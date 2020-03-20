@@ -2,6 +2,7 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
+import { Readable as ReadableStream } from 'stream';
 import { ConnectionPool, CloudConnectionPool } from './pool';
 import Connection from './Connection';
 import Serializer from './Serializer';
@@ -71,11 +72,14 @@ export interface RequestEvent<Response = any, Context = unknown> {
 // we are doing this for have more clear names
 export interface ApiResponse<Response = any, Context = unknown> extends RequestEvent<Response, Context> {}
 
+export type BodyType = Record<string, any> | string | Buffer | ReadableStream
+export type NDBodyType = Record<string, any>[] | string[] | Buffer | ReadableStream
+
 export interface TransportRequestParams {
   method: string;
   path: string;
-  body?: Record<string, any>;
-  bulkBody?: Record<string, any>[];
+  body?: BodyType;
+  bulkBody?: NDBodyType;
   querystring?: Record<string, any>;
 }
 

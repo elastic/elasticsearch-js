@@ -14,7 +14,9 @@ import Transport, {
   nodeFilterFn,
   nodeSelectorFn,
   generateRequestIdFn,
-  TransportRequestCallback
+  TransportRequestCallback,
+  BodyType,
+  NDBodyType
 } from './lib/Transport';
 import { URL } from 'url';
 import Connection, { AgentOptions, agentFn } from './lib/Connection';
@@ -120,12 +122,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     get<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     get<Response = any, Context = unknown>(params: RequestParams.AsyncSearchGet, callback: callbackFn<Response, Context>): TransportRequestCallback
     get<Response = any, Context = unknown>(params: RequestParams.AsyncSearchGet, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    submit<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    submit<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>): Promise<ApiResponse<Response, Context>>
-    submit<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    submit<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    submit<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    submit<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>): Promise<ApiResponse<Response, Context>>
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   asyncSearch: {
     delete<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
@@ -140,12 +142,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     get<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     get<Response = any, Context = unknown>(params: RequestParams.AsyncSearchGet, callback: callbackFn<Response, Context>): TransportRequestCallback
     get<Response = any, Context = unknown>(params: RequestParams.AsyncSearchGet, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    submit<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    submit<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>): Promise<ApiResponse<Response, Context>>
-    submit<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    submit<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    submit<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    submit<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>): Promise<ApiResponse<Response, Context>>
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    submit<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.AsyncSearchSubmit<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   autoscaling: {
     get_autoscaling_decision<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
@@ -161,12 +163,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getAutoscalingDecision<Response = any, Context = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, callback: callbackFn<Response, Context>): TransportRequestCallback
     getAutoscalingDecision<Response = any, Context = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
-  bulk<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  bulk<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Bulk<RequestBody>): Promise<ApiResponse<Response, Context>>
-  bulk<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Bulk<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  bulk<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  bulk<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Bulk<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  bulk<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Bulk<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.Bulk<RequestBody>): Promise<ApiResponse<Response, Context>>
+  bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.Bulk<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.Bulk<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.Bulk<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   cat: {
     aliases<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     aliases<Response = any, Context = unknown>(params: RequestParams.CatAliases): Promise<ApiResponse<Response, Context>>
@@ -362,12 +364,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     deleteAutoFollowPattern<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     deleteAutoFollowPattern<Response = any, Context = unknown>(params: RequestParams.CcrDeleteAutoFollowPattern, callback: callbackFn<Response, Context>): TransportRequestCallback
     deleteAutoFollowPattern<Response = any, Context = unknown>(params: RequestParams.CcrDeleteAutoFollowPattern, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    follow<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    follow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrFollow<RequestBody>): Promise<ApiResponse<Response, Context>>
-    follow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrFollow<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    follow<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    follow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrFollow<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    follow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrFollow<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    follow<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    follow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrFollow<RequestBody>): Promise<ApiResponse<Response, Context>>
+    follow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrFollow<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    follow<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    follow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrFollow<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    follow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrFollow<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     follow_info<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     follow_info<Response = any, Context = unknown>(params: RequestParams.CcrFollowInfo): Promise<ApiResponse<Response, Context>>
     follow_info<Response = any, Context = unknown>(params: RequestParams.CcrFollowInfo, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -392,18 +394,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     followStats<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     followStats<Response = any, Context = unknown>(params: RequestParams.CcrFollowStats, callback: callbackFn<Response, Context>): TransportRequestCallback
     followStats<Response = any, Context = unknown>(params: RequestParams.CcrFollowStats, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    forget_follower<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    forget_follower<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>): Promise<ApiResponse<Response, Context>>
-    forget_follower<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    forget_follower<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    forget_follower<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    forget_follower<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    forgetFollower<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    forgetFollower<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>): Promise<ApiResponse<Response, Context>>
-    forgetFollower<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    forgetFollower<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    forgetFollower<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    forgetFollower<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    forget_follower<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    forget_follower<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>): Promise<ApiResponse<Response, Context>>
+    forget_follower<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    forget_follower<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    forget_follower<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    forget_follower<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    forgetFollower<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    forgetFollower<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>): Promise<ApiResponse<Response, Context>>
+    forgetFollower<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    forgetFollower<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    forgetFollower<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    forgetFollower<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrForgetFollower<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     get_auto_follow_pattern<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     get_auto_follow_pattern<Response = any, Context = unknown>(params: RequestParams.CcrGetAutoFollowPattern): Promise<ApiResponse<Response, Context>>
     get_auto_follow_pattern<Response = any, Context = unknown>(params: RequestParams.CcrGetAutoFollowPattern, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -440,18 +442,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     pauseFollow<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     pauseFollow<Response = any, Context = unknown>(params: RequestParams.CcrPauseFollow, callback: callbackFn<Response, Context>): TransportRequestCallback
     pauseFollow<Response = any, Context = unknown>(params: RequestParams.CcrPauseFollow, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_auto_follow_pattern<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_auto_follow_pattern<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_auto_follow_pattern<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_auto_follow_pattern<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_auto_follow_pattern<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_auto_follow_pattern<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putAutoFollowPattern<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putAutoFollowPattern<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putAutoFollowPattern<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putAutoFollowPattern<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putAutoFollowPattern<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putAutoFollowPattern<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_auto_follow_pattern<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_auto_follow_pattern<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_auto_follow_pattern<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_auto_follow_pattern<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_auto_follow_pattern<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_auto_follow_pattern<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putAutoFollowPattern<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putAutoFollowPattern<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putAutoFollowPattern<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putAutoFollowPattern<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putAutoFollowPattern<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putAutoFollowPattern<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrPutAutoFollowPattern<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     resume_auto_follow_pattern<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     resume_auto_follow_pattern<Response = any, Context = unknown>(params: RequestParams.CcrResumeAutoFollowPattern): Promise<ApiResponse<Response, Context>>
     resume_auto_follow_pattern<Response = any, Context = unknown>(params: RequestParams.CcrResumeAutoFollowPattern, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -464,18 +466,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     resumeAutoFollowPattern<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     resumeAutoFollowPattern<Response = any, Context = unknown>(params: RequestParams.CcrResumeAutoFollowPattern, callback: callbackFn<Response, Context>): TransportRequestCallback
     resumeAutoFollowPattern<Response = any, Context = unknown>(params: RequestParams.CcrResumeAutoFollowPattern, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    resume_follow<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    resume_follow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>): Promise<ApiResponse<Response, Context>>
-    resume_follow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    resume_follow<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    resume_follow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    resume_follow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    resumeFollow<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    resumeFollow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>): Promise<ApiResponse<Response, Context>>
-    resumeFollow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    resumeFollow<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    resumeFollow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    resumeFollow<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    resume_follow<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    resume_follow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>): Promise<ApiResponse<Response, Context>>
+    resume_follow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    resume_follow<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    resume_follow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    resume_follow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    resumeFollow<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    resumeFollow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>): Promise<ApiResponse<Response, Context>>
+    resumeFollow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    resumeFollow<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    resumeFollow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    resumeFollow<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.CcrResumeFollow<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     stats<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     stats<Response = any, Context = unknown>(params: RequestParams.CcrStats): Promise<ApiResponse<Response, Context>>
     stats<Response = any, Context = unknown>(params: RequestParams.CcrStats, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -489,31 +491,31 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     unfollow<Response = any, Context = unknown>(params: RequestParams.CcrUnfollow, callback: callbackFn<Response, Context>): TransportRequestCallback
     unfollow<Response = any, Context = unknown>(params: RequestParams.CcrUnfollow, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
-  clear_scroll<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  clear_scroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>): Promise<ApiResponse<Response, Context>>
-  clear_scroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  clear_scroll<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  clear_scroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  clear_scroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  clearScroll<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  clearScroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>): Promise<ApiResponse<Response, Context>>
-  clearScroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  clearScroll<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  clearScroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  clearScroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  clear_scroll<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  clear_scroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>): Promise<ApiResponse<Response, Context>>
+  clear_scroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  clear_scroll<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  clear_scroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  clear_scroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  clearScroll<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  clearScroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>): Promise<ApiResponse<Response, Context>>
+  clearScroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  clearScroll<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  clearScroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  clearScroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClearScroll<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   cluster: {
-    allocation_explain<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    allocation_explain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>): Promise<ApiResponse<Response, Context>>
-    allocation_explain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    allocation_explain<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    allocation_explain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    allocation_explain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    allocationExplain<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    allocationExplain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>): Promise<ApiResponse<Response, Context>>
-    allocationExplain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    allocationExplain<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    allocationExplain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    allocationExplain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    allocation_explain<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    allocation_explain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>): Promise<ApiResponse<Response, Context>>
+    allocation_explain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    allocation_explain<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    allocation_explain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    allocation_explain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    allocationExplain<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    allocationExplain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>): Promise<ApiResponse<Response, Context>>
+    allocationExplain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    allocationExplain<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    allocationExplain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    allocationExplain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterAllocationExplain<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     delete_component_template<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     delete_component_template<Response = any, Context = unknown>(params: RequestParams.ClusterDeleteComponentTemplate): Promise<ApiResponse<Response, Context>>
     delete_component_template<Response = any, Context = unknown>(params: RequestParams.ClusterDeleteComponentTemplate, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -568,30 +570,30 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     pendingTasks<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     pendingTasks<Response = any, Context = unknown>(params: RequestParams.ClusterPendingTasks, callback: callbackFn<Response, Context>): TransportRequestCallback
     pendingTasks<Response = any, Context = unknown>(params: RequestParams.ClusterPendingTasks, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_component_template<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_component_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_component_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_component_template<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_component_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_component_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putComponentTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_settings<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_settings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_settings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_settings<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_settings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_settings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putSettings<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putSettings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putSettings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putSettings<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putSettings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putSettings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_component_template<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_component_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_component_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_component_template<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_component_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_component_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putComponentTemplate<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putComponentTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putComponentTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putComponentTemplate<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putComponentTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putComponentTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutComponentTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterPutSettings<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     remote_info<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     remote_info<Response = any, Context = unknown>(params: RequestParams.ClusterRemoteInfo): Promise<ApiResponse<Response, Context>>
     remote_info<Response = any, Context = unknown>(params: RequestParams.ClusterRemoteInfo, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -604,12 +606,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     remoteInfo<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     remoteInfo<Response = any, Context = unknown>(params: RequestParams.ClusterRemoteInfo, callback: callbackFn<Response, Context>): TransportRequestCallback
     remoteInfo<Response = any, Context = unknown>(params: RequestParams.ClusterRemoteInfo, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    reroute<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    reroute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterReroute<RequestBody>): Promise<ApiResponse<Response, Context>>
-    reroute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterReroute<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    reroute<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    reroute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterReroute<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    reroute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ClusterReroute<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    reroute<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    reroute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterReroute<RequestBody>): Promise<ApiResponse<Response, Context>>
+    reroute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterReroute<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    reroute<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    reroute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterReroute<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    reroute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ClusterReroute<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     state<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     state<Response = any, Context = unknown>(params: RequestParams.ClusterState): Promise<ApiResponse<Response, Context>>
     state<Response = any, Context = unknown>(params: RequestParams.ClusterState, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -623,18 +625,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     stats<Response = any, Context = unknown>(params: RequestParams.ClusterStats, callback: callbackFn<Response, Context>): TransportRequestCallback
     stats<Response = any, Context = unknown>(params: RequestParams.ClusterStats, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
-  count<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  count<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Count<RequestBody>): Promise<ApiResponse<Response, Context>>
-  count<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Count<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  count<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  count<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Count<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  count<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Count<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  create<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Create<RequestBody>): Promise<ApiResponse<Response, Context>>
-  create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Create<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  create<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Create<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Create<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  count<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  count<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Count<RequestBody>): Promise<ApiResponse<Response, Context>>
+  count<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Count<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  count<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  count<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Count<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  count<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Count<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  create<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Create<RequestBody>): Promise<ApiResponse<Response, Context>>
+  create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Create<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  create<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Create<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Create<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   data_frame_transform_deprecated: {
     delete_transform<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     delete_transform<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedDeleteTransform): Promise<ApiResponse<Response, Context>>
@@ -672,30 +674,30 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getTransformStats<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getTransformStats<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, callback: callbackFn<Response, Context>): TransportRequestCallback
     getTransformStats<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_transform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_transform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTransform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putTransform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     start_transform<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     start_transform<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform): Promise<ApiResponse<Response, Context>>
     start_transform<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -720,18 +722,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     stopTransform<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     stopTransform<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, callback: callbackFn<Response, Context>): TransportRequestCallback
     stopTransform<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_transform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    update_transform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   dataFrameTransformDeprecated: {
     delete_transform<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
@@ -770,30 +772,30 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getTransformStats<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getTransformStats<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, callback: callbackFn<Response, Context>): TransportRequestCallback
     getTransformStats<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_transform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_transform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTransform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putTransform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     start_transform<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     start_transform<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform): Promise<ApiResponse<Response, Context>>
     start_transform<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -818,18 +820,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     stopTransform<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     stopTransform<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, callback: callbackFn<Response, Context>): TransportRequestCallback
     stopTransform<Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_transform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    update_transform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   delete<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
   delete<Response = any, Context = unknown>(params: RequestParams.Delete): Promise<ApiResponse<Response, Context>>
@@ -837,18 +839,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   delete<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
   delete<Response = any, Context = unknown>(params: RequestParams.Delete, callback: callbackFn<Response, Context>): TransportRequestCallback
   delete<Response = any, Context = unknown>(params: RequestParams.Delete, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  delete_by_query<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  delete_by_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
-  delete_by_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  delete_by_query<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  delete_by_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  delete_by_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  deleteByQuery<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  deleteByQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
-  deleteByQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  deleteByQuery<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  deleteByQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  deleteByQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  delete_by_query<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  delete_by_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
+  delete_by_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  delete_by_query<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  delete_by_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  delete_by_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  deleteByQuery<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  deleteByQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
+  deleteByQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  deleteByQuery<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  deleteByQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  deleteByQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.DeleteByQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   delete_by_query_rethrottle<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
   delete_by_query_rethrottle<Response = any, Context = unknown>(params: RequestParams.DeleteByQueryRethrottle): Promise<ApiResponse<Response, Context>>
   delete_by_query_rethrottle<Response = any, Context = unknown>(params: RequestParams.DeleteByQueryRethrottle, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -910,18 +912,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getPolicy<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getPolicy<Response = any, Context = unknown>(params: RequestParams.EnrichGetPolicy, callback: callbackFn<Response, Context>): TransportRequestCallback
     getPolicy<Response = any, Context = unknown>(params: RequestParams.EnrichGetPolicy, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_policy<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_policy<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_policy<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_policy<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_policy<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_policy<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putPolicy<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putPolicy<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putPolicy<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putPolicy<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putPolicy<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putPolicy<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_policy<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_policy<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_policy<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_policy<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_policy<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_policy<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putPolicy<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putPolicy<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putPolicy<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putPolicy<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putPolicy<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putPolicy<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EnrichPutPolicy<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     stats<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     stats<Response = any, Context = unknown>(params: RequestParams.EnrichStats): Promise<ApiResponse<Response, Context>>
     stats<Response = any, Context = unknown>(params: RequestParams.EnrichStats, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -930,12 +932,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     stats<Response = any, Context = unknown>(params: RequestParams.EnrichStats, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   eql: {
-    search<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EqlSearch<RequestBody>): Promise<ApiResponse<Response, Context>>
-    search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EqlSearch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    search<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EqlSearch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.EqlSearch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    search<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EqlSearch<RequestBody>): Promise<ApiResponse<Response, Context>>
+    search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EqlSearch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    search<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EqlSearch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.EqlSearch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   exists<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
   exists<Response = any, Context = unknown>(params: RequestParams.Exists): Promise<ApiResponse<Response, Context>>
@@ -955,12 +957,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   existsSource<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
   existsSource<Response = any, Context = unknown>(params: RequestParams.ExistsSource, callback: callbackFn<Response, Context>): TransportRequestCallback
   existsSource<Response = any, Context = unknown>(params: RequestParams.ExistsSource, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  explain<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  explain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Explain<RequestBody>): Promise<ApiResponse<Response, Context>>
-  explain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Explain<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  explain<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  explain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Explain<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  explain<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Explain<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  explain<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  explain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Explain<RequestBody>): Promise<ApiResponse<Response, Context>>
+  explain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Explain<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  explain<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  explain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Explain<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  explain<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Explain<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   field_caps<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
   field_caps<Response = any, Context = unknown>(params: RequestParams.FieldCaps): Promise<ApiResponse<Response, Context>>
   field_caps<Response = any, Context = unknown>(params: RequestParams.FieldCaps, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1028,12 +1030,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   getSource<Response = any, Context = unknown>(params: RequestParams.GetSource, callback: callbackFn<Response, Context>): TransportRequestCallback
   getSource<Response = any, Context = unknown>(params: RequestParams.GetSource, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   graph: {
-    explore<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    explore<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.GraphExplore<RequestBody>): Promise<ApiResponse<Response, Context>>
-    explore<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.GraphExplore<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    explore<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    explore<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.GraphExplore<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    explore<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.GraphExplore<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    explore<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    explore<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.GraphExplore<RequestBody>): Promise<ApiResponse<Response, Context>>
+    explore<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.GraphExplore<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    explore<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    explore<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.GraphExplore<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    explore<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.GraphExplore<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   ilm: {
     delete_lifecycle<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
@@ -1084,30 +1086,30 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getStatus<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getStatus<Response = any, Context = unknown>(params: RequestParams.IlmGetStatus, callback: callbackFn<Response, Context>): TransportRequestCallback
     getStatus<Response = any, Context = unknown>(params: RequestParams.IlmGetStatus, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    move_to_step<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    move_to_step<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>): Promise<ApiResponse<Response, Context>>
-    move_to_step<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    move_to_step<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    move_to_step<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    move_to_step<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    moveToStep<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    moveToStep<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>): Promise<ApiResponse<Response, Context>>
-    moveToStep<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    moveToStep<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    moveToStep<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    moveToStep<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    move_to_step<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    move_to_step<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>): Promise<ApiResponse<Response, Context>>
+    move_to_step<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    move_to_step<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    move_to_step<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    move_to_step<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    moveToStep<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    moveToStep<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>): Promise<ApiResponse<Response, Context>>
+    moveToStep<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    moveToStep<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    moveToStep<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    moveToStep<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmMoveToStep<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IlmPutLifecycle<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     remove_policy<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     remove_policy<Response = any, Context = unknown>(params: RequestParams.IlmRemovePolicy): Promise<ApiResponse<Response, Context>>
     remove_policy<Response = any, Context = unknown>(params: RequestParams.IlmRemovePolicy, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1139,19 +1141,19 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     stop<Response = any, Context = unknown>(params: RequestParams.IlmStop, callback: callbackFn<Response, Context>): TransportRequestCallback
     stop<Response = any, Context = unknown>(params: RequestParams.IlmStop, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
-  index<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  index<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Index<RequestBody>): Promise<ApiResponse<Response, Context>>
-  index<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Index<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  index<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  index<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Index<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  index<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Index<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  index<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  index<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Index<RequestBody>): Promise<ApiResponse<Response, Context>>
+  index<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Index<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  index<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  index<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Index<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  index<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Index<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   indices: {
-    analyze<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    analyze<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesAnalyze<RequestBody>): Promise<ApiResponse<Response, Context>>
-    analyze<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesAnalyze<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    analyze<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    analyze<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesAnalyze<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    analyze<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesAnalyze<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    analyze<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    analyze<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesAnalyze<RequestBody>): Promise<ApiResponse<Response, Context>>
+    analyze<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesAnalyze<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    analyze<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    analyze<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesAnalyze<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    analyze<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesAnalyze<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     clear_cache<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     clear_cache<Response = any, Context = unknown>(params: RequestParams.IndicesClearCache): Promise<ApiResponse<Response, Context>>
     clear_cache<Response = any, Context = unknown>(params: RequestParams.IndicesClearCache, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1164,24 +1166,24 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     clearCache<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     clearCache<Response = any, Context = unknown>(params: RequestParams.IndicesClearCache, callback: callbackFn<Response, Context>): TransportRequestCallback
     clearCache<Response = any, Context = unknown>(params: RequestParams.IndicesClearCache, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    clone<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    clone<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesClone<RequestBody>): Promise<ApiResponse<Response, Context>>
-    clone<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesClone<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    clone<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    clone<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesClone<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    clone<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesClone<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    clone<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    clone<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesClone<RequestBody>): Promise<ApiResponse<Response, Context>>
+    clone<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesClone<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    clone<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    clone<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesClone<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    clone<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesClone<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     close<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     close<Response = any, Context = unknown>(params: RequestParams.IndicesClose): Promise<ApiResponse<Response, Context>>
     close<Response = any, Context = unknown>(params: RequestParams.IndicesClose, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
     close<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     close<Response = any, Context = unknown>(params: RequestParams.IndicesClose, callback: callbackFn<Response, Context>): TransportRequestCallback
     close<Response = any, Context = unknown>(params: RequestParams.IndicesClose, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    create<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesCreate<RequestBody>): Promise<ApiResponse<Response, Context>>
-    create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesCreate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    create<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesCreate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesCreate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    create<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesCreate<RequestBody>): Promise<ApiResponse<Response, Context>>
+    create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesCreate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    create<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesCreate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesCreate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     delete<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     delete<Response = any, Context = unknown>(params: RequestParams.IndicesDelete): Promise<ApiResponse<Response, Context>>
     delete<Response = any, Context = unknown>(params: RequestParams.IndicesDelete, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1356,54 +1358,54 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     open<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     open<Response = any, Context = unknown>(params: RequestParams.IndicesOpen, callback: callbackFn<Response, Context>): TransportRequestCallback
     open<Response = any, Context = unknown>(params: RequestParams.IndicesOpen, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_alias<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_alias<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_alias<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_alias<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_alias<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_alias<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putAlias<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putAlias<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putAlias<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putAlias<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putAlias<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putAlias<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_mapping<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_mapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_mapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_mapping<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_mapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_mapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putMapping<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putMapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putMapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putMapping<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putMapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putMapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_settings<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_settings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_settings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_settings<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_settings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_settings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putSettings<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putSettings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putSettings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putSettings<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putSettings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putSettings<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_template<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_template<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTemplate<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putTemplate<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_alias<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_alias<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_alias<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_alias<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_alias<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_alias<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putAlias<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putAlias<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putAlias<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putAlias<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putAlias<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putAlias<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutAlias<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_mapping<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_mapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_mapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_mapping<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_mapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_mapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putMapping<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putMapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putMapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putMapping<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putMapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putMapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutMapping<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_settings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putSettings<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutSettings<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_template<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_template<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTemplate<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putTemplate<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesPutTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     recovery<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     recovery<Response = any, Context = unknown>(params: RequestParams.IndicesRecovery): Promise<ApiResponse<Response, Context>>
     recovery<Response = any, Context = unknown>(params: RequestParams.IndicesRecovery, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1428,12 +1430,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     reloadSearchAnalyzers<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     reloadSearchAnalyzers<Response = any, Context = unknown>(params: RequestParams.IndicesReloadSearchAnalyzers, callback: callbackFn<Response, Context>): TransportRequestCallback
     reloadSearchAnalyzers<Response = any, Context = unknown>(params: RequestParams.IndicesReloadSearchAnalyzers, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    rollover<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    rollover<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesRollover<RequestBody>): Promise<ApiResponse<Response, Context>>
-    rollover<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesRollover<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    rollover<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    rollover<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesRollover<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    rollover<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesRollover<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    rollover<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    rollover<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesRollover<RequestBody>): Promise<ApiResponse<Response, Context>>
+    rollover<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesRollover<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    rollover<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    rollover<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesRollover<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    rollover<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesRollover<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     segments<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     segments<Response = any, Context = unknown>(params: RequestParams.IndicesSegments): Promise<ApiResponse<Response, Context>>
     segments<Response = any, Context = unknown>(params: RequestParams.IndicesSegments, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1452,18 +1454,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     shardStores<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     shardStores<Response = any, Context = unknown>(params: RequestParams.IndicesShardStores, callback: callbackFn<Response, Context>): TransportRequestCallback
     shardStores<Response = any, Context = unknown>(params: RequestParams.IndicesShardStores, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    shrink<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    shrink<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesShrink<RequestBody>): Promise<ApiResponse<Response, Context>>
-    shrink<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesShrink<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    shrink<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    shrink<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesShrink<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    shrink<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesShrink<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    split<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    split<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesSplit<RequestBody>): Promise<ApiResponse<Response, Context>>
-    split<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesSplit<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    split<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    split<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesSplit<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    split<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesSplit<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    shrink<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    shrink<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesShrink<RequestBody>): Promise<ApiResponse<Response, Context>>
+    shrink<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesShrink<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    shrink<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    shrink<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesShrink<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    shrink<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesShrink<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    split<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    split<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesSplit<RequestBody>): Promise<ApiResponse<Response, Context>>
+    split<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesSplit<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    split<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    split<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesSplit<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    split<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesSplit<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     stats<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     stats<Response = any, Context = unknown>(params: RequestParams.IndicesStats): Promise<ApiResponse<Response, Context>>
     stats<Response = any, Context = unknown>(params: RequestParams.IndicesStats, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1476,36 +1478,36 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     unfreeze<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     unfreeze<Response = any, Context = unknown>(params: RequestParams.IndicesUnfreeze, callback: callbackFn<Response, Context>): TransportRequestCallback
     unfreeze<Response = any, Context = unknown>(params: RequestParams.IndicesUnfreeze, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_aliases<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    update_aliases<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>): Promise<ApiResponse<Response, Context>>
-    update_aliases<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    update_aliases<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_aliases<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_aliases<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateAliases<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    updateAliases<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>): Promise<ApiResponse<Response, Context>>
-    updateAliases<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    updateAliases<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateAliases<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateAliases<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_aliases<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    update_aliases<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>): Promise<ApiResponse<Response, Context>>
+    update_aliases<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    update_aliases<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_aliases<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_aliases<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateAliases<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    updateAliases<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>): Promise<ApiResponse<Response, Context>>
+    updateAliases<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    updateAliases<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateAliases<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateAliases<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesUpdateAliases<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     upgrade<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     upgrade<Response = any, Context = unknown>(params: RequestParams.IndicesUpgrade): Promise<ApiResponse<Response, Context>>
     upgrade<Response = any, Context = unknown>(params: RequestParams.IndicesUpgrade, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
     upgrade<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     upgrade<Response = any, Context = unknown>(params: RequestParams.IndicesUpgrade, callback: callbackFn<Response, Context>): TransportRequestCallback
     upgrade<Response = any, Context = unknown>(params: RequestParams.IndicesUpgrade, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    validate_query<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    validate_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
-    validate_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    validate_query<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    validate_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    validate_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    validateQuery<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    validateQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
-    validateQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    validateQuery<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    validateQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    validateQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    validate_query<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    validate_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
+    validate_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    validate_query<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    validate_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    validate_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    validateQuery<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    validateQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
+    validateQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    validateQuery<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    validateQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    validateQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesValidateQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   info<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
   info<Response = any, Context = unknown>(params: RequestParams.Info): Promise<ApiResponse<Response, Context>>
@@ -1550,24 +1552,24 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     processorGrok<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     processorGrok<Response = any, Context = unknown>(params: RequestParams.IngestProcessorGrok, callback: callbackFn<Response, Context>): TransportRequestCallback
     processorGrok<Response = any, Context = unknown>(params: RequestParams.IngestProcessorGrok, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_pipeline<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_pipeline<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_pipeline<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_pipeline<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_pipeline<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_pipeline<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putPipeline<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putPipeline<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putPipeline<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putPipeline<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putPipeline<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putPipeline<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    simulate<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    simulate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestSimulate<RequestBody>): Promise<ApiResponse<Response, Context>>
-    simulate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestSimulate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    simulate<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    simulate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestSimulate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    simulate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.IngestSimulate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_pipeline<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_pipeline<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_pipeline<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_pipeline<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_pipeline<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_pipeline<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putPipeline<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putPipeline<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putPipeline<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putPipeline<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putPipeline<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putPipeline<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestPutPipeline<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    simulate<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    simulate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestSimulate<RequestBody>): Promise<ApiResponse<Response, Context>>
+    simulate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestSimulate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    simulate<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    simulate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestSimulate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    simulate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IngestSimulate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   license: {
     delete<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
@@ -1606,12 +1608,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getTrialStatus<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getTrialStatus<Response = any, Context = unknown>(params: RequestParams.LicenseGetTrialStatus, callback: callbackFn<Response, Context>): TransportRequestCallback
     getTrialStatus<Response = any, Context = unknown>(params: RequestParams.LicenseGetTrialStatus, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    post<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    post<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.LicensePost<RequestBody>): Promise<ApiResponse<Response, Context>>
-    post<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.LicensePost<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    post<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    post<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.LicensePost<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    post<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.LicensePost<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    post<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    post<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.LicensePost<RequestBody>): Promise<ApiResponse<Response, Context>>
+    post<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.LicensePost<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    post<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    post<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.LicensePost<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    post<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.LicensePost<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     post_start_basic<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     post_start_basic<Response = any, Context = unknown>(params: RequestParams.LicensePostStartBasic): Promise<ApiResponse<Response, Context>>
     post_start_basic<Response = any, Context = unknown>(params: RequestParams.LicensePostStartBasic, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1637,12 +1639,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     postStartTrial<Response = any, Context = unknown>(params: RequestParams.LicensePostStartTrial, callback: callbackFn<Response, Context>): TransportRequestCallback
     postStartTrial<Response = any, Context = unknown>(params: RequestParams.LicensePostStartTrial, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
-  mget<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  mget<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Mget<RequestBody>): Promise<ApiResponse<Response, Context>>
-  mget<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Mget<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  mget<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  mget<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Mget<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  mget<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Mget<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  mget<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  mget<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Mget<RequestBody>): Promise<ApiResponse<Response, Context>>
+  mget<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Mget<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  mget<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  mget<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Mget<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  mget<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Mget<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   migration: {
     deprecations<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     deprecations<Response = any, Context = unknown>(params: RequestParams.MigrationDeprecations): Promise<ApiResponse<Response, Context>>
@@ -1652,18 +1654,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     deprecations<Response = any, Context = unknown>(params: RequestParams.MigrationDeprecations, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   ml: {
-    close_job<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    close_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>): Promise<ApiResponse<Response, Context>>
-    close_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    close_job<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    close_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    close_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    closeJob<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    closeJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>): Promise<ApiResponse<Response, Context>>
-    closeJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    closeJob<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    closeJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    closeJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    close_job<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    close_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>): Promise<ApiResponse<Response, Context>>
+    close_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    close_job<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    close_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    close_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    closeJob<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    closeJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>): Promise<ApiResponse<Response, Context>>
+    closeJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    closeJob<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    closeJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    closeJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlCloseJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     delete_calendar<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     delete_calendar<Response = any, Context = unknown>(params: RequestParams.MlDeleteCalendar): Promise<ApiResponse<Response, Context>>
     delete_calendar<Response = any, Context = unknown>(params: RequestParams.MlDeleteCalendar, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1796,84 +1798,84 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     deleteTrainedModel<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     deleteTrainedModel<Response = any, Context = unknown>(params: RequestParams.MlDeleteTrainedModel, callback: callbackFn<Response, Context>): TransportRequestCallback
     deleteTrainedModel<Response = any, Context = unknown>(params: RequestParams.MlDeleteTrainedModel, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    estimate_model_memory<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    estimate_model_memory<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>): Promise<ApiResponse<Response, Context>>
-    estimate_model_memory<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    estimate_model_memory<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    estimate_model_memory<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    estimate_model_memory<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    estimateModelMemory<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    estimateModelMemory<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>): Promise<ApiResponse<Response, Context>>
-    estimateModelMemory<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    estimateModelMemory<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    estimateModelMemory<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    estimateModelMemory<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    evaluate_data_frame<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    evaluate_data_frame<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>): Promise<ApiResponse<Response, Context>>
-    evaluate_data_frame<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    evaluate_data_frame<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    evaluate_data_frame<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    evaluate_data_frame<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    evaluateDataFrame<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    evaluateDataFrame<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>): Promise<ApiResponse<Response, Context>>
-    evaluateDataFrame<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    evaluateDataFrame<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    evaluateDataFrame<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    evaluateDataFrame<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    explain_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    explain_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
-    explain_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    explain_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    explain_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    explain_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    explainDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    explainDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
-    explainDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    explainDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    explainDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    explainDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    find_file_structure<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    find_file_structure<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>): Promise<ApiResponse<Response, Context>>
-    find_file_structure<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    find_file_structure<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    find_file_structure<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    find_file_structure<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    findFileStructure<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    findFileStructure<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>): Promise<ApiResponse<Response, Context>>
-    findFileStructure<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    findFileStructure<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    findFileStructure<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    findFileStructure<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    flush_job<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    flush_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>): Promise<ApiResponse<Response, Context>>
-    flush_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    flush_job<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    flush_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    flush_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    flushJob<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    flushJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>): Promise<ApiResponse<Response, Context>>
-    flushJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    flushJob<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    flushJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    flushJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    estimate_model_memory<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    estimate_model_memory<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>): Promise<ApiResponse<Response, Context>>
+    estimate_model_memory<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    estimate_model_memory<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    estimate_model_memory<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    estimate_model_memory<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    estimateModelMemory<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    estimateModelMemory<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>): Promise<ApiResponse<Response, Context>>
+    estimateModelMemory<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    estimateModelMemory<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    estimateModelMemory<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    estimateModelMemory<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEstimateModelMemory<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    evaluate_data_frame<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    evaluate_data_frame<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>): Promise<ApiResponse<Response, Context>>
+    evaluate_data_frame<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    evaluate_data_frame<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    evaluate_data_frame<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    evaluate_data_frame<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    evaluateDataFrame<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    evaluateDataFrame<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>): Promise<ApiResponse<Response, Context>>
+    evaluateDataFrame<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    evaluateDataFrame<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    evaluateDataFrame<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    evaluateDataFrame<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlEvaluateDataFrame<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    explain_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    explain_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
+    explain_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    explain_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    explain_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    explain_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    explainDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    explainDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
+    explainDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    explainDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    explainDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    explainDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlExplainDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    find_file_structure<RequestBody = NDBodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    find_file_structure<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>): Promise<ApiResponse<Response, Context>>
+    find_file_structure<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    find_file_structure<RequestBody = NDBodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    find_file_structure<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    find_file_structure<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    findFileStructure<RequestBody = NDBodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    findFileStructure<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>): Promise<ApiResponse<Response, Context>>
+    findFileStructure<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    findFileStructure<RequestBody = NDBodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    findFileStructure<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    findFileStructure<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MlFindFileStructure<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    flush_job<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    flush_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>): Promise<ApiResponse<Response, Context>>
+    flush_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    flush_job<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    flush_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    flush_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    flushJob<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    flushJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>): Promise<ApiResponse<Response, Context>>
+    flushJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    flushJob<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    flushJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    flushJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlFlushJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     forecast<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     forecast<Response = any, Context = unknown>(params: RequestParams.MlForecast): Promise<ApiResponse<Response, Context>>
     forecast<Response = any, Context = unknown>(params: RequestParams.MlForecast, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
     forecast<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     forecast<Response = any, Context = unknown>(params: RequestParams.MlForecast, callback: callbackFn<Response, Context>): TransportRequestCallback
     forecast<Response = any, Context = unknown>(params: RequestParams.MlForecast, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_buckets<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    get_buckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>): Promise<ApiResponse<Response, Context>>
-    get_buckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    get_buckets<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_buckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_buckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getBuckets<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    getBuckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>): Promise<ApiResponse<Response, Context>>
-    getBuckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    getBuckets<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    getBuckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getBuckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_buckets<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    get_buckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>): Promise<ApiResponse<Response, Context>>
+    get_buckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    get_buckets<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_buckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_buckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getBuckets<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    getBuckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>): Promise<ApiResponse<Response, Context>>
+    getBuckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    getBuckets<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    getBuckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getBuckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetBuckets<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     get_calendar_events<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     get_calendar_events<Response = any, Context = unknown>(params: RequestParams.MlGetCalendarEvents): Promise<ApiResponse<Response, Context>>
     get_calendar_events<Response = any, Context = unknown>(params: RequestParams.MlGetCalendarEvents, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1886,30 +1888,30 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getCalendarEvents<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getCalendarEvents<Response = any, Context = unknown>(params: RequestParams.MlGetCalendarEvents, callback: callbackFn<Response, Context>): TransportRequestCallback
     getCalendarEvents<Response = any, Context = unknown>(params: RequestParams.MlGetCalendarEvents, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_calendars<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    get_calendars<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>): Promise<ApiResponse<Response, Context>>
-    get_calendars<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    get_calendars<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_calendars<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_calendars<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getCalendars<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    getCalendars<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>): Promise<ApiResponse<Response, Context>>
-    getCalendars<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    getCalendars<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    getCalendars<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getCalendars<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_categories<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    get_categories<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>): Promise<ApiResponse<Response, Context>>
-    get_categories<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    get_categories<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_categories<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_categories<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getCategories<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    getCategories<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>): Promise<ApiResponse<Response, Context>>
-    getCategories<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    getCategories<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    getCategories<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getCategories<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_calendars<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    get_calendars<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>): Promise<ApiResponse<Response, Context>>
+    get_calendars<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    get_calendars<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_calendars<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_calendars<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getCalendars<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    getCalendars<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>): Promise<ApiResponse<Response, Context>>
+    getCalendars<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    getCalendars<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    getCalendars<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getCalendars<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCalendars<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_categories<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    get_categories<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>): Promise<ApiResponse<Response, Context>>
+    get_categories<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    get_categories<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_categories<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_categories<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getCategories<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    getCategories<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>): Promise<ApiResponse<Response, Context>>
+    getCategories<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    getCategories<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    getCategories<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getCategories<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetCategories<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     get_data_frame_analytics<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     get_data_frame_analytics<Response = any, Context = unknown>(params: RequestParams.MlGetDataFrameAnalytics): Promise<ApiResponse<Response, Context>>
     get_data_frame_analytics<Response = any, Context = unknown>(params: RequestParams.MlGetDataFrameAnalytics, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1970,18 +1972,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getFilters<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getFilters<Response = any, Context = unknown>(params: RequestParams.MlGetFilters, callback: callbackFn<Response, Context>): TransportRequestCallback
     getFilters<Response = any, Context = unknown>(params: RequestParams.MlGetFilters, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_influencers<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    get_influencers<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>): Promise<ApiResponse<Response, Context>>
-    get_influencers<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    get_influencers<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_influencers<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_influencers<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getInfluencers<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    getInfluencers<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>): Promise<ApiResponse<Response, Context>>
-    getInfluencers<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    getInfluencers<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    getInfluencers<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getInfluencers<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_influencers<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    get_influencers<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>): Promise<ApiResponse<Response, Context>>
+    get_influencers<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    get_influencers<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_influencers<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_influencers<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getInfluencers<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    getInfluencers<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>): Promise<ApiResponse<Response, Context>>
+    getInfluencers<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    getInfluencers<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    getInfluencers<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getInfluencers<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetInfluencers<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     get_job_stats<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     get_job_stats<Response = any, Context = unknown>(params: RequestParams.MlGetJobStats): Promise<ApiResponse<Response, Context>>
     get_job_stats<Response = any, Context = unknown>(params: RequestParams.MlGetJobStats, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2006,42 +2008,42 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getJobs<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getJobs<Response = any, Context = unknown>(params: RequestParams.MlGetJobs, callback: callbackFn<Response, Context>): TransportRequestCallback
     getJobs<Response = any, Context = unknown>(params: RequestParams.MlGetJobs, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_model_snapshots<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    get_model_snapshots<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>): Promise<ApiResponse<Response, Context>>
-    get_model_snapshots<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    get_model_snapshots<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_model_snapshots<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_model_snapshots<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getModelSnapshots<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    getModelSnapshots<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>): Promise<ApiResponse<Response, Context>>
-    getModelSnapshots<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    getModelSnapshots<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    getModelSnapshots<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getModelSnapshots<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_overall_buckets<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    get_overall_buckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>): Promise<ApiResponse<Response, Context>>
-    get_overall_buckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    get_overall_buckets<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_overall_buckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_overall_buckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getOverallBuckets<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    getOverallBuckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>): Promise<ApiResponse<Response, Context>>
-    getOverallBuckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    getOverallBuckets<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    getOverallBuckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getOverallBuckets<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_records<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    get_records<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>): Promise<ApiResponse<Response, Context>>
-    get_records<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    get_records<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_records<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_records<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getRecords<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    getRecords<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>): Promise<ApiResponse<Response, Context>>
-    getRecords<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    getRecords<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    getRecords<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getRecords<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_model_snapshots<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    get_model_snapshots<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>): Promise<ApiResponse<Response, Context>>
+    get_model_snapshots<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    get_model_snapshots<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_model_snapshots<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_model_snapshots<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getModelSnapshots<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    getModelSnapshots<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>): Promise<ApiResponse<Response, Context>>
+    getModelSnapshots<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    getModelSnapshots<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    getModelSnapshots<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getModelSnapshots<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetModelSnapshots<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_overall_buckets<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    get_overall_buckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>): Promise<ApiResponse<Response, Context>>
+    get_overall_buckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    get_overall_buckets<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_overall_buckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_overall_buckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getOverallBuckets<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    getOverallBuckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>): Promise<ApiResponse<Response, Context>>
+    getOverallBuckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    getOverallBuckets<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    getOverallBuckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getOverallBuckets<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetOverallBuckets<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_records<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    get_records<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>): Promise<ApiResponse<Response, Context>>
+    get_records<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    get_records<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_records<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_records<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getRecords<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    getRecords<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>): Promise<ApiResponse<Response, Context>>
+    getRecords<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    getRecords<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    getRecords<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getRecords<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlGetRecords<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     get_trained_models<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     get_trained_models<Response = any, Context = unknown>(params: RequestParams.MlGetTrainedModels): Promise<ApiResponse<Response, Context>>
     get_trained_models<Response = any, Context = unknown>(params: RequestParams.MlGetTrainedModels, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2084,30 +2086,30 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     openJob<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     openJob<Response = any, Context = unknown>(params: RequestParams.MlOpenJob, callback: callbackFn<Response, Context>): TransportRequestCallback
     openJob<Response = any, Context = unknown>(params: RequestParams.MlOpenJob, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    post_calendar_events<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    post_calendar_events<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>): Promise<ApiResponse<Response, Context>>
-    post_calendar_events<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    post_calendar_events<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    post_calendar_events<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    post_calendar_events<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    postCalendarEvents<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    postCalendarEvents<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>): Promise<ApiResponse<Response, Context>>
-    postCalendarEvents<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    postCalendarEvents<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    postCalendarEvents<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    postCalendarEvents<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    post_data<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    post_data<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>): Promise<ApiResponse<Response, Context>>
-    post_data<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    post_data<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    post_data<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    post_data<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    postData<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    postData<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>): Promise<ApiResponse<Response, Context>>
-    postData<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    postData<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    postData<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    postData<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    post_calendar_events<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    post_calendar_events<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>): Promise<ApiResponse<Response, Context>>
+    post_calendar_events<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    post_calendar_events<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    post_calendar_events<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    post_calendar_events<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    postCalendarEvents<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    postCalendarEvents<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>): Promise<ApiResponse<Response, Context>>
+    postCalendarEvents<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    postCalendarEvents<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    postCalendarEvents<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    postCalendarEvents<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostCalendarEvents<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    post_data<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    post_data<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>): Promise<ApiResponse<Response, Context>>
+    post_data<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    post_data<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    post_data<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    post_data<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    postData<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    postData<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>): Promise<ApiResponse<Response, Context>>
+    postData<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    postData<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    postData<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    postData<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPostData<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     preview_datafeed<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     preview_datafeed<Response = any, Context = unknown>(params: RequestParams.MlPreviewDatafeed): Promise<ApiResponse<Response, Context>>
     preview_datafeed<Response = any, Context = unknown>(params: RequestParams.MlPreviewDatafeed, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2120,18 +2122,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     previewDatafeed<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     previewDatafeed<Response = any, Context = unknown>(params: RequestParams.MlPreviewDatafeed, callback: callbackFn<Response, Context>): TransportRequestCallback
     previewDatafeed<Response = any, Context = unknown>(params: RequestParams.MlPreviewDatafeed, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_calendar<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_calendar<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_calendar<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_calendar<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_calendar<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_calendar<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putCalendar<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putCalendar<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putCalendar<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putCalendar<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putCalendar<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putCalendar<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_calendar<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_calendar<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_calendar<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_calendar<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_calendar<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_calendar<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putCalendar<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putCalendar<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putCalendar<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putCalendar<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putCalendar<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putCalendar<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutCalendar<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     put_calendar_job<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     put_calendar_job<Response = any, Context = unknown>(params: RequestParams.MlPutCalendarJob): Promise<ApiResponse<Response, Context>>
     put_calendar_job<Response = any, Context = unknown>(params: RequestParams.MlPutCalendarJob, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2144,78 +2146,78 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     putCalendarJob<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     putCalendarJob<Response = any, Context = unknown>(params: RequestParams.MlPutCalendarJob, callback: callbackFn<Response, Context>): TransportRequestCallback
     putCalendarJob<Response = any, Context = unknown>(params: RequestParams.MlPutCalendarJob, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_datafeed<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_datafeed<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putDatafeed<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putDatafeed<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_filter<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_filter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_filter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_filter<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_filter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_filter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putFilter<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putFilter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putFilter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putFilter<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putFilter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putFilter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_job<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_job<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putJob<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putJob<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_trained_model<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_trained_model<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_trained_model<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_trained_model<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_trained_model<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_trained_model<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTrainedModel<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putTrainedModel<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putTrainedModel<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putTrainedModel<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTrainedModel<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTrainedModel<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    revert_model_snapshot<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    revert_model_snapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>): Promise<ApiResponse<Response, Context>>
-    revert_model_snapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    revert_model_snapshot<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    revert_model_snapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    revert_model_snapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    revertModelSnapshot<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    revertModelSnapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>): Promise<ApiResponse<Response, Context>>
-    revertModelSnapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    revertModelSnapshot<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    revertModelSnapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    revertModelSnapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_filter<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_filter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_filter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_filter<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_filter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_filter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putFilter<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putFilter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putFilter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putFilter<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putFilter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putFilter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutFilter<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_trained_model<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_trained_model<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_trained_model<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_trained_model<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_trained_model<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_trained_model<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTrainedModel<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putTrainedModel<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putTrainedModel<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putTrainedModel<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTrainedModel<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTrainedModel<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlPutTrainedModel<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    revert_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    revert_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>): Promise<ApiResponse<Response, Context>>
+    revert_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    revert_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    revert_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    revert_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    revertModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    revertModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>): Promise<ApiResponse<Response, Context>>
+    revertModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    revertModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    revertModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    revertModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlRevertModelSnapshot<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     set_upgrade_mode<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     set_upgrade_mode<Response = any, Context = unknown>(params: RequestParams.MlSetUpgradeMode): Promise<ApiResponse<Response, Context>>
     set_upgrade_mode<Response = any, Context = unknown>(params: RequestParams.MlSetUpgradeMode, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2228,42 +2230,42 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     setUpgradeMode<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     setUpgradeMode<Response = any, Context = unknown>(params: RequestParams.MlSetUpgradeMode, callback: callbackFn<Response, Context>): TransportRequestCallback
     setUpgradeMode<Response = any, Context = unknown>(params: RequestParams.MlSetUpgradeMode, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    start_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    start_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
-    start_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    start_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    start_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    start_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    startDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    startDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
-    startDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    startDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    startDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    startDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    start_datafeed<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    start_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
-    start_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    start_datafeed<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    start_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    start_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    startDatafeed<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    startDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
-    startDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    startDatafeed<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    startDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    startDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    stop_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    stop_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
-    stop_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    stop_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    stop_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    stop_data_frame_analytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    stopDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    stopDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
-    stopDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    stopDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    stopDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    stopDataFrameAnalytics<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    start_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    start_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
+    start_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    start_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    start_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    start_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    startDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    startDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
+    startDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    startDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    startDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    startDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    start_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    start_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
+    start_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    start_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    start_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    start_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    startDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    startDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
+    startDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    startDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    startDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    startDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStartDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    stop_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    stop_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
+    stop_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    stop_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    stop_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    stop_data_frame_analytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    stopDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    stopDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>): Promise<ApiResponse<Response, Context>>
+    stopDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    stopDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    stopDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    stopDataFrameAnalytics<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlStopDataFrameAnalytics<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     stop_datafeed<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     stop_datafeed<Response = any, Context = unknown>(params: RequestParams.MlStopDatafeed): Promise<ApiResponse<Response, Context>>
     stop_datafeed<Response = any, Context = unknown>(params: RequestParams.MlStopDatafeed, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2276,105 +2278,105 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     stopDatafeed<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     stopDatafeed<Response = any, Context = unknown>(params: RequestParams.MlStopDatafeed, callback: callbackFn<Response, Context>): TransportRequestCallback
     stopDatafeed<Response = any, Context = unknown>(params: RequestParams.MlStopDatafeed, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_datafeed<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    update_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
-    update_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    update_datafeed<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_datafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateDatafeed<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    updateDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
-    updateDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    updateDatafeed<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateDatafeed<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_filter<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    update_filter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>): Promise<ApiResponse<Response, Context>>
-    update_filter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    update_filter<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_filter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_filter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateFilter<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    updateFilter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>): Promise<ApiResponse<Response, Context>>
-    updateFilter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    updateFilter<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateFilter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateFilter<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_job<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    update_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>): Promise<ApiResponse<Response, Context>>
-    update_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    update_job<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateJob<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    updateJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>): Promise<ApiResponse<Response, Context>>
-    updateJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    updateJob<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_model_snapshot<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    update_model_snapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>): Promise<ApiResponse<Response, Context>>
-    update_model_snapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    update_model_snapshot<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_model_snapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_model_snapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateModelSnapshot<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    updateModelSnapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>): Promise<ApiResponse<Response, Context>>
-    updateModelSnapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    updateModelSnapshot<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateModelSnapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateModelSnapshot<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    validate<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    validate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidate<RequestBody>): Promise<ApiResponse<Response, Context>>
-    validate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    validate<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    validate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    validate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    validate_detector<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    validate_detector<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>): Promise<ApiResponse<Response, Context>>
-    validate_detector<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    validate_detector<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    validate_detector<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    validate_detector<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    validateDetector<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    validateDetector<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>): Promise<ApiResponse<Response, Context>>
-    validateDetector<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    validateDetector<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    validateDetector<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    validateDetector<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    update_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
+    update_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    update_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_datafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    updateDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>): Promise<ApiResponse<Response, Context>>
+    updateDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    updateDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateDatafeed<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateDatafeed<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_filter<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    update_filter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>): Promise<ApiResponse<Response, Context>>
+    update_filter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    update_filter<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_filter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_filter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateFilter<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    updateFilter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>): Promise<ApiResponse<Response, Context>>
+    updateFilter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    updateFilter<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateFilter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateFilter<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateFilter<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_job<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    update_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>): Promise<ApiResponse<Response, Context>>
+    update_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    update_job<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateJob<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    updateJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>): Promise<ApiResponse<Response, Context>>
+    updateJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    updateJob<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    update_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>): Promise<ApiResponse<Response, Context>>
+    update_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    update_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_model_snapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    updateModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>): Promise<ApiResponse<Response, Context>>
+    updateModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    updateModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateModelSnapshot<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlUpdateModelSnapshot<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    validate<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    validate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidate<RequestBody>): Promise<ApiResponse<Response, Context>>
+    validate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    validate<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    validate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    validate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    validate_detector<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    validate_detector<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>): Promise<ApiResponse<Response, Context>>
+    validate_detector<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    validate_detector<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    validate_detector<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    validate_detector<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    validateDetector<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    validateDetector<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>): Promise<ApiResponse<Response, Context>>
+    validateDetector<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    validateDetector<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    validateDetector<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    validateDetector<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.MlValidateDetector<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   monitoring: {
-    bulk<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    bulk<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MonitoringBulk<RequestBody>): Promise<ApiResponse<Response, Context>>
-    bulk<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MonitoringBulk<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    bulk<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    bulk<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MonitoringBulk<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    bulk<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MonitoringBulk<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MonitoringBulk<RequestBody>): Promise<ApiResponse<Response, Context>>
+    bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MonitoringBulk<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MonitoringBulk<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    bulk<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MonitoringBulk<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
-  msearch<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  msearch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Msearch<RequestBody>): Promise<ApiResponse<Response, Context>>
-  msearch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Msearch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  msearch<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  msearch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Msearch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  msearch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Msearch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  msearch_template<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  msearch_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
-  msearch_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  msearch_template<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  msearch_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  msearch_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  msearchTemplate<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  msearchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
-  msearchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  msearchTemplate<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  msearchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  msearchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  mtermvectors<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  mtermvectors<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Mtermvectors<RequestBody>): Promise<ApiResponse<Response, Context>>
-  mtermvectors<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Mtermvectors<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  mtermvectors<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  mtermvectors<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Mtermvectors<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  mtermvectors<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Mtermvectors<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  msearch<RequestBody = NDBodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  msearch<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.Msearch<RequestBody>): Promise<ApiResponse<Response, Context>>
+  msearch<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.Msearch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  msearch<RequestBody = NDBodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  msearch<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.Msearch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  msearch<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.Msearch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  msearch_template<RequestBody = NDBodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  msearch_template<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+  msearch_template<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  msearch_template<RequestBody = NDBodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  msearch_template<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  msearch_template<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  msearchTemplate<RequestBody = NDBodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  msearchTemplate<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+  msearchTemplate<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  msearchTemplate<RequestBody = NDBodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  msearchTemplate<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  msearchTemplate<RequestBody = NDBodyType, Response = any, Context = unknown>(params: RequestParams.MsearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  mtermvectors<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  mtermvectors<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Mtermvectors<RequestBody>): Promise<ApiResponse<Response, Context>>
+  mtermvectors<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Mtermvectors<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  mtermvectors<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  mtermvectors<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Mtermvectors<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  mtermvectors<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Mtermvectors<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   nodes: {
     hot_threads<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     hot_threads<Response = any, Context = unknown>(params: RequestParams.NodesHotThreads): Promise<ApiResponse<Response, Context>>
@@ -2425,36 +2427,36 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   ping<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
   ping<Response = any, Context = unknown>(params: RequestParams.Ping, callback: callbackFn<Response, Context>): TransportRequestCallback
   ping<Response = any, Context = unknown>(params: RequestParams.Ping, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  put_script<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  put_script<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>): Promise<ApiResponse<Response, Context>>
-  put_script<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  put_script<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  put_script<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  put_script<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  putScript<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  putScript<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>): Promise<ApiResponse<Response, Context>>
-  putScript<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  putScript<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  putScript<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  putScript<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  rank_eval<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  rank_eval<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>): Promise<ApiResponse<Response, Context>>
-  rank_eval<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  rank_eval<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  rank_eval<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  rank_eval<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  rankEval<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  rankEval<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>): Promise<ApiResponse<Response, Context>>
-  rankEval<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  rankEval<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  rankEval<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  rankEval<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  reindex<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  reindex<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Reindex<RequestBody>): Promise<ApiResponse<Response, Context>>
-  reindex<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Reindex<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  reindex<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  reindex<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Reindex<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  reindex<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Reindex<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  put_script<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  put_script<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>): Promise<ApiResponse<Response, Context>>
+  put_script<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  put_script<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  put_script<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  put_script<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  putScript<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  putScript<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>): Promise<ApiResponse<Response, Context>>
+  putScript<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  putScript<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  putScript<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  putScript<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.PutScript<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  rank_eval<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  rank_eval<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>): Promise<ApiResponse<Response, Context>>
+  rank_eval<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  rank_eval<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  rank_eval<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  rank_eval<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  rankEval<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  rankEval<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>): Promise<ApiResponse<Response, Context>>
+  rankEval<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  rankEval<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  rankEval<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  rankEval<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RankEval<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  reindex<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  reindex<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Reindex<RequestBody>): Promise<ApiResponse<Response, Context>>
+  reindex<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Reindex<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  reindex<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  reindex<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Reindex<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  reindex<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Reindex<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   reindex_rethrottle<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
   reindex_rethrottle<Response = any, Context = unknown>(params: RequestParams.ReindexRethrottle): Promise<ApiResponse<Response, Context>>
   reindex_rethrottle<Response = any, Context = unknown>(params: RequestParams.ReindexRethrottle, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2467,18 +2469,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   reindexRethrottle<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
   reindexRethrottle<Response = any, Context = unknown>(params: RequestParams.ReindexRethrottle, callback: callbackFn<Response, Context>): TransportRequestCallback
   reindexRethrottle<Response = any, Context = unknown>(params: RequestParams.ReindexRethrottle, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  render_search_template<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  render_search_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
-  render_search_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  render_search_template<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  render_search_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  render_search_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  renderSearchTemplate<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  renderSearchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
-  renderSearchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  renderSearchTemplate<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  renderSearchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  renderSearchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  render_search_template<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  render_search_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+  render_search_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  render_search_template<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  render_search_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  render_search_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  renderSearchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  renderSearchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+  renderSearchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  renderSearchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  renderSearchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  renderSearchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RenderSearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   rollup: {
     delete_job<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     delete_job<Response = any, Context = unknown>(params: RequestParams.RollupDeleteJob): Promise<ApiResponse<Response, Context>>
@@ -2528,30 +2530,30 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getRollupIndexCaps<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getRollupIndexCaps<Response = any, Context = unknown>(params: RequestParams.RollupGetRollupIndexCaps, callback: callbackFn<Response, Context>): TransportRequestCallback
     getRollupIndexCaps<Response = any, Context = unknown>(params: RequestParams.RollupGetRollupIndexCaps, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_job<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_job<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_job<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putJob<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putJob<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putJob<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    rollup_search<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    rollup_search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>): Promise<ApiResponse<Response, Context>>
-    rollup_search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    rollup_search<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    rollup_search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    rollup_search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    rollupSearch<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    rollupSearch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>): Promise<ApiResponse<Response, Context>>
-    rollupSearch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    rollupSearch<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    rollupSearch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    rollupSearch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_job<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putJob<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupPutJob<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    rollup_search<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    rollup_search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>): Promise<ApiResponse<Response, Context>>
+    rollup_search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    rollup_search<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    rollup_search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    rollup_search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    rollupSearch<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    rollupSearch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>): Promise<ApiResponse<Response, Context>>
+    rollupSearch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    rollupSearch<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    rollupSearch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    rollupSearch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.RollupRollupSearch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     start_job<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     start_job<Response = any, Context = unknown>(params: RequestParams.RollupStartJob): Promise<ApiResponse<Response, Context>>
     start_job<Response = any, Context = unknown>(params: RequestParams.RollupStartJob, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2577,30 +2579,30 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     stopJob<Response = any, Context = unknown>(params: RequestParams.RollupStopJob, callback: callbackFn<Response, Context>): TransportRequestCallback
     stopJob<Response = any, Context = unknown>(params: RequestParams.RollupStopJob, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
-  scripts_painless_execute<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  scripts_painless_execute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>): Promise<ApiResponse<Response, Context>>
-  scripts_painless_execute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  scripts_painless_execute<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  scripts_painless_execute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  scripts_painless_execute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  scriptsPainlessExecute<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  scriptsPainlessExecute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>): Promise<ApiResponse<Response, Context>>
-  scriptsPainlessExecute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  scriptsPainlessExecute<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  scriptsPainlessExecute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  scriptsPainlessExecute<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  scroll<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  scroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Scroll<RequestBody>): Promise<ApiResponse<Response, Context>>
-  scroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Scroll<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  scroll<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  scroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Scroll<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  scroll<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Scroll<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  search<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Search<RequestBody>): Promise<ApiResponse<Response, Context>>
-  search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Search<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  search<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Search<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  search<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Search<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  scripts_painless_execute<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  scripts_painless_execute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>): Promise<ApiResponse<Response, Context>>
+  scripts_painless_execute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  scripts_painless_execute<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  scripts_painless_execute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  scripts_painless_execute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  scriptsPainlessExecute<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  scriptsPainlessExecute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>): Promise<ApiResponse<Response, Context>>
+  scriptsPainlessExecute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  scriptsPainlessExecute<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  scriptsPainlessExecute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  scriptsPainlessExecute<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.ScriptsPainlessExecute<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  scroll<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  scroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Scroll<RequestBody>): Promise<ApiResponse<Response, Context>>
+  scroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Scroll<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  scroll<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  scroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Scroll<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  scroll<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Scroll<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  search<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Search<RequestBody>): Promise<ApiResponse<Response, Context>>
+  search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Search<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  search<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Search<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  search<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Search<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   search_shards<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
   search_shards<Response = any, Context = unknown>(params: RequestParams.SearchShards): Promise<ApiResponse<Response, Context>>
   search_shards<Response = any, Context = unknown>(params: RequestParams.SearchShards, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2613,18 +2615,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   searchShards<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
   searchShards<Response = any, Context = unknown>(params: RequestParams.SearchShards, callback: callbackFn<Response, Context>): TransportRequestCallback
   searchShards<Response = any, Context = unknown>(params: RequestParams.SearchShards, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  search_template<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  search_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
-  search_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  search_template<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  search_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  search_template<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  searchTemplate<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  searchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
-  searchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  searchTemplate<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  searchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  searchTemplate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  search_template<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  search_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+  search_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  search_template<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  search_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  search_template<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  searchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  searchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>): Promise<ApiResponse<Response, Context>>
+  searchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  searchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  searchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  searchTemplate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SearchTemplate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   security: {
     authenticate<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     authenticate<Response = any, Context = unknown>(params: RequestParams.SecurityAuthenticate): Promise<ApiResponse<Response, Context>>
@@ -2632,18 +2634,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     authenticate<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     authenticate<Response = any, Context = unknown>(params: RequestParams.SecurityAuthenticate, callback: callbackFn<Response, Context>): TransportRequestCallback
     authenticate<Response = any, Context = unknown>(params: RequestParams.SecurityAuthenticate, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    change_password<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    change_password<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>): Promise<ApiResponse<Response, Context>>
-    change_password<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    change_password<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    change_password<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    change_password<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    changePassword<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    changePassword<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>): Promise<ApiResponse<Response, Context>>
-    changePassword<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    changePassword<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    changePassword<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    changePassword<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    change_password<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    change_password<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>): Promise<ApiResponse<Response, Context>>
+    change_password<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    change_password<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    change_password<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    change_password<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    changePassword<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    changePassword<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>): Promise<ApiResponse<Response, Context>>
+    changePassword<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    changePassword<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    changePassword<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    changePassword<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityChangePassword<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     clear_cached_realms<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     clear_cached_realms<Response = any, Context = unknown>(params: RequestParams.SecurityClearCachedRealms): Promise<ApiResponse<Response, Context>>
     clear_cached_realms<Response = any, Context = unknown>(params: RequestParams.SecurityClearCachedRealms, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2668,18 +2670,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     clearCachedRoles<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     clearCachedRoles<Response = any, Context = unknown>(params: RequestParams.SecurityClearCachedRoles, callback: callbackFn<Response, Context>): TransportRequestCallback
     clearCachedRoles<Response = any, Context = unknown>(params: RequestParams.SecurityClearCachedRoles, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    create_api_key<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    create_api_key<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>): Promise<ApiResponse<Response, Context>>
-    create_api_key<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    create_api_key<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    create_api_key<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    create_api_key<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    createApiKey<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    createApiKey<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>): Promise<ApiResponse<Response, Context>>
-    createApiKey<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    createApiKey<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    createApiKey<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    createApiKey<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    create_api_key<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    create_api_key<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>): Promise<ApiResponse<Response, Context>>
+    create_api_key<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    create_api_key<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    create_api_key<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    create_api_key<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    createApiKey<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    createApiKey<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>): Promise<ApiResponse<Response, Context>>
+    createApiKey<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    createApiKey<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    createApiKey<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    createApiKey<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityCreateApiKey<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     delete_privileges<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     delete_privileges<Response = any, Context = unknown>(params: RequestParams.SecurityDeletePrivileges): Promise<ApiResponse<Response, Context>>
     delete_privileges<Response = any, Context = unknown>(params: RequestParams.SecurityDeletePrivileges, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2812,18 +2814,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getRoleMapping<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getRoleMapping<Response = any, Context = unknown>(params: RequestParams.SecurityGetRoleMapping, callback: callbackFn<Response, Context>): TransportRequestCallback
     getRoleMapping<Response = any, Context = unknown>(params: RequestParams.SecurityGetRoleMapping, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_token<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    get_token<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>): Promise<ApiResponse<Response, Context>>
-    get_token<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    get_token<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_token<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    get_token<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getToken<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    getToken<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>): Promise<ApiResponse<Response, Context>>
-    getToken<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    getToken<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    getToken<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    getToken<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_token<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    get_token<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>): Promise<ApiResponse<Response, Context>>
+    get_token<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    get_token<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_token<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    get_token<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getToken<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    getToken<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>): Promise<ApiResponse<Response, Context>>
+    getToken<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    getToken<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    getToken<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    getToken<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityGetToken<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     get_user<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     get_user<Response = any, Context = unknown>(params: RequestParams.SecurityGetUser): Promise<ApiResponse<Response, Context>>
     get_user<Response = any, Context = unknown>(params: RequestParams.SecurityGetUser, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -2848,90 +2850,90 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getUserPrivileges<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getUserPrivileges<Response = any, Context = unknown>(params: RequestParams.SecurityGetUserPrivileges, callback: callbackFn<Response, Context>): TransportRequestCallback
     getUserPrivileges<Response = any, Context = unknown>(params: RequestParams.SecurityGetUserPrivileges, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    has_privileges<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    has_privileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>): Promise<ApiResponse<Response, Context>>
-    has_privileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    has_privileges<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    has_privileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    has_privileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    hasPrivileges<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    hasPrivileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>): Promise<ApiResponse<Response, Context>>
-    hasPrivileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    hasPrivileges<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    hasPrivileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    hasPrivileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidate_api_key<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    invalidate_api_key<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>): Promise<ApiResponse<Response, Context>>
-    invalidate_api_key<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    invalidate_api_key<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidate_api_key<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidate_api_key<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidateApiKey<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    invalidateApiKey<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>): Promise<ApiResponse<Response, Context>>
-    invalidateApiKey<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    invalidateApiKey<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidateApiKey<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidateApiKey<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidate_token<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    invalidate_token<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>): Promise<ApiResponse<Response, Context>>
-    invalidate_token<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    invalidate_token<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidate_token<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidate_token<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidateToken<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    invalidateToken<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>): Promise<ApiResponse<Response, Context>>
-    invalidateToken<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    invalidateToken<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidateToken<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    invalidateToken<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_privileges<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_privileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_privileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_privileges<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_privileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_privileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putPrivileges<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putPrivileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putPrivileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putPrivileges<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putPrivileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putPrivileges<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_role<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_role<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_role<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_role<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_role<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_role<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putRole<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putRole<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putRole<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putRole<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putRole<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putRole<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_role_mapping<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_role_mapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_role_mapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_role_mapping<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_role_mapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_role_mapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putRoleMapping<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putRoleMapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putRoleMapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putRoleMapping<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putRoleMapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putRoleMapping<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_user<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_user<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_user<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_user<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_user<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_user<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putUser<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putUser<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putUser<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putUser<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putUser<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putUser<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    has_privileges<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    has_privileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>): Promise<ApiResponse<Response, Context>>
+    has_privileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    has_privileges<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    has_privileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    has_privileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    hasPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    hasPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>): Promise<ApiResponse<Response, Context>>
+    hasPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    hasPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    hasPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    hasPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityHasPrivileges<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidate_api_key<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    invalidate_api_key<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>): Promise<ApiResponse<Response, Context>>
+    invalidate_api_key<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    invalidate_api_key<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidate_api_key<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidate_api_key<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidateApiKey<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    invalidateApiKey<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>): Promise<ApiResponse<Response, Context>>
+    invalidateApiKey<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    invalidateApiKey<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidateApiKey<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidateApiKey<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateApiKey<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidate_token<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    invalidate_token<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>): Promise<ApiResponse<Response, Context>>
+    invalidate_token<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    invalidate_token<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidate_token<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidate_token<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidateToken<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    invalidateToken<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>): Promise<ApiResponse<Response, Context>>
+    invalidateToken<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    invalidateToken<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidateToken<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    invalidateToken<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityInvalidateToken<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_privileges<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_privileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_privileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_privileges<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_privileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_privileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putPrivileges<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutPrivileges<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_role<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_role<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_role<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_role<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_role<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_role<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putRole<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putRole<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putRole<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putRole<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putRole<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putRole<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRole<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_role_mapping<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_role_mapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_role_mapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_role_mapping<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_role_mapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_role_mapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putRoleMapping<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putRoleMapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putRoleMapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putRoleMapping<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putRoleMapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putRoleMapping<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutRoleMapping<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_user<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_user<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_user<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_user<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_user<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_user<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putUser<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putUser<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putUser<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putUser<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putUser<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putUser<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SecurityPutUser<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   slm: {
     delete_lifecycle<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
@@ -3006,18 +3008,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getStatus<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getStatus<Response = any, Context = unknown>(params: RequestParams.SlmGetStatus, callback: callbackFn<Response, Context>): TransportRequestCallback
     getStatus<Response = any, Context = unknown>(params: RequestParams.SlmGetStatus, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_lifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putLifecycle<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_lifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putLifecycle<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SlmPutLifecycle<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     start<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     start<Response = any, Context = unknown>(params: RequestParams.SlmStart): Promise<ApiResponse<Response, Context>>
     start<Response = any, Context = unknown>(params: RequestParams.SlmStart, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -3032,36 +3034,36 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     stop<Response = any, Context = unknown>(params: RequestParams.SlmStop, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   snapshot: {
-    cleanup_repository<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    cleanup_repository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>): Promise<ApiResponse<Response, Context>>
-    cleanup_repository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    cleanup_repository<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    cleanup_repository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    cleanup_repository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    cleanupRepository<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    cleanupRepository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>): Promise<ApiResponse<Response, Context>>
-    cleanupRepository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    cleanupRepository<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    cleanupRepository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    cleanupRepository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    create<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreate<RequestBody>): Promise<ApiResponse<Response, Context>>
-    create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    create<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    create<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    create_repository<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    create_repository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>): Promise<ApiResponse<Response, Context>>
-    create_repository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    create_repository<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    create_repository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    create_repository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    createRepository<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    createRepository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>): Promise<ApiResponse<Response, Context>>
-    createRepository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    createRepository<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    createRepository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    createRepository<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    cleanup_repository<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    cleanup_repository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>): Promise<ApiResponse<Response, Context>>
+    cleanup_repository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    cleanup_repository<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    cleanup_repository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    cleanup_repository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    cleanupRepository<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    cleanupRepository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>): Promise<ApiResponse<Response, Context>>
+    cleanupRepository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    cleanupRepository<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    cleanupRepository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    cleanupRepository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCleanupRepository<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    create<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreate<RequestBody>): Promise<ApiResponse<Response, Context>>
+    create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    create<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    create<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    create_repository<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    create_repository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>): Promise<ApiResponse<Response, Context>>
+    create_repository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    create_repository<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    create_repository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    create_repository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    createRepository<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    createRepository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>): Promise<ApiResponse<Response, Context>>
+    createRepository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    createRepository<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    createRepository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    createRepository<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotCreateRepository<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     delete<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     delete<Response = any, Context = unknown>(params: RequestParams.SnapshotDelete): Promise<ApiResponse<Response, Context>>
     delete<Response = any, Context = unknown>(params: RequestParams.SnapshotDelete, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -3098,12 +3100,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getRepository<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getRepository<Response = any, Context = unknown>(params: RequestParams.SnapshotGetRepository, callback: callbackFn<Response, Context>): TransportRequestCallback
     getRepository<Response = any, Context = unknown>(params: RequestParams.SnapshotGetRepository, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    restore<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    restore<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotRestore<RequestBody>): Promise<ApiResponse<Response, Context>>
-    restore<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotRestore<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    restore<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    restore<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotRestore<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    restore<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SnapshotRestore<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    restore<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    restore<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotRestore<RequestBody>): Promise<ApiResponse<Response, Context>>
+    restore<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotRestore<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    restore<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    restore<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotRestore<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    restore<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SnapshotRestore<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     status<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     status<Response = any, Context = unknown>(params: RequestParams.SnapshotStatus): Promise<ApiResponse<Response, Context>>
     status<Response = any, Context = unknown>(params: RequestParams.SnapshotStatus, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -3124,30 +3126,30 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     verifyRepository<Response = any, Context = unknown>(params: RequestParams.SnapshotVerifyRepository, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   sql: {
-    clear_cursor<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    clear_cursor<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>): Promise<ApiResponse<Response, Context>>
-    clear_cursor<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    clear_cursor<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    clear_cursor<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    clear_cursor<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    clearCursor<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    clearCursor<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>): Promise<ApiResponse<Response, Context>>
-    clearCursor<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    clearCursor<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    clearCursor<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    clearCursor<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    query<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
-    query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    query<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    translate<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    translate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlTranslate<RequestBody>): Promise<ApiResponse<Response, Context>>
-    translate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlTranslate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    translate<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    translate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlTranslate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    translate<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.SqlTranslate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    clear_cursor<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    clear_cursor<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>): Promise<ApiResponse<Response, Context>>
+    clear_cursor<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    clear_cursor<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    clear_cursor<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    clear_cursor<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    clearCursor<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    clearCursor<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>): Promise<ApiResponse<Response, Context>>
+    clearCursor<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    clearCursor<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    clearCursor<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    clearCursor<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlClearCursor<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    query<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
+    query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    query<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    translate<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    translate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlTranslate<RequestBody>): Promise<ApiResponse<Response, Context>>
+    translate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlTranslate<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    translate<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    translate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlTranslate<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    translate<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.SqlTranslate<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
   ssl: {
     certificates<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
@@ -3177,12 +3179,12 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     list<Response = any, Context = unknown>(params: RequestParams.TasksList, callback: callbackFn<Response, Context>): TransportRequestCallback
     list<Response = any, Context = unknown>(params: RequestParams.TasksList, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
-  termvectors<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  termvectors<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Termvectors<RequestBody>): Promise<ApiResponse<Response, Context>>
-  termvectors<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Termvectors<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  termvectors<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  termvectors<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Termvectors<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  termvectors<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Termvectors<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  termvectors<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  termvectors<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Termvectors<RequestBody>): Promise<ApiResponse<Response, Context>>
+  termvectors<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Termvectors<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  termvectors<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  termvectors<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Termvectors<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  termvectors<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Termvectors<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   transform: {
     cat_transform<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     cat_transform<Response = any, Context = unknown>(params: RequestParams.TransformCatTransform): Promise<ApiResponse<Response, Context>>
@@ -3232,30 +3234,30 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getTransformStats<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getTransformStats<Response = any, Context = unknown>(params: RequestParams.TransformGetTransformStats, callback: callbackFn<Response, Context>): TransportRequestCallback
     getTransformStats<Response = any, Context = unknown>(params: RequestParams.TransformGetTransformStats, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    preview_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    previewTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_transform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_transform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTransform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putTransform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    preview_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    previewTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPreviewTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformPutTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     start_transform<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     start_transform<Response = any, Context = unknown>(params: RequestParams.TransformStartTransform): Promise<ApiResponse<Response, Context>>
     start_transform<Response = any, Context = unknown>(params: RequestParams.TransformStartTransform, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -3280,37 +3282,37 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     stopTransform<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     stopTransform<Response = any, Context = unknown>(params: RequestParams.TransformStopTransform, callback: callbackFn<Response, Context>): TransportRequestCallback
     stopTransform<Response = any, Context = unknown>(params: RequestParams.TransformStopTransform, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_transform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    update_transform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    update_transform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    updateTransform<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    update_transform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>): Promise<ApiResponse<Response, Context>>
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    updateTransform<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.TransformUpdateTransform<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   }
-  update<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  update<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Update<RequestBody>): Promise<ApiResponse<Response, Context>>
-  update<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Update<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  update<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  update<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Update<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  update<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.Update<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  update_by_query<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  update_by_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
-  update_by_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  update_by_query<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  update_by_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  update_by_query<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-  updateByQuery<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-  updateByQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
-  updateByQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-  updateByQuery<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-  updateByQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-  updateByQuery<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  update<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  update<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Update<RequestBody>): Promise<ApiResponse<Response, Context>>
+  update<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Update<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  update<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  update<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Update<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  update<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Update<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  update_by_query<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  update_by_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
+  update_by_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  update_by_query<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  update_by_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  update_by_query<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+  updateByQuery<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+  updateByQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>): Promise<ApiResponse<Response, Context>>
+  updateByQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+  updateByQuery<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+  updateByQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+  updateByQuery<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.UpdateByQuery<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   update_by_query_rethrottle<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
   update_by_query_rethrottle<Response = any, Context = unknown>(params: RequestParams.UpdateByQueryRethrottle): Promise<ApiResponse<Response, Context>>
   update_by_query_rethrottle<Response = any, Context = unknown>(params: RequestParams.UpdateByQueryRethrottle, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -3372,18 +3374,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     deleteWatch<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     deleteWatch<Response = any, Context = unknown>(params: RequestParams.WatcherDeleteWatch, callback: callbackFn<Response, Context>): TransportRequestCallback
     deleteWatch<Response = any, Context = unknown>(params: RequestParams.WatcherDeleteWatch, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    execute_watch<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    execute_watch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>): Promise<ApiResponse<Response, Context>>
-    execute_watch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    execute_watch<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    execute_watch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    execute_watch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    executeWatch<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    executeWatch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>): Promise<ApiResponse<Response, Context>>
-    executeWatch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    executeWatch<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    executeWatch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    executeWatch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    execute_watch<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    execute_watch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>): Promise<ApiResponse<Response, Context>>
+    execute_watch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    execute_watch<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    execute_watch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    execute_watch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    executeWatch<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    executeWatch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>): Promise<ApiResponse<Response, Context>>
+    executeWatch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    executeWatch<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    executeWatch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    executeWatch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherExecuteWatch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     get_watch<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     get_watch<Response = any, Context = unknown>(params: RequestParams.WatcherGetWatch): Promise<ApiResponse<Response, Context>>
     get_watch<Response = any, Context = unknown>(params: RequestParams.WatcherGetWatch, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -3396,18 +3398,18 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
     getWatch<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
     getWatch<Response = any, Context = unknown>(params: RequestParams.WatcherGetWatch, callback: callbackFn<Response, Context>): TransportRequestCallback
     getWatch<Response = any, Context = unknown>(params: RequestParams.WatcherGetWatch, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_watch<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    put_watch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>): Promise<ApiResponse<Response, Context>>
-    put_watch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    put_watch<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_watch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    put_watch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putWatch<RequestBody = any, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
-    putWatch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>): Promise<ApiResponse<Response, Context>>
-    putWatch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
-    putWatch<RequestBody = any, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
-    putWatch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
-    putWatch<RequestBody = any, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_watch<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    put_watch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>): Promise<ApiResponse<Response, Context>>
+    put_watch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    put_watch<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_watch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    put_watch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putWatch<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
+    putWatch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>): Promise<ApiResponse<Response, Context>>
+    putWatch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
+    putWatch<RequestBody = BodyType, Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
+    putWatch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
+    putWatch<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.WatcherPutWatch<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
     start<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     start<Response = any, Context = unknown>(params: RequestParams.WatcherStart): Promise<ApiResponse<Response, Context>>
     start<Response = any, Context = unknown>(params: RequestParams.WatcherStart, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>

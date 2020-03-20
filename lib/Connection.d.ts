@@ -6,6 +6,7 @@
 
 import { URL } from 'url';
 import { inspect, InspectOptions } from 'util'
+import { Readable as ReadableStream } from 'stream';
 import { ApiKeyAuth, BasicAuth } from './pool'
 import * as http from 'http'
 import { ConnectionOptions as TlsConnectionOptions } from 'tls'
@@ -32,7 +33,7 @@ interface ConnectionRoles {
 
 interface RequestOptions extends http.ClientRequestArgs {
   asStream?: boolean;
-  body?: any;
+  body?: string | Buffer | ReadableStream;
   querystring?: string;
 }
 
