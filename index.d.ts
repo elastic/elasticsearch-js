@@ -315,9 +315,13 @@ declare class Client extends EventEmitter {
     clone: ApiMethod<RequestParams.IndicesClone>
     close: ApiMethod<RequestParams.IndicesClose>
     create: ApiMethod<RequestParams.IndicesCreate>
+    create_data_stream: ApiMethod<RequestParams.IndicesCreateDataStream>
+    createDataStream: ApiMethod<RequestParams.IndicesCreateDataStream>
     delete: ApiMethod<RequestParams.IndicesDelete>
     delete_alias: ApiMethod<RequestParams.IndicesDeleteAlias>
     deleteAlias: ApiMethod<RequestParams.IndicesDeleteAlias>
+    delete_data_stream: ApiMethod<RequestParams.IndicesDeleteDataStream>
+    deleteDataStream: ApiMethod<RequestParams.IndicesDeleteDataStream>
     delete_template: ApiMethod<RequestParams.IndicesDeleteTemplate>
     deleteTemplate: ApiMethod<RequestParams.IndicesDeleteTemplate>
     exists: ApiMethod<RequestParams.IndicesExists>
@@ -333,6 +337,8 @@ declare class Client extends EventEmitter {
     get: ApiMethod<RequestParams.IndicesGet>
     get_alias: ApiMethod<RequestParams.IndicesGetAlias>
     getAlias: ApiMethod<RequestParams.IndicesGetAlias>
+    get_data_streams: ApiMethod<RequestParams.IndicesGetDataStreams>
+    getDataStreams: ApiMethod<RequestParams.IndicesGetDataStreams>
     get_field_mapping: ApiMethod<RequestParams.IndicesGetFieldMapping>
     getFieldMapping: ApiMethod<RequestParams.IndicesGetFieldMapping>
     get_mapping: ApiMethod<RequestParams.IndicesGetMapping>
