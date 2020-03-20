@@ -18,7 +18,8 @@ import {
   ApiError,
   ApiResponse,
   RequestBody,
-  RequestNDBody
+  RequestNDBody,
+  ResponseBody
 } from '../../lib/Transport'
 
 const params = {
@@ -66,7 +67,7 @@ expectAssignable<TransportRequestOptions>(options)
 expectAssignable<RequestEvent>(response)
 expectAssignable<ApiResponse>(response)
 
-// verify that RequestBody and RequestNDBody works as expected
+// verify that RequestBody, RequestNDBody and ResponseBody works as expected
 interface TestBody { hello: string }
 expectAssignable<RequestBody>({ foo: 'bar' })
 expectAssignable<RequestBody<TestBody>>({ hello: 'world' })
@@ -75,6 +76,7 @@ expectAssignable<RequestBody>('string')
 expectAssignable<RequestBody<TestBody>>('string')
 expectAssignable<RequestBody>(Buffer.from('hello world'))
 expectAssignable<RequestBody>(new ReadableStream())
+
 expectAssignable<RequestNDBody>([{ foo: 'bar' }])
 expectAssignable<RequestNDBody<TestBody>[]>([{ hello: 'world' }])
 expectError<RequestNDBody>({ foo: 'bar' })
@@ -82,6 +84,14 @@ expectError<RequestNDBody<TestBody>[]>([{ foo: 'bar' }])
 expectAssignable<RequestNDBody>(['string'])
 expectAssignable<RequestNDBody>(Buffer.from('hello world'))
 expectAssignable<RequestNDBody>(new ReadableStream())
+
+expectAssignable<ResponseBody>({ foo: 'bar' })
+expectAssignable<ResponseBody<TestBody>>({ hello: 'world' })
+expectError<ResponseBody<TestBody>>({ foo: 'bar' })
+expectAssignable<ResponseBody>('string')
+expectAssignable<ResponseBody<TestBody>>('string')
+expectAssignable<ResponseBody>(true)
+expectAssignable<ResponseBody>(new ReadableStream())
 
 const transport = new Transport({
   emit: (event, ...args) => true,
