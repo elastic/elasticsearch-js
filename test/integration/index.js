@@ -81,6 +81,7 @@ const xPackBlackList = {
   'transforms_force_delete.yml': [
     'Test force deleting a running transform'
   ],
+  'transforms_cat_apis.yml': ['*'],
   'transforms_start_stop.yml': ['*'],
   'transforms_stats.yml': ['*'],
   'transforms_stats_continuous.yml': ['*'],
