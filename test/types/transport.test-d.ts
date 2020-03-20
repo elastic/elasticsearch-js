@@ -17,8 +17,8 @@ import {
   RequestEvent,
   ApiError,
   ApiResponse,
-  BodyType,
-  NDBodyType
+  RequestBody,
+  RequestNDBody
 } from '../../lib/Transport'
 
 const params = {
@@ -66,22 +66,22 @@ expectAssignable<TransportRequestOptions>(options)
 expectAssignable<RequestEvent>(response)
 expectAssignable<ApiResponse>(response)
 
-// verify that BodyType and NDBodyType works as expected
+// verify that RequestBody and RequestNDBody works as expected
 interface TestBody { hello: string }
-expectAssignable<BodyType>({ foo: 'bar' })
-expectAssignable<BodyType<TestBody>>({ hello: 'world' })
-expectError<BodyType<TestBody>>({ foo: 'bar' })
-expectAssignable<BodyType>('string')
-expectAssignable<BodyType<TestBody>>('string')
-expectAssignable<BodyType>(Buffer.from('hello world'))
-expectAssignable<BodyType>(new ReadableStream())
-expectAssignable<NDBodyType>([{ foo: 'bar' }])
-expectAssignable<NDBodyType<TestBody>[]>([{ hello: 'world' }])
-expectError<NDBodyType>({ foo: 'bar' })
-expectError<NDBodyType<TestBody>[]>([{ foo: 'bar' }])
-expectAssignable<NDBodyType>(['string'])
-expectAssignable<NDBodyType>(Buffer.from('hello world'))
-expectAssignable<NDBodyType>(new ReadableStream())
+expectAssignable<RequestBody>({ foo: 'bar' })
+expectAssignable<RequestBody<TestBody>>({ hello: 'world' })
+expectError<RequestBody<TestBody>>({ foo: 'bar' })
+expectAssignable<RequestBody>('string')
+expectAssignable<RequestBody<TestBody>>('string')
+expectAssignable<RequestBody>(Buffer.from('hello world'))
+expectAssignable<RequestBody>(new ReadableStream())
+expectAssignable<RequestNDBody>([{ foo: 'bar' }])
+expectAssignable<RequestNDBody<TestBody>[]>([{ hello: 'world' }])
+expectError<RequestNDBody>({ foo: 'bar' })
+expectError<RequestNDBody<TestBody>[]>([{ foo: 'bar' }])
+expectAssignable<RequestNDBody>(['string'])
+expectAssignable<RequestNDBody>(Buffer.from('hello world'))
+expectAssignable<RequestNDBody>(new ReadableStream())
 
 const transport = new Transport({
   emit: (event, ...args) => true,

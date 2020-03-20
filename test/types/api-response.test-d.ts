@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 import { expectType } from 'tsd'
-import { BodyType } from '../../lib/Transport'
+import { ResponseBody } from '../../lib/Transport'
 import { Client } from '../../'
 
 const client = new Client({
@@ -14,7 +14,7 @@ const client = new Client({
 {
   const response = await client.cat.count({ index: 'test' })
 
-  expectType<BodyType>(response.body)
+  expectType<ResponseBody>(response.body)
   expectType<unknown>(response.meta.context)
 }
 

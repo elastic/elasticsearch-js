@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 import { expectType, expectError } from 'tsd'
-import { BodyType } from '../../lib/Transport'
+import { ResponseBody } from '../../lib/Transport'
 import { Client } from '../../'
 
 const client = new Client({
@@ -78,7 +78,7 @@ expectError(
     }
   })
 
-  expectType<BodyType>(response.body)
+  expectType<ResponseBody>(response.body)
   expectType<unknown>(response.meta.context)
 }
 
@@ -93,7 +93,7 @@ expectError(
     }
   })
 
-  expectType<BodyType>(response.body)
+  expectType<ResponseBody>(response.body)
   expectType<unknown>(response.meta.context)
 }
 
