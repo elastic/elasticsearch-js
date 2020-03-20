@@ -13,8 +13,10 @@ function buildAsyncSearchSubmit (opts) {
 
   const acceptedQuerystring = [
     'wait_for_completion',
+    'clean_on_completion',
     'keep_alive',
     'batched_reduce_size',
+    'request_cache',
     'analyzer',
     'analyze_wildcard',
     'default_operator',
@@ -52,15 +54,15 @@ function buildAsyncSearchSubmit (opts) {
     'typed_keys',
     'version',
     'seq_no_primary_term',
-    'request_cache',
-    'max_concurrent_shard_requests',
-    'clean_on_completion'
+    'max_concurrent_shard_requests'
   ]
 
   const snakeCase = {
     waitForCompletion: 'wait_for_completion',
+    cleanOnCompletion: 'clean_on_completion',
     keepAlive: 'keep_alive',
     batchedReduceSize: 'batched_reduce_size',
+    requestCache: 'request_cache',
     analyzeWildcard: 'analyze_wildcard',
     defaultOperator: 'default_operator',
     storedFields: 'stored_fields',
@@ -84,9 +86,7 @@ function buildAsyncSearchSubmit (opts) {
     allowPartialSearchResults: 'allow_partial_search_results',
     typedKeys: 'typed_keys',
     seqNoPrimaryTerm: 'seq_no_primary_term',
-    requestCache: 'request_cache',
-    maxConcurrentShardRequests: 'max_concurrent_shard_requests',
-    cleanOnCompletion: 'clean_on_completion'
+    maxConcurrentShardRequests: 'max_concurrent_shard_requests'
   }
 
   /**
