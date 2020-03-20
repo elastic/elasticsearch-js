@@ -2454,7 +2454,7 @@ client.indices.createDataStream({
   body: object
 })
 ----
-link:{ref}/data-streams.html[Documentation] +
+
 [cols=2*]
 |===
 |`name`
@@ -2538,7 +2538,7 @@ client.indices.deleteDataStream({
   name: string
 })
 ----
-link:{ref}/data-streams.html[Documentation] +
+
 [cols=2*]
 |===
 |`name`
@@ -2881,7 +2881,7 @@ client.indices.getDataStreams({
   name: string | string[]
 })
 ----
-link:{ref}/data-streams.html[Documentation] +
+
 [cols=2*]
 |===
 |`name`
