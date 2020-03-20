@@ -1364,8 +1364,10 @@ export interface AsyncSearchSubmit<T = any> extends Generic {
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   wait_for_completion?: string;
+  clean_on_completion?: boolean;
   keep_alive?: string;
   batched_reduce_size?: number;
+  request_cache?: boolean;
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
@@ -1401,9 +1403,7 @@ export interface AsyncSearchSubmit<T = any> extends Generic {
   typed_keys?: boolean;
   version?: boolean;
   seq_no_primary_term?: boolean;
-  request_cache?: boolean;
   max_concurrent_shard_requests?: number;
-  clean_on_completion?: boolean;
   body?: T;
 }
 
