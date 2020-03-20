@@ -13,11 +13,13 @@ request for instance, you can access them via `RequestParams.Search`.
 Every API that supports a body, accepts a 
 https://www.typescriptlang.org/docs/handbook/generics.html[generics] which 
 represents the type of the request body, if you don't configure anything, it 
-will default to `BodyType`. +
-`BodyType` is defined inside the client, and it looks like this:
+will default to `RequestBody`. +
+`RequestBody`, along with `RequestNDBody` and `ResponseBody` are defined inside the client, and it looks like this:
 [source,ts]
 ----
-type BodyType<T = Record<string, any>> = T | string | Buffer | ReadableStream
+type RequestBody<T = Record<string, any>> = T | string | Buffer | ReadableStream
+type RequestNDBody<T = Record<string, any>[]> = T | string[] | Buffer | ReadableStream
+type ResponseBody<T = Record<string, any>> = T | string | boolean | ReadableStream
 ----
 
 For example:
@@ -144,7 +146,7 @@ interface Source {
 
 async function run () {
   // All of the examples below are valid code, by default,
-  // both the request body and response will be `BodyType`.
+  // the request body will be `RequestBody` and response will be `ResponseBody`.
   const response = await client.search({
     index: 'test',
     body: {
@@ -153,7 +155,7 @@ async function run () {
       }
     }
   })
-  // body here is `BodyType`
+  // body here is `ResponseBody`
   console.log(response.body)
 
   // The first generic is the request body
@@ -166,7 +168,7 @@ async function run () {
       }
     }
   })
-  // body here is `BodyType`
+  // body here is `ResponseBody`
   console.log(response.body)
 
   const response = await client.search<SearchBody, SearchResponse<Source>>({
