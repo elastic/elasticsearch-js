@@ -13,7 +13,12 @@ request for instance, you can access them via `RequestParams.Search`.
 Every API that supports a body, accepts a 
 https://www.typescriptlang.org/docs/handbook/generics.html[generics] which 
 represents the type of the request body, if you don't configure anything, it 
-will default to `any`.
+will default to `BodyType`. +
+`BodyType` is defined inside the client, and it looks like this:
+[source,ts]
+----
+type BodyType<T = Record<string, any>> = T | string | Buffer | ReadableStream
+----
 
 For example:
 
@@ -49,7 +54,7 @@ const searchParams: RequestParams.Search = {
 
 You can find the type definiton of a response in `ApiResponse`, which accepts a 
 generics as well if you want to specify the body type, otherwise it defaults to 
-`any`.
+`BodyType`.
 
 [source,ts]
 ----
@@ -139,7 +144,7 @@ interface Source {
 
 async function run () {
   // All of the examples below are valid code, by default,
-  // both the request body and response will be `any`.
+  // both the request body and response will be `BodyType`.
   const response = await client.search({
     index: 'test',
     body: {
@@ -148,7 +153,7 @@ async function run () {
       }
     }
   })
-  // body here is `any`
+  // body here is `BodyType`
   console.log(response.body)
 
   // The first generic is the request body
@@ -161,7 +166,7 @@ async function run () {
       }
     }
   })
-  // body here is `any`
+  // body here is `BodyType`
   console.log(response.body)
 
   const response = await client.search<SearchBody, SearchResponse<Source>>({
