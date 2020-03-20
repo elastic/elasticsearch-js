@@ -2445,6 +2445,26 @@ link:{ref}/indices-create-index.html[Documentation] +
 
 |===
 
+=== indices.createDataStream
+*Stability:* experimental
+[source,ts]
+----
+client.indices.createDataStream({
+  name: string,
+  body: object
+})
+----
+
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the data stream
+
+|`body`
+|`object` - The data stream definition
+
+|===
+
 === indices.delete
 
 [source,ts]
@@ -2507,6 +2527,22 @@ link:{ref}/indices-aliases.html[Documentation] +
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
+
+|===
+
+=== indices.deleteDataStream
+*Stability:* experimental
+[source,ts]
+----
+client.indices.deleteDataStream({
+  name: string
+})
+----
+
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the data stream
 
 |===
 
@@ -2834,6 +2870,22 @@ _Default:_ `all`
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|===
+
+=== indices.getDataStreams
+*Stability:* experimental
+[source,ts]
+----
+client.indices.getDataStreams({
+  name: string | string[]
+})
+----
+
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - The comma separated names of data streams
 
 |===
 

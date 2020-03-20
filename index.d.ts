@@ -1148,6 +1148,7 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   index<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Index<RequestBody>, callback: callbackFn<Response, Context>): TransportRequestCallback
   index<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.Index<RequestBody>, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
   indices: {
+<<<<<<< HEAD
     analyze<RequestBody = BodyType, Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     analyze<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesAnalyze<RequestBody>): Promise<ApiResponse<Response, Context>>
     analyze<RequestBody = BodyType, Response = any, Context = unknown>(params: RequestParams.IndicesAnalyze<RequestBody>, options: TransportRequestOptions): Promise<ApiResponse<Response, Context>>
@@ -1515,6 +1516,76 @@ declare class Client<RequestBody = any, Response = any, Context = unknown> exten
   info<Response = any, Context = unknown>(callback: callbackFn<Response, Context>): TransportRequestCallback
   info<Response = any, Context = unknown>(params: RequestParams.Info, callback: callbackFn<Response, Context>): TransportRequestCallback
   info<Response = any, Context = unknown>(params: RequestParams.Info, options: TransportRequestOptions, callback: callbackFn<Response, Context>): TransportRequestCallback
+=======
+    analyze: ApiMethod<RequestParams.IndicesAnalyze>
+    clear_cache: ApiMethod<RequestParams.IndicesClearCache>
+    clearCache: ApiMethod<RequestParams.IndicesClearCache>
+    clone: ApiMethod<RequestParams.IndicesClone>
+    close: ApiMethod<RequestParams.IndicesClose>
+    create: ApiMethod<RequestParams.IndicesCreate>
+    create_data_stream: ApiMethod<RequestParams.IndicesCreateDataStream>
+    createDataStream: ApiMethod<RequestParams.IndicesCreateDataStream>
+    delete: ApiMethod<RequestParams.IndicesDelete>
+    delete_alias: ApiMethod<RequestParams.IndicesDeleteAlias>
+    deleteAlias: ApiMethod<RequestParams.IndicesDeleteAlias>
+    delete_data_stream: ApiMethod<RequestParams.IndicesDeleteDataStream>
+    deleteDataStream: ApiMethod<RequestParams.IndicesDeleteDataStream>
+    delete_template: ApiMethod<RequestParams.IndicesDeleteTemplate>
+    deleteTemplate: ApiMethod<RequestParams.IndicesDeleteTemplate>
+    exists: ApiMethod<RequestParams.IndicesExists>
+    exists_alias: ApiMethod<RequestParams.IndicesExistsAlias>
+    existsAlias: ApiMethod<RequestParams.IndicesExistsAlias>
+    exists_template: ApiMethod<RequestParams.IndicesExistsTemplate>
+    existsTemplate: ApiMethod<RequestParams.IndicesExistsTemplate>
+    exists_type: ApiMethod<RequestParams.IndicesExistsType>
+    existsType: ApiMethod<RequestParams.IndicesExistsType>
+    flush: ApiMethod<RequestParams.IndicesFlush>
+    forcemerge: ApiMethod<RequestParams.IndicesForcemerge>
+    freeze: ApiMethod<RequestParams.IndicesFreeze>
+    get: ApiMethod<RequestParams.IndicesGet>
+    get_alias: ApiMethod<RequestParams.IndicesGetAlias>
+    getAlias: ApiMethod<RequestParams.IndicesGetAlias>
+    get_data_streams: ApiMethod<RequestParams.IndicesGetDataStreams>
+    getDataStreams: ApiMethod<RequestParams.IndicesGetDataStreams>
+    get_field_mapping: ApiMethod<RequestParams.IndicesGetFieldMapping>
+    getFieldMapping: ApiMethod<RequestParams.IndicesGetFieldMapping>
+    get_mapping: ApiMethod<RequestParams.IndicesGetMapping>
+    getMapping: ApiMethod<RequestParams.IndicesGetMapping>
+    get_settings: ApiMethod<RequestParams.IndicesGetSettings>
+    getSettings: ApiMethod<RequestParams.IndicesGetSettings>
+    get_template: ApiMethod<RequestParams.IndicesGetTemplate>
+    getTemplate: ApiMethod<RequestParams.IndicesGetTemplate>
+    get_upgrade: ApiMethod<RequestParams.IndicesGetUpgrade>
+    getUpgrade: ApiMethod<RequestParams.IndicesGetUpgrade>
+    open: ApiMethod<RequestParams.IndicesOpen>
+    put_alias: ApiMethod<RequestParams.IndicesPutAlias>
+    putAlias: ApiMethod<RequestParams.IndicesPutAlias>
+    put_mapping: ApiMethod<RequestParams.IndicesPutMapping>
+    putMapping: ApiMethod<RequestParams.IndicesPutMapping>
+    put_settings: ApiMethod<RequestParams.IndicesPutSettings>
+    putSettings: ApiMethod<RequestParams.IndicesPutSettings>
+    put_template: ApiMethod<RequestParams.IndicesPutTemplate>
+    putTemplate: ApiMethod<RequestParams.IndicesPutTemplate>
+    recovery: ApiMethod<RequestParams.IndicesRecovery>
+    refresh: ApiMethod<RequestParams.IndicesRefresh>
+    reload_search_analyzers: ApiMethod<RequestParams.IndicesReloadSearchAnalyzers>
+    reloadSearchAnalyzers: ApiMethod<RequestParams.IndicesReloadSearchAnalyzers>
+    rollover: ApiMethod<RequestParams.IndicesRollover>
+    segments: ApiMethod<RequestParams.IndicesSegments>
+    shard_stores: ApiMethod<RequestParams.IndicesShardStores>
+    shardStores: ApiMethod<RequestParams.IndicesShardStores>
+    shrink: ApiMethod<RequestParams.IndicesShrink>
+    split: ApiMethod<RequestParams.IndicesSplit>
+    stats: ApiMethod<RequestParams.IndicesStats>
+    unfreeze: ApiMethod<RequestParams.IndicesUnfreeze>
+    update_aliases: ApiMethod<RequestParams.IndicesUpdateAliases>
+    updateAliases: ApiMethod<RequestParams.IndicesUpdateAliases>
+    upgrade: ApiMethod<RequestParams.IndicesUpgrade>
+    validate_query: ApiMethod<RequestParams.IndicesValidateQuery>
+    validateQuery: ApiMethod<RequestParams.IndicesValidateQuery>
+  }
+  info: ApiMethod<RequestParams.Info>
+>>>>>>> master
   ingest: {
     delete_pipeline<Response = any, Context = unknown>(): Promise<ApiResponse<Response, Context>>
     delete_pipeline<Response = any, Context = unknown>(params: RequestParams.IngestDeletePipeline): Promise<ApiResponse<Response, Context>>

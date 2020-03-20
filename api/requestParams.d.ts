@@ -609,6 +609,11 @@ export interface IndicesCreate<T = any> extends Generic {
   body?: T;
 }
 
+export interface IndicesCreateDataStream<T = any> extends Generic {
+  name: string;
+  body: T;
+}
+
 export interface IndicesDelete extends Generic {
   index: string | string[];
   timeout?: string;
@@ -623,6 +628,10 @@ export interface IndicesDeleteAlias extends Generic {
   name: string | string[];
   timeout?: string;
   master_timeout?: string;
+}
+
+export interface IndicesDeleteDataStream extends Generic {
+  name: string;
 }
 
 export interface IndicesDeleteTemplate extends Generic {
@@ -703,6 +712,10 @@ export interface IndicesGetAlias extends Generic {
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   local?: boolean;
+}
+
+export interface IndicesGetDataStreams extends Generic {
+  name?: string | string[];
 }
 
 export interface IndicesGetFieldMapping extends Generic {
