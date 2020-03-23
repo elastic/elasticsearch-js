@@ -59,7 +59,7 @@ function start (opts) {
       { encoding: 'utf8' }
     )
 
-    const { fn: factory, types } = genFactory(apiOutputFolder)
+    const { fn: factory, types } = genFactory(apiOutputFolder, [apiFolder, xPackFolder])
     writeFileSync(
       mainOutputFile,
       factory,

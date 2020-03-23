@@ -545,3 +545,4 @@ function intersect (first, ...rest) {
 }
 
 module.exports = generate
+module.exports.ndjsonApi = ndjsonApi
