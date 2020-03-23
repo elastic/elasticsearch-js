@@ -3,26 +3,26 @@
 // See the LICENSE file in the project root for more information
 
 import { Readable as ReadableStream } from 'stream'
-import { TransportRequestOptions, ApiResponse } from './Transport'
+import { TransportRequestOptions, ApiResponse, RequestBody, ResponseBody } from './Transport'
 import { Search, Bulk } from '../api/requestParams'
 
 export default class Helpers {
-  search<T>(params: Search, options: TransportRequestOptions): Promise<T[]>
-  scrollSearch<T, B, C>(params: Search, options: TransportRequestOptions): AsyncIterator<ScrollSearchResult<T, B, C>>
-  scrollDocuments<T>(params: Search, options: TransportRequestOptions): AsyncIterator<T>
+  search<TRequestBody extends RequestBody, TDocument = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): Promise<TDocument[]>
+  scrollSearch<TRequestBody extends RequestBody, TDocument = unknown, TResponse = ResponseBody, TContext = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<ScrollSearchResponse<TDocument, TResponse, TContext>>
+  scrollDocuments<TRequestBody extends RequestBody, TDocument = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<TDocument>
   bulk(options: BulkHelperOptions): BulkHelper<BulkStats>
 }
 
-interface ScrollSearchResult<T= any, B = any, C = any> extends ApiResponse<B, C> {
+export interface ScrollSearchResponse<TDocument = unknown, TResponse = ResponseBody, TContext = unknown> extends ApiResponse<TResponse, TContext> {
   clear: () => Promise<void>
-  documents: T[]
+  documents: TDocument[]
 }
 
-interface BulkHelper<T> extends Promise<T> {
+export interface BulkHelper<T> extends Promise<T> {
   abort: () => BulkHelper<T>
 }
 
-interface BulkStats {
+export interface BulkStats {
   total: number
   failed: number
   retry: number
@@ -64,7 +64,7 @@ type UpdateAction = [UpdateActionOperation, Record<string, any>]
 type Action = IndexAction | CreateAction | UpdateAction | DeleteAction
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
-interface BulkHelperOptions extends Omit<Bulk, 'body'> {
+export interface BulkHelperOptions extends Omit<Bulk, 'body'> {
   datasource: any[] | Buffer | ReadableStream
   onDocument: (doc: Record<string, any>) => Action
   flushBytes?: number
