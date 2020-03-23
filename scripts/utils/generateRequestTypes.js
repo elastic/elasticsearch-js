@@ -6,12 +6,23 @@
 
 const semver = require('semver')
 const deprecatedParameters = require('./patch.json')
+const { ndjsonApi } = require('./generateApis')
+
+const ndjsonApiKey = ndjsonApi
+  .map(api => {
+    return api
+      .replace(/\.([a-z])/g, k => k[1].toUpperCase())
+      .replace(/_([a-z])/g, k => k[1].toUpperCase())
+  })
+  .map(toPascalCase)
 
 function generate (version, api) {
   const release = semver.valid(version) ? semver.major(version) : version
   var types = `// Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
+
+import { RequestBody, RequestNDBody } from '../lib/Transport'
 
 export interface Generic {
   method?: string;
@@ -83,8 +94,10 @@ export interface Generic {
       return `${e.key}${optional}: ${getType(e.value.type, e.value.options)};`
     }
 
+    const bodyGeneric = ndjsonApiKey.includes(toPascalCase(name)) ? 'RequestNDBody' : 'RequestBody'
+
     const code = `
-export interface ${name[0].toUpperCase() + name.slice(1)}${body ? '<T = any>' : ''} extends Generic {
+export interface ${toPascalCase(name)}${body ? `<T = ${bodyGeneric}>` : ''} extends Generic {
   ${partsArr.map(genLine).join('\n  ')}
   ${paramsArr.map(genLine).join('\n  ')}
   ${body ? `body${body.required ? '' : '?'}: T;` : ''}
@@ -120,6 +133,10 @@ function intersect (first, ...rest) {
   return rest.reduce((accum, current) => {
     return accum.filter(x => current.indexOf(x) !== -1)
   }, first)
+}
+
+function toPascalCase (str) {
+  return str[0].toUpperCase() + str.slice(1)
 }
 
 module.exports = generate
