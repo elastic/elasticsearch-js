@@ -53,15 +53,17 @@ const response = {
 }
 
 {
-  const err = new errors.SerializationError('message')
+  const err = new errors.SerializationError('message', {})
   expectType<string>(err.name)
   expectType<string>(err.message)
+  expectType<any>(err.data)
 }
 
 {
-  const err = new errors.DeserializationError('message')
+  const err = new errors.DeserializationError('message', 'data')
   expectType<string>(err.name)
   expectType<string>(err.message)
+  expectType<string>(err.data)
 }
 
 {

@@ -33,8 +33,8 @@ export declare class NoLivingConnectionsError extends ElasticsearchClientError {
 export declare class SerializationError extends ElasticsearchClientError {
   name: string;
   message: string;
-  data: object;
-  constructor(message: string, data: object);
+  data: any;
+  constructor(message: string, data: any);
 }
 
 export declare class DeserializationError extends ElasticsearchClientError {
