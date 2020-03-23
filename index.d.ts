@@ -112,32 +112,6 @@ declare class Client extends EventEmitter {
   child(opts?: ClientOptions): Client;
   close(callback?: Function): Promise<void> | void;
   /* GENERATED */
-<<<<<<< HEAD
-  bulk: ApiMethod<RequestParams.Bulk>
-  cat: {
-    aliases: ApiMethod<RequestParams.CatAliases>
-    allocation: ApiMethod<RequestParams.CatAllocation>
-    count: ApiMethod<RequestParams.CatCount>
-    fielddata: ApiMethod<RequestParams.CatFielddata>
-    health: ApiMethod<RequestParams.CatHealth>
-    help: ApiMethod<RequestParams.CatHelp>
-    indices: ApiMethod<RequestParams.CatIndices>
-    master: ApiMethod<RequestParams.CatMaster>
-    nodeattrs: ApiMethod<RequestParams.CatNodeattrs>
-    nodes: ApiMethod<RequestParams.CatNodes>
-    pending_tasks: ApiMethod<RequestParams.CatPendingTasks>
-    pendingTasks: ApiMethod<RequestParams.CatPendingTasks>
-    plugins: ApiMethod<RequestParams.CatPlugins>
-    recovery: ApiMethod<RequestParams.CatRecovery>
-    repositories: ApiMethod<RequestParams.CatRepositories>
-    segments: ApiMethod<RequestParams.CatSegments>
-    shards: ApiMethod<RequestParams.CatShards>
-    snapshots: ApiMethod<RequestParams.CatSnapshots>
-    tasks: ApiMethod<RequestParams.CatTasks>
-    templates: ApiMethod<RequestParams.CatTemplates>
-    thread_pool: ApiMethod<RequestParams.CatThreadPool>
-    threadPool: ApiMethod<RequestParams.CatThreadPool>
-=======
   async_search: {
     delete<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.AsyncSearchDelete, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     delete<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -301,7 +275,6 @@ declare class Client extends EventEmitter {
     threadPool<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     threadPool<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatThreadPool, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     threadPool<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatThreadPool, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
->>>>>>> 6c82a496... Refactored type definitions (#1119)
   }
   ccr: {
     delete_auto_follow_pattern<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.CcrDeleteAutoFollowPattern, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
@@ -406,32 +379,6 @@ declare class Client extends EventEmitter {
   clearScroll<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.ClearScroll<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   clearScroll<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.ClearScroll<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   cluster: {
-<<<<<<< HEAD
-    allocation_explain: ApiMethod<RequestParams.ClusterAllocationExplain>
-    allocationExplain: ApiMethod<RequestParams.ClusterAllocationExplain>
-    get_settings: ApiMethod<RequestParams.ClusterGetSettings>
-    getSettings: ApiMethod<RequestParams.ClusterGetSettings>
-    health: ApiMethod<RequestParams.ClusterHealth>
-    pending_tasks: ApiMethod<RequestParams.ClusterPendingTasks>
-    pendingTasks: ApiMethod<RequestParams.ClusterPendingTasks>
-    put_settings: ApiMethod<RequestParams.ClusterPutSettings>
-    putSettings: ApiMethod<RequestParams.ClusterPutSettings>
-    remote_info: ApiMethod<RequestParams.ClusterRemoteInfo>
-    remoteInfo: ApiMethod<RequestParams.ClusterRemoteInfo>
-    reroute: ApiMethod<RequestParams.ClusterReroute>
-    state: ApiMethod<RequestParams.ClusterState>
-    stats: ApiMethod<RequestParams.ClusterStats>
-  }
-  count: ApiMethod<RequestParams.Count>
-  create: ApiMethod<RequestParams.Create>
-  delete: ApiMethod<RequestParams.Delete>
-  delete_by_query: ApiMethod<RequestParams.DeleteByQuery>
-  deleteByQuery: ApiMethod<RequestParams.DeleteByQuery>
-  delete_by_query_rethrottle: ApiMethod<RequestParams.DeleteByQueryRethrottle>
-  deleteByQueryRethrottle: ApiMethod<RequestParams.DeleteByQueryRethrottle>
-  delete_script: ApiMethod<RequestParams.DeleteScript>
-  deleteScript: ApiMethod<RequestParams.DeleteScript>
-=======
     allocation_explain<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.ClusterAllocationExplain<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     allocation_explain<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     allocation_explain<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.ClusterAllocationExplain<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -521,138 +468,6 @@ declare class Client extends EventEmitter {
   create<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   create<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.Create<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   create<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.Create<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  data_frame_transform_deprecated: {
-    delete_transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedDeleteTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    delete_transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    delete_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedDeleteTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    delete_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedDeleteTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    deleteTransform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedDeleteTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    deleteTransform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    deleteTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedDeleteTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    deleteTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedDeleteTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedGetTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    get_transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedGetTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    getTransform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform_stats<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedGetTransformStats, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    get_transform_stats<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform_stats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform_stats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransformStats<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedGetTransformStats, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    getTransformStats<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransformStats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransformStats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    preview_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    preview_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    preview_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    preview_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    previewTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    previewTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    previewTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    previewTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    put_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    put_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    put_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    put_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    putTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    putTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    putTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    putTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    start_transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedStartTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    start_transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    start_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    start_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    startTransform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedStartTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    startTransform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    startTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    startTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stop_transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedStopTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    stop_transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stop_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stop_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stopTransform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedStopTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    stopTransform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stopTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stopTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    update_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    update_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    update_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    update_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    updateTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    updateTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    updateTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    updateTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  }
-  dataFrameTransformDeprecated: {
-    delete_transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedDeleteTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    delete_transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    delete_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedDeleteTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    delete_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedDeleteTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    deleteTransform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedDeleteTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    deleteTransform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    deleteTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedDeleteTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    deleteTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedDeleteTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedGetTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    get_transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedGetTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    getTransform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform_stats<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedGetTransformStats, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    get_transform_stats<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform_stats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_transform_stats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransformStats<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedGetTransformStats, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    getTransformStats<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransformStats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getTransformStats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedGetTransformStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    preview_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    preview_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    preview_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    preview_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    previewTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    previewTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    previewTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    previewTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    put_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    put_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    put_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    put_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    putTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    putTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    putTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    putTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    start_transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedStartTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    start_transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    start_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    start_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    startTransform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedStartTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    startTransform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    startTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    startTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStartTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stop_transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedStopTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    stop_transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stop_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stop_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stopTransform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedStopTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    stopTransform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stopTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stopTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedStopTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    update_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    update_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    update_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    update_transform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    updateTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    updateTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    updateTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    updateTransform<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  }
   delete<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.Delete, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
   delete<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   delete<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.Delete, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -681,7 +496,6 @@ declare class Client extends EventEmitter {
   deleteScript<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   deleteScript<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DeleteScript, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   deleteScript<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.DeleteScript, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
->>>>>>> 6c82a496... Refactored type definitions (#1119)
   enrich: {
     delete_policy<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.EnrichDeletePolicy, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     delete_policy<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -720,23 +534,6 @@ declare class Client extends EventEmitter {
     stats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.EnrichStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     stats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.EnrichStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
-<<<<<<< HEAD
-  exists: ApiMethod<RequestParams.Exists>
-  exists_source: ApiMethod<RequestParams.ExistsSource>
-  existsSource: ApiMethod<RequestParams.ExistsSource>
-  explain: ApiMethod<RequestParams.Explain>
-  field_caps: ApiMethod<RequestParams.FieldCaps>
-  fieldCaps: ApiMethod<RequestParams.FieldCaps>
-  get: ApiMethod<RequestParams.Get>
-  get_script: ApiMethod<RequestParams.GetScript>
-  getScript: ApiMethod<RequestParams.GetScript>
-  get_script_context: ApiMethod<RequestParams.GetScriptContext>
-  getScriptContext: ApiMethod<RequestParams.GetScriptContext>
-  get_script_languages: ApiMethod<RequestParams.GetScriptLanguages>
-  getScriptLanguages: ApiMethod<RequestParams.GetScriptLanguages>
-  get_source: ApiMethod<RequestParams.GetSource>
-  getSource: ApiMethod<RequestParams.GetSource>
-=======
   eql: {
     search<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.EqlSearch<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     search<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -803,7 +600,6 @@ declare class Client extends EventEmitter {
   getSource<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   getSource<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.GetSource, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   getSource<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.GetSource, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
->>>>>>> 6c82a496... Refactored type definitions (#1119)
   graph: {
     explore<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.GraphExplore<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     explore<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -885,72 +681,6 @@ declare class Client extends EventEmitter {
   index<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.Index<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   index<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.Index<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   indices: {
-<<<<<<< HEAD
-    analyze: ApiMethod<RequestParams.IndicesAnalyze>
-    clear_cache: ApiMethod<RequestParams.IndicesClearCache>
-    clearCache: ApiMethod<RequestParams.IndicesClearCache>
-    clone: ApiMethod<RequestParams.IndicesClone>
-    close: ApiMethod<RequestParams.IndicesClose>
-    create: ApiMethod<RequestParams.IndicesCreate>
-    delete: ApiMethod<RequestParams.IndicesDelete>
-    delete_alias: ApiMethod<RequestParams.IndicesDeleteAlias>
-    deleteAlias: ApiMethod<RequestParams.IndicesDeleteAlias>
-    delete_template: ApiMethod<RequestParams.IndicesDeleteTemplate>
-    deleteTemplate: ApiMethod<RequestParams.IndicesDeleteTemplate>
-    exists: ApiMethod<RequestParams.IndicesExists>
-    exists_alias: ApiMethod<RequestParams.IndicesExistsAlias>
-    existsAlias: ApiMethod<RequestParams.IndicesExistsAlias>
-    exists_template: ApiMethod<RequestParams.IndicesExistsTemplate>
-    existsTemplate: ApiMethod<RequestParams.IndicesExistsTemplate>
-    exists_type: ApiMethod<RequestParams.IndicesExistsType>
-    existsType: ApiMethod<RequestParams.IndicesExistsType>
-    flush: ApiMethod<RequestParams.IndicesFlush>
-    flush_synced: ApiMethod<RequestParams.IndicesFlushSynced>
-    flushSynced: ApiMethod<RequestParams.IndicesFlushSynced>
-    forcemerge: ApiMethod<RequestParams.IndicesForcemerge>
-    freeze: ApiMethod<RequestParams.IndicesFreeze>
-    get: ApiMethod<RequestParams.IndicesGet>
-    get_alias: ApiMethod<RequestParams.IndicesGetAlias>
-    getAlias: ApiMethod<RequestParams.IndicesGetAlias>
-    get_field_mapping: ApiMethod<RequestParams.IndicesGetFieldMapping>
-    getFieldMapping: ApiMethod<RequestParams.IndicesGetFieldMapping>
-    get_mapping: ApiMethod<RequestParams.IndicesGetMapping>
-    getMapping: ApiMethod<RequestParams.IndicesGetMapping>
-    get_settings: ApiMethod<RequestParams.IndicesGetSettings>
-    getSettings: ApiMethod<RequestParams.IndicesGetSettings>
-    get_template: ApiMethod<RequestParams.IndicesGetTemplate>
-    getTemplate: ApiMethod<RequestParams.IndicesGetTemplate>
-    get_upgrade: ApiMethod<RequestParams.IndicesGetUpgrade>
-    getUpgrade: ApiMethod<RequestParams.IndicesGetUpgrade>
-    open: ApiMethod<RequestParams.IndicesOpen>
-    put_alias: ApiMethod<RequestParams.IndicesPutAlias>
-    putAlias: ApiMethod<RequestParams.IndicesPutAlias>
-    put_mapping: ApiMethod<RequestParams.IndicesPutMapping>
-    putMapping: ApiMethod<RequestParams.IndicesPutMapping>
-    put_settings: ApiMethod<RequestParams.IndicesPutSettings>
-    putSettings: ApiMethod<RequestParams.IndicesPutSettings>
-    put_template: ApiMethod<RequestParams.IndicesPutTemplate>
-    putTemplate: ApiMethod<RequestParams.IndicesPutTemplate>
-    recovery: ApiMethod<RequestParams.IndicesRecovery>
-    refresh: ApiMethod<RequestParams.IndicesRefresh>
-    reload_search_analyzers: ApiMethod<RequestParams.IndicesReloadSearchAnalyzers>
-    reloadSearchAnalyzers: ApiMethod<RequestParams.IndicesReloadSearchAnalyzers>
-    rollover: ApiMethod<RequestParams.IndicesRollover>
-    segments: ApiMethod<RequestParams.IndicesSegments>
-    shard_stores: ApiMethod<RequestParams.IndicesShardStores>
-    shardStores: ApiMethod<RequestParams.IndicesShardStores>
-    shrink: ApiMethod<RequestParams.IndicesShrink>
-    split: ApiMethod<RequestParams.IndicesSplit>
-    stats: ApiMethod<RequestParams.IndicesStats>
-    unfreeze: ApiMethod<RequestParams.IndicesUnfreeze>
-    update_aliases: ApiMethod<RequestParams.IndicesUpdateAliases>
-    updateAliases: ApiMethod<RequestParams.IndicesUpdateAliases>
-    upgrade: ApiMethod<RequestParams.IndicesUpgrade>
-    validate_query: ApiMethod<RequestParams.IndicesValidateQuery>
-    validateQuery: ApiMethod<RequestParams.IndicesValidateQuery>
-  }
-  info: ApiMethod<RequestParams.Info>
-=======
     analyze<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesAnalyze<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     analyze<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     analyze<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesAnalyze<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1043,6 +773,14 @@ declare class Client extends EventEmitter {
     flush<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     flush<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesFlush, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     flush<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesFlush, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    flush_synced<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesFlushSynced, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    flush_synced<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    flush_synced<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesFlushSynced, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    flush_synced<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesFlushSynced, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    flushSynced<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesFlushSynced, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    flushSynced<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    flushSynced<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesFlushSynced, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    flushSynced<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesFlushSynced, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     forcemerge<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesForcemerge, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     forcemerge<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     forcemerge<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesForcemerge, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1220,7 +958,6 @@ declare class Client extends EventEmitter {
   info<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   info<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.Info, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   info<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.Info, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
->>>>>>> 6c82a496... Refactored type definitions (#1119)
   ingest: {
     delete_pipeline<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IngestDeletePipeline, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     delete_pipeline<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1316,121 +1053,6 @@ declare class Client extends EventEmitter {
     deprecations<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.MigrationDeprecations, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   ml: {
-<<<<<<< HEAD
-    close_job: ApiMethod<RequestParams.MlCloseJob>
-    closeJob: ApiMethod<RequestParams.MlCloseJob>
-    delete_calendar: ApiMethod<RequestParams.MlDeleteCalendar>
-    deleteCalendar: ApiMethod<RequestParams.MlDeleteCalendar>
-    delete_calendar_event: ApiMethod<RequestParams.MlDeleteCalendarEvent>
-    deleteCalendarEvent: ApiMethod<RequestParams.MlDeleteCalendarEvent>
-    delete_calendar_job: ApiMethod<RequestParams.MlDeleteCalendarJob>
-    deleteCalendarJob: ApiMethod<RequestParams.MlDeleteCalendarJob>
-    delete_data_frame_analytics: ApiMethod<RequestParams.MlDeleteDataFrameAnalytics>
-    deleteDataFrameAnalytics: ApiMethod<RequestParams.MlDeleteDataFrameAnalytics>
-    delete_datafeed: ApiMethod<RequestParams.MlDeleteDatafeed>
-    deleteDatafeed: ApiMethod<RequestParams.MlDeleteDatafeed>
-    delete_expired_data: ApiMethod<RequestParams.MlDeleteExpiredData>
-    deleteExpiredData: ApiMethod<RequestParams.MlDeleteExpiredData>
-    delete_filter: ApiMethod<RequestParams.MlDeleteFilter>
-    deleteFilter: ApiMethod<RequestParams.MlDeleteFilter>
-    delete_forecast: ApiMethod<RequestParams.MlDeleteForecast>
-    deleteForecast: ApiMethod<RequestParams.MlDeleteForecast>
-    delete_job: ApiMethod<RequestParams.MlDeleteJob>
-    deleteJob: ApiMethod<RequestParams.MlDeleteJob>
-    delete_model_snapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
-    deleteModelSnapshot: ApiMethod<RequestParams.MlDeleteModelSnapshot>
-    delete_trained_model: ApiMethod<RequestParams.MlDeleteTrainedModel>
-    deleteTrainedModel: ApiMethod<RequestParams.MlDeleteTrainedModel>
-    evaluate_data_frame: ApiMethod<RequestParams.MlEvaluateDataFrame>
-    evaluateDataFrame: ApiMethod<RequestParams.MlEvaluateDataFrame>
-    explain_data_frame_analytics: ApiMethod<RequestParams.MlExplainDataFrameAnalytics>
-    explainDataFrameAnalytics: ApiMethod<RequestParams.MlExplainDataFrameAnalytics>
-    find_file_structure: ApiMethod<RequestParams.MlFindFileStructure>
-    findFileStructure: ApiMethod<RequestParams.MlFindFileStructure>
-    flush_job: ApiMethod<RequestParams.MlFlushJob>
-    flushJob: ApiMethod<RequestParams.MlFlushJob>
-    forecast: ApiMethod<RequestParams.MlForecast>
-    get_buckets: ApiMethod<RequestParams.MlGetBuckets>
-    getBuckets: ApiMethod<RequestParams.MlGetBuckets>
-    get_calendar_events: ApiMethod<RequestParams.MlGetCalendarEvents>
-    getCalendarEvents: ApiMethod<RequestParams.MlGetCalendarEvents>
-    get_calendars: ApiMethod<RequestParams.MlGetCalendars>
-    getCalendars: ApiMethod<RequestParams.MlGetCalendars>
-    get_categories: ApiMethod<RequestParams.MlGetCategories>
-    getCategories: ApiMethod<RequestParams.MlGetCategories>
-    get_data_frame_analytics: ApiMethod<RequestParams.MlGetDataFrameAnalytics>
-    getDataFrameAnalytics: ApiMethod<RequestParams.MlGetDataFrameAnalytics>
-    get_data_frame_analytics_stats: ApiMethod<RequestParams.MlGetDataFrameAnalyticsStats>
-    getDataFrameAnalyticsStats: ApiMethod<RequestParams.MlGetDataFrameAnalyticsStats>
-    get_datafeed_stats: ApiMethod<RequestParams.MlGetDatafeedStats>
-    getDatafeedStats: ApiMethod<RequestParams.MlGetDatafeedStats>
-    get_datafeeds: ApiMethod<RequestParams.MlGetDatafeeds>
-    getDatafeeds: ApiMethod<RequestParams.MlGetDatafeeds>
-    get_filters: ApiMethod<RequestParams.MlGetFilters>
-    getFilters: ApiMethod<RequestParams.MlGetFilters>
-    get_influencers: ApiMethod<RequestParams.MlGetInfluencers>
-    getInfluencers: ApiMethod<RequestParams.MlGetInfluencers>
-    get_job_stats: ApiMethod<RequestParams.MlGetJobStats>
-    getJobStats: ApiMethod<RequestParams.MlGetJobStats>
-    get_jobs: ApiMethod<RequestParams.MlGetJobs>
-    getJobs: ApiMethod<RequestParams.MlGetJobs>
-    get_model_snapshots: ApiMethod<RequestParams.MlGetModelSnapshots>
-    getModelSnapshots: ApiMethod<RequestParams.MlGetModelSnapshots>
-    get_overall_buckets: ApiMethod<RequestParams.MlGetOverallBuckets>
-    getOverallBuckets: ApiMethod<RequestParams.MlGetOverallBuckets>
-    get_records: ApiMethod<RequestParams.MlGetRecords>
-    getRecords: ApiMethod<RequestParams.MlGetRecords>
-    get_trained_models: ApiMethod<RequestParams.MlGetTrainedModels>
-    getTrainedModels: ApiMethod<RequestParams.MlGetTrainedModels>
-    get_trained_models_stats: ApiMethod<RequestParams.MlGetTrainedModelsStats>
-    getTrainedModelsStats: ApiMethod<RequestParams.MlGetTrainedModelsStats>
-    info: ApiMethod<RequestParams.MlInfo>
-    open_job: ApiMethod<RequestParams.MlOpenJob>
-    openJob: ApiMethod<RequestParams.MlOpenJob>
-    post_calendar_events: ApiMethod<RequestParams.MlPostCalendarEvents>
-    postCalendarEvents: ApiMethod<RequestParams.MlPostCalendarEvents>
-    post_data: ApiMethod<RequestParams.MlPostData>
-    postData: ApiMethod<RequestParams.MlPostData>
-    preview_datafeed: ApiMethod<RequestParams.MlPreviewDatafeed>
-    previewDatafeed: ApiMethod<RequestParams.MlPreviewDatafeed>
-    put_calendar: ApiMethod<RequestParams.MlPutCalendar>
-    putCalendar: ApiMethod<RequestParams.MlPutCalendar>
-    put_calendar_job: ApiMethod<RequestParams.MlPutCalendarJob>
-    putCalendarJob: ApiMethod<RequestParams.MlPutCalendarJob>
-    put_data_frame_analytics: ApiMethod<RequestParams.MlPutDataFrameAnalytics>
-    putDataFrameAnalytics: ApiMethod<RequestParams.MlPutDataFrameAnalytics>
-    put_datafeed: ApiMethod<RequestParams.MlPutDatafeed>
-    putDatafeed: ApiMethod<RequestParams.MlPutDatafeed>
-    put_filter: ApiMethod<RequestParams.MlPutFilter>
-    putFilter: ApiMethod<RequestParams.MlPutFilter>
-    put_job: ApiMethod<RequestParams.MlPutJob>
-    putJob: ApiMethod<RequestParams.MlPutJob>
-    put_trained_model: ApiMethod<RequestParams.MlPutTrainedModel>
-    putTrainedModel: ApiMethod<RequestParams.MlPutTrainedModel>
-    revert_model_snapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
-    revertModelSnapshot: ApiMethod<RequestParams.MlRevertModelSnapshot>
-    set_upgrade_mode: ApiMethod<RequestParams.MlSetUpgradeMode>
-    setUpgradeMode: ApiMethod<RequestParams.MlSetUpgradeMode>
-    start_data_frame_analytics: ApiMethod<RequestParams.MlStartDataFrameAnalytics>
-    startDataFrameAnalytics: ApiMethod<RequestParams.MlStartDataFrameAnalytics>
-    start_datafeed: ApiMethod<RequestParams.MlStartDatafeed>
-    startDatafeed: ApiMethod<RequestParams.MlStartDatafeed>
-    stop_data_frame_analytics: ApiMethod<RequestParams.MlStopDataFrameAnalytics>
-    stopDataFrameAnalytics: ApiMethod<RequestParams.MlStopDataFrameAnalytics>
-    stop_datafeed: ApiMethod<RequestParams.MlStopDatafeed>
-    stopDatafeed: ApiMethod<RequestParams.MlStopDatafeed>
-    update_datafeed: ApiMethod<RequestParams.MlUpdateDatafeed>
-    updateDatafeed: ApiMethod<RequestParams.MlUpdateDatafeed>
-    update_filter: ApiMethod<RequestParams.MlUpdateFilter>
-    updateFilter: ApiMethod<RequestParams.MlUpdateFilter>
-    update_job: ApiMethod<RequestParams.MlUpdateJob>
-    updateJob: ApiMethod<RequestParams.MlUpdateJob>
-    update_model_snapshot: ApiMethod<RequestParams.MlUpdateModelSnapshot>
-    updateModelSnapshot: ApiMethod<RequestParams.MlUpdateModelSnapshot>
-    validate: ApiMethod<RequestParams.MlValidate>
-    validate_detector: ApiMethod<RequestParams.MlValidateDetector>
-    validateDetector: ApiMethod<RequestParams.MlValidateDetector>
-=======
     close_job<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.MlCloseJob<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     close_job<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     close_job<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.MlCloseJob<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1891,7 +1513,6 @@ declare class Client extends EventEmitter {
     validateDetector<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     validateDetector<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.MlValidateDetector<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     validateDetector<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.MlValidateDetector<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
->>>>>>> 6c82a496... Refactored type definitions (#1119)
   }
   monitoring: {
     bulk<TRequestBody extends RequestNDBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.MonitoringBulk<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
@@ -2460,30 +2081,6 @@ declare class Client extends EventEmitter {
   termvectors<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.Termvectors<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   termvectors<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.Termvectors<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   transform: {
-<<<<<<< HEAD
-    delete_transform: ApiMethod<RequestParams.TransformDeleteTransform>
-    deleteTransform: ApiMethod<RequestParams.TransformDeleteTransform>
-    get_transform: ApiMethod<RequestParams.TransformGetTransform>
-    getTransform: ApiMethod<RequestParams.TransformGetTransform>
-    get_transform_stats: ApiMethod<RequestParams.TransformGetTransformStats>
-    getTransformStats: ApiMethod<RequestParams.TransformGetTransformStats>
-    preview_transform: ApiMethod<RequestParams.TransformPreviewTransform>
-    previewTransform: ApiMethod<RequestParams.TransformPreviewTransform>
-    put_transform: ApiMethod<RequestParams.TransformPutTransform>
-    putTransform: ApiMethod<RequestParams.TransformPutTransform>
-    start_transform: ApiMethod<RequestParams.TransformStartTransform>
-    startTransform: ApiMethod<RequestParams.TransformStartTransform>
-    stop_transform: ApiMethod<RequestParams.TransformStopTransform>
-    stopTransform: ApiMethod<RequestParams.TransformStopTransform>
-    update_transform: ApiMethod<RequestParams.TransformUpdateTransform>
-    updateTransform: ApiMethod<RequestParams.TransformUpdateTransform>
-  }
-  update: ApiMethod<RequestParams.Update>
-  update_by_query: ApiMethod<RequestParams.UpdateByQuery>
-  updateByQuery: ApiMethod<RequestParams.UpdateByQuery>
-  update_by_query_rethrottle: ApiMethod<RequestParams.UpdateByQueryRethrottle>
-  updateByQueryRethrottle: ApiMethod<RequestParams.UpdateByQueryRethrottle>
-=======
     cat_transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.TransformCatTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     cat_transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     cat_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.TransformCatTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2577,7 +2174,6 @@ declare class Client extends EventEmitter {
   updateByQueryRethrottle<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   updateByQueryRethrottle<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.UpdateByQueryRethrottle, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   updateByQueryRethrottle<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.UpdateByQueryRethrottle, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
->>>>>>> 6c82a496... Refactored type definitions (#1119)
   watcher: {
     ack_watch<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.WatcherAckWatch, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     ack_watch<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback

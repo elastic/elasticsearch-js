@@ -24,7 +24,7 @@ function buildMlCloseJob (opts) {
 
   /**
    * Perform a ml.close_job request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
    */
   return function mlCloseJob (params, options, callback) {
     options = options || {}

@@ -15,9 +15,7 @@ function buildIndicesPutTemplate (opts) {
     'include_type_name',
     'order',
     'create',
-    'timeout',
     'master_timeout',
-    'flat_settings',
     'pretty',
     'human',
     'error_trace',
@@ -28,7 +26,6 @@ function buildIndicesPutTemplate (opts) {
   const snakeCase = {
     includeTypeName: 'include_type_name',
     masterTimeout: 'master_timeout',
-    flatSettings: 'flat_settings',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

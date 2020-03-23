@@ -21,7 +21,7 @@ function buildWatcherStart (opts) {
 
   /**
    * Perform a watcher.start request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start.html
    */
   return function watcherStart (params, options, callback) {
     options = options || {}

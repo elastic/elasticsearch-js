@@ -12,6 +12,7 @@ function buildDeleteByQuery (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
+    'analyzer',
     'analyze_wildcard',
     'default_operator',
     'df',
@@ -32,9 +33,7 @@ function buildDeleteByQuery (opts) {
     'sort',
     '_source',
     '_source_excludes',
-    '_source_exclude',
     '_source_includes',
-    '_source_include',
     'terminate_after',
     'stats',
     'version',
@@ -63,9 +62,7 @@ function buildDeleteByQuery (opts) {
     searchTimeout: 'search_timeout',
     maxDocs: 'max_docs',
     _sourceExcludes: '_source_excludes',
-    _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
-    _sourceInclude: '_source_include',
     terminateAfter: 'terminate_after',
     requestCache: 'request_cache',
     waitForActiveShards: 'wait_for_active_shards',

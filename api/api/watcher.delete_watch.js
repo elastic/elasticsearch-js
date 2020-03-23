@@ -21,7 +21,7 @@ function buildWatcherDeleteWatch (opts) {
 
   /**
    * Perform a watcher.delete_watch request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html
    */
   return function watcherDeleteWatch (params, options, callback) {
     options = options || {}

@@ -12,16 +12,22 @@ function buildMlPutDatafeed (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-
+    'ignore_unavailable',
+    'allow_no_indices',
+    'ignore_throttled',
+    'expand_wildcards'
   ]
 
   const snakeCase = {
-
+    ignoreUnavailable: 'ignore_unavailable',
+    allowNoIndices: 'allow_no_indices',
+    ignoreThrottled: 'ignore_throttled',
+    expandWildcards: 'expand_wildcards'
   }
 
   /**
    * Perform a ml.put_datafeed request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.html
    */
   return function mlPutDatafeed (params, options, callback) {
     options = options || {}

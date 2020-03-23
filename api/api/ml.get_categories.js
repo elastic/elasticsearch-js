@@ -22,7 +22,7 @@ function buildMlGetCategories (opts) {
 
   /**
    * Perform a ml.get_categories request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.html
    */
   return function mlGetCategories (params, options, callback) {
     options = options || {}
