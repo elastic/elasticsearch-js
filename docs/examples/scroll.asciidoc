@@ -19,6 +19,8 @@ In order to use scrolling, the initial search request should specify the scroll
 parameter in the query string, which tells {es} how long it should keep the 
 “search context” alive.
 
+NOTE: Did you know that we provide an helper for sending scroll requests? You can find it {jsclient}/client-helpers.html[here].
+
 [source,js]
 ----
 'use strict'

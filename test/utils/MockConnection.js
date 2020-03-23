@@ -4,6 +4,7 @@
 
 'use strict'
 
+const assert = require('assert')
 const { Connection } = require('../../index')
 const { TimeoutError } = require('../../lib/errors')
 const intoStream = require('into-stream')
@@ -99,6 +100,39 @@ class MockConnectionSniff extends Connection {
     }
   }
 }
+
+function buildMockConnection (opts) {
+  assert(opts.onRequest, 'Missing required onRequest option')
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      var { body, statusCode } = opts.onRequest(params)
+      if (typeof body !== 'string') {
+        body = JSON.stringify(body)
+      }
+      var aborted = false
+      const stream = intoStream(body)
+      stream.statusCode = statusCode || 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        date: new Date().toISOString(),
+        connection: 'keep-alive',
+        'content-length': Buffer.byteLength(body)
+      }
+      process.nextTick(() => {
+        if (!aborted) {
+          callback(null, stream)
+        }
+      })
+      return {
+        abort: () => { aborted = true }
+      }
+    }
+  }
+
+  return MockConnection
+}
+
 function setStatusCode (path) {
   const statusCode = Number(path.slice(1))
   if (Number.isInteger(statusCode)) {
@@ -111,5 +145,6 @@ module.exports = {
   MockConnection,
   MockConnectionTimeout,
   MockConnectionError,
-  MockConnectionSniff
+  MockConnectionSniff,
+  buildMockConnection
 }

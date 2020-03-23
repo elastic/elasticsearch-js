@@ -60,6 +60,7 @@ We recommend that you write a lightweight proxy that uses this client instead.
 - [Observability](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/observability.html)
 - [Creating a child client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/child-client.html)
 - [Extend the client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/extend-client.html)
+- [Client helpers](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-helpers.html)
 - [Typescript support](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html)
 - [Examples](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/examples.html)
 
