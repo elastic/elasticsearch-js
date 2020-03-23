@@ -38,11 +38,21 @@ function buildServer (handler, opts, cb) {
     console.log('http server error', err)
     process.exit(1)
   })
-  server.listen(0, () => {
-    const port = server.address().port
-    debug(`Server '${serverId}' booted on port ${port}`)
-    cb(Object.assign({}, secureOpts, { port }), server)
-  })
+  if (cb === undefined) {
+    return new Promise((resolve, reject) => {
+      server.listen(0, () => {
+        const port = server.address().port
+        debug(`Server '${serverId}' booted on port ${port}`)
+        resolve([Object.assign({}, secureOpts, { port }), server])
+      })
+    })
+  } else {
+    server.listen(0, () => {
+      const port = server.address().port
+      debug(`Server '${serverId}' booted on port ${port}`)
+      cb(Object.assign({}, secureOpts, { port }), server)
+    })
+  }
 }
 
 module.exports = buildServer
