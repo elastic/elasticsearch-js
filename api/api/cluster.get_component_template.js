@@ -7,14 +7,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndicesPutTemplate (opts) {
+function buildClusterGetComponentTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'order',
-    'create',
     'master_timeout',
+    'local',
     'pretty',
     'human',
     'error_trace',
@@ -29,11 +28,11 @@ function buildIndicesPutTemplate (opts) {
   }
 
   /**
-   * Perform a indices.put_template request
-   * Creates or updates an index template.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+   * Perform a cluster.get_component_template request
+   * Returns one or more component templates
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-templates.html
    */
-  return function indicesPutTemplate (params, options, callback) {
+  return function clusterGetComponentTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -43,16 +42,6 @@ function buildIndicesPutTemplate (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // check required parameters
-    if (params['name'] == null) {
-      const err = new ConfigurationError('Missing required parameter: name')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
     }
 
     // validate headers object
@@ -72,14 +61,19 @@ function buildIndicesPutTemplate (opts) {
 
     var path = ''
 
-    if (method == null) method = 'PUT'
-    path = '/' + '_template' + '/' + encodeURIComponent(name)
+    if ((name) != null) {
+      if (method == null) method = 'GET'
+      path = '/' + '_component_template' + '/' + encodeURIComponent(name)
+    } else {
+      if (method == null) method = 'GET'
+      path = '/' + '_component_template'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -88,4 +82,4 @@ function buildIndicesPutTemplate (opts) {
   }
 }
 
-module.exports = buildIndicesPutTemplate
+module.exports = buildClusterGetComponentTemplate

@@ -260,6 +260,18 @@ export interface ClusterAllocationExplain<T = any> extends Generic {
   body?: T;
 }
 
+export interface ClusterDeleteComponentTemplate extends Generic {
+  name: string;
+  timeout?: string;
+  master_timeout?: string;
+}
+
+export interface ClusterGetComponentTemplate extends Generic {
+  name?: string | string[];
+  master_timeout?: string;
+  local?: boolean;
+}
+
 export interface ClusterGetSettings extends Generic {
   flat_settings?: boolean;
   master_timeout?: string;
@@ -285,6 +297,14 @@ export interface ClusterHealth extends Generic {
 export interface ClusterPendingTasks extends Generic {
   local?: boolean;
   master_timeout?: string;
+}
+
+export interface ClusterPutComponentTemplate<T = any> extends Generic {
+  name: string;
+  create?: boolean;
+  timeout?: string;
+  master_timeout?: string;
+  body: T;
 }
 
 export interface ClusterPutSettings<T = any> extends Generic {
@@ -589,6 +609,11 @@ export interface IndicesCreate<T = any> extends Generic {
   body?: T;
 }
 
+export interface IndicesCreateDataStream<T = any> extends Generic {
+  name: string;
+  body: T;
+}
+
 export interface IndicesDelete extends Generic {
   index: string | string[];
   timeout?: string;
@@ -603,6 +628,10 @@ export interface IndicesDeleteAlias extends Generic {
   name: string | string[];
   timeout?: string;
   master_timeout?: string;
+}
+
+export interface IndicesDeleteDataStream extends Generic {
+  name: string;
 }
 
 export interface IndicesDeleteTemplate extends Generic {
@@ -683,6 +712,10 @@ export interface IndicesGetAlias extends Generic {
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   local?: boolean;
+}
+
+export interface IndicesGetDataStreams extends Generic {
+  name?: string | string[];
 }
 
 export interface IndicesGetFieldMapping extends Generic {
@@ -774,9 +807,7 @@ export interface IndicesPutTemplate<T = any> extends Generic {
   name: string;
   order?: number;
   create?: boolean;
-  timeout?: string;
   master_timeout?: string;
-  flat_settings?: boolean;
   body: T;
 }
 
@@ -1333,8 +1364,10 @@ export interface AsyncSearchSubmit<T = any> extends Generic {
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   wait_for_completion?: string;
+  clean_on_completion?: boolean;
   keep_alive?: string;
   batched_reduce_size?: number;
+  request_cache?: boolean;
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
@@ -1370,9 +1403,7 @@ export interface AsyncSearchSubmit<T = any> extends Generic {
   typed_keys?: boolean;
   version?: boolean;
   seq_no_primary_term?: boolean;
-  request_cache?: boolean;
   max_concurrent_shard_requests?: number;
-  clean_on_completion?: boolean;
   body?: T;
 }
 
@@ -2272,6 +2303,19 @@ export interface SqlTranslate<T = any> extends Generic {
 }
 
 export interface SslCertificates extends Generic {
+}
+
+export interface TransformCatTransform extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
+  format?: string;
+  h?: string | string[];
+  help?: boolean;
+  s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  v?: boolean;
 }
 
 export interface TransformDeleteTransform extends Generic {

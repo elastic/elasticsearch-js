@@ -7,14 +7,11 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndicesPutTemplate (opts) {
+function buildIndicesDeleteDataStream (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'order',
-    'create',
-    'master_timeout',
     'pretty',
     'human',
     'error_trace',
@@ -23,17 +20,16 @@ function buildIndicesPutTemplate (opts) {
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
 
   /**
-   * Perform a indices.put_template request
-   * Creates or updates an index template.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+   * Perform a indices.delete_data_stream request
+   * Deletes a data stream.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
    */
-  return function indicesPutTemplate (params, options, callback) {
+  return function indicesDeleteDataStream (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -48,10 +44,6 @@ function buildIndicesPutTemplate (opts) {
     // check required parameters
     if (params['name'] == null) {
       const err = new ConfigurationError('Missing required parameter: name')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -72,8 +64,8 @@ function buildIndicesPutTemplate (opts) {
 
     var path = ''
 
-    if (method == null) method = 'PUT'
-    path = '/' + '_template' + '/' + encodeURIComponent(name)
+    if (method == null) method = 'DELETE'
+    path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
 
     // build request object
     const request = {
@@ -88,4 +80,4 @@ function buildIndicesPutTemplate (opts) {
   }
 }
 
-module.exports = buildIndicesPutTemplate
+module.exports = buildIndicesDeleteDataStream

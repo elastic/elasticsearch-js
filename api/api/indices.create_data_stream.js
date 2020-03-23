@@ -7,14 +7,11 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndicesPutTemplate (opts) {
+function buildIndicesCreateDataStream (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'order',
-    'create',
-    'master_timeout',
     'pretty',
     'human',
     'error_trace',
@@ -23,17 +20,16 @@ function buildIndicesPutTemplate (opts) {
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
 
   /**
-   * Perform a indices.put_template request
-   * Creates or updates an index template.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+   * Perform a indices.create_data_stream request
+   * Creates or updates a data stream
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
    */
-  return function indicesPutTemplate (params, options, callback) {
+  return function indicesCreateDataStream (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -73,7 +69,7 @@ function buildIndicesPutTemplate (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_template' + '/' + encodeURIComponent(name)
+    path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
 
     // build request object
     const request = {
@@ -88,4 +84,4 @@ function buildIndicesPutTemplate (opts) {
   }
 }
 
-module.exports = buildIndicesPutTemplate
+module.exports = buildIndicesCreateDataStream

@@ -192,11 +192,17 @@ declare class Client extends EventEmitter {
   cluster: {
     allocation_explain: ApiMethod<RequestParams.ClusterAllocationExplain>
     allocationExplain: ApiMethod<RequestParams.ClusterAllocationExplain>
+    delete_component_template: ApiMethod<RequestParams.ClusterDeleteComponentTemplate>
+    deleteComponentTemplate: ApiMethod<RequestParams.ClusterDeleteComponentTemplate>
+    get_component_template: ApiMethod<RequestParams.ClusterGetComponentTemplate>
+    getComponentTemplate: ApiMethod<RequestParams.ClusterGetComponentTemplate>
     get_settings: ApiMethod<RequestParams.ClusterGetSettings>
     getSettings: ApiMethod<RequestParams.ClusterGetSettings>
     health: ApiMethod<RequestParams.ClusterHealth>
     pending_tasks: ApiMethod<RequestParams.ClusterPendingTasks>
     pendingTasks: ApiMethod<RequestParams.ClusterPendingTasks>
+    put_component_template: ApiMethod<RequestParams.ClusterPutComponentTemplate>
+    putComponentTemplate: ApiMethod<RequestParams.ClusterPutComponentTemplate>
     put_settings: ApiMethod<RequestParams.ClusterPutSettings>
     putSettings: ApiMethod<RequestParams.ClusterPutSettings>
     remote_info: ApiMethod<RequestParams.ClusterRemoteInfo>
@@ -309,9 +315,13 @@ declare class Client extends EventEmitter {
     clone: ApiMethod<RequestParams.IndicesClone>
     close: ApiMethod<RequestParams.IndicesClose>
     create: ApiMethod<RequestParams.IndicesCreate>
+    create_data_stream: ApiMethod<RequestParams.IndicesCreateDataStream>
+    createDataStream: ApiMethod<RequestParams.IndicesCreateDataStream>
     delete: ApiMethod<RequestParams.IndicesDelete>
     delete_alias: ApiMethod<RequestParams.IndicesDeleteAlias>
     deleteAlias: ApiMethod<RequestParams.IndicesDeleteAlias>
+    delete_data_stream: ApiMethod<RequestParams.IndicesDeleteDataStream>
+    deleteDataStream: ApiMethod<RequestParams.IndicesDeleteDataStream>
     delete_template: ApiMethod<RequestParams.IndicesDeleteTemplate>
     deleteTemplate: ApiMethod<RequestParams.IndicesDeleteTemplate>
     exists: ApiMethod<RequestParams.IndicesExists>
@@ -327,6 +337,8 @@ declare class Client extends EventEmitter {
     get: ApiMethod<RequestParams.IndicesGet>
     get_alias: ApiMethod<RequestParams.IndicesGetAlias>
     getAlias: ApiMethod<RequestParams.IndicesGetAlias>
+    get_data_streams: ApiMethod<RequestParams.IndicesGetDataStreams>
+    getDataStreams: ApiMethod<RequestParams.IndicesGetDataStreams>
     get_field_mapping: ApiMethod<RequestParams.IndicesGetFieldMapping>
     getFieldMapping: ApiMethod<RequestParams.IndicesGetFieldMapping>
     get_mapping: ApiMethod<RequestParams.IndicesGetMapping>
@@ -666,6 +678,8 @@ declare class Client extends EventEmitter {
   }
   termvectors: ApiMethod<RequestParams.Termvectors>
   transform: {
+    cat_transform: ApiMethod<RequestParams.TransformCatTransform>
+    catTransform: ApiMethod<RequestParams.TransformCatTransform>
     delete_transform: ApiMethod<RequestParams.TransformDeleteTransform>
     deleteTransform: ApiMethod<RequestParams.TransformDeleteTransform>
     get_transform: ApiMethod<RequestParams.TransformGetTransform>

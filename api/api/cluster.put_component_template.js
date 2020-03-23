@@ -7,13 +7,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndicesPutTemplate (opts) {
+function buildClusterPutComponentTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'order',
     'create',
+    'timeout',
     'master_timeout',
     'pretty',
     'human',
@@ -29,11 +29,11 @@ function buildIndicesPutTemplate (opts) {
   }
 
   /**
-   * Perform a indices.put_template request
-   * Creates or updates an index template.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+   * Perform a cluster.put_component_template request
+   * Creates or updates a component template
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-templates.html
    */
-  return function indicesPutTemplate (params, options, callback) {
+  return function clusterPutComponentTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -73,7 +73,7 @@ function buildIndicesPutTemplate (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_template' + '/' + encodeURIComponent(name)
+    path = '/' + '_component_template' + '/' + encodeURIComponent(name)
 
     // build request object
     const request = {
@@ -88,4 +88,4 @@ function buildIndicesPutTemplate (opts) {
   }
 }
 
-module.exports = buildIndicesPutTemplate
+module.exports = buildClusterPutComponentTemplate
