@@ -2,7 +2,7 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-import { ApiResponse } from './Transport'
+import { ApiResponse, ResponseBody } from './Transport'
 
 export declare class ElasticsearchClientError extends Error {
   name: string;
@@ -33,8 +33,8 @@ export declare class NoLivingConnectionsError extends ElasticsearchClientError {
 export declare class SerializationError extends ElasticsearchClientError {
   name: string;
   message: string;
-  data: object;
-  constructor(message: string, data: object);
+  data: any;
+  constructor(message: string, data: any);
 }
 
 export declare class DeserializationError extends ElasticsearchClientError {
@@ -54,8 +54,8 @@ export declare class ResponseError extends ElasticsearchClientError {
   name: string;
   message: string;
   meta: ApiResponse;
-  body: any;
+  body: ResponseBody;
   statusCode: number;
-  headers: any;
+  headers: Record<string, any>;
   constructor(meta: ApiResponse);
 }
