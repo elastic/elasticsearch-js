@@ -164,12 +164,62 @@ test('Scroll search (retry throws and maxRetries)', async t => {
     index: 'test',
     body: { foo: 'bar' }
   }, {
-    wait: 10
+    wait: 10,
+    ignore: [404]
   })
 
   try {
     for await (const result of scrollSearch) { // eslint-disable-line
       t.fail('we should not be here')
+    }
+  } catch (err) {
+    t.true(err instanceof errors.ResponseError)
+    t.strictEqual(err.statusCode, 429)
+    t.strictEqual(count, 5)
+  }
+})
+
+test('Scroll search (retry throws later)', async t => {
+  var count = 0
+  const MockConnection = connection.buildMockConnection({
+    onRequest (params) {
+      if (count > 1) {
+        count += 1
+        return { body: {}, statusCode: 429 }
+      }
+      return {
+        statusCode: 200,
+        body: {
+          _scroll_id: count === 4 ? undefined : 'id',
+          count,
+          hits: {
+            hits: [
+              { _source: { one: 'one' } },
+              { _source: { two: 'two' } },
+              { _source: { three: 'three' } }
+            ]
+          }
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  const scrollSearch = client.helpers.scrollSearch({
+    index: 'test',
+    body: { foo: 'bar' }
+  }, {
+    wait: 10
+  })
+
+  try {
+    for await (const result of scrollSearch) { // eslint-disable-line
+      t.strictEqual(result.body.count, count)
+      count += 1
     }
   } catch (err) {
     t.true(err instanceof errors.ResponseError)
