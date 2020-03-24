@@ -40,3 +40,22 @@ test('Search should have an additional documents property', async t => {
     { three: 'three' }
   ])
 })
+
+test('kGetHits fallback', async t => {
+  const MockConnection = connection.buildMockConnection({
+    onRequest (params) {
+      return { body: {} }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  const result = await client.helpers.search({
+    index: 'test',
+    body: { foo: 'bar' }
+  })
+  t.deepEqual(result, [])
+})
