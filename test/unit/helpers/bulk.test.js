@@ -143,6 +143,51 @@ test('bulk index', t => {
       })
     })
 
+    t.test('refreshOnCompletion', async t => {
+      let count = 0
+      const MockConnection = connection.buildMockConnection({
+        onRequest (params) {
+          if (params.method === 'GET') {
+            t.strictEqual(params.path, '/_all/_refresh')
+            return { body: { acknowledged: true } }
+          } else {
+            t.strictEqual(params.path, '/_bulk')
+            t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+            const [action, payload] = params.body.split('\n')
+            t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+            t.deepEqual(JSON.parse(payload), dataset[count++])
+            return { body: { errors: false, items: [{}] } }
+          }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+      const result = await client.helpers.bulk({
+        datasource: dataset.slice(),
+        flushBytes: 1,
+        concurrency: 1,
+        refreshOnCompletion: true,
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        }
+      })
+
+      t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
+      t.match(result, {
+        total: 3,
+        successful: 3,
+        retry: 0,
+        failed: 0,
+        aborted: false
+      })
+    })
+
     t.test('Should perform a bulk request (custom action)', async t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
@@ -256,6 +301,55 @@ test('bulk index', t => {
         total: 3,
         successful: 2,
         retry: 2,
+        failed: 1,
+        aborted: false
+      })
+      server.stop()
+    })
+
+    t.test('Should perform a bulk request (retry a single document from batch)', async t => {
+      function handler (req, res) {
+        res.setHeader('content-type', 'application/json')
+        res.end(JSON.stringify({
+          took: 0,
+          errors: true,
+          items: [
+            { index: { status: 200 } },
+            { index: { status: 429 } },
+            { index: { status: 200 } }
+          ]
+        }))
+      }
+
+      const [{ port }, server] = await buildServer(handler)
+      const client = new Client({ node: `http://localhost:${port}` })
+      const result = await client.helpers.bulk({
+        datasource: dataset.slice(),
+        concurrency: 1,
+        wait: 10,
+        retries: 0,
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        },
+        onDrop (doc) {
+          t.deepEqual(doc, {
+            status: 429,
+            error: null,
+            operation: { index: { _index: 'test' } },
+            document: { user: 'arya', age: 18 },
+            retried: false
+          })
+        }
+      })
+
+      t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
+      t.match(result, {
+        total: 3,
+        successful: 2,
+        retry: 0,
         failed: 1,
         aborted: false
       })
@@ -473,6 +567,35 @@ test('bulk index', t => {
         aborted: true
       })
       server.stop()
+    })
+
+    t.test('Invalid operation', t => {
+      t.plan(2)
+      const MockConnection = connection.buildMockConnection({
+        onRequest (params) {
+          return { body: { errors: false, items: [{}] } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+      client.helpers
+        .bulk({
+          datasource: dataset.slice(),
+          flushBytes: 1,
+          concurrency: 1,
+          onDocument (doc) {
+            return {
+              foo: { _index: 'test' }
+            }
+          }
+        })
+        .catch(err => {
+          t.true(err instanceof errors.ConfigurationError)
+          t.is(err.message, `Bulk helper invalid action: 'foo'`)
+        })
     })
 
     t.end()
