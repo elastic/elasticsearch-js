@@ -15,7 +15,6 @@ const {
   connection: { MockConnection, MockConnectionTimeout, MockConnectionError }
 } = require('../utils')
 const {
-  NoLivingConnectionsError,
   SerializationError,
   DeserializationError,
   TimeoutError,
@@ -332,28 +331,6 @@ test('Not JSON payload from server', t => {
       t.strictEqual(body, 'hello!')
       server.stop()
     })
-  })
-})
-
-test('NoLivingConnectionsError', t => {
-  t.plan(1)
-  const pool = new ConnectionPool({ Connection })
-
-  const transport = new Transport({
-    emit: () => {},
-    connectionPool: pool,
-    serializer: new Serializer(),
-    maxRetries: 3,
-    requestTimeout: 30000,
-    sniffInterval: false,
-    sniffOnStart: false
-  })
-
-  transport.request({
-    method: 'GET',
-    path: '/hello'
-  }, (err, { body }) => {
-    t.ok(err instanceof NoLivingConnectionsError)
   })
 })
 

@@ -9,6 +9,8 @@
 const { test } = require('tap')
 const { errors } = require('../../index')
 
+process.removeAllListeners('warning')
+
 test('ElasticsearchClientError', t => {
   const err = new errors.ElasticsearchClientError()
   t.true(err instanceof Error)
@@ -32,11 +34,21 @@ test('ConnectionError', t => {
 })
 
 test('NoLivingConnectionsError', t => {
+  t.plan(5)
+
+  process.on('warning', warn => {
+    t.is(warn.code, 'ESCDEP001')
+    t.is(warn.message, 'The NoLivingConnectionsError is deprecated and it will no longer be emitted.')
+  })
+
   const err = new errors.NoLivingConnectionsError()
   t.true(err instanceof Error)
   t.true(err instanceof errors.ElasticsearchClientError)
   t.true(err.hasOwnProperty('meta'))
-  t.end()
+
+  // create the error again to test
+  // that the warning gets emitted just once
+  new errors.NoLivingConnectionsError() // eslint-disable-line
 })
 
 test('SerializationError', t => {
