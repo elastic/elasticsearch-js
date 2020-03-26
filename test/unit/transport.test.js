@@ -335,9 +335,10 @@ test('Not JSON payload from server', t => {
   })
 })
 
-test('NoLivingConnectionsError', t => {
-  t.plan(1)
+test('NoLivingConnectionsError (null connection)', t => {
+  t.plan(3)
   const pool = new ConnectionPool({ Connection })
+  pool.addConnection('http://localhost:9200')
 
   const transport = new Transport({
     emit: () => {},
@@ -346,7 +347,40 @@ test('NoLivingConnectionsError', t => {
     maxRetries: 3,
     requestTimeout: 30000,
     sniffInterval: false,
-    sniffOnStart: false
+    sniffOnStart: false,
+    nodeSelector (connections) {
+      t.is(connections.length, 1)
+      t.true(connections[0] instanceof Connection)
+      return null
+    }
+  })
+
+  transport.request({
+    method: 'GET',
+    path: '/hello'
+  }, (err, { body }) => {
+    t.ok(err instanceof NoLivingConnectionsError)
+  })
+})
+
+test('NoLivingConnectionsError (undefined connection)', t => {
+  t.plan(3)
+  const pool = new ConnectionPool({ Connection })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false,
+    nodeSelector (connections) {
+      t.is(connections.length, 1)
+      t.true(connections[0] instanceof Connection)
+      return undefined
+    }
   })
 
   transport.request({
