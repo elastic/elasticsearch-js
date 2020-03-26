@@ -272,6 +272,20 @@ test('API', t => {
       pool.getConnection({ filter })
     })
 
+    t.test('If all connections are marked as dead, getConnection should return a dead connection', t => {
+      const pool = new ConnectionPool({ Connection })
+      const href1 = 'http://localhost:9200/'
+      const href2 = 'http://localhost:9200/other'
+      const conn1 = pool.addConnection(href1)
+      const conn2 = pool.addConnection(href2)
+      pool.markDead(conn1)
+      pool.markDead(conn2)
+      const conn = pool.getConnection()
+      t.ok(conn instanceof Connection)
+      t.is(conn.status, 'dead')
+      t.end()
+    })
+
     t.end()
   })
 
@@ -781,30 +795,6 @@ test('Node filter', t => {
       }
     })
     t.strictEqual(pool.getConnection({ filter: defaultNodeFilter }), null)
-  })
-
-  t.end()
-})
-
-test('Single node behavior', t => {
-  t.test('sniffing disabled (markDead and markAlive should be noop)', t => {
-    t.plan(4)
-    const pool = new ConnectionPool({ Connection, sniffEnabled: false })
-    const conn = pool.addConnection('http://localhost:9200/')
-    t.true(pool.markDead(conn) instanceof ConnectionPool)
-    t.strictEqual(pool.dead.length, 0)
-    t.true(pool.markAlive(conn) instanceof ConnectionPool)
-    t.strictEqual(pool.dead.length, 0)
-  })
-
-  t.test('sniffing enabled (markDead and markAlive should work)', t => {
-    t.plan(4)
-    const pool = new ConnectionPool({ Connection, sniffEnabled: true })
-    const conn = pool.addConnection('http://localhost:9200/')
-    t.true(pool.markDead(conn) instanceof ConnectionPool)
-    t.strictEqual(pool.dead.length, 1)
-    t.true(pool.markAlive(conn) instanceof ConnectionPool)
-    t.strictEqual(pool.dead.length, 0)
   })
 
   t.end()
