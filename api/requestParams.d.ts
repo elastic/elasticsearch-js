@@ -1475,6 +1475,19 @@ export interface CatMlTrainedModels extends Generic {
   v?: boolean;
 }
 
+export interface CatTransform extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
+  format?: string;
+  h?: string | string[];
+  help?: boolean;
+  s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  v?: boolean;
+}
+
 export interface CcrDeleteAutoFollowPattern extends Generic {
   name: string;
 }
@@ -2273,19 +2286,6 @@ export interface SqlTranslate<T = RequestBody> extends Generic {
 }
 
 export interface SslCertificates extends Generic {
-}
-
-export interface TransformCatTransform extends Generic {
-  transform_id?: string;
-  from?: number;
-  size?: number;
-  allow_no_match?: boolean;
-  format?: string;
-  h?: string | string[];
-  help?: boolean;
-  s?: string | string[];
-  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
-  v?: boolean;
 }
 
 export interface TransformDeleteTransform extends Generic {
