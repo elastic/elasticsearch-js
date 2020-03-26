@@ -10,8 +10,7 @@ import * as errors from './errors';
 
 export type ApiError = errors.ConfigurationError | errors.ConnectionError |
                        errors.DeserializationError | errors.SerializationError |
-                       errors.NoLivingConnectionsError | errors.ResponseError |
-                       errors.TimeoutError
+                       errors.TimeoutError | errors.ResponseError
 
 export interface nodeSelectorFn {
   (connections: Connection[]): Connection;

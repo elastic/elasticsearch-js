@@ -89,15 +89,15 @@ declare class BaseConnectionPool {
   markDead(connection: Connection): this;
   /**
    * Returns an alive connection if present,
-   * otherwise returns null.
+   * otherwise returns a dead connection.
    * By default it filters the `master` only nodes.
    * It uses the selector to choose which
    * connection return.
    *
    * @param {object} options (filter and selector)
-   * @returns {object|null} connection
+   * @returns {object} connection
    */
-  getConnection(opts?: getConnectionOptions): Connection | null;
+  getConnection(opts?: getConnectionOptions): Connection;
   /**
    * Adds a new connection to the pool.
    *

@@ -23,6 +23,7 @@ export declare class ConnectionError extends ElasticsearchClientError {
   constructor(message: string, meta: ApiResponse);
 }
 
+// TODO: this error should be removed in 8
 export declare class NoLivingConnectionsError extends ElasticsearchClientError {
   name: string;
   message: string;
