@@ -48,7 +48,7 @@ function build (opts = {}) {
     }
 
     try {
-      await client.indices.delete({ index: '_all' }, { ignore: 404 })
+      await client.indices.delete({ index: '_all', expandWildcards: 'all' }, { ignore: 404 })
     } catch (err) {
       assert.ifError(err, 'should not error: indices.delete')
     }
