@@ -95,9 +95,9 @@ declare class BaseConnectionPool {
    * connection return.
    *
    * @param {object} options (filter and selector)
-   * @returns {object} connection
+   * @returns {object|null} connection
    */
-  getConnection(opts?: getConnectionOptions): Connection;
+  getConnection(opts?: getConnectionOptions): Connection | null;
   /**
    * Adds a new connection to the pool.
    *
