@@ -1372,15 +1372,15 @@ export interface AsyncSearchDelete extends Generic {
 
 export interface AsyncSearchGet extends Generic {
   id: string;
-  wait_for_completion?: string;
+  wait_for_completion_timeout?: string;
   keep_alive?: string;
   typed_keys?: boolean;
 }
 
 export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   index?: string | string[];
-  wait_for_completion?: string;
-  clean_on_completion?: boolean;
+  wait_for_completion_timeout?: string;
+  keep_on_completion?: boolean;
   keep_alive?: string;
   batched_reduce_size?: number;
   request_cache?: boolean;
