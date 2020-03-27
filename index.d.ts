@@ -275,6 +275,10 @@ declare class Client extends EventEmitter {
     threadPool<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     threadPool<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatThreadPool, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     threadPool<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatThreadPool, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.CatTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   ccr: {
     delete_auto_follow_pattern<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.CcrDeleteAutoFollowPattern, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
@@ -2205,14 +2209,6 @@ declare class Client extends EventEmitter {
   termvectors<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.Termvectors<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   termvectors<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.Termvectors<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   transform: {
-    cat_transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.TransformCatTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    cat_transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    cat_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.TransformCatTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    cat_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.TransformCatTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    catTransform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.TransformCatTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    catTransform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    catTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.TransformCatTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    catTransform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.TransformCatTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     delete_transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.TransformDeleteTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     delete_transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     delete_transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.TransformDeleteTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

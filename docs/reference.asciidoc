@@ -2454,7 +2454,7 @@ client.indices.createDataStream({
   body: object
 })
 ----
-
+link:{ref}/data-streams.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -2538,7 +2538,7 @@ client.indices.deleteDataStream({
   name: string
 })
 ----
-
+link:{ref}/data-streams.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -2881,7 +2881,7 @@ client.indices.getDataStreams({
   name: string | string[]
 })
 ----
-
+link:{ref}/data-streams.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5452,7 +5452,7 @@ link:{ref}/async-search.html[Documentation] +
 ----
 client.asyncSearch.get({
   id: string,
-  wait_for_completion: string,
+  wait_for_completion_timeout: string,
   keep_alive: string,
   typed_keys: boolean
 })
@@ -5463,13 +5463,11 @@ link:{ref}/async-search.html[Documentation] +
 |`id`
 |`string` - The async search ID
 
-|`wait_for_completion` or `waitForCompletion`
-|`string` - Specify the time that the request should block waiting for the final response +
-_Default:_ `1s`
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Specify the time that the request should block waiting for the final response
 
 |`keep_alive` or `keepAlive`
-|`string` - Specify the time interval in which the results (partial or final) for this search will be available +
-_Default:_ `5d`
+|`string` - Specify the time interval in which the results (partial or final) for this search will be available
 
 |`typed_keys` or `typedKeys`
 |`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
@@ -5482,8 +5480,8 @@ _Default:_ `5d`
 ----
 client.asyncSearch.submit({
   index: string | string[],
-  wait_for_completion: string,
-  clean_on_completion: boolean,
+  wait_for_completion_timeout: string,
+  keep_on_completion: boolean,
   keep_alive: string,
   batched_reduce_size: number,
   request_cache: boolean,
@@ -5532,15 +5530,16 @@ link:{ref}/async-search.html[Documentation] +
 |`index`
 |`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
 
-|`wait_for_completion` or `waitForCompletion`
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
 |`string` - Specify the time that the request should block waiting for the final response +
 _Default:_ `1s`
 
-|`clean_on_completion` or `cleanOnCompletion`
-|`boolean` - Control whether the response should not be stored in the cluster if it completed within the provided [wait_for_completion] time (default: true)
+|`keep_on_completion` or `keepOnCompletion`
+|`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: true)
 
 |`keep_alive` or `keepAlive`
-|`string` - Update the time interval in which the results (partial or final) for this search will be available
+|`string` - Update the time interval in which the results (partial or final) for this search will be available +
+_Default:_ `5d`
 
 |`batched_reduce_size` or `batchedReduceSize`
 |`number` - The number of shard results that should be reduced at once on the coordinating node. This value should be used as the granularity at which progress results will be made available. +
@@ -5853,6 +5852,58 @@ _Default:_ `100`
 
 |`bytes`
 |`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
+=== cat.transform
+
+[source,ts]
+----
+client.cat.transform({
+  transform_id: string,
+  from: number,
+  size: number,
+  allow_no_match: boolean,
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  v: boolean
+})
+----
+link:{ref}/cat-transforms.html[Documentation] +
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
+
+|`from`
+|`number` - skips a number of transform configs, defaults to 0
+
+|`size`
+|`number` - specifies a max number of transforms to get, defaults to 100
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
 
 |`format`
 |`string` - a short version of the Accept header, e.g. json, yaml
@@ -9199,58 +9250,6 @@ client.ssl.certificates()
 ----
 link:{ref}/security-api-ssl.html[Documentation] +
 
-
-=== transform.catTransform
-
-[source,ts]
-----
-client.transform.catTransform({
-  transform_id: string,
-  from: number,
-  size: number,
-  allow_no_match: boolean,
-  format: string,
-  h: string | string[],
-  help: boolean,
-  s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
-  v: boolean
-})
-----
-link:{ref}/cat-transforms.html[Documentation] +
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
-
-|`from`
-|`number` - skips a number of transform configs, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transforms to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
-
-|`format`
-|`string` - a short version of the Accept header, e.g. json, yaml
-
-|`h`
-|`string \| string[]` - Comma-separated list of column names to display
-
-|`help`
-|`boolean` - Return help information
-
-|`s`
-|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
-
-|`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
-
-|`v`
-|`boolean` - Verbose mode. Display column headers
-
-|===
 
 === transform.deleteTransform
 

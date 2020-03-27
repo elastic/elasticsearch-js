@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildTransformCatTransform (opts) {
+function buildCatTransform (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -29,10 +29,10 @@ function buildTransformCatTransform (opts) {
   }
 
   /**
-   * Perform a transform.cat_transform request
+   * Perform a cat.transform request
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-transforms.html
    */
-  return function transformCatTransform (params, options, callback) {
+  return function catTransform (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -82,4 +82,4 @@ function buildTransformCatTransform (opts) {
   }
 }
 
-module.exports = buildTransformCatTransform
+module.exports = buildCatTransform

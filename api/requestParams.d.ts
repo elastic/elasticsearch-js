@@ -1356,7 +1356,7 @@ export interface AsyncSearchDelete extends Generic {
 
 export interface AsyncSearchGet extends Generic {
   id: string;
-  wait_for_completion?: string;
+  wait_for_completion_timeout?: string;
   keep_alive?: string;
   typed_keys?: boolean;
 }
@@ -1365,8 +1365,8 @@ export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   index?: string | string[];
   _source_exclude?: string | string[];
   _source_include?: string | string[];
-  wait_for_completion?: string;
-  clean_on_completion?: boolean;
+  wait_for_completion_timeout?: string;
+  keep_on_completion?: boolean;
   keep_alive?: string;
   batched_reduce_size?: number;
   request_cache?: boolean;
@@ -1453,6 +1453,19 @@ export interface CatMlTrainedModels extends Generic {
   from?: number;
   size?: number;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
+  format?: string;
+  h?: string | string[];
+  help?: boolean;
+  s?: string | string[];
+  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  v?: boolean;
+}
+
+export interface CatTransform extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
   format?: string;
   h?: string | string[];
   help?: boolean;
@@ -2305,19 +2318,6 @@ export interface SqlTranslate<T = RequestBody> extends Generic {
 }
 
 export interface SslCertificates extends Generic {
-}
-
-export interface TransformCatTransform extends Generic {
-  transform_id?: string;
-  from?: number;
-  size?: number;
-  allow_no_match?: boolean;
-  format?: string;
-  h?: string | string[];
-  help?: boolean;
-  s?: string | string[];
-  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
-  v?: boolean;
 }
 
 export interface TransformDeleteTransform extends Generic {

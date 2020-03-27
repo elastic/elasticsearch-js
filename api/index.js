@@ -61,7 +61,8 @@ function ESAPI (opts) {
       tasks: lazyLoad('cat.tasks', opts),
       templates: lazyLoad('cat.templates', opts),
       thread_pool: lazyLoad('cat.thread_pool', opts),
-      threadPool: lazyLoad('cat.thread_pool', opts)
+      threadPool: lazyLoad('cat.thread_pool', opts),
+      transform: lazyLoad('cat.transform', opts)
     },
     ccr: {
       delete_auto_follow_pattern: lazyLoad('ccr.delete_auto_follow_pattern', opts),
@@ -579,8 +580,6 @@ function ESAPI (opts) {
     },
     termvectors: lazyLoad('termvectors', opts),
     transform: {
-      cat_transform: lazyLoad('transform.cat_transform', opts),
-      catTransform: lazyLoad('transform.cat_transform', opts),
       delete_transform: lazyLoad('transform.delete_transform', opts),
       deleteTransform: lazyLoad('transform.delete_transform', opts),
       get_transform: lazyLoad('transform.get_transform', opts),
