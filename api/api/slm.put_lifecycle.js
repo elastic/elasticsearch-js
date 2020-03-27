@@ -21,7 +21,7 @@ function buildSlmPutLifecycle (opts) {
 
   /**
    * Perform a slm.put_lifecycle request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-put.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-put-policy.html
    */
   return function slmPutLifecycle (params, options, callback) {
     options = options || {}

@@ -467,6 +467,62 @@ test('Authentication', t => {
       })
     })
 
+    t.test('ApiKey should take precedence over basic auth (in url)', t => {
+      t.plan(3)
+
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: 'ApiKey Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://user:pwd@localhost:${port}`,
+          auth: {
+            apiKey: 'Zm9vOmJhcg=='
+          }
+        })
+
+        client.info((err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          server.stop()
+        })
+      })
+    })
+
+    t.test('ApiKey should take precedence over basic auth (in opts)', t => {
+      t.plan(3)
+
+      function handler (req, res) {
+        t.match(req.headers, {
+          authorization: 'ApiKey Zm9vOmJhcg=='
+        })
+        res.setHeader('Content-Type', 'application/json;utf=8')
+        res.end(JSON.stringify({ hello: 'world' }))
+      }
+
+      buildServer(handler, ({ port }, server) => {
+        const client = new Client({
+          node: `http://localhost:${port}`,
+          auth: {
+            apiKey: 'Zm9vOmJhcg==',
+            username: 'user',
+            password: 'pwd'
+          }
+        })
+
+        client.info((err, { body }) => {
+          t.error(err)
+          t.deepEqual(body, { hello: 'world' })
+          server.stop()
+        })
+      })
+    })
+
     t.end()
   })
 
@@ -827,6 +883,44 @@ test('Elastic cloud config', t => {
     t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
   })
 
+  t.test('ApiKey should take precedence over basic auth', t => {
+    t.plan(5)
+    const client = new Client({
+      cloud: {
+        // 'localhost$abcd$efgh'
+        id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA=='
+      },
+      auth: {
+        username: 'elastic',
+        password: 'changeme',
+        apiKey: 'Zm9vOmJhcg=='
+      }
+    })
+
+    const pool = client.connectionPool
+    t.ok(pool instanceof CloudConnectionPool)
+    t.match(pool.connections.find(c => c.id === 'https://abcd.localhost/'), {
+      url: new URL('https://elastic:changeme@abcd.localhost'),
+      id: 'https://abcd.localhost/',
+      headers: {
+        authorization: 'ApiKey Zm9vOmJhcg=='
+      },
+      ssl: { secureProtocol: 'TLSv1_2_method' },
+      deadCount: 0,
+      resurrectTimeout: 0,
+      roles: {
+        master: true,
+        data: true,
+        ingest: true,
+        ml: false
+      }
+    })
+
+    t.strictEqual(client.transport.compression, 'gzip')
+    t.strictEqual(client.transport.suggestCompression, true)
+    t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
+  })
+
   t.test('Override default options', t => {
     t.plan(4)
     const client = new Client({
@@ -847,6 +941,90 @@ test('Elastic cloud config', t => {
     t.strictEqual(client.transport.compression, false)
     t.strictEqual(client.transport.suggestCompression, false)
     t.deepEqual(client.connectionPool._ssl, { secureProtocol: 'TLSv1_1_method' })
+  })
+
+  t.end()
+})
+
+test('Opaque Id support', t => {
+  t.test('No opaqueId', t => {
+    t.plan(3)
+
+    function handler (req, res) {
+      t.strictEqual(req.headers['x-opaque-id'], undefined)
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const client = new Client({
+        node: `http://localhost:${port}`
+      })
+
+      client.search({
+        index: 'test',
+        q: 'foo:bar'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('No prefix', t => {
+    t.plan(3)
+
+    function handler (req, res) {
+      t.strictEqual(req.headers['x-opaque-id'], 'bar')
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const client = new Client({
+        node: `http://localhost:${port}`
+      })
+
+      client.search({
+        index: 'test',
+        q: 'foo:bar'
+      }, {
+        opaqueId: 'bar'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
+  })
+
+  t.test('With prefix', t => {
+    t.plan(3)
+
+    function handler (req, res) {
+      t.strictEqual(req.headers['x-opaque-id'], 'foo-bar')
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const client = new Client({
+        node: `http://localhost:${port}`,
+        opaqueIdPrefix: 'foo-'
+      })
+
+      client.search({
+        index: 'test',
+        q: 'foo:bar'
+      }, {
+        opaqueId: 'bar'
+      }, (err, { body }) => {
+        t.error(err)
+        t.deepEqual(body, { hello: 'world' })
+        server.stop()
+      })
+    })
   })
 
   t.end()

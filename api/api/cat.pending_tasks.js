@@ -18,6 +18,7 @@ function buildCatPendingTasks (opts) {
     'h',
     'help',
     's',
+    'time',
     'v',
     'pretty',
     'human',

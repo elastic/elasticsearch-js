@@ -12,14 +12,17 @@ function buildTransformStopTransform (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
+    'force',
     'wait_for_completion',
     'timeout',
-    'allow_no_match'
+    'allow_no_match',
+    'wait_for_checkpoint'
   ]
 
   const snakeCase = {
     waitForCompletion: 'wait_for_completion',
-    allowNoMatch: 'allow_no_match'
+    allowNoMatch: 'allow_no_match',
+    waitForCheckpoint: 'wait_for_checkpoint'
   }
 
   /**
@@ -62,7 +65,7 @@ function buildTransformStopTransform (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stop'
+    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stop'
 
     // build request object
     const request = {

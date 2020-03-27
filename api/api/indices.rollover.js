@@ -12,7 +12,6 @@ function buildIndicesRollover (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'include_type_name',
     'timeout',
     'dry_run',
     'master_timeout',
@@ -25,7 +24,6 @@ function buildIndicesRollover (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     dryRun: 'dry_run',
     masterTimeout: 'master_timeout',
     waitForActiveShards: 'wait_for_active_shards',

@@ -21,7 +21,7 @@ function buildMlUpdateJob (opts) {
 
   /**
    * Perform a ml.update_job request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.html
    */
   return function mlUpdateJob (params, options, callback) {
     options = options || {}

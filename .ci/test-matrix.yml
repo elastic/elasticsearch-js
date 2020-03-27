@@ -1,10 +1,14 @@
 ---
-ELASTICSEARCH_VERSION:
+STACK_VERSION:
   - 8.0.0-SNAPSHOT
 
 NODE_JS_VERSION:
   - 12
   - 10
   - 8
+
+TEST_SUITE:
+  - oss
+  - xpack
 
 exclude: ~

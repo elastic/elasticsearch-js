@@ -21,7 +21,7 @@ function buildSecurityPutPrivileges (opts) {
 
   /**
    * Perform a security.put_privileges request
-   * TODO
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-privileges.html
    */
   return function securityPutPrivileges (params, options, callback) {
     options = options || {}

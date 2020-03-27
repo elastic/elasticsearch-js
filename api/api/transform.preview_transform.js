@@ -59,7 +59,7 @@ function buildTransformPreviewTransform (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + '_preview'
+    path = '/' + '_transform' + '/' + '_preview'
 
     // build request object
     const request = {

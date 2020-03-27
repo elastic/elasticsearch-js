@@ -61,7 +61,7 @@ function buildTransformGetTransformStats (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stats'
+    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stats'
 
     // build request object
     const request = {

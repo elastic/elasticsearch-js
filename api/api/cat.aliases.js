@@ -14,11 +14,11 @@ function buildCatAliases (opts) {
   const acceptedQuerystring = [
     'format',
     'local',
-    'master_timeout',
     'h',
     'help',
     's',
     'v',
+    'expand_wildcards',
     'pretty',
     'human',
     'error_trace',
@@ -27,7 +27,7 @@ function buildCatAliases (opts) {
   ]
 
   const snakeCase = {
-    masterTimeout: 'master_timeout',
+    expandWildcards: 'expand_wildcards',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

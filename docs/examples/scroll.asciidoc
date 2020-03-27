@@ -1,13 +1,25 @@
 [[scroll_examples]]
 == Scroll
 
-While a search request returns a single “page” of results, the scroll API can be used to retrieve large numbers of results (or even all results) from a single search request, in much the same way as you would use a cursor on a traditional database.
+While a search request returns a single “page” of results, the scroll API can be 
+used to retrieve large numbers of results (or even all results) from a single 
+search request, in much the same way as you would use a cursor on a traditional 
+database.
 
-Scrolling is not intended for real time user requests, but rather for processing large amounts of data, e.g. in order to reindex the contents of one index into a new index with a different configuration.
+Scrolling is not intended for real time user requests, but rather for processing 
+large amounts of data, for example in order to reindex the contents of one index 
+into a new index with a different configuration.
 
-NOTE: The results that are returned from a scroll request reflect the state of the index at the time that the initial search request was made, like a snapshot in time. Subsequent changes to documents (index, update or delete) will only affect later search requests.
+NOTE: The results that are returned from a scroll request reflect the state of 
+the index at the time that the initial search request was made, like a snapshot 
+in time. Subsequent changes to documents (index, update or delete) will only 
+affect later search requests.
 
-In order to use scrolling, the initial search request should specify the scroll parameter in the query string, which tells Elasticsearch how long it should keep the “search context” alive.
+In order to use scrolling, the initial search request should specify the scroll 
+parameter in the query string, which tells {es} how long it should keep the 
+“search context” alive.
+
+NOTE: Did you know that we provide an helper for sending scroll requests? You can find it {jsclient}/client-helpers.html[here].
 
 [source,js]
 ----
@@ -100,7 +112,8 @@ async function run () {
 run().catch(console.log)
 ----
 
-Another cool usage of the `scroll` API can be done with Node.js ≥ 10, by using async iteration!
+Another cool usage of the `scroll` API can be done with Node.js ≥ 10, by using 
+async iteration!
 
 [source,js]
 ----

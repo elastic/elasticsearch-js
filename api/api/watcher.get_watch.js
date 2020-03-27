@@ -21,7 +21,7 @@ function buildWatcherGetWatch (opts) {
 
   /**
    * Perform a watcher.get_watch request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html
    */
   return function watcherGetWatch (params, options, callback) {
     options = options || {}

@@ -21,7 +21,8 @@ function buildSqlTranslate (opts) {
 
   /**
    * Perform a sql.translate request
-   * Translate SQL into Elasticsearch queries
+   * Translates SQL into Elasticsearch queries
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate.html
    */
   return function sqlTranslate (params, options, callback) {
     options = options || {}

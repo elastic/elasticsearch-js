@@ -21,7 +21,7 @@ function buildMlGetDatafeeds (opts) {
 
   /**
    * Perform a ml.get_datafeeds request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html
    */
   return function mlGetDatafeeds (params, options, callback) {
     options = options || {}

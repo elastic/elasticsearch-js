@@ -24,7 +24,7 @@ function buildMlStopDatafeed (opts) {
 
   /**
    * Perform a ml.stop_datafeed request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
    */
   return function mlStopDatafeed (params, options, callback) {
     options = options || {}

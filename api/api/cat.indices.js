@@ -21,8 +21,10 @@ function buildCatIndices (opts) {
     'help',
     'pri',
     's',
+    'time',
     'v',
     'include_unloaded_segments',
+    'expand_wildcards',
     'pretty',
     'human',
     'error_trace',
@@ -33,6 +35,7 @@ function buildCatIndices (opts) {
   const snakeCase = {
     masterTimeout: 'master_timeout',
     includeUnloadedSegments: 'include_unloaded_segments',
+    expandWildcards: 'expand_wildcards',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

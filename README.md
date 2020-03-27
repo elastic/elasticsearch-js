@@ -2,7 +2,7 @@
 
 # Elasticsearch Node.js client
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)  [![Build Status](https://clients-ci.elastic.co/buildStatus/icon?job=elastic%2Belasticsearch-js%2Bmbp%2Fmaster)](https://clients-ci.elastic.co/job/elastic+elasticsearch-js+mbp/job/master/)  [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js)  [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)  [![Build Status](https://clients-ci.elastic.co/buildStatus/icon?job=elastic%2Belasticsearch-js%2Bmaster)](https://clients-ci.elastic.co/view/Javascript/job/elastic+elasticsearch-js+master/)  [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js)  [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
 
 The official Node.js client for Elasticsearch.
 
@@ -60,6 +60,7 @@ We recommend that you write a lightweight proxy that uses this client instead.
 - [Observability](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/observability.html)
 - [Creating a child client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/child-client.html)
 - [Extend the client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/extend-client.html)
+- [Client helpers](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-helpers.html)
 - [Typescript support](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html)
 - [Examples](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/examples.html)
 

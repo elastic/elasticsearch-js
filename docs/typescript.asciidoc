@@ -1,12 +1,26 @@
 [[typescript]]
 == TypeScript support
 
-The client offers a first-class support for TypeScript, since it ships the type definitions for every exposed API.
+The client offers a first-class support for TypeScript, since it ships the type 
+definitions for every exposed API.
 
-NOTE: If you are using TypeScript you will be required to use _snake_case_ style to define the API parameters instead of _camelCase_.
+NOTE: If you are using TypeScript you will be required to use _snake_case_ style 
+to define the API parameters instead of _camelCase_. 
 
-Other than the types for the surface API, the client offers the types for every request method, via the `RequestParams`, if you need the types for a search request for instance, you can access them via `RequestParams.Search`.
-Every API that supports a body, accepts a https://www.typescriptlang.org/docs/handbook/generics.html[generics] which represents the type of the request body, if you don't configure anything, it will default to `any`.
+Other than the types for the surface API, the client offers the types for every 
+request method, via the `RequestParams`, if you need the types for a search 
+request for instance, you can access them via `RequestParams.Search`.
+Every API that supports a body, accepts a 
+https://www.typescriptlang.org/docs/handbook/generics.html[generics] which 
+represents the type of the request body, if you don't configure anything, it 
+will default to `RequestBody`. +
+`RequestBody`, along with `RequestNDBody` and `ResponseBody` are defined inside the client, and it looks like this:
+[source,ts]
+----
+type RequestBody<T = Record<string, any>> = T | string | Buffer | ReadableStream
+type RequestNDBody<T = Record<string, any>[]> = T | string[] | Buffer | ReadableStream
+type ResponseBody<T = Record<string, any>> = T | string | boolean | ReadableStream
+----
 
 For example:
 
@@ -40,7 +54,9 @@ const searchParams: RequestParams.Search = {
 }
 ----
 
-You can find the type definition of a response in `ApiResponse`, which accepts a generics as well if you want to specify the body type, otherwise it defaults to `any`.
+You can find the type definiton of a response in `ApiResponse`, which accepts a 
+generics as well if you want to specify the body type, otherwise it defaults to 
+`BodyType`.
 
 [source,ts]
 ----
@@ -128,19 +144,43 @@ interface Source {
   foo: string
 }
 
-async function run (): Promise<void> {
-  // Define the search parameters
-  const searchParams: RequestParams.Search<SearchBody> = {
+async function run () {
+  // All of the examples below are valid code, by default,
+  // the request body will be `RequestBody` and response will be `ResponseBody`.
+  const response = await client.search({
     index: 'test',
     body: {
       query: {
         match: { foo: 'bar' }
       }
     }
-  }
+  })
+  // body here is `ResponseBody`
+  console.log(response.body)
 
-  // Craft the final type definition
-  const response: ApiResponse<SearchResponse<Source>> = await client.search(searchParams)
+  // The first generic is the request body
+  const response = await client.search<SearchBody>({
+    index: 'test',
+    // Here the body must follow the `SearchBody` interface
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
+  })
+  // body here is `ResponseBody`
+  console.log(response.body)
+
+  const response = await client.search<SearchBody, SearchResponse<Source>>({
+    index: 'test',
+    // Here the body must follow the `SearchBody` interface
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
+  })
+  // Now you can have full type definition of the response
   console.log(response.body)
 }
 

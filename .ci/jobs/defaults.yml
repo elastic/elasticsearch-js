@@ -1,4 +1,4 @@
----
+
 
 ##### GLOBAL METADATA
 
@@ -42,11 +42,15 @@
     - axis:
         type: yaml
         filename: .ci/test-matrix.yml
-        name: ELASTICSEARCH_VERSION
+        name: STACK_VERSION
     - axis:
         type: yaml
         filename: .ci/test-matrix.yml
         name: NODE_JS_VERSION
+    - axis:
+        type: yaml
+        filename: .ci/test-matrix.yml
+        name: TEST_SUITE
     yaml-strategy:
       exclude-key: exclude
       filename: .ci/test-matrix.yml

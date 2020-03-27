@@ -21,7 +21,7 @@ function buildMlRevertModelSnapshot (opts) {
 
   /**
    * Perform a ml.revert_model_snapshot request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
    */
   return function mlRevertModelSnapshot (params, options, callback) {
     options = options || {}

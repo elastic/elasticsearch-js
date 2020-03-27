@@ -21,7 +21,7 @@ function buildCcrForgetFollower (opts) {
 
   /**
    * Perform a ccr.forget_follower request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-forget-follower.html
    */
   return function ccrForgetFollower (params, options, callback) {
     options = options || {}

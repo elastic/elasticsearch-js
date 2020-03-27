@@ -12,7 +12,6 @@ function buildIndicesGetFieldMapping (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'include_type_name',
     'include_defaults',
     'ignore_unavailable',
     'allow_no_indices',
@@ -26,7 +25,6 @@ function buildIndicesGetFieldMapping (opts) {
   ]
 
   const snakeCase = {
-    includeTypeName: 'include_type_name',
     includeDefaults: 'include_defaults',
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',

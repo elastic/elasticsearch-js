@@ -10,6 +10,7 @@ const debug = require('debug')('elasticsearch')
 const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
 const { ConnectionPool, CloudConnectionPool } = require('./lib/pool')
+const Helpers = require('./lib/Helpers')
 const Serializer = require('./lib/Serializer')
 const errors = require('./lib/errors')
 const { ConfigurationError } = errors
@@ -79,7 +80,8 @@ class Client extends EventEmitter {
       nodeSelector: 'round-robin',
       generateRequestId: null,
       name: 'elasticsearch-js',
-      auth: null
+      auth: null,
+      opaqueIdPrefix: null
     }, opts)
 
     this[kInitialOptions] = options
@@ -121,8 +123,11 @@ class Client extends EventEmitter {
       nodeFilter: options.nodeFilter,
       nodeSelector: options.nodeSelector,
       generateRequestId: options.generateRequestId,
-      name: options.name
+      name: options.name,
+      opaqueIdPrefix: options.opaqueIdPrefix
     })
+
+    this.helpers = new Helpers({ client: this, maxRetries: options.maxRetries })
 
     const apis = buildApi({
       makeRequest: this.transport.request.bind(this.transport),

@@ -21,7 +21,7 @@ function buildMlPutDataFrameAnalytics (opts) {
 
   /**
    * Perform a ml.put_data_frame_analytics request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/put-dfanalytics.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-dfanalytics.html
    */
   return function mlPutDataFrameAnalytics (params, options, callback) {
     options = options || {}

@@ -1,0 +1,61 @@
+[[update_by_query_examples]]
+== Update By Query
+
+The simplest usage of _update_by_query just performs an update on every document 
+in the index without changing the source. This is useful to pick up a new 
+property or some other online mapping change.
+
+[source,js]
+---------
+'use strict'
+
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+async function run () {
+  await client.index({
+    index: 'game-of-thrones',
+    body: {
+      character: 'Ned Stark',
+      quote: 'Winter is coming.'
+    }
+  })
+
+  await client.index({
+    index: 'game-of-thrones',
+    refresh: true,
+    body: {
+      character: 'Arya Stark',
+      quote: 'A girl is Arya Stark of Winterfell. And I\'m going home.'
+    }
+  })
+
+  await client.updateByQuery({
+    index: 'game-of-thrones',
+    refresh: true,
+    body: {
+      script: {
+        lang: 'painless',
+        source: 'ctx._source["house"] = "stark"'
+      },
+      query: {
+        match: {
+          character: 'stark'
+        }
+      }
+    }
+  })
+
+  const { body } = await client.search({
+    index: 'game-of-thrones',
+    body: {
+      query: { match_all: {} }
+    }
+  })
+
+  console.log(body.hits.hits)
+}
+
+run().catch(console.log)
+
+---------

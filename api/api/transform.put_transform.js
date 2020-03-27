@@ -63,7 +63,7 @@ function buildTransformPutTransform (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId)
 
     // build request object
     const request = {

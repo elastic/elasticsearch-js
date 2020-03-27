@@ -1,10 +1,12 @@
 [[extend-client]]
 == Extend the client
 
-Sometimes you need to reuse the same logic, or you want to build a custom API to allow you simplify your code. +
-The easiest way to achieve that is by extending the client.
+Sometimes you need to reuse the same logic, or you want to build a custom API to 
+allow you simplify your code. The easiest way to achieve that is by extending 
+the client.
 
-NOTE: If you want to override existing methods, you should specify the `{ force: true }` option.
+NOTE: If you want to override existing methods, you should specify the 
+`{ force: true }` option.
 
 [source,js]
 ----

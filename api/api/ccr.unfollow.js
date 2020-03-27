@@ -21,7 +21,7 @@ function buildCcrUnfollow (opts) {
 
   /**
    * Perform a ccr.unfollow request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-unfollow.html
    */
   return function ccrUnfollow (params, options, callback) {
     options = options || {}

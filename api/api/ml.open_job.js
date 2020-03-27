@@ -21,7 +21,7 @@ function buildMlOpenJob (opts) {
 
   /**
    * Perform a ml.open_job request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
    */
   return function mlOpenJob (params, options, callback) {
     options = options || {}
