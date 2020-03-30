@@ -869,6 +869,14 @@ declare class Client extends EventEmitter {
     deleteDataStream<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteDataStream<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteDataStream, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteDataStream<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteDataStream, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_index_template<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDeleteIndexTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    delete_index_template<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_index_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_index_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDeleteIndexTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    deleteIndexTemplate<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     delete_template<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDeleteTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     delete_template<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     delete_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -945,6 +953,14 @@ declare class Client extends EventEmitter {
     getFieldMapping<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getFieldMapping<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetFieldMapping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getFieldMapping<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetFieldMapping, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_index_template<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetIndexTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get_index_template<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_index_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_index_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetIndexTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    getIndexTemplate<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_mapping<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetMapping, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     get_mapping<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_mapping<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetMapping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -989,6 +1005,14 @@ declare class Client extends EventEmitter {
     putAlias<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     putAlias<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutAlias<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     putAlias<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutAlias<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_index_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutIndexTemplate<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    put_index_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_index_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutIndexTemplate<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_index_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutIndexTemplate<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putIndexTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutIndexTemplate<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    putIndexTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putIndexTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutIndexTemplate<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putIndexTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutIndexTemplate<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     put_mapping<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutMapping<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     put_mapping<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     put_mapping<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutMapping<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

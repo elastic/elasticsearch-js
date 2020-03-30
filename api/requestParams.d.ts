@@ -636,6 +636,12 @@ export interface IndicesDeleteDataStream extends Generic {
   name: string;
 }
 
+export interface IndicesDeleteIndexTemplate extends Generic {
+  name: string;
+  timeout?: string;
+  master_timeout?: string;
+}
+
 export interface IndicesDeleteTemplate extends Generic {
   name: string;
   timeout?: string;
@@ -730,6 +736,13 @@ export interface IndicesGetFieldMapping extends Generic {
   local?: boolean;
 }
 
+export interface IndicesGetIndexTemplate extends Generic {
+  name?: string | string[];
+  flat_settings?: boolean;
+  master_timeout?: string;
+  local?: boolean;
+}
+
 export interface IndicesGetMapping extends Generic {
   index?: string | string[];
   ignore_unavailable?: boolean;
@@ -781,6 +794,14 @@ export interface IndicesPutAlias<T = RequestBody> extends Generic {
   timeout?: string;
   master_timeout?: string;
   body?: T;
+}
+
+export interface IndicesPutIndexTemplate<T = RequestBody> extends Generic {
+  name: string;
+  order?: number;
+  create?: boolean;
+  master_timeout?: string;
+  body: T;
 }
 
 export interface IndicesPutMapping<T = RequestBody> extends Generic {
