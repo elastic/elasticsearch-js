@@ -12,13 +12,13 @@ function buildAsyncSearchGet (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'wait_for_completion',
+    'wait_for_completion_timeout',
     'keep_alive',
     'typed_keys'
   ]
 
   const snakeCase = {
-    waitForCompletion: 'wait_for_completion',
+    waitForCompletionTimeout: 'wait_for_completion_timeout',
     keepAlive: 'keep_alive',
     typedKeys: 'typed_keys'
   }

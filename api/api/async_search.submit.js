@@ -12,8 +12,8 @@ function buildAsyncSearchSubmit (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'wait_for_completion',
-    'clean_on_completion',
+    'wait_for_completion_timeout',
+    'keep_on_completion',
     'keep_alive',
     'batched_reduce_size',
     'request_cache',
@@ -56,8 +56,8 @@ function buildAsyncSearchSubmit (opts) {
   ]
 
   const snakeCase = {
-    waitForCompletion: 'wait_for_completion',
-    cleanOnCompletion: 'clean_on_completion',
+    waitForCompletionTimeout: 'wait_for_completion_timeout',
+    keepOnCompletion: 'keep_on_completion',
     keepAlive: 'keep_alive',
     batchedReduceSize: 'batched_reduce_size',
     requestCache: 'request_cache',
