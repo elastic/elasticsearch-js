@@ -4,7 +4,6 @@
 
 import { expectType } from 'tsd'
 import { errors, ApiResponse, Connection } from '../../'
-import { ResponseBody } from '../../lib/Transport'
 
 const response = {
   body: {},
@@ -77,7 +76,7 @@ const response = {
   expectType<string>(err.name)
   expectType<string>(err.message)
   expectType<ApiResponse>(err.meta)
-  expectType<ResponseBody>(err.body)
+  expectType<Record<string, any>>(err.body)
   expectType<number>(err.statusCode)
   expectType<Record<string, any>>(err.headers)
 }

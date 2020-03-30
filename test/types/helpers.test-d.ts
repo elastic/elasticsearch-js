@@ -4,7 +4,6 @@
 
 import { expectType, expectError, expectAssignable } from 'tsd'
 import { Client } from '../../'
-import { RequestBody, ResponseBody } from '../../lib/Transport'
 import {
   BulkHelper,
   BulkStats,
@@ -129,7 +128,7 @@ expectError(
 
     for await (const response of scrollSearch) {
       expectAssignable<ScrollSearchResponse>(response)
-      expectType<ResponseBody<Record<string, any>>>(response.body)
+      expectType<Record<string, any>>(response.body)
       expectType<unknown[]>(response.documents)
       expectType<unknown>(response.meta.context)
     }
@@ -137,6 +136,69 @@ expectError(
 }
 
 // with type defs
+{  
+  interface ShardsResponse {
+    total: number;
+    successful: number;
+    failed: number;
+    skipped: number;
+  }
+  
+  interface Explanation {
+    value: number;
+    description: string;
+    details: Explanation[];
+  }
+  
+  interface SearchResponse<T> {
+    took: number;
+    timed_out: boolean;
+    _scroll_id?: string;
+    _shards: ShardsResponse;
+    hits: {
+      total: number;
+      max_score: number;
+      hits: Array<{
+        _index: string;
+        _type: string;
+        _id: string;
+        _score: number;
+        _source: T;
+        _version?: number;
+        _explanation?: Explanation;
+        fields?: any;
+        highlight?: any;
+        inner_hits?: any;
+        matched_queries?: string[];
+        sort?: string[];
+      }>;
+    };
+    aggregations?: any;
+  }
+  
+  interface Source {
+    foo: string
+  }
+
+  async function test () {
+    const scrollSearch = client.helpers.scrollSearch<Source, SearchResponse<Source>>({
+      index: 'test',
+      body: {
+        query: {
+          match: { foo: 'bar' }
+        }
+      }
+    })
+
+    for await (const response of scrollSearch) {
+      expectAssignable<ScrollSearchResponse>(response)
+      expectType<SearchResponse<Source>>(response.body)
+      expectType<Source[]>(response.documents)
+      expectType<unknown>(response.meta.context)
+    }
+  }
+}
+
 {
   interface SearchBody {
     query: {
@@ -188,7 +250,7 @@ expectError(
   }
 
   async function test () {
-    const scrollSearch = client.helpers.scrollSearch<SearchBody, Source, SearchResponse<Source>, string>({
+    const scrollSearch = client.helpers.scrollSearch<Source, SearchResponse<Source>, SearchBody, string>({
       index: 'test',
       body: {
         query: {
@@ -245,6 +307,27 @@ expectError(
 }
 
 // with type defs
+{ 
+  interface Source {
+    foo: string
+  }
+
+  async function test () {
+    const scrollDocuments = client.helpers.scrollDocuments<Source>({
+      index: 'test',
+      body: {
+        query: {
+          match: { foo: 'bar' }
+        }
+      }
+    })
+
+    for await (const document of scrollDocuments) {
+      expectType<Source>(document)
+    }
+  }
+}
+
 {
   interface SearchBody {
     query: {
@@ -257,7 +340,7 @@ expectError(
   }
 
   async function test () {
-    const scrollDocuments = client.helpers.scrollDocuments<SearchBody, Source>({
+    const scrollDocuments = client.helpers.scrollDocuments<Source, SearchBody>({
       index: 'test',
       body: {
         query: {
@@ -306,6 +389,24 @@ expectError(
 
 // with type defs
 {
+  interface Source {
+    foo: string
+  }
+
+  const p = client.helpers.search<Source>({
+    index: 'test',
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
+  })
+
+  expectType<Promise<Source[]>>(p)
+  expectType<Source[]>(await p)
+}
+
+{
   interface SearchBody {
     query: {
       match: { foo: string }
@@ -316,7 +417,7 @@ expectError(
     foo: string
   }
 
-  const p = client.helpers.search<SearchBody, Source>({
+  const p = client.helpers.search<Source, SearchBody>({
     index: 'test',
     body: {
       query: {

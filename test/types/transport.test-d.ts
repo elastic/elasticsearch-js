@@ -16,10 +16,9 @@ import {
   TransportRequestCallback,
   RequestEvent,
   ApiError,
-  ApiResponse,
   RequestBody,
   RequestNDBody,
-  ResponseBody
+  ApiResponse
 } from '../../lib/Transport'
 
 const params = {
@@ -85,14 +84,6 @@ expectAssignable<RequestNDBody>(['string'])
 expectAssignable<RequestNDBody>(Buffer.from('hello world'))
 expectAssignable<RequestNDBody>(new ReadableStream())
 
-expectAssignable<ResponseBody>({ foo: 'bar' })
-expectAssignable<ResponseBody<TestBody>>({ hello: 'world' })
-expectError<ResponseBody<TestBody>>({ foo: 'bar' })
-expectAssignable<ResponseBody>('string')
-expectAssignable<ResponseBody<TestBody>>('string')
-expectAssignable<ResponseBody>(true)
-expectAssignable<ResponseBody>(new ReadableStream())
-
 const transport = new Transport({
   emit: (event, ...args) => true,
   serializer: new Serializer(),
@@ -110,7 +101,42 @@ const transport = new Transport({
 expectType<Transport>(transport)
 
 expectType<TransportRequestCallback>(transport.request(params, options, (err, result) => {}))
+
+// body as object
 transport.request(params, options, (err, result) => {
+  expectType<ApiError>(err)
+  expectType<ApiResponse>(result)
+})
+
+// body as string
+transport.request({
+  method: 'POST',
+  path: '/search',
+  body: 'hello world',
+  querystring: { baz: 'faz' }
+}, options, (err, result) => {
+  expectType<ApiError>(err)
+  expectType<ApiResponse>(result)
+})
+
+// body as Buffer
+transport.request({
+  method: 'POST',
+  path: '/search',
+  body: Buffer.from('hello world'),
+  querystring: { baz: 'faz' }
+}, options, (err, result) => {
+  expectType<ApiError>(err)
+  expectType<ApiResponse>(result)
+})
+
+// body as ReadableStream
+transport.request({
+  method: 'POST',
+  path: '/search',
+  body: new ReadableStream(),
+  querystring: { baz: 'faz' }
+}, options, (err, result) => {
   expectType<ApiError>(err)
   expectType<ApiResponse>(result)
 })
@@ -120,6 +146,7 @@ expectType<Promise<ApiResponse>>(promise)
 promise.then(result => expectType<ApiResponse>(result))
 expectType<ApiResponse>(await promise)
 
+// body that does not respect the RequestBody constraint
 expectError(
   transport.request({
     method: 'POST',

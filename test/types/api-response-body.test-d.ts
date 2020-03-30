@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 import { expectType, expectError } from 'tsd'
-import { ResponseBody } from '../../lib/Transport'
+import { Readable as ReadableStream } from 'stream';
 import { Client } from '../../'
 
 const client = new Client({
@@ -59,7 +59,7 @@ interface Source {
   foo: string
 }
 
-// Use a bad body
+// body that does not respect the RequestBody constraint
 expectError(
   client.search({
     index: 'hello',
@@ -78,13 +78,13 @@ expectError(
     }
   })
 
-  expectType<ResponseBody>(response.body)
+  expectType<Record<string, any>>(response.body)
   expectType<unknown>(response.meta.context)
 }
 
 // Define only the request body
 {
-  const response = await client.search<SearchBody>({
+  const response = await client.search<SearchResponse<Source>>({
     index: 'test',
     body: {
       query: {
@@ -93,13 +93,13 @@ expectError(
     }
   })
 
-  expectType<ResponseBody>(response.body)
+  expectType<SearchResponse<Source>>(response.body)
   expectType<unknown>(response.meta.context)
 }
 
 // Define request body and response body
 {
-  const response = await client.search<SearchBody, SearchResponse<Source>>({
+  const response = await client.search<SearchResponse<Source>, SearchBody>({
     index: 'test',
     body: {
       query: {
@@ -114,7 +114,7 @@ expectError(
 
 // Define request body, response body and the context
 {
-  const response = await client.search<SearchBody, SearchResponse<Source>, string>({
+  const response = await client.search<SearchResponse<Source>, SearchBody, string>({
     index: 'test',
     body: {
       query: {
@@ -125,4 +125,37 @@ expectError(
 
   expectType<SearchResponse<Source>>(response.body)
   expectType<string>(response.meta.context)
+}
+
+// Send request body as string
+{
+  const response = await client.search({
+    index: 'test',
+    body: 'hello world'
+  })
+
+  expectType<Record<string, any>>(response.body)
+  expectType<unknown>(response.meta.context)
+}
+
+// Send request body as buffer
+{
+  const response = await client.search({
+    index: 'test',
+    body: Buffer.from('hello world')
+  })
+
+  expectType<Record<string, any>>(response.body)
+  expectType<unknown>(response.meta.context)
+}
+
+// Send request body as readable stream
+{
+  const response = await client.search({
+    index: 'test',
+    body: new ReadableStream()
+  })
+
+  expectType<Record<string, any>>(response.body)
+  expectType<unknown>(response.meta.context)
 }
