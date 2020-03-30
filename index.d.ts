@@ -816,6 +816,7 @@ declare class Client extends EventEmitter {
   index<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.Index<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   index<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.Index<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   indices: {
+<<<<<<< HEAD
     analyze<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesAnalyze<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     analyze<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     analyze<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesAnalyze<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1080,6 +1081,296 @@ declare class Client extends EventEmitter {
     validateQuery<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     validateQuery<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesValidateQuery<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     validateQuery<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesValidateQuery<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+=======
+    analyze<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesAnalyze<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    analyze<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    analyze<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesAnalyze<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    analyze<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesAnalyze<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cache<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesClearCache, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    clear_cache<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cache<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesClearCache, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cache<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesClearCache, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCache<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesClearCache, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    clearCache<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCache<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesClearCache, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCache<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesClearCache, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clone<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesClone<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    clone<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clone<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesClone<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clone<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesClone<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    close<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesClose, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    close<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    close<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesClose, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    close<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesClose, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesCreate<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    create<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesCreate<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesCreate<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_data_stream<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesCreateDataStream<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    create_data_stream<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_data_stream<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesCreateDataStream<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_data_stream<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesCreateDataStream<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createDataStream<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesCreateDataStream<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    createDataStream<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createDataStream<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesCreateDataStream<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createDataStream<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesCreateDataStream<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDelete, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    delete<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDelete, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDelete, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_alias<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDeleteAlias, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    delete_alias<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_alias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_alias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteAlias<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDeleteAlias, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    deleteAlias<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteAlias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteAlias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_data_stream<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDeleteDataStream, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    delete_data_stream<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_data_stream<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteDataStream, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_data_stream<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteDataStream, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteDataStream<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDeleteDataStream, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    deleteDataStream<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteDataStream<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteDataStream, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteDataStream<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteDataStream, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_index_template<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDeleteIndexTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    delete_index_template<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_index_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_index_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDeleteIndexTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    deleteIndexTemplate<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_template<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDeleteTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    delete_template<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteTemplate<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesDeleteTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    deleteTemplate<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesDeleteTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesExists, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    exists<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExists, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExists, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_alias<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesExistsAlias, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    exists_alias<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_alias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_alias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsAlias<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesExistsAlias, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    existsAlias<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsAlias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsAlias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_template<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesExistsTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    exists_template<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsTemplate<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesExistsTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    existsTemplate<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_type<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesExistsType, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    exists_type<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_type<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsType, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_type<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsType, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsType<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesExistsType, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    existsType<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsType<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsType, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsType<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesExistsType, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    flush<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesFlush, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    flush<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    flush<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesFlush, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    flush<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesFlush, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    forcemerge<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesForcemerge, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    forcemerge<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    forcemerge<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesForcemerge, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    forcemerge<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesForcemerge, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    freeze<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesFreeze, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    freeze<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    freeze<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesFreeze, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    freeze<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesFreeze, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGet, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGet, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGet, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_alias<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetAlias, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get_alias<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_alias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_alias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getAlias<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetAlias, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    getAlias<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getAlias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getAlias<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_data_streams<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetDataStreams, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get_data_streams<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_data_streams<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetDataStreams, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_data_streams<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetDataStreams, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getDataStreams<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetDataStreams, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    getDataStreams<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getDataStreams<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetDataStreams, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getDataStreams<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetDataStreams, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_field_mapping<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetFieldMapping, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get_field_mapping<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_field_mapping<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetFieldMapping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_field_mapping<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetFieldMapping, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getFieldMapping<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetFieldMapping, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    getFieldMapping<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getFieldMapping<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetFieldMapping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getFieldMapping<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetFieldMapping, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_index_template<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetIndexTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get_index_template<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_index_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_index_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetIndexTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    getIndexTemplate<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getIndexTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_mapping<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetMapping, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get_mapping<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_mapping<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetMapping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_mapping<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetMapping, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getMapping<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetMapping, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    getMapping<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getMapping<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetMapping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getMapping<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetMapping, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_settings<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetSettings, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get_settings<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_settings<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetSettings, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_settings<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetSettings, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getSettings<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetSettings, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    getSettings<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getSettings<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetSettings, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getSettings<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetSettings, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_template<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get_template<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_template<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getTemplate<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetTemplate, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    getTemplate<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getTemplate<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_upgrade<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetUpgrade, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get_upgrade<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_upgrade<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetUpgrade, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_upgrade<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetUpgrade, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getUpgrade<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesGetUpgrade, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    getUpgrade<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getUpgrade<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetUpgrade, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getUpgrade<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesGetUpgrade, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    open<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesOpen, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    open<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    open<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesOpen, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    open<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesOpen, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_alias<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutAlias<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    put_alias<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_alias<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutAlias<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_alias<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutAlias<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putAlias<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutAlias<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    putAlias<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putAlias<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutAlias<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putAlias<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutAlias<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_index_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutIndexTemplate<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    put_index_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_index_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutIndexTemplate<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_index_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutIndexTemplate<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putIndexTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutIndexTemplate<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    putIndexTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putIndexTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutIndexTemplate<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putIndexTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutIndexTemplate<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_mapping<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutMapping<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    put_mapping<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_mapping<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutMapping<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_mapping<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutMapping<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putMapping<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutMapping<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    putMapping<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putMapping<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutMapping<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putMapping<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutMapping<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_settings<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutSettings<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    put_settings<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_settings<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutSettings<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_settings<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutSettings<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putSettings<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutSettings<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    putSettings<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putSettings<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutSettings<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putSettings<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutSettings<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutTemplate<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    put_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutTemplate<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_template<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutTemplate<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesPutTemplate<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    putTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutTemplate<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putTemplate<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesPutTemplate<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    recovery<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesRecovery, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    recovery<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    recovery<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesRecovery, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    recovery<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesRecovery, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    refresh<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesRefresh, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    refresh<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    refresh<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesRefresh, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    refresh<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesRefresh, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    reload_search_analyzers<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesReloadSearchAnalyzers, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    reload_search_analyzers<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    reload_search_analyzers<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesReloadSearchAnalyzers, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    reload_search_analyzers<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesReloadSearchAnalyzers, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    reloadSearchAnalyzers<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesReloadSearchAnalyzers, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    reloadSearchAnalyzers<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    reloadSearchAnalyzers<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesReloadSearchAnalyzers, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    reloadSearchAnalyzers<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesReloadSearchAnalyzers, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    rollover<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesRollover<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    rollover<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    rollover<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesRollover<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    rollover<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesRollover<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    segments<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesSegments, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    segments<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    segments<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesSegments, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    segments<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesSegments, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    shard_stores<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesShardStores, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    shard_stores<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    shard_stores<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesShardStores, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    shard_stores<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesShardStores, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    shardStores<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesShardStores, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    shardStores<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    shardStores<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesShardStores, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    shardStores<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesShardStores, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    shrink<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesShrink<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    shrink<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    shrink<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesShrink<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    shrink<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesShrink<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    split<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesSplit<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    split<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    split<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesSplit<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    split<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesSplit<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stats<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesStats, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    stats<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stats<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    unfreeze<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesUnfreeze, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    unfreeze<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    unfreeze<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesUnfreeze, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    unfreeze<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesUnfreeze, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    update_aliases<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesUpdateAliases<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    update_aliases<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    update_aliases<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesUpdateAliases<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    update_aliases<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesUpdateAliases<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    updateAliases<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesUpdateAliases<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    updateAliases<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    updateAliases<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesUpdateAliases<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    updateAliases<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesUpdateAliases<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    upgrade<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesUpgrade, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    upgrade<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    upgrade<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesUpgrade, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    upgrade<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesUpgrade, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    validate_query<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesValidateQuery<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    validate_query<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    validate_query<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesValidateQuery<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    validate_query<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesValidateQuery<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    validateQuery<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.IndicesValidateQuery<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    validateQuery<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    validateQuery<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesValidateQuery<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    validateQuery<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.IndicesValidateQuery<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+>>>>>>> master
   }
   info<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.Info, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
   info<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback

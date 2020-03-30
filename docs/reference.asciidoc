@@ -2546,6 +2546,30 @@ link:{ref}/data-streams.html[Documentation] +
 
 |===
 
+=== indices.deleteIndexTemplate
+
+[source,ts]
+----
+client.indices.deleteIndexTemplate({
+  name: string,
+  timeout: string,
+  master_timeout: string
+})
+----
+link:{ref}/indices-templates.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the template
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|===
+
 === indices.deleteTemplate
 
 [source,ts]
@@ -2930,6 +2954,34 @@ _Default:_ `open`
 
 |===
 
+=== indices.getIndexTemplate
+
+[source,ts]
+----
+client.indices.getIndexTemplate({
+  name: string | string[],
+  flat_settings: boolean,
+  master_timeout: string,
+  local: boolean
+})
+----
+link:{ref}/indices-templates.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - The comma separated names of the index templates
+
+|`flat_settings` or `flatSettings`
+|`boolean` - Return settings in flat format (default: false)
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`local`
+|`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|===
+
 === indices.getMapping
 
 [source,ts]
@@ -3143,6 +3195,38 @@ link:{ref}/indices-aliases.html[Documentation] +
 
 |`body`
 |`object` - The settings for the alias, such as `routing` or `filter`
+
+|===
+
+=== indices.putIndexTemplate
+
+[source,ts]
+----
+client.indices.putIndexTemplate({
+  name: string,
+  order: number,
+  create: boolean,
+  master_timeout: string,
+  body: object
+})
+----
+link:{ref}/indices-templates.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the template
+
+|`order`
+|`number` - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
+
+|`create`
+|`boolean` - Whether the index template should only be added if new or can also replace an existing one
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`body`
+|`object` - The template definition
 
 |===
 
