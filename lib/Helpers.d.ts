@@ -3,17 +3,17 @@
 // See the LICENSE file in the project root for more information
 
 import { Readable as ReadableStream } from 'stream'
-import { TransportRequestOptions, ApiResponse, RequestBody, ResponseBody } from './Transport'
+import { TransportRequestOptions, ApiResponse, RequestBody } from './Transport'
 import { Search, Bulk } from '../api/requestParams'
 
 export default class Helpers {
-  search<TRequestBody extends RequestBody, TDocument = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): Promise<TDocument[]>
-  scrollSearch<TRequestBody extends RequestBody, TDocument = unknown, TResponse = ResponseBody, TContext = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<ScrollSearchResponse<TDocument, TResponse, TContext>>
-  scrollDocuments<TRequestBody extends RequestBody, TDocument = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<TDocument>
+  search<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): Promise<TDocument[]>
+  scrollSearch<TDocument = unknown, TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<ScrollSearchResponse<TDocument, TResponse, TContext>>
+  scrollDocuments<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<TDocument>
   bulk(options: BulkHelperOptions): BulkHelper<BulkStats>
 }
 
-export interface ScrollSearchResponse<TDocument = unknown, TResponse = ResponseBody, TContext = unknown> extends ApiResponse<TResponse, TContext> {
+export interface ScrollSearchResponse<TDocument = unknown, TResponse = Record<string, any>, TContext = unknown> extends ApiResponse<TResponse, TContext> {
   clear: () => Promise<void>
   documents: TDocument[]
 }
