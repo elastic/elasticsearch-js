@@ -243,6 +243,8 @@ function getAuth (node) {
         username: decodeURIComponent(node.url.username),
         password: decodeURIComponent(node.url.password)
       }
+    } else {
+      return {}
     }
   }
 }
