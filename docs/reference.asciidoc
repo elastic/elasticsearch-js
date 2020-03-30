@@ -5708,11 +5708,7 @@ link:{ref}/async-search.html[Documentation] +
 _Default:_ `1s`
 
 |`keep_on_completion` or `keepOnCompletion`
-<<<<<<< HEAD
 |`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
-=======
-|`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: true)
->>>>>>> b3ac79b0484e3c847a916e1e8773b45acdf36847
 
 |`keep_alive` or `keepAlive`
 |`string` - Update the time interval in which the results (partial or final) for this search will be available +
