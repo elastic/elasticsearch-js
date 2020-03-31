@@ -2,7 +2,8 @@
 
 # Elasticsearch Node.js client
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)  [![Build Status](https://clients-ci.elastic.co/buildStatus/icon?job=elastic%2Belasticsearch-js%2Bmaster)](https://clients-ci.elastic.co/view/Javascript/job/elastic+elasticsearch-js+master/)  [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js)  [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Felastic%2Felasticsearch-js.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Felastic%2Felasticsearch-js?ref=badge_shield)
+ [![Build Status](https://clients-ci.elastic.co/buildStatus/icon?job=elastic%2Belasticsearch-js%2Bmaster)](https://clients-ci.elastic.co/view/Javascript/job/elastic+elasticsearch-js+master/)  [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js)  [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
 
 The official Node.js client for Elasticsearch.
 
@@ -195,3 +196,6 @@ npm install esmaster@github:elastic/elasticsearch-js
 ## License
 
 This software is licensed under the [Apache 2 license](./LICENSE).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Felastic%2Felasticsearch-js.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Felastic%2Felasticsearch-js?ref=badge_large)
