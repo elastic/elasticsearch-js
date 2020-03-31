@@ -238,16 +238,20 @@ function getAuth (node) {
         username: decodeURIComponent(username),
         password: decodeURIComponent(password)
       }
-    } else if (node.url instanceof URL) {
+    }
+
+    if (typeof node === 'object' && node.url instanceof URL) {
       return {
         username: decodeURIComponent(node.url.username),
         password: decodeURIComponent(node.url.password)
       }
-    } else {
-      return {}
     }
-  }
-}
+
+    return {
+      username: undefined,
+      password: undefined
+    }
+  }}
 
 const events = {
   RESPONSE: 'response',
