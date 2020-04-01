@@ -653,6 +653,59 @@ test('bulk index', t => {
     t.end()
   })
 
+  t.test('datasource as async generator', t => {
+    t.test('Should perform a bulk request', async t => {
+      let count = 0
+      const MockConnection = connection.buildMockConnection({
+        onRequest (params) {
+          t.strictEqual(params.path, '/_bulk')
+          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          const [action, payload] = params.body.split('\n')
+          t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+          t.deepEqual(JSON.parse(payload), dataset[count++])
+          return { body: { errors: false, items: [{}] } }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      async function * generator () {
+        const data = dataset.slice()
+        for (const doc of data) {
+          yield doc
+        }
+      }
+
+      const result = await client.helpers.bulk({
+        datasource: generator(),
+        flushBytes: 1,
+        concurrency: 1,
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        },
+        onDrop (doc) {
+          t.fail('This should never be called')
+        }
+      })
+
+      t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
+      t.match(result, {
+        total: 3,
+        successful: 3,
+        retry: 0,
+        failed: 0,
+        aborted: false
+      })
+    })
+    t.end()
+  })
+
   t.end()
 })
 
@@ -896,7 +949,7 @@ test('errors', t => {
       })
     } catch (err) {
       t.true(err instanceof errors.ConfigurationError)
-      t.is(err.message, 'bulk helper: the datasource must be an array or a buffer or a readable stream')
+      t.is(err.message, 'bulk helper: the datasource must be an array or a buffer or a readable stream or an async generator')
     }
   })
 
