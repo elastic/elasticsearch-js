@@ -10,7 +10,7 @@ export default class Helpers {
   search<TRequestBody extends RequestBody, TDocument = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): Promise<TDocument[]>
   scrollSearch<TRequestBody extends RequestBody, TDocument = unknown, TResponse = ResponseBody, TContext = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<ScrollSearchResponse<TDocument, TResponse, TContext>>
   scrollDocuments<TRequestBody extends RequestBody, TDocument = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<TDocument>
-  bulk(options: BulkHelperOptions): BulkHelper<BulkStats>
+  bulk<TDocument = unknown>(options: BulkHelperOptions<TDocument>): BulkHelper<BulkStats>
 }
 
 export interface ScrollSearchResponse<TDocument = unknown, TResponse = ResponseBody, TContext = unknown> extends ApiResponse<TResponse, TContext> {
@@ -64,13 +64,13 @@ type UpdateAction = [UpdateActionOperation, Record<string, any>]
 type Action = IndexAction | CreateAction | UpdateAction | DeleteAction
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
-export interface BulkHelperOptions extends Omit<Bulk, 'body'> {
-  datasource: any[] | Buffer | ReadableStream | AsyncIterator<any>
-  onDocument: (doc: Record<string, any>) => Action
+export interface BulkHelperOptions<TDocument = unknown> extends Omit<Bulk, 'body'> {
+  datasource: TDocument[] | Buffer | ReadableStream | AsyncIterator<TDocument>
+  onDocument: (doc: TDocument) => Action
   flushBytes?: number
   concurrency?: number
   retries?: number
   wait?: number,
-  onDrop?: (doc: Record<string, any>) => void,
+  onDrop?: (doc: TDocument) => void,
   refreshOnCompletion?: boolean | string
 }
