@@ -65,7 +65,7 @@ type Action = IndexAction | CreateAction | UpdateAction | DeleteAction
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
 export interface BulkHelperOptions extends Omit<Bulk, 'body'> {
-  datasource: any[] | Buffer | ReadableStream
+  datasource: any[] | Buffer | ReadableStream | AsyncIterator<any>
   onDocument: (doc: Record<string, any>) => Action
   flushBytes?: number
   concurrency?: number
