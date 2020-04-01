@@ -55,7 +55,7 @@ interface ClientExtends {
 // /Extend API
 
 interface NodeOptions {
-  url: URL;
+  url: string | URL;
   id?: string;
   agent?: AgentOptions;
   ssl?: TlsConnectionOptions;

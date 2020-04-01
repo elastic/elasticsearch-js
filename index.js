@@ -5,7 +5,6 @@
 'use strict'
 
 const { EventEmitter } = require('events')
-const { URL } = require('url')
 const debug = require('debug')('elasticsearch')
 const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
@@ -13,6 +12,7 @@ const { ConnectionPool, CloudConnectionPool } = require('./lib/pool')
 const Helpers = require('./lib/Helpers')
 const Serializer = require('./lib/Serializer')
 const errors = require('./lib/errors')
+const { getAuth } = require('./lib/ConfigurationHelpers')
 const { ConfigurationError } = errors
 
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
@@ -43,7 +43,7 @@ class Client extends EventEmitter {
       if (opts.compression == null) opts.compression = 'gzip'
       if (opts.suggestCompression == null) opts.suggestCompression = true
       if (opts.ssl == null ||
-         (opts.ssl && opts.ssl.secureProtocol == null)) {
+        (opts.ssl && opts.ssl.secureProtocol == null)) {
         opts.ssl = opts.ssl || {}
         opts.ssl.secureProtocol = 'TLSv1_2_method'
       }
@@ -98,8 +98,8 @@ class Client extends EventEmitter {
       auth: options.auth,
       emit: this.emit.bind(this),
       sniffEnabled: options.sniffInterval !== false ||
-                    options.sniffOnStart !== false ||
-                    options.sniffOnConnectionFault !== false
+        options.sniffOnStart !== false ||
+        options.sniffOnConnectionFault !== false
     })
 
     // Add the connections before initialize the Transport
@@ -211,47 +211,6 @@ class Client extends EventEmitter {
     this.connectionPool.empty(callback)
   }
 }
-
-function getAuth (node) {
-  if (Array.isArray(node)) {
-    for (const url of node) {
-      const auth = getUsernameAndPassword(url)
-      if (auth.username !== '' && auth.password !== '') {
-        return auth
-      }
-    }
-
-    return null
-  }
-
-  const auth = getUsernameAndPassword(node)
-  if (auth.username !== '' && auth.password !== '') {
-    return auth
-  }
-
-  return null
-
-  function getUsernameAndPassword (node) {
-    if (typeof node === 'string') {
-      const { username, password } = new URL(node)
-      return {
-        username: decodeURIComponent(username),
-        password: decodeURIComponent(password)
-      }
-    }
-
-    if (typeof node === 'object' && node.url instanceof URL) {
-      return {
-        username: decodeURIComponent(node.url.username),
-        password: decodeURIComponent(node.url.password)
-      }
-    }
-
-    return {
-      username: undefined,
-      password: undefined
-    }
-  }}
 
 const events = {
   RESPONSE: 'response',
