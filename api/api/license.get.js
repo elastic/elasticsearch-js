@@ -22,6 +22,7 @@ function buildLicenseGet (opts) {
 
   /**
    * Perform a license.get request
+   * Retrieves licensing information for the cluster
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html
    */
   return function licenseGet (params, options, callback) {

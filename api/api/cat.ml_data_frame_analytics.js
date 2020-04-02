@@ -29,6 +29,7 @@ function buildCatMlDataFrameAnalytics (opts) {
 
   /**
    * Perform a cat.ml_data_frame_analytics request
+   * Gets configuration and usage information about data frame analytics jobs.
    * http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-dfanalytics.html
    */
   return function catMlDataFrameAnalytics (params, options, callback) {

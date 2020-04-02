@@ -21,6 +21,7 @@ function buildIlmRetry (opts) {
 
   /**
    * Perform a ilm.retry request
+   * Retries executing the policy for an index that is in the ERROR step.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-retry-policy.html
    */
   return function ilmRetry (params, options, callback) {

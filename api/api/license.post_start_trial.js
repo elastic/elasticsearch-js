@@ -22,6 +22,7 @@ function buildLicensePostStartTrial (opts) {
 
   /**
    * Perform a license.post_start_trial request
+   * starts a limited time trial license.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html
    */
   return function licensePostStartTrial (params, options, callback) {

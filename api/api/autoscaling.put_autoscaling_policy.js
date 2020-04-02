@@ -7,12 +7,12 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSecurityDeleteUser (opts) {
+function buildAutoscalingPutAutoscalingPolicy (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'refresh'
+
   ]
 
   const snakeCase = {
@@ -20,11 +20,10 @@ function buildSecurityDeleteUser (opts) {
   }
 
   /**
-   * Perform a security.delete_user request
-   * Deletes users from the native realm.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-user.html
+   * Perform a autoscaling.put_autoscaling_policy request
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-put-autoscaling-policy.html
    */
-  return function securityDeleteUser (params, options, callback) {
+  return function autoscalingPutAutoscalingPolicy (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -37,8 +36,12 @@ function buildSecurityDeleteUser (opts) {
     }
 
     // check required parameters
-    if (params['username'] == null) {
-      const err = new ConfigurationError('Missing required parameter: username')
+    if (params['name'] == null) {
+      const err = new ConfigurationError('Missing required parameter: name')
+      return handleError(err, callback)
+    }
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
@@ -49,7 +52,7 @@ function buildSecurityDeleteUser (opts) {
     }
 
     var warnings = []
-    var { method, body, username, ...querystring } = params
+    var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -59,8 +62,8 @@ function buildSecurityDeleteUser (opts) {
 
     var path = ''
 
-    if (method == null) method = 'DELETE'
-    path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username)
+    if (method == null) method = 'PUT'
+    path = '/' + '_autoscaling' + '/' + 'policy' + '/' + encodeURIComponent(name)
 
     // build request object
     const request = {
@@ -75,4 +78,4 @@ function buildSecurityDeleteUser (opts) {
   }
 }
 
-module.exports = buildSecurityDeleteUser
+module.exports = buildAutoscalingPutAutoscalingPolicy

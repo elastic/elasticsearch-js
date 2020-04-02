@@ -21,6 +21,7 @@ function buildSecurityGetRole (opts) {
 
   /**
    * Perform a security.get_role request
+   * Retrieves roles in the native realm.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html
    */
   return function securityGetRole (params, options, callback) {

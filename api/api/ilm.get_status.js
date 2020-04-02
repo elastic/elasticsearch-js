@@ -21,6 +21,7 @@ function buildIlmGetStatus (opts) {
 
   /**
    * Perform a ilm.get_status request
+   * Retrieves the current index lifecycle management (ILM) status.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.html
    */
   return function ilmGetStatus (params, options, callback) {

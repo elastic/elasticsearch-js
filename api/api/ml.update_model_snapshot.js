@@ -21,6 +21,7 @@ function buildMlUpdateModelSnapshot (opts) {
 
   /**
    * Perform a ml.update_model_snapshot request
+   * Updates certain properties of a snapshot.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapshot.html
    */
   return function mlUpdateModelSnapshot (params, options, callback) {

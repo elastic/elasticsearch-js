@@ -21,6 +21,7 @@ function buildDataFrameTransformDeprecatedUpdateTransform (opts) {
 
   /**
    * Perform a data_frame_transform_deprecated.update_transform request
+   * Updates certain properties of a transform.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/update-transform.html
    */
   return function dataFrameTransformDeprecatedUpdateTransform (params, options, callback) {

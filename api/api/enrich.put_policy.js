@@ -21,6 +21,7 @@ function buildEnrichPutPolicy (opts) {
 
   /**
    * Perform a enrich.put_policy request
+   * Creates a new enrich policy.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-enrich-policy-api.html
    */
   return function enrichPutPolicy (params, options, callback) {

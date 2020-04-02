@@ -21,6 +21,7 @@ function buildSecurityClearCachedRoles (opts) {
 
   /**
    * Perform a security.clear_cached_roles request
+   * Evicts roles from the native role cache.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-role-cache.html
    */
   return function securityClearCachedRoles (params, options, callback) {

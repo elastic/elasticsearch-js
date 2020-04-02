@@ -28,7 +28,9 @@ function ESAPI (opts) {
     },
     autoscaling: {
       get_autoscaling_decision: lazyLoad('autoscaling.get_autoscaling_decision', opts),
-      getAutoscalingDecision: lazyLoad('autoscaling.get_autoscaling_decision', opts)
+      getAutoscalingDecision: lazyLoad('autoscaling.get_autoscaling_decision', opts),
+      put_autoscaling_policy: lazyLoad('autoscaling.put_autoscaling_policy', opts),
+      putAutoscalingPolicy: lazyLoad('autoscaling.put_autoscaling_policy', opts)
     },
     bulk: lazyLoad('bulk', opts),
     cat: {

@@ -27,6 +27,7 @@ function buildMlFlushJob (opts) {
 
   /**
    * Perform a ml.flush_job request
+   * Forces any buffered data to be processed by the job.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
    */
   return function mlFlushJob (params, options, callback) {

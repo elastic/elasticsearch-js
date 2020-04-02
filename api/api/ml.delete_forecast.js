@@ -23,6 +23,7 @@ function buildMlDeleteForecast (opts) {
 
   /**
    * Perform a ml.delete_forecast request
+   * Deletes forecasts from a machine learning job.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
    */
   return function mlDeleteForecast (params, options, callback) {

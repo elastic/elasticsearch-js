@@ -21,6 +21,7 @@ function buildTransformPutTransform (opts) {
 
   /**
    * Perform a transform.put_transform request
+   * Instantiates a transform.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-transform.html
    */
   return function transformPutTransform (params, options, callback) {

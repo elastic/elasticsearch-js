@@ -21,6 +21,7 @@ function buildAutoscalingGetAutoscalingDecision (opts) {
 
   /**
    * Perform a autoscaling.get_autoscaling_decision request
+   * Gets the current autoscaling decision based on the configured autoscaling policy, indicating whether or not autoscaling is needed.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-get-autoscaling-decision.html
    */
   return function autoscalingGetAutoscalingDecision (params, options, callback) {

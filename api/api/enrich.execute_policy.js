@@ -21,6 +21,7 @@ function buildEnrichExecutePolicy (opts) {
 
   /**
    * Perform a enrich.execute_policy request
+   * Creates the enrich index for an existing enrich policy.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/execute-enrich-policy-api.html
    */
   return function enrichExecutePolicy (params, options, callback) {

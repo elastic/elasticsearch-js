@@ -21,6 +21,7 @@ function buildEnrichStats (opts) {
 
   /**
    * Perform a enrich.stats request
+   * Gets enrich coordinator statistics and information about enrich policies that are currently executing.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/enrich-stats-api.html
    */
   return function enrichStats (params, options, callback) {

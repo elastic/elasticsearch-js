@@ -21,6 +21,7 @@ function buildTransformDeleteTransform (opts) {
 
   /**
    * Perform a transform.delete_transform request
+   * Deletes an existing transform.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform.html
    */
   return function transformDeleteTransform (params, options, callback) {

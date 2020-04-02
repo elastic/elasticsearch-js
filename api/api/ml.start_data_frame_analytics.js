@@ -21,6 +21,7 @@ function buildMlStartDataFrameAnalytics (opts) {
 
   /**
    * Perform a ml.start_data_frame_analytics request
+   * Starts a data frame analytics job.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/start-dfanalytics.html
    */
   return function mlStartDataFrameAnalytics (params, options, callback) {

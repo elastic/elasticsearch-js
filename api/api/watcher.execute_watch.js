@@ -21,6 +21,7 @@ function buildWatcherExecuteWatch (opts) {
 
   /**
    * Perform a watcher.execute_watch request
+   * Forces the execution of a stored watch.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html
    */
   return function watcherExecuteWatch (params, options, callback) {

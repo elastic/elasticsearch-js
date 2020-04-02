@@ -21,6 +21,8 @@ function buildRollupStartJob (opts) {
 
   /**
    * Perform a rollup.start_job request
+   * Starts an existing, stopped rollup job.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-start-job.html
    */
   return function rollupStartJob (params, options, callback) {
     options = options || {}

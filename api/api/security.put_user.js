@@ -21,6 +21,7 @@ function buildSecurityPutUser (opts) {
 
   /**
    * Perform a security.put_user request
+   * Adds and updates users in the native realm. These users are commonly referred to as native users.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-user.html
    */
   return function securityPutUser (params, options, callback) {

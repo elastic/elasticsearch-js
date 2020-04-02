@@ -21,6 +21,8 @@ function buildMlInfo (opts) {
 
   /**
    * Perform a ml.info request
+   * Returns defaults and limits used by machine learning.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-info.html
    */
   return function mlInfo (params, options, callback) {
     options = options || {}

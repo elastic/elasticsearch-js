@@ -27,6 +27,7 @@ function buildTransformStopTransform (opts) {
 
   /**
    * Perform a transform.stop_transform request
+   * Stops one or more transforms.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-transform.html
    */
   return function transformStopTransform (params, options, callback) {

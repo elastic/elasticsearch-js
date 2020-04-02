@@ -21,6 +21,7 @@ function buildLicensePost (opts) {
 
   /**
    * Perform a license.post request
+   * Updates the license for the cluster.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/update-license.html
    */
   return function licensePost (params, options, callback) {

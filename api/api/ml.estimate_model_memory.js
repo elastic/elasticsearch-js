@@ -21,6 +21,8 @@ function buildMlEstimateModelMemory (opts) {
 
   /**
    * Perform a ml.estimate_model_memory request
+   * Estimates the model memory
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-apis.html
    */
   return function mlEstimateModelMemory (params, options, callback) {
     options = options || {}
