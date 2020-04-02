@@ -21,6 +21,7 @@ function buildSecurityDeleteUser (opts) {
 
   /**
    * Perform a security.delete_user request
+   * Deletes users from the native realm.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-user.html
    */
   return function securityDeleteUser (params, options, callback) {

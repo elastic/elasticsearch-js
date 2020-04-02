@@ -21,6 +21,7 @@ function buildCcrResumeAutoFollowPattern (opts) {
 
   /**
    * Perform a ccr.resume_auto_follow_pattern request
+   * Resumes an auto-follow pattern that has been paused
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-resume-auto-follow-pattern.html
    */
   return function ccrResumeAutoFollowPattern (params, options, callback) {

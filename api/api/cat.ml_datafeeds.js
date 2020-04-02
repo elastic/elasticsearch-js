@@ -28,6 +28,7 @@ function buildCatMlDatafeeds (opts) {
 
   /**
    * Perform a cat.ml_datafeeds request
+   * Gets configuration and usage information about datafeeds.
    * http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-datafeeds.html
    */
   return function catMlDatafeeds (params, options, callback) {

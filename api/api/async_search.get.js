@@ -25,6 +25,7 @@ function buildAsyncSearchGet (opts) {
 
   /**
    * Perform a async_search.get request
+   * Retrieves the results of a previously submitted async search request given its ID.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/async-search.html
    */
   return function asyncSearchGet (params, options, callback) {

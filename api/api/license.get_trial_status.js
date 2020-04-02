@@ -21,6 +21,7 @@ function buildLicenseGetTrialStatus (opts) {
 
   /**
    * Perform a license.get_trial_status request
+   * Retrieves information about the status of the trial license.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trial-status.html
    */
   return function licenseGetTrialStatus (params, options, callback) {

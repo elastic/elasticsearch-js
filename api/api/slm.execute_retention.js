@@ -21,6 +21,7 @@ function buildSlmExecuteRetention (opts) {
 
   /**
    * Perform a slm.execute_retention request
+   * Deletes any snapshots that are expired according to the policy's retention rules.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-retention.html
    */
   return function slmExecuteRetention (params, options, callback) {

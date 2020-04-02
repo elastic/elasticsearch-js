@@ -21,6 +21,7 @@ function buildSecurityDeleteRoleMapping (opts) {
 
   /**
    * Perform a security.delete_role_mapping request
+   * Removes role mappings.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role-mapping.html
    */
   return function securityDeleteRoleMapping (params, options, callback) {

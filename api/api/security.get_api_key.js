@@ -26,6 +26,7 @@ function buildSecurityGetApiKey (opts) {
 
   /**
    * Perform a security.get_api_key request
+   * Retrieves information for one or more API keys.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
    */
   return function securityGetApiKey (params, options, callback) {

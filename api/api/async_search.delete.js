@@ -21,6 +21,7 @@ function buildAsyncSearchDelete (opts) {
 
   /**
    * Perform a async_search.delete request
+   * Deletes an async search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/async-search.html
    */
   return function asyncSearchDelete (params, options, callback) {

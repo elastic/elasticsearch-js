@@ -21,6 +21,7 @@ function buildTransformUpdateTransform (opts) {
 
   /**
    * Perform a transform.update_transform request
+   * Updates certain properties of a transform.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/update-transform.html
    */
   return function transformUpdateTransform (params, options, callback) {

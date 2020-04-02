@@ -22,6 +22,7 @@ function buildWatcherStats (opts) {
 
   /**
    * Perform a watcher.stats request
+   * Retrieves the current Watcher metrics.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html
    */
   return function watcherStats (params, options, callback) {

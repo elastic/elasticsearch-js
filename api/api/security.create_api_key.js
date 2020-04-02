@@ -21,6 +21,7 @@ function buildSecurityCreateApiKey (opts) {
 
   /**
    * Perform a security.create_api_key request
+   * Creates an API key for access without requiring basic authentication.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
    */
   return function securityCreateApiKey (params, options, callback) {

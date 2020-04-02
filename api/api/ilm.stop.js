@@ -21,6 +21,7 @@ function buildIlmStop (opts) {
 
   /**
    * Perform a ilm.stop request
+   * Halts all lifecycle management operations and stops the index lifecycle management (ILM) plugin
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-stop.html
    */
   return function ilmStop (params, options, callback) {

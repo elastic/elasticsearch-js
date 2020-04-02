@@ -21,6 +21,7 @@ function buildMlGetDatafeeds (opts) {
 
   /**
    * Perform a ml.get_datafeeds request
+   * Retrieves configuration information for datafeeds.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html
    */
   return function mlGetDatafeeds (params, options, callback) {

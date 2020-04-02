@@ -30,6 +30,7 @@ function buildCatTransform (opts) {
 
   /**
    * Perform a cat.transform request
+   * Gets configuration and usage information about transforms.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-transforms.html
    */
   return function catTransform (params, options, callback) {

@@ -21,6 +21,7 @@ function buildIlmMoveToStep (opts) {
 
   /**
    * Perform a ilm.move_to_step request
+   * Manually moves an index into the specified step and executes that step.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-move-to-step.html
    */
   return function ilmMoveToStep (params, options, callback) {

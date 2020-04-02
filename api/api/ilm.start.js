@@ -21,6 +21,7 @@ function buildIlmStart (opts) {
 
   /**
    * Perform a ilm.start request
+   * Start the index lifecycle management (ILM) plugin.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html
    */
   return function ilmStart (params, options, callback) {

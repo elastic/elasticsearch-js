@@ -26,6 +26,8 @@ function buildMlGetCalendarEvents (opts) {
 
   /**
    * Perform a ml.get_calendar_events request
+   * Retrieves information about the scheduled events in calendars.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar-event.html
    */
   return function mlGetCalendarEvents (params, options, callback) {
     options = options || {}

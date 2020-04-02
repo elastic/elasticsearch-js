@@ -21,6 +21,8 @@ function buildRollupGetRollupCaps (opts) {
 
   /**
    * Perform a rollup.get_rollup_caps request
+   * Returns the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-rollup-caps.html
    */
   return function rollupGetRollupCaps (params, options, callback) {
     options = options || {}

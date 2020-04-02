@@ -21,6 +21,8 @@ function buildMlDeleteCalendarEvent (opts) {
 
   /**
    * Perform a ml.delete_calendar_event request
+   * Deletes scheduled events from a calendar.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-calendar-event.html
    */
   return function mlDeleteCalendarEvent (params, options, callback) {
     options = options || {}

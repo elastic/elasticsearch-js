@@ -21,7 +21,8 @@ function buildMlPutTrainedModel (opts) {
 
   /**
    * Perform a ml.put_trained_model request
-   * TODO
+   * Creates an inference trained model.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-inference.html
    */
   return function mlPutTrainedModel (params, options, callback) {
     options = options || {}

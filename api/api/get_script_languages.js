@@ -27,6 +27,7 @@ function buildGetScriptLanguages (opts) {
   /**
    * Perform a get_script_languages request
    * Returns available script types, languages and contexts
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
    */
   return function getScriptLanguages (params, options, callback) {
     options = options || {}

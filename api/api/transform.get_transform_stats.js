@@ -23,6 +23,7 @@ function buildTransformGetTransformStats (opts) {
 
   /**
    * Perform a transform.get_transform_stats request
+   * Retrieves usage information for transforms.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform-stats.html
    */
   return function transformGetTransformStats (params, options, callback) {

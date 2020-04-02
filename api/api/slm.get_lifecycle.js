@@ -21,6 +21,7 @@ function buildSlmGetLifecycle (opts) {
 
   /**
    * Perform a slm.get_lifecycle request
+   * Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-policy.html
    */
   return function slmGetLifecycle (params, options, callback) {

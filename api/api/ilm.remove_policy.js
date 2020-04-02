@@ -21,6 +21,7 @@ function buildIlmRemovePolicy (opts) {
 
   /**
    * Perform a ilm.remove_policy request
+   * Removes the assigned lifecycle policy and stops managing the specified index
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-remove-policy.html
    */
   return function ilmRemovePolicy (params, options, callback) {

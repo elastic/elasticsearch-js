@@ -21,6 +21,7 @@ function buildSecurityChangePassword (opts) {
 
   /**
    * Perform a security.change_password request
+   * Changes the passwords of users in the native realm and built-in users.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html
    */
   return function securityChangePassword (params, options, callback) {

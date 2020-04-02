@@ -21,6 +21,8 @@ function buildMlUpdateFilter (opts) {
 
   /**
    * Perform a ml.update_filter request
+   * Updates the description of a filter, adds items, or removes items.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-filter.html
    */
   return function mlUpdateFilter (params, options, callback) {
     options = options || {}

@@ -21,6 +21,8 @@ function buildMlDeleteFilter (opts) {
 
   /**
    * Perform a ml.delete_filter request
+   * Deletes a filter.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-filter.html
    */
   return function mlDeleteFilter (params, options, callback) {
     options = options || {}

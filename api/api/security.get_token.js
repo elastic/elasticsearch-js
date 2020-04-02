@@ -21,6 +21,7 @@ function buildSecurityGetToken (opts) {
 
   /**
    * Perform a security.get_token request
+   * Creates a bearer token for access without requiring basic authentication.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-token.html
    */
   return function securityGetToken (params, options, callback) {

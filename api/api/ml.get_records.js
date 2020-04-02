@@ -30,6 +30,7 @@ function buildMlGetRecords (opts) {
 
   /**
    * Perform a ml.get_records request
+   * Retrieves anomaly records for an anomaly detection job.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.html
    */
   return function mlGetRecords (params, options, callback) {

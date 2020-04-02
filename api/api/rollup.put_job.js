@@ -21,6 +21,8 @@ function buildRollupPutJob (opts) {
 
   /**
    * Perform a rollup.put_job request
+   * Creates a rollup job.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-put-job.html
    */
   return function rollupPutJob (params, options, callback) {
     options = options || {}

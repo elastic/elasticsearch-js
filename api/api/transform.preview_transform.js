@@ -21,6 +21,7 @@ function buildTransformPreviewTransform (opts) {
 
   /**
    * Perform a transform.preview_transform request
+   * Previews a transform.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
    */
   return function transformPreviewTransform (params, options, callback) {

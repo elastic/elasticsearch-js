@@ -29,6 +29,7 @@ function buildCatMlJobs (opts) {
 
   /**
    * Perform a cat.ml_jobs request
+   * Gets configuration and usage information about anomaly detection jobs.
    * http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-anomaly-detectors.html
    */
   return function catMlJobs (params, options, callback) {
