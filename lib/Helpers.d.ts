@@ -71,6 +71,20 @@ export interface BulkHelperOptions<TDocument = unknown> extends Omit<Bulk, 'body
   concurrency?: number
   retries?: number
   wait?: number,
-  onDrop?: (doc: TDocument) => void,
+  onDrop?: (doc: OnDropDocument<TDocument>) => void,
   refreshOnCompletion?: boolean | string
+}
+
+export interface OnDropDocument<TDocument = unknown> {
+  status: number
+  error: {
+    type: string,
+    reason: string,
+    caused_by: {
+      type: string,
+      reason: string
+    }
+  }
+  document: TDocument
+  retried: boolean
 }

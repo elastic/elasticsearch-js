@@ -9,7 +9,8 @@ import {
   BulkHelper,
   BulkStats,
   BulkHelperOptions,
-  ScrollSearchResponse
+  ScrollSearchResponse,
+  OnDropDocument
 } from '../../lib/Helpers'
 
 const client = new Client({
@@ -29,7 +30,7 @@ const b = client.helpers.bulk<Record<string, any>>({
   retries: 3,
   wait: 5000,
   onDrop (doc) {
-    expectType<Record<string, any>>(doc)
+    expectType<OnDropDocument<Record<string, any>>>(doc)
   },
   refreshOnCompletion: true,
   pipeline: 'my-pipeline'
