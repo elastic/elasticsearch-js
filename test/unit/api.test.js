@@ -135,7 +135,7 @@ test('Abort method (callback)', t => {
   })
 })
 
-test('Abort is not supported in promises', t => {
+test('Abort method (promises)', t => {
   t.plan(2)
 
   function handler (req, res) {
