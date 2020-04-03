@@ -43,7 +43,7 @@ To create a new instance of the Bulk helper, you should access it as shown in th
 [cols=2*]
 |===
 |`datasource`
-a|An array or a readable stream with the data you need to index/create/update/delete.
+a|An array, async generator or a readable stream with the data you need to index/create/update/delete.
 It can be an array of strings or objects, but also a stream of json strings or JavaScript objects. +
 If it is a stream, we recommend to use the https://www.npmjs.com/package/split2[`split2`] package, that will split the stream on new lines delimiters. +
 This parameter is mandatory.
@@ -180,6 +180,36 @@ const result = await client.helpers.bulk({
   },
   pipeline: 'my-pipeline'
 })
+----
+
+==== Usage with an async generator
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+
+async function * generator () {
+  const dataset = [
+    { user: 'jon', age: 23 },
+    { user: 'arya', age: 18 },
+    { user: 'tyrion', age: 39 }
+  ]
+  for (const doc of dataset) {
+    yield doc
+  }
+}
+
+const client = new Client({ node: 'http://localhost:9200' })
+const result = await client.helpers.bulk({
+  datasource: generator(),
+  onDocument (doc) {
+    return {
+      index: { _index: 'my-index' }
+    }
+  }
+})
+
+console.log(result)
 ----
 
 === Search Helper
