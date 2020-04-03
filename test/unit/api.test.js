@@ -160,7 +160,7 @@ test('Abort is not supported in promises', t => {
       })
       .catch(t.fail)
 
-    t.type(request.abort, 'undefined')
+    t.type(request.abort, 'function')
   })
 })
 

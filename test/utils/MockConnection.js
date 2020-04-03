@@ -6,7 +6,11 @@
 
 const assert = require('assert')
 const { Connection } = require('../../index')
-const { TimeoutError } = require('../../lib/errors')
+const {
+  ConnectionError,
+  RequestAbortedError,
+  TimeoutError
+} = require('../../lib/errors')
 const intoStream = require('into-stream')
 
 class MockConnection extends Connection {
@@ -23,6 +27,8 @@ class MockConnection extends Connection {
     process.nextTick(() => {
       if (!aborted) {
         callback(null, stream)
+      } else {
+        callback(new RequestAbortedError(), null)
       }
     })
     return {
@@ -37,6 +43,8 @@ class MockConnectionTimeout extends Connection {
     process.nextTick(() => {
       if (!aborted) {
         callback(new TimeoutError('Request timed out', params), null)
+      } else {
+        callback(new RequestAbortedError(), null)
       }
     })
     return {
@@ -50,7 +58,9 @@ class MockConnectionError extends Connection {
     var aborted = false
     process.nextTick(() => {
       if (!aborted) {
-        callback(new Error('Kaboom'), null)
+        callback(new ConnectionError('Kaboom'), null)
+      } else {
+        callback(new RequestAbortedError(), null)
       }
     })
     return {
@@ -93,6 +103,8 @@ class MockConnectionSniff extends Connection {
         } else {
           callback(null, stream)
         }
+      } else {
+        callback(new RequestAbortedError(), null)
       }
     })
     return {
@@ -122,6 +134,8 @@ function buildMockConnection (opts) {
       process.nextTick(() => {
         if (!aborted) {
           callback(null, stream)
+        } else {
+          callback(new RequestAbortedError(), null)
         }
       })
       return {
