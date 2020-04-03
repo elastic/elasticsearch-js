@@ -18,7 +18,7 @@ const client = new Client({
   expectType<unknown>(response.meta.context)
 }
 
-// Define only the request body (promise style)
+// Define only the response body (promise style)
 {
   const response = await client.cat.count<string>({ index: 'test' })
 
@@ -26,7 +26,7 @@ const client = new Client({
   expectType<unknown>(response.meta.context)
 }
 
-// Define request body and  the context (promise style)
+// Define response body and the context (promise style)
 {
   const response = await client.cat.count<string, string>({ index: 'test' })
 
@@ -44,7 +44,7 @@ const client = new Client({
   expectType<TransportRequestCallback>(result)
 }
 
-// Define only the request body (callback style)
+// Define only the response body (callback style)
 {
   const result = client.cat.count<string>({ index: 'test' }, (err, response) => {
     expectType<ApiError>(err)
@@ -54,7 +54,7 @@ const client = new Client({
   expectType<TransportRequestCallback>(result)
 }
 
-// Define request body and  the context (callback style)
+// Define response body and the context (callback style)
 {
   const result = client.cat.count<string, string>({ index: 'test' }, (err, response) => {
     expectType<ApiError>(err)
