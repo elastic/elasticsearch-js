@@ -141,6 +141,14 @@ declare class Client extends EventEmitter {
     submit<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AsyncSearchSubmit<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   autoscaling: {
+    delete_autoscaling_policy<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.AutoscalingDeleteAutoscalingPolicy, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    delete_autoscaling_policy<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_autoscaling_policy<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingDeleteAutoscalingPolicy, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_autoscaling_policy<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingDeleteAutoscalingPolicy, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteAutoscalingPolicy<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.AutoscalingDeleteAutoscalingPolicy, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    deleteAutoscalingPolicy<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteAutoscalingPolicy<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingDeleteAutoscalingPolicy, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteAutoscalingPolicy<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingDeleteAutoscalingPolicy, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_autoscaling_decision<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.AutoscalingGetAutoscalingDecision, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     get_autoscaling_decision<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_autoscaling_decision<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -283,10 +291,10 @@ declare class Client extends EventEmitter {
     threadPool<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     threadPool<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatThreadPool, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     threadPool<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatThreadPool, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.CatTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    transforms<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.CatTransforms, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    transforms<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    transforms<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatTransforms, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    transforms<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatTransforms, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   ccr: {
     delete_auto_follow_pattern<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.CcrDeleteAutoFollowPattern, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>

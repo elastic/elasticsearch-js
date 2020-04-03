@@ -27,6 +27,8 @@ function ESAPI (opts) {
       submit: lazyLoad('async_search.submit', opts)
     },
     autoscaling: {
+      delete_autoscaling_policy: lazyLoad('autoscaling.delete_autoscaling_policy', opts),
+      deleteAutoscalingPolicy: lazyLoad('autoscaling.delete_autoscaling_policy', opts),
       get_autoscaling_decision: lazyLoad('autoscaling.get_autoscaling_decision', opts),
       getAutoscalingDecision: lazyLoad('autoscaling.get_autoscaling_decision', opts),
       put_autoscaling_policy: lazyLoad('autoscaling.put_autoscaling_policy', opts),
@@ -64,7 +66,7 @@ function ESAPI (opts) {
       templates: lazyLoad('cat.templates', opts),
       thread_pool: lazyLoad('cat.thread_pool', opts),
       threadPool: lazyLoad('cat.thread_pool', opts),
-      transform: lazyLoad('cat.transform', opts)
+      transforms: lazyLoad('cat.transforms', opts)
     },
     ccr: {
       delete_auto_follow_pattern: lazyLoad('ccr.delete_auto_follow_pattern', opts),

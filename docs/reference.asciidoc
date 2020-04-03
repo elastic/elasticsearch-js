@@ -5754,6 +5754,22 @@ _Default:_ `5`
 
 |===
 
+=== autoscaling.deleteAutoscalingPolicy
+*Stability:* experimental
+[source,ts]
+----
+client.autoscaling.deleteAutoscalingPolicy({
+  name: string
+})
+----
+link:{ref}/autoscaling-delete-autoscaling-policy.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - the name of the autoscaling policy
+
+|===
+
 === autoscaling.getAutoscalingDecision
 *Stability:* experimental
 [source,ts]
@@ -5981,11 +5997,11 @@ _Default:_ `100`
 
 |===
 
-=== cat.transform
+=== cat.transforms
 
 [source,ts]
 ----
-client.cat.transform({
+client.cat.transforms({
   transform_id: string,
   from: number,
   size: number,
