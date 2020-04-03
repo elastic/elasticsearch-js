@@ -21,6 +21,7 @@ function buildCcrGetAutoFollowPattern (opts) {
 
   /**
    * Perform a ccr.get_auto_follow_pattern request
+   * Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-auto-follow-pattern.html
    */
   return function ccrGetAutoFollowPattern (params, options, callback) {

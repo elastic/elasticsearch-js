@@ -21,6 +21,7 @@ function buildMlGetDatafeedStats (opts) {
 
   /**
    * Perform a ml.get_datafeed_stats request
+   * Retrieves usage information for datafeeds.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
    */
   return function mlGetDatafeedStats (params, options, callback) {

@@ -21,6 +21,7 @@ function buildMlExplainDataFrameAnalytics (opts) {
 
   /**
    * Perform a ml.explain_data_frame_analytics request
+   * Explains a data frame analytics config.
    * http://www.elastic.co/guide/en/elasticsearch/reference/current/explain-dfanalytics.html
    */
   return function mlExplainDataFrameAnalytics (params, options, callback) {

@@ -30,7 +30,8 @@ function buildIndicesUnfreeze (opts) {
 
   /**
    * Perform a indices.unfreeze request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/frozen.html
+   * Unfreezes an index. When a frozen index is unfrozen, the index goes through the normal recovery process and becomes writeable again.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/unfreeze-index-api.html
    */
   return function indicesUnfreeze (params, options, callback) {
     options = options || {}

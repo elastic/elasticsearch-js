@@ -23,6 +23,8 @@ function buildRollupRollupSearch (opts) {
 
   /**
    * Perform a rollup.rollup_search request
+   * Enables searching rolled-up data using the standard query DSL.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-search.html
    */
   return function rollupRollupSearch (params, options, callback) {
     options = options || {}

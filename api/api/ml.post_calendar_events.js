@@ -21,6 +21,8 @@ function buildMlPostCalendarEvents (opts) {
 
   /**
    * Perform a ml.post_calendar_events request
+   * Posts scheduled events in a calendar.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-calendar-event.html
    */
   return function mlPostCalendarEvents (params, options, callback) {
     options = options || {}

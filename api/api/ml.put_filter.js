@@ -21,6 +21,8 @@ function buildMlPutFilter (opts) {
 
   /**
    * Perform a ml.put_filter request
+   * Instantiates a filter.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-filter.html
    */
   return function mlPutFilter (params, options, callback) {
     options = options || {}

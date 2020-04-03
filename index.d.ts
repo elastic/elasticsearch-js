@@ -140,6 +140,7 @@ declare class Client extends EventEmitter {
     submit<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.AsyncSearchSubmit<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   autoscaling: {
+<<<<<<< HEAD
     get_autoscaling_decision<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.AutoscalingGetAutoscalingDecision, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     get_autoscaling_decision<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_autoscaling_decision<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -148,6 +149,24 @@ declare class Client extends EventEmitter {
     getAutoscalingDecision<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getAutoscalingDecision<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getAutoscalingDecision<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+=======
+    get_autoscaling_decision<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.AutoscalingGetAutoscalingDecision, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get_autoscaling_decision<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_autoscaling_decision<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_autoscaling_decision<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getAutoscalingDecision<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.AutoscalingGetAutoscalingDecision, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    getAutoscalingDecision<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getAutoscalingDecision<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getAutoscalingDecision<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_autoscaling_policy<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.AutoscalingPutAutoscalingPolicy<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    put_autoscaling_policy<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_autoscaling_policy<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingPutAutoscalingPolicy<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_autoscaling_policy<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingPutAutoscalingPolicy<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putAutoscalingPolicy<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.AutoscalingPutAutoscalingPolicy<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    putAutoscalingPolicy<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putAutoscalingPolicy<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingPutAutoscalingPolicy<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putAutoscalingPolicy<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingPutAutoscalingPolicy<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+>>>>>>> master
   }
   bulk<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = unknown>(params?: RequestParams.Bulk<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
   bulk<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2128,6 +2147,7 @@ declare class Client extends EventEmitter {
     stop<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SlmStop, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   snapshot: {
+<<<<<<< HEAD
     cleanup_repository<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.SnapshotCleanupRepository<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
     cleanup_repository<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     cleanup_repository<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.SnapshotCleanupRepository<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2188,6 +2208,68 @@ declare class Client extends EventEmitter {
     verifyRepository<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     verifyRepository<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SnapshotVerifyRepository, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     verifyRepository<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SnapshotVerifyRepository, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+=======
+    cleanup_repository<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotCleanupRepository, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    cleanup_repository<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cleanup_repository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotCleanupRepository, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cleanup_repository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotCleanupRepository, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cleanupRepository<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotCleanupRepository, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    cleanupRepository<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cleanupRepository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotCleanupRepository, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cleanupRepository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotCleanupRepository, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotCreate<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    create<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotCreate<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotCreate<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_repository<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotCreateRepository<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    create_repository<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_repository<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotCreateRepository<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_repository<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotCreateRepository<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createRepository<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotCreateRepository<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    createRepository<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createRepository<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotCreateRepository<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createRepository<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotCreateRepository<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotDelete, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    delete<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotDelete, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotDelete, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_repository<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotDeleteRepository, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    delete_repository<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_repository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotDeleteRepository, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_repository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotDeleteRepository, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteRepository<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotDeleteRepository, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    deleteRepository<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteRepository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotDeleteRepository, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteRepository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotDeleteRepository, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotGet, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotGet, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotGet, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_repository<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotGetRepository, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    get_repository<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_repository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotGetRepository, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_repository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotGetRepository, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getRepository<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotGetRepository, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    getRepository<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getRepository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotGetRepository, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getRepository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotGetRepository, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    restore<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotRestore<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    restore<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    restore<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotRestore<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    restore<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotRestore<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    status<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotStatus, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    status<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    status<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotStatus, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    status<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotStatus, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    verify_repository<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotVerifyRepository, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    verify_repository<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    verify_repository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotVerifyRepository, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    verify_repository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotVerifyRepository, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    verifyRepository<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.SnapshotVerifyRepository, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    verifyRepository<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    verifyRepository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotVerifyRepository, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    verifyRepository<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.SnapshotVerifyRepository, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+>>>>>>> master
   }
   sql: {
     clear_cursor<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.SqlClearCursor<TRequestBody>, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>

@@ -21,6 +21,7 @@ function buildCcrFollowInfo (opts) {
 
   /**
    * Perform a ccr.follow_info request
+   * Retrieves information about all follower indices, including parameters and status for each follower index
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html
    */
   return function ccrFollowInfo (params, options, callback) {

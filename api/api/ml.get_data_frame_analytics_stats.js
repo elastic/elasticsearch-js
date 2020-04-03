@@ -24,6 +24,7 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
 
   /**
    * Perform a ml.get_data_frame_analytics_stats request
+   * Retrieves usage information for data frame analytics jobs.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics-stats.html
    */
   return function mlGetDataFrameAnalyticsStats (params, options, callback) {

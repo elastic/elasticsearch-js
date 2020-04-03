@@ -21,6 +21,7 @@ function buildDataFrameTransformDeprecatedPreviewTransform (opts) {
 
   /**
    * Perform a data_frame_transform_deprecated.preview_transform request
+   * Previews a transform.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
    */
   return function dataFrameTransformDeprecatedPreviewTransform (params, options, callback) {

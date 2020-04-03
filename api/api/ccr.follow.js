@@ -21,6 +21,7 @@ function buildCcrFollow (opts) {
 
   /**
    * Perform a ccr.follow request
+   * Creates a new follower index configured to follow the referenced leader index.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.html
    */
   return function ccrFollow (params, options, callback) {

@@ -21,6 +21,7 @@ function buildCcrUnfollow (opts) {
 
   /**
    * Perform a ccr.unfollow request
+   * Stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-unfollow.html
    */
   return function ccrUnfollow (params, options, callback) {

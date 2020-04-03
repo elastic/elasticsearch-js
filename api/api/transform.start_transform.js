@@ -21,6 +21,7 @@ function buildTransformStartTransform (opts) {
 
   /**
    * Perform a transform.start_transform request
+   * Starts one or more transforms.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/start-transform.html
    */
   return function transformStartTransform (params, options, callback) {

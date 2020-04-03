@@ -21,6 +21,8 @@ function buildMlDeleteExpiredData (opts) {
 
   /**
    * Perform a ml.delete_expired_data request
+   * Deletes expired and unused machine learning data.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-expired-data.html
    */
   return function mlDeleteExpiredData (params, options, callback) {
     options = options || {}

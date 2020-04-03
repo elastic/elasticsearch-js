@@ -21,6 +21,7 @@ function buildSecurityClearCachedRealms (opts) {
 
   /**
    * Perform a security.clear_cached_realms request
+   * Evicts users from the user cache. Can completely clear the cache or evict specific users.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html
    */
   return function securityClearCachedRealms (params, options, callback) {

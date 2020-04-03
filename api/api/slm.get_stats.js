@@ -21,6 +21,7 @@ function buildSlmGetStats (opts) {
 
   /**
    * Perform a slm.get_stats request
+   * Returns global and policy-level statistics about actions taken by snapshot lifecycle management.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/slm-api-get-stats.html
    */
   return function slmGetStats (params, options, callback) {

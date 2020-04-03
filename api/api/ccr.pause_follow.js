@@ -21,6 +21,7 @@ function buildCcrPauseFollow (opts) {
 
   /**
    * Perform a ccr.pause_follow request
+   * Pauses a follower index. The follower index will not fetch any additional operations from the leader index.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-pause-follow.html
    */
   return function ccrPauseFollow (params, options, callback) {

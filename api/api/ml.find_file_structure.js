@@ -42,6 +42,7 @@ function buildMlFindFileStructure (opts) {
 
   /**
    * Perform a ml.find_file_structure request
+   * Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-find-file-structure.html
    */
   return function mlFindFileStructure (params, options, callback) {

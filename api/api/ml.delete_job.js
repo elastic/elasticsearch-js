@@ -22,6 +22,7 @@ function buildMlDeleteJob (opts) {
 
   /**
    * Perform a ml.delete_job request
+   * Deletes an existing anomaly detection job.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.html
    */
   return function mlDeleteJob (params, options, callback) {

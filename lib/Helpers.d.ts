@@ -10,7 +10,7 @@ export default class Helpers {
   search<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): Promise<TDocument[]>
   scrollSearch<TDocument = unknown, TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<ScrollSearchResponse<TDocument, TResponse, TContext>>
   scrollDocuments<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<TDocument>
-  bulk(options: BulkHelperOptions): BulkHelper<BulkStats>
+  bulk<TDocument = unknown>(options: BulkHelperOptions<TDocument>): BulkHelper<BulkStats>
 }
 
 export interface ScrollSearchResponse<TDocument = unknown, TResponse = Record<string, any>, TContext = unknown> extends ApiResponse<TResponse, TContext> {
@@ -64,13 +64,27 @@ type UpdateAction = [UpdateActionOperation, Record<string, any>]
 type Action = IndexAction | CreateAction | UpdateAction | DeleteAction
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
-export interface BulkHelperOptions extends Omit<Bulk, 'body'> {
-  datasource: any[] | Buffer | ReadableStream
-  onDocument: (doc: Record<string, any>) => Action
+export interface BulkHelperOptions<TDocument = unknown> extends Omit<Bulk, 'body'> {
+  datasource: TDocument[] | Buffer | ReadableStream | AsyncIterator<TDocument>
+  onDocument: (doc: TDocument) => Action
   flushBytes?: number
   concurrency?: number
   retries?: number
   wait?: number,
-  onDrop?: (doc: Record<string, any>) => void,
+  onDrop?: (doc: OnDropDocument<TDocument>) => void,
   refreshOnCompletion?: boolean | string
+}
+
+export interface OnDropDocument<TDocument = unknown> {
+  status: number
+  error: {
+    type: string,
+    reason: string,
+    caused_by: {
+      type: string,
+      reason: string
+    }
+  }
+  document: TDocument
+  retried: boolean
 }

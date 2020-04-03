@@ -21,6 +21,7 @@ function buildDataFrameTransformDeprecatedDeleteTransform (opts) {
 
   /**
    * Perform a data_frame_transform_deprecated.delete_transform request
+   * Deletes an existing transform.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform.html
    */
   return function dataFrameTransformDeprecatedDeleteTransform (params, options, callback) {

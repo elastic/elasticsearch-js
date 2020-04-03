@@ -21,6 +21,7 @@ function buildMlUpdateJob (opts) {
 
   /**
    * Perform a ml.update_job request
+   * Updates certain properties of an anomaly detection job.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.html
    */
   return function mlUpdateJob (params, options, callback) {

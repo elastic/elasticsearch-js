@@ -91,6 +91,7 @@ function buildAsyncSearchSubmit (opts) {
 
   /**
    * Perform a async_search.submit request
+   * Executes a search request asynchronously.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/async-search.html
    */
   return function asyncSearchSubmit (params, options, callback) {

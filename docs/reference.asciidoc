@@ -330,7 +330,7 @@ client.cat.health({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   ts: boolean,
   v: boolean
 })
@@ -351,7 +351,7 @@ link:{ref}/cat-health.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`ts`
 |`boolean` - Set to false to disable timestamping +
@@ -1759,7 +1759,8 @@ _Default:_ `1m`
 |`string` - Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`scroll_size` or `scrollSize`
-|`number` - Size on the scroll request powering the delete by query
+|`number` - Size on the scroll request powering the delete by query +
+_Default:_ `100`
 
 |`wait_for_completion` or `waitForCompletion`
 |`boolean` - Should the request should block until the delete by query is complete. +
@@ -2141,6 +2142,7 @@ link:{ref}/modules-scripting.html[Documentation] +
 ----
 client.getScriptContext()
 ----
+link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html[Documentation] +
 
 
 === getScriptLanguages
@@ -2149,6 +2151,7 @@ client.getScriptContext()
 ----
 client.getScriptLanguages()
 ----
+link:{ref}/modules-scripting.html[Documentation] +
 
 
 === getSource
@@ -3055,7 +3058,7 @@ link:{ref}/indices-get-settings.html[Documentation] +
 
 |`expand_wildcards` or `expandWildcards`
 |`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open,closed`
+_Default:_ `all`
 
 |`flat_settings` or `flatSettings`
 |`boolean` - Return settings in flat format (default: false)
@@ -4818,8 +4821,7 @@ _Default:_ `true`
 client.snapshot.cleanupRepository({
   repository: string,
   master_timeout: string,
-  timeout: string,
-  body: object
+  timeout: string
 })
 ----
 link:{ref}/modules-snapshots.html[Documentation] +
@@ -4833,9 +4835,6 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |`timeout`
 |`string` - Explicit operation timeout
-
-|`body`
-|`object` - undefined
 
 |===
 
@@ -5099,7 +5098,8 @@ client.tasks.cancel({
   task_id: string,
   nodes: string | string[],
   actions: string | string[],
-  parent_task_id: string
+  parent_task_id: string,
+  wait_for_completion: boolean
 })
 ----
 link:{ref}/tasks.html[Documentation] +
@@ -5116,6 +5116,9 @@ link:{ref}/tasks.html[Documentation] +
 
 |`parent_task_id` or `parentTaskId`
 |`string` - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should the request block until the cancellation of the task and its child tasks is completed. Defaults to false
 
 |===
 
@@ -5476,7 +5479,8 @@ _Default:_ `1m`
 |`string` - Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`scroll_size` or `scrollSize`
-|`number` - Size on the scroll request powering the update by query
+|`number` - Size on the scroll request powering the update by query +
+_Default:_ `100`
 
 |`wait_for_completion` or `waitForCompletion`
 |`boolean` - Should the request should block until the update by query operation is complete. +
@@ -5580,7 +5584,7 @@ client.asyncSearch.submit({
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   lenient: boolean,
   preference: string,
   q: string,
@@ -5619,7 +5623,7 @@ link:{ref}/async-search.html[Documentation] +
 _Default:_ `1s`
 
 |`keep_on_completion` or `keepOnCompletion`
-|`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: true)
+|`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
 
 |`keep_alive` or `keepAlive`
 |`string` - Update the time interval in which the results (partial or final) for this search will be available +
@@ -5667,7 +5671,7 @@ _Default:_ `OR`
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`lenient`
@@ -5759,6 +5763,26 @@ client.autoscaling.getAutoscalingDecision()
 link:{ref}/autoscaling-get-autoscaling-decision.html[Documentation] +
 
 
+=== autoscaling.putAutoscalingPolicy
+*Stability:* experimental
+[source,ts]
+----
+client.autoscaling.putAutoscalingPolicy({
+  name: string,
+  body: object
+})
+----
+link:{ref}/autoscaling-put-autoscaling-policy.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - the name of the autoscaling policy
+
+|`body`
+|`object` - the specification of the autoscaling policy
+
+|===
+
 === cat.mlDataFrameAnalytics
 
 [source,ts]
@@ -5771,7 +5795,7 @@ client.cat.mlDataFrameAnalytics({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -5800,7 +5824,7 @@ link:{ref}/cat-dfanalytics.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -5818,7 +5842,7 @@ client.cat.mlDatafeeds({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -5844,7 +5868,7 @@ link:{ref}/cat-datafeeds.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -5863,7 +5887,7 @@ client.cat.mlJobs({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -5892,7 +5916,7 @@ link:{ref}/cat-anomaly-detectors.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -5913,7 +5937,7 @@ client.cat.mlTrainedModels({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -5950,7 +5974,7 @@ _Default:_ `100`
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -5970,7 +5994,7 @@ client.cat.transform({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -6002,7 +6026,7 @@ link:{ref}/cat-transforms.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -6714,7 +6738,7 @@ client.indices.freeze({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
@@ -6737,7 +6761,7 @@ link:{ref}/freeze-index-api.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `closed`
 
 |`wait_for_active_shards` or `waitForActiveShards`
@@ -6753,7 +6777,7 @@ client.indices.reloadSearchAnalyzers({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-reload-analyzers.html[Documentation] +
@@ -6769,7 +6793,7 @@ link:{ref}/indices-reload-analyzers.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -6784,11 +6808,11 @@ client.indices.unfreeze({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
-link:{ref}/freeze-index-api.html[Documentation] +
+link:{ref}/unfreeze-index-api.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -6807,7 +6831,7 @@ link:{ref}/freeze-index-api.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `closed`
 
 |`wait_for_active_shards` or `waitForActiveShards`
@@ -6976,6 +7000,7 @@ client.ml.deleteCalendar({
   calendar_id: string
 })
 ----
+link:{ref}/ml-delete-calendar.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -6992,6 +7017,7 @@ client.ml.deleteCalendarEvent({
   event_id: string
 })
 ----
+link:{ref}/ml-delete-calendar-event.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -7011,6 +7037,7 @@ client.ml.deleteCalendarJob({
   job_id: string
 })
 ----
+link:{ref}/ml-delete-calendar-job.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -7067,6 +7094,7 @@ link:{ref}/ml-delete-datafeed.html[Documentation] +
 ----
 client.ml.deleteExpiredData()
 ----
+link:{ref}/ml-delete-expired-data.html[Documentation] +
 
 
 === ml.deleteFilter
@@ -7077,6 +7105,7 @@ client.ml.deleteFilter({
   filter_id: string
 })
 ----
+link:{ref}/ml-delete-filter.html[Documentation] +
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -7181,6 +7210,7 @@ client.ml.estimateModelMemory({
   body: object
 })
 ----
+link:{ref}/ml-apis.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -7349,6 +7379,7 @@ client.ml.forecast({
   expires_in: string
 })
 ----
+link:{ref}/ml-forecast.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -7435,6 +7466,7 @@ client.ml.getCalendarEvents({
   size: number
 })
 ----
+link:{ref}/ml-get-calendar-event.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -7468,6 +7500,7 @@ client.ml.getCalendars({
   body: object
 })
 ----
+link:{ref}/ml-get-calendar.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -7626,6 +7659,7 @@ client.ml.getFilters({
   size: number
 })
 ----
+link:{ref}/ml-get-filter.html[Documentation] +
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -7660,7 +7694,7 @@ link:{ref}/ml-get-influencer.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
-|`string` - undefined
+|`string` - Identifier for the anomaly detection job
 
 |`exclude_interim` or `excludeInterim`
 |`boolean` - Exclude interim results
@@ -7848,7 +7882,7 @@ link:{ref}/ml-get-record.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
-|`string` - undefined
+|`string` - The ID of the job
 
 |`exclude_interim` or `excludeInterim`
 |`boolean` - Exclude interim results
@@ -7866,7 +7900,7 @@ link:{ref}/ml-get-record.html[Documentation] +
 |`string` - End time filter for records
 
 |`record_score` or `recordScore`
-|`number` - undefined
+|`number` - Returns records with anomaly scores greater or equal than this value
 
 |`sort`
 |`string` - Sort records by a particular field
@@ -7958,6 +7992,7 @@ _Default:_ `100`
 ----
 client.ml.info()
 ----
+link:{ref}/get-ml-info.html[Documentation] +
 
 
 === ml.openJob
@@ -7985,6 +8020,7 @@ client.ml.postCalendarEvents({
   body: object
 })
 ----
+link:{ref}/ml-post-calendar-event.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -8048,6 +8084,7 @@ client.ml.putCalendar({
   body: object
 })
 ----
+link:{ref}/ml-put-calendar.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -8067,6 +8104,7 @@ client.ml.putCalendarJob({
   job_id: string
 })
 ----
+link:{ref}/ml-put-calendar-job.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -8142,6 +8180,7 @@ client.ml.putFilter({
   body: object
 })
 ----
+link:{ref}/ml-put-filter.html[Documentation] +
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -8181,7 +8220,7 @@ client.ml.putTrainedModel({
   body: object
 })
 ----
-link:TODO[Documentation] +
+link:{ref}/put-inference.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -8401,6 +8440,7 @@ client.ml.updateFilter({
   body: object
 })
 ----
+link:{ref}/ml-update-filter.html[Documentation] +
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -8527,6 +8567,7 @@ client.rollup.deleteJob({
   id: string
 })
 ----
+link:{ref}/rollup-delete-job.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -8542,6 +8583,7 @@ client.rollup.getJobs({
   id: string
 })
 ----
+link:{ref}/rollup-get-job.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -8557,6 +8599,7 @@ client.rollup.getRollupCaps({
   id: string
 })
 ----
+link:{ref}/rollup-get-rollup-caps.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -8572,6 +8615,7 @@ client.rollup.getRollupIndexCaps({
   index: string
 })
 ----
+link:{ref}/rollup-get-rollup-index-caps.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -8588,6 +8632,7 @@ client.rollup.putJob({
   body: object
 })
 ----
+link:{ref}/rollup-put-job.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -8610,6 +8655,7 @@ client.rollup.rollupSearch({
   body: object
 })
 ----
+link:{ref}/rollup-search.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -8639,6 +8685,7 @@ client.rollup.startJob({
   id: string
 })
 ----
+link:{ref}/rollup-start-job.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -8656,6 +8703,7 @@ client.rollup.stopJob({
   timeout: string
 })
 ----
+link:{ref}/rollup-stop-job.html[Documentation] +
 [cols=2*]
 |===
 |`id`

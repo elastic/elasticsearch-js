@@ -21,6 +21,7 @@ function buildWatcherDeactivateWatch (opts) {
 
   /**
    * Perform a watcher.deactivate_watch request
+   * Deactivates a currently active watch.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-deactivate-watch.html
    */
   return function watcherDeactivateWatch (params, options, callback) {

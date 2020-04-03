@@ -21,6 +21,7 @@ function buildSecurityAuthenticate (opts) {
 
   /**
    * Perform a security.authenticate request
+   * Enables authentication as a user and retrieve information about the authenticated user.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
    */
   return function securityAuthenticate (params, options, callback) {

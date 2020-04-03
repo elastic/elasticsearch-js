@@ -21,7 +21,7 @@ function buildSqlQuery (opts) {
 
   /**
    * Perform a sql.query request
-   * Executes an SQL request
+   * Executes a SQL request
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-rest-overview.html
    */
   return function sqlQuery (params, options, callback) {

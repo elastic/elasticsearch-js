@@ -21,6 +21,8 @@ function buildRollupGetJobs (opts) {
 
   /**
    * Perform a rollup.get_jobs request
+   * Retrieves the configuration, stats, and status of rollup jobs.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-job.html
    */
   return function rollupGetJobs (params, options, callback) {
     options = options || {}

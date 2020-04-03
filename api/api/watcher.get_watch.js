@@ -21,6 +21,7 @@ function buildWatcherGetWatch (opts) {
 
   /**
    * Perform a watcher.get_watch request
+   * Retrieves a watch by its ID.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html
    */
   return function watcherGetWatch (params, options, callback) {

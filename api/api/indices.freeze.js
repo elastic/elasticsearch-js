@@ -30,7 +30,8 @@ function buildIndicesFreeze (opts) {
 
   /**
    * Perform a indices.freeze request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/frozen.html
+   * Freezes an index. A frozen index has almost no overhead on the cluster (except for maintaining its metadata in memory) and is read-only.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/freeze-index-api.html
    */
   return function indicesFreeze (params, options, callback) {
     options = options || {}

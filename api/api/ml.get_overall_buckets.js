@@ -31,6 +31,7 @@ function buildMlGetOverallBuckets (opts) {
 
   /**
    * Perform a ml.get_overall_buckets request
+   * Retrieves overall bucket results that summarize the bucket results of multiple anomaly detection jobs.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-buckets.html
    */
   return function mlGetOverallBuckets (params, options, callback) {

@@ -21,6 +21,7 @@ function buildSecurityGetUserPrivileges (opts) {
 
   /**
    * Perform a security.get_user_privileges request
+   * Retrieves application privileges.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html
    */
   return function securityGetUserPrivileges (params, options, callback) {

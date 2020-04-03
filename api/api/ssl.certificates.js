@@ -21,6 +21,7 @@ function buildSslCertificates (opts) {
 
   /**
    * Perform a ssl.certificates request
+   * Retrieves information about the X.509 certificates used to encrypt communications in the cluster.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html
    */
   return function sslCertificates (params, options, callback) {
