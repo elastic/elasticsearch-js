@@ -30,14 +30,14 @@ export declare class NoLivingConnectionsError<TResponse = Record<string, any>, T
   constructor(message: string, meta: ApiResponse);
 }
 
-export declare class SerializationError<TResponse = Record<string, any>, TContext = unknown> extends ElasticsearchClientError {
+export declare class SerializationError extends ElasticsearchClientError {
   name: string;
   message: string;
   data: any;
   constructor(message: string, data: any);
 }
 
-export declare class DeserializationError<TResponse = Record<string, any>, TContext = unknown> extends ElasticsearchClientError {
+export declare class DeserializationError extends ElasticsearchClientError {
   name: string;
   message: string;
   data: string;
