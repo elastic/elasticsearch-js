@@ -1430,6 +1430,10 @@ export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   body?: T;
 }
 
+export interface AutoscalingDeleteAutoscalingPolicy extends Generic {
+  name: string;
+}
+
 export interface AutoscalingGetAutoscalingDecision extends Generic {
 }
 
@@ -1487,7 +1491,7 @@ export interface CatMlTrainedModels extends Generic {
   v?: boolean;
 }
 
-export interface CatTransform extends Generic {
+export interface CatTransforms extends Generic {
   transform_id?: string;
   from?: number;
   size?: number;
