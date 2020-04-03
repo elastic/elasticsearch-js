@@ -62,7 +62,7 @@ function ESAPI (opts) {
       templates: lazyLoad('cat.templates', opts),
       thread_pool: lazyLoad('cat.thread_pool', opts),
       threadPool: lazyLoad('cat.thread_pool', opts),
-      transform: lazyLoad('cat.transform', opts)
+      transforms: lazyLoad('cat.transforms', opts)
     },
     ccr: {
       delete_auto_follow_pattern: lazyLoad('ccr.delete_auto_follow_pattern', opts),

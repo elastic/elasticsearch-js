@@ -275,10 +275,10 @@ declare class Client extends EventEmitter {
     threadPool<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     threadPool<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatThreadPool, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     threadPool<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatThreadPool, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    transform<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.CatTransform, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
-    transform<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatTransform, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    transform<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatTransform, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    transforms<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.CatTransforms, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>
+    transforms<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    transforms<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatTransforms, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    transforms<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.CatTransforms, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   ccr: {
     delete_auto_follow_pattern<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.CcrDeleteAutoFollowPattern, options?: TransportRequestOptions): Promise<ApiResponse<TResponse, TContext>>

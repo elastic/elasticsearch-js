@@ -6046,11 +6046,11 @@ _Default:_ `100`
 
 |===
 
-=== cat.transform
+=== cat.transforms
 
 [source,ts]
 ----
-client.cat.transform({
+client.cat.transforms({
   transform_id: string,
   from: number,
   size: number,

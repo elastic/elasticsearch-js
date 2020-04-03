@@ -1474,7 +1474,7 @@ export interface CatMlTrainedModels extends Generic {
   v?: boolean;
 }
 
-export interface CatTransform extends Generic {
+export interface CatTransforms extends Generic {
   transform_id?: string;
   from?: number;
   size?: number;
