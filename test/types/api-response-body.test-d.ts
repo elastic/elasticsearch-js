@@ -4,7 +4,8 @@
 
 import { expectType, expectError } from 'tsd'
 import { Readable as ReadableStream } from 'stream';
-import { Client } from '../../'
+import { TransportRequestCallback } from '../../lib/Transport'
+import { Client, ApiError } from '../../'
 
 const client = new Client({
   node: 'http://localhost:9200'
@@ -67,7 +68,7 @@ expectError(
   }).then(console.log)
 )
 
-// No generics
+// No generics (promise style)
 {
   const response = await client.search({
     index: 'test',
@@ -82,7 +83,7 @@ expectError(
   expectType<unknown>(response.meta.context)
 }
 
-// Define only the request body
+// Define only the response body (promise style)
 {
   const response = await client.search<SearchResponse<Source>>({
     index: 'test',
@@ -97,7 +98,7 @@ expectError(
   expectType<unknown>(response.meta.context)
 }
 
-// Define request body and response body
+// Define response body and request body (promise style)
 {
   const response = await client.search<SearchResponse<Source>, SearchBody>({
     index: 'test',
@@ -112,7 +113,7 @@ expectError(
   expectType<unknown>(response.meta.context)
 }
 
-// Define request body, response body and the context
+// Define response body, request body and the context (promise style)
 {
   const response = await client.search<SearchResponse<Source>, SearchBody, string>({
     index: 'test',
@@ -127,7 +128,7 @@ expectError(
   expectType<string>(response.meta.context)
 }
 
-// Send request body as string
+// Send request body as string (promise style)
 {
   const response = await client.search({
     index: 'test',
@@ -138,7 +139,7 @@ expectError(
   expectType<unknown>(response.meta.context)
 }
 
-// Send request body as buffer
+// Send request body as buffer (promise style)
 {
   const response = await client.search({
     index: 'test',
@@ -149,7 +150,7 @@ expectError(
   expectType<unknown>(response.meta.context)
 }
 
-// Send request body as readable stream
+// Send request body as readable stream (promise style)
 {
   const response = await client.search({
     index: 'test',
@@ -158,4 +159,111 @@ expectError(
 
   expectType<Record<string, any>>(response.body)
   expectType<unknown>(response.meta.context)
+}
+
+// No generics (callback style)
+{
+  const result = client.search({
+    index: 'test',
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
+  }, (err, response) => {
+    expectType<ApiError>(err)
+    expectType<Record<string, any>>(response.body)
+    expectType<unknown>(response.meta.context)
+  })
+  expectType<TransportRequestCallback>(result)
+}
+
+// Define only the response body (callback style)
+{
+  const result = client.search<SearchResponse<Source>>({
+    index: 'test',
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
+  }, (err, response) => {
+    expectType<ApiError>(err)
+    expectType<SearchResponse<Source>>(response.body)
+    expectType<unknown>(response.meta.context)
+  })
+  expectType<TransportRequestCallback>(result)
+}
+
+// Define response body and request body (callback style)
+{
+  const result = client.search<SearchResponse<Source>, SearchBody>({
+    index: 'test',
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
+  }, (err, response) => {
+    expectType<ApiError>(err)
+    expectType<SearchResponse<Source>>(response.body)
+    expectType<unknown>(response.meta.context)
+  })
+  expectType<TransportRequestCallback>(result)
+}
+
+// Define response body, request body and the context (callback style)
+{
+  const result = client.search<SearchResponse<Source>, SearchBody, string>({
+    index: 'test',
+    body: {
+      query: {
+        match: { foo: 'bar' }
+      }
+    }
+  }, (err, response) => {
+    expectType<ApiError>(err)
+    expectType<SearchResponse<Source>>(response.body)
+    expectType<string>(response.meta.context)
+  })
+  expectType<TransportRequestCallback>(result)
+}
+
+// Send request body as string (callback style)
+{
+  const result = client.search({
+    index: 'test',
+    body: 'hello world'
+  }, (err, response) => {
+    expectType<ApiError>(err)
+    expectType<Record<string, any>>(response.body)
+    expectType<unknown>(response.meta.context)
+  })
+  expectType<TransportRequestCallback>(result)
+}
+
+// Send request body as buffer (callback style)
+{
+  const result = client.search({
+    index: 'test',
+    body: Buffer.from('hello world')
+  }, (err, response) => {
+    expectType<ApiError>(err)
+    expectType<Record<string, any>>(response.body)
+    expectType<unknown>(response.meta.context)
+  })
+  expectType<TransportRequestCallback>(result)
+}
+
+// Send request body as readable stream (callback style)
+{
+  const result = client.search({
+    index: 'test',
+    body: new ReadableStream()
+  }, (err, response) => {
+    expectType<ApiError>(err)
+    expectType<Record<string, any>>(response.body)
+    expectType<unknown>(response.meta.context)
+  })
+  expectType<TransportRequestCallback>(result)
 }
