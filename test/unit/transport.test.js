@@ -89,6 +89,32 @@ test('Basic (promises support)', t => {
     .catch(t.fail)
 })
 
+test('Basic - failing (promises support)', t => {
+  t.plan(1)
+
+  const pool = new ConnectionPool({ Connection: MockConnectionTimeout })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  transport
+    .request({
+      method: 'GET',
+      path: '/hello'
+    })
+    .catch(err => {
+      t.ok(err instanceof TimeoutError)
+    })
+})
+
 test('Basic (options + promises support)', t => {
   t.plan(1)
 
