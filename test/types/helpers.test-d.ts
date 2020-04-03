@@ -9,7 +9,8 @@ import {
   BulkHelper,
   BulkStats,
   BulkHelperOptions,
-  ScrollSearchResponse
+  ScrollSearchResponse,
+  OnDropDocument
 } from '../../lib/Helpers'
 
 const client = new Client({
@@ -18,7 +19,7 @@ const client = new Client({
 
 /// .helpers.bulk
 
-const b = client.helpers.bulk({
+const b = client.helpers.bulk<Record<string, any>>({
   datasource: [],
   onDocument (doc) {
     expectType<Record<string, any>>(doc)
@@ -29,7 +30,7 @@ const b = client.helpers.bulk({
   retries: 3,
   wait: 5000,
   onDrop (doc) {
-    expectType<Record<string, any>>(doc)
+    expectType<OnDropDocument<Record<string, any>>>(doc)
   },
   refreshOnCompletion: true,
   pipeline: 'my-pipeline'
@@ -59,7 +60,7 @@ expectError(
       return { index: { _index: 'test' } } 
     }
   }
-  expectAssignable<BulkHelperOptions>(options)
+  expectAssignable<BulkHelperOptions<Record<string, any>>>(options)
 }
 // create
 {
@@ -69,20 +70,20 @@ expectError(
       return { create: { _index: 'test' } }
     }
   }
-  expectAssignable<BulkHelperOptions>(options)
+  expectAssignable<BulkHelperOptions<Record<string, any>>>(options)
 }
 // update
 {
   // without `:BulkHelperOptions` this test cannot pass
   // but if we write these options inline inside
   // a `.helper.bulk`, it works as expected
-  const options: BulkHelperOptions = {
+  const options: BulkHelperOptions<Record<string, any>> = {
     datasource: [],
     onDocument (doc: Record<string, any>) {
       return [{ update: { _index: 'test' } }, doc]
     }
   }
-  expectAssignable<BulkHelperOptions>(options)
+  expectAssignable<BulkHelperOptions<Record<string, any>>>(options)
 }
 // delete
 {
@@ -92,7 +93,7 @@ expectError(
       return { delete: { _index: 'test' } }
     }
   }
-  expectAssignable<BulkHelperOptions>(options)
+  expectAssignable<BulkHelperOptions<Record<string, any>>>(options)
 }
 
 /// .helpers.scrollSearch
