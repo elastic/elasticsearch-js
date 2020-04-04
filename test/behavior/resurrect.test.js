@@ -49,8 +49,7 @@ test('Should execute the recurrect API with the ping strategy', t => {
     })
 
     q.add((q, done) => {
-      cluster.kill('node0')
-      setTimeout(done, 100)
+      cluster.kill('node0', done)
     })
 
     q.add((q, done) => {
@@ -173,8 +172,7 @@ test('Should execute the recurrect API with the optimistic strategy', t => {
     })
 
     q.add((q, done) => {
-      cluster.kill('node0')
-      setTimeout(done, 100)
+      cluster.kill('node0', done)
     })
 
     q.add((q, done) => {

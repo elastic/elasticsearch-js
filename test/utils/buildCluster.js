@@ -55,31 +55,41 @@ function buildCluster (options, callback) {
   }
 
   function shutdown () {
-    debug(`Shutting down cluster '${clusterId}'`)
-    Object.keys(nodes).forEach(kill)
+    const nodeIds = Object.keys(nodes)
+    debug(`Shutting down cluster '${clusterId}' with ${nodeIds.length} nodes`)
+
+    let shut = 0
+    nodeIds.forEach(id => kill(id, (shutNodeId) => {
+      debug(`Shut down node '${shutNodeId}' (cluster '${clusterId}')`)
+
+      shut += 1
+      if (shut === nodeIds.length) {
+        debug(`Shutting down cluster '${clusterId}' DONE!`)
+      }
+    }))
   }
 
-  function kill (id) {
+  function kill (id, callback) {
+    if (!nodes[id]) {
+      callback(null)
+      return
+    }
+
     debug(`Shutting down cluster node '${id}' (cluster id: '${clusterId}')`)
-    nodes[id].server.stop()
-    delete nodes[id]
-    delete sniffResult.nodes[id]
-  }
-
-  function spawn (id, callback) {
-    debug(`Spawning cluster node '${id}' (cluster id: '${clusterId}')`)
-    q.add(bootNode, { id })
-    q.add((q, done) => {
-      callback()
-      done()
+    nodes[id].server.stop((err) => {
+      if (err) {
+        throw err // Failed to stop
+      }
+      delete nodes[id]
+      delete sniffResult.nodes[id]
+      callback(id)
     })
   }
 
   const cluster = {
     nodes,
     shutdown,
-    kill,
-    spawn
+    kill
   }
 
   q.drain(done => {

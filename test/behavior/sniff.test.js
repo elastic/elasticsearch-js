@@ -111,8 +111,8 @@ test('Should handle hostnames in publish_address', t => {
   })
 })
 
-test('Sniff interval', { skip: 'Flaky on CI' }, t => {
-  t.plan(10)
+test('Sniff interval', t => {
+  t.plan(13)
 
   buildCluster(({ nodes, shutdown, kill }) => {
     const client = new Client({
@@ -120,29 +120,50 @@ test('Sniff interval', { skip: 'Flaky on CI' }, t => {
       sniffInterval: 50
     })
 
-    // this event will be triggered by api calls
-    client.on(events.SNIFF, (err, request) => {
+    // Should be 1 because SNIFF wasn't run yet
+    t.strictEqual(client.connectionPool.size, 1)
+
+    // SNIFF is triggered by API calls
+    // See Transport.js => makeRequest() => getConnection() => sniff()
+    let run = 0
+    let expectedSize
+    client.on(events.SNIFF, (err, result) => {
+      run += 1
+      if (run > 3) { return }
+
       t.error(err)
-      const { hosts, reason } = request.meta.sniff
-      t.strictEqual(
-        client.connectionPool.size,
-        hosts.length
-      )
+      const { reason, hosts } = result.meta.sniff
       t.strictEqual(reason, Transport.sniffReasons.SNIFF_INTERVAL)
+
+      // Test assumptions about connectionPool and hosts
+      t.strictEqual(client.connectionPool.size, expectedSize)
+      t.strictEqual(hosts.length, expectedSize)
+
+      if (run === 3) {
+        return // at this point, 'node1' and 'node2' should be killed
+      }
+
+      // Should kill the node and run SNIFF again
+      // Should get here 2x, to kill 'node1' and 'node2'
+      kill(`node${run}`, () => {
+        setTimeout(() => {
+          expectedSize = 4 - run // from 4 to 3, later 2
+          client.info()
+        }, 60) // wait > sniffInterval
+      })
     })
 
-    t.strictEqual(client.connectionPool.size, 1)
-    setTimeout(() => client.info(t.error), 60)
-
+    // SNIFF should be run only when:
+    // 1) delay is greater than sniffInterval
+    // 2) delay is greater than time of last sniff + sniffInterval
+    setTimeout(() => client.info(), 20)
+    setTimeout(() => client.info(), 30)
     setTimeout(() => {
-      // let's kill a node
-      kill('node1')
-      client.info(t.error)
-    }, 150)
-
-    setTimeout(() => {
-      t.strictEqual(client.connectionPool.size, 3)
-    }, 200)
+      expectedSize = 4
+      client.info()
+    }, 60) // meets 1) and 2)
+    setTimeout(() => client.info(), 70)
+    setTimeout(() => client.info(), 80)
 
     t.teardown(shutdown)
   })
