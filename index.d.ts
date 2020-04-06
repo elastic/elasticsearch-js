@@ -158,6 +158,14 @@ declare class Client extends EventEmitter {
     getAutoscalingDecision<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getAutoscalingDecision<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getAutoscalingDecision<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingDecision, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_autoscaling_policy<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.AutoscalingGetAutoscalingPolicy, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get_autoscaling_policy<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_autoscaling_policy<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingPolicy, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_autoscaling_policy<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingPolicy, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getAutoscalingPolicy<TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.AutoscalingGetAutoscalingPolicy, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getAutoscalingPolicy<TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getAutoscalingPolicy<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingPolicy, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getAutoscalingPolicy<TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingGetAutoscalingPolicy, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     put_autoscaling_policy<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params?: RequestParams.AutoscalingPutAutoscalingPolicy<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     put_autoscaling_policy<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     put_autoscaling_policy<TRequestBody extends RequestBody, TResponse = ResponseBody, TContext = unknown>(params: RequestParams.AutoscalingPutAutoscalingPolicy<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
