@@ -619,6 +619,57 @@ test('Retry mechanism', t => {
   })
 })
 
+test('Should not retry if the body is a stream', t => {
+  t.plan(2)
+
+  var count = 0
+  function handler (req, res) {
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    if (count > 0) {
+      res.end(JSON.stringify({ hello: 'world' }))
+    } else {
+      setTimeout(() => {
+        res.end(JSON.stringify({ hello: 'world' }))
+      }, 1000)
+    }
+    count++
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection([{
+      url: new URL(`http://localhost:${port}`),
+      id: 'node1'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node2'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node3'
+    }])
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 1,
+      requestTimeout: 10,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'POST',
+      path: '/hello',
+      body: intoStream(JSON.stringify({ hello: 'world' }))
+    }, (err, { body }) => {
+      t.ok(err instanceof TimeoutError)
+      t.strictEqual(count, 1)
+      server.stop()
+    })
+  })
+})
+
 test('Custom retry mechanism', t => {
   t.plan(2)
 
@@ -1952,6 +2003,62 @@ test('Compress request', t => {
             server.stop()
           })
         })
+      })
+    })
+  })
+
+  t.test('Retry a gzipped body', t => {
+    t.plan(7)
+
+    var count = 0
+    function handler (req, res) {
+      t.match(req.headers, {
+        'content-type': 'application/json',
+        'content-encoding': 'gzip'
+      })
+      var json = ''
+      req
+        .pipe(createGunzip())
+        .on('data', chunk => { json += chunk })
+        .on('error', err => t.fail(err))
+        .on('end', () => {
+          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          res.setHeader('Content-Type', 'application/json;utf=8')
+          if (count++ > 0) {
+            res.end(JSON.stringify({ you_know: 'for search' }))
+          } else {
+            setTimeout(() => {
+              res.end(JSON.stringify({ you_know: 'for search' }))
+            }, 1000)
+          }
+        })
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 250,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'POST',
+        path: '/hello',
+        body: { you_know: 'for search' }
+      }, {
+        compression: 'gzip'
+      }, (err, { body, meta }) => {
+        t.error(err)
+        t.deepEqual(body, { you_know: 'for search' })
+        t.strictEqual(count, 2)
+        server.stop()
       })
     })
   })
