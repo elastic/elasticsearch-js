@@ -80,3 +80,10 @@ const response = {
   expectType<number>(err.statusCode)
   expectType<Record<string, any>>(err.headers)
 }
+
+{
+  const err = new errors.RequestAbortedError('message', response)
+  expectType<string>(err.name)
+  expectType<string>(err.message)
+  expectType<ApiResponse>(err.meta)
+}

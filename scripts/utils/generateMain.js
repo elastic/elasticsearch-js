@@ -184,14 +184,14 @@ function buildMethodDefinition (api, name, hasBody) {
 
   if (hasBody) {
     let methods = [
-      { key: `${api}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params?: RequestParams.${Name}<TRequestBody>, options?: TransportRequestOptions)`, val: `Promise<ApiResponse<TResponse, TContext>>` },
+      { key: `${api}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params?: RequestParams.${Name}<TRequestBody>, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` },
       { key: `${api}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
       { key: `${api}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params: RequestParams.${Name}<TRequestBody>, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
       { key: `${api}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params: RequestParams.${Name}<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` }
     ]
     if (isSnakeCased(api)) {
       methods = methods.concat([
-        { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params?: RequestParams.${Name}<TRequestBody>, options?: TransportRequestOptions)`, val: `Promise<ApiResponse<TResponse, TContext>>` },
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params?: RequestParams.${Name}<TRequestBody>, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` },
         { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
         { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params: RequestParams.${Name}<TRequestBody>, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
         { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params: RequestParams.${Name}<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` }
@@ -200,14 +200,14 @@ function buildMethodDefinition (api, name, hasBody) {
     return methods
   } else {
     let methods = [
-      { key: `${api}<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.${Name}, options?: TransportRequestOptions)`, val: `Promise<ApiResponse<TResponse, TContext>>` },
+      { key: `${api}<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.${Name}, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` },
       { key: `${api}<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
       { key: `${api}<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.${Name}, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
       { key: `${api}<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.${Name}, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` }
     ]
     if (isSnakeCased(api)) {
       methods = methods.concat([
-        { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.${Name}, options?: TransportRequestOptions)`, val: `Promise<ApiResponse<TResponse, TContext>>` },
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.${Name}, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` },
         { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
         { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.${Name}, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
         { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.${Name}, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` }

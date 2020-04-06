@@ -2905,14 +2905,14 @@ _Default:_ `all`
 [source,ts]
 ----
 client.indices.getDataStreams({
-  name: string | string[]
+  name: string
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string \| string[]` - The comma separated names of data streams
+|`string` - The name or wildcard expression of the requested data streams
 
 |===
 
@@ -5778,6 +5778,22 @@ client.autoscaling.getAutoscalingDecision()
 ----
 link:{ref}/autoscaling-get-autoscaling-decision.html[Documentation] +
 
+
+=== autoscaling.getAutoscalingPolicy
+*Stability:* experimental
+[source,ts]
+----
+client.autoscaling.getAutoscalingPolicy({
+  name: string
+})
+----
+link:{ref}/autoscaling-get-autoscaling-policy.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - the name of the autoscaling policy
+
+|===
 
 === autoscaling.putAutoscalingPolicy
 *Stability:* experimental

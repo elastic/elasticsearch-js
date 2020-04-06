@@ -80,3 +80,11 @@ test('ResponseError', t => {
   t.ok(err.headers)
   t.end()
 })
+
+test('RequestAbortedError', t => {
+  const err = new errors.RequestAbortedError()
+  t.true(err instanceof Error)
+  t.true(err instanceof errors.ElasticsearchClientError)
+  t.true(err.hasOwnProperty('meta'))
+  t.end()
+})

@@ -11,7 +11,7 @@ import * as errors from './errors';
 export type ApiError = errors.ConfigurationError | errors.ConnectionError |
                        errors.DeserializationError | errors.SerializationError |
                        errors.NoLivingConnectionsError | errors.ResponseError |
-                       errors.TimeoutError
+                       errors.TimeoutError | errors.RequestAbortedError
 
 export interface nodeSelectorFn {
   (connections: Connection[]): Connection;
@@ -98,6 +98,10 @@ export interface TransportRequestOptions {
 }
 
 export interface TransportRequestCallback {
+  abort: () => void;
+}
+
+export interface TransportRequestPromise<T> extends Promise<T> {
   abort: () => void;
 }
 

@@ -12,7 +12,7 @@ const { Agent } = require('http')
 const intoStream = require('into-stream')
 const { buildServer } = require('../utils')
 const Connection = require('../../lib/Connection')
-const { TimeoutError, ConfigurationError } = require('../../lib/errors')
+const { TimeoutError, ConfigurationError, RequestAbortedError } = require('../../lib/errors')
 
 test('Basic (http)', t => {
   t.plan(4)
@@ -854,4 +854,49 @@ test('Should not add agent and ssl to the serialized connection', t => {
   )
 
   t.end()
+})
+
+test('Abort a request syncronously', t => {
+  t.plan(1)
+
+  function handler (req, res) {
+    t.fail('The server should not be contacted')
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      url: new URL(`http://localhost:${port}`)
+    })
+    const request = connection.request({
+      path: '/hello',
+      method: 'GET'
+    }, (err, res) => {
+      t.ok(err instanceof RequestAbortedError)
+      server.stop()
+    })
+    request.abort()
+  })
+})
+
+test('Abort a request asyncronously', t => {
+  t.plan(1)
+
+  function handler (req, res) {
+    // might be called or not
+    res.end('ok')
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      url: new URL(`http://localhost:${port}`)
+    })
+    const request = connection.request({
+      path: '/hello',
+      method: 'GET'
+    }, (err, res) => {
+      t.ok(err instanceof RequestAbortedError)
+      server.stop()
+    })
+    setImmediate(() => request.abort())
+  })
 })
