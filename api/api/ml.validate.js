@@ -21,6 +21,7 @@ function buildMlValidate (opts) {
 
   /**
    * Perform a ml.validate request
+   * Validates an anomaly detection job.
    */
   return function mlValidate (params, options, callback) {
     options = options || {}

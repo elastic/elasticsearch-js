@@ -25,6 +25,7 @@ function buildIndicesReloadSearchAnalyzers (opts) {
 
   /**
    * Perform a indices.reload_search_analyzers request
+   * Reloads an index's search analyzers and their resources.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-reload-analyzers.html
    */
   return function indicesReloadSearchAnalyzers (params, options, callback) {

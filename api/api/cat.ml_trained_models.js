@@ -31,6 +31,7 @@ function buildCatMlTrainedModels (opts) {
 
   /**
    * Perform a cat.ml_trained_models request
+   * Gets configuration and usage information about inference trained models.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-trained-model.html
    */
   return function catMlTrainedModels (params, options, callback) {

@@ -11,7 +11,7 @@ import * as errors from './errors';
 export type ApiError = errors.ConfigurationError | errors.ConnectionError |
                        errors.DeserializationError | errors.SerializationError |
                        errors.NoLivingConnectionsError | errors.ResponseError |
-                       errors.TimeoutError
+                       errors.TimeoutError | errors.RequestAbortedError
 
 export interface nodeSelectorFn {
   (connections: Connection[]): Connection;
@@ -45,7 +45,7 @@ interface TransportOptions {
   opaqueIdPrefix?: string;
 }
 
-export interface RequestEvent<TResponse = ResponseBody, TContext = unknown> {
+export interface RequestEvent<TResponse = Record<string, any>, TContext = unknown> {
   body: TResponse;
   statusCode: number | null;
   headers: Record<string, any> | null;
@@ -70,11 +70,10 @@ export interface RequestEvent<TResponse = ResponseBody, TContext = unknown> {
 
 // ApiResponse and RequestEvent are the same thing
 // we are doing this for have more clear names
-export interface ApiResponse<TResponse = ResponseBody, TContext = unknown> extends RequestEvent<TResponse, TContext> {}
+export interface ApiResponse<TResponse = Record<string, any>, TContext = unknown> extends RequestEvent<TResponse, TContext> {}
 
-export type RequestBody<T = Record<string, any>> = T | string | Buffer | ReadableStream
-export type RequestNDBody<T = Record<string, any>[]> = T | string[] | Buffer | ReadableStream
-export type ResponseBody<T = Record<string, any>> = T | string | boolean | ReadableStream
+export type RequestBody<T = Record<string, any>>  = T | string | Buffer | ReadableStream
+export type RequestNDBody<T = Record<string, any>[]>  = T | string | string[] | Buffer | ReadableStream
 
 export interface TransportRequestParams {
   method: string;
@@ -99,6 +98,10 @@ export interface TransportRequestOptions {
 }
 
 export interface TransportRequestCallback {
+  abort: () => void;
+}
+
+export interface TransportRequestPromise<T> extends Promise<T> {
   abort: () => void;
 }
 

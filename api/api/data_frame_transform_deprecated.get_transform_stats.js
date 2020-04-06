@@ -23,6 +23,7 @@ function buildDataFrameTransformDeprecatedGetTransformStats (opts) {
 
   /**
    * Perform a data_frame_transform_deprecated.get_transform_stats request
+   * Retrieves usage information for transforms.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform-stats.html
    */
   return function dataFrameTransformDeprecatedGetTransformStats (params, options, callback) {

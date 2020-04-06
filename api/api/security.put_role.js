@@ -21,6 +21,7 @@ function buildSecurityPutRole (opts) {
 
   /**
    * Perform a security.put_role request
+   * Adds and updates roles in the native realm.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html
    */
   return function securityPutRole (params, options, callback) {

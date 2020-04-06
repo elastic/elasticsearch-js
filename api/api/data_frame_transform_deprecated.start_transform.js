@@ -21,6 +21,7 @@ function buildDataFrameTransformDeprecatedStartTransform (opts) {
 
   /**
    * Perform a data_frame_transform_deprecated.start_transform request
+   * Starts one or more transforms.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/start-transform.html
    */
   return function dataFrameTransformDeprecatedStartTransform (params, options, callback) {

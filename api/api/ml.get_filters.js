@@ -22,6 +22,8 @@ function buildMlGetFilters (opts) {
 
   /**
    * Perform a ml.get_filters request
+   * Retrieves filters.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-filter.html
    */
   return function mlGetFilters (params, options, callback) {
     options = options || {}

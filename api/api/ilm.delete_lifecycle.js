@@ -21,6 +21,7 @@ function buildIlmDeleteLifecycle (opts) {
 
   /**
    * Perform a ilm.delete_lifecycle request
+   * Deletes the specified lifecycle policy definition. A currently used policy cannot be deleted.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html
    */
   return function ilmDeleteLifecycle (params, options, callback) {

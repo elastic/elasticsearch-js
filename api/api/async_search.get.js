@@ -12,19 +12,20 @@ function buildAsyncSearchGet (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'wait_for_completion',
+    'wait_for_completion_timeout',
     'keep_alive',
     'typed_keys'
   ]
 
   const snakeCase = {
-    waitForCompletion: 'wait_for_completion',
+    waitForCompletionTimeout: 'wait_for_completion_timeout',
     keepAlive: 'keep_alive',
     typedKeys: 'typed_keys'
   }
 
   /**
    * Perform a async_search.get request
+   * Retrieves the results of a previously submitted async search request given its ID.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/async-search.html
    */
   return function asyncSearchGet (params, options, callback) {

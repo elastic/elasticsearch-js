@@ -21,6 +21,8 @@ function buildMlPutCalendarJob (opts) {
 
   /**
    * Perform a ml.put_calendar_job request
+   * Adds an anomaly detection job to a calendar.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar-job.html
    */
   return function mlPutCalendarJob (params, options, callback) {
     options = options || {}

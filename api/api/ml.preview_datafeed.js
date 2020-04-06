@@ -21,6 +21,7 @@ function buildMlPreviewDatafeed (opts) {
 
   /**
    * Perform a ml.preview_datafeed request
+   * Previews a datafeed.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafeed.html
    */
   return function mlPreviewDatafeed (params, options, callback) {

@@ -21,6 +21,7 @@ function buildMlDeleteTrainedModel (opts) {
 
   /**
    * Perform a ml.delete_trained_model request
+   * Deletes an existing trained inference model that is currently not referenced by an ingest pipeline.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-inference.html
    */
   return function mlDeleteTrainedModel (params, options, callback) {

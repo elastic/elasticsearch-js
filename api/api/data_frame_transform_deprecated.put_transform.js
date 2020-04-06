@@ -21,6 +21,7 @@ function buildDataFrameTransformDeprecatedPutTransform (opts) {
 
   /**
    * Perform a data_frame_transform_deprecated.put_transform request
+   * Instantiates a transform.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/put-transform.html
    */
   return function dataFrameTransformDeprecatedPutTransform (params, options, callback) {

@@ -21,6 +21,7 @@ function buildSecurityInvalidateApiKey (opts) {
 
   /**
    * Perform a security.invalidate_api_key request
+   * Invalidates one or more API keys.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html
    */
   return function securityInvalidateApiKey (params, options, callback) {

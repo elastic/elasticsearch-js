@@ -21,6 +21,7 @@ function buildSecurityGetRoleMapping (opts) {
 
   /**
    * Perform a security.get_role_mapping request
+   * Retrieves role mappings.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role-mapping.html
    */
   return function securityGetRoleMapping (params, options, callback) {

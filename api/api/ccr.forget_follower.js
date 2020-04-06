@@ -21,6 +21,7 @@ function buildCcrForgetFollower (opts) {
 
   /**
    * Perform a ccr.forget_follower request
+   * Removes the follower retention leases from the leader.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-forget-follower.html
    */
   return function ccrForgetFollower (params, options, callback) {

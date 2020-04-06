@@ -21,6 +21,7 @@ function buildEqlSearch (opts) {
 
   /**
    * Perform a eql.search request
+   * Returns results matching a query expressed in Event Query Language (EQL)
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql.html
    */
   return function eqlSearch (params, options, callback) {

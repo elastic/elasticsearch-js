@@ -21,7 +21,8 @@ const {
   TimeoutError,
   ResponseError,
   ConnectionError,
-  ConfigurationError
+  ConfigurationError,
+  RequestAbortedError
 } = require('../../lib/errors')
 
 const ConnectionPool = require('../../lib/pool/ConnectionPool')
@@ -86,6 +87,32 @@ test('Basic (promises support)', t => {
       t.deepEqual(body, { hello: 'world' })
     })
     .catch(t.fail)
+})
+
+test('Basic - failing (promises support)', t => {
+  t.plan(1)
+
+  const pool = new ConnectionPool({ Connection: MockConnectionTimeout })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  transport
+    .request({
+      method: 'GET',
+      path: '/hello'
+    })
+    .catch(err => {
+      t.ok(err instanceof TimeoutError)
+    })
 })
 
 test('Basic (options + promises support)', t => {
@@ -592,6 +619,57 @@ test('Retry mechanism', t => {
   })
 })
 
+test('Should not retry if the body is a stream', t => {
+  t.plan(2)
+
+  var count = 0
+  function handler (req, res) {
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    if (count > 0) {
+      res.end(JSON.stringify({ hello: 'world' }))
+    } else {
+      setTimeout(() => {
+        res.end(JSON.stringify({ hello: 'world' }))
+      }, 1000)
+    }
+    count++
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection([{
+      url: new URL(`http://localhost:${port}`),
+      id: 'node1'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node2'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node3'
+    }])
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 1,
+      requestTimeout: 10,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'POST',
+      path: '/hello',
+      body: intoStream(JSON.stringify({ hello: 'world' }))
+    }, (err, { body }) => {
+      t.ok(err instanceof TimeoutError)
+      t.strictEqual(count, 1)
+      server.stop()
+    })
+  })
+})
+
 test('Custom retry mechanism', t => {
   t.plan(2)
 
@@ -764,7 +842,7 @@ test('Should call resurrect on every request', t => {
 test('Should return a request aborter utility', t => {
   t.plan(1)
 
-  const pool = new ConnectionPool({ Connection, MockConnection })
+  const pool = new ConnectionPool({ Connection: MockConnection })
   pool.addConnection({
     url: new URL('http://localhost:9200'),
     id: 'node1'
@@ -783,12 +861,11 @@ test('Should return a request aborter utility', t => {
   const request = transport.request({
     method: 'GET',
     path: '/hello'
-  }, (_err, body) => {
-    t.fail('Should not be called')
+  }, (err, result) => {
+    t.ok(err instanceof RequestAbortedError)
   })
 
   request.abort()
-  t.pass('ok')
 })
 
 test('Retry mechanism and abort', t => {
@@ -819,8 +896,6 @@ test('Retry mechanism and abort', t => {
       emit: event => {
         if (event === 'request' && count++ > 0) {
           request.abort()
-          server.stop()
-          t.pass('ok')
         }
       },
       connectionPool: pool,
@@ -834,10 +909,46 @@ test('Retry mechanism and abort', t => {
     const request = transport.request({
       method: 'GET',
       path: '/hello'
-    }, (e, { body }) => {
-      t.fail('Should not be called')
+    }, (err, result) => {
+      t.ok(err instanceof RequestAbortedError)
+      server.stop()
     })
   })
+})
+
+test('Abort a request with the promise API', t => {
+  t.plan(1)
+
+  const pool = new ConnectionPool({ Connection: MockConnection })
+  pool.addConnection({
+    url: new URL('http://localhost:9200'),
+    id: 'node1'
+  })
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  const request = transport.request({
+    method: 'GET',
+    path: '/hello'
+  })
+
+  request
+    .then(() => {
+      t.fail('Should not be called')
+    })
+    .catch(err => {
+      t.ok(err instanceof RequestAbortedError)
+    })
+
+  request.abort()
 })
 
 test('ResponseError', t => {
@@ -1892,6 +2003,62 @@ test('Compress request', t => {
             server.stop()
           })
         })
+      })
+    })
+  })
+
+  t.test('Retry a gzipped body', t => {
+    t.plan(7)
+
+    var count = 0
+    function handler (req, res) {
+      t.match(req.headers, {
+        'content-type': 'application/json',
+        'content-encoding': 'gzip'
+      })
+      var json = ''
+      req
+        .pipe(createGunzip())
+        .on('data', chunk => { json += chunk })
+        .on('error', err => t.fail(err))
+        .on('end', () => {
+          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          res.setHeader('Content-Type', 'application/json;utf=8')
+          if (count++ > 0) {
+            res.end(JSON.stringify({ you_know: 'for search' }))
+          } else {
+            setTimeout(() => {
+              res.end(JSON.stringify({ you_know: 'for search' }))
+            }, 1000)
+          }
+        })
+    }
+
+    buildServer(handler, ({ port }, server) => {
+      const pool = new ConnectionPool({ Connection })
+      pool.addConnection(`http://localhost:${port}`)
+
+      const transport = new Transport({
+        emit: () => {},
+        connectionPool: pool,
+        serializer: new Serializer(),
+        maxRetries: 3,
+        requestTimeout: 250,
+        sniffInterval: false,
+        sniffOnStart: false
+      })
+
+      transport.request({
+        method: 'POST',
+        path: '/hello',
+        body: { you_know: 'for search' }
+      }, {
+        compression: 'gzip'
+      }, (err, { body, meta }) => {
+        t.error(err)
+        t.deepEqual(body, { you_know: 'for search' })
+        t.strictEqual(count, 2)
+        server.stop()
       })
     })
   })

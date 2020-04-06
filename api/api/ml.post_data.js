@@ -23,6 +23,7 @@ function buildMlPostData (opts) {
 
   /**
    * Perform a ml.post_data request
+   * Sends data to an anomaly detection job for analysis.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
    */
   return function mlPostData (params, options, callback) {

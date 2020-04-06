@@ -21,6 +21,7 @@ function buildCcrResumeFollow (opts) {
 
   /**
    * Perform a ccr.resume_follow request
+   * Resumes a follower index that has been paused
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-resume-follow.html
    */
   return function ccrResumeFollow (params, options, callback) {

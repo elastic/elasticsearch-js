@@ -21,6 +21,7 @@ function buildSecurityInvalidateToken (opts) {
 
   /**
    * Perform a security.invalidate_token request
+   * Invalidates one or more access tokens or refresh tokens.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-token.html
    */
   return function securityInvalidateToken (params, options, callback) {

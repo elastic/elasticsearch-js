@@ -15,6 +15,7 @@ function buildTasksCancel (opts) {
     'nodes',
     'actions',
     'parent_task_id',
+    'wait_for_completion',
     'pretty',
     'human',
     'error_trace',
@@ -24,6 +25,7 @@ function buildTasksCancel (opts) {
 
   const snakeCase = {
     parentTaskId: 'parent_task_id',
+    waitForCompletion: 'wait_for_completion',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

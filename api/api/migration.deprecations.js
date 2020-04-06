@@ -21,6 +21,7 @@ function buildMigrationDeprecations (opts) {
 
   /**
    * Perform a migration.deprecations request
+   * Retrieves information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-deprecation.html
    */
   return function migrationDeprecations (params, options, callback) {

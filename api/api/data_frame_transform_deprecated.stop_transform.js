@@ -24,6 +24,7 @@ function buildDataFrameTransformDeprecatedStopTransform (opts) {
 
   /**
    * Perform a data_frame_transform_deprecated.stop_transform request
+   * Stops one or more transforms.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-transform.html
    */
   return function dataFrameTransformDeprecatedStopTransform (params, options, callback) {

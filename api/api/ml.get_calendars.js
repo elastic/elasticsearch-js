@@ -22,6 +22,8 @@ function buildMlGetCalendars (opts) {
 
   /**
    * Perform a ml.get_calendars request
+   * Retrieves configuration information for calendars.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar.html
    */
   return function mlGetCalendars (params, options, callback) {
     options = options || {}

@@ -27,6 +27,7 @@ function buildMlUpdateDatafeed (opts) {
 
   /**
    * Perform a ml.update_datafeed request
+   * Updates certain properties of a datafeed.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
    */
   return function mlUpdateDatafeed (params, options, callback) {

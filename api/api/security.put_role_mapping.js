@@ -21,6 +21,7 @@ function buildSecurityPutRoleMapping (opts) {
 
   /**
    * Perform a security.put_role_mapping request
+   * Creates and updates role mappings.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html
    */
   return function securityPutRoleMapping (params, options, callback) {

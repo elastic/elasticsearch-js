@@ -77,7 +77,7 @@ export interface CatHealth extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
-  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  time?: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos';
   ts?: boolean;
   v?: boolean;
 }
@@ -636,6 +636,12 @@ export interface IndicesDeleteDataStream extends Generic {
   name: string;
 }
 
+export interface IndicesDeleteIndexTemplate extends Generic {
+  name: string;
+  timeout?: string;
+  master_timeout?: string;
+}
+
 export interface IndicesDeleteTemplate extends Generic {
   name: string;
   timeout?: string;
@@ -717,7 +723,7 @@ export interface IndicesGetAlias extends Generic {
 }
 
 export interface IndicesGetDataStreams extends Generic {
-  name?: string | string[];
+  name?: string;
 }
 
 export interface IndicesGetFieldMapping extends Generic {
@@ -727,6 +733,13 @@ export interface IndicesGetFieldMapping extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+  local?: boolean;
+}
+
+export interface IndicesGetIndexTemplate extends Generic {
+  name?: string | string[];
+  flat_settings?: boolean;
+  master_timeout?: string;
   local?: boolean;
 }
 
@@ -781,6 +794,14 @@ export interface IndicesPutAlias<T = RequestBody> extends Generic {
   timeout?: string;
   master_timeout?: string;
   body?: T;
+}
+
+export interface IndicesPutIndexTemplate<T = RequestBody> extends Generic {
+  name: string;
+  order?: number;
+  create?: boolean;
+  master_timeout?: string;
+  body: T;
 }
 
 export interface IndicesPutMapping<T = RequestBody> extends Generic {
@@ -1174,11 +1195,10 @@ export interface SearchTemplate<T = RequestBody> extends Generic {
   body: T;
 }
 
-export interface SnapshotCleanupRepository<T = RequestBody> extends Generic {
+export interface SnapshotCleanupRepository extends Generic {
   repository: string;
   master_timeout?: string;
   timeout?: string;
-  body?: T;
 }
 
 export interface SnapshotCreate<T = RequestBody> extends Generic {
@@ -1249,6 +1269,7 @@ export interface TasksCancel extends Generic {
   nodes?: string | string[];
   actions?: string | string[];
   parent_task_id?: string;
+  wait_for_completion?: boolean;
 }
 
 export interface TasksGet extends Generic {
@@ -1356,7 +1377,7 @@ export interface AsyncSearchDelete extends Generic {
 
 export interface AsyncSearchGet extends Generic {
   id: string;
-  wait_for_completion?: string;
+  wait_for_completion_timeout?: string;
   keep_alive?: string;
   typed_keys?: boolean;
 }
@@ -1365,8 +1386,8 @@ export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   index?: string | string[];
   _source_exclude?: string | string[];
   _source_include?: string | string[];
-  wait_for_completion?: string;
-  clean_on_completion?: boolean;
+  wait_for_completion_timeout?: string;
+  keep_on_completion?: boolean;
   keep_alive?: string;
   batched_reduce_size?: number;
   request_cache?: boolean;
@@ -1381,7 +1402,7 @@ export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   ignore_unavailable?: boolean;
   ignore_throttled?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   lenient?: boolean;
   preference?: string;
   q?: string;
@@ -1409,7 +1430,20 @@ export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   body?: T;
 }
 
+export interface AutoscalingDeleteAutoscalingPolicy extends Generic {
+  name: string;
+}
+
 export interface AutoscalingGetAutoscalingDecision extends Generic {
+}
+
+export interface AutoscalingGetAutoscalingPolicy extends Generic {
+  name: string;
+}
+
+export interface AutoscalingPutAutoscalingPolicy<T = RequestBody> extends Generic {
+  name: string;
+  body: T;
 }
 
 export interface CatMlDataFrameAnalytics extends Generic {
@@ -1420,7 +1454,7 @@ export interface CatMlDataFrameAnalytics extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
-  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  time?: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos';
   v?: boolean;
 }
 
@@ -1431,7 +1465,7 @@ export interface CatMlDatafeeds extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
-  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  time?: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos';
   v?: boolean;
 }
 
@@ -1443,7 +1477,7 @@ export interface CatMlJobs extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
-  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  time?: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos';
   v?: boolean;
 }
 
@@ -1457,7 +1491,20 @@ export interface CatMlTrainedModels extends Generic {
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
-  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
+  time?: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos';
+  v?: boolean;
+}
+
+export interface CatTransforms extends Generic {
+  transform_id?: string;
+  from?: number;
+  size?: number;
+  allow_no_match?: boolean;
+  format?: string;
+  h?: string | string[];
+  help?: boolean;
+  s?: string | string[];
+  time?: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos';
   v?: boolean;
 }
 
@@ -1644,7 +1691,7 @@ export interface IndicesFreeze extends Generic {
   master_timeout?: string;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   wait_for_active_shards?: string;
 }
 
@@ -1652,7 +1699,7 @@ export interface IndicesReloadSearchAnalyzers extends Generic {
   index: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesUnfreeze extends Generic {
@@ -1661,7 +1708,7 @@ export interface IndicesUnfreeze extends Generic {
   master_timeout?: string;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   wait_for_active_shards?: string;
 }
 
@@ -2305,19 +2352,6 @@ export interface SqlTranslate<T = RequestBody> extends Generic {
 }
 
 export interface SslCertificates extends Generic {
-}
-
-export interface TransformCatTransform extends Generic {
-  transform_id?: string;
-  from?: number;
-  size?: number;
-  allow_no_match?: boolean;
-  format?: string;
-  h?: string | string[];
-  help?: boolean;
-  s?: string | string[];
-  time?: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)';
-  v?: boolean;
 }
 
 export interface TransformDeleteTransform extends Generic {

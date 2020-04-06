@@ -21,6 +21,7 @@ function buildCcrPauseAutoFollowPattern (opts) {
 
   /**
    * Perform a ccr.pause_auto_follow_pattern request
+   * Pauses an auto-follow pattern
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-pause-auto-follow-pattern.html
    */
   return function ccrPauseAutoFollowPattern (params, options, callback) {

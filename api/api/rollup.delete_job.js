@@ -21,6 +21,8 @@ function buildRollupDeleteJob (opts) {
 
   /**
    * Perform a rollup.delete_job request
+   * Deletes an existing rollup job.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-delete-job.html
    */
   return function rollupDeleteJob (params, options, callback) {
     options = options || {}

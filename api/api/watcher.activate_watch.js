@@ -21,6 +21,7 @@ function buildWatcherActivateWatch (opts) {
 
   /**
    * Perform a watcher.activate_watch request
+   * Activates a currently inactive watch.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-activate-watch.html
    */
   return function watcherActivateWatch (params, options, callback) {

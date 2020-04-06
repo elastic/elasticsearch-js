@@ -23,6 +23,7 @@ function buildTransformGetTransform (opts) {
 
   /**
    * Perform a transform.get_transform request
+   * Retrieves configuration information for transforms.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform.html
    */
   return function transformGetTransform (params, options, callback) {

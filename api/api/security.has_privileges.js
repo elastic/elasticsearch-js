@@ -21,6 +21,7 @@ function buildSecurityHasPrivileges (opts) {
 
   /**
    * Perform a security.has_privileges request
+   * Determines whether the specified user has a specified list of privileges.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html
    */
   return function securityHasPrivileges (params, options, callback) {

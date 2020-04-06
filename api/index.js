@@ -27,8 +27,14 @@ function ESAPI (opts) {
       submit: lazyLoad('async_search.submit', opts)
     },
     autoscaling: {
+      delete_autoscaling_policy: lazyLoad('autoscaling.delete_autoscaling_policy', opts),
+      deleteAutoscalingPolicy: lazyLoad('autoscaling.delete_autoscaling_policy', opts),
       get_autoscaling_decision: lazyLoad('autoscaling.get_autoscaling_decision', opts),
-      getAutoscalingDecision: lazyLoad('autoscaling.get_autoscaling_decision', opts)
+      getAutoscalingDecision: lazyLoad('autoscaling.get_autoscaling_decision', opts),
+      get_autoscaling_policy: lazyLoad('autoscaling.get_autoscaling_policy', opts),
+      getAutoscalingPolicy: lazyLoad('autoscaling.get_autoscaling_policy', opts),
+      put_autoscaling_policy: lazyLoad('autoscaling.put_autoscaling_policy', opts),
+      putAutoscalingPolicy: lazyLoad('autoscaling.put_autoscaling_policy', opts)
     },
     bulk: lazyLoad('bulk', opts),
     cat: {
@@ -61,7 +67,8 @@ function ESAPI (opts) {
       tasks: lazyLoad('cat.tasks', opts),
       templates: lazyLoad('cat.templates', opts),
       thread_pool: lazyLoad('cat.thread_pool', opts),
-      threadPool: lazyLoad('cat.thread_pool', opts)
+      threadPool: lazyLoad('cat.thread_pool', opts),
+      transforms: lazyLoad('cat.transforms', opts)
     },
     ccr: {
       delete_auto_follow_pattern: lazyLoad('ccr.delete_auto_follow_pattern', opts),
@@ -223,6 +230,8 @@ function ESAPI (opts) {
       deleteAlias: lazyLoad('indices.delete_alias', opts),
       delete_data_stream: lazyLoad('indices.delete_data_stream', opts),
       deleteDataStream: lazyLoad('indices.delete_data_stream', opts),
+      delete_index_template: lazyLoad('indices.delete_index_template', opts),
+      deleteIndexTemplate: lazyLoad('indices.delete_index_template', opts),
       delete_template: lazyLoad('indices.delete_template', opts),
       deleteTemplate: lazyLoad('indices.delete_template', opts),
       exists: lazyLoad('indices.exists', opts),
@@ -242,6 +251,8 @@ function ESAPI (opts) {
       getDataStreams: lazyLoad('indices.get_data_streams', opts),
       get_field_mapping: lazyLoad('indices.get_field_mapping', opts),
       getFieldMapping: lazyLoad('indices.get_field_mapping', opts),
+      get_index_template: lazyLoad('indices.get_index_template', opts),
+      getIndexTemplate: lazyLoad('indices.get_index_template', opts),
       get_mapping: lazyLoad('indices.get_mapping', opts),
       getMapping: lazyLoad('indices.get_mapping', opts),
       get_settings: lazyLoad('indices.get_settings', opts),
@@ -253,6 +264,8 @@ function ESAPI (opts) {
       open: lazyLoad('indices.open', opts),
       put_alias: lazyLoad('indices.put_alias', opts),
       putAlias: lazyLoad('indices.put_alias', opts),
+      put_index_template: lazyLoad('indices.put_index_template', opts),
+      putIndexTemplate: lazyLoad('indices.put_index_template', opts),
       put_mapping: lazyLoad('indices.put_mapping', opts),
       putMapping: lazyLoad('indices.put_mapping', opts),
       put_settings: lazyLoad('indices.put_settings', opts),
@@ -579,8 +592,6 @@ function ESAPI (opts) {
     },
     termvectors: lazyLoad('termvectors', opts),
     transform: {
-      cat_transform: lazyLoad('transform.cat_transform', opts),
-      catTransform: lazyLoad('transform.cat_transform', opts),
       delete_transform: lazyLoad('transform.delete_transform', opts),
       deleteTransform: lazyLoad('transform.delete_transform', opts),
       get_transform: lazyLoad('transform.get_transform', opts),

@@ -21,6 +21,7 @@ function buildSecurityGetUser (opts) {
 
   /**
    * Perform a security.get_user request
+   * Retrieves information about users in the native realm and built-in users.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html
    */
   return function securityGetUser (params, options, callback) {

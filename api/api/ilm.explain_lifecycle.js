@@ -23,6 +23,7 @@ function buildIlmExplainLifecycle (opts) {
 
   /**
    * Perform a ilm.explain_lifecycle request
+   * Retrieves information about the index's current lifecycle state, such as the currently executing phase, action, and step.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html
    */
   return function ilmExplainLifecycle (params, options, callback) {

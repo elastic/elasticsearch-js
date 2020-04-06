@@ -23,6 +23,7 @@ function buildMlStartDatafeed (opts) {
 
   /**
    * Perform a ml.start_datafeed request
+   * Starts one or more datafeeds.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html
    */
   return function mlStartDatafeed (params, options, callback) {

@@ -23,6 +23,8 @@ function buildRollupStopJob (opts) {
 
   /**
    * Perform a rollup.stop_job request
+   * Stops an existing, started rollup job.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-stop-job.html
    */
   return function rollupStopJob (params, options, callback) {
     options = options || {}
