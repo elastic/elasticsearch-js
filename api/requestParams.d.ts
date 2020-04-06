@@ -723,7 +723,7 @@ export interface IndicesGetAlias extends Generic {
 }
 
 export interface IndicesGetDataStreams extends Generic {
-  name?: string | string[];
+  name?: string;
 }
 
 export interface IndicesGetFieldMapping extends Generic {
@@ -1435,6 +1435,10 @@ export interface AutoscalingDeleteAutoscalingPolicy extends Generic {
 }
 
 export interface AutoscalingGetAutoscalingDecision extends Generic {
+}
+
+export interface AutoscalingGetAutoscalingPolicy extends Generic {
+  name: string;
 }
 
 export interface AutoscalingPutAutoscalingPolicy<T = RequestBody> extends Generic {
