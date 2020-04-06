@@ -60,9 +60,9 @@ export declare class ResponseError<TResponse = Record<string, any>, TContext = u
   constructor(meta: ApiResponse);
 }
 
-export declare class RequestAbortedError extends ElasticsearchClientError {
+export declare class RequestAbortedError<TResponse = Record<string, any>, TContext = unknown> extends ElasticsearchClientError {
   name: string;
   message: string;
-  meta: ApiResponse;
+  meta: ApiResponse<TResponse, TContext>;
   constructor(message: string, meta: ApiResponse);
 }
