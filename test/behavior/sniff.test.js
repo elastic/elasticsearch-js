@@ -210,7 +210,7 @@ test('Sniff on connection fault', t => {
     class MyConnection extends Connection {
       request (params, callback) {
         if (this.id === 'http://localhost:9200/') {
-          callback(new Error('kaboom'), null)
+          callback(new errors.ConnectionError('kaboom'), null)
           return {}
         } else {
           return super.request(params, callback)
