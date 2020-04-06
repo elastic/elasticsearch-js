@@ -45,7 +45,7 @@ interface TransportOptions {
   opaqueIdPrefix?: string;
 }
 
-export interface RequestEvent<TResponse = ResponseBody, TContext = unknown> {
+export interface RequestEvent<TResponse = Record<string, any>, TContext = unknown> {
   body: TResponse;
   statusCode: number | null;
   headers: Record<string, any> | null;
@@ -70,11 +70,10 @@ export interface RequestEvent<TResponse = ResponseBody, TContext = unknown> {
 
 // ApiResponse and RequestEvent are the same thing
 // we are doing this for have more clear names
-export interface ApiResponse<TResponse = ResponseBody, TContext = unknown> extends RequestEvent<TResponse, TContext> {}
+export interface ApiResponse<TResponse = Record<string, any>, TContext = unknown> extends RequestEvent<TResponse, TContext> {}
 
-export type RequestBody<T = Record<string, any>> = T | string | Buffer | ReadableStream
-export type RequestNDBody<T = Record<string, any>[]> = T | string[] | Buffer | ReadableStream
-export type ResponseBody<T = Record<string, any>> = T | string | boolean | ReadableStream
+export type RequestBody<T = Record<string, any>>  = T | string | Buffer | ReadableStream
+export type RequestNDBody<T = Record<string, any>[]>  = T | string | string[] | Buffer | ReadableStream
 
 export interface TransportRequestParams {
   method: string;
