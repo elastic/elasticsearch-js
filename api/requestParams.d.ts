@@ -268,6 +268,12 @@ export interface ClusterDeleteComponentTemplate extends Generic {
   master_timeout?: string;
 }
 
+export interface ClusterExistsComponentTemplate extends Generic {
+  name: string;
+  master_timeout?: string;
+  local?: boolean;
+}
+
 export interface ClusterGetComponentTemplate extends Generic {
   name?: string | string[];
   master_timeout?: string;
@@ -2179,6 +2185,25 @@ export interface RollupStopJob extends Generic {
   id: string;
   wait_for_completion?: boolean;
   timeout?: string;
+}
+
+export interface SearchableSnapshotsClearCache extends Generic {
+  index?: string | string[];
+  ignore_unavailable?: boolean;
+  allow_no_indices?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'none' | 'all';
+}
+
+export interface SearchableSnapshotsMount<T = RequestBody> extends Generic {
+  repository: string;
+  snapshot: string;
+  master_timeout?: string;
+  wait_for_completion?: boolean;
+  body: T;
+}
+
+export interface SearchableSnapshotsStats extends Generic {
+  index?: string | string[];
 }
 
 export interface SecurityAuthenticate extends Generic {
