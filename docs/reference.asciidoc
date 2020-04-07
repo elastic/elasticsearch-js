@@ -8814,7 +8814,7 @@ client.searchableSnapshots.mount({
   body: object
 })
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-api-mount-snapshot[Documentation] +
+
 [cols=2*]
 |===
 |`repository`
