@@ -422,6 +422,7 @@ declare class Client extends EventEmitter {
     delete_component_template<TResponse = Record<string, any>, TContext = unknown>(params: Req.ClusterDeleteComponentTemplateRequest, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(params?: Req.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     deleteComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+<<<<<<< HEAD
     deleteComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(params: Req.ClusterDeleteComponentTemplateRequest, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(params: Req.ClusterDeleteComponentTemplateRequest, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     exists_component_template<TResponse = Record<string, any>, TContext = unknown>(params?: Req.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -433,6 +434,19 @@ declare class Client extends EventEmitter {
     existsComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(params: Req.ClusterExistsComponentTemplateRequest, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     existsComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(params: Req.ClusterExistsComponentTemplateRequest, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_component_template<TResponse = Record<string, any>, TContext = unknown>(params?: Req.ClusterGetComponentTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+=======
+    deleteComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.ClusterDeleteComponentTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.ClusterDeleteComponentTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_component_template<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.ClusterExistsComponentTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    exists_component_template<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_component_template<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.ClusterExistsComponentTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_component_template<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.ClusterExistsComponentTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.ClusterExistsComponentTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    existsComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.ClusterExistsComponentTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsComponentTemplate<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.ClusterExistsComponentTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_component_template<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.ClusterGetComponentTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+>>>>>>> master
     get_component_template<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_component_template<TResponse = Record<string, any>, TContext = unknown>(params: Req.ClusterGetComponentTemplateRequest, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_component_template<TResponse = Record<string, any>, TContext = unknown>(params: Req.ClusterGetComponentTemplateRequest, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1887,6 +1901,7 @@ declare class Client extends EventEmitter {
   search_template<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: Req.SearchTemplateRequest<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   searchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: Req.SearchTemplateRequest<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   searchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+<<<<<<< HEAD
   searchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: Req.SearchTemplateRequest<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   searchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: Req.SearchTemplateRequest<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   searchable_snapshots: {
@@ -1924,6 +1939,45 @@ declare class Client extends EventEmitter {
     stats<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     stats<TResponse = Record<string, any>, TContext = unknown>(params: Req.SearchableSnapshotsStatsRequest, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     stats<TResponse = Record<string, any>, TContext = unknown>(params: Req.SearchableSnapshotsStatsRequest, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+=======
+  searchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.SearchTemplate<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  searchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.SearchTemplate<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  searchable_snapshots: {
+    clear_cache<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.SearchableSnapshotsClearCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clear_cache<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cache<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsClearCache, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cache<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsClearCache, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCache<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.SearchableSnapshotsClearCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clearCache<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCache<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsClearCache, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCache<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsClearCache, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.SearchableSnapshotsMount<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsMount<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsMount<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stats<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.SearchableSnapshotsStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    stats<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stats<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stats<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  }
+  searchableSnapshots: {
+    clear_cache<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.SearchableSnapshotsClearCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clear_cache<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cache<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsClearCache, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cache<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsClearCache, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCache<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.SearchableSnapshotsClearCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clearCache<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCache<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsClearCache, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCache<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsClearCache, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.SearchableSnapshotsMount<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsMount<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsMount<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stats<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.SearchableSnapshotsStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    stats<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stats<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stats<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SearchableSnapshotsStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+>>>>>>> master
   }
   security: {
     authenticate<TResponse = Record<string, any>, TContext = unknown>(params?: Req.SecurityAuthenticateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
