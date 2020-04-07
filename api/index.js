@@ -102,6 +102,8 @@ function ESAPI (opts) {
       allocationExplain: lazyLoad('cluster.allocation_explain', opts),
       delete_component_template: lazyLoad('cluster.delete_component_template', opts),
       deleteComponentTemplate: lazyLoad('cluster.delete_component_template', opts),
+      exists_component_template: lazyLoad('cluster.exists_component_template', opts),
+      existsComponentTemplate: lazyLoad('cluster.exists_component_template', opts),
       get_component_template: lazyLoad('cluster.get_component_template', opts),
       getComponentTemplate: lazyLoad('cluster.get_component_template', opts),
       get_settings: lazyLoad('cluster.get_settings', opts),
@@ -488,6 +490,18 @@ function ESAPI (opts) {
     searchShards: lazyLoad('search_shards', opts),
     search_template: lazyLoad('search_template', opts),
     searchTemplate: lazyLoad('search_template', opts),
+    searchable_snapshots: {
+      clear_cache: lazyLoad('searchable_snapshots.clear_cache', opts),
+      clearCache: lazyLoad('searchable_snapshots.clear_cache', opts),
+      mount: lazyLoad('searchable_snapshots.mount', opts),
+      stats: lazyLoad('searchable_snapshots.stats', opts)
+    },
+    searchableSnapshots: {
+      clear_cache: lazyLoad('searchable_snapshots.clear_cache', opts),
+      clearCache: lazyLoad('searchable_snapshots.clear_cache', opts),
+      mount: lazyLoad('searchable_snapshots.mount', opts),
+      stats: lazyLoad('searchable_snapshots.stats', opts)
+    },
     security: {
       authenticate: lazyLoad('security.authenticate', opts),
       change_password: lazyLoad('security.change_password', opts),
