@@ -17,6 +17,7 @@ const ndjsonApiKey = ndjsonApi
   .map(toPascalCase)
 
 function generate (version, api) {
+  var exportNewLineCount = 0
   const release = semver.valid(version) ? semver.major(version) : version
   var types = `// Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
@@ -24,7 +25,7 @@ function generate (version, api) {
 
 import { RequestBody, RequestNDBody } from '../lib/Transport'
 
-export interface Generic {
+interface GenericRequest {
   method?: string;
   ignore?: number | number[];
   filter_path?: string | string[];
@@ -36,6 +37,11 @@ export interface Generic {
 `
 
   api.forEach(generateRequestType)
+  types += '\nexport {\n'
+  api.forEach(generateExport)
+  // removes last comma
+  types = types.slice(0, -2) + '\n'
+  types += '}'
   return types
 
   function generateRequestType (spec) {
@@ -97,7 +103,7 @@ export interface Generic {
     const bodyGeneric = ndjsonApiKey.includes(toPascalCase(name)) ? 'RequestNDBody' : 'RequestBody'
 
     const code = `
-export interface ${toPascalCase(name)}${body ? `<T = ${bodyGeneric}>` : ''} extends Generic {
+interface ${toPascalCase(name)}Request${body ? `<T = ${bodyGeneric}>` : ''} extends GenericRequest {
   ${partsArr.map(genLine).join('\n  ')}
   ${paramsArr.map(genLine).join('\n  ')}
   ${body ? `body${body.required ? '' : '?'}: T;` : ''}
@@ -126,6 +132,18 @@ export interface ${toPascalCase(name)}${body ? `<T = ${bodyGeneric}>` : ''} exte
       default:
         return type
     }
+  }
+
+  function generateExport (spec) {
+    const api = Object.keys(spec)[0]
+    const name = api
+      .replace(/\.([a-z])/g, k => k[1].toUpperCase())
+      .replace(/_([a-z])/g, k => k[1].toUpperCase())
+    types += exportNewLineCount === 0 ? '  ' : ''
+    types += toPascalCase(name) + 'Request,'
+    types += exportNewLineCount < 3 ? ' ' : '\n'
+    exportNewLineCount += 1
+    if (exportNewLineCount > 3) exportNewLineCount = 0
   }
 }
 
