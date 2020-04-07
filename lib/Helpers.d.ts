@@ -4,12 +4,12 @@
 
 import { Readable as ReadableStream } from 'stream'
 import { TransportRequestOptions, ApiResponse, RequestBody } from './Transport'
-import { Search, Bulk } from '../api/requestParams'
+import { SearchRequest, BulkRequest } from '../api/RequestTypes'
 
 export default class Helpers {
-  search<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): Promise<TDocument[]>
-  scrollSearch<TDocument = unknown, TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<ScrollSearchResponse<TDocument, TResponse, TContext>>
-  scrollDocuments<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<TDocument>
+  search<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: SearchRequest<TRequestBody>, options?: TransportRequestOptions): Promise<TDocument[]>
+  scrollSearch<TDocument = unknown, TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = unknown>(params: SearchRequest<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<ScrollSearchResponse<TDocument, TResponse, TContext>>
+  scrollDocuments<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: SearchRequest<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<TDocument>
   bulk<TDocument = unknown>(options: BulkHelperOptions<TDocument>): BulkHelper<BulkStats>
 }
 
@@ -64,7 +64,7 @@ type UpdateAction = [UpdateActionOperation, Record<string, any>]
 type Action = IndexAction | CreateAction | UpdateAction | DeleteAction
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
-export interface BulkHelperOptions<TDocument = unknown> extends Omit<Bulk, 'body'> {
+export interface BulkHelperOptions<TDocument = unknown> extends Omit<BulkRequest, 'body'> {
   datasource: TDocument[] | Buffer | ReadableStream | AsyncIterator<TDocument>
   onDocument: (doc: TDocument) => Action
   flushBytes?: number
