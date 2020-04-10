@@ -239,6 +239,8 @@ function ESAPI (opts) {
       exists: lazyLoad('indices.exists', opts),
       exists_alias: lazyLoad('indices.exists_alias', opts),
       existsAlias: lazyLoad('indices.exists_alias', opts),
+      exists_index_template: lazyLoad('indices.exists_index_template', opts),
+      existsIndexTemplate: lazyLoad('indices.exists_index_template', opts),
       exists_template: lazyLoad('indices.exists_template', opts),
       existsTemplate: lazyLoad('indices.exists_template', opts),
       exists_type: lazyLoad('indices.exists_type', opts),

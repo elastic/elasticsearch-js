@@ -7,25 +7,34 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSearchableSnapshotsMount (opts) {
+function buildIndicesExistsIndexTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
+    'flat_settings',
     'master_timeout',
-    'wait_for_completion'
+    'local',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
+    flatSettings: 'flat_settings',
     masterTimeout: 'master_timeout',
-    waitForCompletion: 'wait_for_completion'
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a searchable_snapshots.mount request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-mount-snapshot.html
+   * Perform a indices.exists_index_template request
+   * Returns information about whether a particular index template exists.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
    */
-  return function searchableSnapshotsMount (params, options, callback) {
+  return function indicesExistsIndexTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -38,22 +47,8 @@ function buildSearchableSnapshotsMount (opts) {
     }
 
     // check required parameters
-    if (params['repository'] == null) {
-      const err = new ConfigurationError('Missing required parameter: repository')
-      return handleError(err, callback)
-    }
-    if (params['snapshot'] == null) {
-      const err = new ConfigurationError('Missing required parameter: snapshot')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
-    // check required url components
-    if (params['snapshot'] != null && (params['repository'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: repository')
+    if (params['name'] == null) {
+      const err = new ConfigurationError('Missing required parameter: name')
       return handleError(err, callback)
     }
 
@@ -64,7 +59,7 @@ function buildSearchableSnapshotsMount (opts) {
     }
 
     var warnings = []
-    var { method, body, repository, snapshot, ...querystring } = params
+    var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -74,14 +69,14 @@ function buildSearchableSnapshotsMount (opts) {
 
     var path = ''
 
-    if (method == null) method = 'POST'
-    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_mount'
+    if (method == null) method = 'HEAD'
+    path = '/' + '_index_template' + '/' + encodeURIComponent(name)
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -90,4 +85,4 @@ function buildSearchableSnapshotsMount (opts) {
   }
 }
 
-module.exports = buildSearchableSnapshotsMount
+module.exports = buildIndicesExistsIndexTemplate

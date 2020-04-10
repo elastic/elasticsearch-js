@@ -929,6 +929,14 @@ declare class Client extends EventEmitter {
     existsAlias<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     existsAlias<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesExistsAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     existsAlias<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesExistsAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_index_template<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesExistsIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    exists_index_template<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_index_template<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesExistsIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_index_template<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesExistsIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsIndexTemplate<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesExistsIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    existsIndexTemplate<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsIndexTemplate<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesExistsIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsIndexTemplate<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesExistsIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     exists_template<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesExistsTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     exists_template<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     exists_template<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesExistsTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

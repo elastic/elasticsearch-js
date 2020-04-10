@@ -2699,6 +2699,34 @@ _Default:_ `all`
 
 |===
 
+=== indices.existsIndexTemplate
+
+[source,ts]
+----
+client.indices.existsIndexTemplate({
+  name: string,
+  flat_settings: boolean,
+  master_timeout: string,
+  local: boolean
+})
+----
+link:{ref}/indices-templates.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the template
+
+|`flat_settings` or `flatSettings`
+|`boolean` - Return settings in flat format (default: false)
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`local`
+|`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|===
+
 === indices.existsTemplate
 
 [source,ts]
@@ -8814,7 +8842,7 @@ client.searchableSnapshots.mount({
   body: object
 })
 ----
-
+link:{ref}/searchable-snapshots-api-mount-snapshot.html[Documentation] +
 [cols=2*]
 |===
 |`repository`

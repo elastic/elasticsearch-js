@@ -673,6 +673,13 @@ export interface IndicesExistsAlias extends Generic {
   local?: boolean;
 }
 
+export interface IndicesExistsIndexTemplate extends Generic {
+  name: string;
+  flat_settings?: boolean;
+  master_timeout?: string;
+  local?: boolean;
+}
+
 export interface IndicesExistsTemplate extends Generic {
   name: string | string[];
   flat_settings?: boolean;
