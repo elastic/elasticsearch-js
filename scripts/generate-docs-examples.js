@@ -54,7 +54,14 @@ const enabledFiles = [
   'query-dsl/term-query.asciidoc',
   'docs/update.asciidoc',
   'docs/reindex.asciidoc',
-  'indices/templates.asciidoc'
+  'indices/templates.asciidoc',
+  'query-dsl/exists-query.asciidoc',
+  'query-dsl/terms-query.asciidoc',
+  'query-dsl/wildcard-query.asciidoc',
+  'mapping/types/nested.asciidoc',
+  'mapping/params/format.asciidoc',
+  'docs/delete-by-query.asciidoc',
+  'search/request/sort.asciidoc'
 ]
 
 function generate () {
