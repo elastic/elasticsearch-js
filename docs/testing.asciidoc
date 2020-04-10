@@ -33,7 +33,7 @@ the `Connection` component since it has very few responsibilities and
 it does not interact with other internal components other than getting
 requests and returning responses.
 
-==== `@elastic/elasticsearch-mock`
+=== `@elastic/elasticsearch-mock`
 
 Writing each time a mock for your test can be annoying and error-prone,
 so we have built a simple yet powerful mocking library specifically designed
