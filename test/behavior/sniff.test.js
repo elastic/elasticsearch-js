@@ -135,12 +135,7 @@ test('Sniff interval', t => {
       t.strictEqual(reason, Transport.sniffReasons.SNIFF_INTERVAL)
     })
 
-<<<<<<< HEAD
-    t.strictEqual(client.connectionPool.connections.size, 1)
-    setTimeout(() => client.info(t.error), 60)
-=======
     t.strictEqual(client.connectionPool.size, 1)
->>>>>>> fd8f02b9... Fix flaky test (#1158)
 
     q.add((q, done) => {
       clock.tick(51)
@@ -157,11 +152,6 @@ test('Sniff interval', t => {
       kill('node1', done)
     })
 
-<<<<<<< HEAD
-    setTimeout(() => {
-      t.strictEqual(client.connectionPool.connections.size, 3)
-    }, 200)
-=======
     q.add((q, done) => {
       clock.tick(51)
       client.info(err => {
@@ -172,7 +162,6 @@ test('Sniff interval', t => {
         })
       })
     })
->>>>>>> fd8f02b9... Fix flaky test (#1158)
 
     t.teardown(shutdown)
 
