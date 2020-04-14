@@ -56,14 +56,17 @@ function buildCluster (options, callback) {
 
   function shutdown () {
     debug(`Shutting down cluster '${clusterId}'`)
-    Object.keys(nodes).forEach(kill)
+    for (const id in nodes) {
+      kill(id)
+    }
   }
 
-  function kill (id) {
+  function kill (id, callback) {
     debug(`Shutting down cluster node '${id}' (cluster id: '${clusterId}')`)
-    nodes[id].server.stop()
+    const node = nodes[id]
     delete nodes[id]
     delete sniffResult.nodes[id]
+    node.server.stop(callback)
   }
 
   function spawn (id, callback) {
