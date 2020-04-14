@@ -517,9 +517,8 @@ test('Retry mechanism', t => {
     if (count > 0) {
       res.end(JSON.stringify({ hello: 'world' }))
     } else {
-      setTimeout(() => {
-        res.end(JSON.stringify({ hello: 'world' }))
-      }, 1000)
+      res.statusCode = 504
+      res.end(JSON.stringify({ error: true }))
     }
     count++
   }
@@ -542,7 +541,6 @@ test('Retry mechanism', t => {
       connectionPool: pool,
       serializer: new Serializer(),
       maxRetries: 1,
-      requestTimeout: 250,
       sniffInterval: false,
       sniffOnStart: false
     })
@@ -558,6 +556,51 @@ test('Retry mechanism', t => {
   })
 })
 
+test('Should not retry if the body is a stream', t => {
+  t.plan(2)
+
+  var count = 0
+  function handler (req, res) {
+    count++
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.statusCode = 504
+    res.end(JSON.stringify({ error: true }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection([{
+      url: new URL(`http://localhost:${port}`),
+      id: 'node1'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node2'
+    }, {
+      url: new URL(`http://localhost:${port}`),
+      id: 'node3'
+    }])
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 1,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'POST',
+      path: '/hello',
+      body: intoStream(JSON.stringify({ hello: 'world' }))
+    }, (err, { body }) => {
+      t.ok(err instanceof ResponseError)
+      t.strictEqual(count, 1)
+      server.stop()
+    })
+  })
+})
+
 test('Custom retry mechanism', t => {
   t.plan(2)
 
@@ -567,9 +610,8 @@ test('Custom retry mechanism', t => {
     if (count > 0) {
       res.end(JSON.stringify({ hello: 'world' }))
     } else {
-      setTimeout(() => {
-        res.end(JSON.stringify({ hello: 'world' }))
-      }, 1000)
+      res.statusCode = 504
+      res.end(JSON.stringify({ error: true }))
     }
     count++
   }
@@ -592,7 +634,6 @@ test('Custom retry mechanism', t => {
       connectionPool: pool,
       serializer: new Serializer(),
       maxRetries: 0,
-      requestTimeout: 250,
       sniffInterval: false,
       sniffOnStart: false
     })
