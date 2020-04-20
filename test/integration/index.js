@@ -4,14 +4,15 @@
 
 'use strict'
 
-const { readFileSync, accessSync, mkdirSync, readdirSync, statSync } = require('fs')
+const { writeFileSync, readFileSync, accessSync, mkdirSync, readdirSync, statSync } = require('fs')
 const { join, sep } = require('path')
 const yaml = require('js-yaml')
 const Git = require('simple-git')
+const ms = require('ms')
 const { Client } = require('../../index')
 const build = require('./test-runner')
 const { sleep } = require('./helper')
-const ms = require('ms')
+const createJunitReporter = require('./reporter')
 
 const esRepo = 'https://github.com/elastic/elasticsearch.git'
 const esFolder = join(__dirname, '..', '..', 'elasticsearch')
@@ -133,6 +134,8 @@ async function start ({ client, isXPack }) {
   await withSHA(sha)
 
   log(`Testing ${isXPack ? 'XPack' : 'oss'} api...`)
+  const junit = createJunitReporter()
+  const junitTestSuites = junit.testsuites(`Integration test for ${isXPack ? 'XPack' : 'oss'} api`)
 
   const stats = {
     total: 0,
@@ -196,31 +199,42 @@ async function start ({ client, isXPack }) {
 
       const cleanPath = file.slice(file.lastIndexOf(apiName))
       log('    ' + cleanPath)
+      const junitTestSuite = junitTestSuites.testsuite(apiName.slice(1) + ' - ' + cleanPath)
 
       for (const test of tests) {
         const testTime = now()
         const name = Object.keys(test)[0]
         if (name === 'setup' || name === 'teardown') continue
+        const junitTestCase = junitTestSuite.testcase(name)
+
         stats.total += 1
         if (shouldSkip(isXPack, file, name)) {
           stats.skip += 1
+          junitTestCase.skip()
           continue
         }
         log('        - ' + name)
         try {
-          await testRunner.run(setupTest, test[name], teardownTest, stats)
+          await testRunner.run(setupTest, test[name], teardownTest, stats, junitTestCase)
           stats.pass += 1
         } catch (err) {
+          junitTestCase.failure(err)
+          junitTestCase.end()
+          junitTestSuite.end()
+          junitTestSuites.end()
+          generateJunitXmlReport(junit, isXPack ? 'xpack' : 'oss')
           console.error(err)
           process.exit(1)
         }
         const totalTestTime = now() - testTime
+        junitTestCase.end()
         if (totalTestTime > MAX_TEST_TIME) {
           log('          took too long: ' + ms(totalTestTime))
         } else {
           log('          took: ' + ms(totalTestTime))
         }
       }
+      junitTestSuite.end()
       const totalFileTime = now() - fileTime
       if (totalFileTime > MAX_FILE_TIME) {
         log(`    ${cleanPath} took too long: ` + ms(totalFileTime))
@@ -235,6 +249,8 @@ async function start ({ client, isXPack }) {
       log(`${apiName} took: ` + ms(totalApiTime))
     }
   }
+  junitTestSuites.end()
+  generateJunitXmlReport(junit, isXPack ? 'xpack' : 'oss')
   log(`Total testing time: ${ms(now() - totalTime)}`)
   log(`Test stats:
   - Total: ${stats.total}
@@ -357,6 +373,13 @@ function createFolder (name) {
   } catch (err) {
     return false
   }
+}
+
+function generateJunitXmlReport (junit, suite) {
+  writeFileSync(
+    join(__dirname, '..', '..', `${suite}-report-junit.xml`),
+    junit.prettyPrint()
+  )
 }
 
 if (require.main === module) {
