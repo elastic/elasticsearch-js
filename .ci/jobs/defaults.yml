@@ -1,4 +1,4 @@
-
+---
 
 ##### GLOBAL METADATA
 
@@ -12,6 +12,12 @@
     logrotate:
       daysToKeep: 30
       numToKeep: 100
+    parameters:
+    - string:
+        name: branch_specifier
+        default: refs/heads/master
+        description: the Git branch specifier to build (&lt;branchName&gt;, &lt;tagName&gt;,
+          &lt;commitId&gt;, etc.)
     properties:
     - github:
         url: https://github.com/elastic/elasticsearch-js/
@@ -55,20 +61,20 @@
       exclude-key: exclude
       filename: .ci/test-matrix.yml
     wrappers:
-    - ansicolor
-    - timeout:
-        type: absolute
-        timeout: 120
-        fail: true
-    - timestamps
-    - workspace-cleanup
+      - ansicolor
+      - timeout:
+          type: absolute
+          timeout: 120
+          fail: true
+      - timestamps
+      - workspace-cleanup
     builders:
-    - shell: |-
-        #!/usr/local/bin/runbld
-        .ci/run-tests
+      - shell: |-
+          #!/usr/local/bin/runbld
+          .ci/run-tests
     publishers:
-    - email:
-        recipients: infra-root+build@elastic.co
-    - junit:
-        results: "*-junit.xml"
-        allow-empty-results: true
+      - email:
+          recipients: infra-root+build@elastic.co
+      - junit:
+          results: "*-junit.xml"
+          allow-empty-results: true
