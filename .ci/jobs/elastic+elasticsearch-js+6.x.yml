@@ -3,6 +3,7 @@
     name: elastic+elasticsearch-js+6.x
     display-name: 'elastic / elasticsearch-js # 6.x'
     description: Testing the elasticsearch-js 6.x branch.
+    junit_results: "*-junit.xml"
     parameters:
     - string:
         name: branch_specifier
