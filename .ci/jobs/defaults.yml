@@ -33,6 +33,7 @@
         branches:
         - ${branch_specifier}
         url: https://github.com/elastic/elasticsearch-js.git
+        basedir: ''
         wipe-workspace: 'True'
     triggers:
     - github
