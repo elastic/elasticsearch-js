@@ -92,7 +92,7 @@ function createJunitReporter () {
         },
         skip (reason) {
           if (typeof reason !== 'string') {
-            reason = JSON.stringify(reason)
+            reason = JSON.stringify(reason, null, 2)
           }
           tcase.skipped = {
             '#': reason
