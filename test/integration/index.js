@@ -210,7 +210,7 @@ async function start ({ client, isXPack }) {
         stats.total += 1
         if (shouldSkip(isXPack, file, name)) {
           stats.skip += 1
-          junitTestCase.skip()
+          junitTestCase.skip('This test is in the skip list of the client')
           continue
         }
         log('        - ' + name)

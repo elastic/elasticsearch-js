@@ -223,7 +223,7 @@ function build (opts = {}) {
     // we should skip the entire test file
     const skip = getSkip(setup) || getSkip(teardown)
     if (skip && shouldSkip(esVersion, skip)) {
-      junit.skip()
+      junit.skip(skip)
       logSkip(skip)
       return
     }
@@ -457,7 +457,7 @@ function build (opts = {}) {
     for (const action of actions) {
       if (action.skip) {
         if (shouldSkip(esVersion, action.skip)) {
-          junit.skip()
+          junit.skip(fillStashedValues(action.skip))
           logSkip(fillStashedValues(action.skip))
           break
         }

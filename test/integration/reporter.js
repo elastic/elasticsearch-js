@@ -90,8 +90,13 @@ function createJunitReporter () {
             '@type': error.code
           }
         },
-        skip () {
-          tcase.skipped = {}
+        skip (reason) {
+          if (typeof reason !== 'string') {
+            reason = JSON.stringify(reason)
+          }
+          tcase.skipped = {
+            '#': reason
+          }
         },
         end () {
           tcase['@time'] = Math.round((Date.now() - startTime) / 1000)
