@@ -17,4 +17,3 @@
         github-hooks: true
         status-context: clients-ci
         cancel-builds-on-update: true
-    publishers: []
