@@ -27,7 +27,7 @@ function createJunitReporter () {
     return {
       testsuite: createTestSuite(testsuiteList),
       end () {
-        report.testsuites['@time'] = Date.now() - startTime
+        report.testsuites['@time'] = Math.round((Date.now() - startTime) / 1000)
         report.testsuites['@tests'] = testsuiteList.reduce((acc, val) => {
           acc += val['@tests']
           return acc
@@ -60,7 +60,7 @@ function createJunitReporter () {
       return {
         testcase: createTestCase(testcaseList),
         end () {
-          suite['@time'] = Date.now() - startTime
+          suite['@time'] = Math.round((Date.now() - startTime) / 1000)
           suite['@tests'] = testcaseList.length
           suite['@failures'] = testcaseList.filter(t => t.failure).length
           suite['@skipped'] = testcaseList.filter(t => t.skipped).length
@@ -94,7 +94,7 @@ function createJunitReporter () {
           tcase.skipped = {}
         },
         end () {
-          tcase['@time'] = Date.now() - startTime
+          tcase['@time'] = Math.round((Date.now() - startTime) / 1000)
         }
       }
     }
