@@ -1,0 +1,191 @@
+[[changelog-client]]
+== Changelog
+
+=== 7.7.0
+
+==== Features
+
+===== Support for Elasticsearch `v7.7`.
+
+You can find all the API changes https://www.elastic.co/guide/en/elasticsearch/reference/7.7/release-notes-7.7.0.html[here].
+
+===== Introduced client helpers - https://github.com/elastic/elasticsearch-js/pull/1107[#1107]
+
+From now on, the client comes with an handy collection of helpers to give you a more comfortable experience with some APIs.
+
+CAUTION: The client helpers are experimental, and the API may change in the next minor releases.
+
+The following helpers has been introduced:
+
+- `client.helpers.bulk`
+- `client.helpers.search`
+- `client.helpers.scrollSearch`
+- `client.helpers.scrollDocuments`
+
+===== The `ConnectionPool.getConnection` now always returns a `Connection` - https://github.com/elastic/elasticsearch-js/pull/1127[#1127]
+
+What does this mean? It means that you will see less `NoLivingConnectionError`, which now can only be caused if you set a selector/filter too strict.
+For improving the debugging experience, the `NoLivingConnectionsError` error message has been updated.
+
+===== Abortable promises - https://github.com/elastic/elasticsearch-js/pull/1141[#1141]
+
+From now on, it will be possible to abort a request generated with the promise-styl API. If you abort a request generated from a promise, the promise will be rejected with a `RequestAbortedError`.
+
+
+[source,js]
+----
+const promise = client.search({
+  body: {
+    query: { match_all: {} }
+  }
+})
+
+promise
+  .then(console.log)
+  .catch(console.log)
+
+promise.abort()
+----
+
+===== Major refactor of the Type Definitions - https://github.com/elastic/elasticsearch-js/pull/1119[#1119] https://github.com/elastic/elasticsearch-js/issues/1130[#1130] https://github.com/elastic/elasticsearch-js/pull/1132[#1132]
+
+Now every API makes better use of the generics and overloading, so you can (or not, by default request/response bodies are `Record<string, any>`) define the request/response bodies in the generics.
+[source,ts]
+----
+// request and response bodies are generics
+client.search(...)
+// response body is `SearchResponse` and request body is generic
+client.search<SearchResponse>(...)
+// request body is `SearchBody` and response body is `SearchResponse`
+client.search<SearchResponse, SearchBody>(...)
+----
+
+This *should* not be a breaking change, as every generics defaults to `any`. It might happen to some users that the code breaks, but our test didn't detect any of it, probably because they were not robust enough. However, given the gigantic improvement in the developer experience, we have decided to release this change in the 7.x line.
+
+==== Fixes
+
+===== The `ConnectionPool.update` method now cleans the `dead` list - https://github.com/elastic/elasticsearch-js/issues/1122[#1122] https://github.com/elastic/elasticsearch-js/pull/1127[#1127]
+
+It can happen in a situation where we are updating the connections list and running sniff, leaving the `dead` list in a dirty state. Now the `ConnectionPool.update` cleans up the `dead` list every time, which makes way more sense given that all the new connections are alive.
+
+===== `ConnectionPoolmarkDead` should ignore connections that no longer exists - https://github.com/elastic/elasticsearch-js/pull/1159[#1159]
+
+It might happen that markDead is called just after a pool update, and in such case, the clint was adding the dead list a node that no longer exists, causing unhandled exceptions later.
+
+===== Do not retry a request if the body is a stream - https://github.com/elastic/elasticsearch-js/pull/1143[#1143]
+
+The client should not retry if it's sending a stream body, because it should store in memory a copy of the stream to be able to send it again, but since it doesn't know in advance the size of the stream, it risks to take too much memory.
+Furthermore, copying everytime the stream is very an expensive operation.
+
+===== Return an error if the request has been aborted - https://github.com/elastic/elasticsearch-js/pull/1141[#1141]
+
+Until now, aborting a request was blocking the HTTP request, but never calling the callback or resolving the promise to notify the user. This is a bug because it could lead to dangerous memory leaks. From now on if the user calls the `request.abort()` method, the callback style API will be called with a `RequestAbortedError`, the promise will be rejected with `RequestAbortedError` as well.
+
+=== 7.6.1
+
+**Fixes:**
+
+- Secure json parsing - https://github.com/elastic/elasticsearch-js/pull/1110[#1110]
+- ApiKey should take precedence over basic auth - https://github.com/elastic/elasticsearch-js/pull/1115[#1115]
+
+**Documentation:**
+
+- Fix typo in api reference - https://github.com/elastic/elasticsearch-js/pull/1109[#1109]
+
+=== 7.6.0
+
+Support for Elasticsearch `v7.6`.
+
+=== 7.5.1
+
+**Fixes:**
+
+- Skip compression in case of empty string body - https://github.com/elastic/elasticsearch-js/pull/1080[#1080]
+- Fix typo in NoLivingConnectionsError - https://github.com/elastic/elasticsearch-js/pull/1045[#1045]
+- Change TransportRequestOptions.ignore to number[] - https://github.com/elastic/elasticsearch-js/pull/1053[#1053]
+- ClientOptions["cloud"] should have optional auth fields - https://github.com/elastic/elasticsearch-js/pull/1032[#1032]
+
+**Documentation:**
+
+- Docs: Return super in example Transport subclass - https://github.com/elastic/elasticsearch-js/pull/980[#980]
+- Add examples to reference - https://github.com/elastic/elasticsearch-js/pull/1076[#1076]
+- Added new examples - https://github.com/elastic/elasticsearch-js/pull/1031[#1031]
+
+=== 7.5.0
+
+Support for Elasticsearch `v7.5`.
+
+**Features**
+
+- X-Opaque-Id support https://github.com/elastic/elasticsearch-js/pull/997[#997]
+
+=== 7.4.0
+
+Support for Elasticsearch `v7.4`.
+
+**Fixes:**
+
+- Fix issue; node roles are defaulting to true when undefined is breaking usage of nodeFilter option - https://github.com/elastic/elasticsearch-js/pull/967[#967]
+
+**Documentation:**
+
+- Updated API reference doc - https://github.com/elastic/elasticsearch-js/pull/945[#945] https://github.com/elastic/elasticsearch-js/pull/969[#969]
+- Fix inaccurate description sniffEndpoint - https://github.com/elastic/elasticsearch-js/pull/959[#959]
+
+**Internals:**
+
+- Update code generation https://github.com/elastic/elasticsearch-js/pull/969[#969]
+
+=== 7.3.0
+
+Support for Elasticsearch `v7.3`.
+
+**Features:**
+
+- Added `auth` option - https://github.com/elastic/elasticsearch-js/pull/908[#908]
+- Added support for `ApiKey` authentication - https://github.com/elastic/elasticsearch-js/pull/908[#908]
+
+**Fixes:**
+
+- fix(Typings): sniffInterval can also be boolean - https://github.com/elastic/elasticsearch-js/pull/914[#914]
+
+**Internals:**
+
+- Refactored connection pool - https://github.com/elastic/elasticsearch-js/pull/913[#913]
+
+**Documentation:**
+
+- Better reference code examples - https://github.com/elastic/elasticsearch-js/pull/920[#920]
+- Improve README - https://github.com/elastic/elasticsearch-js/pull/909[#909]
+
+=== 7.2.0
+
+Support for Elasticsearch `v7.2`
+
+**Fixes:**
+
+- Remove auth data from inspect and toJSON in connection class - https://github.com/elastic/elasticsearch-js/pull/887[#887]
+
+=== 7.1.0
+
+Support for Elasticsearch `v7.1`
+
+**Fixes:**
+
+- Support for non-friendly chars in url username and password - https://github.com/elastic/elasticsearch-js/pull/858[#858]
+- Patch deprecated parameters - https://github.com/elastic/elasticsearch-js/pull/851[#851]
+
+=== 7.0.1
+
+**Fixes:**
+
+- Fix TypeScript export *(issue https://github.com/elastic/elasticsearch-js/pull/841[#841])* - https://github.com/elastic/elasticsearch-js/pull/842[#842]
+- Fix http and https port handling *(issue https://github.com/elastic/elasticsearch-js/pull/843[#843])* - https://github.com/elastic/elasticsearch-js/pull/845[#845]
+- Fix TypeScript definiton *(issue https://github.com/elastic/elasticsearch-js/pull/803[#803])* - https://github.com/elastic/elasticsearch-js/pull/846[#846]
+- Added toJSON method to Connection class *(issue https://github.com/elastic/elasticsearch-js/pull/848[#848])* - https://github.com/elastic/elasticsearch-js/pull/849[#849]
+
+=== 7.0.0
+
+Support for Elasticsearch `v7.0`
+
+- Stable release.
