@@ -62,7 +62,8 @@
     "stoppable": "^1.1.0",
     "tap": "^14.4.1",
     "tsd": "^0.11.0",
-    "workq": "^2.1.0"
+    "workq": "^2.1.0",
+    "xmlbuilder2": "^2.1.2"
   },
   "dependencies": {
     "debug": "^4.1.1",
