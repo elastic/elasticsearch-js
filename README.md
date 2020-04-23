@@ -52,6 +52,7 @@ We recommend that you write a lightweight proxy that uses this client instead.
 ## Documentation
 
 - [Introduction](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/introduction.html)
+- [Changelog](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/changelog-client.html)
 - [Usage](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-usage.html)
 - [Client configuration](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-configuration.html)
 - [API reference](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference.html)
