@@ -1036,9 +1036,10 @@ export interface NodesInfo extends Generic {
   timeout?: string;
 }
 
-export interface NodesReloadSecureSettings extends Generic {
+export interface NodesReloadSecureSettings<T = RequestBody> extends Generic {
   node_id?: string | string[];
   timeout?: string;
+  body?: T;
 }
 
 export interface NodesStats extends Generic {

@@ -1092,7 +1092,7 @@ link:{ref}/cluster-allocation-explain.html[Documentation] +
 |===
 
 === cluster.deleteComponentTemplate
-
+*Stability:* experimental
 [source,ts]
 ----
 client.cluster.deleteComponentTemplate({
@@ -1116,7 +1116,7 @@ link:{ref}/indices-component-templates.html[Documentation] +
 |===
 
 === cluster.getComponentTemplate
-
+*Stability:* experimental
 [source,ts]
 ----
 client.cluster.getComponentTemplate({
@@ -1250,7 +1250,7 @@ link:{ref}/cluster-pending.html[Documentation] +
 |===
 
 === cluster.putComponentTemplate
-
+*Stability:* experimental
 [source,ts]
 ----
 client.cluster.putComponentTemplate({
@@ -4259,7 +4259,8 @@ link:{ref}/cluster-nodes-info.html[Documentation] +
 ----
 client.nodes.reloadSecureSettings({
   node_id: string | string[],
-  timeout: string
+  timeout: string,
+  body: object
 })
 ----
 link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
@@ -4270,6 +4271,9 @@ link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
 
 |`timeout`
 |`string` - Explicit operation timeout
+
+|`body`
+|`object` - An object containing the password for the elasticsearch keystore
 
 |===
 
