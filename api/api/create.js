@@ -19,6 +19,7 @@ function buildCreate (opts) {
     'version',
     'version_type',
     'pipeline',
+    'prefer_v2_templates',
     'pretty',
     'human',
     'error_trace',
@@ -29,6 +30,7 @@ function buildCreate (opts) {
   const snakeCase = {
     waitForActiveShards: 'wait_for_active_shards',
     versionType: 'version_type',
+    preferV2Templates: 'prefer_v2_templates',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

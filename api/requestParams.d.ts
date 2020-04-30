@@ -27,6 +27,7 @@ export interface Bulk<T = RequestNDBody> extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   pipeline?: string;
+  prefer_v2_templates?: boolean;
   body: T;
 }
 
@@ -268,6 +269,10 @@ export interface ClusterDeleteComponentTemplate extends Generic {
   master_timeout?: string;
 }
 
+export interface ClusterDeleteVotingConfigExclusions extends Generic {
+  wait_for_removal?: boolean;
+}
+
 export interface ClusterExistsComponentTemplate extends Generic {
   name: string;
   master_timeout?: string;
@@ -305,6 +310,12 @@ export interface ClusterHealth extends Generic {
 export interface ClusterPendingTasks extends Generic {
   local?: boolean;
   master_timeout?: string;
+}
+
+export interface ClusterPostVotingConfigExclusions extends Generic {
+  node_ids?: string;
+  node_names?: string;
+  timeout?: string;
 }
 
 export interface ClusterPutComponentTemplate<T = RequestBody> extends Generic {
@@ -384,6 +395,7 @@ export interface Create<T = RequestBody> extends Generic {
   version?: number;
   version_type?: 'internal' | 'external' | 'external_gte';
   pipeline?: string;
+  prefer_v2_templates?: boolean;
   body: T;
 }
 
@@ -571,6 +583,7 @@ export interface Index<T = RequestBody> extends Generic {
   if_seq_no?: number;
   if_primary_term?: number;
   pipeline?: string;
+  prefer_v2_templates?: boolean;
   body: T;
 }
 
@@ -614,6 +627,7 @@ export interface IndicesCreate<T = RequestBody> extends Generic {
   wait_for_active_shards?: string;
   timeout?: string;
   master_timeout?: string;
+  prefer_v2_templates?: boolean;
   body?: T;
 }
 
@@ -867,6 +881,7 @@ export interface IndicesRollover<T = RequestBody> extends Generic {
   dry_run?: boolean;
   master_timeout?: string;
   wait_for_active_shards?: string;
+  prefer_v2_templates?: boolean;
   body?: T;
 }
 
@@ -892,6 +907,12 @@ export interface IndicesShrink<T = RequestBody> extends Generic {
   timeout?: string;
   master_timeout?: string;
   wait_for_active_shards?: string;
+  body?: T;
+}
+
+export interface IndicesSimulateIndexTemplate<T = RequestBody> extends Generic {
+  name: string;
+  master_timeout?: string;
   body?: T;
 }
 
@@ -1053,9 +1074,10 @@ export interface NodesInfo extends Generic {
   timeout?: string;
 }
 
-export interface NodesReloadSecureSettings extends Generic {
+export interface NodesReloadSecureSettings<T = RequestBody> extends Generic {
   node_id?: string | string[];
   timeout?: string;
+  body?: T;
 }
 
 export interface NodesStats extends Generic {
@@ -1335,6 +1357,7 @@ export interface Update<T = RequestBody> extends Generic {
   timeout?: string;
   if_seq_no?: number;
   if_primary_term?: number;
+  prefer_v2_templates?: boolean;
   body: T;
 }
 
@@ -2207,6 +2230,10 @@ export interface SearchableSnapshotsMount<T = RequestBody> extends Generic {
   master_timeout?: string;
   wait_for_completion?: boolean;
   body: T;
+}
+
+export interface SearchableSnapshotsRepositoryStats extends Generic {
+  repository: string;
 }
 
 export interface SearchableSnapshotsStats extends Generic {

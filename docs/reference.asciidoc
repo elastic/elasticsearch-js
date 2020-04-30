@@ -110,6 +110,7 @@ client.bulk({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   pipeline: string,
+  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -146,6 +147,9 @@ link:{ref}/docs-bulk.html[Documentation] +
 
 |`pipeline`
 |`string` - The pipeline id to preprocess incoming documents with
+
+|`prefer_v2_templates` or `preferV2Templates`
+|`boolean` - favor V2 templates instead of V1 templates during automatic index creation
 
 |`body`
 |`object` - The operation definition and data (action-data pairs), separated by newlines
@@ -1109,6 +1113,23 @@ link:{ref}/indices-component-templates.html[Documentation] +
 
 |===
 
+=== cluster.deleteVotingConfigExclusions
+
+[source,ts]
+----
+client.cluster.deleteVotingConfigExclusions({
+  wait_for_removal: boolean
+})
+----
+link:{ref}/voting-config-exclusions.html[Documentation] +
+[cols=2*]
+|===
+|`wait_for_removal` or `waitForRemoval`
+|`boolean` - Specifies whether to wait for all excluded nodes to be removed from the cluster before clearing the voting configuration exclusions list. +
+_Default:_ `true`
+
+|===
+
 === cluster.existsComponentTemplate
 
 [source,ts]
@@ -1264,6 +1285,31 @@ link:{ref}/cluster-pending.html[Documentation] +
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
+
+|===
+
+=== cluster.postVotingConfigExclusions
+
+[source,ts]
+----
+client.cluster.postVotingConfigExclusions({
+  node_ids: string,
+  node_names: string,
+  timeout: string
+})
+----
+link:{ref}/voting-config-exclusions.html[Documentation] +
+[cols=2*]
+|===
+|`node_ids` or `nodeIds`
+|`string` - A comma-separated list of the persistent ids of the nodes to exclude from the voting configuration. If specified, you may not also specify ?node_names.
+
+|`node_names` or `nodeNames`
+|`string` - A comma-separated list of the names of the nodes to exclude from the voting configuration. If specified, you may not also specify ?node_ids.
+
+|`timeout`
+|`string` - Explicit operation timeout +
+_Default:_ `30s`
 
 |===
 
@@ -1546,6 +1592,7 @@ client.create({
   version: number,
   version_type: 'internal' | 'external' | 'external_gte',
   pipeline: string,
+  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -1583,6 +1630,9 @@ WARNING: This parameter has been deprecated.
 
 |`pipeline`
 |`string` - The pipeline id to preprocess incoming documents with
+
+|`prefer_v2_templates` or `preferV2Templates`
+|`boolean` - favor V2 templates instead of V1 templates during automatic index creation
 
 |`body`
 |`object` - The document
@@ -2251,6 +2301,7 @@ client.index({
   if_seq_no: number,
   if_primary_term: number,
   pipeline: string,
+  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -2292,6 +2343,9 @@ link:{ref}/docs-index_.html[Documentation] +
 
 |`pipeline`
 |`string` - The pipeline id to preprocess incoming documents with
+
+|`prefer_v2_templates` or `preferV2Templates`
+|`boolean` - favor V2 templates instead of V1 templates during automatic index creation
 
 |`body`
 |`object` - The document
@@ -2449,6 +2503,7 @@ client.indices.create({
   wait_for_active_shards: string,
   timeout: string,
   master_timeout: string,
+  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -2466,6 +2521,9 @@ link:{ref}/indices-create-index.html[Documentation] +
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
+
+|`prefer_v2_templates` or `preferV2Templates`
+|`boolean` - favor V2 templates instead of V1 templates during index creation
 
 |`body`
 |`object` - The configuration for the index (`settings` and `mappings`)
@@ -3471,6 +3529,7 @@ client.indices.rollover({
   dry_run: boolean,
   master_timeout: string,
   wait_for_active_shards: string,
+  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -3494,6 +3553,9 @@ link:{ref}/indices-rollover-index.html[Documentation] +
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Set the number of active shards to wait for on the newly created rollover index before the operation returns.
+
+|`prefer_v2_templates` or `preferV2Templates`
+|`boolean` - favor V2 templates instead of V1 templates during automatic index creation
 
 |`body`
 |`object` - The conditions that needs to be met for executing rollover
@@ -3599,6 +3661,30 @@ link:{ref}/indices-shrink-index.html[Documentation] +
 
 |`body`
 |`object` - The configuration for the target index (`settings` and `aliases`)
+
+|===
+
+=== indices.simulateIndexTemplate
+
+[source,ts]
+----
+client.indices.simulateIndexTemplate({
+  name: string,
+  master_timeout: string,
+  body: object
+})
+----
+link:{ref}/indices-templates.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the index (it must be a concrete index name)
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`body`
+|`object` - New index template definition, which will be included in the simulation, as if it already exists in the system
 
 |===
 
@@ -4242,7 +4328,8 @@ link:{ref}/cluster-nodes-info.html[Documentation] +
 ----
 client.nodes.reloadSecureSettings({
   node_id: string | string[],
-  timeout: string
+  timeout: string,
+  body: object
 })
 ----
 link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
@@ -4253,6 +4340,9 @@ link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
 
 |`timeout`
 |`string` - Explicit operation timeout
+
+|`body`
+|`object` - An object containing the password for the elasticsearch keystore
 
 |===
 
@@ -5330,6 +5420,7 @@ client.update({
   timeout: string,
   if_seq_no: number,
   if_primary_term: number,
+  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -5380,6 +5471,9 @@ WARNING: This parameter has been deprecated.
 
 |`if_primary_term` or `ifPrimaryTerm`
 |`number` - only perform the update operation if the last operation that has changed the document has the specified primary term
+
+|`prefer_v2_templates` or `preferV2Templates`
+|`boolean` - favor V2 templates instead of V1 templates during automatic index creation
 
 |`body`
 |`object` - The request definition requires either `script` or partial `doc`
@@ -6618,7 +6712,7 @@ client.eql.search({
   body: object
 })
 ----
-link:{ref}/eql.html[Documentation] +
+link:{ref}/eql-search-api.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -8859,6 +8953,22 @@ link:{ref}/searchable-snapshots-api-mount-snapshot.html[Documentation] +
 
 |`body`
 |`object` - The restore configuration for mounting the snapshot as searchable
+
+|===
+
+=== searchableSnapshots.repositoryStats
+*Stability:* experimental
+[source,ts]
+----
+client.searchableSnapshots.repositoryStats({
+  repository: string
+})
+----
+link:{ref}/searchable-snapshots-repository-stats.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - The repository for which to get the stats for
 
 |===
 

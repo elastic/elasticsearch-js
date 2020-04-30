@@ -102,6 +102,8 @@ function ESAPI (opts) {
       allocationExplain: lazyLoad('cluster.allocation_explain', opts),
       delete_component_template: lazyLoad('cluster.delete_component_template', opts),
       deleteComponentTemplate: lazyLoad('cluster.delete_component_template', opts),
+      delete_voting_config_exclusions: lazyLoad('cluster.delete_voting_config_exclusions', opts),
+      deleteVotingConfigExclusions: lazyLoad('cluster.delete_voting_config_exclusions', opts),
       exists_component_template: lazyLoad('cluster.exists_component_template', opts),
       existsComponentTemplate: lazyLoad('cluster.exists_component_template', opts),
       get_component_template: lazyLoad('cluster.get_component_template', opts),
@@ -111,6 +113,8 @@ function ESAPI (opts) {
       health: lazyLoad('cluster.health', opts),
       pending_tasks: lazyLoad('cluster.pending_tasks', opts),
       pendingTasks: lazyLoad('cluster.pending_tasks', opts),
+      post_voting_config_exclusions: lazyLoad('cluster.post_voting_config_exclusions', opts),
+      postVotingConfigExclusions: lazyLoad('cluster.post_voting_config_exclusions', opts),
       put_component_template: lazyLoad('cluster.put_component_template', opts),
       putComponentTemplate: lazyLoad('cluster.put_component_template', opts),
       put_settings: lazyLoad('cluster.put_settings', opts),
@@ -285,6 +289,8 @@ function ESAPI (opts) {
       shard_stores: lazyLoad('indices.shard_stores', opts),
       shardStores: lazyLoad('indices.shard_stores', opts),
       shrink: lazyLoad('indices.shrink', opts),
+      simulate_index_template: lazyLoad('indices.simulate_index_template', opts),
+      simulateIndexTemplate: lazyLoad('indices.simulate_index_template', opts),
       split: lazyLoad('indices.split', opts),
       stats: lazyLoad('indices.stats', opts),
       unfreeze: lazyLoad('indices.unfreeze', opts),
@@ -496,12 +502,16 @@ function ESAPI (opts) {
       clear_cache: lazyLoad('searchable_snapshots.clear_cache', opts),
       clearCache: lazyLoad('searchable_snapshots.clear_cache', opts),
       mount: lazyLoad('searchable_snapshots.mount', opts),
+      repository_stats: lazyLoad('searchable_snapshots.repository_stats', opts),
+      repositoryStats: lazyLoad('searchable_snapshots.repository_stats', opts),
       stats: lazyLoad('searchable_snapshots.stats', opts)
     },
     searchableSnapshots: {
       clear_cache: lazyLoad('searchable_snapshots.clear_cache', opts),
       clearCache: lazyLoad('searchable_snapshots.clear_cache', opts),
       mount: lazyLoad('searchable_snapshots.mount', opts),
+      repository_stats: lazyLoad('searchable_snapshots.repository_stats', opts),
+      repositoryStats: lazyLoad('searchable_snapshots.repository_stats', opts),
       stats: lazyLoad('searchable_snapshots.stats', opts)
     },
     security: {

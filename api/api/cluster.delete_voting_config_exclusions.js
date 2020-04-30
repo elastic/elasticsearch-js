@@ -7,30 +7,31 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSearchableSnapshotsClearCache (opts) {
+function buildClusterDeleteVotingConfigExclusions (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'ignore_unavailable',
-    'allow_no_indices',
-    'expand_wildcards',
-    'index'
+    'wait_for_removal',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-    ignoreUnavailable: 'ignore_unavailable',
-    allowNoIndices: 'allow_no_indices',
-    expandWildcards: 'expand_wildcards'
-
+    waitForRemoval: 'wait_for_removal',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a searchable_snapshots.clear_cache request
-   * Clear the cache of searchable snapshots.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-clear-cache.html
+   * Perform a cluster.delete_voting_config_exclusions request
+   * Clears cluster voting config exclusions.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/voting-config-exclusions.html
    */
-  return function searchableSnapshotsClearCache (params, options, callback) {
+  return function clusterDeleteVotingConfigExclusions (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -49,7 +50,7 @@ function buildSearchableSnapshotsClearCache (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -59,13 +60,8 @@ function buildSearchableSnapshotsClearCache (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_searchable_snapshots' + '/' + 'cache' + '/' + 'clear'
-    } else {
-      if (method == null) method = 'POST'
-      path = '/' + '_searchable_snapshots' + '/' + 'cache' + '/' + 'clear'
-    }
+    if (method == null) method = 'DELETE'
+    path = '/' + '_cluster' + '/' + 'voting_config_exclusions'
 
     // build request object
     const request = {
@@ -80,4 +76,4 @@ function buildSearchableSnapshotsClearCache (opts) {
   }
 }
 
-module.exports = buildSearchableSnapshotsClearCache
+module.exports = buildClusterDeleteVotingConfigExclusions

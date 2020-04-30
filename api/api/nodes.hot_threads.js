@@ -68,15 +68,6 @@ function buildNodesHotThreads (opts) {
     if ((node_id || nodeId) != null) {
       if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads'
-    } else if ((node_id || nodeId) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + '_cluster' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hotthreads'
-    } else if ((node_id || nodeId) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hotthreads'
-    } else if ((node_id || nodeId) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + '_cluster' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads'
     } else {
       if (method == null) method = 'GET'
       path = '/' + '_nodes' + '/' + 'hot_threads'
