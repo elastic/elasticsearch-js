@@ -21,6 +21,7 @@ function buildSearchableSnapshotsStats (opts) {
 
   /**
    * Perform a searchable_snapshots.stats request
+   * Retrieve various statistics about searchable snapshots.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-stats.html
    */
   return function searchableSnapshotsStats (params, options, callback) {
