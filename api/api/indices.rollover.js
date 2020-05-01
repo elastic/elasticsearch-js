@@ -16,6 +16,7 @@ function buildIndicesRollover (opts) {
     'dry_run',
     'master_timeout',
     'wait_for_active_shards',
+    'prefer_v2_templates',
     'pretty',
     'human',
     'error_trace',
@@ -27,6 +28,7 @@ function buildIndicesRollover (opts) {
     dryRun: 'dry_run',
     masterTimeout: 'master_timeout',
     waitForActiveShards: 'wait_for_active_shards',
+    preferV2Templates: 'prefer_v2_templates',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

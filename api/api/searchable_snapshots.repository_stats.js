@@ -7,30 +7,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSearchableSnapshotsClearCache (opts) {
+function buildSearchableSnapshotsRepositoryStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'ignore_unavailable',
-    'allow_no_indices',
-    'expand_wildcards',
-    'index'
+
   ]
 
   const snakeCase = {
-    ignoreUnavailable: 'ignore_unavailable',
-    allowNoIndices: 'allow_no_indices',
-    expandWildcards: 'expand_wildcards'
 
   }
 
   /**
-   * Perform a searchable_snapshots.clear_cache request
-   * Clear the cache of searchable snapshots.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-clear-cache.html
+   * Perform a searchable_snapshots.repository_stats request
+   * Retrieve usage statistics about a snapshot repository.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-repository-stats.html
    */
-  return function searchableSnapshotsClearCache (params, options, callback) {
+  return function searchableSnapshotsRepositoryStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -42,6 +36,12 @@ function buildSearchableSnapshotsClearCache (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['repository'] == null) {
+      const err = new ConfigurationError('Missing required parameter: repository')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -49,7 +49,7 @@ function buildSearchableSnapshotsClearCache (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, repository, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -59,19 +59,14 @@ function buildSearchableSnapshotsClearCache (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_searchable_snapshots' + '/' + 'cache' + '/' + 'clear'
-    } else {
-      if (method == null) method = 'POST'
-      path = '/' + '_searchable_snapshots' + '/' + 'cache' + '/' + 'clear'
-    }
+    if (method == null) method = 'GET'
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_stats'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -80,4 +75,4 @@ function buildSearchableSnapshotsClearCache (opts) {
   }
 }
 
-module.exports = buildSearchableSnapshotsClearCache
+module.exports = buildSearchableSnapshotsRepositoryStats

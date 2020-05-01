@@ -23,6 +23,7 @@ function buildBulk (opts) {
     '_source_includes',
     '_source_include',
     'pipeline',
+    'prefer_v2_templates',
     'pretty',
     'human',
     'error_trace',
@@ -36,6 +37,7 @@ function buildBulk (opts) {
     _sourceExclude: '_source_exclude',
     _sourceIncludes: '_source_includes',
     _sourceInclude: '_source_include',
+    preferV2Templates: 'prefer_v2_templates',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
