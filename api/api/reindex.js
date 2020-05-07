@@ -20,6 +20,7 @@ function buildReindex (opts) {
     'scroll',
     'slices',
     'max_docs',
+    'prefer_v2_templates',
     'pretty',
     'human',
     'error_trace',
@@ -32,6 +33,7 @@ function buildReindex (opts) {
     waitForCompletion: 'wait_for_completion',
     requestsPerSecond: 'requests_per_second',
     maxDocs: 'max_docs',
+    preferV2Templates: 'prefer_v2_templates',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

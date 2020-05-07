@@ -243,7 +243,7 @@ export interface CatTemplates extends Generic {
 export interface CatThreadPool extends Generic {
   thread_pool_patterns?: string | string[];
   format?: string;
-  size?: '' | 'k' | 'm' | 'g' | 't' | 'p';
+  time?: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos';
   local?: boolean;
   master_timeout?: string;
   h?: string | string[];
@@ -825,8 +825,8 @@ export interface IndicesPutAlias<T = RequestBody> extends Generic {
 
 export interface IndicesPutIndexTemplate<T = RequestBody> extends Generic {
   name: string;
-  order?: number;
   create?: boolean;
+  cause?: string;
   master_timeout?: string;
   body: T;
 }
@@ -912,6 +912,8 @@ export interface IndicesShrink<T = RequestBody> extends Generic {
 
 export interface IndicesSimulateIndexTemplate<T = RequestBody> extends Generic {
   name: string;
+  create?: boolean;
+  cause?: string;
   master_timeout?: string;
   body?: T;
 }
@@ -1129,6 +1131,7 @@ export interface Reindex<T = RequestBody> extends Generic {
   scroll?: string;
   slices?: number|string;
   max_docs?: number;
+  prefer_v2_templates?: boolean;
   body: T;
 }
 

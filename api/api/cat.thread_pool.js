@@ -13,7 +13,7 @@ function buildCatThreadPool (opts) {
 
   const acceptedQuerystring = [
     'format',
-    'size',
+    'time',
     'local',
     'master_timeout',
     'h',

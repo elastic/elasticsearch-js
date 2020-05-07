@@ -1002,7 +1002,7 @@ link:{ref}/cat-templates.html[Documentation] +
 client.cat.threadPool({
   thread_pool_patterns: string | string[],
   format: string,
-  size: '' | 'k' | 'm' | 'g' | 't' | 'p',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   local: boolean,
   master_timeout: string,
   h: string | string[],
@@ -1020,8 +1020,8 @@ link:{ref}/cat-thread-pool.html[Documentation] +
 |`format`
 |`string` - a short version of the Accept header, e.g. json, yaml
 
-|`size`
-|`'' \| 'k' \| 'm' \| 'g' \| 't' \| 'p'` - The multiplier in which to display values
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -3317,8 +3317,8 @@ link:{ref}/indices-aliases.html[Documentation] +
 ----
 client.indices.putIndexTemplate({
   name: string,
-  order: number,
   create: boolean,
+  cause: string,
   master_timeout: string,
   body: object
 })
@@ -3329,11 +3329,11 @@ link:{ref}/indices-templates.html[Documentation] +
 |`name`
 |`string` - The name of the template
 
-|`order`
-|`number` - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
-
 |`create`
 |`boolean` - Whether the index template should only be added if new or can also replace an existing one
+
+|`cause`
+|`string` - User defined reason for creating/updating the index template
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
@@ -3670,6 +3670,8 @@ link:{ref}/indices-shrink-index.html[Documentation] +
 ----
 client.indices.simulateIndexTemplate({
   name: string,
+  create: boolean,
+  cause: string,
   master_timeout: string,
   body: object
 })
@@ -3679,6 +3681,12 @@ link:{ref}/indices-templates.html[Documentation] +
 |===
 |`name`
 |`string` - The name of the index (it must be a concrete index name)
+
+|`create`
+|`boolean` - Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
+
+|`cause`
+|`string` - User defined reason for dry-run creating the new template for simulation purposes
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
@@ -4518,6 +4526,7 @@ client.reindex({
   scroll: string,
   slices: number|string,
   max_docs: number,
+  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -4552,6 +4561,9 @@ _Default:_ `1`
 
 |`max_docs` or `maxDocs`
 |`number` - Maximum number of documents to process (default: all documents)
+
+|`prefer_v2_templates` or `preferV2Templates`
+|`boolean` - favor V2 templates instead of V1 templates during index creation
 
 |`body`
 |`object` - The search definition using the Query DSL and the prototype for the index request.

@@ -12,6 +12,8 @@ function buildIndicesSimulateIndexTemplate (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
+    'create',
+    'cause',
     'master_timeout',
     'pretty',
     'human',

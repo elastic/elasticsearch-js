@@ -12,8 +12,8 @@ function buildIndicesPutIndexTemplate (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'order',
     'create',
+    'cause',
     'master_timeout',
     'pretty',
     'human',
