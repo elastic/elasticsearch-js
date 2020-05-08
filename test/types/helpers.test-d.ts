@@ -9,8 +9,10 @@ import {
   BulkStats,
   BulkHelperOptions,
   ScrollSearchResponse,
-  OnDropDocument
+  OnDropDocument,
+  MsearchHelper
 } from '../../lib/Helpers'
+import { ApiResponse, ApiError } from '../../lib/Transport'
 
 const client = new Client({
   node: 'http://localhost:9200'
@@ -430,3 +432,28 @@ expectError(
   expectType<Promise<Source[]>>(p)
   expectType<Source[]>(await p)
 }
+
+/// .helpers.msearch
+
+const s = client.helpers.msearch({
+  operations: 20,
+  concurrency: 5,
+  retries: 5,
+  wait: 5000
+})
+
+expectType<MsearchHelper>(s)
+expectType<void>(s.stop())
+expectType<void>(s.stop(new Error('kaboom')))
+
+expectType<Promise<ApiResponse<Record<string, any>, unknown>>>(s.search({ index: 'foo'}, { query: {} }))
+expectType<Promise<ApiResponse<string, string>>>(s.search<string, Record<string, any>, string>({ index: 'foo'}, { query: {} }))
+
+expectType<void>(s.search({ index: 'foo'}, { query: {} }, (err, result) => {
+  expectType<ApiError>(err)
+  expectType<ApiResponse>(result)
+}))
+expectType<void>(s.search<string, Record<string, any>, string>({ index: 'foo'}, { query: {} }, (err, result) => {
+  expectType<ApiError>(err)
+  expectType<ApiResponse<string, string>>(result)
+}))
