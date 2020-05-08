@@ -217,6 +217,8 @@ console.log(result)
 If you are sending search request at a high rate, this helper might be useful for you.
 It will use the mutli search API under the hood to batch the requests and improve the overall performances of your application.
 
+NOTE: This helper will not work if you are using Node.js v8.
+
 ==== Usage
 [source,js]
 ----

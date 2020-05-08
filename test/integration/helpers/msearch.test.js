@@ -7,9 +7,15 @@
 const { createReadStream } = require('fs')
 const { join } = require('path')
 const split = require('split2')
-const { test, beforeEach, afterEach } = require('tap')
+const { skip, test, beforeEach, afterEach } = require('tap')
+const semver = require('semver')
 const { waitCluster } = require('../../utils')
 const { Client, errors } = require('../../../')
+
+if (semver.lt(process.versions.node, '10.0.0')) {
+  skip('The msearch helper does not work in Node.js v8')
+  process.exit(0)
+}
 
 const INDEX = `test-helpers-${process.pid}`
 const client = new Client({
