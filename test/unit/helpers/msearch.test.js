@@ -446,7 +446,7 @@ test('Resolves the msearch helper', t => {
 })
 
 test('Stop the msearch helper with an error', t => {
-  t.plan(2)
+  t.plan(3)
 
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -469,6 +469,10 @@ test('Stop the msearch helper with an error', t => {
   )
 
   s.catch(err => t.is(err.message, 'kaboom'))
+
+  s.search({ index: 'test' }, { query: {} }, (err, result) => {
+    t.is(err.message, 'kaboom')
+  })
 })
 
 test('Multiple searches (concurrency = 1)', t => {
