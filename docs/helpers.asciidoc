@@ -115,7 +115,7 @@ const b = client.helpers.bulk({
 ----
 
 |`wait`
-a|How much time to wait before retries in milliseconds.+
+a|How much time to wait before retries in milliseconds. +
 _Default:_ 5000.
 [source,js]
 ----
@@ -210,6 +210,116 @@ const result = await client.helpers.bulk({
 })
 
 console.log(result)
+----
+
+=== Multi Search Helper
+
+If you are sending search request at a high rate, this helper might be useful for you.
+It will use the mutli search API under the hood to batch the requests and improve the overall performances of your application.
+
+==== Usage
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({ node: 'http://localhost:9200' })
+const s = client.helpers.msearch()
+
+// promise style API
+s.search(
+    { index: 'stackoverflow' },
+    { query: { match: { title: 'javascript' } } }
+  )
+  .then(result => console.log(result.body))
+  .catch(err => console.error(err))
+
+// callback style API
+s.search(
+  { index: 'stackoverflow' },
+  { query: { match: { title: 'ruby' } } },
+  (err, result) => {
+    if (err) console.error(err)
+    console.log(result.body)
+  }
+)
+----
+
+To create a new instance of the Msearch helper, you should access it as shown in the example above, the configuration options are:
+[cols=2*]
+|===
+|`operations`
+a|How many search operations should be sent in a single msearch request. +
+_Default:_ `20`
+[source,js]
+----
+const b = client.helpers.msearch({
+  operations: 10
+})
+----
+
+|`concurrency`
+a|How many request will be executed at the same time. +
+_Default:_ `5`
+[source,js]
+----
+const b = client.helpers.msearch({
+  concurrency: 10
+})
+----
+
+|`retries`
+a|How many times an operation will be retried before to resolve the request. An operation will be retried only in case of a 429 error. +
+_Default:_ Client max retries.
+[source,js]
+----
+const b = client.helpers.msearch({
+  retries: 3
+})
+----
+
+|`wait`
+a|How much time to wait before retries in milliseconds. +
+_Default:_ 5000.
+[source,js]
+----
+const b = client.helpers.msearch({
+  wait: 3000
+})
+----
+
+|===
+
+==== Stopping the Msearch Helper
+If needed, you can stop a msearch processor at any time. The msearch helper returns a https://promisesaplus.com/[thenable], which has an `stop` method.
+
+If you are creating multiple msearch helpers instances and using them for a limitied period of time, remember to always use the  `stop` method once you have finished using them, otherwise your application will start leaking memory.
+
+The `stop` method accepts an optional error, that will be dispatched every subsequent search request.
+
+NOTE: The stop method will stop the execution of the msearch processor, but if you are using a concurrency higher than one, the operations that are already running will not be stopped.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({ node: 'http://localhost:9200' })
+const s = client.helpers.msearch()
+
+s.search(
+    { index: 'stackoverflow' },
+    { query: { match: { title: 'javascript' } } }
+  )
+  .then(result => console.log(result.body))
+  .catch(err => console.error(err))
+
+s.search(
+    { index: 'stackoverflow' },
+    { query: { match: { title: 'ruby' } } }
+  )
+  .then(result => console.log(result.body))
+  .catch(err => console.error(err))
+
+setImmediate(() => s.stop())
 ----
 
 === Search Helper
