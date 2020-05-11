@@ -1029,3 +1029,41 @@ test('Opaque Id support', t => {
 
   t.end()
 })
+
+test('Correctly handles the same header cased differently', t => {
+  t.plan(4)
+
+  function handler (req, res) {
+    t.strictEqual(req.headers['authorization'], 'Basic foobar')
+    t.strictEqual(req.headers['foo'], 'baz')
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://localhost:${port}`,
+      auth: {
+        username: 'hello',
+        password: 'world'
+      },
+      headers: {
+        Authorization: 'Basic foobar',
+        Foo: 'bar'
+      }
+    })
+
+    client.search({
+      index: 'test',
+      q: 'foo:bar'
+    }, {
+      headers: {
+        foo: 'baz'
+      }
+    }, (err, { body }) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
