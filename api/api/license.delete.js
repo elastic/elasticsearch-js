@@ -21,6 +21,7 @@ function buildLicenseDelete (opts) {
 
   /**
    * Perform a license.delete request
+   * Deletes licensing information for the cluster
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-license.html
    */
   return function licenseDelete (params, options, callback) {

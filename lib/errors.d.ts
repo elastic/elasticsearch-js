@@ -9,37 +9,39 @@ export declare class ElasticsearchClientError extends Error {
   message: string;
 }
 
-export declare class TimeoutError extends ElasticsearchClientError {
+export declare class TimeoutError<TResponse = Record<string, any>, TContext = unknown> extends ElasticsearchClientError {
   name: string;
   message: string;
-  meta: ApiResponse;
+  meta: ApiResponse<TResponse, TContext>;
   constructor(message: string, meta: ApiResponse);
 }
 
-export declare class ConnectionError extends ElasticsearchClientError {
+export declare class ConnectionError<TResponse = Record<string, any>, TContext = unknown> extends ElasticsearchClientError {
   name: string;
   message: string;
-  meta: ApiResponse;
+  meta: ApiResponse<TResponse, TContext>;
   constructor(message: string, meta: ApiResponse);
 }
 
-export declare class NoLivingConnectionsError extends ElasticsearchClientError {
+export declare class NoLivingConnectionsError<TResponse = Record<string, any>, TContext = unknown> extends ElasticsearchClientError {
   name: string;
   message: string;
-  meta: ApiResponse;
+  meta: ApiResponse<TResponse, TContext>;
   constructor(message: string, meta: ApiResponse);
 }
 
 export declare class SerializationError extends ElasticsearchClientError {
   name: string;
   message: string;
-  constructor(message: string);
+  data: any;
+  constructor(message: string, data: any);
 }
 
 export declare class DeserializationError extends ElasticsearchClientError {
   name: string;
   message: string;
-  constructor(message: string);
+  data: string;
+  constructor(message: string, data: string);
 }
 
 export declare class ConfigurationError extends ElasticsearchClientError {
@@ -48,12 +50,19 @@ export declare class ConfigurationError extends ElasticsearchClientError {
   constructor(message: string);
 }
 
-export declare class ResponseError extends ElasticsearchClientError {
+export declare class ResponseError<TResponse = Record<string, any>, TContext = unknown> extends ElasticsearchClientError {
   name: string;
   message: string;
-  meta: ApiResponse;
-  body: any;
+  meta: ApiResponse<TResponse, TContext>;
+  body: TResponse;
   statusCode: number;
-  headers: any;
+  headers: Record<string, any>;
   constructor(meta: ApiResponse);
+}
+
+export declare class RequestAbortedError<TResponse = Record<string, any>, TContext = unknown> extends ElasticsearchClientError {
+  name: string;
+  message: string;
+  meta: ApiResponse<TResponse, TContext>;
+  constructor(message: string, meta: ApiResponse);
 }

@@ -21,6 +21,7 @@ function buildSecurityDisableUser (opts) {
 
   /**
    * Perform a security.disable_user request
+   * Disables users in the native realm.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html
    */
   return function securityDisableUser (params, options, callback) {

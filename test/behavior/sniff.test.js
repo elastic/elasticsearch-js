@@ -6,6 +6,8 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
+const lolex = require('lolex')
+const workq = require('workq')
 const { buildCluster } = require('../utils')
 const { Client, Connection, Transport, events, errors } = require('../../index')
 
@@ -111,8 +113,10 @@ test('Should handle hostnames in publish_address', t => {
   })
 })
 
-test('Sniff interval', { skip: 'Flaky on CI' }, t => {
-  t.plan(10)
+test('Sniff interval', t => {
+  t.plan(11)
+  const clock = lolex.install({ toFake: ['Date'] })
+  const q = workq()
 
   buildCluster(({ nodes, shutdown, kill }) => {
     const client = new Client({
@@ -132,19 +136,47 @@ test('Sniff interval', { skip: 'Flaky on CI' }, t => {
     })
 
     t.strictEqual(client.connectionPool.size, 1)
-    setTimeout(() => client.info(t.error), 60)
 
-    setTimeout(() => {
-      // let's kill a node
-      kill('node1')
-      client.info(t.error)
-    }, 150)
+    q.add((q, done) => {
+      clock.tick(51)
+      client.info(err => {
+        t.error(err)
+        waitSniffEnd(() => {
+          t.strictEqual(client.connectionPool.size, 4)
+          done()
+        })
+      })
+    })
 
-    setTimeout(() => {
-      t.strictEqual(client.connectionPool.size, 3)
-    }, 200)
+    q.add((q, done) => {
+      kill('node1', done)
+    })
+
+    q.add((q, done) => {
+      clock.tick(51)
+      client.info(err => {
+        t.error(err)
+        waitSniffEnd(() => {
+          t.strictEqual(client.connectionPool.size, 3)
+          done()
+        })
+      })
+    })
 
     t.teardown(shutdown)
+
+    // it can happen that the sniff operation resolves
+    // after the API call that trioggered it, so to
+    // be sure that we are checking the connectionPool size
+    // at the right moment, we verify that the transport
+    // is no longer sniffing
+    function waitSniffEnd (callback) {
+      if (client.transport._isSniffing) {
+        setTimeout(waitSniffEnd, 500, callback)
+      } else {
+        callback()
+      }
+    }
   })
 })
 
@@ -210,7 +242,7 @@ test('Sniff on connection fault', t => {
     class MyConnection extends Connection {
       request (params, callback) {
         if (this.id === 'http://localhost:9200/') {
-          callback(new Error('kaboom'), null)
+          callback(new errors.ConnectionError('kaboom'), null)
           return {}
         } else {
           return super.request(params, callback)

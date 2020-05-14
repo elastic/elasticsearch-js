@@ -21,7 +21,8 @@ function buildXpackUsage (opts) {
 
   /**
    * Perform a xpack.usage request
-   * Retrieve information about xpack features usage
+   * Retrieves usage information about the installed X-Pack features.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/usage-api.html
    */
   return function xpackUsage (params, options, callback) {
     options = options || {}

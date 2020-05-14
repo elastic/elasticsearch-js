@@ -21,6 +21,7 @@ function buildIlmGetLifecycle (opts) {
 
   /**
    * Perform a ilm.get_lifecycle request
+   * Returns the specified policy definition. Includes the policy version and last modified date.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-lifecycle.html
    */
   return function ilmGetLifecycle (params, options, callback) {

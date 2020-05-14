@@ -12,6 +12,7 @@ function buildDeleteByQuery (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
+    'analyzer',
     'analyze_wildcard',
     'default_operator',
     'df',

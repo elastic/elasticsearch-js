@@ -24,6 +24,7 @@ function buildSearchTemplate (opts) {
     'profile',
     'typed_keys',
     'rest_total_hits_as_int',
+    'ccs_minimize_roundtrips',
     'pretty',
     'human',
     'error_trace',
@@ -39,6 +40,7 @@ function buildSearchTemplate (opts) {
     searchType: 'search_type',
     typedKeys: 'typed_keys',
     restTotalHitsAsInt: 'rest_total_hits_as_int',
+    ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

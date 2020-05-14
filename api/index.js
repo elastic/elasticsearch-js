@@ -16,6 +16,20 @@ function ESAPI (opts) {
   opts.snakeCaseKeys = snakeCaseKeys
 
   const apis = {
+    async_search: {
+      delete: lazyLoad('async_search.delete', opts),
+      get: lazyLoad('async_search.get', opts),
+      submit: lazyLoad('async_search.submit', opts)
+    },
+    asyncSearch: {
+      delete: lazyLoad('async_search.delete', opts),
+      get: lazyLoad('async_search.get', opts),
+      submit: lazyLoad('async_search.submit', opts)
+    },
+    autoscaling: {
+      get_autoscaling_decision: lazyLoad('autoscaling.get_autoscaling_decision', opts),
+      getAutoscalingDecision: lazyLoad('autoscaling.get_autoscaling_decision', opts)
+    },
     bulk: lazyLoad('bulk', opts),
     cat: {
       aliases: lazyLoad('cat.aliases', opts),
@@ -26,6 +40,14 @@ function ESAPI (opts) {
       help: lazyLoad('cat.help', opts),
       indices: lazyLoad('cat.indices', opts),
       master: lazyLoad('cat.master', opts),
+      ml_data_frame_analytics: lazyLoad('cat.ml_data_frame_analytics', opts),
+      mlDataFrameAnalytics: lazyLoad('cat.ml_data_frame_analytics', opts),
+      ml_datafeeds: lazyLoad('cat.ml_datafeeds', opts),
+      mlDatafeeds: lazyLoad('cat.ml_datafeeds', opts),
+      ml_jobs: lazyLoad('cat.ml_jobs', opts),
+      mlJobs: lazyLoad('cat.ml_jobs', opts),
+      ml_trained_models: lazyLoad('cat.ml_trained_models', opts),
+      mlTrainedModels: lazyLoad('cat.ml_trained_models', opts),
       nodeattrs: lazyLoad('cat.nodeattrs', opts),
       nodes: lazyLoad('cat.nodes', opts),
       pending_tasks: lazyLoad('cat.pending_tasks', opts),
@@ -39,7 +61,8 @@ function ESAPI (opts) {
       tasks: lazyLoad('cat.tasks', opts),
       templates: lazyLoad('cat.templates', opts),
       thread_pool: lazyLoad('cat.thread_pool', opts),
-      threadPool: lazyLoad('cat.thread_pool', opts)
+      threadPool: lazyLoad('cat.thread_pool', opts),
+      transforms: lazyLoad('cat.transforms', opts)
     },
     ccr: {
       delete_auto_follow_pattern: lazyLoad('ccr.delete_auto_follow_pattern', opts),
@@ -71,11 +94,17 @@ function ESAPI (opts) {
     cluster: {
       allocation_explain: lazyLoad('cluster.allocation_explain', opts),
       allocationExplain: lazyLoad('cluster.allocation_explain', opts),
+      delete_component_template: lazyLoad('cluster.delete_component_template', opts),
+      deleteComponentTemplate: lazyLoad('cluster.delete_component_template', opts),
+      get_component_template: lazyLoad('cluster.get_component_template', opts),
+      getComponentTemplate: lazyLoad('cluster.get_component_template', opts),
       get_settings: lazyLoad('cluster.get_settings', opts),
       getSettings: lazyLoad('cluster.get_settings', opts),
       health: lazyLoad('cluster.health', opts),
       pending_tasks: lazyLoad('cluster.pending_tasks', opts),
       pendingTasks: lazyLoad('cluster.pending_tasks', opts),
+      put_component_template: lazyLoad('cluster.put_component_template', opts),
+      putComponentTemplate: lazyLoad('cluster.put_component_template', opts),
       put_settings: lazyLoad('cluster.put_settings', opts),
       putSettings: lazyLoad('cluster.put_settings', opts),
       remote_info: lazyLoad('cluster.remote_info', opts),
@@ -103,6 +132,9 @@ function ESAPI (opts) {
       put_policy: lazyLoad('enrich.put_policy', opts),
       putPolicy: lazyLoad('enrich.put_policy', opts),
       stats: lazyLoad('enrich.stats', opts)
+    },
+    eql: {
+      search: lazyLoad('eql.search', opts)
     },
     exists: lazyLoad('exists', opts),
     exists_source: lazyLoad('exists_source', opts),
@@ -149,9 +181,13 @@ function ESAPI (opts) {
       clone: lazyLoad('indices.clone', opts),
       close: lazyLoad('indices.close', opts),
       create: lazyLoad('indices.create', opts),
+      create_data_stream: lazyLoad('indices.create_data_stream', opts),
+      createDataStream: lazyLoad('indices.create_data_stream', opts),
       delete: lazyLoad('indices.delete', opts),
       delete_alias: lazyLoad('indices.delete_alias', opts),
       deleteAlias: lazyLoad('indices.delete_alias', opts),
+      delete_data_stream: lazyLoad('indices.delete_data_stream', opts),
+      deleteDataStream: lazyLoad('indices.delete_data_stream', opts),
       delete_template: lazyLoad('indices.delete_template', opts),
       deleteTemplate: lazyLoad('indices.delete_template', opts),
       exists: lazyLoad('indices.exists', opts),
@@ -169,6 +205,8 @@ function ESAPI (opts) {
       get: lazyLoad('indices.get', opts),
       get_alias: lazyLoad('indices.get_alias', opts),
       getAlias: lazyLoad('indices.get_alias', opts),
+      get_data_streams: lazyLoad('indices.get_data_streams', opts),
+      getDataStreams: lazyLoad('indices.get_data_streams', opts),
       get_field_mapping: lazyLoad('indices.get_field_mapping', opts),
       getFieldMapping: lazyLoad('indices.get_field_mapping', opts),
       get_mapping: lazyLoad('indices.get_mapping', opts),
@@ -260,6 +298,8 @@ function ESAPI (opts) {
       deleteModelSnapshot: lazyLoad('ml.delete_model_snapshot', opts),
       delete_trained_model: lazyLoad('ml.delete_trained_model', opts),
       deleteTrainedModel: lazyLoad('ml.delete_trained_model', opts),
+      estimate_model_memory: lazyLoad('ml.estimate_model_memory', opts),
+      estimateModelMemory: lazyLoad('ml.estimate_model_memory', opts),
       evaluate_data_frame: lazyLoad('ml.evaluate_data_frame', opts),
       evaluateDataFrame: lazyLoad('ml.evaluate_data_frame', opts),
       explain_data_frame_analytics: lazyLoad('ml.explain_data_frame_analytics', opts),

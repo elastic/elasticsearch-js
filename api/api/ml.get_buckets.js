@@ -31,7 +31,8 @@ function buildMlGetBuckets (opts) {
 
   /**
    * Perform a ml.get_buckets request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.html
+   * Retrieves anomaly detection job results for one or more buckets.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.html
    */
   return function mlGetBuckets (params, options, callback) {
     options = options || {}

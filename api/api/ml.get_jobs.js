@@ -21,7 +21,8 @@ function buildMlGetJobs (opts) {
 
   /**
    * Perform a ml.get_jobs request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
+   * Retrieves configuration information for anomaly detection jobs.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
    */
   return function mlGetJobs (params, options, callback) {
     options = options || {}

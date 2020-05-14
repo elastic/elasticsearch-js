@@ -22,6 +22,8 @@ function buildMlForecast (opts) {
 
   /**
    * Perform a ml.forecast request
+   * Predicts the future behavior of a time series by using its historical behavior.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-forecast.html
    */
   return function mlForecast (params, options, callback) {
     options = options || {}

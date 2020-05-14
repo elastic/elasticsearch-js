@@ -21,6 +21,7 @@ function buildIlmPutLifecycle (opts) {
 
   /**
    * Perform a ilm.put_lifecycle request
+   * Creates a lifecycle policy
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html
    */
   return function ilmPutLifecycle (params, options, callback) {

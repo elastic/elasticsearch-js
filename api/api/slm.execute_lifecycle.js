@@ -21,7 +21,8 @@ function buildSlmExecuteLifecycle (opts) {
 
   /**
    * Perform a slm.execute_lifecycle request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-policy.html
+   * Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-lifecycle.html
    */
   return function slmExecuteLifecycle (params, options, callback) {
     options = options || {}

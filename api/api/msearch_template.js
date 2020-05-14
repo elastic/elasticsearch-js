@@ -16,6 +16,7 @@ function buildMsearchTemplate (opts) {
     'typed_keys',
     'max_concurrent_searches',
     'rest_total_hits_as_int',
+    'ccs_minimize_roundtrips',
     'pretty',
     'human',
     'error_trace',
@@ -28,6 +29,7 @@ function buildMsearchTemplate (opts) {
     typedKeys: 'typed_keys',
     maxConcurrentSearches: 'max_concurrent_searches',
     restTotalHitsAsInt: 'rest_total_hits_as_int',
+    ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

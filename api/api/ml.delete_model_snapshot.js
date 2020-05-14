@@ -21,7 +21,8 @@ function buildMlDeleteModelSnapshot (opts) {
 
   /**
    * Perform a ml.delete_model_snapshot request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
+   * Deletes an existing model snapshot.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
    */
   return function mlDeleteModelSnapshot (params, options, callback) {
     options = options || {}

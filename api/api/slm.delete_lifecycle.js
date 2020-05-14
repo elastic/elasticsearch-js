@@ -21,6 +21,7 @@ function buildSlmDeleteLifecycle (opts) {
 
   /**
    * Perform a slm.delete_lifecycle request
+   * Deletes an existing snapshot lifecycle policy.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete-policy.html
    */
   return function slmDeleteLifecycle (params, options, callback) {

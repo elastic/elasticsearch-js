@@ -24,6 +24,7 @@ function buildMlGetTrainedModelsStats (opts) {
 
   /**
    * Perform a ml.get_trained_models_stats request
+   * Retrieves usage information for trained inference models.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference-stats.html
    */
   return function mlGetTrainedModelsStats (params, options, callback) {

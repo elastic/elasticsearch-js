@@ -21,6 +21,7 @@ function buildCcrFollowStats (opts) {
 
   /**
    * Perform a ccr.follow_stats request
+   * Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-stats.html
    */
   return function ccrFollowStats (params, options, callback) {

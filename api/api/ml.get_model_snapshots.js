@@ -26,7 +26,8 @@ function buildMlGetModelSnapshots (opts) {
 
   /**
    * Perform a ml.get_model_snapshots request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html
+   * Retrieves information about model snapshots.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html
    */
   return function mlGetModelSnapshots (params, options, callback) {
     options = options || {}

@@ -21,7 +21,8 @@ function buildSlmStop (opts) {
 
   /**
    * Perform a slm.stop request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-stop.html
+   * Turns off snapshot lifecycle management (SLM).
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-stop.html
    */
   return function slmStop (params, options, callback) {
     options = options || {}

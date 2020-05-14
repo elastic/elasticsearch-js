@@ -24,7 +24,8 @@ function buildMlGetDataFrameAnalytics (opts) {
 
   /**
    * Perform a ml.get_data_frame_analytics request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics.html
+   * Retrieves configuration information for data frame analytics jobs.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics.html
    */
   return function mlGetDataFrameAnalytics (params, options, callback) {
     options = options || {}

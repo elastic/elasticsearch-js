@@ -30,7 +30,8 @@ function buildMlGetInfluencers (opts) {
 
   /**
    * Perform a ml.get_influencers request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
+   * Retrieves anomaly detection job results for one or more influencers.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
    */
   return function mlGetInfluencers (params, options, callback) {
     options = options || {}

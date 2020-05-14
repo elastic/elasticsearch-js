@@ -21,6 +21,7 @@ function buildSecurityEnableUser (opts) {
 
   /**
    * Perform a security.enable_user request
+   * Enables users in the native realm.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-enable-user.html
    */
   return function securityEnableUser (params, options, callback) {

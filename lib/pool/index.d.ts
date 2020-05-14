@@ -4,6 +4,7 @@
 
 /// <reference types="node" />
 
+import { URL } from 'url'
 import { SecureContextOptions } from 'tls';
 import Connection, { AgentOptions } from '../Connection';
 import { nodeFilterFn, nodeSelectorFn } from '../Transport';
@@ -13,14 +14,12 @@ interface BaseConnectionPoolOptions {
   agent?: AgentOptions;
   auth?: BasicAuth | ApiKeyAuth;
   emit: (event: string | symbol, ...args: any[]) => boolean;
-  pingTimeout?: number;
   Connection: typeof Connection;
-  resurrectStrategy?: string;
 }
 
 interface ConnectionPoolOptions extends BaseConnectionPoolOptions {
   pingTimeout?: number;
-  resurrectStrategy?: string;
+  resurrectStrategy?: 'ping' | 'optimistic' | 'none';
   sniffEnabled?: boolean;
 }
 
@@ -65,6 +64,8 @@ interface ResurrectEvent {
 
 declare class BaseConnectionPool {
   connections: Connection[];
+  size: number;
+  emit: (event: string | symbol, ...args: any[]) => boolean;
   _ssl: SecureContextOptions | null;
   _agent: AgentOptions | null;
   auth: BasicAuth | ApiKeyAuth;
@@ -88,7 +89,7 @@ declare class BaseConnectionPool {
   markDead(connection: Connection): this;
   /**
    * Returns an alive connection if present,
-   * otherwise returns null.
+   * otherwise returns a dead connection.
    * By default it filters the `master` only nodes.
    * It uses the selector to choose which
    * connection return.
@@ -137,7 +138,7 @@ declare class BaseConnectionPool {
    * @param {string} url
    * @returns {object} host
    */
-  urlToHost(url: string): any;
+  urlToHost(url: string): { url: URL };
 }
 
 declare class ConnectionPool extends BaseConnectionPool {
@@ -167,7 +168,7 @@ declare class ConnectionPool extends BaseConnectionPool {
 declare class CloudConnectionPool extends BaseConnectionPool {
   cloudConnection: Connection | null
   constructor(opts?: BaseConnectionPoolOptions);
-  getConnection(): Connection;
+  getConnection(): Connection | null;
 }
 
 declare function defaultNodeFilter(node: Connection): boolean;

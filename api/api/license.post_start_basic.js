@@ -21,6 +21,7 @@ function buildLicensePostStartBasic (opts) {
 
   /**
    * Perform a license.post_start_basic request
+   * Starts an indefinite basic license.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/start-basic.html
    */
   return function licensePostStartBasic (params, options, callback) {

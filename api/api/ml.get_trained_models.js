@@ -16,7 +16,8 @@ function buildMlGetTrainedModels (opts) {
     'include_model_definition',
     'decompress_definition',
     'from',
-    'size'
+    'size',
+    'tags'
   ]
 
   const snakeCase = {
@@ -28,6 +29,7 @@ function buildMlGetTrainedModels (opts) {
 
   /**
    * Perform a ml.get_trained_models request
+   * Retrieves configuration information for a trained inference model.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference.html
    */
   return function mlGetTrainedModels (params, options, callback) {

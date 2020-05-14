@@ -21,6 +21,7 @@ function buildCcrDeleteAutoFollowPattern (opts) {
 
   /**
    * Perform a ccr.delete_auto_follow_pattern request
+   * Deletes auto-follow patterns.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-delete-auto-follow-pattern.html
    */
   return function ccrDeleteAutoFollowPattern (params, options, callback) {

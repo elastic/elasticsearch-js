@@ -25,7 +25,8 @@ function buildMonitoringBulk (opts) {
 
   /**
    * Perform a monitoring.bulk request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/es-monitoring.html
+   * Used by the monitoring features to send monitoring data.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/monitor-elasticsearch-cluster.html
    */
   return function monitoringBulk (params, options, callback) {
     options = options || {}

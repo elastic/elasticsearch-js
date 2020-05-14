@@ -21,6 +21,8 @@ function buildMlPutCalendar (opts) {
 
   /**
    * Perform a ml.put_calendar request
+   * Instantiates a calendar.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar.html
    */
   return function mlPutCalendar (params, options, callback) {
     options = options || {}

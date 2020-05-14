@@ -22,7 +22,8 @@ function buildMlSetUpgradeMode (opts) {
 
   /**
    * Perform a ml.set_upgrade_mode request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
+   * Sets a cluster wide upgrade_mode setting that prepares machine learning indices for an upgrade.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
    */
   return function mlSetUpgradeMode (params, options, callback) {
     options = options || {}

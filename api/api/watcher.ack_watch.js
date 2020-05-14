@@ -21,7 +21,8 @@ function buildWatcherAckWatch (opts) {
 
   /**
    * Perform a watcher.ack_watch request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
+   * Acknowledges a watch, manually throttling the execution of the watch's actions.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
    */
   return function watcherAckWatch (params, options, callback) {
     options = options || {}

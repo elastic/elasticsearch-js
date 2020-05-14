@@ -21,6 +21,7 @@ function buildXpackInfo (opts) {
 
   /**
    * Perform a xpack.info request
+   * Retrieves information about the installed X-Pack features.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
    */
   return function xpackInfo (params, options, callback) {

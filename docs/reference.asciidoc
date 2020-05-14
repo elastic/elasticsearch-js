@@ -163,7 +163,8 @@ client.cat.aliases({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  v: boolean
+  v: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/cat-alias.html[Documentation] +
@@ -189,6 +190,10 @@ link:{ref}/cat-alias.html[Documentation] +
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `all`
 
 |===
 
@@ -325,7 +330,7 @@ client.cat.health({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   ts: boolean,
   v: boolean
 })
@@ -346,7 +351,7 @@ link:{ref}/cat-health.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`ts`
 |`boolean` - Set to false to disable timestamping +
@@ -392,9 +397,10 @@ client.cat.indices({
   help: boolean,
   pri: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean,
-  include_unloaded_segments: boolean
+  include_unloaded_segments: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/cat-indices.html[Documentation] +
@@ -431,13 +437,17 @@ link:{ref}/cat-indices.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
 
 |`include_unloaded_segments` or `includeUnloadedSegments`
 |`boolean` - If set to true segment stats will include stats for segments that are not currently loaded into memory
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `all`
 
 |===
 
@@ -534,7 +544,7 @@ client.cat.nodes({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -568,7 +578,7 @@ WARNING: This parameter has been deprecated.
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -586,7 +596,7 @@ client.cat.pendingTasks({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -612,7 +622,7 @@ link:{ref}/cat-pending-tasks.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -672,7 +682,7 @@ client.cat.recovery({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -704,7 +714,7 @@ link:{ref}/cat-recovery.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -804,7 +814,7 @@ client.cat.shards({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -836,7 +846,7 @@ link:{ref}/cat-shards.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -855,7 +865,7 @@ client.cat.snapshots({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -884,7 +894,7 @@ link:{ref}/cat-snapshots.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -904,7 +914,7 @@ client.cat.tasks({
   h: string | string[],
   help: boolean,
   s: string | string[],
-  time: 'd (Days)' | 'h (Hours)' | 'm (Minutes)' | 's (Seconds)' | 'ms (Milliseconds)' | 'micros (Microseconds)' | 'nanos (Nanoseconds)',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   v: boolean
 })
 ----
@@ -936,7 +946,7 @@ link:{ref}/tasks.html[Documentation] +
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
 
 |`time`
-|`'d (Days)' \| 'h (Hours)' \| 'm (Minutes)' \| 's (Seconds)' \| 'ms (Milliseconds)' \| 'micros (Microseconds)' \| 'nanos (Nanoseconds)'` - The unit in which to display time values
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -1081,6 +1091,54 @@ link:{ref}/cluster-allocation-explain.html[Documentation] +
 
 |===
 
+=== cluster.deleteComponentTemplate
+*Stability:* experimental
+[source,ts]
+----
+client.cluster.deleteComponentTemplate({
+  name: string,
+  timeout: string,
+  master_timeout: string
+})
+----
+
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the template
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|===
+
+=== cluster.getComponentTemplate
+*Stability:* experimental
+[source,ts]
+----
+client.cluster.getComponentTemplate({
+  name: string | string[],
+  master_timeout: string,
+  local: boolean
+})
+----
+
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - The comma separated names of the component templates
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`local`
+|`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|===
+
 === cluster.getSettings
 
 [source,ts]
@@ -1115,7 +1173,7 @@ link:{ref}/cluster-update-settings.html[Documentation] +
 ----
 client.cluster.health({
   index: string | string[],
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   level: 'cluster' | 'indices' | 'shards',
   local: boolean,
   master_timeout: string,
@@ -1135,7 +1193,7 @@ link:{ref}/cluster-health.html[Documentation] +
 |`string \| string[]` - Limit the information returned to a specific index
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `all`
 
 |`level`
@@ -1188,6 +1246,38 @@ link:{ref}/cluster-pending.html[Documentation] +
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
+
+|===
+
+=== cluster.putComponentTemplate
+*Stability:* experimental
+[source,ts]
+----
+client.cluster.putComponentTemplate({
+  name: string,
+  create: boolean,
+  timeout: string,
+  master_timeout: string,
+  body: object
+})
+----
+
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the template
+
+|`create`
+|`boolean` - Whether the index template should only be added if new or can also replace an existing one
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`body`
+|`object` - The template definition
 
 |===
 
@@ -1282,7 +1372,7 @@ client.cluster.state({
   wait_for_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/cluster-state.html[Documentation] +
@@ -1316,7 +1406,7 @@ link:{ref}/cluster-state.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -1355,7 +1445,7 @@ client.count({
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   min_score: number,
   preference: string,
   routing: string | string[],
@@ -1388,7 +1478,7 @@ link:{ref}/search-count.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`min_score` or `minScore`
@@ -1550,6 +1640,7 @@ WARNING: This parameter has been deprecated.
 client.deleteByQuery({
   index: string | string[],
   type: string | string[],
+  analyzer: string,
   analyze_wildcard: boolean,
   default_operator: 'AND' | 'OR',
   df: string,
@@ -1557,7 +1648,7 @@ client.deleteByQuery({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   conflicts: 'abort' | 'proceed',
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   lenient: boolean,
   preference: string,
   q: string,
@@ -1581,7 +1672,7 @@ client.deleteByQuery({
   scroll_size: number,
   wait_for_completion: boolean,
   requests_per_second: number,
-  slices: number,
+  slices: number|string,
   body: object
 })
 ----
@@ -1593,6 +1684,9 @@ link:{ref}/docs-delete-by-query.html[Documentation] +
 
 |`type`
 |`string \| string[]` - A comma-separated list of document types to search; leave empty to perform the operation on all types
+
+|`analyzer`
+|`string` - The analyzer to use for the query string
 
 |`analyze_wildcard` or `analyzeWildcard`
 |`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
@@ -1618,7 +1712,7 @@ _Default:_ `OR`
 _Default:_ `abort`
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`lenient`
@@ -1683,7 +1777,8 @@ _Default:_ `1m`
 |`string` - Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`scroll_size` or `scrollSize`
-|`number` - Size on the scroll request powering the delete by query
+|`number` - Size on the scroll request powering the delete by query +
+_Default:_ `100`
 
 |`wait_for_completion` or `waitForCompletion`
 |`boolean` - Should the request should block until the delete by query is complete. +
@@ -1693,7 +1788,7 @@ _Default:_ `true`
 |`number` - The throttle for this request in sub-requests per second. -1 means no throttle.
 
 |`slices`
-|`number` - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks. +
+|`number\|string` - The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`. +
 _Default:_ `1`
 
 |`body`
@@ -1962,7 +2057,7 @@ client.fieldCaps({
   fields: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   include_unmapped: boolean
 })
 ----
@@ -1982,7 +2077,7 @@ link:{ref}/search-field-caps.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`include_unmapped` or `includeUnmapped`
@@ -2083,6 +2178,7 @@ link:{ref}/modules-scripting.html[Documentation] +
 ----
 client.getScriptContext()
 ----
+link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html[Documentation] +
 
 
 === getScriptLanguages
@@ -2091,6 +2187,7 @@ client.getScriptContext()
 ----
 client.getScriptLanguages()
 ----
+link:{ref}/modules-scripting.html[Documentation] +
 
 
 === getSource
@@ -2256,7 +2353,7 @@ client.indices.clearCache({
   query: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   request: boolean
 })
 ----
@@ -2282,7 +2379,7 @@ link:{ref}/indices-clearcache.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`request`
@@ -2336,7 +2433,7 @@ client.indices.close({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
@@ -2359,7 +2456,7 @@ link:{ref}/indices-open-close.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`wait_for_active_shards` or `waitForActiveShards`
@@ -2403,6 +2500,26 @@ link:{ref}/indices-create-index.html[Documentation] +
 
 |===
 
+=== indices.createDataStream
+*Stability:* experimental
+[source,ts]
+----
+client.indices.createDataStream({
+  name: string,
+  body: object
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the data stream
+
+|`body`
+|`object` - The data stream definition
+
+|===
+
 === indices.delete
 
 [source,ts]
@@ -2413,7 +2530,7 @@ client.indices.delete({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-delete-index.html[Documentation] +
@@ -2435,7 +2552,7 @@ link:{ref}/indices-delete-index.html[Documentation] +
 |`boolean` - Ignore if a wildcard expression resolves to no concrete indices (default: false)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
 _Default:_ `open`
 
 |===
@@ -2465,6 +2582,22 @@ link:{ref}/indices-aliases.html[Documentation] +
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
+
+|===
+
+=== indices.deleteDataStream
+*Stability:* experimental
+[source,ts]
+----
+client.indices.deleteDataStream({
+  name: string
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the data stream
 
 |===
 
@@ -2501,7 +2634,7 @@ client.indices.exists({
   local: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   flat_settings: boolean,
   include_defaults: boolean
 })
@@ -2522,7 +2655,7 @@ link:{ref}/indices-exists.html[Documentation] +
 |`boolean` - Ignore if a wildcard expression resolves to no concrete indices (default: false)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
 _Default:_ `open`
 
 |`flat_settings` or `flatSettings`
@@ -2542,7 +2675,7 @@ client.indices.existsAlias({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2562,7 +2695,7 @@ link:{ref}/indices-aliases.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `all`
 
 |`local`
@@ -2607,7 +2740,7 @@ client.indices.existsType({
   type: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2627,7 +2760,7 @@ link:{ref}/indices-types-exists.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`local`
@@ -2645,7 +2778,7 @@ client.indices.flush({
   wait_if_ongoing: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-flush.html[Documentation] +
@@ -2667,7 +2800,7 @@ link:{ref}/indices-flush.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -2710,7 +2843,7 @@ client.indices.forcemerge({
   flush: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   max_num_segments: number,
   only_expunge_deletes: boolean
 })
@@ -2731,7 +2864,7 @@ link:{ref}/indices-forcemerge.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`max_num_segments` or `maxNumSegments`
@@ -2752,7 +2885,7 @@ client.indices.get({
   local: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   flat_settings: boolean,
   include_defaults: boolean,
   master_timeout: string
@@ -2777,7 +2910,7 @@ link:{ref}/indices-get-index.html[Documentation] +
 |`boolean` - Ignore if a wildcard expression resolves to no concrete indices (default: false)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
 _Default:_ `open`
 
 |`flat_settings` or `flatSettings`
@@ -2800,7 +2933,7 @@ client.indices.getAlias({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2820,11 +2953,27 @@ link:{ref}/indices-aliases.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `all`
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|===
+
+=== indices.getDataStreams
+*Stability:* experimental
+[source,ts]
+----
+client.indices.getDataStreams({
+  name: string | string[]
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - The comma separated names of data streams
 
 |===
 
@@ -2840,7 +2989,7 @@ client.indices.getFieldMapping({
   include_defaults: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   local: boolean
 })
 ----
@@ -2871,7 +3020,7 @@ WARNING: This parameter has been deprecated.
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`local`
@@ -2889,7 +3038,7 @@ client.indices.getMapping({
   include_type_name: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   master_timeout: string,
   local: boolean
 })
@@ -2915,7 +3064,7 @@ WARNING: This parameter has been deprecated.
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`master_timeout` or `masterTimeout`
@@ -2936,7 +3085,7 @@ client.indices.getSettings({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   flat_settings: boolean,
   local: boolean,
   include_defaults: boolean
@@ -2961,8 +3110,8 @@ link:{ref}/indices-get-settings.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open,closed`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `all`
 
 |`flat_settings` or `flatSettings`
 |`boolean` - Return settings in flat format (default: false)
@@ -3015,7 +3164,7 @@ client.indices.getUpgrade({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-upgrade.html[Documentation] +
@@ -3031,7 +3180,7 @@ link:{ref}/indices-upgrade.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -3046,7 +3195,7 @@ client.indices.open({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
@@ -3069,7 +3218,7 @@ link:{ref}/indices-open-close.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `closed`
 
 |`wait_for_active_shards` or `waitForActiveShards`
@@ -3121,7 +3270,7 @@ client.indices.putMapping({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   body: object
 })
 ----
@@ -3152,7 +3301,7 @@ WARNING: This parameter has been deprecated.
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`body`
@@ -3171,7 +3320,7 @@ client.indices.putSettings({
   preserve_existing: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   flat_settings: boolean,
   body: object
 })
@@ -3198,7 +3347,7 @@ link:{ref}/indices-update-settings.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`flat_settings` or `flatSettings`
@@ -3218,9 +3367,7 @@ client.indices.putTemplate({
   include_type_name: boolean,
   order: number,
   create: boolean,
-  timeout: string,
   master_timeout: string,
-  flat_settings: boolean,
   body: object
 })
 ----
@@ -3239,14 +3386,8 @@ link:{ref}/indices-templates.html[Documentation] +
 |`create`
 |`boolean` - Whether the index template should only be added if new or can also replace an existing one
 
-|`timeout`
-|`string` - Explicit operation timeout
-
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
-
-|`flat_settings` or `flatSettings`
-|`boolean` - Return settings in flat format (default: false)
 
 |`body`
 |`object` - The template definition
@@ -3285,7 +3426,7 @@ client.indices.refresh({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-refresh.html[Documentation] +
@@ -3301,7 +3442,7 @@ link:{ref}/indices-refresh.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -3358,7 +3499,7 @@ client.indices.segments({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   verbose: boolean
 })
 ----
@@ -3375,7 +3516,7 @@ link:{ref}/indices-segments.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`verbose`
@@ -3392,7 +3533,7 @@ client.indices.shardStores({
   status: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-shards-stores.html[Documentation] +
@@ -3411,7 +3552,7 @@ link:{ref}/indices-shards-stores.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -3511,7 +3652,7 @@ client.indices.stats({
   types: string | string[],
   include_segment_file_sizes: boolean,
   include_unloaded_segments: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   forbid_closed_indices: boolean
 })
 ----
@@ -3550,7 +3691,7 @@ _Default:_ `indices`
 |`boolean` - If set to true segment stats will include stats for segments that are not currently loaded into memory
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`forbid_closed_indices` or `forbidClosedIndices`
@@ -3590,7 +3731,7 @@ link:{ref}/indices-aliases.html[Documentation] +
 client.indices.upgrade({
   index: string | string[],
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   ignore_unavailable: boolean,
   wait_for_completion: boolean,
   only_ancient_segments: boolean
@@ -3606,7 +3747,7 @@ link:{ref}/indices-upgrade.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`ignore_unavailable` or `ignoreUnavailable`
@@ -3630,7 +3771,7 @@ client.indices.validateQuery({
   explain: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   q: string,
   analyzer: string,
   analyze_wildcard: boolean,
@@ -3663,7 +3804,7 @@ WARNING: This parameter has been deprecated.
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`q`
@@ -3905,8 +4046,7 @@ link:{ref}/search-multi-search.html[Documentation] +
 |`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
 
 |`pre_filter_shard_size` or `preFilterShardSize`
-|`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint. +
-_Default:_ `128`
+|`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
 
 |`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
 |`number` - The number of concurrent shard requests each sub search executes concurrently per node. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
@@ -3935,6 +4075,7 @@ client.msearchTemplate({
   typed_keys: boolean,
   max_concurrent_searches: number,
   rest_total_hits_as_int: boolean,
+  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -3958,6 +4099,10 @@ link:{ref}/search-multi-search.html[Documentation] +
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
 |`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+
+|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
+|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
+_Default:_ `true`
 
 |`body`
 |`object` - The request definitions (metadata-search request definition pairs), separated by newlines
@@ -4114,7 +4259,8 @@ link:{ref}/cluster-nodes-info.html[Documentation] +
 ----
 client.nodes.reloadSecureSettings({
   node_id: string | string[],
-  timeout: string
+  timeout: string,
+  body: object
 })
 ----
 link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
@@ -4125,6 +4271,9 @@ link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
 
 |`timeout`
 |`string` - Explicit operation timeout
+
+|`body`
+|`object` - An object containing the password for the elasticsearch keystore
 
 |===
 
@@ -4258,7 +4407,7 @@ client.rankEval({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   body: object
 })
@@ -4276,7 +4425,7 @@ link:{ref}/search-rank-eval.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`search_type` or `searchType`
@@ -4298,7 +4447,7 @@ client.reindex({
   wait_for_completion: boolean,
   requests_per_second: number,
   scroll: string,
-  slices: number,
+  slices: number|string,
   max_docs: number,
   body: object
 })
@@ -4329,7 +4478,7 @@ _Default:_ `true`
 _Default:_ `5m`
 
 |`slices`
-|`number` - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks. +
+|`number\|string` - The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`. +
 _Default:_ `1`
 
 |`max_docs` or `maxDocs`
@@ -4446,7 +4595,7 @@ client.search({
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   lenient: boolean,
   preference: string,
   q: string,
@@ -4528,7 +4677,7 @@ _Default:_ `OR`
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`lenient`
@@ -4617,8 +4766,7 @@ _Default:_ `512`
 _Default:_ `5`
 
 |`pre_filter_shard_size` or `preFilterShardSize`
-|`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint. +
-_Default:_ `128`
+|`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
 |`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
@@ -4639,7 +4787,7 @@ client.searchShards({
   local: boolean,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/search-shards.html[Documentation] +
@@ -4664,7 +4812,7 @@ link:{ref}/search-shards.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -4679,7 +4827,7 @@ client.searchTemplate({
   ignore_unavailable: boolean,
   ignore_throttled: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   preference: string,
   routing: string | string[],
   scroll: string,
@@ -4688,6 +4836,7 @@ client.searchTemplate({
   profile: boolean,
   typed_keys: boolean,
   rest_total_hits_as_int: boolean,
+  ccs_minimize_roundtrips: boolean,
   body: object
 })
 ----
@@ -4710,7 +4859,7 @@ link:{ref}/search-template.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`preference`
@@ -4737,6 +4886,10 @@ _Default:_ `open`
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
 |`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
 
+|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
+|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
+_Default:_ `true`
+
 |`body`
 |`object` - The search definition template and its params
 
@@ -4749,8 +4902,7 @@ _Default:_ `open`
 client.snapshot.cleanupRepository({
   repository: string,
   master_timeout: string,
-  timeout: string,
-  body: object
+  timeout: string
 })
 ----
 link:{ref}/modules-snapshots.html[Documentation] +
@@ -4764,9 +4916,6 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |`timeout`
 |`string` - Explicit operation timeout
-
-|`body`
-|`object` - undefined
 
 |===
 
@@ -5281,7 +5430,7 @@ client.updateByQuery({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   conflicts: 'abort' | 'proceed',
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   lenient: boolean,
   pipeline: string,
   preference: string,
@@ -5307,7 +5456,7 @@ client.updateByQuery({
   scroll_size: number,
   wait_for_completion: boolean,
   requests_per_second: number,
-  slices: number,
+  slices: number|string,
   body: object
 })
 ----
@@ -5348,7 +5497,7 @@ _Default:_ `OR`
 _Default:_ `abort`
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |`lenient`
@@ -5419,7 +5568,8 @@ _Default:_ `1m`
 |`string` - Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
 
 |`scroll_size` or `scrollSize`
-|`number` - Size on the scroll request powering the update by query
+|`number` - Size on the scroll request powering the update by query +
+_Default:_ `100`
 
 |`wait_for_completion` or `waitForCompletion`
 |`boolean` - Should the request should block until the update by query operation is complete. +
@@ -5429,7 +5579,7 @@ _Default:_ `true`
 |`number` - The throttle to set on this request in sub-requests per second. -1 means no throttle.
 
 |`slices`
-|`number` - The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks. +
+|`number\|string` - The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`. +
 _Default:_ `1`
 
 |`body`
@@ -5454,6 +5604,501 @@ link:{ref}/docs-update-by-query.html[Documentation] +
 
 |`requests_per_second` or `requestsPerSecond`
 |`number` - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
+
+|===
+
+=== asyncSearch.delete
+
+[source,ts]
+----
+client.asyncSearch.delete({
+  id: string
+})
+----
+link:{ref}/async-search.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|===
+
+=== asyncSearch.get
+
+[source,ts]
+----
+client.asyncSearch.get({
+  id: string,
+  wait_for_completion_timeout: string,
+  keep_alive: string,
+  typed_keys: boolean
+})
+----
+link:{ref}/async-search.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Specify the time that the request should block waiting for the final response
+
+|`keep_alive` or `keepAlive`
+|`string` - Specify the time interval in which the results (partial or final) for this search will be available
+
+|`typed_keys` or `typedKeys`
+|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+
+|===
+
+=== asyncSearch.submit
+
+[source,ts]
+----
+client.asyncSearch.submit({
+  index: string | string[],
+  wait_for_completion_timeout: string,
+  keep_on_completion: boolean,
+  keep_alive: string,
+  batched_reduce_size: number,
+  request_cache: boolean,
+  analyzer: string,
+  analyze_wildcard: boolean,
+  default_operator: 'AND' | 'OR',
+  df: string,
+  explain: boolean,
+  stored_fields: string | string[],
+  docvalue_fields: string | string[],
+  from: number,
+  ignore_unavailable: boolean,
+  ignore_throttled: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  lenient: boolean,
+  preference: string,
+  q: string,
+  routing: string | string[],
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
+  size: number,
+  sort: string | string[],
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  terminate_after: number,
+  stats: string | string[],
+  suggest_field: string,
+  suggest_mode: 'missing' | 'popular' | 'always',
+  suggest_size: number,
+  suggest_text: string,
+  timeout: string,
+  track_scores: boolean,
+  track_total_hits: boolean,
+  allow_partial_search_results: boolean,
+  typed_keys: boolean,
+  version: boolean,
+  seq_no_primary_term: boolean,
+  max_concurrent_shard_requests: number,
+  body: object
+})
+----
+link:{ref}/async-search.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Specify the time that the request should block waiting for the final response +
+_Default:_ `1s`
+
+|`keep_on_completion` or `keepOnCompletion`
+|`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
+
+|`keep_alive` or `keepAlive`
+|`string` - Update the time interval in which the results (partial or final) for this search will be available +
+_Default:_ `5d`
+
+|`batched_reduce_size` or `batchedReduceSize`
+|`number` - The number of shard results that should be reduced at once on the coordinating node. This value should be used as the granularity at which progress results will be made available. +
+_Default:_ `5`
+
+|`request_cache` or `requestCache`
+|`boolean` - Specify if request cache should be used for this request or not, defaults to true
+
+|`analyzer`
+|`string` - The analyzer to use for the query string
+
+|`analyze_wildcard` or `analyzeWildcard`
+|`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
+
+|`default_operator` or `defaultOperator`
+|`'AND' \| 'OR'` - The default operator for query string query (AND or OR) +
+_Default:_ `OR`
+
+|`df`
+|`string` - The field to use as default where no field prefix is given in the query string
+
+|`explain`
+|`boolean` - Specify whether to return detailed information about score computation as part of a hit
+
+|`stored_fields` or `storedFields`
+|`string \| string[]` - A comma-separated list of stored fields to return as part of a hit
+
+|`docvalue_fields` or `docvalueFields`
+|`string \| string[]` - A comma-separated list of fields to return as the docvalue representation of a field for each hit
+
+|`from`
+|`number` - Starting offset (default: 0)
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`ignore_throttled` or `ignoreThrottled`
+|`boolean` - Whether specified concrete, expanded or aliased indices should be ignored when throttled
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|`lenient`
+|`boolean` - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
+
+|`q`
+|`string` - Query in the Lucene query string syntax
+
+|`routing`
+|`string \| string[]` - A comma-separated list of specific routing values
+
+|`search_type` or `searchType`
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
+
+|`size`
+|`number` - Number of hits to return (default: 10)
+
+|`sort`
+|`string \| string[]` - A comma-separated list of <field>:<direction> pairs
+
+|`_source`
+|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
+
+|`_source_excludes` or `_sourceExcludes`
+|`string \| string[]` - A list of fields to exclude from the returned _source field
+
+|`_source_includes` or `_sourceIncludes`
+|`string \| string[]` - A list of fields to extract and return from the _source field
+
+|`terminate_after` or `terminateAfter`
+|`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
+
+|`stats`
+|`string \| string[]` - Specific 'tag' of the request for logging and statistical purposes
+
+|`suggest_field` or `suggestField`
+|`string` - Specify which field to use for suggestions
+
+|`suggest_mode` or `suggestMode`
+|`'missing' \| 'popular' \| 'always'` - Specify suggest mode +
+_Default:_ `missing`
+
+|`suggest_size` or `suggestSize`
+|`number` - How many suggestions to return in response
+
+|`suggest_text` or `suggestText`
+|`string` - The source text for which the suggestions should be returned
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`track_scores` or `trackScores`
+|`boolean` - Whether to calculate and return scores even if they are not used for sorting
+
+|`track_total_hits` or `trackTotalHits`
+|`boolean` - Indicate if the number of documents that match the query should be tracked
+
+|`allow_partial_search_results` or `allowPartialSearchResults`
+|`boolean` - Indicate if an error should be returned if there is a partial search failure or timeout +
+_Default:_ `true`
+
+|`typed_keys` or `typedKeys`
+|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+
+|`version`
+|`boolean` - Specify whether to return document version as part of a hit
+
+|`seq_no_primary_term` or `seqNoPrimaryTerm`
+|`boolean` - Specify whether to return sequence number and primary term of the last modification of each hit
+
+|`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
+|`number` - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
+_Default:_ `5`
+
+|`body`
+|`object` - The search definition using the Query DSL
+
+|===
+
+=== autoscaling.getAutoscalingDecision
+*Stability:* experimental
+[source,ts]
+----
+client.autoscaling.getAutoscalingDecision()
+----
+link:{ref}/autoscaling-get-autoscaling-decision.html[Documentation] +
+
+
+=== cat.mlDataFrameAnalytics
+
+[source,ts]
+----
+client.cat.mlDataFrameAnalytics({
+  id: string,
+  allow_no_match: boolean,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
+  v: boolean
+})
+----
+link:{ref}/cat-dfanalytics.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
+
+|`bytes`
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
+=== cat.mlDatafeeds
+
+[source,ts]
+----
+client.cat.mlDatafeeds({
+  datafeed_id: string,
+  allow_no_datafeeds: boolean,
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
+  v: boolean
+})
+----
+link:{ref}/cat-datafeeds.html[Documentation] +
+[cols=2*]
+|===
+|`datafeed_id` or `datafeedId`
+|`string` - The ID of the datafeeds stats to fetch
+
+|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
+=== cat.mlJobs
+
+[source,ts]
+----
+client.cat.mlJobs({
+  job_id: string,
+  allow_no_jobs: boolean,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
+  v: boolean
+})
+----
+link:{ref}/cat-anomaly-detectors.html[Documentation] +
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the jobs stats to fetch
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|`bytes`
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
+=== cat.mlTrainedModels
+
+[source,ts]
+----
+client.cat.mlTrainedModels({
+  model_id: string,
+  allow_no_match: boolean,
+  from: number,
+  size: number,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
+  v: boolean
+})
+----
+link:{ref}/cat-trained-model.html[Documentation] +
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the trained models stats to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified) +
+_Default:_ `true`
+
+|`from`
+|`number` - skips a number of trained models
+
+|`size`
+|`number` - specifies a max number of trained models to get +
+_Default:_ `100`
+
+|`bytes`
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
+=== cat.transforms
+
+[source,ts]
+----
+client.cat.transforms({
+  transform_id: string,
+  from: number,
+  size: number,
+  allow_no_match: boolean,
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
+  v: boolean
+})
+----
+link:{ref}/cat-transforms.html[Documentation] +
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
+
+|`from`
+|`number` - skips a number of transform configs, defaults to 0
+
+|`size`
+|`number` - specifies a max number of transforms to get, defaults to 100
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
 
 |===
 
@@ -5539,7 +6184,7 @@ client.ccr.forgetFollower({
   body: object
 })
 ----
-link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Documentation] +
+link:{ref}/ccr-post-forget-follower.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5671,7 +6316,7 @@ client.ccr.unfollow({
   index: string
 })
 ----
-link:http://www.elastic.co/guide/en/elasticsearch/reference/current[Documentation] +
+link:{ref}/ccr-post-unfollow.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -5687,6 +6332,7 @@ client.enrich.deletePolicy({
   name: string
 })
 ----
+link:{ref}/delete-enrich-policy-api.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5703,6 +6349,7 @@ client.enrich.executePolicy({
   wait_for_completion: boolean
 })
 ----
+link:{ref}/execute-enrich-policy-api.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5719,13 +6366,14 @@ _Default:_ `true`
 [source,ts]
 ----
 client.enrich.getPolicy({
-  name: string
+  name: string | string[]
 })
 ----
+link:{ref}/get-enrich-policy-api.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string` - The name of the enrich policy
+|`string \| string[]` - A comma-separated list of enrich policy names
 
 |===
 
@@ -5738,6 +6386,7 @@ client.enrich.putPolicy({
   body: object
 })
 ----
+link:{ref}/put-enrich-policy-api.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -5754,7 +6403,28 @@ client.enrich.putPolicy({
 ----
 client.enrich.stats()
 ----
+link:{ref}/enrich-stats-api.html[Documentation] +
 
+
+=== eql.search
+*Stability:* beta
+[source,ts]
+----
+client.eql.search({
+  index: string,
+  body: object
+})
+----
+link:{ref}/eql.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the index to scope the operation
+
+|`body`
+|`object` - Eql request body. Use the `query` to limit the query scope.
+
+|===
 
 === graph.explore
 
@@ -5955,7 +6625,7 @@ client.indices.freeze({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
@@ -5978,7 +6648,7 @@ link:{ref}/freeze-index-api.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `closed`
 
 |`wait_for_active_shards` or `waitForActiveShards`
@@ -5994,7 +6664,7 @@ client.indices.reloadSearchAnalyzers({
   index: string | string[],
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/indices-reload-analyzers.html[Documentation] +
@@ -6010,7 +6680,7 @@ link:{ref}/indices-reload-analyzers.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
 
 |===
@@ -6025,11 +6695,11 @@ client.indices.unfreeze({
   master_timeout: string,
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   wait_for_active_shards: string
 })
 ----
-link:{ref}/freeze-index-api.html[Documentation] +
+link:{ref}/unfreeze-index-api.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -6048,7 +6718,7 @@ link:{ref}/freeze-index-api.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `closed`
 
 |`wait_for_active_shards` or `waitForActiveShards`
@@ -6215,6 +6885,7 @@ client.ml.deleteCalendar({
   calendar_id: string
 })
 ----
+link:{ref}/ml-delete-calendar.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -6231,6 +6902,7 @@ client.ml.deleteCalendarEvent({
   event_id: string
 })
 ----
+link:{ref}/ml-delete-calendar-event.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -6250,6 +6922,7 @@ client.ml.deleteCalendarJob({
   job_id: string
 })
 ----
+link:{ref}/ml-delete-calendar-job.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -6306,6 +6979,7 @@ link:{ref}/ml-delete-datafeed.html[Documentation] +
 ----
 client.ml.deleteExpiredData()
 ----
+link:{ref}/ml-delete-expired-data.html[Documentation] +
 
 
 === ml.deleteFilter
@@ -6316,6 +6990,7 @@ client.ml.deleteFilter({
   filter_id: string
 })
 ----
+link:{ref}/ml-delete-filter.html[Documentation] +
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -6409,6 +7084,22 @@ link:{ref}/delete-inference.html[Documentation] +
 |===
 |`model_id` or `modelId`
 |`string` - The ID of the trained model to delete
+
+|===
+
+=== ml.estimateModelMemory
+
+[source,ts]
+----
+client.ml.estimateModelMemory({
+  body: object
+})
+----
+link:{ref}/ml-apis.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - The analysis config, plus cardinality estimates for fields it references
 
 |===
 
@@ -6573,6 +7264,7 @@ client.ml.forecast({
   expires_in: string
 })
 ----
+link:{ref}/ml-forecast.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
@@ -6659,6 +7351,7 @@ client.ml.getCalendarEvents({
   size: number
 })
 ----
+link:{ref}/ml-get-calendar-event.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -6692,6 +7385,7 @@ client.ml.getCalendars({
   body: object
 })
 ----
+link:{ref}/ml-get-calendar.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -6850,6 +7544,7 @@ client.ml.getFilters({
   size: number
 })
 ----
+link:{ref}/ml-get-filter.html[Documentation] +
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -6884,7 +7579,7 @@ link:{ref}/ml-get-influencer.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
-|`string` - undefined
+|`string` - Identifier for the anomaly detection job
 
 |`exclude_interim` or `excludeInterim`
 |`boolean` - Exclude interim results
@@ -7072,7 +7767,7 @@ link:{ref}/ml-get-record.html[Documentation] +
 [cols=2*]
 |===
 |`job_id` or `jobId`
-|`string` - undefined
+|`string` - The ID of the job
 
 |`exclude_interim` or `excludeInterim`
 |`boolean` - Exclude interim results
@@ -7090,7 +7785,7 @@ link:{ref}/ml-get-record.html[Documentation] +
 |`string` - End time filter for records
 
 |`record_score` or `recordScore`
-|`number` - undefined
+|`number` - Returns records with anomaly scores greater or equal than this value
 
 |`sort`
 |`string` - Sort records by a particular field
@@ -7113,7 +7808,8 @@ client.ml.getTrainedModels({
   include_model_definition: boolean,
   decompress_definition: boolean,
   from: number,
-  size: number
+  size: number,
+  tags: string | string[]
 })
 ----
 link:{ref}/get-inference.html[Documentation] +
@@ -7139,6 +7835,9 @@ _Default:_ `true`
 |`size`
 |`number` - specifies a max number of trained models to get +
 _Default:_ `100`
+
+|`tags`
+|`string \| string[]` - A comma-separated list of tags that the model must have.
 
 |===
 
@@ -7178,6 +7877,7 @@ _Default:_ `100`
 ----
 client.ml.info()
 ----
+link:{ref}/get-ml-info.html[Documentation] +
 
 
 === ml.openJob
@@ -7205,6 +7905,7 @@ client.ml.postCalendarEvents({
   body: object
 })
 ----
+link:{ref}/ml-post-calendar-event.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -7268,6 +7969,7 @@ client.ml.putCalendar({
   body: object
 })
 ----
+link:{ref}/ml-put-calendar.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -7287,6 +7989,7 @@ client.ml.putCalendarJob({
   job_id: string
 })
 ----
+link:{ref}/ml-put-calendar-job.html[Documentation] +
 [cols=2*]
 |===
 |`calendar_id` or `calendarId`
@@ -7323,6 +8026,10 @@ link:{ref}/put-dfanalytics.html[Documentation] +
 ----
 client.ml.putDatafeed({
   datafeed_id: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  ignore_throttled: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   body: object
 })
 ----
@@ -7331,6 +8038,18 @@ link:{ref}/ml-put-datafeed.html[Documentation] +
 |===
 |`datafeed_id` or `datafeedId`
 |`string` - The ID of the datafeed to create
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Ignore unavailable indexes (default: false)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Ignore if the source indices expressions resolves to no concrete indices (default: true)
+
+|`ignore_throttled` or `ignoreThrottled`
+|`boolean` - Ignore indices that are marked as throttled (default: true)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether source index expressions should get expanded to open or closed indices (default: open)
 
 |`body`
 |`object` - The datafeed config
@@ -7346,6 +8065,7 @@ client.ml.putFilter({
   body: object
 })
 ----
+link:{ref}/ml-put-filter.html[Documentation] +
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -7385,7 +8105,7 @@ client.ml.putTrainedModel({
   body: object
 })
 ----
-link:TODO[Documentation] +
+link:{ref}/put-inference.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7566,6 +8286,10 @@ link:{ref}/ml-stop-datafeed.html[Documentation] +
 ----
 client.ml.updateDatafeed({
   datafeed_id: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  ignore_throttled: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   body: object
 })
 ----
@@ -7574,6 +8298,18 @@ link:{ref}/ml-update-datafeed.html[Documentation] +
 |===
 |`datafeed_id` or `datafeedId`
 |`string` - The ID of the datafeed to update
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Ignore unavailable indexes (default: false)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Ignore if the source indices expressions resolves to no concrete indices (default: true)
+
+|`ignore_throttled` or `ignoreThrottled`
+|`boolean` - Ignore indices that are marked as throttled (default: true)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether source index expressions should get expanded to open or closed indices (default: open)
 
 |`body`
 |`object` - The datafeed update settings
@@ -7589,6 +8325,7 @@ client.ml.updateFilter({
   body: object
 })
 ----
+link:{ref}/ml-update-filter.html[Documentation] +
 [cols=2*]
 |===
 |`filter_id` or `filterId`
@@ -7715,6 +8452,7 @@ client.rollup.deleteJob({
   id: string
 })
 ----
+link:{ref}/rollup-delete-job.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -7730,6 +8468,7 @@ client.rollup.getJobs({
   id: string
 })
 ----
+link:{ref}/rollup-get-job.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -7745,6 +8484,7 @@ client.rollup.getRollupCaps({
   id: string
 })
 ----
+link:{ref}/rollup-get-rollup-caps.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -7760,6 +8500,7 @@ client.rollup.getRollupIndexCaps({
   index: string
 })
 ----
+link:{ref}/rollup-get-rollup-index-caps.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -7776,6 +8517,7 @@ client.rollup.putJob({
   body: object
 })
 ----
+link:{ref}/rollup-put-job.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -7798,6 +8540,7 @@ client.rollup.rollupSearch({
   body: object
 })
 ----
+link:{ref}/rollup-search.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -7827,6 +8570,7 @@ client.rollup.startJob({
   id: string
 })
 ----
+link:{ref}/rollup-start-job.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -7844,6 +8588,7 @@ client.rollup.stopJob({
   timeout: string
 })
 ----
+link:{ref}/rollup-stop-job.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -7956,7 +8701,7 @@ client.security.deletePrivileges({
   refresh: 'true' | 'false' | 'wait_for'
 })
 ----
-link:TODO[Documentation] +
+link:{ref}/security-api-delete-privilege.html[Documentation] +
 [cols=2*]
 |===
 |`application`
@@ -8265,7 +9010,7 @@ client.security.putPrivileges({
   body: object
 })
 ----
-link:TODO[Documentation] +
+link:{ref}/security-api-put-privileges.html[Documentation] +
 [cols=2*]
 |===
 |`refresh`
@@ -8372,7 +9117,7 @@ client.slm.executeLifecycle({
   policy_id: string
 })
 ----
-link:{ref}/slm-api-execute-policy.html[Documentation] +
+link:{ref}/slm-api-execute-lifecycle.html[Documentation] +
 [cols=2*]
 |===
 |`policy_id` or `policyId`
@@ -8420,7 +9165,7 @@ link:{ref}/slm-api-get-stats.html[Documentation] +
 ----
 client.slm.getStatus()
 ----
-link:{ref}/slm-get-status.html[Documentation] +
+link:{ref}/slm-api-get-status.html[Documentation] +
 
 
 === slm.putLifecycle
@@ -8449,7 +9194,7 @@ link:{ref}/slm-api-put-policy.html[Documentation] +
 ----
 client.slm.start()
 ----
-link:{ref}/slm-start.html[Documentation] +
+link:{ref}/slm-api-start.html[Documentation] +
 
 
 === slm.stop
@@ -8458,7 +9203,7 @@ link:{ref}/slm-start.html[Documentation] +
 ----
 client.slm.stop()
 ----
-link:{ref}/slm-stop.html[Documentation] +
+link:{ref}/slm-api-stop.html[Documentation] +
 
 
 === sql.clearCursor
@@ -8469,7 +9214,7 @@ client.sql.clearCursor({
   body: object
 })
 ----
-link:Clear SQL cursor[Documentation] +
+link:{ref}/sql-pagination.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8486,7 +9231,7 @@ client.sql.query({
   body: object
 })
 ----
-link:Execute SQL[Documentation] +
+link:{ref}/sql-rest-overview.html[Documentation] +
 {jsclient}/sql_query_examples.html[Code Example] +
 [cols=2*]
 |===
@@ -8506,7 +9251,7 @@ client.sql.translate({
   body: object
 })
 ----
-link:Translate SQL into Elasticsearch queries[Documentation] +
+link:{ref}/sql-translate.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8524,7 +9269,7 @@ link:{ref}/security-api-ssl.html[Documentation] +
 
 
 === transform.deleteTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.deleteTransform({
@@ -8544,7 +9289,7 @@ link:{ref}/delete-transform.html[Documentation] +
 |===
 
 === transform.getTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.getTransform({
@@ -8572,7 +9317,7 @@ link:{ref}/get-transform.html[Documentation] +
 |===
 
 === transform.getTransformStats
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.getTransformStats({
@@ -8600,7 +9345,7 @@ link:{ref}/get-transform-stats.html[Documentation] +
 |===
 
 === transform.previewTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.previewTransform({
@@ -8616,7 +9361,7 @@ link:{ref}/preview-transform.html[Documentation] +
 |===
 
 === transform.putTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.putTransform({
@@ -8640,7 +9385,7 @@ link:{ref}/put-transform.html[Documentation] +
 |===
 
 === transform.startTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.startTransform({
@@ -8660,7 +9405,7 @@ link:{ref}/start-transform.html[Documentation] +
 |===
 
 === transform.stopTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.stopTransform({
@@ -8696,7 +9441,7 @@ link:{ref}/stop-transform.html[Documentation] +
 |===
 
 === transform.updateTransform
-*Stability:* beta
+
 [source,ts]
 ----
 client.transform.updateTransform({
@@ -8925,7 +9670,7 @@ client.xpack.usage({
   master_timeout: string
 })
 ----
-link:Retrieve information about xpack features usage[Documentation] +
+link:{ref}/usage-api.html[Documentation] +
 [cols=2*]
 |===
 |`master_timeout` or `masterTimeout`

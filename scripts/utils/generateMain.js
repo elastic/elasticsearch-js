@@ -7,10 +7,20 @@
 'use strict'
 
 const { readdirSync } = require('fs')
+const { join } = require('path')
 const dedent = require('dedent')
 const deepmerge = require('deepmerge')
+const { ndjsonApi } = require('./generateApis')
 
-function genFactory (folder) {
+const ndjsonApiKey = ndjsonApi
+  .map(api => {
+    return api
+      .replace(/\.([a-z])/g, k => k[1].toUpperCase())
+      .replace(/_([a-z])/g, k => k[1].toUpperCase())
+  })
+  .map(toPascalCase)
+
+function genFactory (folder, paths) {
   // get all the API files
   const apiFiles = readdirSync(folder)
   const types = apiFiles
@@ -25,15 +35,18 @@ function genFactory (folder) {
         .split('.')
         .reverse()
         .reduce((acc, val) => {
-          const obj = {
-            [val]: acc === null
-              ? `ApiMethod<RequestParams.${name[0].toUpperCase() + name.slice(1)}>`
-              : acc
-          }
-          if (isSnakeCased(val)) {
-            obj[camelify(val)] = acc === null
-              ? `ApiMethod<RequestParams.${name[0].toUpperCase() + name.slice(1)}>`
-              : acc
+          const body = hasBody(paths, file.slice(0, -3))
+          const methods = acc === null ? buildMethodDefinition(val, name, body) : null
+          const obj = {}
+          if (methods) {
+            for (const m of methods) {
+              obj[m.key] = m.val
+            }
+          } else {
+            obj[val] = acc
+            if (isSnakeCased(val)) {
+              obj[camelify(val)] = acc
+            }
           }
           return obj
         }, null)
@@ -83,7 +96,7 @@ function genFactory (folder) {
     .join('\n')
     // remove useless quotes and commas
     .replace(/"/g, '')
-    .replace(/,/g, '')
+    .replace(/,$/gm, '')
 
   const fn = dedent`
   // Licensed to Elasticsearch B.V under one or more agreements.
@@ -158,6 +171,67 @@ function camelify (str) {
 
 function isSnakeCased (str) {
   return !!~str.indexOf('_')
+}
+
+function toPascalCase (str) {
+  return str[0].toUpperCase() + str.slice(1)
+}
+
+function buildMethodDefinition (api, name, hasBody) {
+  const Name = toPascalCase(name)
+  const bodyType = ndjsonApiKey.includes(Name) ? 'RequestNDBody' : 'RequestBody'
+  const defaultBodyType = ndjsonApiKey.includes(Name) ? 'Record<string, any>[]' : 'Record<string, any>'
+
+  if (hasBody) {
+    let methods = [
+      { key: `${api}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params?: RequestParams.${Name}<TRequestBody>, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` },
+      { key: `${api}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
+      { key: `${api}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params: RequestParams.${Name}<TRequestBody>, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
+      { key: `${api}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params: RequestParams.${Name}<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` }
+    ]
+    if (isSnakeCased(api)) {
+      methods = methods.concat([
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params?: RequestParams.${Name}<TRequestBody>, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` },
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params: RequestParams.${Name}<TRequestBody>, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params: RequestParams.${Name}<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` }
+      ])
+    }
+    return methods
+  } else {
+    let methods = [
+      { key: `${api}<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.${Name}, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` },
+      { key: `${api}<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
+      { key: `${api}<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.${Name}, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
+      { key: `${api}<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.${Name}, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` }
+    ]
+    if (isSnakeCased(api)) {
+      methods = methods.concat([
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.${Name}, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` },
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.${Name}, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` },
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.${Name}, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>)`, val: `TransportRequestCallback` }
+      ])
+    }
+    return methods
+  }
+}
+
+function hasBody (paths, file) {
+  const spec = readSpec()
+  return !!spec[file].body
+
+  function readSpec () {
+    try {
+      return require(join(paths[0], file))
+    } catch (err) {}
+
+    try {
+      return require(join(paths[1], file))
+    } catch (err) {}
+
+    throw new Error(`Cannot read spec file ${file}`)
+  }
 }
 
 module.exports = genFactory

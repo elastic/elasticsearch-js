@@ -21,6 +21,7 @@ function buildSecurityDeleteRole (opts) {
 
   /**
    * Perform a security.delete_role request
+   * Removes roles in the native realm.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role.html
    */
   return function securityDeleteRole (params, options, callback) {

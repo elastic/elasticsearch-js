@@ -21,7 +21,8 @@ function buildSlmStart (opts) {
 
   /**
    * Perform a slm.start request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-start.html
+   * Turns on snapshot lifecycle management (SLM).
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-start.html
    */
   return function slmStart (params, options, callback) {
     options = options || {}

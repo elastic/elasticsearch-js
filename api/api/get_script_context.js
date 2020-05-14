@@ -27,6 +27,7 @@ function buildGetScriptContext (opts) {
   /**
    * Perform a get_script_context request
    * Returns all script contexts.
+   * https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html
    */
   return function getScriptContext (params, options, callback) {
     options = options || {}

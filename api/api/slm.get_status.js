@@ -21,7 +21,8 @@ function buildSlmGetStatus (opts) {
 
   /**
    * Perform a slm.get_status request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-get-status.html
+   * Retrieves the status of snapshot lifecycle management (SLM).
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-status.html
    */
   return function slmGetStatus (params, options, callback) {
     options = options || {}

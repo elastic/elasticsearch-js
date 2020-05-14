@@ -25,7 +25,8 @@ function buildWatcherPutWatch (opts) {
 
   /**
    * Perform a watcher.put_watch request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html
+   * Creates a new watch, or updates an existing one.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html
    */
   return function watcherPutWatch (params, options, callback) {
     options = options || {}

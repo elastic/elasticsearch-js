@@ -24,7 +24,8 @@ function buildMlCloseJob (opts) {
 
   /**
    * Perform a ml.close_job request
-   * http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
+   * Closes one or more anomaly detection jobs. A job can be opened and closed multiple times throughout its lifecycle.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
    */
   return function mlCloseJob (params, options, callback) {
     options = options || {}

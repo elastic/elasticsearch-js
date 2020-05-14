@@ -21,6 +21,8 @@ function buildMlDeleteCalendarJob (opts) {
 
   /**
    * Perform a ml.delete_calendar_job request
+   * Deletes anomaly detection jobs from a calendar.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-calendar-job.html
    */
   return function mlDeleteCalendarJob (params, options, callback) {
     options = options || {}

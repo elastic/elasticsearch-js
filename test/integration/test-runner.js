@@ -48,7 +48,7 @@ function build (opts = {}) {
     }
 
     try {
-      await client.indices.delete({ index: '_all' }, { ignore: 404 })
+      await client.indices.delete({ index: '_all', expandWildcards: 'all' }, { ignore: 404 })
     } catch (err) {
       assert.ifError(err, 'should not error: indices.delete')
     }
@@ -212,11 +212,12 @@ function build (opts = {}) {
    * @oaram {object} teardown (null if not needed)
    * @returns {Promise}
    */
-  async function run (setup, test, teardown, stats) {
+  async function run (setup, test, teardown, stats, junit) {
     // if we should skip a feature in the setup/teardown section
     // we should skip the entire test file
     const skip = getSkip(setup) || getSkip(teardown)
     if (skip && shouldSkip(esVersion, skip)) {
+      junit.skip(skip)
       logSkip(skip)
       return
     }
@@ -234,11 +235,11 @@ function build (opts = {}) {
       }
     }
 
-    if (setup) await exec('Setup', setup, stats)
+    if (setup) await exec('Setup', setup, stats, junit)
 
-    await exec('Test', test, stats)
+    await exec('Test', test, stats, junit)
 
-    if (teardown) await exec('Teardown', teardown, stats)
+    if (teardown) await exec('Teardown', teardown, stats, junit)
 
     if (isXPack) await cleanupXPack()
 
@@ -445,11 +446,12 @@ function build (opts = {}) {
    * @param {object} the actions to perform
    * @returns {Promise}
    */
-  async function exec (name, actions, stats) {
+  async function exec (name, actions, stats, junit) {
     // tap.comment(name)
     for (const action of actions) {
       if (action.skip) {
         if (shouldSkip(esVersion, action.skip)) {
+          junit.skip(fillStashedValues(action.skip))
           logSkip(fillStashedValues(action.skip))
           break
         }

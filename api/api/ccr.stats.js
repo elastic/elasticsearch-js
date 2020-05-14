@@ -21,6 +21,7 @@ function buildCcrStats (opts) {
 
   /**
    * Perform a ccr.stats request
+   * Gets all stats related to cross-cluster replication.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-stats.html
    */
   return function ccrStats (params, options, callback) {
