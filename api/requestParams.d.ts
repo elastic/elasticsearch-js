@@ -27,7 +27,6 @@ export interface Bulk<T = RequestNDBody> extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   pipeline?: string;
-  prefer_v2_templates?: boolean;
   body: T;
 }
 
@@ -395,7 +394,6 @@ export interface Create<T = RequestBody> extends Generic {
   version?: number;
   version_type?: 'internal' | 'external' | 'external_gte';
   pipeline?: string;
-  prefer_v2_templates?: boolean;
   body: T;
 }
 
@@ -583,7 +581,6 @@ export interface Index<T = RequestBody> extends Generic {
   if_seq_no?: number;
   if_primary_term?: number;
   pipeline?: string;
-  prefer_v2_templates?: boolean;
   body: T;
 }
 
@@ -627,7 +624,6 @@ export interface IndicesCreate<T = RequestBody> extends Generic {
   wait_for_active_shards?: string;
   timeout?: string;
   master_timeout?: string;
-  prefer_v2_templates?: boolean;
   body?: T;
 }
 
@@ -881,7 +877,6 @@ export interface IndicesRollover<T = RequestBody> extends Generic {
   dry_run?: boolean;
   master_timeout?: string;
   wait_for_active_shards?: string;
-  prefer_v2_templates?: boolean;
   body?: T;
 }
 
@@ -1131,7 +1126,6 @@ export interface Reindex<T = RequestBody> extends Generic {
   scroll?: string;
   slices?: number|string;
   max_docs?: number;
-  prefer_v2_templates?: boolean;
   body: T;
 }
 
@@ -1360,7 +1354,6 @@ export interface Update<T = RequestBody> extends Generic {
   timeout?: string;
   if_seq_no?: number;
   if_primary_term?: number;
-  prefer_v2_templates?: boolean;
   body: T;
 }
 
