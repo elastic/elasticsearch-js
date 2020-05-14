@@ -556,7 +556,7 @@ test('Retry mechanism', t => {
   })
 })
 
-test('Should not retry if the body is a stream', t => {
+test('Should not retry if the body is a stream', { skip: 'https://github.com/elastic/elasticsearch-js/pull/1143 has not been backported' }, t => {
   t.plan(2)
 
   var count = 0
