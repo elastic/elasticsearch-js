@@ -1,6 +1,19 @@
 [[changelog-client]]
 == Changelog
 
+=== 7.7.1
+
+==== Fixes
+
+===== Disable client Helpers in Node.js < 10 - https://github.com/elastic/elasticsearch-js/pull/1194[#1194]
+
+The client helpers can't be used in Node.js < 10 because it needs a custom flag to be able to use them.
+Given that not every provider allows the user to specify cuatom Node.js flags, the Helpers has been disabled completely in Node.js < 10.
+
+===== Force lowercase in all headers - https://github.com/elastic/elasticsearch-js/pull/1187[#1187]
+
+Now all the user-provided headers names will be lowercased by default, so there will be no conflicts in case of the same header with different casing.
+
 === 7.7.0
 
 ==== Features
