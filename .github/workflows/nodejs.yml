@@ -63,7 +63,7 @@ jobs:
 
     - name: Test
       run: |
-        npm run test:unit -- --node-arg=--harmony-async-iteration
+        npm run test:node8
 
   helpers-integration-test:
     name: Helpers integration test
