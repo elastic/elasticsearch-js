@@ -2416,3 +2416,32 @@ test('Secure json parsing', t => {
 
   t.end()
 })
+
+test('Lowercase headers utilty', t => {
+  t.plan(4)
+  const { lowerCaseHeaders } = Transport.internals
+
+  t.deepEqual(lowerCaseHeaders({
+    Foo: 'bar',
+    Faz: 'baz',
+    'X-Hello': 'world'
+  }), {
+    foo: 'bar',
+    faz: 'baz',
+    'x-hello': 'world'
+  })
+
+  t.deepEqual(lowerCaseHeaders({
+    Foo: 'bar',
+    faz: 'baz',
+    'X-hello': 'world'
+  }), {
+    foo: 'bar',
+    faz: 'baz',
+    'x-hello': 'world'
+  })
+
+  t.strictEqual(lowerCaseHeaders(null), null)
+
+  t.strictEqual(lowerCaseHeaders(undefined), undefined)
+})

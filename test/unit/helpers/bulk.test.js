@@ -25,7 +25,7 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -67,7 +67,7 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -108,7 +108,7 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           t.strictEqual(params.body.split('\n').filter(Boolean).length, 6)
           return { body: { errors: false, items: new Array(3).fill({}) } }
         }
@@ -152,7 +152,7 @@ test('bulk index', t => {
             return { body: { acknowledged: true } }
           } else {
             t.strictEqual(params.path, '/_bulk')
-            t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+            t.match(params.headers, { 'content-type': 'application/x-ndjson' })
             const [action, payload] = params.body.split('\n')
             t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
             t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -193,7 +193,7 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test', _id: count } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -607,7 +607,7 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test', _id: count } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -659,7 +659,7 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -715,7 +715,7 @@ test('bulk create', t => {
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
         t.strictEqual(params.path, '/_bulk')
-        t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
         const [action, payload] = params.body.split('\n')
         t.deepEqual(JSON.parse(action), { create: { _index: 'test', _id: count } })
         t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -764,7 +764,7 @@ test('bulk update', t => {
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
         t.strictEqual(params.path, '/_bulk')
-        t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
         const [action, payload] = params.body.split('\n')
         t.deepEqual(JSON.parse(action), { update: { _index: 'test', _id: count } })
         t.deepEqual(JSON.parse(payload), { doc: dataset[count++], doc_as_upsert: true })
@@ -815,7 +815,7 @@ test('bulk delete', t => {
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
         t.strictEqual(params.path, '/_bulk')
-        t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
         t.deepEqual(JSON.parse(params.body), { delete: { _index: 'test', _id: count++ } })
         return { body: { errors: false, items: [{}] } }
       }
