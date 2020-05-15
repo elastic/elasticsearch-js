@@ -1103,7 +1103,7 @@ client.cluster.deleteComponentTemplate({
   master_timeout: string
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -1144,7 +1144,7 @@ client.cluster.existsComponentTemplate({
   local: boolean
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -1168,7 +1168,7 @@ client.cluster.getComponentTemplate({
   local: boolean
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -1329,7 +1329,7 @@ client.cluster.putComponentTemplate({
   body: object
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
