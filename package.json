@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "decompress-response": "^4.2.0",
+    "decompress-response": "^6.0.0",
     "ms": "^2.1.1",
     "pump": "^3.0.0",
     "secure-json-parse": "^2.1.0"
