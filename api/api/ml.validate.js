@@ -22,6 +22,7 @@ function buildMlValidate (opts) {
   /**
    * Perform a ml.validate request
    * Validates an anomaly detection job.
+   * https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html
    */
   return function mlValidate (params, options, callback) {
     options = options || {}

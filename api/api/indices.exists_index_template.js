@@ -7,15 +7,14 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildTasksCancel (opts) {
+function buildIndicesExistsIndexTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'nodes',
-    'actions',
-    'parent_task_id',
-    'wait_for_completion',
+    'flat_settings',
+    'master_timeout',
+    'local',
     'pretty',
     'human',
     'error_trace',
@@ -24,18 +23,18 @@ function buildTasksCancel (opts) {
   ]
 
   const snakeCase = {
-    parentTaskId: 'parent_task_id',
-    waitForCompletion: 'wait_for_completion',
+    flatSettings: 'flat_settings',
+    masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
 
   /**
-   * Perform a tasks.cancel request
-   * Cancels a task, if it can be cancelled through an API.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+   * Perform a indices.exists_index_template request
+   * Returns information about whether a particular index template exists.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
    */
-  return function tasksCancel (params, options, callback) {
+  return function indicesExistsIndexTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -47,6 +46,12 @@ function buildTasksCancel (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['name'] == null) {
+      const err = new ConfigurationError('Missing required parameter: name')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -54,7 +59,7 @@ function buildTasksCancel (opts) {
     }
 
     var warnings = []
-    var { method, body, taskId, task_id, ...querystring } = params
+    var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -64,19 +69,14 @@ function buildTasksCancel (opts) {
 
     var path = ''
 
-    if ((task_id || taskId) != null) {
-      if (method == null) method = 'POST'
-      path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_cancel'
-    } else {
-      if (method == null) method = 'POST'
-      path = '/' + '_tasks' + '/' + '_cancel'
-    }
+    if (method == null) method = 'HEAD'
+    path = '/' + '_index_template' + '/' + encodeURIComponent(name)
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -85,4 +85,4 @@ function buildTasksCancel (opts) {
   }
 }
 
-module.exports = buildTasksCancel
+module.exports = buildIndicesExistsIndexTemplate
