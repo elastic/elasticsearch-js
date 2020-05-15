@@ -4,15 +4,9 @@
 
 'use strict'
 
-const { test, skip } = require('tap')
+const { test } = require('tap')
 const { Client, errors } = require('../../../')
 const { connection } = require('../../utils')
-const semver = require('semver')
-
-if (semver.lt(process.versions.node, '10.0.0')) {
-  skip('The msearch helper does not work in Node.js v8')
-  process.exit(0)
-}
 
 test('Basic', async t => {
   const MockConnection = connection.buildMockConnection({
