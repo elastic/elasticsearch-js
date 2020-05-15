@@ -7,15 +7,12 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildTasksCancel (opts) {
+function buildClusterDeleteVotingConfigExclusions (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'nodes',
-    'actions',
-    'parent_task_id',
-    'wait_for_completion',
+    'wait_for_removal',
     'pretty',
     'human',
     'error_trace',
@@ -24,18 +21,17 @@ function buildTasksCancel (opts) {
   ]
 
   const snakeCase = {
-    parentTaskId: 'parent_task_id',
-    waitForCompletion: 'wait_for_completion',
+    waitForRemoval: 'wait_for_removal',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
 
   /**
-   * Perform a tasks.cancel request
-   * Cancels a task, if it can be cancelled through an API.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+   * Perform a cluster.delete_voting_config_exclusions request
+   * Clears cluster voting config exclusions.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/voting-config-exclusions.html
    */
-  return function tasksCancel (params, options, callback) {
+  return function clusterDeleteVotingConfigExclusions (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,7 +50,7 @@ function buildTasksCancel (opts) {
     }
 
     var warnings = []
-    var { method, body, taskId, task_id, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -64,13 +60,8 @@ function buildTasksCancel (opts) {
 
     var path = ''
 
-    if ((task_id || taskId) != null) {
-      if (method == null) method = 'POST'
-      path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_cancel'
-    } else {
-      if (method == null) method = 'POST'
-      path = '/' + '_tasks' + '/' + '_cancel'
-    }
+    if (method == null) method = 'DELETE'
+    path = '/' + '_cluster' + '/' + 'voting_config_exclusions'
 
     // build request object
     const request = {
@@ -85,4 +76,4 @@ function buildTasksCancel (opts) {
   }
 }
 
-module.exports = buildTasksCancel
+module.exports = buildClusterDeleteVotingConfigExclusions

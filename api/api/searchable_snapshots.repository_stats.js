@@ -7,35 +7,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildTasksCancel (opts) {
+function buildSearchableSnapshotsRepositoryStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'nodes',
-    'actions',
-    'parent_task_id',
-    'wait_for_completion',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    parentTaskId: 'parent_task_id',
-    waitForCompletion: 'wait_for_completion',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
   /**
-   * Perform a tasks.cancel request
-   * Cancels a task, if it can be cancelled through an API.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+   * Perform a searchable_snapshots.repository_stats request
+   * Retrieve usage statistics about a snapshot repository.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-repository-stats.html
    */
-  return function tasksCancel (params, options, callback) {
+  return function searchableSnapshotsRepositoryStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -47,6 +36,12 @@ function buildTasksCancel (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['repository'] == null) {
+      const err = new ConfigurationError('Missing required parameter: repository')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -54,7 +49,7 @@ function buildTasksCancel (opts) {
     }
 
     var warnings = []
-    var { method, body, taskId, task_id, ...querystring } = params
+    var { method, body, repository, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -64,19 +59,14 @@ function buildTasksCancel (opts) {
 
     var path = ''
 
-    if ((task_id || taskId) != null) {
-      if (method == null) method = 'POST'
-      path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_cancel'
-    } else {
-      if (method == null) method = 'POST'
-      path = '/' + '_tasks' + '/' + '_cancel'
-    }
+    if (method == null) method = 'GET'
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_stats'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -85,4 +75,4 @@ function buildTasksCancel (opts) {
   }
 }
 
-module.exports = buildTasksCancel
+module.exports = buildSearchableSnapshotsRepositoryStats

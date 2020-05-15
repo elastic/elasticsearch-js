@@ -7,41 +7,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildGetSource (opts) {
+function buildSearchableSnapshotsMount (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'preference',
-    'realtime',
-    'refresh',
-    'routing',
-    '_source',
-    '_source_excludes',
-    '_source_includes',
-    'version',
-    'version_type',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+    'master_timeout',
+    'wait_for_completion'
   ]
 
   const snakeCase = {
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
-    versionType: 'version_type',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+    masterTimeout: 'master_timeout',
+    waitForCompletion: 'wait_for_completion'
   }
 
   /**
-   * Perform a get_source request
-   * Returns the source of a document.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+   * Perform a searchable_snapshots.mount request
+   * Mount a snapshot as a searchable index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-api-mount-snapshot.html
    */
-  return function getSource (params, options, callback) {
+  return function searchableSnapshotsMount (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,12 +39,22 @@ function buildGetSource (opts) {
     }
 
     // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
+    if (params['repository'] == null) {
+      const err = new ConfigurationError('Missing required parameter: repository')
       return handleError(err, callback)
     }
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
+    if (params['snapshot'] == null) {
+      const err = new ConfigurationError('Missing required parameter: snapshot')
+      return handleError(err, callback)
+    }
+    if (params['body'] == null) {
+      const err = new ConfigurationError('Missing required parameter: body')
+      return handleError(err, callback)
+    }
+
+    // check required url components
+    if (params['snapshot'] != null && (params['repository'] == null)) {
+      const err = new ConfigurationError('Missing required parameter of the url: repository')
       return handleError(err, callback)
     }
 
@@ -70,7 +65,7 @@ function buildGetSource (opts) {
     }
 
     var warnings = []
-    var { method, body, id, index, type, ...querystring } = params
+    var { method, body, repository, snapshot, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -80,19 +75,14 @@ function buildGetSource (opts) {
 
     var path = ''
 
-    if ((index) != null && (type) != null && (id) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
-    } else {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
-    }
+    if (method == null) method = 'POST'
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_mount'
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -101,4 +91,4 @@ function buildGetSource (opts) {
   }
 }
 
-module.exports = buildGetSource
+module.exports = buildSearchableSnapshotsMount

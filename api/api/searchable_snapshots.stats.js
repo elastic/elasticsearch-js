@@ -7,35 +7,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildTasksCancel (opts) {
+function buildSearchableSnapshotsStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'nodes',
-    'actions',
-    'parent_task_id',
-    'wait_for_completion',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    parentTaskId: 'parent_task_id',
-    waitForCompletion: 'wait_for_completion',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
   /**
-   * Perform a tasks.cancel request
-   * Cancels a task, if it can be cancelled through an API.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+   * Perform a searchable_snapshots.stats request
+   * Retrieve various statistics about searchable snapshots.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-api-stats.html
    */
-  return function tasksCancel (params, options, callback) {
+  return function searchableSnapshotsStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -54,7 +43,7 @@ function buildTasksCancel (opts) {
     }
 
     var warnings = []
-    var { method, body, taskId, task_id, ...querystring } = params
+    var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -64,19 +53,19 @@ function buildTasksCancel (opts) {
 
     var path = ''
 
-    if ((task_id || taskId) != null) {
-      if (method == null) method = 'POST'
-      path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_cancel'
+    if ((index) != null) {
+      if (method == null) method = 'GET'
+      path = '/' + encodeURIComponent(index) + '/' + '_searchable_snapshots' + '/' + 'stats'
     } else {
-      if (method == null) method = 'POST'
-      path = '/' + '_tasks' + '/' + '_cancel'
+      if (method == null) method = 'GET'
+      path = '/' + '_searchable_snapshots' + '/' + 'stats'
     }
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -85,4 +74,4 @@ function buildTasksCancel (opts) {
   }
 }
 
-module.exports = buildTasksCancel
+module.exports = buildSearchableSnapshotsStats
