@@ -51,11 +51,17 @@ test('Basic', async t => {
     }
   })
 
+  t.deepEqual(result.documents, [
+    { one: 'one' },
+    { two: 'two' },
+    { three: 'three' }
+  ])
+
   t.teardown(() => s.stop())
 })
 
 test('Multiple searches (inside async iterator)', t => {
-  t.plan(4)
+  t.plan(6)
 
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -104,6 +110,12 @@ test('Multiple searches (inside async iterator)', t => {
         ]
       }
     })
+
+    t.deepEqual(result.documents, [
+      { one: 'one' },
+      { two: 'two' },
+      { three: 'three' }
+    ])
   })
 
   s.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
@@ -118,13 +130,19 @@ test('Multiple searches (inside async iterator)', t => {
         ]
       }
     })
+
+    t.deepEqual(result.documents, [
+      { four: 'four' },
+      { five: 'five' },
+      { six: 'six' }
+    ])
   })
 
   t.teardown(() => s.stop())
 })
 
 test('Multiple searches (async iterator exits)', t => {
-  t.plan(4)
+  t.plan(6)
 
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -173,6 +191,12 @@ test('Multiple searches (async iterator exits)', t => {
         ]
       }
     })
+
+    t.deepEqual(result.documents, [
+      { one: 'one' },
+      { two: 'two' },
+      { three: 'three' }
+    ])
   })
 
   s.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
@@ -187,6 +211,12 @@ test('Multiple searches (async iterator exits)', t => {
         ]
       }
     })
+
+    t.deepEqual(result.documents, [
+      { four: 'four' },
+      { five: 'five' },
+      { six: 'six' }
+    ])
   })
 
   setImmediate(() => s.stop())
@@ -344,6 +374,12 @@ test('Retry on 429', async t => {
     }
   })
 
+  t.deepEqual(result.documents, [
+    { one: 'one' },
+    { two: 'two' },
+    { three: 'three' }
+  ])
+
   t.teardown(() => s.stop())
 })
 
@@ -381,7 +417,7 @@ test('Single search errors', async t => {
 })
 
 test('Entire msearch fails', t => {
-  t.plan(2)
+  t.plan(4)
 
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -404,10 +440,12 @@ test('Entire msearch fails', t => {
 
   s.search({ index: 'test' }, { query: {} }, (err, result) => {
     t.true(err instanceof errors.ResponseError)
+    t.deepEqual(result.documents, [])
   })
 
   s.search({ index: 'test' }, { query: {} }, (err, result) => {
     t.true(err instanceof errors.ResponseError)
+    t.deepEqual(result.documents, [])
   })
 
   t.teardown(() => s.stop())
@@ -470,7 +508,7 @@ test('Stop the msearch helper with an error', t => {
 })
 
 test('Multiple searches (concurrency = 1)', t => {
-  t.plan(4)
+  t.plan(6)
 
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -510,6 +548,12 @@ test('Multiple searches (concurrency = 1)', t => {
         ]
       }
     })
+
+    t.deepEqual(result.documents, [
+      { one: 'one' },
+      { two: 'two' },
+      { three: 'three' }
+    ])
   })
 
   s.search({ index: 'test' }, { query: {} }, (err, result) => {
@@ -524,6 +568,12 @@ test('Multiple searches (concurrency = 1)', t => {
         ]
       }
     })
+
+    t.deepEqual(result.documents, [
+      { one: 'one' },
+      { two: 'two' },
+      { three: 'three' }
+    ])
   })
 
   t.teardown(() => s.stop())
