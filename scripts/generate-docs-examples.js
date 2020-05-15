@@ -61,7 +61,20 @@ const enabledFiles = [
   'mapping/types/nested.asciidoc',
   'mapping/params/format.asciidoc',
   'docs/delete-by-query.asciidoc',
-  'search/request/sort.asciidoc'
+  'search/request/sort.asciidoc',
+  'query-dsl/function-score-query.asciidoc',
+  'query-dsl/nested-query.asciidoc',
+  'query-dsl/regexp-query.asciidoc',
+  'mapping/types/array.asciidoc',
+  'mapping/types/date.asciidoc',
+  'mapping/types/keyword.asciidoc',
+  'mapping/params/fielddata.asciidoc',
+  'cluster/health.asciidoc',
+  'docs/bulk.asciidoc',
+  'indices/aliases.asciidoc',
+  'indices/update-settings.asciidoc',
+  'search/request/from-size.asciidoc',
+  'search/count.asciidoc'
 ]
 
 function generate () {

@@ -30,7 +30,7 @@ function buildSnapshotCleanupRepository (opts) {
   /**
    * Perform a snapshot.cleanup_repository request
    * Removes stale data from repository.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/clean-up-snapshot-repo-api.html
    */
   return function snapshotCleanupRepository (params, options, callback) {
     options = options || {}

@@ -3,9 +3,9 @@
 
 [source, js]
 ----
-const response = await client.search({
+const response = await client.count({
   index: 'twitter',
-  q: 'tag:wow'
+  q: 'user:kimchy'
 })
 console.log(response)
 ----

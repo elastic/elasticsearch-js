@@ -110,7 +110,6 @@ client.bulk({
   _source_excludes: string | string[],
   _source_includes: string | string[],
   pipeline: string,
-  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -147,9 +146,6 @@ link:{ref}/docs-bulk.html[Documentation] +
 
 |`pipeline`
 |`string` - The pipeline id to preprocess incoming documents with
-
-|`prefer_v2_templates` or `preferV2Templates`
-|`boolean` - favor V2 templates instead of V1 templates during automatic index creation
 
 |`body`
 |`object` - The operation definition and data (action-data pairs), separated by newlines
@@ -1099,7 +1095,7 @@ client.cluster.deleteComponentTemplate({
   master_timeout: string
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -1140,7 +1136,7 @@ client.cluster.existsComponentTemplate({
   local: boolean
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -1164,7 +1160,7 @@ client.cluster.getComponentTemplate({
   local: boolean
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -1325,7 +1321,7 @@ client.cluster.putComponentTemplate({
   body: object
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -1592,7 +1588,6 @@ client.create({
   version: number,
   version_type: 'internal' | 'external' | 'external_gte',
   pipeline: string,
-  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -1630,9 +1625,6 @@ WARNING: This parameter has been deprecated.
 
 |`pipeline`
 |`string` - The pipeline id to preprocess incoming documents with
-
-|`prefer_v2_templates` or `preferV2Templates`
-|`boolean` - favor V2 templates instead of V1 templates during automatic index creation
 
 |`body`
 |`object` - The document
@@ -2301,7 +2293,6 @@ client.index({
   if_seq_no: number,
   if_primary_term: number,
   pipeline: string,
-  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -2343,9 +2334,6 @@ link:{ref}/docs-index_.html[Documentation] +
 
 |`pipeline`
 |`string` - The pipeline id to preprocess incoming documents with
-
-|`prefer_v2_templates` or `preferV2Templates`
-|`boolean` - favor V2 templates instead of V1 templates during automatic index creation
 
 |`body`
 |`object` - The document
@@ -2503,7 +2491,6 @@ client.indices.create({
   wait_for_active_shards: string,
   timeout: string,
   master_timeout: string,
-  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -2521,9 +2508,6 @@ link:{ref}/indices-create-index.html[Documentation] +
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
-
-|`prefer_v2_templates` or `preferV2Templates`
-|`boolean` - favor V2 templates instead of V1 templates during index creation
 
 |`body`
 |`object` - The configuration for the index (`settings` and `mappings`)
@@ -3529,7 +3513,6 @@ client.indices.rollover({
   dry_run: boolean,
   master_timeout: string,
   wait_for_active_shards: string,
-  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -3553,9 +3536,6 @@ link:{ref}/indices-rollover-index.html[Documentation] +
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Set the number of active shards to wait for on the newly created rollover index before the operation returns.
-
-|`prefer_v2_templates` or `preferV2Templates`
-|`boolean` - favor V2 templates instead of V1 templates during automatic index creation
 
 |`body`
 |`object` - The conditions that needs to be met for executing rollover
@@ -4526,7 +4506,6 @@ client.reindex({
   scroll: string,
   slices: number|string,
   max_docs: number,
-  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -4561,9 +4540,6 @@ _Default:_ `1`
 
 |`max_docs` or `maxDocs`
 |`number` - Maximum number of documents to process (default: all documents)
-
-|`prefer_v2_templates` or `preferV2Templates`
-|`boolean` - favor V2 templates instead of V1 templates during index creation
 
 |`body`
 |`object` - The search definition using the Query DSL and the prototype for the index request.
@@ -4978,7 +4954,7 @@ client.snapshot.cleanupRepository({
   timeout: string
 })
 ----
-link:{ref}/modules-snapshots.html[Documentation] +
+link:{ref}/clean-up-snapshot-repo-api.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -5432,7 +5408,6 @@ client.update({
   timeout: string,
   if_seq_no: number,
   if_primary_term: number,
-  prefer_v2_templates: boolean,
   body: object
 })
 ----
@@ -5483,9 +5458,6 @@ WARNING: This parameter has been deprecated.
 
 |`if_primary_term` or `ifPrimaryTerm`
 |`number` - only perform the update operation if the last operation that has changed the document has the specified primary term
-
-|`prefer_v2_templates` or `preferV2Templates`
-|`boolean` - favor V2 templates instead of V1 templates during automatic index creation
 
 |`body`
 |`object` - The request definition requires either `script` or partial `doc`
@@ -8693,6 +8665,7 @@ client.ml.validate({
   body: object
 })
 ----
+link:https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8708,6 +8681,7 @@ client.ml.validateDetector({
   body: object
 })
 ----
+link:https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html[Documentation] +
 [cols=2*]
 |===
 |`body`

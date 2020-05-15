@@ -15,7 +15,6 @@ function buildIndicesCreate (opts) {
     'wait_for_active_shards',
     'timeout',
     'master_timeout',
-    'prefer_v2_templates',
     'pretty',
     'human',
     'error_trace',
@@ -26,7 +25,6 @@ function buildIndicesCreate (opts) {
   const snakeCase = {
     waitForActiveShards: 'wait_for_active_shards',
     masterTimeout: 'master_timeout',
-    preferV2Templates: 'prefer_v2_templates',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

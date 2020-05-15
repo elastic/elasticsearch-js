@@ -22,6 +22,7 @@ function buildMlValidateDetector (opts) {
   /**
    * Perform a ml.validate_detector request
    * Validates an anomaly detection detector.
+   * https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html
    */
   return function mlValidateDetector (params, options, callback) {
     options = options || {}
