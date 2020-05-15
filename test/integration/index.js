@@ -55,6 +55,8 @@ const xPackBlackList = {
     'Attempt to open job when upgrade_mode is enabled',
     'Setting upgrade mode to disabled from enabled'
   ],
+  // The cleanup fails with a index not found when retrieving the jobs
+  'ml/get_datafeed_stats.yml': ['Test get datafeed stats when total_search_time_ms mapping is missing'],
   // investigate why this is failing
   'monitoring/bulk/10_basic.yml': ['*'],
   'monitoring/bulk/20_privileges.yml': ['*'],
