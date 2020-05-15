@@ -1095,7 +1095,7 @@ client.cluster.deleteComponentTemplate({
   master_timeout: string
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
