@@ -219,7 +219,8 @@ console.log(result)
 ~Added~ ~in~ ~`v7.8.0`~
 
 If you are sending search request at a high rate, this helper might be useful for you.
-It will use the mutli search API under the hood to batch the requests and improve the overall performances of your application.
+It will use the mutli search API under the hood to batch the requests and improve the overall performances of your application. +
+The `result` exposes a `documents` property as well, which allows you to access directly the hits sources.
 
 ==== Usage
 [source,js]
@@ -234,7 +235,7 @@ s.search(
     { index: 'stackoverflow' },
     { query: { match: { title: 'javascript' } } }
   )
-  .then(result => console.log(result.body))
+  .then(result => console.log(result.body)) // or result.documents
   .catch(err => console.error(err))
 
 // callback style API
@@ -243,7 +244,7 @@ s.search(
   { query: { match: { title: 'ruby' } } },
   (err, result) => {
     if (err) console.error(err)
-    console.log(result.body)
+    console.log(result.body)) // or result.documents
   }
 )
 ----
