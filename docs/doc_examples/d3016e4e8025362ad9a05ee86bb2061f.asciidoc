@@ -3,16 +3,16 @@
 
 [source, js]
 ----
-const response = await client.search({
+const response = await client.indices.updateAliases({
   body: {
-    aggs: {
-      products: {
-        terms: {
-          field: 'product',
-          size: 5
+    actions: [
+      {
+        add: {
+          index: 'twitter',
+          alias: 'alias1'
         }
       }
-    }
+    ]
   }
 })
 console.log(response)
