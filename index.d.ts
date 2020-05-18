@@ -869,14 +869,14 @@ declare class Client extends EventEmitter {
     getAlias<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getAlias<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesGetAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getAlias<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesGetAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_data_streams<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesGetDataStreams, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    get_data_streams<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_data_streams<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesGetDataStreams, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_data_streams<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesGetDataStreams, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getDataStreams<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesGetDataStreams, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getDataStreams<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getDataStreams<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesGetDataStreams, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getDataStreams<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesGetDataStreams, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_data_stream<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesGetDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get_data_stream<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_data_stream<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesGetDataStream, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_data_stream<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesGetDataStream, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getDataStream<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesGetDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getDataStream<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getDataStream<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesGetDataStream, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getDataStream<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesGetDataStream, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_field_mapping<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesGetFieldMapping, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     get_field_mapping<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_field_mapping<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesGetFieldMapping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

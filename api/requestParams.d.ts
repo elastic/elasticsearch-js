@@ -749,7 +749,7 @@ export interface IndicesGetAlias extends Generic {
   local?: boolean;
 }
 
-export interface IndicesGetDataStreams extends Generic {
+export interface IndicesGetDataStream extends Generic {
   name?: string;
 }
 

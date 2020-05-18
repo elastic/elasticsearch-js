@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndicesGetDataStreams (opts) {
+function buildIndicesGetDataStream (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -25,11 +25,11 @@ function buildIndicesGetDataStreams (opts) {
   }
 
   /**
-   * Perform a indices.get_data_streams request
+   * Perform a indices.get_data_stream request
    * Returns data streams.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
    */
-  return function indicesGetDataStreams (params, options, callback) {
+  return function indicesGetDataStream (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -60,10 +60,10 @@ function buildIndicesGetDataStreams (opts) {
 
     if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_data_streams' + '/' + encodeURIComponent(name)
+      path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_data_streams'
+      path = '/' + '_data_stream'
     }
 
     // build request object
@@ -79,4 +79,4 @@ function buildIndicesGetDataStreams (opts) {
   }
 }
 
-module.exports = buildIndicesGetDataStreams
+module.exports = buildIndicesGetDataStream
