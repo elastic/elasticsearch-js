@@ -400,10 +400,10 @@ test('Should handle compression', t => {
       connection.request({
         path: '/hello',
         method: 'GET'
-      }, (err, res) => {
+      }, (err, res, headers, statusCode) => {
         t.error(err)
 
-        t.match(res.headers, {
+        t.match(headers, {
           'content-type': 'application/json;utf=8',
           'content-encoding': 'gzip'
         })
@@ -440,10 +440,10 @@ test('Should handle compression', t => {
       connection.request({
         path: '/hello',
         method: 'GET'
-      }, (err, res) => {
+      }, (err, res, headers, statusCode) => {
         t.error(err)
 
-        t.match(res.headers, {
+        t.match(headers, {
           'content-type': 'application/json;utf=8',
           'content-encoding': 'deflate'
         })

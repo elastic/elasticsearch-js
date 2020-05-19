@@ -26,7 +26,7 @@ class MockConnection extends Connection {
     }
     process.nextTick(() => {
       if (!aborted) {
-        callback(null, stream)
+        callback(null, stream, stream.headers, stream.statusCode)
       } else {
         callback(new RequestAbortedError(), null)
       }
@@ -133,7 +133,7 @@ function buildMockConnection (opts) {
       }
       process.nextTick(() => {
         if (!aborted) {
-          callback(null, stream)
+          callback(null, stream, stream.headers, stream.statusCode)
         } else {
           callback(new RequestAbortedError(), null)
         }

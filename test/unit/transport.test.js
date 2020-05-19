@@ -7,7 +7,7 @@
 const { test } = require('tap')
 const { URL } = require('url')
 const lolex = require('lolex')
-const { createGunzip } = require('zlib')
+const { createGunzip, gzip } = require('zlib')
 const os = require('os')
 const intoStream = require('into-stream')
 const {
@@ -2444,4 +2444,40 @@ test('Lowercase headers utilty', t => {
   t.strictEqual(lowerCaseHeaders(null), null)
 
   t.strictEqual(lowerCaseHeaders(undefined), undefined)
+})
+
+test('Stream response error', t => {
+  t.plan(1)
+  function handler (req, res) {
+    gzip(JSON.stringify({ hello: 'world' }), (err, buffer) => {
+      if (err) throw err
+      res.setHeader('Content-Type', 'application/json;utf=8')
+      res.setHeader('Content-Encoding', 'gzip')
+      // send back a broken buffer
+      res.end(buffer.slice(0, 1))
+    })
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, { body }) => {
+      t.ok(err instanceof ConnectionError)
+      server.stop()
+    })
+  })
 })
