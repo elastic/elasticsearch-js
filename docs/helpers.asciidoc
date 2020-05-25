@@ -331,7 +331,8 @@ setImmediate(() => s.stop())
 
 ~Added~ ~in~ ~`v7.7.0`~
 
-A simple wrapper around the search API. Instead of returning the entire `result` object it will return only the search documents result.
+A simple wrapper around the search API. Instead of returning the entire `result` object it will return only the search documents source.
+For improving the performances, this helper automatically adds `filter_path=hits.hits._source` to the querystring.
 
 [source,js]
 ----
@@ -405,6 +406,7 @@ for await (const result of scrollSearch) {
 ~Added~ ~in~ ~`v7.7.0`~
 
 It works in the same way as the scroll search helper, but it returns only the documents instead. Note, every loop cycle will return you a single document, and you can't use the `clear` method.
+For improving the performances, this helper automatically adds `filter_path=hits.hits._source` to the querystring.
 
 [source,js]
 ----

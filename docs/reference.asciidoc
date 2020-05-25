@@ -2994,11 +2994,11 @@ _Default:_ `all`
 
 |===
 
-=== indices.getDataStreams
+=== indices.getDataStream
 *Stability:* experimental
 [source,ts]
 ----
-client.indices.getDataStreams({
+client.indices.getDataStream({
   name: string
 })
 ----
