@@ -30,7 +30,7 @@ function buildClusterExistsComponentTemplate (opts) {
   /**
    * Perform a cluster.exists_component_template request
    * Returns information about whether a particular component template exist
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-templates.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html
    */
   return function clusterExistsComponentTemplate (params, options, callback) {
     options = options || {}

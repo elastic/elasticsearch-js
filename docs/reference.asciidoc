@@ -5233,7 +5233,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
-|`string \| string[]` - A comma-separated list of repository names
+|`string \| string[]` - Name of the snapshot repository to unregister. Wildcard (`*`) patterns are supported.
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -7245,10 +7245,17 @@ link:{ref}/ml-delete-datafeed.html[Documentation] +
 
 [source,ts]
 ----
-client.ml.deleteExpiredData()
+client.ml.deleteExpiredData({
+  body: object
+})
 ----
 link:{ref}/ml-delete-expired-data.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - deleting expired data parameters
 
+|===
 
 === ml.deleteFilter
 

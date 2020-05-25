@@ -1776,7 +1776,8 @@ export interface MlDeleteDatafeed extends Generic {
   force?: boolean;
 }
 
-export interface MlDeleteExpiredData extends Generic {
+export interface MlDeleteExpiredData<T = RequestBody> extends Generic {
+  body?: T;
 }
 
 export interface MlDeleteFilter extends Generic {

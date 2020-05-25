@@ -30,7 +30,7 @@ function buildClusterDeleteComponentTemplate (opts) {
   /**
    * Perform a cluster.delete_component_template request
    * Deletes a component template
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-templates.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html
    */
   return function clusterDeleteComponentTemplate (params, options, callback) {
     options = options || {}
