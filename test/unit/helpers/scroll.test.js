@@ -183,6 +183,8 @@ test('Scroll search (retry throws later)', async t => {
   var count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
+    // filter_path should not be added if is not already present
+      t.strictEqual(params.querystring, 'scroll=1m')
       if (count > 1) {
         count += 1
         return { body: {}, statusCode: 429 }
@@ -232,6 +234,7 @@ test('Scroll search documents', async t => {
   var count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
+      t.strictEqual(params.querystring, 'filter_path=hits.hits._source%2C_scroll_id&scroll=1m')
       return {
         body: {
           _scroll_id: count === 3 ? undefined : 'id',
