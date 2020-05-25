@@ -3,13 +3,14 @@
 // See the LICENSE file in the project root for more information
 
 import { Readable as ReadableStream } from 'stream'
-import { TransportRequestOptions, ApiResponse, RequestBody } from './Transport'
-import { Search, Bulk } from '../api/requestParams'
+import { TransportRequestOptions, ApiError, ApiResponse, RequestBody } from './Transport'
+import { Search, Msearch, Bulk } from '../api/requestParams'
 
 export default class Helpers {
   search<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): Promise<TDocument[]>
   scrollSearch<TDocument = unknown, TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<ScrollSearchResponse<TDocument, TResponse, TContext>>
   scrollDocuments<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<TDocument>
+  msearch(options?: MsearchHelperOptions): MsearchHelper
   bulk<TDocument = unknown>(options: BulkHelperOptions<TDocument>): BulkHelper<BulkStats>
 }
 
@@ -70,8 +71,8 @@ export interface BulkHelperOptions<TDocument = unknown> extends Omit<Bulk, 'body
   flushBytes?: number
   concurrency?: number
   retries?: number
-  wait?: number,
-  onDrop?: (doc: OnDropDocument<TDocument>) => void,
+  wait?: number
+  onDrop?: (doc: OnDropDocument<TDocument>) => void
   refreshOnCompletion?: boolean | string
 }
 
@@ -87,4 +88,18 @@ export interface OnDropDocument<TDocument = unknown> {
   }
   document: TDocument
   retried: boolean
+}
+
+export interface MsearchHelperOptions extends Omit<Msearch, 'body'> {
+  operations?: number
+  concurrency?: number
+  retries?: number
+  wait?: number
+}
+
+declare type callbackFn<Response, Context> = (err: ApiError, result: ApiResponse<Response, Context>) => void;
+export interface MsearchHelper extends Promise<void> {
+  stop(error?: Error): void
+  search<TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = unknown>(header: Omit<Search, 'body'>, body: TRequestBody): Promise<ApiResponse<TResponse, TContext>>
+  search<TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = unknown>(header: Omit<Search, 'body'>, body: TRequestBody, callback: callbackFn<TResponse, TContext>): void
 }
