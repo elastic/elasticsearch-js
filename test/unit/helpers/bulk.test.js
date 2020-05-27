@@ -5,12 +5,14 @@
 'use strict'
 
 const { createReadStream } = require('fs')
+const { promisify } = require('util')
 const { join } = require('path')
 const split = require('split2')
 const semver = require('semver')
 const { test } = require('tap')
 const { Client, errors } = require('../../../')
 const { buildServer, connection } = require('../../utils')
+const sleep = promisify(setTimeout)
 
 const dataset = [
   { user: 'jon', age: 23 },
@@ -983,6 +985,114 @@ test('errors', t => {
       t.true(err instanceof errors.ConfigurationError)
       t.is(err.message, 'bulk helper: the onDocument callback is required')
     }
+  })
+
+  t.end()
+})
+
+test('Flush interval', t => {
+  t.test('Slow producer', async t => {
+    let count = 0
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        t.strictEqual(params.path, '/_bulk')
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+        const [action, payload] = params.body.split('\n')
+        t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+        t.deepEqual(JSON.parse(payload), dataset[count++])
+        return { body: { errors: false, items: [{}] } }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    const result = await client.helpers.bulk({
+      datasource: (async function * generator () {
+        for (const chunk of dataset) {
+          await sleep(200)
+          yield chunk
+        }
+      })(),
+      flushBytes: 5000000,
+      flushInterval: 100,
+      concurrency: 1,
+      onDocument (doc) {
+        return {
+          index: { _index: 'test' }
+        }
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
+    })
+
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, {
+      total: 3,
+      successful: 3,
+      retry: 0,
+      failed: 0,
+      aborted: false
+    })
+  })
+
+  t.test('Abort operation', async t => {
+    let count = 0
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        t.true(count < 2)
+        t.strictEqual(params.path, '/_bulk')
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+        const [action, payload] = params.body.split('\n')
+        t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+        t.deepEqual(JSON.parse(payload), dataset[count++])
+        return { body: { errors: false, items: [{}] } }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    const b = client.helpers.bulk({
+      datasource: (async function * generator () {
+        for (const chunk of dataset) {
+          await sleep(200)
+          if (count > 1) {
+            b.abort()
+          }
+          yield chunk
+        }
+      })(),
+      flushBytes: 5000000,
+      flushInterval: 100,
+      concurrency: 1,
+      onDocument (doc) {
+        return {
+          index: { _index: 'test' }
+        }
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
+    })
+
+    const result = await b
+
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, {
+      total: 2,
+      successful: 2,
+      retry: 0,
+      failed: 0,
+      aborted: true
+    })
   })
 
   t.end()

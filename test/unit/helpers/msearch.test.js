@@ -578,3 +578,97 @@ test('Multiple searches (concurrency = 1)', t => {
 
   t.teardown(() => s.stop())
 })
+
+test('Flush interval', t => {
+  t.plan(4)
+
+  const MockConnection = connection.buildMockConnection({
+    onRequest (params) {
+      return {
+        body: {
+          responses: [{
+            status: 200,
+            hits: {
+              hits: [
+                { _source: { one: 'one' } },
+                { _source: { two: 'two' } },
+                { _source: { three: 'three' } }
+              ]
+            }
+          }, {
+            status: 200,
+            hits: {
+              hits: [
+                { _source: { four: 'four' } },
+                { _source: { five: 'five' } },
+                { _source: { six: 'six' } }
+              ]
+            }
+          }]
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  const s = client.helpers.msearch({ operations: 10, flushInterval: 50 })
+
+  s.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
+    t.error(err)
+    t.is(result.documents.length, 3)
+  })
+
+  s.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
+    t.error(err)
+    t.is(result.documents.length, 3)
+  })
+
+  t.teardown(() => s.stop())
+})
+
+test('Flush interval - early stop', t => {
+  t.plan(3)
+
+  const MockConnection = connection.buildMockConnection({
+    onRequest (params) {
+      return {
+        body: {
+          responses: [{
+            status: 200,
+            hits: {
+              hits: [
+                { _source: { one: 'one' } },
+                { _source: { two: 'two' } },
+                { _source: { three: 'three' } }
+              ]
+            }
+          }]
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  const s = client.helpers.msearch({ operations: 10, flushInterval: 50 })
+
+  s.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
+    t.error(err)
+    t.is(result.documents.length, 3)
+  })
+
+  setTimeout(() => {
+    s.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
+      t.ok(err)
+    })
+  }, 100)
+
+  s.stop()
+})
