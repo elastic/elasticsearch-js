@@ -70,7 +70,8 @@ class Benchmark {
         event: {
           action: stat.action,
           dataset: stat.dataset || null,
-          duration: stat.duration
+          duration: stat.duration,
+          outcome: stat.outcome
         },
         http: { response: { status_code: stat.statusCode } },
         benchmark: {
