@@ -6,7 +6,6 @@
 
 const { join } = require('path')
 const { readdirSync } = require('fs')
-const { errors } = require('../..')
 const { Benchmark } = require('./lib')
 
 const env = {
@@ -102,11 +101,14 @@ function runAction (action, done) {
       measure(i, benchmark, next)
     }
 
-    function next (err, result) {
-      if (err instanceof errors.ResponseError) err = null
+    function next (err, result, operations) {
+      if (operations == null) {
+        operations = err ? 0 : action.operations
+      }
       benchmark.stats.push({
         statusCode: result.statusCode,
-        outcome: err ? 'failure' : 'success'
+        outcome: err ? 'failure' : 'success',
+        operations
       })
 
       repetitions -= 1
@@ -115,8 +117,8 @@ function runAction (action, done) {
       const duration = process.hrtime.bigint() - startTimeGlobal
       benchmark.stats = benchmark.stats.map(stat => {
         return {
-          ...stat,
           ...action,
+          ...stat,
           timestamp,
           duration: duration / BigInt(action.repetitions), // eslint-disable-line
         }
