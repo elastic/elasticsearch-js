@@ -47,7 +47,7 @@ module.exports = new Action({
             successfulOperations += 1
           }
         }
-        done(new Error('Something went wrong during bulk index'), result, successfulOperations)
+        done(err, result, successfulOperations)
       } else {
         done(err, result, OPERATIONS)
       }
