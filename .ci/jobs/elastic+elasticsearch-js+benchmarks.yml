@@ -6,7 +6,7 @@
     display-name: 'elastic / elasticsearch-js # benchmarks'
     description: Client benchmarks for the js client
     parameters:
-      - string: { name: branch_specifier, default: refs/heads/benchmarking }
+      - string: { name: branch_specifier, default: refs/heads/benchmarks }
     triggers:
       - timed: "H H/12 * * *"
     vault:
