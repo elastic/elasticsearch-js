@@ -25,7 +25,7 @@
     "test:types": "tsd",
     "test:coverage": "tap test/unit/*.test.js test/unit/**/*.test.js test/behavior/*.test.js -t 300 && nyc report --reporter=text-lcov > coverage.lcov",
     "test:coverage-ui": "tap test/unit/*.test.js test/unit/**/*.test.js test/behavior/*.test.js -t 300 --coverage-report=html",
-    "benchmarks": "node test/benchmarks/run.js",
+    "benchmarks": "node --max-old-space-size=8192 test/benchmarks/run.js",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "ci": "npm run license-checker && npm test && npm run test:integration:helpers && npm run test:integration && npm run test:coverage",
