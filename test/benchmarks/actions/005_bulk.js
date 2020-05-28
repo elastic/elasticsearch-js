@@ -38,11 +38,18 @@ module.exports = new Action({
       body: bulkBody
     }, (err, result) => {
       if (err) {
-        done(err, result)
+        done(err, result, 0)
       } else if (result.body.errors === true) {
-        done(new Error('Something went wrong during bulk index'), result)
+        let successfulOperations = 0
+        const { items } = result.body
+        for (let i = 0, len = items.length; i < len; i++) {
+          if (items[i].index.status < 400) {
+            successfulOperations += 1
+          }
+        }
+        done(err, result, successfulOperations)
       } else {
-        done(err, result)
+        done(err, result, OPERATIONS)
       }
     })
   }

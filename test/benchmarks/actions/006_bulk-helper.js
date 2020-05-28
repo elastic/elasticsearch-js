@@ -47,14 +47,10 @@ module.exports = new Action({
         }
       })
       .then(stats => {
-        if (stats.failed > 0) {
-          done(new Error('Bulk operation failed'), { statusCode: 200 })
-        } else {
-          done(null, { statusCode: 200 })
-        }
+        done(null, { statusCode: 200 }, stats.successful)
       })
       .catch(err => {
-        done(err, { statusCode: 418 })
+        done(err, { statusCode: 418 }, 0)
       })
   }
 })
