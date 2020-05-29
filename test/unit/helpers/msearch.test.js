@@ -7,6 +7,7 @@
 const { test } = require('tap')
 const { Client, errors } = require('../../../')
 const { connection } = require('../../utils')
+const FakeTimers = require('@sinonjs/fake-timers')
 
 test('Basic', async t => {
   const MockConnection = connection.buildMockConnection({
@@ -581,6 +582,8 @@ test('Multiple searches (concurrency = 1)', t => {
 
 test('Flush interval', t => {
   t.plan(4)
+  const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+  t.teardown(() => clock.uninstall())
 
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -615,7 +618,7 @@ test('Flush interval', t => {
     Connection: MockConnection
   })
 
-  const s = client.helpers.msearch({ operations: 10, flushInterval: 50 })
+  const s = client.helpers.msearch()
 
   s.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
     t.error(err)
@@ -626,12 +629,16 @@ test('Flush interval', t => {
     t.error(err)
     t.is(result.documents.length, 3)
   })
+
+  setImmediate(clock.next)
 
   t.teardown(() => s.stop())
 })
 
 test('Flush interval - early stop', t => {
   t.plan(3)
+  const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+  t.teardown(() => clock.uninstall())
 
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -657,18 +664,19 @@ test('Flush interval - early stop', t => {
     Connection: MockConnection
   })
 
-  const s = client.helpers.msearch({ operations: 10, flushInterval: 50 })
+  const s = client.helpers.msearch()
 
   s.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
     t.error(err)
     t.is(result.documents.length, 3)
   })
 
-  setTimeout(() => {
+  setImmediate(() => {
+    clock.next()
     s.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
-      t.ok(err)
+      t.ok(err instanceof errors.ConfigurationError)
     })
-  }, 100)
+  })
 
   s.stop()
 })

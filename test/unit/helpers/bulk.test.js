@@ -5,14 +5,13 @@
 'use strict'
 
 const { createReadStream } = require('fs')
-const { promisify } = require('util')
 const { join } = require('path')
 const split = require('split2')
+const FakeTimers = require('@sinonjs/fake-timers')
 const semver = require('semver')
 const { test } = require('tap')
 const { Client, errors } = require('../../../')
 const { buildServer, connection } = require('../../utils')
-const sleep = promisify(setTimeout)
 
 const dataset = [
   { user: 'jon', age: 23 },
@@ -992,6 +991,9 @@ test('errors', t => {
 
 test('Flush interval', t => {
   t.test('Slow producer', async t => {
+    const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+    t.teardown(() => clock.uninstall())
+
     let count = 0
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
@@ -1012,7 +1014,7 @@ test('Flush interval', t => {
     const result = await client.helpers.bulk({
       datasource: (async function * generator () {
         for (const chunk of dataset) {
-          await sleep(200)
+          await clock.nextAsync()
           yield chunk
         }
       })(),
@@ -1041,6 +1043,9 @@ test('Flush interval', t => {
   })
 
   t.test('Abort operation', async t => {
+    const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+    t.teardown(() => clock.uninstall())
+
     let count = 0
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
@@ -1062,7 +1067,7 @@ test('Flush interval', t => {
     const b = client.helpers.bulk({
       datasource: (async function * generator () {
         for (const chunk of dataset) {
-          await sleep(200)
+          await clock.nextAsync()
           if (count > 1) {
             b.abort()
           }
