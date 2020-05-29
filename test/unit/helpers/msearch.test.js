@@ -672,3 +672,57 @@ test('Flush interval - early stop', t => {
 
   s.stop()
 })
+
+test('Stop should resolve the helper', t => {
+  t.plan(1)
+
+  const MockConnection = connection.buildMockConnection({
+    onRequest (params) {
+      return {
+        body: {
+          responses: []
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  const s = client.helpers.msearch()
+  setImmediate(s.stop)
+
+  s.then(() => t.pass('Called'))
+    .catch(() => t.fail('Should not fail'))
+})
+
+test('Stop should resolve the helper (error)', t => {
+  t.plan(3)
+
+  const MockConnection = connection.buildMockConnection({
+    onRequest (params) {
+      return {
+        body: {
+          responses: []
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  const s = client.helpers.msearch()
+  setImmediate(s.stop, new Error('kaboom'))
+
+  s.then(() => t.fail('Should not fail'))
+    .catch(err => t.is(err.message, 'kaboom'))
+
+  s.catch(err => t.is(err.message, 'kaboom'))
+
+  s.then(() => t.fail('Should not fail'), err => t.is(err.message, 'kaboom'))
+})
