@@ -1019,7 +1019,6 @@ test('Flush interval', t => {
         }
       })(),
       flushBytes: 5000000,
-      flushInterval: 100,
       concurrency: 1,
       onDocument (doc) {
         return {
@@ -1068,14 +1067,16 @@ test('Flush interval', t => {
       datasource: (async function * generator () {
         for (const chunk of dataset) {
           await clock.nextAsync()
-          if (count > 1) {
+          if (chunk.user === 'tyrion') {
+            // Needed otherwise in Node.js 10
+            // the second request will never be sent
+            await Promise.resolve()
             b.abort()
           }
           yield chunk
         }
       })(),
       flushBytes: 5000000,
-      flushInterval: 100,
       concurrency: 1,
       onDocument (doc) {
         return {
