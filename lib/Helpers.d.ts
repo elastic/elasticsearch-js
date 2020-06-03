@@ -69,6 +69,7 @@ export interface BulkHelperOptions<TDocument = unknown> extends Omit<Bulk, 'body
   datasource: TDocument[] | Buffer | ReadableStream | AsyncIterator<TDocument>
   onDocument: (doc: TDocument) => Action
   flushBytes?: number
+  flushInterval?: number
   concurrency?: number
   retries?: number
   wait?: number
@@ -92,6 +93,7 @@ export interface OnDropDocument<TDocument = unknown> {
 
 export interface MsearchHelperOptions extends Omit<Msearch, 'body'> {
   operations?: number
+  flushInterval?: number
   concurrency?: number
   retries?: number
   wait?: number

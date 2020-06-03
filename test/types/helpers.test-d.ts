@@ -27,6 +27,7 @@ const b = client.helpers.bulk<Record<string, any>>({
     return { index: { _index: 'test' } }
   },
   flushBytes: 5000000,
+  flushInterval: 30000,
   concurrency: 5,
   retries: 3,
   wait: 5000,
@@ -58,7 +59,7 @@ expectError(
   const options = {
     datasource: [],
     onDocument (doc: Record<string, any>) {
-      return { index: { _index: 'test' } } 
+      return { index: { _index: 'test' } }
     }
   }
   expectAssignable<BulkHelperOptions<Record<string, any>>>(options)
@@ -139,20 +140,20 @@ expectError(
 }
 
 // with type defs
-{  
+{
   interface ShardsResponse {
     total: number;
     successful: number;
     failed: number;
     skipped: number;
   }
-  
+
   interface Explanation {
     value: number;
     description: string;
     details: Explanation[];
   }
-  
+
   interface SearchResponse<T> {
     took: number;
     timed_out: boolean;
@@ -178,7 +179,7 @@ expectError(
     };
     aggregations?: any;
   }
-  
+
   interface Source {
     foo: string
   }
@@ -208,20 +209,20 @@ expectError(
       match: { foo: string }
     }
   }
-  
+
   interface ShardsResponse {
     total: number;
     successful: number;
     failed: number;
     skipped: number;
   }
-  
+
   interface Explanation {
     value: number;
     description: string;
     details: Explanation[];
   }
-  
+
   interface SearchResponse<T> {
     took: number;
     timed_out: boolean;
@@ -247,7 +248,7 @@ expectError(
     };
     aggregations?: any;
   }
-  
+
   interface Source {
     foo: string
   }
@@ -310,7 +311,7 @@ expectError(
 }
 
 // with type defs
-{ 
+{
   interface Source {
     foo: string
   }
@@ -337,7 +338,7 @@ expectError(
       match: { foo: string }
     }
   }
-  
+
   interface Source {
     foo: string
   }
@@ -415,7 +416,7 @@ expectError(
       match: { foo: string }
     }
   }
-  
+
   interface Source {
     foo: string
   }
@@ -436,7 +437,8 @@ expectError(
 /// .helpers.msearch
 
 const s = client.helpers.msearch({
-  operations: 20,
+  operations: 5,
+  flushInterval: 500,
   concurrency: 5,
   retries: 5,
   wait: 5000
