@@ -3219,7 +3219,9 @@ _Default:_ `open`
 |`string` - Specify timeout for connection to master
 
 |`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
+|`boolean` - Return local information, do not retrieve the state from master node (default: false) +
+
+WARNING: This parameter has been deprecated.
 
 |===
 
@@ -3806,6 +3808,38 @@ link:{ref}/indices-templates.html[Documentation] +
 
 |`body`
 |`object` - New index template definition, which will be included in the simulation, as if it already exists in the system
+
+|===
+
+=== indices.simulateTemplate
+
+[source,ts]
+----
+client.indices.simulateTemplate({
+  name: string,
+  create: boolean,
+  cause: string,
+  master_timeout: string,
+  body: object
+})
+----
+link:{ref}/indices-templates.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the index template
+
+|`create`
+|`boolean` - Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
+
+|`cause`
+|`string` - User defined reason for dry-run creating the new template for simulation purposes
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`body`
+|`object` - New index template definition to be simulated, if no index template name is specified
 
 |===
 
@@ -5233,7 +5267,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
-|`string \| string[]` - A comma-separated list of repository names
+|`string \| string[]` - Name of the snapshot repository to unregister. Wildcard (`*`) patterns are supported.
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -7245,10 +7279,17 @@ link:{ref}/ml-delete-datafeed.html[Documentation] +
 
 [source,ts]
 ----
-client.ml.deleteExpiredData()
+client.ml.deleteExpiredData({
+  body: object
+})
 ----
 link:{ref}/ml-delete-expired-data.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - deleting expired data parameters
 
+|===
 
 === ml.deleteFilter
 
@@ -7529,7 +7570,8 @@ link:{ref}/ml-flush-job.html[Documentation] +
 client.ml.forecast({
   job_id: string,
   duration: string,
-  expires_in: string
+  expires_in: string,
+  max_model_memory: string
 })
 ----
 link:{ref}/ml-forecast.html[Documentation] +
@@ -7543,6 +7585,9 @@ link:{ref}/ml-forecast.html[Documentation] +
 
 |`expires_in` or `expiresIn`
 |`string` - The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
+
+|`max_model_memory` or `maxModelMemory`
+|`string` - The max memory able to be used by the forecast. Default is 20mb.
 
 |===
 
@@ -8077,7 +8122,8 @@ client.ml.getTrainedModels({
   decompress_definition: boolean,
   from: number,
   size: number,
-  tags: string | string[]
+  tags: string | string[],
+  for_export: boolean
 })
 ----
 link:{ref}/get-inference.html[Documentation] +
@@ -8106,6 +8152,9 @@ _Default:_ `100`
 
 |`tags`
 |`string \| string[]` - A comma-separated list of tags that the model must have.
+
+|`for_export` or `forExport`
+|`boolean` - Omits fields that are illegal to set on model PUT
 
 |===
 

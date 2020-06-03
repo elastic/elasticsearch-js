@@ -13,11 +13,13 @@ function buildMlForecast (opts) {
 
   const acceptedQuerystring = [
     'duration',
-    'expires_in'
+    'expires_in',
+    'max_model_memory'
   ]
 
   const snakeCase = {
-    expiresIn: 'expires_in'
+    expiresIn: 'expires_in',
+    maxModelMemory: 'max_model_memory'
   }
 
   /**

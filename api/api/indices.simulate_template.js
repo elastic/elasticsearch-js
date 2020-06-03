@@ -7,11 +7,14 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndicesCreateDataStream (opts) {
+function buildIndicesSimulateTemplate (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
+    'create',
+    'cause',
+    'master_timeout',
     'pretty',
     'human',
     'error_trace',
@@ -20,16 +23,17 @@ function buildIndicesCreateDataStream (opts) {
   ]
 
   const snakeCase = {
+    masterTimeout: 'master_timeout',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
 
   /**
-   * Perform a indices.create_data_stream request
-   * Creates or updates a data stream
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
+   * Perform a indices.simulate_template request
+   * Simulate resolving the given template name or body
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
    */
-  return function indicesCreateDataStream (params, options, callback) {
+  return function indicesSimulateTemplate (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -39,12 +43,6 @@ function buildIndicesCreateDataStream (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // check required parameters
-    if (params['name'] == null) {
-      const err = new ConfigurationError('Missing required parameter: name')
-      return handleError(err, callback)
     }
 
     // validate headers object
@@ -64,8 +62,13 @@ function buildIndicesCreateDataStream (opts) {
 
     var path = ''
 
-    if (method == null) method = 'PUT'
-    path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
+    if ((name) != null) {
+      if (method == null) method = 'POST'
+      path = '/' + '_index_template' + '/' + '_simulate' + '/' + encodeURIComponent(name)
+    } else {
+      if (method == null) method = 'POST'
+      path = '/' + '_index_template' + '/' + '_simulate'
+    }
 
     // build request object
     const request = {
@@ -80,4 +83,4 @@ function buildIndicesCreateDataStream (opts) {
   }
 }
 
-module.exports = buildIndicesCreateDataStream
+module.exports = buildIndicesSimulateTemplate

@@ -17,14 +17,15 @@ function buildMlGetTrainedModels (opts) {
     'decompress_definition',
     'from',
     'size',
-    'tags'
+    'tags',
+    'for_export'
   ]
 
   const snakeCase = {
     allowNoMatch: 'allow_no_match',
     includeModelDefinition: 'include_model_definition',
-    decompressDefinition: 'decompress_definition'
-
+    decompressDefinition: 'decompress_definition',
+    forExport: 'for_export'
   }
 
   /**
