@@ -629,7 +629,7 @@ export interface IndicesCreate<T = RequestBody> extends Generic {
 
 export interface IndicesCreateDataStream<T = RequestBody> extends Generic {
   name: string;
-  body: T;
+  body?: T;
 }
 
 export interface IndicesDelete extends Generic {
@@ -913,6 +913,14 @@ export interface IndicesSimulateIndexTemplate<T = RequestBody> extends Generic {
   body?: T;
 }
 
+export interface IndicesSimulateTemplate<T = RequestBody> extends Generic {
+  name?: string;
+  create?: boolean;
+  cause?: string;
+  master_timeout?: string;
+  body?: T;
+}
+
 export interface IndicesSplit<T = RequestBody> extends Generic {
   index: string;
   target: string;
@@ -1186,7 +1194,7 @@ export interface Search<T = RequestBody> extends Generic {
   suggest_text?: string;
   timeout?: string;
   track_scores?: boolean;
-  track_total_hits?: boolean;
+  track_total_hits?: boolean|long;
   allow_partial_search_results?: boolean;
   typed_keys?: boolean;
   version?: boolean;
@@ -1251,7 +1259,7 @@ export interface SnapshotCreateRepository<T = RequestBody> extends Generic {
 
 export interface SnapshotDelete extends Generic {
   repository: string;
-  snapshot: string;
+  snapshot: string | string[];
   master_timeout?: string;
 }
 
@@ -1453,7 +1461,7 @@ export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   suggest_text?: string;
   timeout?: string;
   track_scores?: boolean;
-  track_total_hits?: boolean;
+  track_total_hits?: boolean|long;
   allow_partial_search_results?: boolean;
   typed_keys?: boolean;
   version?: boolean;
@@ -1808,7 +1816,8 @@ export interface MlDeleteDatafeed extends Generic {
   force?: boolean;
 }
 
-export interface MlDeleteExpiredData extends Generic {
+export interface MlDeleteExpiredData<T = RequestBody> extends Generic {
+  body?: T;
 }
 
 export interface MlDeleteFilter extends Generic {
@@ -1882,6 +1891,7 @@ export interface MlForecast extends Generic {
   job_id: string;
   duration?: string;
   expires_in?: string;
+  max_model_memory?: string;
 }
 
 export interface MlGetBuckets<T = RequestBody> extends Generic {
@@ -2021,6 +2031,7 @@ export interface MlGetTrainedModels extends Generic {
   from?: number;
   size?: number;
   tags?: string | string[];
+  for_export?: boolean;
 }
 
 export interface MlGetTrainedModelsStats extends Generic {
@@ -2307,11 +2318,11 @@ export interface SecurityGetPrivileges extends Generic {
 }
 
 export interface SecurityGetRole extends Generic {
-  name?: string;
+  name?: string | string[];
 }
 
 export interface SecurityGetRoleMapping extends Generic {
-  name?: string;
+  name?: string | string[];
 }
 
 export interface SecurityGetToken<T = RequestBody> extends Generic {

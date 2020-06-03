@@ -30,7 +30,7 @@ function buildClusterGetComponentTemplate (opts) {
   /**
    * Perform a cluster.get_component_template request
    * Returns one or more component templates
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-templates.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html
    */
   return function clusterGetComponentTemplate (params, options, callback) {
     options = options || {}

@@ -291,6 +291,8 @@ function ESAPI (opts) {
       shrink: lazyLoad('indices.shrink', opts),
       simulate_index_template: lazyLoad('indices.simulate_index_template', opts),
       simulateIndexTemplate: lazyLoad('indices.simulate_index_template', opts),
+      simulate_template: lazyLoad('indices.simulate_template', opts),
+      simulateTemplate: lazyLoad('indices.simulate_template', opts),
       split: lazyLoad('indices.split', opts),
       stats: lazyLoad('indices.stats', opts),
       unfreeze: lazyLoad('indices.unfreeze', opts),
