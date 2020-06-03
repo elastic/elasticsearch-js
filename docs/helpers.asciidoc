@@ -96,6 +96,16 @@ const b = client.helpers.bulk({
 })
 ----
 
+|`flushInterval`
+a|How much time (in milliseconds) the helper will wait before flushing the body from the last document read. +
+_Default:_ `30000`
+[source,js]
+----
+const b = client.helpers.bulk({
+  flushInterval: 30000
+})
+----
+
 |`concurrency`
 a|How many request will be executed at the same time. +
 _Default:_ `5`
@@ -254,11 +264,21 @@ To create a new instance of the Msearch helper, you should access it as shown in
 |===
 |`operations`
 a|How many search operations should be sent in a single msearch request. +
-_Default:_ `20`
+_Default:_ `5`
 [source,js]
 ----
 const b = client.helpers.msearch({
   operations: 10
+})
+----
+
+|`flushInterval`
+a|How much time (in milliseconds) the helper will wait before flushing the operations from the last operation read. +
+_Default:_ `500`
+[source,js]
+----
+const b = client.helpers.msearch({
+  flushInterval: 500
 })
 ----
 

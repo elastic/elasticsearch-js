@@ -7,6 +7,7 @@
 const { createReadStream } = require('fs')
 const { join } = require('path')
 const split = require('split2')
+const FakeTimers = require('@sinonjs/fake-timers')
 const semver = require('semver')
 const { test } = require('tap')
 const { Client, errors } = require('../../../')
@@ -983,6 +984,121 @@ test('errors', t => {
       t.true(err instanceof errors.ConfigurationError)
       t.is(err.message, 'bulk helper: the onDocument callback is required')
     }
+  })
+
+  t.end()
+})
+
+test('Flush interval', t => {
+  t.test('Slow producer', async t => {
+    const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+    t.teardown(() => clock.uninstall())
+
+    let count = 0
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        t.strictEqual(params.path, '/_bulk')
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+        const [action, payload] = params.body.split('\n')
+        t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+        t.deepEqual(JSON.parse(payload), dataset[count++])
+        return { body: { errors: false, items: [{}] } }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    const result = await client.helpers.bulk({
+      datasource: (async function * generator () {
+        for (const chunk of dataset) {
+          await clock.nextAsync()
+          yield chunk
+        }
+      })(),
+      flushBytes: 5000000,
+      concurrency: 1,
+      onDocument (doc) {
+        return {
+          index: { _index: 'test' }
+        }
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
+    })
+
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, {
+      total: 3,
+      successful: 3,
+      retry: 0,
+      failed: 0,
+      aborted: false
+    })
+  })
+
+  t.test('Abort operation', async t => {
+    const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+    t.teardown(() => clock.uninstall())
+
+    let count = 0
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        t.true(count < 2)
+        t.strictEqual(params.path, '/_bulk')
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+        const [action, payload] = params.body.split('\n')
+        t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+        t.deepEqual(JSON.parse(payload), dataset[count++])
+        return { body: { errors: false, items: [{}] } }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    const b = client.helpers.bulk({
+      datasource: (async function * generator () {
+        for (const chunk of dataset) {
+          await clock.nextAsync()
+          if (chunk.user === 'tyrion') {
+            // Needed otherwise in Node.js 10
+            // the second request will never be sent
+            await Promise.resolve()
+            b.abort()
+          }
+          yield chunk
+        }
+      })(),
+      flushBytes: 5000000,
+      concurrency: 1,
+      onDocument (doc) {
+        return {
+          index: { _index: 'test' }
+        }
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
+    })
+
+    const result = await b
+
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, {
+      total: 2,
+      successful: 2,
+      retry: 0,
+      failed: 0,
+      aborted: true
+    })
   })
 
   t.end()
