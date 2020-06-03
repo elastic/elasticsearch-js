@@ -1194,7 +1194,7 @@ export interface Search<T = RequestBody> extends Generic {
   suggest_text?: string;
   timeout?: string;
   track_scores?: boolean;
-  track_total_hits?: boolean|long;
+  track_total_hits?: boolean | number;
   allow_partial_search_results?: boolean;
   typed_keys?: boolean;
   version?: boolean;
@@ -1461,7 +1461,7 @@ export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   suggest_text?: string;
   timeout?: string;
   track_scores?: boolean;
-  track_total_hits?: boolean|long;
+  track_total_hits?: boolean | number;
   allow_partial_search_results?: boolean;
   typed_keys?: boolean;
   version?: boolean;
