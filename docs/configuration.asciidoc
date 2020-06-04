@@ -76,11 +76,11 @@ auth: {
 _Default:_ `3`
 
 |`requestTimeout`
-|`number` - Max request timeout for each request. +
+|`number` - Max request timeout in milliseconds for each request. +
 _Default:_ `30000`
 
 |`pingTimeout`
-|`number` - Max ping request timeout for each request. +
+|`number` - Max ping request timeout in milliseconds for each request. +
 _Default:_ `3000`
 
 |`sniffInterval`
