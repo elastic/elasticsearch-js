@@ -150,6 +150,64 @@ const b = client.helpers.bulk({
 
 |===
 
+==== Supported operations
+
+===== Index
+[source,js]
+----
+client.helpers.bulk({
+  datasource: myDatasource,
+  onDocument (doc) {
+    return {
+      index: { _index: 'my-index' }
+    }
+  }
+})
+----
+
+===== Create
+[source,js]
+----
+client.helpers.bulk({
+  datasource: myDatasource,
+  onDocument (doc) {
+    return {
+      create: { _index: 'my-index', _id: doc.id }
+    }
+  }
+})
+----
+
+===== Update
+[source,js]
+----
+client.helpers.bulk({
+  datasource: myDatasource,
+  onDocument (doc) {
+    // Note that the update operation requires you to return
+    // an array, where the first element is the actio, while
+    // the second are the document option
+    return [
+      { update: { _index: 'my-index', _id: doc.id } },
+      { doc_as_upsert: true }
+    ]
+  }
+})
+----
+
+===== Delete
+[source,js]
+----
+client.helpers.bulk({
+  datasource: myDatasource,
+  onDocument (doc) {
+    return {
+      delete: { _index: 'my-index', _id: doc.id }
+    }
+  }
+})
+----
+
 ==== Abort a bulk operation
 If needed, you can abort a bulk operation at any time. The bulk helper returns a https://promisesaplus.com/[thenable], which has an `abort` method.
 
