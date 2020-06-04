@@ -95,6 +95,16 @@ error, such as `statusCode`, `headers`, `body`, and `message`.
 version, you can specify the host and port in a variety of ways. With the new 
 client, there is only one way to do it, via the `node` parameter.
 
+* Certificates are verified by default, if you want to disable certificates verification, you should set the `rejectUnauthorized` option to `false` inside the `ssl` configuration:
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  ssl: { rejectUnauthorized: false }
+})
+----
+
 * The `plugins` option has been removed. If you want to extend the client now, 
 you should use the `client.extend` API.
 
