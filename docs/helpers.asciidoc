@@ -238,10 +238,10 @@ The `result` exposes a `documents` property as well, which allows you to access 
 const { Client } = require('@elastic/elasticsearch')
 
 const client = new Client({ node: 'http://localhost:9200' })
-const s = client.helpers.msearch()
+const m = client.helpers.msearch()
 
 // promise style API
-s.search(
+m.search(
     { index: 'stackoverflow' },
     { query: { match: { title: 'javascript' } } }
   )
@@ -249,7 +249,7 @@ s.search(
   .catch(err => console.error(err))
 
 // callback style API
-s.search(
+m.search(
   { index: 'stackoverflow' },
   { query: { match: { title: 'ruby' } } },
   (err, result) => {
@@ -267,7 +267,7 @@ a|How many search operations should be sent in a single msearch request. +
 _Default:_ `5`
 [source,js]
 ----
-const b = client.helpers.msearch({
+const m = client.helpers.msearch({
   operations: 10
 })
 ----
@@ -277,7 +277,7 @@ a|How much time (in milliseconds) the helper will wait before flushing the opera
 _Default:_ `500`
 [source,js]
 ----
-const b = client.helpers.msearch({
+const m = client.helpers.msearch({
   flushInterval: 500
 })
 ----
@@ -287,7 +287,7 @@ a|How many request will be executed at the same time. +
 _Default:_ `5`
 [source,js]
 ----
-const b = client.helpers.msearch({
+const m = client.helpers.msearch({
   concurrency: 10
 })
 ----
@@ -297,7 +297,7 @@ a|How many times an operation will be retried before to resolve the request. An 
 _Default:_ Client max retries.
 [source,js]
 ----
-const b = client.helpers.msearch({
+const m = client.helpers.msearch({
   retries: 3
 })
 ----
@@ -307,7 +307,7 @@ a|How much time to wait before retries in milliseconds. +
 _Default:_ 5000.
 [source,js]
 ----
-const b = client.helpers.msearch({
+const m = client.helpers.msearch({
   wait: 3000
 })
 ----
@@ -328,23 +328,23 @@ NOTE: The stop method will stop the execution of the msearch processor, but if y
 const { Client } = require('@elastic/elasticsearch')
 
 const client = new Client({ node: 'http://localhost:9200' })
-const s = client.helpers.msearch()
+const m = client.helpers.msearch()
 
-s.search(
+m.search(
     { index: 'stackoverflow' },
     { query: { match: { title: 'javascript' } } }
   )
   .then(result => console.log(result.body))
   .catch(err => console.error(err))
 
-s.search(
+m.search(
     { index: 'stackoverflow' },
     { query: { match: { title: 'ruby' } } }
   )
   .then(result => console.log(result.body))
   .catch(err => console.error(err))
 
-setImmediate(() => s.stop())
+setImmediate(() => m.stop())
 ----
 
 === Search Helper
