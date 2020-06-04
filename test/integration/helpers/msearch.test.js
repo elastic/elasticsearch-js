@@ -40,9 +40,9 @@ afterEach(async () => {
 
 test('Basic', t => {
   t.plan(4)
-  const s = client.helpers.msearch({ operations: 1 })
+  const m = client.helpers.msearch({ operations: 1 })
 
-  s.search(
+  m.search(
     { index: INDEX },
     { query: { match: { title: 'javascript' } } },
     (err, result) => {
@@ -51,7 +51,7 @@ test('Basic', t => {
     }
   )
 
-  s.search(
+  m.search(
     { index: INDEX },
     { query: { match: { title: 'ruby' } } },
     (err, result) => {
@@ -60,14 +60,14 @@ test('Basic', t => {
     }
   )
 
-  t.teardown(() => s.stop())
+  t.teardown(() => m.stop())
 })
 
 test('Bad request', t => {
   t.plan(3)
-  const s = client.helpers.msearch({ operations: 1 })
+  const m = client.helpers.msearch({ operations: 1 })
 
-  s.search(
+  m.search(
     { index: INDEX },
     { query: { match: { title: 'javascript' } } },
     (err, result) => {
@@ -76,7 +76,7 @@ test('Bad request', t => {
     }
   )
 
-  s.search(
+  m.search(
     { index: INDEX },
     { query: { foo: { title: 'ruby' } } },
     (err, result) => {
@@ -84,15 +84,15 @@ test('Bad request', t => {
     }
   )
 
-  t.teardown(() => s.stop())
+  t.teardown(() => m.stop())
 })
 
 test('Send multiple request concurrently over the concurrency limit', t => {
   t.plan(20)
-  const s = client.helpers.msearch({ operations: 1 })
+  const m = client.helpers.msearch({ operations: 1 })
 
   for (let i = 0; i < 10; i++) {
-    s.search(
+    m.search(
       { index: INDEX },
       { query: { match: { title: 'javascript' } } },
       (err, result) => {
@@ -102,5 +102,5 @@ test('Send multiple request concurrently over the concurrency limit', t => {
     )
   }
 
-  t.teardown(() => s.stop())
+  t.teardown(() => m.stop())
 })
