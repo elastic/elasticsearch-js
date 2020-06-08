@@ -900,3 +900,18 @@ test('Abort a request asyncronously', t => {
     setImmediate(() => request.abort())
   })
 })
+
+test('Should correctly resolve request pathname', t => {
+  t.plan(1)
+
+  const connection = new Connection({
+    url: new URL(`http://localhost:80/test`)
+  })
+
+  t.strictEqual(
+    connection.buildRequestObject({
+      path: 'hello'
+    }).pathname,
+    '/test/hello'
+  )
+})
