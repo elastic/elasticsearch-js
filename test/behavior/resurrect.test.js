@@ -6,7 +6,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const lolex = require('lolex')
+const FakeTimers = require('@sinonjs/fake-timers')
 const workq = require('workq')
 const { buildCluster } = require('../utils')
 const { Client, events } = require('../../index')
@@ -24,7 +24,7 @@ const { Client, events } = require('../../index')
 test('Should execute the recurrect API with the ping strategy', t => {
   t.plan(8)
 
-  const clock = lolex.install({ toFake: ['Date'] })
+  const clock = FakeTimers.install({ toFake: ['Date'] })
   const q = workq()
 
   buildCluster({ numberOfNodes: 2 }, cluster => {
@@ -77,7 +77,7 @@ test('Should execute the recurrect API with the ping strategy', t => {
 test('Resurrect a node and handle 502/3/4 status code', t => {
   t.plan(15)
 
-  const clock = lolex.install({ toFake: ['Date'] })
+  const clock = FakeTimers.install({ toFake: ['Date'] })
   const q = workq()
 
   var count = 0
@@ -146,7 +146,7 @@ test('Resurrect a node and handle 502/3/4 status code', t => {
 test('Should execute the recurrect API with the optimistic strategy', t => {
   t.plan(8)
 
-  const clock = lolex.install({ toFake: ['Date'] })
+  const clock = FakeTimers.install({ toFake: ['Date'] })
   const q = workq()
 
   buildCluster({ numberOfNodes: 2 }, cluster => {

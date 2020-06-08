@@ -6,7 +6,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const lolex = require('lolex')
+const FakeTimers = require('@sinonjs/fake-timers')
 const { createGunzip } = require('zlib')
 const os = require('os')
 const intoStream = require('into-stream')
@@ -1072,7 +1072,7 @@ test('sniff', t => {
   t.test('sniffInterval', t => {
     t.plan(6)
 
-    const clock = lolex.install({ toFake: ['Date'] })
+    const clock = FakeTimers.install({ toFake: ['Date'] })
     t.teardown(() => clock.uninstall())
 
     class MyTransport extends Transport {
