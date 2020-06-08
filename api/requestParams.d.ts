@@ -1809,6 +1809,7 @@ export interface MlDeleteCalendarJob extends Generic {
 export interface MlDeleteDataFrameAnalytics extends Generic {
   id: string;
   force?: boolean;
+  timeout?: string;
 }
 
 export interface MlDeleteDatafeed extends Generic {
@@ -1817,6 +1818,9 @@ export interface MlDeleteDatafeed extends Generic {
 }
 
 export interface MlDeleteExpiredData<T = RequestBody> extends Generic {
+  job_id?: string;
+  requests_per_second?: number;
+  timeout?: string;
   body?: T;
 }
 
@@ -1930,6 +1934,7 @@ export interface MlGetCategories<T = RequestBody> extends Generic {
   category_id?: number;
   from?: number;
   size?: number;
+  partition_field_value?: string;
   body?: T;
 }
 

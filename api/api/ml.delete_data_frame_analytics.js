@@ -12,7 +12,8 @@ function buildMlDeleteDataFrameAnalytics (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'force'
+    'force',
+    'timeout'
   ]
 
   const snakeCase = {
