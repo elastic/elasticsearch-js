@@ -7241,7 +7241,8 @@ link:{ref}/ml-delete-calendar-job.html[Documentation] +
 ----
 client.ml.deleteDataFrameAnalytics({
   id: string,
-  force: boolean
+  force: boolean,
+  timeout: string
 })
 ----
 link:{ref}/delete-dfanalytics.html[Documentation] +
@@ -7252,6 +7253,9 @@ link:{ref}/delete-dfanalytics.html[Documentation] +
 
 |`force`
 |`boolean` - True if the job should be forcefully deleted
+
+|`timeout`
+|`string` - Controls the time to wait until a job is deleted. Defaults to 1 minute
 
 |===
 
@@ -7724,6 +7728,7 @@ client.ml.getCategories({
   category_id: number,
   from: number,
   size: number,
+  partition_field_value: string,
   body: object
 })
 ----
@@ -7741,6 +7746,9 @@ link:{ref}/ml-get-category.html[Documentation] +
 
 |`size`
 |`number` - specifies a max number of categories to get
+
+|`partition_field_value` or `partitionFieldValue`
+|`string` - Specifies the partition to retrieve categories for. This is optional, and should never be used for jobs where per-partition categorization is disabled.
 
 |`body`
 |`object` - Category selection details if not provided in URI

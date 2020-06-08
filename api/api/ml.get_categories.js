@@ -13,11 +13,12 @@ function buildMlGetCategories (opts) {
 
   const acceptedQuerystring = [
     'from',
-    'size'
+    'size',
+    'partition_field_value'
   ]
 
   const snakeCase = {
-
+    partitionFieldValue: 'partition_field_value'
   }
 
   /**
