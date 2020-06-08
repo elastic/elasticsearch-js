@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const lolex = require('lolex')
+const FakeTimers = require('@sinonjs/fake-timers')
 const { Client, Transport } = require('../../index')
 const {
   connection: { MockConnection, MockConnectionSniff }
@@ -125,7 +125,7 @@ test('Request id', t => {
   t.test('Resurrect should use the same request id of the request that starts it', t => {
     t.plan(2)
 
-    const clock = lolex.install({ toFake: ['Date'] })
+    const clock = FakeTimers.install({ toFake: ['Date'] })
     const client = new Client({
       node: 'http://localhost:9200',
       Connection: MockConnection,
@@ -281,7 +281,7 @@ test('Client name', t => {
   t.test('Resurrect should have the client name configured', t => {
     t.plan(2)
 
-    const clock = lolex.install({ toFake: ['Date'] })
+    const clock = FakeTimers.install({ toFake: ['Date'] })
     const client = new Client({
       node: 'http://localhost:9200',
       Connection: MockConnection,
@@ -305,7 +305,7 @@ test('Client name', t => {
   t.test('Resurrect should have the client name configured (child client)', t => {
     t.plan(2)
 
-    const clock = lolex.install({ toFake: ['Date'] })
+    const clock = FakeTimers.install({ toFake: ['Date'] })
     const client = new Client({
       node: 'http://localhost:9200',
       Connection: MockConnection,
