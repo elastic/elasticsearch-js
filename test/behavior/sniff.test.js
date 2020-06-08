@@ -6,7 +6,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const lolex = require('lolex')
+const FakeTimers = require('@sinonjs/fake-timers')
 const workq = require('workq')
 const { buildCluster } = require('../utils')
 const { Client, Connection, Transport, events, errors } = require('../../index')
@@ -115,7 +115,7 @@ test('Should handle hostnames in publish_address', t => {
 
 test('Sniff interval', t => {
   t.plan(11)
-  const clock = lolex.install({ toFake: ['Date'] })
+  const clock = FakeTimers.install({ toFake: ['Date'] })
   const q = workq()
 
   buildCluster(({ nodes, shutdown, kill }) => {
