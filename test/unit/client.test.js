@@ -1067,3 +1067,28 @@ test('Correctly handles the same header cased differently', t => {
     })
   })
 })
+
+test('Random selector', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://localhost:${port}`,
+      nodeSelector: 'random'
+    })
+
+    client.search({
+      index: 'test',
+      q: 'foo:bar'
+    }, (err, { body }) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
