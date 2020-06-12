@@ -637,8 +637,6 @@ test('Flush interval', t => {
 
 test('Flush interval - early stop', t => {
   t.plan(3)
-  const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
-  t.teardown(() => clock.uninstall())
 
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -672,7 +670,6 @@ test('Flush interval - early stop', t => {
   })
 
   setImmediate(() => {
-    clock.next()
     m.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
       t.ok(err instanceof errors.ConfigurationError)
     })
