@@ -16,21 +16,19 @@
     "index"
   ],
   "scripts": {
-    "test": "npm run lint && npm run test:unit && npm run test:behavior && npm run test:types",
-    "test:node8": "npm run lint && tap test/unit/*.test.js -t 300 --no-coverage && npm run test:behavior && npm run test:types",
-    "test:unit": "tap test/unit/*.test.js test/unit/**/*.test.js -t 300 --no-coverage",
-    "test:behavior": "tap test/behavior/*.test.js -t 300 --no-coverage",
+    "test": "npm run lint && tap test/{unit,acceptance}/{*,**/*}.test.js && npm run test:types",
+    "test:node8": "npm run lint && tap test/{unit,acceptance}/*.test.js && npm run test:types",
+    "test:unit": "tap test/unit/{*,**/*}.test.js",
+    "test:acceptance": "tap test/acceptance/*.test.js",
     "test:integration": "node test/integration/index.js",
-    "test:integration:helpers": "tap test/integration/helpers/*.test.js --no-coverage -J",
+    "test:integration:helpers": "tap test/integration/helpers/*.test.js",
     "test:types": "tsd",
-    "test:coverage": "tap test/unit/*.test.js test/unit/**/*.test.js test/behavior/*.test.js -t 300 && nyc report --reporter=text-lcov > coverage.lcov",
-    "test:coverage-ui": "tap test/unit/*.test.js test/unit/**/*.test.js test/behavior/*.test.js -t 300 --coverage-report=html",
+    "test:coverage-100": "tap test/{unit,acceptance}/{*,**/*}.test.js --coverage --100 --nyc-arg=\"--exclude=api\"",
+    "test:coverage-report": "tap test/{unit,acceptance}/{*,**/*}.test.js --coverage --nyc-arg=\"--exclude=api\" && nyc report --reporter=text-lcov > coverage.lcov",
+    "test:coverage-ui": "tap test/{unit,acceptance}/{*,**/*}.test.js --coverage --coverage-report=html --nyc-arg=\"--exclude=api\"",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "ci": "npm run license-checker && npm test && npm run test:integration:helpers && npm run test:integration && npm run test:coverage",
-    "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'",
-    "elasticsearch": "./scripts/es-docker.sh",
-    "elasticsearch:xpack": "./scripts/es-docker-platinum.sh"
+    "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'"
   },
   "author": {
     "name": "Tomas Della Vedova",
@@ -86,5 +84,13 @@
   },
   "tsd": {
     "directory": "test/types"
+  },
+  "tap": {
+    "esm": false,
+    "ts": false,
+    "jsx": false,
+    "flow": false,
+    "coverage": false,
+    "jobs-auto": true
   }
 }
