@@ -617,6 +617,14 @@ test('Connection id should not contain credentials', t => {
   t.end()
 })
 
+test('Ipv6 support', t => {
+  const connection = new Connection({
+    url: new URL('http://[::1]:9200')
+  })
+  t.strictEqual(connection.buildRequestObject({}).hostname, '::1')
+  t.end()
+})
+
 test('Should throw if the protocol is not http or https', t => {
   try {
     new Connection({ // eslint-disable-line
