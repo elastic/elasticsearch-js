@@ -439,7 +439,7 @@ It handles automatically the `429` error and uses the client's `maxRetries` opti
 
 [source,js]
 ----
-const scrollSearch = await client.helpers.scrollSearch({
+const scrollSearch = client.helpers.scrollSearch({
   index: 'stackoverflow',
   body: {
     query: {
@@ -488,7 +488,7 @@ For improving the performances, this helper automatically adds `filter_path=hits
 
 [source,js]
 ----
-const scrollSearch = await client.helpers.scrollDocuments({
+const scrollSearch = client.helpers.scrollDocuments({
   index: 'stackoverflow',
   body: {
     query: {
