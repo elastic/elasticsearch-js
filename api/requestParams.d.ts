@@ -882,6 +882,11 @@ export interface IndicesRefresh extends Generic {
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
+export interface IndicesResolveIndex extends Generic {
+  name: string | string[];
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+}
+
 export interface IndicesRollover<T = RequestBody> extends Generic {
   alias: string;
   new_index?: string;
@@ -1786,6 +1791,9 @@ export interface MlDeleteDatafeed extends Generic {
 }
 
 export interface MlDeleteExpiredData<T = RequestBody> extends Generic {
+  job_id?: string;
+  requests_per_second?: number;
+  timeout?: string;
   body?: T;
 }
 

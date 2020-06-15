@@ -3629,6 +3629,27 @@ _Default:_ `open`
 
 |===
 
+=== indices.resolveIndex
+*Stability:* experimental
+[source,ts]
+----
+client.indices.resolveIndex({
+  name: string | string[],
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
+})
+----
+link:{ref}/indices-resolve-index.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - A comma-separated list of names or wildcard expressions
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+_Default:_ `open`
+
+|===
+
 === indices.rollover
 
 [source,ts]
@@ -3780,7 +3801,7 @@ link:{ref}/indices-shrink-index.html[Documentation] +
 |===
 
 === indices.simulateIndexTemplate
-
+*Stability:* experimental
 [source,ts]
 ----
 client.indices.simulateIndexTemplate({
@@ -3812,7 +3833,7 @@ link:{ref}/indices-templates.html[Documentation] +
 |===
 
 === indices.simulateTemplate
-
+*Stability:* experimental
 [source,ts]
 ----
 client.indices.simulateTemplate({
@@ -7284,12 +7305,24 @@ link:{ref}/ml-delete-datafeed.html[Documentation] +
 [source,ts]
 ----
 client.ml.deleteExpiredData({
+  job_id: string,
+  requests_per_second: number,
+  timeout: string,
   body: object
 })
 ----
 link:{ref}/ml-delete-expired-data.html[Documentation] +
 [cols=2*]
 |===
+|`job_id` or `jobId`
+|`string` - The ID of the job(s) to perform expired data hygiene for
+
+|`requests_per_second` or `requestsPerSecond`
+|`number` - The desired requests per second for the deletion processes.
+
+|`timeout`
+|`string` - How long can the underlying delete processes run until they are canceled
+
 |`body`
 |`object` - deleting expired data parameters
 

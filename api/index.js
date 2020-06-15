@@ -250,6 +250,8 @@ function ESAPI (opts) {
       refresh: lazyLoad('indices.refresh', opts),
       reload_search_analyzers: lazyLoad('indices.reload_search_analyzers', opts),
       reloadSearchAnalyzers: lazyLoad('indices.reload_search_analyzers', opts),
+      resolve_index: lazyLoad('indices.resolve_index', opts),
+      resolveIndex: lazyLoad('indices.resolve_index', opts),
       rollover: lazyLoad('indices.rollover', opts),
       segments: lazyLoad('indices.segments', opts),
       shard_stores: lazyLoad('indices.shard_stores', opts),

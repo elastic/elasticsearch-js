@@ -7,26 +7,31 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlDeleteExpiredData (opts) {
+function buildIndicesResolveIndex (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'requests_per_second',
-    'timeout'
+    'expand_wildcards',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-    requestsPerSecond: 'requests_per_second'
-
+    expandWildcards: 'expand_wildcards',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a ml.delete_expired_data request
-   * Deletes expired and unused machine learning data.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-expired-data.html
+   * Perform a indices.resolve_index request
+   * Returns information about any matching indices, aliases, and data streams
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-index.html
    */
-  return function mlDeleteExpiredData (params, options, callback) {
+  return function indicesResolveIndex (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -38,6 +43,12 @@ function buildMlDeleteExpiredData (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['name'] == null) {
+      const err = new ConfigurationError('Missing required parameter: name')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -45,7 +56,7 @@ function buildMlDeleteExpiredData (opts) {
     }
 
     var warnings = []
-    var { method, body, jobId, job_id, ...querystring } = params
+    var { method, body, name, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -55,19 +66,14 @@ function buildMlDeleteExpiredData (opts) {
 
     var path = ''
 
-    if ((job_id || jobId) != null) {
-      if (method == null) method = 'DELETE'
-      path = '/' + '_ml' + '/' + '_delete_expired_data' + '/' + encodeURIComponent(job_id || jobId)
-    } else {
-      if (method == null) method = 'DELETE'
-      path = '/' + '_ml' + '/' + '_delete_expired_data'
-    }
+    if (method == null) method = 'GET'
+    path = '/' + '_resolve' + '/' + 'index' + '/' + encodeURIComponent(name)
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -76,4 +82,4 @@ function buildMlDeleteExpiredData (opts) {
   }
 }
 
-module.exports = buildMlDeleteExpiredData
+module.exports = buildIndicesResolveIndex

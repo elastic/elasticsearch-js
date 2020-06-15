@@ -985,6 +985,14 @@ declare class Client extends EventEmitter {
     reloadSearchAnalyzers<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     reloadSearchAnalyzers<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesReloadSearchAnalyzers, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     reloadSearchAnalyzers<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesReloadSearchAnalyzers, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    resolve_index<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesResolveIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    resolve_index<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    resolve_index<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesResolveIndex, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    resolve_index<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesResolveIndex, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    resolveIndex<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesResolveIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    resolveIndex<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    resolveIndex<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesResolveIndex, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    resolveIndex<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesResolveIndex, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     rollover<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesRollover<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     rollover<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     rollover<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesRollover<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
