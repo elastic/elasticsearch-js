@@ -189,6 +189,51 @@ test('bulk index', t => {
       })
     })
 
+    t.test('refreshOnCompletion custom index', async t => {
+      let count = 0
+      const MockConnection = connection.buildMockConnection({
+        onRequest (params) {
+          if (params.method === 'GET') {
+            t.strictEqual(params.path, '/test/_refresh')
+            return { body: { acknowledged: true } }
+          } else {
+            t.strictEqual(params.path, '/_bulk')
+            t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+            const [action, payload] = params.body.split('\n')
+            t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+            t.deepEqual(JSON.parse(payload), dataset[count++])
+            return { body: { errors: false, items: [{}] } }
+          }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+      const result = await client.helpers.bulk({
+        datasource: dataset.slice(),
+        flushBytes: 1,
+        concurrency: 1,
+        refreshOnCompletion: 'test',
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        }
+      })
+
+      t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
+      t.match(result, {
+        total: 3,
+        successful: 3,
+        retry: 0,
+        failed: 0,
+        aborted: false
+      })
+    })
+
     t.test('Should perform a bulk request (custom action)', async t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
@@ -807,6 +852,53 @@ test('bulk update', t => {
       aborted: false
     })
   })
+
+  t.test('Should perform a bulk request dataset as string)', async t => {
+    let count = 0
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        t.strictEqual(params.path, '/_bulk')
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+        const [action, payload] = params.body.split('\n')
+        t.deepEqual(JSON.parse(action), { update: { _index: 'test', _id: count } })
+        t.deepEqual(JSON.parse(payload), { doc: dataset[count++] })
+        return { body: { errors: false, items: [{}] } }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+    let id = 0
+    const result = await client.helpers.bulk({
+      datasource: dataset.map(d => JSON.stringify(d)),
+      flushBytes: 1,
+      concurrency: 1,
+      onDocument (doc) {
+        return [{
+          update: {
+            _index: 'test',
+            _id: id++
+          }
+        }]
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
+    })
+
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, {
+      total: 3,
+      successful: 3,
+      retry: 0,
+      failed: 0,
+      aborted: false
+    })
+  })
+
   t.end()
 })
 
@@ -856,10 +948,6 @@ test('bulk delete', t => {
   })
 
   t.test('Should perform a bulk request (failure)', async t => {
-    if (semver.lt(process.versions.node, '10.0.0')) {
-      t.skip('This test will not pass on Node v8')
-      return
-    }
     async function handler (req, res) {
       t.strictEqual(req.url, '/_bulk')
       t.match(req.headers, { 'content-type': 'application/x-ndjson' })
