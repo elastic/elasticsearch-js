@@ -32,9 +32,9 @@ jobs:
       run: |
         npm run test:unit
 
-    - name: Behavior test
+    - name: Acceptance test
       run: |
-        npm run test:behavior
+        npm run test:acceptance
 
     - name: Type Definitions
       run: |
@@ -121,15 +121,19 @@ jobs:
       run: |
         npm install
 
-    - name: Code coverage
+    - name: Code coverage report
       run: |
-        npm run test:coverage
+        npm run test:coverage-report
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
         file: ./coverage.lcov
         fail_ci_if_error: true
+
+    - name: Code coverage 100%
+      run: |
+        npm run test:coverage-100
 
   license:
     name: License check

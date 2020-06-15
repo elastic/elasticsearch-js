@@ -13,7 +13,7 @@ const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
 const { ConnectionPool, CloudConnectionPool } = require('./lib/pool')
 // Helpers works only in Node.js >= 10
-const Helpers = nodeMajor < 10 ? null : require('./lib/Helpers')
+const Helpers = nodeMajor < 10 ? /* istanbul ignore next */ null : require('./lib/Helpers')
 const Serializer = require('./lib/Serializer')
 const errors = require('./lib/errors')
 const { ConfigurationError } = errors
@@ -130,6 +130,7 @@ class Client extends EventEmitter {
       opaqueIdPrefix: options.opaqueIdPrefix
     })
 
+    /* istanbul ignore else */
     if (Helpers !== null) {
       this.helpers = new Helpers({ client: this, maxRetries: options.maxRetries })
     }
@@ -237,6 +238,7 @@ function getAuth (node) {
   return null
 
   function getUsernameAndPassword (node) {
+    /* istanbul ignore else */
     if (typeof node === 'string') {
       const { username, password } = new URL(node)
       return {

@@ -275,7 +275,7 @@ test('Stop a msearch processor (callbacks)', t => {
 })
 
 test('Bad header', t => {
-  t.plan(1)
+  t.plan(2)
 
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -294,11 +294,16 @@ test('Bad header', t => {
     t.strictEqual(err.message, 'The header should be an object')
   })
 
+  m.search(null, { query: { match: { foo: 'bar' } } })
+    .catch(err => {
+      t.strictEqual(err.message, 'The header should be an object')
+    })
+
   t.teardown(() => m.stop())
 })
 
 test('Bad body', t => {
-  t.plan(1)
+  t.plan(2)
 
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -316,6 +321,11 @@ test('Bad body', t => {
   m.search({ index: 'test' }, null, (err, result) => {
     t.strictEqual(err.message, 'The body should be an object')
   })
+
+  m.search({ index: 'test' }, null)
+    .catch(err => {
+      t.strictEqual(err.message, 'The body should be an object')
+    })
 
   t.teardown(() => m.stop())
 })
