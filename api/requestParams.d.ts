@@ -1769,6 +1769,7 @@ export interface MlDeleteCalendarJob extends Generic {
 export interface MlDeleteDataFrameAnalytics extends Generic {
   id: string;
   force?: boolean;
+  timeout?: string;
 }
 
 export interface MlDeleteDatafeed extends Generic {

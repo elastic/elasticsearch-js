@@ -3778,7 +3778,7 @@ link:{ref}/indices-shrink-index.html[Documentation] +
 |===
 
 === indices.simulateIndexTemplate
-
+*Stability:* experimental
 [source,ts]
 ----
 client.indices.simulateIndexTemplate({
@@ -7207,7 +7207,8 @@ link:{ref}/ml-delete-calendar-job.html[Documentation] +
 ----
 client.ml.deleteDataFrameAnalytics({
   id: string,
-  force: boolean
+  force: boolean,
+  timeout: string
 })
 ----
 link:{ref}/delete-dfanalytics.html[Documentation] +
@@ -7218,6 +7219,9 @@ link:{ref}/delete-dfanalytics.html[Documentation] +
 
 |`force`
 |`boolean` - True if the job should be forcefully deleted
+
+|`timeout`
+|`string` - Controls the time to wait until a job is deleted. Defaults to 1 minute
 
 |===
 
