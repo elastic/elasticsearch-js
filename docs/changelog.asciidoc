@@ -1,6 +1,78 @@
 [[changelog-client]]
 == Changelog
 
+=== 7.8.0
+
+==== Features
+
+===== Support for Elasticsearch `v7.8`.
+
+You can find all the API changes https://www.elastic.co/guide/en/elasticsearch/reference/7.8/release-notes-7.8.0.html[here].
+
+=====  Added multi search helper https://github.com/elastic/elasticsearch-js/pull/1186[#1186]
+
+If you are sending search request at a high rate, this helper might be useful for you.
+It will use the mutli search API under the hood to batch the requests and improve the overall performances of your application. +
+The `result` exposes a `documents` property as well, which allows you to access directly the hits sources.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({ node: 'http://localhost:9200' })
+const m = client.helpers.msearch()
+
+// promise style API
+m.search(
+    { index: 'stackoverflow' },
+    { query: { match: { title: 'javascript' } } }
+  )
+  .then(result => console.log(result.body)) // or result.documents
+  .catch(err => console.error(err))
+
+// callback style API
+m.search(
+  { index: 'stackoverflow' },
+  { query: { match: { title: 'ruby' } } },
+  (err, result) => {
+    if (err) console.error(err)
+    console.log(result.body)) // or result.documents
+  }
+)
+----
+
+=====  Added timeout support in bulk and msearch helpers https://github.com/elastic/elasticsearch-js/pull/1206[#1206]
+
+If there is a slow producer, the bulk helper might send data with a very large period of time, and if the process crashes for any reason, the data would be lost.
+This pr introduces a `flushInterval` option in the bulk helper to avoid this issue. By default, the bulk helper will flush the data automatically every 30 seconds, unless the threshold has been reached before.
+
+[source,js]
+----
+const b = client.helpers.bulk({
+  flushInterval: 30000
+})
+----
+
+The same problem might happen with the multi search helper, where the user is not sending search requests fast enough. A `flushInterval` options has been added as well, with a default value of 500 milliseconds.
+
+[source,js]
+----
+const m = client.helpers.msearch({
+  flushInterval: 500
+})
+----
+
+==== Internals
+
+=====  Use filter_path for improving the search helpers performances https://github.com/elastic/elasticsearch-js/pull/1199[#1199]
+
+From now on, all he search helpers will use the `filter_path` option automatically when needed to retrieve only the hits source. This change will result in less netwprk traffic and improved deserialization performances.
+
+=====  Search helpers documents getter https://github.com/elastic/elasticsearch-js/pull/1186[#1186]
+
+Before this, the `documents` key that you can access in any search helper was computed as soon as we got the search result from Elasticsearch. With this change the `documents` key is now a getter, which makes this procees lazy, resulting in better performances and lower memory impact.
+
+
 === 7.7.1
 
 ==== Fixes
