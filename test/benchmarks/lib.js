@@ -119,7 +119,7 @@ class Action {
     assert(opts.action, 'Missing action name')
     assert(opts.action, 'Missing action category')
     assert(opts.measure, 'Missing action measure function')
-    assert(opts.run, 'Missing actionrun type (sequential or concurrent)')
+    assert(opts.run, 'Missing action run type (sequential or concurrent)')
     this.action = opts.action
     this.category = opts.category
     this.run = opts.run
