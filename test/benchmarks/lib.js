@@ -119,8 +119,10 @@ class Action {
     assert(opts.action, 'Missing action name')
     assert(opts.action, 'Missing action category')
     assert(opts.measure, 'Missing action measure function')
+    assert(opts.run, 'Missing actionrun type (sequential or concurrent)')
     this.action = opts.action
     this.category = opts.category
+    this.run = opts.run
     this.warmups = opts.warmups || Action.DEFAULT_WARMUPS
     this.repetitions = opts.repetitions || Action.DEFAULT_REPETITIONS
     this.operations = opts.operations || Action.DEFAULT_OPERATIONS

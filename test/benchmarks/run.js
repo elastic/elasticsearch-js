@@ -59,7 +59,7 @@ const actions = readdirSync(join(__dirname, 'actions'))
   .map(file => require(join(__dirname, 'actions', file)))
 
 function runAction (action, done) {
-  const { setup, measure } = action
+  const { setup, measure, run } = action
 
   function runSetup () {
     if (typeof setup !== 'function') {
@@ -78,53 +78,106 @@ function runAction (action, done) {
       return runRepetitions()
     }
 
-    let warmups = action.warmups
-    for (let i = 0; i < action.warmups; i++) {
-      measure(i, benchmark, next)
+    if (run === 'concurrent') {
+      concurrent()
+    } else {
+      sequential()
     }
 
-    function next (err, result) {
-      if (err) throw err
-      warmups -= 1
-      if (warmups > 0) return
+    function sequential (count = 0) {
+      count += 1
+      measure(count, benchmark, (err, result, operations) => {
+        if (err) throw err
+        if (count === action.repetitions) {
+          runRepetitions()
+        } else {
+          sequential(count)
+        }
+      })
+    }
 
-      runRepetitions()
+    function concurrent () {
+      let warmups = action.warmups
+      for (let i = 0; i < action.warmups; i++) {
+        measure(i, benchmark, next)
+      }
+
+      function next (err, result) {
+        if (err) throw err
+        warmups -= 1
+        if (warmups > 0) return
+        runRepetitions()
+      }
     }
   }
 
   function runRepetitions () {
-    const startTimeGlobal = process.hrtime.bigint()
-    const timestamp = new Date().toISOString()
-
-    let repetitions = action.repetitions
-    for (let i = 0; i < action.repetitions; i++) {
-      measure(i, benchmark, next)
+    if (run === 'concurrent') {
+      concurrent()
+    } else {
+      sequential()
     }
 
-    function next (err, result, operations) {
-      if (operations == null) {
-        operations = err ? 0 : action.operations
-      }
-      benchmark.stats.push({
-        statusCode: result.statusCode,
-        outcome: err ? 'failure' : 'success',
-        operations
-      })
-
-      repetitions -= 1
-      if (repetitions > 0) return
-
-      const duration = process.hrtime.bigint() - startTimeGlobal
-      benchmark.stats = benchmark.stats.map(stat => {
-        return {
+    function sequential (count = 0) {
+      count += 1
+      const timestamp = new Date().toISOString()
+      const startTime = process.hrtime.bigint()
+      measure(count, benchmark, (err, result, operations) => {
+        const duration = process.hrtime.bigint() - startTime
+        if (operations == null) {
+          operations = err ? 0 : action.operations
+        }
+        benchmark.stats.push({
           ...action,
-          ...stat,
+          statusCode: result.statusCode,
+          outcome: err ? 'failure' : 'success',
+          duration,
           timestamp,
-          duration: duration / BigInt(action.repetitions), // eslint-disable-line
+          operations
+        })
+
+        if (count === action.repetitions) {
+          done()
+        } else {
+          sequential(count)
         }
       })
+    }
 
-      done()
+    function concurrent () {
+      const startTimeGlobal = process.hrtime.bigint()
+      const timestamp = new Date().toISOString()
+
+      let repetitions = action.repetitions
+      for (let i = 0; i < action.repetitions; i++) {
+        measure(i, benchmark, next)
+      }
+
+      function next (err, result, operations) {
+        if (operations == null) {
+          operations = err ? 0 : action.operations
+        }
+        benchmark.stats.push({
+          statusCode: result.statusCode,
+          outcome: err ? 'failure' : 'success',
+          operations
+        })
+
+        repetitions -= 1
+        if (repetitions > 0) return
+
+        const duration = process.hrtime.bigint() - startTimeGlobal
+        benchmark.stats = benchmark.stats.map(stat => {
+          return {
+            ...action,
+            ...stat,
+            timestamp,
+            duration: duration / BigInt(action.repetitions), // eslint-disable-line
+          }
+        })
+
+        done()
+      }
     }
   }
 

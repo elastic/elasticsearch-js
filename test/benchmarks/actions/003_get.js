@@ -9,6 +9,7 @@ const { Action } = require('../lib')
 module.exports = new Action({
   action: 'get',
   category: 'core',
+  run: 'sequential',
   warmups: 100,
   async setup (benchmark) {
     await benchmark.runnerClient.indices.delete({ index: 'test-bench-get' }, { ignore: [404] })

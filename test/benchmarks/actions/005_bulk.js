@@ -13,6 +13,7 @@ const OPERATIONS = 10000
 module.exports = new Action({
   action: 'bulk',
   category: 'core',
+  run: 'sequential',
   warmups: 10,
   repetitions: 1000,
   operations: OPERATIONS,

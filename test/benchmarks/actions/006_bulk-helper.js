@@ -20,6 +20,7 @@ async function * generate () {
 module.exports = new Action({
   action: 'bulk-helper',
   category: 'helpers',
+  run: 'sequential',
   warmups: 10,
   repetitions: 10,
   operations: OPERATIONS,
@@ -50,7 +51,7 @@ module.exports = new Action({
         done(null, { statusCode: 200 }, stats.successful)
       })
       .catch(err => {
-        done(err, { statusCode: 418 }, 0)
+        done(err, { statusCode: err.statusCode || 418 }, 0)
       })
   }
 })

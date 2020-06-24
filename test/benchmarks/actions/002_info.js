@@ -9,6 +9,7 @@ const { Action } = require('../lib')
 module.exports = new Action({
   action: 'info',
   category: 'core',
+  run: 'sequential',
   measure (n, benchmark, done) {
     benchmark.runnerClient.info(done)
   }

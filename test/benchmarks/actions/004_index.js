@@ -13,6 +13,7 @@ let id = 0
 module.exports = new Action({
   action: 'index',
   category: 'core',
+  run: 'sequential',
   warmups: 100,
   async setup (benchmark) {
     payload = JSON.parse(readFileSync(join(benchmark.config.dataSource, 'small', 'document.json'), 'utf8'))
