@@ -74,7 +74,24 @@ const enabledFiles = [
   'indices/aliases.asciidoc',
   'indices/update-settings.asciidoc',
   'search/request/from-size.asciidoc',
-  'search/count.asciidoc'
+  'search/count.asciidoc',
+  'setup/logging-config.asciidoc',
+  'search/request/from-size.asciidoc',
+  'query-dsl/match-phrase-query.asciidoc',
+  'aggregations/metrics/valuecount-aggregation.asciidoc',
+  'aggregations/bucket/datehistogram-aggregation.asciidoc',
+  'aggregations/bucket/filter-aggregation.asciidoc',
+  'mapping/types/numeric.asciidoc',
+  'mapping/fields/id-field.asciidoc',
+  'mapping/params/multi-fields.asciidoc',
+  'api-conventions.asciidoc',
+  'cat/indices.asciidoc',
+  'docs/update-by-query.asciidoc',
+  'indices/get-index.asciidoc',
+  'indices/get-mapping.asciidoc',
+  'search.asciidoc',
+  'search/request/scroll.asciidoc',
+  'search/suggesters.asciidoc'
 ]
 
 function generate () {
