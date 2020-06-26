@@ -1,7 +1,7 @@
 [[client-usage]]
 == Usage
 
-Using the client is straightforward, it supports all the public APIs of {es}, 
+Using the client is straightforward, it supports all the public APIs of {es},
 and every method exposes the same signature.
 
 
@@ -40,11 +40,11 @@ The returned value of every API call is formed as follows:
 
 NOTE: The body is a boolean value when you use `HEAD` APIs.
 
-The above value is returned even if there is an error during the execution of 
-the request, this means that you can safely use the 
+The above value is returned even if there is an error during the execution of
+the request, this means that you can safely use the
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment[destructuring assignment].
 
-The `meta` key contains all the information about the request, such as attempt, 
+The `meta` key contains all the information about the request, such as attempt,
 options, and the connection that has been used.
 
 [source,js]
@@ -181,8 +181,8 @@ _Default:_ `null`
 
 === Error handling
 
-The client exposes a variety of error objects that you can use to enhance your 
-error handling. You can find all the error objects inside the `errors` key in 
+The client exposes a variety of error objects that you can use to enhance your
+error handling. You can find all the error objects inside the `errors` key in
 the client.
 
 [source,js]
