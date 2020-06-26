@@ -79,13 +79,21 @@ You can use both the callback-style API and the promise-style API, both behave t
 // promise API
 const result = await client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 })
 
 // callback API
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 }, (err, result) => {
   if (err) console.log(err)
 })
