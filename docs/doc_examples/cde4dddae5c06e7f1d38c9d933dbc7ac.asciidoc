@@ -3,16 +3,8 @@
 
 [source, js]
 ----
-const response = await client.search({
-  body: {
-    from: 0,
-    size: 10,
-    query: {
-      term: {
-        user: 'kimchy'
-      }
-    }
-  }
+const response = await client.updateByQuery({
+  index: 'twitter,blog'
 })
 console.log(response)
 ----
