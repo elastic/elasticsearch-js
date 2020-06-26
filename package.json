@@ -36,7 +36,7 @@
     "lint": "standard",
     "lint:fix": "standard --fix",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'",
-    "build-esm": "npx gen-esm-wrapper . index.mjs"
+    "build-esm": "npx gen-esm-wrapper . index.mjs && standard --fix index.mjs"
   },
   "author": {
     "name": "Tomas Della Vedova",
