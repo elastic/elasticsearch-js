@@ -11,13 +11,21 @@ const client = new Client({ node: 'http://localhost:9200' })
 // promise API
 const result = await client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 })
 
 // callback API
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 }, (err, result) => {
   if (err) console.log(err)
 })
@@ -47,13 +55,21 @@ The `meta` key contains all the information regarding the request, such as attem
 // promise API
 const { body } = await client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 })
 
 // callback API
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 }, (err, { body }) => {
   if (err) console.log(err)
 })
@@ -68,7 +84,11 @@ When using the callback style API, the function will also return an object that 
 // calback API
 const request = client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 }, {
   ignore: [404],
   maxRetries: 3
@@ -98,7 +118,11 @@ function abortableRequest (params, options) {
 
 const request = abortableRequest({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 }, {
   ignore: [404],
   maxRetries: 3
@@ -115,16 +139,24 @@ If needed you can pass request specific options in a second object:
 // promise API
 const result = await client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 }, {
   ignore: [404],
   maxRetries: 3
 })
 
-// calback API
+// callback API
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 }, {
   ignore: [404],
   maxRetries: 3
