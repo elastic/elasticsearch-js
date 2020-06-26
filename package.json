@@ -5,8 +5,8 @@
   "types": "index.d.ts",
   "exports": {
     ".": {
-      "require": "index.js",
-      "import": "index.mjs"
+      "require": "./index.js",
+      "import": "./index.mjs"
     },
     "./": "./"
   },
