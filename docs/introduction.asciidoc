@@ -22,9 +22,12 @@ npm install @elastic/elasticsearch
 
 The minimum supported version of Node.js is `v8`.
 
-The library is compatible with all Elasticsearch versions since 5.x, and you should use the same major version of the Elasticsearch instance that you are using.
+The library is compatible with all {es} versions since 5.x. We recommend you to
+use the same major version of the client as the {es} instance that you are
+using.
 
-[%header,cols=2*] 
+
+[%header,cols=2*]
 |===
 |Elasticsearch Version
 |Client Version
@@ -49,8 +52,10 @@ npm install @elastic/elasticsearch@<major>
 
 ==== Browser
 
-WARNING: There is no official support for the browser environment. It exposes your Elasticsearch instance to everyone, which could lead to security issues.
-We recommend that you write a lightweight proxy that uses this client instead.
+WARNING: There is no official support for the browser environment. It exposes
+your {es} instance to everyone, which could lead to security issues. We
+recommend you to write a lightweight proxy that uses this client instead.
+
 
 === Quick start
 
@@ -67,13 +72,21 @@ You can use both the callback-style API and the promise-style API, both behave t
 // promise API
 const result = await client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 })
 
 // callback API
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 }, (err, result) => {
   if (err) console.log(err)
 })
@@ -152,7 +165,11 @@ run().catch(console.log)
 If you are using multiple versions of Elasticsearch, you need to use multiple versions of the client. +
 In the past, install multiple versions of the same package was not possible, but with `npm v6.9`, you can do that via aliasing.
 
-The command you must run to install different version of the client is:
+If you are using multiple versions of {es}, you need to use multiple versions of
+the client as well. In the past, installing multiple versions of the same
+package was not possible, but with `npm v6.9`, you can do it via aliasing.
+
+To install different version of the client, run the following command:
 
 [source,sh]
 ----
@@ -189,9 +206,13 @@ client6.info(console.log)
 client7.info(console.log)
 ----
 
-Finally, if you want to install the client for the next version of Elasticsearch (the one that lives in Elasticsearch's master branch), you can use the following command:
+
+Finally, if you want to install the client for the next version of {es} (the one
+that lives in the {es} master branch), use the following command:
+
 [source,sh]
 ----
 npm install esmaster@github:elastic/elasticsearch-js
 ----
-WARNING: This command will install the master branch of the client, which is not considered stable.
+WARNING: This command installs the master branch of the client which is not
+considered stable.
