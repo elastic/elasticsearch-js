@@ -27,12 +27,12 @@ npm install @elastic/elasticsearch
 
 The minimum supported version of Node.js is `v8`.
 
-The library is compatible with all {es} versions since 5.x. We recommend you to 
-use the same major version of the client as the {es} instance that you are 
+The library is compatible with all {es} versions since 5.x. We recommend you to
+use the same major version of the client as the {es} instance that you are
 using.
 
 
-[%header,cols=2*] 
+[%header,cols=2*]
 |===
 |{es} Version
 |Client Version
@@ -59,8 +59,8 @@ npm install @elastic/elasticsearch@<major>
 
 ==== Browser
 
-WARNING: There is no official support for the browser environment. It exposes 
-your {es} instance to everyone, which could lead to security issues. We 
+WARNING: There is no official support for the browser environment. It exposes
+your {es} instance to everyone, which could lead to security issues. We
 recommend you to write a lightweight proxy that uses this client instead.
 
 
@@ -82,13 +82,21 @@ You can use both the callback API and the promise API, both behave the same way.
 // promise API
 const result = await client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 })
 
 // callback API
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 }, (err, result) => {
   if (err) console.log(err)
 })
@@ -171,8 +179,8 @@ run().catch(console.log)
 
 ==== Install multiple versions
 
-If you are using multiple versions of {es}, you need to use multiple versions of 
-the client as well. In the past, installing multiple versions of the same 
+If you are using multiple versions of {es}, you need to use multiple versions of
+the client as well. In the past, installing multiple versions of the same
 package was not possible, but with `npm v6.9`, you can do it via aliasing.
 
 To install different version of the client, run the following command:
@@ -218,12 +226,12 @@ client7.info(console.log)
 ----
 
 
-Finally, if you want to install the client for the next version of {es} (the one 
+Finally, if you want to install the client for the next version of {es} (the one
 that lives in the {es} master branch), use the following command:
 
 [source,sh]
 ----
 npm install esmaster@github:elastic/elasticsearch-js
 ----
-WARNING: This command installs the master branch of the client which is not 
+WARNING: This command installs the master branch of the client which is not
 considered stable.
