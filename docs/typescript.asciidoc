@@ -10,7 +10,7 @@ to define the API parameters instead of _camelCase_.
 
 By default event API uses https://www.typescriptlang.org/docs/handbook/generics.html[generics] to specify the requets and response bodies and the `meta.context`. Currently we can't provide those definitions, but we are working to improve this situation.
 
-You can't fid a partial definition of the request types by importing `RequestParams`, which it is used by default in the client and accepts a body (when needed) as a generic to provide a better specification.
+You can find a partial definition of the request types by importing `RequestParams`, which is used by default in the client and accepts a body (when needed) as a generic to provide a better specification.
 
 The body defaults to `RequestBody` and `RequestNDBody`, which are defined as follows:
 
