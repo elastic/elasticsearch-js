@@ -20,7 +20,8 @@ const {
 } = require('./utils')
 
 start(minimist(process.argv.slice(2), {
-  string: ['tag', 'branch']
+  string: ['tag', 'branch'],
+  boolean: ['kibana']
 }))
 
 function start (opts) {
@@ -58,7 +59,7 @@ function start (opts) {
       { encoding: 'utf8' }
     )
 
-    const { fn: factory, types } = genFactory(apiOutputFolder, [apiFolder, xPackFolder])
+    const { fn: factory, types } = genFactory(opts, apiOutputFolder, [apiFolder, xPackFolder])
     writeFileSync(
       mainOutputFile,
       factory,

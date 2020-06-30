@@ -20,7 +20,7 @@ const ndjsonApiKey = ndjsonApi
   })
   .map(toPascalCase)
 
-function genFactory (folder, paths) {
+function genFactory (opts, folder, paths) {
   // get all the API files
   const apiFiles = readdirSync(folder)
   const types = apiFiles
@@ -36,16 +36,20 @@ function genFactory (folder, paths) {
         .reverse()
         .reduce((acc, val) => {
           const body = hasBody(paths, file.slice(0, -3))
-          const methods = acc === null ? buildMethodDefinition(val, name, body) : null
+          const methods = acc === null ? buildMethodDefinition(opts, val, name, body) : null
           const obj = {}
           if (methods) {
             for (const m of methods) {
               obj[m.key] = m.val
             }
           } else {
-            obj[val] = acc
-            if (isSnakeCased(val)) {
+            if (opts.kibana) {
               obj[camelify(val)] = acc
+            } else {
+              obj[val] = acc
+              if (isSnakeCased(val)) {
+                obj[camelify(val)] = acc
+              }
             }
           }
           return obj
@@ -177,10 +181,22 @@ function toPascalCase (str) {
   return str[0].toUpperCase() + str.slice(1)
 }
 
-function buildMethodDefinition (api, name, hasBody) {
+function buildMethodDefinition (opts, api, name, hasBody) {
   const Name = toPascalCase(name)
   const bodyType = ndjsonApiKey.includes(Name) ? 'RequestNDBody' : 'RequestBody'
   const defaultBodyType = ndjsonApiKey.includes(Name) ? 'Record<string, any>[]' : 'Record<string, any>'
+
+  if (opts.kibana) {
+    if (hasBody) {
+      return [
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = unknown>(params?: RequestParams.${Name}<TRequestBody>, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` }
+      ]
+    } else {
+      return [
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.${Name}, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` }
+      ]
+    }
+  }
 
   if (hasBody) {
     let methods = [
