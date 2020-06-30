@@ -127,6 +127,22 @@ function ESAPI (opts) {
     },
     count: lazyLoad('count', opts),
     create: lazyLoad('create', opts),
+    dangling_indices: {
+      delete_dangling_index: lazyLoad('dangling_indices.delete_dangling_index', opts),
+      deleteDanglingIndex: lazyLoad('dangling_indices.delete_dangling_index', opts),
+      import_dangling_index: lazyLoad('dangling_indices.import_dangling_index', opts),
+      importDanglingIndex: lazyLoad('dangling_indices.import_dangling_index', opts),
+      list_dangling_indices: lazyLoad('dangling_indices.list_dangling_indices', opts),
+      listDanglingIndices: lazyLoad('dangling_indices.list_dangling_indices', opts)
+    },
+    danglingIndices: {
+      delete_dangling_index: lazyLoad('dangling_indices.delete_dangling_index', opts),
+      deleteDanglingIndex: lazyLoad('dangling_indices.delete_dangling_index', opts),
+      import_dangling_index: lazyLoad('dangling_indices.import_dangling_index', opts),
+      importDanglingIndex: lazyLoad('dangling_indices.import_dangling_index', opts),
+      list_dangling_indices: lazyLoad('dangling_indices.list_dangling_indices', opts),
+      listDanglingIndices: lazyLoad('dangling_indices.list_dangling_indices', opts)
+    },
     data_frame_transform_deprecated: {
       delete_transform: lazyLoad('data_frame_transform_deprecated.delete_transform', opts),
       deleteTransform: lazyLoad('data_frame_transform_deprecated.delete_transform', opts),
@@ -182,6 +198,8 @@ function ESAPI (opts) {
       stats: lazyLoad('enrich.stats', opts)
     },
     eql: {
+      delete: lazyLoad('eql.delete', opts),
+      get: lazyLoad('eql.get', opts),
       search: lazyLoad('eql.search', opts)
     },
     exists: lazyLoad('exists', opts),
@@ -223,6 +241,8 @@ function ESAPI (opts) {
     },
     index: lazyLoad('index', opts),
     indices: {
+      add_block: lazyLoad('indices.add_block', opts),
+      addBlock: lazyLoad('indices.add_block', opts),
       analyze: lazyLoad('indices.analyze', opts),
       clear_cache: lazyLoad('indices.clear_cache', opts),
       clearCache: lazyLoad('indices.clear_cache', opts),
@@ -284,6 +304,8 @@ function ESAPI (opts) {
       refresh: lazyLoad('indices.refresh', opts),
       reload_search_analyzers: lazyLoad('indices.reload_search_analyzers', opts),
       reloadSearchAnalyzers: lazyLoad('indices.reload_search_analyzers', opts),
+      resolve_index: lazyLoad('indices.resolve_index', opts),
+      resolveIndex: lazyLoad('indices.resolve_index', opts),
       rollover: lazyLoad('indices.rollover', opts),
       segments: lazyLoad('indices.segments', opts),
       shard_stores: lazyLoad('indices.shard_stores', opts),
@@ -520,6 +542,8 @@ function ESAPI (opts) {
       authenticate: lazyLoad('security.authenticate', opts),
       change_password: lazyLoad('security.change_password', opts),
       changePassword: lazyLoad('security.change_password', opts),
+      clear_cached_privileges: lazyLoad('security.clear_cached_privileges', opts),
+      clearCachedPrivileges: lazyLoad('security.clear_cached_privileges', opts),
       clear_cached_realms: lazyLoad('security.clear_cached_realms', opts),
       clearCachedRealms: lazyLoad('security.clear_cached_realms', opts),
       clear_cached_roles: lazyLoad('security.clear_cached_roles', opts),

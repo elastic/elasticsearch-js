@@ -7,28 +7,29 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildEqlSearch (opts) {
+function buildDanglingIndicesListDanglingIndices (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'wait_for_completion_timeout',
-    'keep_on_completion',
-    'keep_alive'
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-    waitForCompletionTimeout: 'wait_for_completion_timeout',
-    keepOnCompletion: 'keep_on_completion',
-    keepAlive: 'keep_alive'
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a eql.search request
-   * Returns results matching a query expressed in Event Query Language (EQL)
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html
+   * Perform a dangling_indices.list_dangling_indices request
+   * Returns all dangling indices.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-dangling-indices.html
    */
-  return function eqlSearch (params, options, callback) {
+  return function danglingIndicesListDanglingIndices (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -40,16 +41,6 @@ function buildEqlSearch (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -57,7 +48,7 @@ function buildEqlSearch (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -67,14 +58,14 @@ function buildEqlSearch (opts) {
 
     var path = ''
 
-    if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_eql' + '/' + 'search'
+    if (method == null) method = 'GET'
+    path = '/' + '_dangling'
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -83,4 +74,4 @@ function buildEqlSearch (opts) {
   }
 }
 
-module.exports = buildEqlSearch
+module.exports = buildDanglingIndicesListDanglingIndices
