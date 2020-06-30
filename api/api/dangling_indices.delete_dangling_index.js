@@ -7,28 +7,34 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildEqlSearch (opts) {
+function buildDanglingIndicesDeleteDanglingIndex (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'wait_for_completion_timeout',
-    'keep_on_completion',
-    'keep_alive'
+    'accept_data_loss',
+    'timeout',
+    'master_timeout',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-    waitForCompletionTimeout: 'wait_for_completion_timeout',
-    keepOnCompletion: 'keep_on_completion',
-    keepAlive: 'keep_alive'
+    acceptDataLoss: 'accept_data_loss',
+    masterTimeout: 'master_timeout',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a eql.search request
-   * Returns results matching a query expressed in Event Query Language (EQL)
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html
+   * Perform a dangling_indices.delete_dangling_index request
+   * Deletes the specified dangling index
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-dangling-indices.html
    */
-  return function eqlSearch (params, options, callback) {
+  return function danglingIndicesDeleteDanglingIndex (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -41,12 +47,8 @@ function buildEqlSearch (opts) {
     }
 
     // check required parameters
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params['index_uuid'] == null && params['indexUuid'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index_uuid or indexUuid')
       return handleError(err, callback)
     }
 
@@ -57,7 +59,7 @@ function buildEqlSearch (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, indexUuid, index_uuid, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -67,8 +69,8 @@ function buildEqlSearch (opts) {
 
     var path = ''
 
-    if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_eql' + '/' + 'search'
+    if (method == null) method = 'DELETE'
+    path = '/' + '_dangling' + '/' + encodeURIComponent(index_uuid || indexUuid)
 
     // build request object
     const request = {
@@ -83,4 +85,4 @@ function buildEqlSearch (opts) {
   }
 }
 
-module.exports = buildEqlSearch
+module.exports = buildDanglingIndicesDeleteDanglingIndex

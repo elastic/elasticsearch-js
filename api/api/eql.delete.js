@@ -7,28 +7,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildEqlSearch (opts) {
+function buildEqlDelete (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'wait_for_completion_timeout',
-    'keep_on_completion',
-    'keep_alive'
+
   ]
 
   const snakeCase = {
-    waitForCompletionTimeout: 'wait_for_completion_timeout',
-    keepOnCompletion: 'keep_on_completion',
-    keepAlive: 'keep_alive'
+
   }
 
   /**
-   * Perform a eql.search request
-   * Returns results matching a query expressed in Event Query Language (EQL)
+   * Perform a eql.delete request
+   * Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html
    */
-  return function eqlSearch (params, options, callback) {
+  return function eqlDelete (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -41,12 +37,8 @@ function buildEqlSearch (opts) {
     }
 
     // check required parameters
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params['id'] == null) {
+      const err = new ConfigurationError('Missing required parameter: id')
       return handleError(err, callback)
     }
 
@@ -57,7 +49,7 @@ function buildEqlSearch (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -67,8 +59,8 @@ function buildEqlSearch (opts) {
 
     var path = ''
 
-    if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_eql' + '/' + 'search'
+    if (method == null) method = 'DELETE'
+    path = '/' + '_eql' + '/' + 'search' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
@@ -83,4 +75,4 @@ function buildEqlSearch (opts) {
   }
 }
 
-module.exports = buildEqlSearch
+module.exports = buildEqlDelete

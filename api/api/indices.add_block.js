@@ -7,28 +7,38 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildEqlSearch (opts) {
+function buildIndicesAddBlock (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'wait_for_completion_timeout',
-    'keep_on_completion',
-    'keep_alive'
+    'timeout',
+    'master_timeout',
+    'ignore_unavailable',
+    'allow_no_indices',
+    'expand_wildcards',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-    waitForCompletionTimeout: 'wait_for_completion_timeout',
-    keepOnCompletion: 'keep_on_completion',
-    keepAlive: 'keep_alive'
+    masterTimeout: 'master_timeout',
+    ignoreUnavailable: 'ignore_unavailable',
+    allowNoIndices: 'allow_no_indices',
+    expandWildcards: 'expand_wildcards',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a eql.search request
-   * Returns results matching a query expressed in Event Query Language (EQL)
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html
+   * Perform a indices.add_block request
+   * Adds a block to an index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-blocks.html
    */
-  return function eqlSearch (params, options, callback) {
+  return function indicesAddBlock (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -45,8 +55,14 @@ function buildEqlSearch (opts) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params['block'] == null) {
+      const err = new ConfigurationError('Missing required parameter: block')
+      return handleError(err, callback)
+    }
+
+    // check required url components
+    if (params['block'] != null && (params['index'] == null)) {
+      const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
     }
 
@@ -57,7 +73,7 @@ function buildEqlSearch (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, index, block, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -67,8 +83,8 @@ function buildEqlSearch (opts) {
 
     var path = ''
 
-    if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_eql' + '/' + 'search'
+    if (method == null) method = 'PUT'
+    path = '/' + encodeURIComponent(index) + '/' + '_block' + '/' + encodeURIComponent(block)
 
     // build request object
     const request = {
@@ -83,4 +99,4 @@ function buildEqlSearch (opts) {
   }
 }
 
-module.exports = buildEqlSearch
+module.exports = buildIndicesAddBlock

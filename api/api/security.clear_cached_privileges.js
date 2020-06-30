@@ -7,28 +7,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildEqlSearch (opts) {
+function buildSecurityClearCachedPrivileges (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'wait_for_completion_timeout',
-    'keep_on_completion',
-    'keep_alive'
+
   ]
 
   const snakeCase = {
-    waitForCompletionTimeout: 'wait_for_completion_timeout',
-    keepOnCompletion: 'keep_on_completion',
-    keepAlive: 'keep_alive'
+
   }
 
   /**
-   * Perform a eql.search request
-   * Returns results matching a query expressed in Event Query Language (EQL)
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html
+   * Perform a security.clear_cached_privileges request
+   * Evicts application privileges from the native application privileges cache.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-privilege-cache.html
    */
-  return function eqlSearch (params, options, callback) {
+  return function securityClearCachedPrivileges (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -41,12 +37,8 @@ function buildEqlSearch (opts) {
     }
 
     // check required parameters
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
+    if (params['application'] == null) {
+      const err = new ConfigurationError('Missing required parameter: application')
       return handleError(err, callback)
     }
 
@@ -57,7 +49,7 @@ function buildEqlSearch (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, application, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -67,8 +59,8 @@ function buildEqlSearch (opts) {
 
     var path = ''
 
-    if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_eql' + '/' + 'search'
+    if (method == null) method = 'POST'
+    path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + '_clear_cache'
 
     // build request object
     const request = {
@@ -83,4 +75,4 @@ function buildEqlSearch (opts) {
   }
 }
 
-module.exports = buildEqlSearch
+module.exports = buildSecurityClearCachedPrivileges
