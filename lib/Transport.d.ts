@@ -80,7 +80,7 @@ export interface TransportRequestParams {
   path: string;
   body?: RequestBody;
   bulkBody?: RequestNDBody;
-  querystring?: Record<string, any>;
+  querystring?: Record<string, any> | string;
 }
 
 export interface TransportRequestOptions {
