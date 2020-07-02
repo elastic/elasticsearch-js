@@ -71,20 +71,25 @@ class KibanaClient extends Client {
 function buildKibanaClient (opts) {
   const client = new Client(opts)
 
-  return {
-    ...client,
-    transport: {
-      request: client.transport.request.bind(client.transport)
-    },
-    connectionPool: undefined,
-    serializer: undefined,
-    helpers: {
+  let helpers = null
+  if (semver.gte(process.versions.node, '10.0.0')) {
+    helpers = {
       search: client.helpers.search.bind(client.helpers),
       scrollSearch: client.helpers.scrollSearch.bind(client.helpers),
       scrollDocuments: client.helpers.scrollDocuments.bind(client.helpers),
       msearch: client.helpers.msearch.bind(client.helpers),
       bulk: client.helpers.bulk.bind(client.helpers)
+    }
+  }
+
+  return {
+    ...client,
+    transport: {
+      request: client.transport.request.bind(client.transport)
     },
+    helpers,
+    connectionPool: undefined,
+    serializer: undefined,
     emit () {
       throw new errors.ElasticsearchClientError('Cannot access emit method')
     },
