@@ -5,6 +5,7 @@
 'use strict'
 
 const { test } = require('tap')
+const semver = require('semver')
 const { Client, errors } = require('../../index')
 const { connection } = require('../utils')
 
@@ -95,7 +96,7 @@ test('Multiple connections', async t => {
   t.strictEqual(response.meta.connection.id, 'http://localhost:9202/')
 })
 
-test('Can use helpers', async t => {
+test('Can use helpers', { skip: semver.lt(process.versions.node, '10.0.0') }, async t => {
   const dataset = [
     { user: 'jon', age: 23 },
     { user: 'arya', age: 18 },
