@@ -21,12 +21,15 @@ const { ConfigurationError } = errors
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
 const kChild = Symbol('elasticsearchjs-child')
 const kExtensions = Symbol('elasticsearchjs-extensions')
+const kTransport = Symbol('elasticsearchjs-transport')
+const kConnectionPool = Symbol('elasticsearchjs-connection-pool')
+const kSerializer = Symbol('elasticsearchjs-serializer')
+const kEventEmitter = Symbol('elasticsearchjs-event-emitter')
 
 const buildApi = require('./api')
 
-class Client extends EventEmitter {
+class Client {
   constructor (opts = {}) {
-    super()
     if (opts.cloud) {
       const { id, username, password } = opts.cloud
       // the cloud id is `cluster-name:base64encodedurl`
@@ -89,17 +92,18 @@ class Client extends EventEmitter {
 
     this[kInitialOptions] = options
     this[kExtensions] = []
+    this[kEventEmitter] = new EventEmitter()
 
     this.name = options.name
-    this.serializer = new options.Serializer()
-    this.connectionPool = new options.ConnectionPool({
+    this[kSerializer] = new options.Serializer()
+    this[kConnectionPool] = new options.ConnectionPool({
       pingTimeout: options.pingTimeout,
       resurrectStrategy: options.resurrectStrategy,
       ssl: options.ssl,
       agent: options.agent,
       Connection: options.Connection,
       auth: options.auth,
-      emit: this.emit.bind(this),
+      emit: this[kEventEmitter].emit.bind(this[kEventEmitter]),
       sniffEnabled: options.sniffInterval !== false ||
                     options.sniffOnStart !== false ||
                     options.sniffOnConnectionFault !== false
@@ -107,13 +111,13 @@ class Client extends EventEmitter {
 
     // Add the connections before initialize the Transport
     if (opts[kChild] !== true) {
-      this.connectionPool.addConnection(options.node || options.nodes)
+      this[kConnectionPool].addConnection(options.node || options.nodes)
     }
 
-    this.transport = new options.Transport({
-      emit: this.emit.bind(this),
-      connectionPool: this.connectionPool,
-      serializer: this.serializer,
+    this[kTransport] = new options.Transport({
+      emit: this[kEventEmitter].emit.bind(this[kEventEmitter]),
+      connectionPool: this[kConnectionPool],
+      serializer: this[kSerializer],
       maxRetries: options.maxRetries,
       requestTimeout: options.requestTimeout,
       sniffInterval: options.sniffInterval,
@@ -132,11 +136,15 @@ class Client extends EventEmitter {
 
     /* istanbul ignore else */
     if (Helpers !== null) {
-      this.helpers = new Helpers({ client: this, maxRetries: options.maxRetries })
+      this.helpers = new Helpers({
+        client: this,
+        serializer: this[kSerializer],
+        maxRetries: options.maxRetries
+      })
     }
 
     const apis = buildApi({
-      makeRequest: this.transport.request.bind(this.transport),
+      makeRequest: this[kTransport].request.bind(this[kTransport]),
       result: { body: null, statusCode: null, headers: null, warnings: null },
       ConfigurationError
     })
@@ -144,6 +152,30 @@ class Client extends EventEmitter {
     Object.keys(apis).forEach(api => {
       this[api] = apis[api]
     })
+  }
+
+  get transport () {
+    return this[kTransport]
+  }
+
+  get connectionPool () {
+    return this[kConnectionPool]
+  }
+
+  get serializer () {
+    return this[kSerializer]
+  }
+
+  get on () {
+    return this[kEventEmitter].on.bind(this[kEventEmitter])
+  }
+
+  get once () {
+    return this[kEventEmitter].once.bind(this[kEventEmitter])
+  }
+
+  get emit () {
+    return this[kEventEmitter].emit.bind(this[kEventEmitter])
   }
 
   extend (name, opts, fn) {
@@ -165,7 +197,7 @@ class Client extends EventEmitter {
 
       this[namespace] = this[namespace] || {}
       this[namespace][method] = fn({
-        makeRequest: this.transport.request.bind(this.transport),
+        makeRequest: this[kTransport].request.bind(this[kTransport]),
         result: { body: null, statusCode: null, headers: null, warnings: null },
         ConfigurationError
       })
@@ -175,7 +207,7 @@ class Client extends EventEmitter {
       }
 
       this[method] = fn({
-        makeRequest: this.transport.request.bind(this.transport),
+        makeRequest: this[kTransport].request.bind(this[kTransport]),
         result: { body: null, statusCode: null, headers: null, warnings: null },
         ConfigurationError
       })
@@ -192,14 +224,12 @@ class Client extends EventEmitter {
 
     const client = new Client(initialOptions)
     // Reuse the same connection pool
-    client.connectionPool = this.connectionPool
-    client.transport.connectionPool = this.connectionPool
+    client[kConnectionPool] = this[kConnectionPool]
+    client[kTransport].connectionPool = this[kConnectionPool]
     // Share event listener
-    const emitter = this.emit.bind(this)
-    client.emit = emitter
-    client.connectionPool.emit = emitter
-    client.transport.emit = emitter
-    client.on = this.on.bind(this)
+    client[kEventEmitter] = this[kEventEmitter]
+    client[kConnectionPool].emit = this[kEventEmitter].emit.bind(this[kEventEmitter])
+    client[kTransport].emit = this[kEventEmitter].emit.bind(this[kEventEmitter])
     // Add parent extensions
     this[kExtensions].forEach(({ name, opts, fn }) => {
       client.extend(name, opts, fn)
@@ -214,7 +244,7 @@ class Client extends EventEmitter {
       })
     }
     debug('Closing the client')
-    this.connectionPool.empty(callback)
+    this[kConnectionPool].empty(callback)
   }
 }
 
