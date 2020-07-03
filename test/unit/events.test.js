@@ -54,6 +54,113 @@ test('Should emit a request event when a request is performed', t => {
   })
 })
 
+test('Should emit a request event once when a request is performed', t => {
+  t.plan(4)
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.once(events.REQUEST, (err, request) => {
+    t.error(err)
+    t.match(request, {
+      body: null,
+      statusCode: null,
+      headers: null,
+      warnings: null,
+      meta: {
+        context: null,
+        name: 'elasticsearch-js',
+        request: {
+          params: {
+            method: 'GET',
+            path: '/test/_search',
+            body: '',
+            querystring: 'q=foo%3Abar'
+          },
+          options: {},
+          id: 1
+        },
+        connection: {
+          id: 'http://localhost:9200'
+        },
+        attempts: 0,
+        aborted: false
+      }
+    })
+  })
+
+  client.search({
+    index: 'test',
+    q: 'foo:bar'
+  }, (err, result) => {
+    t.error(err)
+  })
+
+  client.search({
+    index: 'test',
+    q: 'foo:bar'
+  }, (err, result) => {
+    t.error(err)
+  })
+})
+
+test('Remove an event', t => {
+  t.plan(4)
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.on(events.REQUEST, onRequest)
+  function onRequest (err, request) {
+    t.error(err)
+    t.match(request, {
+      body: null,
+      statusCode: null,
+      headers: null,
+      warnings: null,
+      meta: {
+        context: null,
+        name: 'elasticsearch-js',
+        request: {
+          params: {
+            method: 'GET',
+            path: '/test/_search',
+            body: '',
+            querystring: 'q=foo%3Abar'
+          },
+          options: {},
+          id: 1
+        },
+        connection: {
+          id: 'http://localhost:9200'
+        },
+        attempts: 0,
+        aborted: false
+      }
+    })
+
+    client.off('request', onRequest)
+  }
+
+  client.search({
+    index: 'test',
+    q: 'foo:bar'
+  }, (err, result) => {
+    t.error(err)
+  })
+
+  client.search({
+    index: 'test',
+    q: 'foo:bar'
+  }, (err, result) => {
+    t.error(err)
+  })
+})
+
 test('Should emit a response event in case of a successful response', t => {
   t.plan(3)
 
