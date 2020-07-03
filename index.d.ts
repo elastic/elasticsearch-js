@@ -119,7 +119,6 @@ declare class Client {
   once(event: 'response', listener: (err: ApiError, meta: RequestEvent) => void): this;
   once(event: 'sniff', listener: (err: ApiError, meta: RequestEvent) => void): this;
   once(event: 'resurrect', listener: (err: null, meta: ResurrectEvent) => void): this;
-  removeListener(event: string | symbol, listener: (...args: any[]) => void): this;
   off(event: string | symbol, listener: (...args: any[]) => void): this;
   /* GENERATED */
   async_search: {
