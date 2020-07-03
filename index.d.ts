@@ -48,10 +48,6 @@ interface ClientExtendsCallbackOptions {
   }
 }
 declare type extendsCallback = (options: ClientExtendsCallbackOptions) => any;
-interface ClientExtends {
-  (method: string, fn: extendsCallback): void;
-  (method: string, opts: { force: boolean }, fn: extendsCallback): void;
-}
 // /Extend API
 
 interface NodeOptions {
@@ -107,7 +103,8 @@ declare class Client extends EventEmitter {
   connectionPool: ConnectionPool;
   transport: Transport;
   serializer: Serializer;
-  extend: ClientExtends;
+  extend(method: string, fn: extendsCallback): void
+  extend(method: string, opts: { force: boolean }, fn: extendsCallback): void;
   helpers: Helpers;
   child(opts?: ClientOptions): Client;
   close(callback?: Function): Promise<void> | void;
