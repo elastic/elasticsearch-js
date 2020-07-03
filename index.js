@@ -21,12 +21,12 @@ const { ConfigurationError } = errors
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
 const kChild = Symbol('elasticsearchjs-child')
 const kExtensions = Symbol('elasticsearchjs-extensions')
+const kEventEmitter = Symbol('elasticsearchjs-event-emitter')
 
 const buildApi = require('./api')
 
-class Client extends EventEmitter {
+class Client {
   constructor (opts = {}) {
-    super()
     if (opts.cloud) {
       const { id, username, password } = opts.cloud
       // the cloud id is `cluster-name:base64encodedurl`
@@ -89,29 +89,33 @@ class Client extends EventEmitter {
 
     this[kInitialOptions] = options
     this[kExtensions] = []
-
     this.name = options.name
-    this.serializer = new options.Serializer()
-    this.connectionPool = new options.ConnectionPool({
-      pingTimeout: options.pingTimeout,
-      resurrectStrategy: options.resurrectStrategy,
-      ssl: options.ssl,
-      agent: options.agent,
-      Connection: options.Connection,
-      auth: options.auth,
-      emit: this.emit.bind(this),
-      sniffEnabled: options.sniffInterval !== false ||
-                    options.sniffOnStart !== false ||
-                    options.sniffOnConnectionFault !== false
-    })
 
-    // Add the connections before initialize the Transport
-    if (opts[kChild] !== true) {
+    if (opts[kChild] !== undefined) {
+      this.serializer = options[kChild].serializer
+      this.connectionPool = options[kChild].connectionPool
+      this[kEventEmitter] = options[kChild].eventEmitter
+    } else {
+      this[kEventEmitter] = new EventEmitter()
+      this.serializer = new options.Serializer()
+      this.connectionPool = new options.ConnectionPool({
+        pingTimeout: options.pingTimeout,
+        resurrectStrategy: options.resurrectStrategy,
+        ssl: options.ssl,
+        agent: options.agent,
+        Connection: options.Connection,
+        auth: options.auth,
+        emit: this[kEventEmitter].emit.bind(this[kEventEmitter]),
+        sniffEnabled: options.sniffInterval !== false ||
+                      options.sniffOnStart !== false ||
+                      options.sniffOnConnectionFault !== false
+      })
+      // Add the connections before initialize the Transport
       this.connectionPool.addConnection(options.node || options.nodes)
     }
 
     this.transport = new options.Transport({
-      emit: this.emit.bind(this),
+      emit: this[kEventEmitter].emit.bind(this[kEventEmitter]),
       connectionPool: this.connectionPool,
       serializer: this.serializer,
       maxRetries: options.maxRetries,
@@ -141,9 +145,22 @@ class Client extends EventEmitter {
       ConfigurationError
     })
 
-    Object.keys(apis).forEach(api => {
-      this[api] = apis[api]
-    })
+    const apiNames = Object.keys(apis)
+    for (var i = 0, len = apiNames.length; i < len; i++) {
+      this[apiNames[i]] = apis[apiNames[i]]
+    }
+  }
+
+  get on () {
+    return this[kEventEmitter].on.bind(this[kEventEmitter])
+  }
+
+  get once () {
+    return this[kEventEmitter].once.bind(this[kEventEmitter])
+  }
+
+  get off () {
+    return this[kEventEmitter].off.bind(this[kEventEmitter])
   }
 
   extend (name, opts, fn) {
@@ -187,23 +204,20 @@ class Client extends EventEmitter {
   child (opts) {
     // Merge the new options with the initial ones
     const initialOptions = Object.assign({}, this[kInitialOptions], opts)
-    // Tell to the client that we are creating a child client
-    initialOptions[kChild] = true
+    // Pass to the child client the parent instances that cannot be overriden
+    initialOptions[kChild] = {
+      connectionPool: this.connectionPool,
+      serializer: this.serializer,
+      eventEmitter: this[kEventEmitter]
+    }
 
     const client = new Client(initialOptions)
-    // Reuse the same connection pool
-    client.connectionPool = this.connectionPool
-    client.transport.connectionPool = this.connectionPool
-    // Share event listener
-    const emitter = this.emit.bind(this)
-    client.emit = emitter
-    client.connectionPool.emit = emitter
-    client.transport.emit = emitter
-    client.on = this.on.bind(this)
     // Add parent extensions
-    this[kExtensions].forEach(({ name, opts, fn }) => {
-      client.extend(name, opts, fn)
-    })
+    if (this[kExtensions].length > 0) {
+      this[kExtensions].forEach(({ name, opts, fn }) => {
+        client.extend(name, opts, fn)
+      })
+    }
     return client
   }
 
