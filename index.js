@@ -151,6 +151,10 @@ class Client {
     }
   }
 
+  get emit () {
+    return this[kEventEmitter].emit.bind(this[kEventEmitter])
+  }
+
   get on () {
     return this[kEventEmitter].on.bind(this[kEventEmitter])
   }

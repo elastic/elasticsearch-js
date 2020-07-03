@@ -259,3 +259,19 @@ test('Should emit a response event with the error set', t => {
     t.ok(err instanceof TimeoutError)
   })
 })
+
+test('Emit event', t => {
+  t.plan(2)
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.on(events.REQUEST, (err, request) => {
+    t.error(err)
+    t.deepEqual(request, { hello: 'world' })
+  })
+
+  client.emit(events.REQUEST, null, { hello: 'world' })
+})
