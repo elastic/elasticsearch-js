@@ -47,7 +47,7 @@ interface KibanaClient extends EventEmitter {
   extend(method: string, opts: { force: boolean }, fn: extendsCallback): void;
   helpers: Helpers
   child(opts?: ClientOptions): KibanaClient
-  close(callback?: Function): Promise<void> | void;
+  close(): Promise<void>;
   /* GENERATED */
   asyncSearch: {
     delete<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.AsyncSearchDelete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>

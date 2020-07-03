@@ -107,7 +107,8 @@ declare class Client extends EventEmitter {
   extend(method: string, opts: { force: boolean }, fn: extendsCallback): void;
   helpers: Helpers;
   child(opts?: ClientOptions): Client;
-  close(callback?: Function): Promise<void> | void;
+  close(): Promise<void>;
+  close(callback: Function): void;
   /* GENERATED */
   async_search: {
     delete<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.AsyncSearchDelete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
