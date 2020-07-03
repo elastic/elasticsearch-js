@@ -102,6 +102,11 @@ client.async_search.get()
 // callback api is not supported
 expectError(client.cat.count({ index: 'test' }, {}, (err: any, result: any) => {}))
 
+// close api, only promises should be supported
+// callback api is not supported
+expectType<Promise<void>>(client.close())
+expectError(client.close(() => {}))
+
 // the child api should return a KibanaClient instance
 const child = client.child()
 expectType<KibanaClient>(child)
