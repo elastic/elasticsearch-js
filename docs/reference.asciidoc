@@ -2430,7 +2430,7 @@ client.indices.addBlock({
 |`string \| string[]` - A comma separated list of indices to add a block to
 
 |`block`
-|`string` - The block to add (one of read, write, read_only, metadata, read_only_allow_delete)
+|`string` - The block to add (one of read, write, read_only or metadata)
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -10293,7 +10293,8 @@ link:{ref}/watcher-api-stop.html[Documentation] +
 [source,ts]
 ----
 client.xpack.info({
-  categories: string | string[]
+  categories: string | string[],
+  accept_enterprise: boolean
 })
 ----
 link:{ref}/info-api.html[Documentation] +
@@ -10301,6 +10302,11 @@ link:{ref}/info-api.html[Documentation] +
 |===
 |`categories`
 |`string \| string[]` - Comma-separated list of info categories. Can be any of: build, license, features
+
+|`accept_enterprise` or `acceptEnterprise`
+|`boolean` - Supported for backwards compatibility with 7.x. If this param is used it must be set to true +
+
+WARNING: This parameter has been deprecated.
 
 |===
 

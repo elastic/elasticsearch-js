@@ -2573,6 +2573,7 @@ export interface WatcherStop extends Generic {
 
 export interface XpackInfo extends Generic {
   categories?: string | string[];
+  accept_enterprise?: boolean;
 }
 
 export interface XpackUsage extends Generic {
