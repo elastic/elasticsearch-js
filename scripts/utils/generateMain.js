@@ -20,7 +20,7 @@ const ndjsonApiKey = ndjsonApi
   })
   .map(toPascalCase)
 
-function genFactory (opts, folder, paths) {
+function genFactory (folder, paths) {
   // get all the API files
   const apiFiles = readdirSync(folder)
   const types = apiFiles
@@ -36,21 +36,44 @@ function genFactory (opts, folder, paths) {
         .reverse()
         .reduce((acc, val) => {
           const body = hasBody(paths, file.slice(0, -3))
-          const methods = acc === null ? buildMethodDefinition(opts, val, name, body) : null
+          const methods = acc === null ? buildMethodDefinition({ kibana: false }, val, name, body) : null
           const obj = {}
           if (methods) {
             for (const m of methods) {
               obj[m.key] = m.val
             }
           } else {
-            if (opts.kibana) {
+            obj[val] = acc
+            if (isSnakeCased(val)) {
               obj[camelify(val)] = acc
-            } else {
-              obj[val] = acc
-              if (isSnakeCased(val)) {
-                obj[camelify(val)] = acc
-              }
             }
+          }
+          return obj
+        }, null)
+    })
+    .reduce((acc, val) => deepmerge(acc, val), {})
+
+  const kibanaTypes = apiFiles
+    .map(file => {
+      const name = file
+        .slice(0, -3)
+        .replace(/\.([a-z])/g, k => k[1].toUpperCase())
+        .replace(/_([a-z])/g, k => k[1].toUpperCase())
+
+      return file
+        .slice(0, -3) // remove `.js` extension
+        .split('.')
+        .reverse()
+        .reduce((acc, val) => {
+          const body = hasBody(paths, file.slice(0, -3))
+          const methods = acc === null ? buildMethodDefinition({ kibana: true }, val, name, body) : null
+          const obj = {}
+          if (methods) {
+            for (const m of methods) {
+              obj[m.key] = m.val
+            }
+          } else {
+            obj[camelify(val)] = acc
           }
           return obj
         }, null)
@@ -92,6 +115,18 @@ function genFactory (opts, folder, paths) {
   const typesStr = Object.keys(types)
     .map(key => {
       const line = `  ${key}: ${JSON.stringify(types[key], null, 4)}`
+      if (line.slice(-1) === '}') {
+        return line.slice(0, -1) + '  }'
+      }
+      return line
+    })
+    .join('\n')
+    // remove useless quotes and commas
+    .replace(/"/g, '')
+    .replace(/,$/gm, '')
+  const kibanaTypesStr = Object.keys(kibanaTypes)
+    .map(key => {
+      const line = `  ${key}: ${JSON.stringify(kibanaTypes[key], null, 4)}`
       if (line.slice(-1) === '}') {
         return line.slice(0, -1) + '  }'
       }
@@ -165,7 +200,7 @@ function genFactory (opts, folder, paths) {
   `
 
   // new line at the end of file
-  return { fn: fn + '\n', types: typesStr }
+  return { fn: fn + '\n', types: typesStr, kibanaTypes: kibanaTypesStr }
 }
 
 // from snake_case to camelCase

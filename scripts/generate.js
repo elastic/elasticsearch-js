@@ -20,8 +20,7 @@ const {
 } = require('./utils')
 
 start(minimist(process.argv.slice(2), {
-  string: ['tag', 'branch'],
-  boolean: ['kibana']
+  string: ['tag', 'branch']
 }))
 
 function start (opts) {
@@ -34,6 +33,7 @@ function start (opts) {
   const apiOutputFolder = join(packageFolder, 'api')
   const mainOutputFile = join(packageFolder, 'index.js')
   const typeDefFile = join(__dirname, '..', 'index.d.ts')
+  const kibanaTypeDefFile = join(packageFolder, 'kibana.d.ts')
   const docOutputFile = join(__dirname, '..', 'docs', 'reference.asciidoc')
   const requestParamsOutputFile = join(packageFolder, 'requestParams.d.ts')
   const allSpec = []
@@ -59,19 +59,29 @@ function start (opts) {
       { encoding: 'utf8' }
     )
 
-    const { fn: factory, types } = genFactory(opts, apiOutputFolder, [apiFolder, xPackFolder])
+    const { fn: factory, types, kibanaTypes } = genFactory(apiOutputFolder, [apiFolder, xPackFolder])
     writeFileSync(
       mainOutputFile,
       factory,
       { encoding: 'utf8' }
     )
 
-    const oldTypeDefString = readFileSync(typeDefFile, 'utf8')
-    const start = oldTypeDefString.indexOf('/* GENERATED */')
-    const end = oldTypeDefString.indexOf('/* /GENERATED */')
-    const newTypeDefString = oldTypeDefString.slice(0, start + 15) + '\n' + types + '\n  ' + oldTypeDefString.slice(end)
+    let oldTypeDefString = readFileSync(typeDefFile, 'utf8')
+    let start = oldTypeDefString.indexOf('/* GENERATED */')
+    let end = oldTypeDefString.indexOf('/* /GENERATED */')
+    let newTypeDefString = oldTypeDefString.slice(0, start + 15) + '\n' + types + '\n  ' + oldTypeDefString.slice(end)
     writeFileSync(
       typeDefFile,
+      newTypeDefString,
+      { encoding: 'utf8' }
+    )
+
+    oldTypeDefString = readFileSync(kibanaTypeDefFile, 'utf8')
+    start = oldTypeDefString.indexOf('/* GENERATED */')
+    end = oldTypeDefString.indexOf('/* /GENERATED */')
+    newTypeDefString = oldTypeDefString.slice(0, start + 15) + '\n' + kibanaTypes + '\n  ' + oldTypeDefString.slice(end)
+    writeFileSync(
+      kibanaTypeDefFile,
       newTypeDefString,
       { encoding: 'utf8' }
     )
