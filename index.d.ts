@@ -111,6 +111,7 @@ declare class Client {
   helpers: Helpers;
   child(opts?: ClientOptions): Client;
   close(callback?: Function): Promise<void> | void;
+  emit(event: string | symbol, ...args: any[]): boolean;
   on(event: 'request', listener: (err: ApiError, meta: RequestEvent) => void): this;
   on(event: 'response', listener: (err: ApiError, meta: RequestEvent) => void): this;
   on(event: 'sniff', listener: (err: ApiError, meta: RequestEvent) => void): this;
