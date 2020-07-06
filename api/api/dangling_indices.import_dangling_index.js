@@ -7,25 +7,34 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackInfo (opts) {
+function buildDanglingIndicesImportDanglingIndex (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'categories',
-    'accept_enterprise'
+    'accept_data_loss',
+    'timeout',
+    'master_timeout',
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-    acceptEnterprise: 'accept_enterprise'
+    acceptDataLoss: 'accept_data_loss',
+    masterTimeout: 'master_timeout',
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a xpack.info request
-   * Retrieves information about the installed X-Pack features.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
+   * Perform a dangling_indices.import_dangling_index request
+   * Imports the specified dangling index
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-dangling-indices.html
    */
-  return function xpackInfo (params, options, callback) {
+  return function danglingIndicesImportDanglingIndex (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -37,6 +46,12 @@ function buildXpackInfo (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['index_uuid'] == null && params['indexUuid'] == null) {
+      const err = new ConfigurationError('Missing required parameter: index_uuid or indexUuid')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -44,7 +59,7 @@ function buildXpackInfo (opts) {
     }
 
     var warnings = []
-    var { method, body, ...querystring } = params
+    var { method, body, indexUuid, index_uuid, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -54,14 +69,14 @@ function buildXpackInfo (opts) {
 
     var path = ''
 
-    if (method == null) method = 'GET'
-    path = '/' + '_xpack'
+    if (method == null) method = 'POST'
+    path = '/' + '_dangling' + '/' + encodeURIComponent(index_uuid || indexUuid)
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -70,4 +85,4 @@ function buildXpackInfo (opts) {
   }
 }
 
-module.exports = buildXpackInfo
+module.exports = buildDanglingIndicesImportDanglingIndex

@@ -529,6 +529,58 @@ declare class Client {
   create<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   create<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.Create<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   create<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.Create<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  dangling_indices: {
+    delete_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesDeleteDanglingIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    delete_dangling_index<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesDeleteDanglingIndex, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesDeleteDanglingIndex, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesDeleteDanglingIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    deleteDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesDeleteDanglingIndex, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesDeleteDanglingIndex, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    import_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesImportDanglingIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    import_dangling_index<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    import_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesImportDanglingIndex, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    import_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesImportDanglingIndex, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    importDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesImportDanglingIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    importDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    importDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesImportDanglingIndex, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    importDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesImportDanglingIndex, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    list_dangling_indices<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesListDanglingIndices, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    list_dangling_indices<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    list_dangling_indices<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesListDanglingIndices, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    list_dangling_indices<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesListDanglingIndices, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    listDanglingIndices<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesListDanglingIndices, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    listDanglingIndices<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    listDanglingIndices<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesListDanglingIndices, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    listDanglingIndices<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesListDanglingIndices, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  }
+  danglingIndices: {
+    delete_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesDeleteDanglingIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    delete_dangling_index<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesDeleteDanglingIndex, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesDeleteDanglingIndex, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesDeleteDanglingIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    deleteDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesDeleteDanglingIndex, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesDeleteDanglingIndex, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    import_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesImportDanglingIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    import_dangling_index<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    import_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesImportDanglingIndex, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    import_dangling_index<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesImportDanglingIndex, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    importDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesImportDanglingIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    importDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    importDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesImportDanglingIndex, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    importDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesImportDanglingIndex, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    list_dangling_indices<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesListDanglingIndices, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    list_dangling_indices<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    list_dangling_indices<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesListDanglingIndices, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    list_dangling_indices<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesListDanglingIndices, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    listDanglingIndices<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesListDanglingIndices, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    listDanglingIndices<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    listDanglingIndices<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesListDanglingIndices, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    listDanglingIndices<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.DanglingIndicesListDanglingIndices, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  }
   delete<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.Delete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   delete<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   delete<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.Delete, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -596,6 +648,14 @@ declare class Client {
     stats<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.EnrichStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   eql: {
+    delete<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.EqlDelete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    delete<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.EqlDelete, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.EqlDelete, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.EqlGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.EqlGet, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.EqlGet, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.EqlSearch<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.EqlSearch<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -617,14 +677,14 @@ declare class Client {
   explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.Explain<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.Explain<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  field_caps<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.FieldCaps, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  field_caps<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  field_caps<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.FieldCaps, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  field_caps<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.FieldCaps, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  fieldCaps<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.FieldCaps, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  fieldCaps<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  fieldCaps<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.FieldCaps, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  fieldCaps<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.FieldCaps, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  field_caps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.FieldCaps<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  field_caps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  field_caps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.FieldCaps<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  field_caps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.FieldCaps<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  fieldCaps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.FieldCaps<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  fieldCaps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  fieldCaps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.FieldCaps<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  fieldCaps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.FieldCaps<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   get<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.Get, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   get<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   get<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.Get, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -742,6 +802,14 @@ declare class Client {
   index<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.Index<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   index<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.Index<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   indices: {
+    add_block<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesAddBlock, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    add_block<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    add_block<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesAddBlock, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    add_block<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesAddBlock, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    addBlock<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesAddBlock, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    addBlock<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    addBlock<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesAddBlock, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    addBlock<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesAddBlock, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     analyze<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesAnalyze<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     analyze<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     analyze<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.IndicesAnalyze<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1886,6 +1954,14 @@ declare class Client {
     changePassword<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     changePassword<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.SecurityChangePassword<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     changePassword<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params: RequestParams.SecurityChangePassword<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cached_privileges<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.SecurityClearCachedPrivileges, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clear_cached_privileges<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cached_privileges<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SecurityClearCachedPrivileges, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cached_privileges<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SecurityClearCachedPrivileges, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCachedPrivileges<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.SecurityClearCachedPrivileges, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clearCachedPrivileges<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCachedPrivileges<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SecurityClearCachedPrivileges, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCachedPrivileges<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SecurityClearCachedPrivileges, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     clear_cached_realms<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.SecurityClearCachedRealms, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     clear_cached_realms<TResponse = Record<string, any>, TContext = unknown>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     clear_cached_realms<TResponse = Record<string, any>, TContext = unknown>(params: RequestParams.SecurityClearCachedRealms, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

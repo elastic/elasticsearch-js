@@ -1643,6 +1643,71 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+=== danglingIndices.deleteDanglingIndex
+
+[source,ts]
+----
+client.danglingIndices.deleteDanglingIndex({
+  index_uuid: string,
+  accept_data_loss: boolean,
+  timeout: string,
+  master_timeout: string
+})
+----
+link:{ref}/modules-gateway-dangling-indices.html[Documentation] +
+[cols=2*]
+|===
+|`index_uuid` or `indexUuid`
+|`string` - The UUID of the dangling index
+
+|`accept_data_loss` or `acceptDataLoss`
+|`boolean` - Must be set to true in order to delete the dangling index
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|===
+
+=== danglingIndices.importDanglingIndex
+
+[source,ts]
+----
+client.danglingIndices.importDanglingIndex({
+  index_uuid: string,
+  accept_data_loss: boolean,
+  timeout: string,
+  master_timeout: string
+})
+----
+link:{ref}/modules-gateway-dangling-indices.html[Documentation] +
+[cols=2*]
+|===
+|`index_uuid` or `indexUuid`
+|`string` - The UUID of the dangling index
+
+|`accept_data_loss` or `acceptDataLoss`
+|`boolean` - Must be set to true in order to import the dangling index
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|===
+
+=== danglingIndices.listDanglingIndices
+
+[source,ts]
+----
+client.danglingIndices.listDanglingIndices()
+----
+link:{ref}/modules-gateway-dangling-indices.html[Documentation] +
+
+
 === delete
 
 [source,ts]
@@ -2126,7 +2191,8 @@ client.fieldCaps({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
-  include_unmapped: boolean
+  include_unmapped: boolean,
+  body: object
 })
 ----
 link:{ref}/search-field-caps.html[Documentation] +
@@ -2150,6 +2216,9 @@ _Default:_ `open`
 
 |`include_unmapped` or `includeUnmapped`
 |`boolean` - Indicates whether unmapped fields should be included in the response.
+
+|`body`
+|`object` - An index filter specified with the Query DSL
 
 |===
 
@@ -2387,6 +2456,47 @@ WARNING: This parameter has been deprecated.
 
 |`body`
 |`object` - The document
+
+|===
+
+=== indices.addBlock
+
+[source,ts]
+----
+client.indices.addBlock({
+  index: string | string[],
+  block: string,
+  timeout: string,
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
+})
+----
+link:{ref}/indices-blocks.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma separated list of indices to add a block to
+
+|`block`
+|`string` - The block to add (one of read, write, read_only or metadata)
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
 
 |===
 
@@ -3638,7 +3748,7 @@ client.indices.resolveIndex({
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
-
+link:{ref}/indices-resolve-index.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -6729,12 +6839,56 @@ client.enrich.stats()
 link:{ref}/enrich-stats-api.html[Documentation] +
 
 
+=== eql.delete
+*Stability:* beta
+[source,ts]
+----
+client.eql.delete({
+  id: string
+})
+----
+link:{ref}/eql-search-api.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|===
+
+=== eql.get
+*Stability:* beta
+[source,ts]
+----
+client.eql.get({
+  id: string,
+  wait_for_completion_timeout: string,
+  keep_alive: string
+})
+----
+link:{ref}/eql-search-api.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Specify the time that the request should block waiting for the final response
+
+|`keep_alive` or `keepAlive`
+|`string` - Update the time interval in which the results (partial or final) for this search will be available +
+_Default:_ `5d`
+
+|===
+
 === eql.search
 *Stability:* beta
 [source,ts]
 ----
 client.eql.search({
   index: string,
+  wait_for_completion_timeout: string,
+  keep_on_completion: boolean,
+  keep_alive: string,
   body: object
 })
 ----
@@ -6743,6 +6897,16 @@ link:{ref}/eql-search-api.html[Documentation] +
 |===
 |`index`
 |`string` - The name of the index to scope the operation
+
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Specify the time that the request should block waiting for the final response
+
+|`keep_on_completion` or `keepOnCompletion`
+|`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
+
+|`keep_alive` or `keepAlive`
+|`string` - Update the time interval in which the results (partial or final) for this search will be available +
+_Default:_ `5d`
 
 |`body`
 |`object` - Eql request body. Use the `query` to limit the query scope.
@@ -9088,6 +9252,22 @@ link:{ref}/security-api-change-password.html[Documentation] +
 
 |===
 
+=== security.clearCachedPrivileges
+
+[source,ts]
+----
+client.security.clearCachedPrivileges({
+  application: string | string[]
+})
+----
+link:{ref}/security-api-clear-privilege-cache.html[Documentation] +
+[cols=2*]
+|===
+|`application`
+|`string \| string[]` - A comma-separated list of application names
+
+|===
+
 === security.clearCachedRealms
 
 [source,ts]
@@ -10104,7 +10284,8 @@ link:{ref}/watcher-api-stop.html[Documentation] +
 [source,ts]
 ----
 client.xpack.info({
-  categories: string | string[]
+  categories: string | string[],
+  accept_enterprise: boolean
 })
 ----
 link:{ref}/info-api.html[Documentation] +
@@ -10112,6 +10293,9 @@ link:{ref}/info-api.html[Documentation] +
 |===
 |`categories`
 |`string \| string[]` - Comma-separated list of info categories. Can be any of: build, license, features
+
+|`accept_enterprise` or `acceptEnterprise`
+|`boolean` - If an enterprise license is installed, return the type and mode as 'enterprise' (default: false)
 
 |===
 

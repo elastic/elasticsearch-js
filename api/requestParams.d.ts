@@ -397,6 +397,23 @@ export interface Create<T = RequestBody> extends Generic {
   body: T;
 }
 
+export interface DanglingIndicesDeleteDanglingIndex extends Generic {
+  index_uuid: string;
+  accept_data_loss?: boolean;
+  timeout?: string;
+  master_timeout?: string;
+}
+
+export interface DanglingIndicesImportDanglingIndex extends Generic {
+  index_uuid: string;
+  accept_data_loss?: boolean;
+  timeout?: string;
+  master_timeout?: string;
+}
+
+export interface DanglingIndicesListDanglingIndices extends Generic {
+}
+
 export interface Delete extends Generic {
   id: string;
   index: string;
@@ -511,13 +528,14 @@ export interface Explain<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface FieldCaps extends Generic {
+export interface FieldCaps<T = RequestBody> extends Generic {
   index?: string | string[];
   fields?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   include_unmapped?: boolean;
+  body?: T;
 }
 
 export interface Get extends Generic {
@@ -577,6 +595,16 @@ export interface Index<T = RequestBody> extends Generic {
   if_primary_term?: number;
   pipeline?: string;
   body: T;
+}
+
+export interface IndicesAddBlock extends Generic {
+  index: string | string[];
+  block: string;
+  timeout?: string;
+  master_timeout?: string;
+  ignore_unavailable?: boolean;
+  allow_no_indices?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesAnalyze<T = RequestBody> extends Generic {
@@ -1644,8 +1672,21 @@ export interface EnrichPutPolicy<T = RequestBody> extends Generic {
 export interface EnrichStats extends Generic {
 }
 
+export interface EqlDelete extends Generic {
+  id: string;
+}
+
+export interface EqlGet extends Generic {
+  id: string;
+  wait_for_completion_timeout?: string;
+  keep_alive?: string;
+}
+
 export interface EqlSearch<T = RequestBody> extends Generic {
   index: string;
+  wait_for_completion_timeout?: string;
+  keep_on_completion?: boolean;
+  keep_alive?: string;
   body: T;
 }
 
@@ -2234,6 +2275,10 @@ export interface SecurityChangePassword<T = RequestBody> extends Generic {
   body: T;
 }
 
+export interface SecurityClearCachedPrivileges extends Generic {
+  application: string | string[];
+}
+
 export interface SecurityClearCachedRealms extends Generic {
   realms: string | string[];
   usernames?: string | string[];
@@ -2496,6 +2541,7 @@ export interface WatcherStop extends Generic {
 
 export interface XpackInfo extends Generic {
   categories?: string | string[];
+  accept_enterprise?: boolean;
 }
 
 export interface XpackUsage extends Generic {

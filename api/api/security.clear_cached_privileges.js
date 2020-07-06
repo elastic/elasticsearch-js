@@ -7,25 +7,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackInfo (opts) {
+function buildSecurityClearCachedPrivileges (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'categories',
-    'accept_enterprise'
+
   ]
 
   const snakeCase = {
-    acceptEnterprise: 'accept_enterprise'
+
   }
 
   /**
-   * Perform a xpack.info request
-   * Retrieves information about the installed X-Pack features.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
+   * Perform a security.clear_cached_privileges request
+   * Evicts application privileges from the native application privileges cache.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-privilege-cache.html
    */
-  return function xpackInfo (params, options, callback) {
+  return function securityClearCachedPrivileges (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -37,6 +36,12 @@ function buildXpackInfo (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['application'] == null) {
+      const err = new ConfigurationError('Missing required parameter: application')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -44,7 +49,7 @@ function buildXpackInfo (opts) {
     }
 
     var warnings = []
-    var { method, body, ...querystring } = params
+    var { method, body, application, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -54,14 +59,14 @@ function buildXpackInfo (opts) {
 
     var path = ''
 
-    if (method == null) method = 'GET'
-    path = '/' + '_xpack'
+    if (method == null) method = 'POST'
+    path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + '_clear_cache'
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -70,4 +75,4 @@ function buildXpackInfo (opts) {
   }
 }
 
-module.exports = buildXpackInfo
+module.exports = buildSecurityClearCachedPrivileges

@@ -138,16 +138,6 @@ interface KibanaClient {
     importDanglingIndex<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesImportDanglingIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     listDanglingIndices<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DanglingIndicesListDanglingIndices, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
-  dataFrameTransformDeprecated: {
-    deleteTransform<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedDeleteTransform, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getTransform<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedGetTransform, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getTransformStats<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedGetTransformStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    previewTransform<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedPreviewTransform<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    putTransform<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedPutTransform<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    startTransform<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedStartTransform, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    stopTransform<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedStopTransform, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    updateTransform<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  }
   delete<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.Delete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   deleteByQuery<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = unknown>(params?: RequestParams.DeleteByQuery<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   deleteByQueryRethrottle<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.DeleteByQueryRethrottle, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -208,6 +198,7 @@ interface KibanaClient {
     existsTemplate<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesExistsTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     existsType<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesExistsType, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     flush<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesFlush, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    flushSynced<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesFlushSynced, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     forcemerge<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesForcemerge, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     freeze<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesFreeze, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     get<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.IndicesGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>

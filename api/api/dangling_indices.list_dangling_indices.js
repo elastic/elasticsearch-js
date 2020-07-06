@@ -7,25 +7,29 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackInfo (opts) {
+function buildDanglingIndicesListDanglingIndices (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'categories',
-    'accept_enterprise'
+    'pretty',
+    'human',
+    'error_trace',
+    'source',
+    'filter_path'
   ]
 
   const snakeCase = {
-    acceptEnterprise: 'accept_enterprise'
+    errorTrace: 'error_trace',
+    filterPath: 'filter_path'
   }
 
   /**
-   * Perform a xpack.info request
-   * Retrieves information about the installed X-Pack features.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
+   * Perform a dangling_indices.list_dangling_indices request
+   * Returns all dangling indices.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-dangling-indices.html
    */
-  return function xpackInfo (params, options, callback) {
+  return function danglingIndicesListDanglingIndices (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -55,7 +59,7 @@ function buildXpackInfo (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_xpack'
+    path = '/' + '_dangling'
 
     // build request object
     const request = {
@@ -70,4 +74,4 @@ function buildXpackInfo (opts) {
   }
 }
 
-module.exports = buildXpackInfo
+module.exports = buildDanglingIndicesListDanglingIndices

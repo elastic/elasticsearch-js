@@ -7,25 +7,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildXpackInfo (opts) {
+function buildEqlGet (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'categories',
-    'accept_enterprise'
+    'wait_for_completion_timeout',
+    'keep_alive'
   ]
 
   const snakeCase = {
-    acceptEnterprise: 'accept_enterprise'
+    waitForCompletionTimeout: 'wait_for_completion_timeout',
+    keepAlive: 'keep_alive'
   }
 
   /**
-   * Perform a xpack.info request
-   * Retrieves information about the installed X-Pack features.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
+   * Perform a eql.get request
+   * Returns async results from previously executed Event Query Language (EQL) search
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html
    */
-  return function xpackInfo (params, options, callback) {
+  return function eqlGet (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -37,6 +38,12 @@ function buildXpackInfo (opts) {
       options = {}
     }
 
+    // check required parameters
+    if (params['id'] == null) {
+      const err = new ConfigurationError('Missing required parameter: id')
+      return handleError(err, callback)
+    }
+
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -44,7 +51,7 @@ function buildXpackInfo (opts) {
     }
 
     var warnings = []
-    var { method, body, ...querystring } = params
+    var { method, body, id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -55,7 +62,7 @@ function buildXpackInfo (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_xpack'
+    path = '/' + '_eql' + '/' + 'search' + '/' + encodeURIComponent(id)
 
     // build request object
     const request = {
@@ -70,4 +77,4 @@ function buildXpackInfo (opts) {
   }
 }
 
-module.exports = buildXpackInfo
+module.exports = buildEqlGet
