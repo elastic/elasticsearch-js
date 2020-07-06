@@ -39,7 +39,7 @@ interface ClientExtendsCallbackOptions {
 declare type extendsCallback = (options: ClientExtendsCallbackOptions) => any;
 // /Extend API
 
-interface KibanaClient extends EventEmitter {
+interface KibanaClient {
   connectionPool: ConnectionPool
   transport: Transport
   serializer: Serializer
@@ -48,6 +48,16 @@ interface KibanaClient extends EventEmitter {
   helpers: Helpers
   child(opts?: ClientOptions): KibanaClient
   close(): Promise<void>;
+  emit(event: string | symbol, ...args: any[]): boolean;
+  on(event: 'request', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  on(event: 'response', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  on(event: 'sniff', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  on(event: 'resurrect', listener: (err: null, meta: ResurrectEvent) => void): this;
+  once(event: 'request', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  once(event: 'response', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  once(event: 'sniff', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  once(event: 'resurrect', listener: (err: null, meta: ResurrectEvent) => void): this;
+  off(event: string | symbol, listener: (...args: any[]) => void): this;
   /* GENERATED */
   asyncSearch: {
     delete<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.AsyncSearchDelete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -450,34 +460,6 @@ interface KibanaClient extends EventEmitter {
     usage<TResponse = Record<string, any>, TContext = unknown>(params?: RequestParams.XpackUsage, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
   /* /GENERATED */
-}
-
-// We must redeclare the EventEmitter class so we can provide
-// better type definitions for our events, otherwise the default
-// signature is `(event: string | symbol, listener: (...args: any[]) => void): this;`
-declare class EventEmitter {
-  addListener(event: string | symbol, listener: (...args: any[]) => void): this;
-  on(event: 'request', listener: (err: ApiError, meta: RequestEvent) => void): this;
-  on(event: 'response', listener: (err: ApiError, meta: RequestEvent) => void): this;
-  on(event: 'sniff', listener: (err: ApiError, meta: RequestEvent) => void): this;
-  on(event: 'resurrect', listener: (err: null, meta: ResurrectEvent) => void): this;
-  once(event: 'request', listener: (err: ApiError, meta: RequestEvent) => void): this;
-  once(event: 'response', listener: (err: ApiError, meta: RequestEvent) => void): this;
-  once(event: 'sniff', listener: (err: ApiError, meta: RequestEvent) => void): this;
-  once(event: 'resurrect', listener: (err: null, meta: ResurrectEvent) => void): this;
-  removeListener(event: string | symbol, listener: (...args: any[]) => void): this;
-  off(event: string | symbol, listener: (...args: any[]) => void): this;
-  removeAllListeners(event?: string | symbol): this;
-  setMaxListeners(n: number): this;
-  getMaxListeners(): number;
-  listeners(event: string | symbol): Function[];
-  rawListeners(event: string | symbol): Function[];
-  emit(event: string | symbol, ...args: any[]): boolean;
-  listenerCount(type: string | symbol): number;
-  // Added in Node 6...
-  prependListener(event: string | symbol, listener: (...args: any[]) => void): this;
-  prependOnceListener(event: string | symbol, listener: (...args: any[]) => void): this;
-  eventNames(): Array<string | symbol>;
 }
 
 export { KibanaClient }
