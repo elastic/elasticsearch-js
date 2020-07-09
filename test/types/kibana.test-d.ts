@@ -90,14 +90,9 @@ expectError(
     body: 42
   }).then(console.log)
 )
-/*
- * We cannot test yet the absence of a property because tsd is still shipping
- * TypeScript v3.7, as soon as it will be 3.9, we'll uncomment the following test.
 
 // @ts-expect-error
 client.async_search.get()
-
-*/
 
 // callback api is not supported
 expectError(client.cat.count({ index: 'test' }, {}, (err: any, result: any) => {}))
