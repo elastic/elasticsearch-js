@@ -82,7 +82,7 @@ interface ClientOptions {
   suggestCompression?: boolean;
   compression?: 'gzip';
   ssl?: TlsConnectionOptions;
-  agent?: AgentOptions | agentFn;
+  agent?: AgentOptions | agentFn | null;
   nodeFilter?: nodeFilterFn;
   nodeSelector?: nodeSelectorFn | string;
   headers?: Record<string, any>;
