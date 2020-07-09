@@ -84,11 +84,11 @@ _Default:_ `30000`
 _Default:_ `3000`
 
 |`sniffInterval`
-|`number, boolean` - Perform a sniff operation every `n` milliseconds. +
+|`number, boolean` - Perform a sniff operation every `n` milliseconds. Sniffing might not be the best solution for you, take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here] to know more. +
 _Default:_ `false`
 
 |`sniffOnStart`
-|`boolean` - Perform a sniff once the client is started. +
+|`boolean` - Perform a sniff once the client is started. Sniffing might not be the best solution for you, take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here] to know more. +
 _Default:_ `false`
 
 |`sniffEndpoint`
@@ -96,7 +96,7 @@ _Default:_ `false`
 _Default:_ `'_nodes/_all/http'`
 
 |`sniffOnConnectionFault`
-|`boolean` - Perform a sniff on connection fault. +
+|`boolean` - Perform a sniff on connection fault. Sniffing might not be the best solution for you, take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here] to know more. +
 _Default:_ `false`
 
 |`resurrectStrategy`
