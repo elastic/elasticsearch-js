@@ -20,6 +20,8 @@ override this option by configuring them.
 
 IMPORTANT: Do not enable sniffing when using Elastic Cloud, since the nodes are 
 behind a load balancer, Elastic Cloud will take care of everything for you.
+Take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here]
+to know more.
 
 [source,js]
 ----
