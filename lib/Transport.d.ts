@@ -52,7 +52,7 @@ export interface RequestEvent<TResponse = Record<string, any>, TContext = unknow
   warnings: string[] | null;
   meta: {
     context: TContext;
-    name: string;
+    name: string | Symbol;
     request: {
       params: TransportRequestParams;
       options: TransportRequestOptions;
