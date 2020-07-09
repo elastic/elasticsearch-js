@@ -300,6 +300,13 @@ expectType<Client>(
   })
 )
 
+expectType<Client>(
+  new Client({
+    node: 'http://localhost:9200',
+    name: Symbol('foo')
+  })
+)
+
 expectError<errors.ConfigurationError>(
   new Client({
     node: 'http://localhost:9200',

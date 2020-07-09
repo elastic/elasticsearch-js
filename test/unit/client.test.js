@@ -1092,3 +1092,26 @@ test('Random selector', t => {
     })
   })
 })
+
+test('name property as string', t => {
+  t.plan(1)
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    name: 'client-name'
+  })
+
+  t.strictEqual(client.name, 'client-name')
+})
+
+test('name property as symbol', t => {
+  t.plan(1)
+
+  const symbol = Symbol('client-name')
+  const client = new Client({
+    node: 'http://localhost:9200',
+    name: symbol
+  })
+
+  t.strictEqual(client.name, symbol)
+})
