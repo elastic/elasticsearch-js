@@ -3,18 +3,18 @@
 // See the LICENSE file in the project root for more information
 
 import { Readable as ReadableStream } from 'stream'
-import { TransportRequestOptions, ApiError, ApiResponse, RequestBody } from './Transport'
+import { TransportRequestOptions, ApiError, ApiResponse, RequestBody, Context } from './Transport'
 import { Search, Msearch, Bulk } from '../api/requestParams'
 
 export default class Helpers {
   search<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): Promise<TDocument[]>
-  scrollSearch<TDocument = unknown, TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = unknown>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<ScrollSearchResponse<TDocument, TResponse, TContext>>
+  scrollSearch<TDocument = unknown, TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = Context>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<ScrollSearchResponse<TDocument, TResponse, TContext>>
   scrollDocuments<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<TDocument>
   msearch(options?: MsearchHelperOptions): MsearchHelper
   bulk<TDocument = unknown>(options: BulkHelperOptions<TDocument>): BulkHelper<BulkStats>
 }
 
-export interface ScrollSearchResponse<TDocument = unknown, TResponse = Record<string, any>, TContext = unknown> extends ApiResponse<TResponse, TContext> {
+export interface ScrollSearchResponse<TDocument = unknown, TResponse = Record<string, any>, TContext = Context> extends ApiResponse<TResponse, TContext> {
   clear: () => Promise<void>
   documents: TDocument[]
 }
@@ -102,6 +102,6 @@ export interface MsearchHelperOptions extends Omit<Msearch, 'body'> {
 declare type callbackFn<Response, Context> = (err: ApiError, result: ApiResponse<Response, Context>) => void;
 export interface MsearchHelper extends Promise<void> {
   stop(error?: Error): void
-  search<TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = unknown>(header: Omit<Search, 'body'>, body: TRequestBody): Promise<ApiResponse<TResponse, TContext>>
-  search<TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = unknown>(header: Omit<Search, 'body'>, body: TRequestBody, callback: callbackFn<TResponse, TContext>): void
+  search<TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = Context>(header: Omit<Search, 'body'>, body: TRequestBody): Promise<ApiResponse<TResponse, TContext>>
+  search<TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = Context>(header: Omit<Search, 'body'>, body: TRequestBody, callback: callbackFn<TResponse, TContext>): void
 }

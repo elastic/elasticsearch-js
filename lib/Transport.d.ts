@@ -13,6 +13,8 @@ export type ApiError = errors.ConfigurationError | errors.ConnectionError |
                        errors.NoLivingConnectionsError | errors.ResponseError |
                        errors.TimeoutError | errors.RequestAbortedError
 
+export type Context = Record<string, unknown> | null
+
 export interface nodeSelectorFn {
   (connections: Connection[]): Connection;
 }
@@ -45,7 +47,7 @@ interface TransportOptions {
   opaqueIdPrefix?: string;
 }
 
-export interface RequestEvent<TResponse = Record<string, any>, TContext = unknown> {
+export interface RequestEvent<TResponse = Record<string, any>, TContext = Context> {
   body: TResponse;
   statusCode: number | null;
   headers: Record<string, any> | null;
@@ -70,7 +72,7 @@ export interface RequestEvent<TResponse = Record<string, any>, TContext = unknow
 
 // ApiResponse and RequestEvent are the same thing
 // we are doing this for have more clear names
-export interface ApiResponse<TResponse = Record<string, any>, TContext = unknown> extends RequestEvent<TResponse, TContext> {}
+export interface ApiResponse<TResponse = Record<string, any>, TContext = Context> extends RequestEvent<TResponse, TContext> {}
 
 export type RequestBody<T = Record<string, any>>  = T | string | Buffer | ReadableStream
 export type RequestNDBody<T = Record<string, any>[]>  = T | string | string[] | Buffer | ReadableStream
@@ -92,7 +94,7 @@ export interface TransportRequestOptions {
   querystring?: Record<string, any>;
   compression?: 'gzip';
   id?: any;
-  context?: Record<string, any>;
+  context?: Context;
   warnings?: string[];
   opaqueId?: string;
 }
