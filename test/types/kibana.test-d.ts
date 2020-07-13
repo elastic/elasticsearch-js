@@ -5,7 +5,7 @@
 import { expectType, expectNotType, expectError } from 'tsd'
 import { Client, RequestEvent, ResurrectEvent, ApiError, ApiResponse } from '../../'
 import { KibanaClient } from '../../api/kibana'
-import { TransportRequestPromise } from '../../lib/Transport'
+import { TransportRequestPromise, Context } from '../../lib/Transport'
 
 const client: KibanaClient = new Client({
   node: 'http://localhost:9200'
@@ -36,7 +36,7 @@ client.on('resurrect', (err, meta) => {
   const response = await client.cat.count({ index: 'test' })
 
   expectType<Record<string, any>>(response.body)
-  expectType<unknown>(response.meta.context)
+  expectType<Context>(response.meta.context)
 }
 
 // Define only the response body
@@ -44,7 +44,7 @@ client.on('resurrect', (err, meta) => {
   const response = await client.cat.count<string>({ index: 'test' })
 
   expectType<string>(response.body)
-  expectType<unknown>(response.meta.context)
+  expectType<Context>(response.meta.context)
 }
 
 // Define response body and the context

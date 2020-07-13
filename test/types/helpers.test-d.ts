@@ -12,7 +12,7 @@ import {
   OnDropDocument,
   MsearchHelper
 } from '../../lib/Helpers'
-import { ApiResponse, ApiError } from '../../lib/Transport'
+import { ApiResponse, ApiError, Context } from '../../lib/Transport'
 
 const client = new Client({
   node: 'http://localhost:9200'
@@ -134,7 +134,7 @@ expectError(
       expectAssignable<ScrollSearchResponse>(response)
       expectType<Record<string, any>>(response.body)
       expectType<unknown[]>(response.documents)
-      expectType<unknown>(response.meta.context)
+      expectType<Context>(response.meta.context)
     }
   }
 }
@@ -198,7 +198,7 @@ expectError(
       expectAssignable<ScrollSearchResponse>(response)
       expectType<SearchResponse<Source>>(response.body)
       expectType<Source[]>(response.documents)
-      expectType<unknown>(response.meta.context)
+      expectType<Context>(response.meta.context)
     }
   }
 }
@@ -254,7 +254,7 @@ expectError(
   }
 
   async function test () {
-    const scrollSearch = client.helpers.scrollSearch<Source, SearchResponse<Source>, SearchBody, string>({
+    const scrollSearch = client.helpers.scrollSearch<Source, SearchResponse<Source>, SearchBody, Record<string, unknown>>({
       index: 'test',
       body: {
         query: {
@@ -267,7 +267,7 @@ expectError(
       expectAssignable<ScrollSearchResponse>(response)
       expectType<SearchResponse<Source>>(response.body)
       expectType<Source[]>(response.documents)
-      expectType<string>(response.meta.context)
+      expectType<Record<string, unknown>>(response.meta.context)
     }
   }
 }
