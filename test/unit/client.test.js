@@ -1118,7 +1118,7 @@ test('Disable keep alive agent', t => {
     })
   })
 })
-  
+
 test('name property as string', t => {
   t.plan(1)
 
