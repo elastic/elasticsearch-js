@@ -205,7 +205,7 @@ test('Client name', t => {
     t.end()
   })
 
-  t.test('Is present in the event metadata', t => {
+  t.test('Is present in the event metadata (as string)', t => {
     t.plan(6)
     const client = new Client({
       node: 'http://localhost:9200',
@@ -226,6 +226,31 @@ test('Client name', t => {
     client.info((err, { meta }) => {
       t.error(err)
       t.strictEqual(meta.name, 'cluster')
+    })
+  })
+
+  t.test('Is present in the event metadata (as symbol)', t => {
+    t.plan(6)
+    const symbol = Symbol('cluster')
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection,
+      name: symbol
+    })
+
+    client.on('request', (err, { meta }) => {
+      t.error(err)
+      t.strictEqual(meta.name, symbol)
+    })
+
+    client.on('response', (err, { meta }) => {
+      t.error(err)
+      t.strictEqual(meta.name, symbol)
+    })
+
+    client.info((err, { meta }) => {
+      t.error(err)
+      t.strictEqual(meta.name, symbol)
     })
   })
 
