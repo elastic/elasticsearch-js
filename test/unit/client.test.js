@@ -1093,6 +1093,32 @@ test('Random selector', t => {
   })
 })
 
+test('Disable keep alive agent', t => {
+  t.plan(3)
+
+  function handler (req, res) {
+    t.strictEqual(req.headers.connection, 'close')
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://localhost:${port}`,
+      agent: false
+    })
+
+    client.search({
+      index: 'test',
+      q: 'foo:bar'
+    }, (err, { body }) => {
+      t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
+
 test('name property as string', t => {
   t.plan(1)
 
