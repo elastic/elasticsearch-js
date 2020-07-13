@@ -178,7 +178,7 @@ function generateRequestId (params, options) {
 ----
 
 |`name`
-|`string | Symbol` - The name to identify the client instance in the events. +
+|`string | symbol` - The name to identify the client instance in the events. +
 _Default:_ `elasticsearch-js`
 
 |`opaqueIdPrefix`

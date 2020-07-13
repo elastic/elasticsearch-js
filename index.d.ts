@@ -88,7 +88,7 @@ interface ClientOptions {
   headers?: Record<string, any>;
   opaqueIdPrefix?: string;
   generateRequestId?: generateRequestIdFn;
-  name?: string | Symbol;
+  name?: string | symbol;
   auth?: BasicAuth | ApiKeyAuth;
   cloud?: {
     id: string;
