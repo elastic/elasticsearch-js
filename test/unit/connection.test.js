@@ -499,6 +499,43 @@ test('Should not close a connection if there are open requests', t => {
   })
 })
 
+test('Should not close a connection if there are open requests (with agent disabled)', t => {
+  t.plan(4)
+
+  function handler (req, res) {
+    setTimeout(() => res.end('ok'), 1000)
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      url: new URL(`http://localhost:${port}`),
+      agent: false
+    })
+
+    setTimeout(() => {
+      t.strictEqual(connection._openRequests, 1)
+      connection.close()
+    }, 500)
+
+    connection.request({
+      path: '/hello',
+      method: 'GET'
+    }, (err, res) => {
+      t.error(err)
+      t.strictEqual(connection._openRequests, 0)
+
+      var payload = ''
+      res.setEncoding('utf8')
+      res.on('data', chunk => { payload += chunk })
+      res.on('error', err => t.fail(err))
+      res.on('end', () => {
+        t.strictEqual(payload, 'ok')
+        server.stop()
+      })
+    })
+  })
+})
+
 test('Url with auth', t => {
   t.plan(2)
 
