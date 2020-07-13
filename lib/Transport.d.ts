@@ -92,7 +92,7 @@ export interface TransportRequestOptions {
   querystring?: Record<string, any>;
   compression?: 'gzip';
   id?: any;
-  context?: any;
+  context?: Record<string, any>;
   warnings?: string[];
   opaqueId?: string;
 }

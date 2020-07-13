@@ -90,6 +90,7 @@ interface ClientOptions {
   generateRequestId?: generateRequestIdFn;
   name?: string;
   auth?: BasicAuth | ApiKeyAuth;
+  context?: Record<string, any>;
   cloud?: {
     id: string;
     // TODO: remove username and password here in 8
