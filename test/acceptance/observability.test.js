@@ -192,6 +192,50 @@ test('Request context', t => {
     client.info({}, { context: { winter: 'is coming' } }, t.error)
   })
 
+  t.test('global value', t => {
+    t.plan(5)
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection,
+      context: { winter: 'is coming' }
+    })
+
+    client.on('request', (err, { meta }) => {
+      t.error(err)
+      t.deepEqual(meta.context, { winter: 'is coming' })
+    })
+
+    client.on('response', (err, { meta }) => {
+      t.error(err)
+      t.deepEqual(meta.context, { winter: 'is coming' })
+    })
+
+    client.info(t.error)
+  })
+
+  t.test('override global', t => {
+    t.plan(5)
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection,
+      context: { winter: 'is coming' }
+    })
+
+    client.on('request', (err, { meta }) => {
+      t.error(err)
+      t.deepEqual(meta.context, { winter: 'has come' })
+    })
+
+    client.on('response', (err, { meta }) => {
+      t.error(err)
+      t.deepEqual(meta.context, { winter: 'has come' })
+    })
+
+    client.info({}, { context: { winter: 'has come' } }, t.error)
+  })
+
   t.end()
 })
 
