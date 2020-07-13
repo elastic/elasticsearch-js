@@ -2768,14 +2768,14 @@ link:{ref}/indices-aliases.html[Documentation] +
 [source,ts]
 ----
 client.indices.deleteDataStream({
-  name: string
+  name: string | string[]
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string` - The name of the data stream
+|`string \| string[]` - A comma-separated list of data streams to delete; use `*` to delete all data streams
 
 |===
 
@@ -3196,14 +3196,14 @@ _Default:_ `all`
 [source,ts]
 ----
 client.indices.getDataStream({
-  name: string
+  name: string | string[]
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string` - The name or wildcard expression of the requested data streams
+|`string \| string[]` - A comma-separated list of data streams to get; use `*` to get all data streams
 
 |===
 
@@ -8799,6 +8799,26 @@ link:{ref}/ml-stop-datafeed.html[Documentation] +
 
 |`timeout`
 |`string` - Controls the time to wait until a datafeed has stopped. Default to 20 seconds
+
+|===
+
+=== ml.updateDataFrameAnalytics
+*Stability:* experimental
+[source,ts]
+----
+client.ml.updateDataFrameAnalytics({
+  id: string,
+  body: object
+})
+----
+link:{ref}/update-dfanalytics.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to update
+
+|`body`
+|`object` - The data frame analytics settings to update
 
 |===
 

@@ -673,7 +673,7 @@ export interface IndicesDeleteAlias extends Generic {
 }
 
 export interface IndicesDeleteDataStream extends Generic {
-  name: string;
+  name: string | string[];
 }
 
 export interface IndicesDeleteIndexTemplate extends Generic {
@@ -778,7 +778,7 @@ export interface IndicesGetAlias extends Generic {
 }
 
 export interface IndicesGetDataStream extends Generic {
-  name?: string;
+  name?: string | string[];
 }
 
 export interface IndicesGetFieldMapping extends Generic {
@@ -2161,6 +2161,11 @@ export interface MlStopDatafeed extends Generic {
   allow_no_datafeeds?: boolean;
   force?: boolean;
   timeout?: string;
+}
+
+export interface MlUpdateDataFrameAnalytics<T = RequestBody> extends Generic {
+  id: string;
+  body: T;
 }
 
 export interface MlUpdateDatafeed<T = RequestBody> extends Generic {
