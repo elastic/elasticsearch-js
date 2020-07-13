@@ -120,7 +120,7 @@ _Default:_ `null`
 |`agent`
 a|`http.AgentOptions, function` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options], 
 or a function that returns an actual http agent instance. If you want to disable the http agent use entirely
-(and disable the `keep-alive` feature), set the agent to `null`. +
+(and disable the `keep-alive` feature), set the agent to `false`. +
 _Default:_ `null`
 [source,js]
 ----
@@ -137,7 +137,7 @@ const client = new Client({
 const client = new Client({
   node: 'http://localhost:9200',
   // Disable agent and keep-alive
-  agent: null
+  agent: false
 })
 ----
 

@@ -402,7 +402,7 @@ expectType<Client>(
 expectType<Client>(
   new Client({
     node: 'http://localhost:9200',
-    agent: null
+    agent: false
   })
 )
 expectError<errors.ConfigurationError>(
