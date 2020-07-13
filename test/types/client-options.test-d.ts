@@ -314,6 +314,13 @@ expectType<Client>(
   })
 )
 
+expectType<Client>(
+  new Client({
+    node: 'http://localhost:9200',
+    name: Symbol('foo')
+  })
+)
+
 expectError<errors.ConfigurationError>(
   // @ts-expect-error
   new Client({

@@ -1093,7 +1093,7 @@ test('Random selector', t => {
   })
 })
 
-test('Disable keeep alive agent', t => {
+test('Disable keep alive agent', t => {
   t.plan(3)
 
   function handler (req, res) {
@@ -1117,4 +1117,27 @@ test('Disable keeep alive agent', t => {
       server.stop()
     })
   })
+})
+  
+test('name property as string', t => {
+  t.plan(1)
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    name: 'client-name'
+  })
+
+  t.strictEqual(client.name, 'client-name')
+})
+
+test('name property as symbol', t => {
+  t.plan(1)
+
+  const symbol = Symbol('client-name')
+  const client = new Client({
+    node: 'http://localhost:9200',
+    name: symbol
+  })
+
+  t.strictEqual(client.name, symbol)
 })
