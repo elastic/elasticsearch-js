@@ -190,6 +190,11 @@ _Default:_ `null`
 |`object` - A set of custom headers to send in every request. +
 _Default:_ `{}`
 
+|`context`
+|`object` - A custom object that you can use for observability in yoru events.
+It will be merged with the API level context option. +
+_Default:_ `null`
+
 |`cloud`
 a|`object` - Custom configuration for connecting to 
 https://cloud.elastic.co[Elastic Cloud]. See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] 
