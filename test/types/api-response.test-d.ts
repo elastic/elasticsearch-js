@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 import { expectType } from 'tsd'
-import { TransportRequestCallback } from '../../lib/Transport'
+import { TransportRequestCallback, Context } from '../../lib/Transport'
 import { Client, ApiError } from '../../'
 
 const client = new Client({
@@ -15,7 +15,7 @@ const client = new Client({
   const response = await client.cat.count({ index: 'test' })
 
   expectType<Record<string, any>>(response.body)
-  expectType<unknown>(response.meta.context)
+  expectType<Context>(response.meta.context)
 }
 
 // Define only the response body (promise style)
@@ -23,7 +23,7 @@ const client = new Client({
   const response = await client.cat.count<string>({ index: 'test' })
 
   expectType<string>(response.body)
-  expectType<unknown>(response.meta.context)
+  expectType<Context>(response.meta.context)
 }
 
 // Define response body and the context (promise style)
@@ -39,7 +39,7 @@ const client = new Client({
   const result = client.cat.count({ index: 'test' }, (err, response) => {
     expectType<ApiError>(err)
     expectType<Record<string, any>>(response.body)
-    expectType<unknown>(response.meta.context)
+    expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
 }
@@ -49,17 +49,17 @@ const client = new Client({
   const result = client.cat.count<string>({ index: 'test' }, (err, response) => {
     expectType<ApiError>(err)
     expectType<string>(response.body)
-    expectType<unknown>(response.meta.context)
+    expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
 }
 
 // Define response body and the context (callback style)
 {
-  const result = client.cat.count<string, string>({ index: 'test' }, (err, response) => {
+  const result = client.cat.count<string, Context>({ index: 'test' }, (err, response) => {
     expectType<ApiError>(err)
     expectType<string>(response.body)
-    expectType<string>(response.meta.context)
+    expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
 }

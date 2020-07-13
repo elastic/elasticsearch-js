@@ -623,3 +623,20 @@ expectError<errors.ConfigurationError>(
     })
   )
 }
+
+/**
+ * `context` option
+ */
+expectType<Client>(
+  new Client({
+    node: 'http://localhost:9200',
+    context: { hello: 'world' }
+  })
+)
+
+expectError<errors.ConfigurationError>(
+  new Client({
+    node: 'http://localhost:9200',
+    context: 'hello world'
+  })
+)
