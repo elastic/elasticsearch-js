@@ -2423,7 +2423,7 @@ client.indices.addBlock({
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-blocks.html[Documentation] +
+
 [cols=2*]
 |===
 |`index`
@@ -3623,7 +3623,7 @@ client.indices.resolveIndex({
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-resolve-index.html[Documentation] +
+
 [cols=2*]
 |===
 |`name`
