@@ -458,6 +458,8 @@ function ESAPI (opts) {
       stopDataFrameAnalytics: lazyLoad('ml.stop_data_frame_analytics', opts),
       stop_datafeed: lazyLoad('ml.stop_datafeed', opts),
       stopDatafeed: lazyLoad('ml.stop_datafeed', opts),
+      update_data_frame_analytics: lazyLoad('ml.update_data_frame_analytics', opts),
+      updateDataFrameAnalytics: lazyLoad('ml.update_data_frame_analytics', opts),
       update_datafeed: lazyLoad('ml.update_datafeed', opts),
       updateDatafeed: lazyLoad('ml.update_datafeed', opts),
       update_filter: lazyLoad('ml.update_filter', opts),
