@@ -84,7 +84,8 @@ class Client {
       generateRequestId: null,
       name: 'elasticsearch-js',
       auth: null,
-      opaqueIdPrefix: null
+      opaqueIdPrefix: null,
+      context: null
     }, opts)
 
     this[kInitialOptions] = options
@@ -131,7 +132,8 @@ class Client {
       nodeSelector: options.nodeSelector,
       generateRequestId: options.generateRequestId,
       name: options.name,
-      opaqueIdPrefix: options.opaqueIdPrefix
+      opaqueIdPrefix: options.opaqueIdPrefix,
+      context: options.context
     })
 
     /* istanbul ignore else */

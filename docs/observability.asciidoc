@@ -229,6 +229,44 @@ client.search({
 })
 ----
 
+The context object can also be configured as a global option in the client
+configuration. If you provide both, the two context object will be shallow merged,
+and the API level object will take precedece.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'http://localhost:9200',
+  context: { winter: 'is coming' }
+})
+
+client.on('request', (err, result) => {
+  const { id } = result.meta.request
+  const { context } = result.meta
+  if (err) {
+    console.log({ error: err, reqId: id, context })
+  }
+})
+
+client.on('response', (err, result) => {
+  const { id } = result.meta.request
+  const { winter } = result.meta.context
+  if (err) {
+    console.log({ error: err, reqId: id, winter })
+  }
+})
+
+client.search({
+  index: 'my-index',
+  body: { foo: 'bar' }
+}, {
+  context: { winter: 'has come' }
+}, (err, result) => {
+  if (err) console.log(err)
+})
+----
+
 
 === Client name
 
