@@ -656,6 +656,12 @@ export interface IndicesCreateDataStream<T = RequestBody> extends Generic {
   body?: T;
 }
 
+export interface IndicesDataStreamsStats extends Generic {
+  name?: string | string[];
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+  forbid_closed_indices?: boolean;
+}
+
 export interface IndicesDelete extends Generic {
   index: string | string[];
   timeout?: string;
@@ -873,6 +879,7 @@ export interface IndicesPutMapping<T = RequestBody> extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+  write_index_only?: boolean;
   body: T;
 }
 

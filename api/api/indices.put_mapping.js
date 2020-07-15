@@ -18,6 +18,7 @@ function buildIndicesPutMapping (opts) {
     'ignore_unavailable',
     'allow_no_indices',
     'expand_wildcards',
+    'write_index_only',
     'pretty',
     'human',
     'error_trace',
@@ -31,6 +32,7 @@ function buildIndicesPutMapping (opts) {
     ignoreUnavailable: 'ignore_unavailable',
     allowNoIndices: 'allow_no_indices',
     expandWildcards: 'expand_wildcards',
+    writeIndexOnly: 'write_index_only',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

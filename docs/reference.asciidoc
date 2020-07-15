@@ -2473,7 +2473,7 @@ client.indices.addBlock({
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
-
+link:{ref}/indices-blocks.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -2695,6 +2695,32 @@ link:{ref}/data-streams.html[Documentation] +
 
 |`body`
 |`object` - The data stream definition
+
+|===
+
+=== indices.dataStreamsStats
+*Stability:* experimental
+[source,ts]
+----
+client.indices.dataStreamsStats({
+  name: string | string[],
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  forbid_closed_indices: boolean
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|`forbid_closed_indices` or `forbidClosedIndices`
+|`boolean` - If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices +
+_Default:_ `true`
 
 |===
 
@@ -3563,6 +3589,7 @@ client.indices.putMapping({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  write_index_only: boolean,
   body: object
 })
 ----
@@ -3595,6 +3622,9 @@ WARNING: This parameter has been deprecated.
 |`expand_wildcards` or `expandWildcards`
 |`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
+
+|`write_index_only` or `writeIndexOnly`
+|`boolean` - When true, applies mappings only to the write index of an alias or data stream
 
 |`body`
 |`object` - The mapping definition
@@ -3748,7 +3778,7 @@ client.indices.resolveIndex({
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
-
+link:{ref}/indices-resolve-index.html[Documentation] +
 [cols=2*]
 |===
 |`name`
