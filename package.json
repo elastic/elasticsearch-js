@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "test": "npm run lint && tap test/{unit,acceptance}/{*,**/*}.test.js && npm run test:types",
-    "test:node8": "npm run lint && tap test/{unit,acceptance}/*.test.js && npm run test:types",
+    "test:node8": "npm run lint && tap test/{unit,acceptance}/*.test.js",
     "test:unit": "tap test/unit/{*,**/*}.test.js",
     "test:acceptance": "tap test/acceptance/*.test.js",
     "test:integration": "node test/integration/index.js",
@@ -68,7 +68,7 @@
     "standard": "^13.0.2",
     "stoppable": "^1.1.0",
     "tap": "^14.4.1",
-    "tsd": "^0.12.1",
+    "tsd": "^0.13.1",
     "workq": "^2.1.0",
     "xmlbuilder2": "^2.1.2"
   },
