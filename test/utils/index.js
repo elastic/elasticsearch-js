@@ -8,6 +8,7 @@ const { promisify } = require('util')
 const sleep = promisify(setTimeout)
 const buildServer = require('./buildServer')
 const buildCluster = require('./buildCluster')
+const buildProxy = require('./buildProxy')
 const connection = require('./MockConnection')
 
 async function waitCluster (client, waitForStatus = 'green', timeout = '50s', times = 0) {
@@ -28,6 +29,7 @@ async function waitCluster (client, waitForStatus = 'green', timeout = '50s', ti
 module.exports = {
   buildServer,
   buildCluster,
+  buildProxy,
   connection,
   waitCluster
 }

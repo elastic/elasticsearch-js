@@ -69,7 +69,8 @@ test('Should update the connection pool', t => {
               ml: false
             },
             ssl: null,
-            agent: null
+            agent: null,
+            proxy: null
           })
         }
       }

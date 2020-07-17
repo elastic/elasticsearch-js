@@ -677,3 +677,28 @@ expectError<errors.ConfigurationError>(
     context: 'hello world'
   })
 )
+
+/**
+ * `proxy` option
+ */
+expectType<Client>(
+  new Client({
+    node: 'http://localhost:9200',
+    proxy: 'http://localhost:8080'
+  })
+)
+
+expectType<Client>(
+  new Client({
+    node: 'http://localhost:9200',
+    proxy: new URL('http://localhost:8080')
+  })
+)
+
+expectError<errors.ConfigurationError>(
+  // @ts-expect-error
+  new Client({
+    node: 'http://localhost:9200',
+    proxy: 42
+  })
+)
