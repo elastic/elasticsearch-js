@@ -12,6 +12,7 @@ import { nodeFilterFn, nodeSelectorFn } from '../Transport';
 interface BaseConnectionPoolOptions {
   ssl?: SecureContextOptions;
   agent?: AgentOptions;
+  proxy?: string | URL;
   auth?: BasicAuth | ApiKeyAuth;
   emit: (event: string | symbol, ...args: any[]) => boolean;
   Connection: typeof Connection;
@@ -68,6 +69,7 @@ declare class BaseConnectionPool {
   emit: (event: string | symbol, ...args: any[]) => boolean;
   _ssl: SecureContextOptions | null;
   _agent: AgentOptions | null;
+  _proxy: string | URL;
   auth: BasicAuth | ApiKeyAuth;
   Connection: typeof Connection;
   constructor(opts?: BaseConnectionPoolOptions);
