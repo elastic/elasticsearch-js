@@ -76,7 +76,7 @@
   "dependencies": {
     "debug": "^4.1.1",
     "decompress-response": "^4.2.0",
-    "hpagent": "^0.1.0",
+    "hpagent": "^0.1.1",
     "ms": "^2.1.1",
     "pump": "^3.0.0",
     "secure-json-parse": "^2.1.0"
