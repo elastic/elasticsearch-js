@@ -212,6 +212,8 @@ _Default:_ `null`
 
 === Connecting through a proxy
 
+~Added~ ~in~ ~`v7.10.0`~
+
 If you need to pass through an http(s) proxy for connecting to Elasticsearch, the client offers
 out of the box a handy configuration for helping you with it. Under the hood it
 uses the https://github.com/delvedor/hpagent[`hpagent`] module.
