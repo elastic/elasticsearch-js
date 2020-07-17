@@ -118,7 +118,7 @@ _Default:_ `false`
 _Default:_ `null`
 
 |`proxy`
-a|`string, URL` - If you are using a proxy, you can put its url here.
+a|`string, URL` - If you are using an http(s) proxy, you can put its url here.
 The client will automatically handle the connection to it. +
 _Default:_ `null`
 [source,js]

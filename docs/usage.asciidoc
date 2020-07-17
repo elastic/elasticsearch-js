@@ -212,7 +212,7 @@ _Default:_ `null`
 
 === Connecting through a proxy
 
-If you need to pass through a proxy for connecting to Elasticsearch, the client offers
+If you need to pass through an http(s) proxy for connecting to Elasticsearch, the client offers
 out of the box a handy configuration for helping you with it. Under the hood it
 uses the https://github.com/delvedor/hpagent[`hpagent`] module.
 
@@ -231,6 +231,20 @@ Basic authentication is supported as well:
 const client = new Client({
   node: 'http://localhost:9200',
   proxy: 'http:user:pwd@//localhost:8080'
+})
+----
+
+If you are connecting through a not http(s) proxy, such as a `socks5` or `pac`,
+you can use the `agent` option to configure it.
+
+[source,js]
+----
+const SocksProxyAgent = require('socks-proxy-agent')
+const client = new Client({
+  node: 'http://localhost:9200',
+  agent () {
+    return new SocksProxyAgent('socks://127.0.0.1:1080')
+  }
 })
 ----
 
