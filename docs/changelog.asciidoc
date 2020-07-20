@@ -60,6 +60,11 @@ const client = new Client({
 
 Only `Record<string, any>` was allowed. Now `string` is allowed as well.
 
+===== Fixed type definitions https://github.com/elastic/elasticsearch-js/pull/1263[#1263]
+
+* The `transport.request` defintion was incorrect, it was returning a `Promise<T>` instead of `TransportRequestPromise<T>`.
+* The `refresh` parameter of most APIs was declared as `'true' | 'false' | 'wait_for'`, which was clunky. Now is `'wait_for' | boolean`.
+
 ==== Internals
 
 ===== Updated default http agent configuration https://github.com/elastic/elasticsearch-js/pull/1242[#1242]
