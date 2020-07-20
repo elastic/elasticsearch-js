@@ -215,6 +215,8 @@ function ESAPI (opts) {
       create: lazyLoad('indices.create', opts),
       create_data_stream: lazyLoad('indices.create_data_stream', opts),
       createDataStream: lazyLoad('indices.create_data_stream', opts),
+      data_streams_stats: lazyLoad('indices.data_streams_stats', opts),
+      dataStreamsStats: lazyLoad('indices.data_streams_stats', opts),
       delete: lazyLoad('indices.delete', opts),
       delete_alias: lazyLoad('indices.delete_alias', opts),
       deleteAlias: lazyLoad('indices.delete_alias', opts),

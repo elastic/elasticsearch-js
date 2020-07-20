@@ -22,6 +22,7 @@ function buildIndex (opts) {
     'if_seq_no',
     'if_primary_term',
     'pipeline',
+    'require_alias',
     'pretty',
     'human',
     'error_trace',
@@ -35,6 +36,7 @@ function buildIndex (opts) {
     versionType: 'version_type',
     ifSeqNo: 'if_seq_no',
     ifPrimaryTerm: 'if_primary_term',
+    requireAlias: 'require_alias',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

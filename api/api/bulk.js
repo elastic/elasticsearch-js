@@ -21,6 +21,7 @@ function buildBulk (opts) {
     '_source_excludes',
     '_source_includes',
     'pipeline',
+    'require_alias',
     'pretty',
     'human',
     'error_trace',
@@ -32,6 +33,7 @@ function buildBulk (opts) {
     waitForActiveShards: 'wait_for_active_shards',
     _sourceExcludes: '_source_excludes',
     _sourceIncludes: '_source_includes',
+    requireAlias: 'require_alias',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }
