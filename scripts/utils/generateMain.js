@@ -236,11 +236,11 @@ function buildMethodDefinition (opts, api, name, hasBody) {
   if (opts.kibana) {
     if (hasBody) {
       return [
-        { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = Context>(params?: RequestParams.${Name}<TRequestBody>, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` }
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TRequestBody extends ${bodyType} = ${defaultBodyType}, TContext = Context>(params?: Req.${Name}Request<TRequestBody>, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` }
       ]
     } else {
       return [
-        { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.${Name}, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` }
+        { key: `${camelify(api)}<TResponse = Record<string, any>, TContext = Context>(params?: Req.${Name}Request, options?: TransportRequestOptions)`, val: `TransportRequestPromise<ApiResponse<TResponse, TContext>>` }
       ]
     }
   }
