@@ -6,7 +6,6 @@ import { RequestBody, RequestNDBody } from '../lib/Transport'
 
 interface GenericRequest {
   method?: string;
-  ignore?: number | number[];
   filter_path?: string | string[];
   pretty?: boolean;
   human?: boolean;
@@ -20,13 +19,14 @@ interface BulkRequest<T = RequestNDBody> extends GenericRequest {
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   wait_for_active_shards?: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
   routing?: string;
   timeout?: string;
   _source?: string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   pipeline?: string;
+  require_alias?: boolean;
   body: T;
 }
 
@@ -392,7 +392,7 @@ interface CreateRequest<T = RequestBody> extends GenericRequest {
   index: string;
   type?: string;
   wait_for_active_shards?: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
   routing?: string;
   timeout?: string;
   version?: number;
@@ -427,7 +427,7 @@ export interface Delete extends Generic {
   index: string;
   type?: string;
   wait_for_active_shards?: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
   routing?: string;
   timeout?: string;
   if_seq_no?: number;
@@ -603,7 +603,7 @@ interface IndexRequest<T = RequestBody> extends GenericRequest {
   index: string;
   wait_for_active_shards?: string;
   op_type?: 'index' | 'create';
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
   routing?: string;
   timeout?: string;
   version?: number;
@@ -611,6 +611,7 @@ interface IndexRequest<T = RequestBody> extends GenericRequest {
   if_seq_no?: number;
   if_primary_term?: number;
   pipeline?: string;
+  require_alias?: boolean;
   body: T;
 }
 
@@ -671,12 +672,16 @@ interface IndicesCreateRequest<T = RequestBody> extends GenericRequest {
   body?: T;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface IndicesCreateDataStreamRequest<T = RequestBody> extends GenericRequest {
   name: string;
   body?: T;
 }
 
 interface IndicesDeleteRequest extends GenericRequest {
+=======
+export interface IndicesDelete extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   index: string | string[];
   timeout?: string;
   master_timeout?: string;
@@ -693,6 +698,7 @@ interface IndicesDeleteAliasRequest extends GenericRequest {
 }
 
 <<<<<<< HEAD:api/RequestTypes.d.ts
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface IndicesDeleteDataStreamRequest extends GenericRequest {
   name: string;
 =======
@@ -702,6 +708,9 @@ export interface IndicesDeleteDataStream extends Generic {
 }
 
 interface IndicesDeleteIndexTemplateRequest extends GenericRequest {
+=======
+export interface IndicesDeleteIndexTemplate extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   name: string;
   timeout?: string;
   master_timeout?: string;
@@ -799,6 +808,7 @@ interface IndicesGetAliasRequest extends GenericRequest {
 }
 
 <<<<<<< HEAD:api/RequestTypes.d.ts
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface IndicesGetDataStreamsRequest extends GenericRequest {
   name?: string;
 =======
@@ -808,6 +818,9 @@ export interface IndicesGetDataStream extends Generic {
 }
 
 interface IndicesGetFieldMappingRequest extends GenericRequest {
+=======
+export interface IndicesGetFieldMapping extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   fields: string | string[];
   index?: string | string[];
   include_defaults?: boolean;
@@ -892,6 +905,7 @@ interface IndicesPutMappingRequest<T = RequestBody> extends GenericRequest {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+  write_index_only?: boolean;
   body: T;
 }
 
@@ -1431,12 +1445,13 @@ interface UpdateRequest<T = RequestBody> extends GenericRequest {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   lang?: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
   retry_on_conflict?: number;
   routing?: string;
   timeout?: string;
   if_seq_no?: number;
   if_primary_term?: number;
+  require_alias?: boolean;
   body: T;
 }
 
@@ -1817,7 +1832,24 @@ interface IlmStartRequest extends GenericRequest {
 interface IlmStopRequest extends GenericRequest {
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface IndicesFreezeRequest extends GenericRequest {
+=======
+export interface IndicesCreateDataStream<T = RequestBody> extends Generic {
+  name: string;
+  body?: T;
+}
+
+export interface IndicesDataStreamsStats extends Generic {
+  name?: string | string[];
+}
+
+export interface IndicesDeleteDataStream extends Generic {
+  name: string | string[];
+}
+
+export interface IndicesFreeze extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   index: string;
   timeout?: string;
   master_timeout?: string;
@@ -1827,7 +1859,15 @@ interface IndicesFreezeRequest extends GenericRequest {
   wait_for_active_shards?: string;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface IndicesReloadSearchAnalyzersRequest extends GenericRequest {
+=======
+export interface IndicesGetDataStream extends Generic {
+  name?: string | string[];
+}
+
+export interface IndicesReloadSearchAnalyzers extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   index: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -2046,6 +2086,7 @@ interface MlGetDataFrameAnalyticsStatsRequest extends GenericRequest {
   allow_no_match?: boolean;
   from?: number;
   size?: number;
+  verbose?: boolean;
 }
 
 interface MlGetDatafeedStatsRequest extends GenericRequest {
@@ -2366,7 +2407,7 @@ interface SecurityAuthenticateRequest extends GenericRequest {
 
 interface SecurityChangePasswordRequest<T = RequestBody> extends GenericRequest {
   username?: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
   body: T;
 }
 
@@ -2387,40 +2428,45 @@ interface SecurityClearCachedRolesRequest extends GenericRequest {
   name: string | string[];
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface SecurityCreateApiKeyRequest<T = RequestBody> extends GenericRequest {
   refresh?: 'true' | 'false' | 'wait_for';
+=======
+export interface SecurityCreateApiKey<T = RequestBody> extends Generic {
+  refresh?: 'wait_for' | boolean;
+>>>>>>> master:api/requestParams.d.ts
   body: T;
 }
 
 interface SecurityDeletePrivilegesRequest extends GenericRequest {
   application: string;
   name: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
 }
 
 interface SecurityDeleteRoleRequest extends GenericRequest {
   name: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
 }
 
 interface SecurityDeleteRoleMappingRequest extends GenericRequest {
   name: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
 }
 
 interface SecurityDeleteUserRequest extends GenericRequest {
   username: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
 }
 
 interface SecurityDisableUserRequest extends GenericRequest {
   username: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
 }
 
 interface SecurityEnableUserRequest extends GenericRequest {
   username: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
 }
 
 interface SecurityGetApiKeyRequest extends GenericRequest {
@@ -2480,26 +2526,31 @@ interface SecurityInvalidateTokenRequest<T = RequestBody> extends GenericRequest
   body: T;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface SecurityPutPrivilegesRequest<T = RequestBody> extends GenericRequest {
   refresh?: 'true' | 'false' | 'wait_for';
+=======
+export interface SecurityPutPrivileges<T = RequestBody> extends Generic {
+  refresh?: 'wait_for' | boolean;
+>>>>>>> master:api/requestParams.d.ts
   body: T;
 }
 
 interface SecurityPutRoleRequest<T = RequestBody> extends GenericRequest {
   name: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
   body: T;
 }
 
 interface SecurityPutRoleMappingRequest<T = RequestBody> extends GenericRequest {
   name: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
   body: T;
 }
 
 interface SecurityPutUserRequest<T = RequestBody> extends GenericRequest {
   username: string;
-  refresh?: 'true' | 'false' | 'wait_for';
+  refresh?: 'wait_for' | boolean;
   body: T;
 }
 

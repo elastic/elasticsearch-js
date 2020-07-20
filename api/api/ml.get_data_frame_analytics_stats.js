@@ -14,7 +14,8 @@ function buildMlGetDataFrameAnalyticsStats (opts) {
   const acceptedQuerystring = [
     'allow_no_match',
     'from',
-    'size'
+    'size',
+    'verbose'
   ]
 
   const snakeCase = {
