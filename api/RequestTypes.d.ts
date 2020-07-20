@@ -268,11 +268,11 @@ interface ClusterDeleteComponentTemplateRequest extends GenericRequest {
   master_timeout?: string;
 }
 
-export interface ClusterDeleteVotingConfigExclusionsRequest extends Generic {
+interface ClusterDeleteVotingConfigExclusionsRequest extends GenericRequest {
   wait_for_removal?: boolean;
 }
 
-export interface ClusterExistsComponentTemplateRequest extends Generic {
+interface ClusterExistsComponentTemplateRequest extends GenericRequest {
   name: string;
   master_timeout?: string;
   local?: boolean;
@@ -311,17 +311,13 @@ interface ClusterPendingTasksRequest extends GenericRequest {
   master_timeout?: string;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface ClusterPutComponentTemplateRequest<T = RequestBody> extends GenericRequest {
-=======
-export interface ClusterPostVotingConfigExclusions extends Generic {
+interface ClusterPostVotingConfigExclusionsRequest extends GenericRequest {
   node_ids?: string;
   node_names?: string;
   timeout?: string;
 }
 
-export interface ClusterPutComponentTemplate<T = RequestBody> extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface ClusterPutComponentTemplateRequest<T = RequestBody> extends GenericRequest {
   name: string;
   create?: boolean;
   timeout?: string;
@@ -401,28 +397,24 @@ interface CreateRequest<T = RequestBody> extends GenericRequest {
   body: T;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
+interface DanglingIndicesDeleteDanglingIndexRequest extends GenericRequest {
+  index_uuid: string;
+  accept_data_loss?: boolean;
+  timeout?: string;
+  master_timeout?: string;
+}
+
+interface DanglingIndicesImportDanglingIndexRequest extends GenericRequest {
+  index_uuid: string;
+  accept_data_loss?: boolean;
+  timeout?: string;
+  master_timeout?: string;
+}
+
+interface DanglingIndicesListDanglingIndicesRequest extends GenericRequest {
+}
+
 interface DeleteRequest extends GenericRequest {
-=======
-export interface DanglingIndicesDeleteDanglingIndex extends Generic {
-  index_uuid: string;
-  accept_data_loss?: boolean;
-  timeout?: string;
-  master_timeout?: string;
-}
-
-export interface DanglingIndicesImportDanglingIndex extends Generic {
-  index_uuid: string;
-  accept_data_loss?: boolean;
-  timeout?: string;
-  master_timeout?: string;
-}
-
-export interface DanglingIndicesListDanglingIndices extends Generic {
-}
-
-export interface Delete extends Generic {
->>>>>>> master:api/requestParams.d.ts
   id: string;
   index: string;
   type?: string;
@@ -540,11 +532,7 @@ interface ExplainRequest<T = RequestBody> extends GenericRequest {
   body?: T;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface FieldCapsRequest extends GenericRequest {
-=======
-export interface FieldCaps<T = RequestBody> extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface FieldCapsRequest<T = RequestBody> extends GenericRequest {
   index?: string | string[];
   fields?: string | string[];
   ignore_unavailable?: boolean;
@@ -615,10 +603,7 @@ interface IndexRequest<T = RequestBody> extends GenericRequest {
   body: T;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface IndicesAnalyzeRequest<T = RequestBody> extends GenericRequest {
-=======
-export interface IndicesAddBlock extends Generic {
+interface IndicesAddBlockRequest extends GenericRequest {
   index: string | string[];
   block: string;
   timeout?: string;
@@ -628,8 +613,7 @@ export interface IndicesAddBlock extends Generic {
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
-export interface IndicesAnalyze<T = RequestBody> extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface IndicesAnalyzeRequest<T = RequestBody> extends GenericRequest {
   index?: string;
   body?: T;
 }
@@ -672,16 +656,7 @@ interface IndicesCreateRequest<T = RequestBody> extends GenericRequest {
   body?: T;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface IndicesCreateDataStreamRequest<T = RequestBody> extends GenericRequest {
-  name: string;
-  body?: T;
-}
-
 interface IndicesDeleteRequest extends GenericRequest {
-=======
-export interface IndicesDelete extends Generic {
->>>>>>> master:api/requestParams.d.ts
   index: string | string[];
   timeout?: string;
   master_timeout?: string;
@@ -697,20 +672,7 @@ interface IndicesDeleteAliasRequest extends GenericRequest {
   master_timeout?: string;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface IndicesDeleteDataStreamRequest extends GenericRequest {
-  name: string;
-=======
-export interface IndicesDeleteDataStream extends Generic {
-  name: string | string[];
->>>>>>> master:api/requestParams.d.ts
-}
-
 interface IndicesDeleteIndexTemplateRequest extends GenericRequest {
-=======
-export interface IndicesDeleteIndexTemplate extends Generic {
->>>>>>> master:api/requestParams.d.ts
   name: string;
   timeout?: string;
   master_timeout?: string;
@@ -741,18 +703,14 @@ interface IndicesExistsAliasRequest extends GenericRequest {
   local?: boolean;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface IndicesExistsTemplateRequest extends GenericRequest {
-=======
-export interface IndicesExistsIndexTemplate extends Generic {
+interface IndicesExistsIndexTemplateRequest extends GenericRequest {
   name: string;
   flat_settings?: boolean;
   master_timeout?: string;
   local?: boolean;
 }
 
-export interface IndicesExistsTemplate extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface IndicesExistsTemplateRequest extends GenericRequest {
   name: string | string[];
   flat_settings?: boolean;
   master_timeout?: string;
@@ -807,20 +765,7 @@ interface IndicesGetAliasRequest extends GenericRequest {
   local?: boolean;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface IndicesGetDataStreamsRequest extends GenericRequest {
-  name?: string;
-=======
-export interface IndicesGetDataStream extends Generic {
-  name?: string | string[];
->>>>>>> master:api/requestParams.d.ts
-}
-
 interface IndicesGetFieldMappingRequest extends GenericRequest {
-=======
-export interface IndicesGetFieldMapping extends Generic {
->>>>>>> master:api/requestParams.d.ts
   fields: string | string[];
   index?: string | string[];
   include_defaults?: boolean;
@@ -942,16 +887,12 @@ interface IndicesRefreshRequest extends GenericRequest {
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface IndicesRolloverRequest<T = RequestBody> extends GenericRequest {
-=======
-export interface IndicesResolveIndex extends Generic {
+interface IndicesResolveIndexRequest extends GenericRequest {
   name: string | string[];
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
-export interface IndicesRollover<T = RequestBody> extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface IndicesRolloverRequest<T = RequestBody> extends GenericRequest {
   alias: string;
   new_index?: string;
   timeout?: string;
@@ -986,10 +927,7 @@ interface IndicesShrinkRequest<T = RequestBody> extends GenericRequest {
   body?: T;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface IndicesSplitRequest<T = RequestBody> extends GenericRequest {
-=======
-export interface IndicesSimulateIndexTemplate<T = RequestBody> extends Generic {
+interface IndicesSimulateIndexTemplateRequest<T = RequestBody> extends GenericRequest {
   name: string;
   create?: boolean;
   cause?: string;
@@ -997,7 +935,7 @@ export interface IndicesSimulateIndexTemplate<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface IndicesSimulateTemplate<T = RequestBody> extends Generic {
+interface IndicesSimulateTemplateRequest<T = RequestBody> extends GenericRequest {
   name?: string;
   create?: boolean;
   cause?: string;
@@ -1005,8 +943,7 @@ export interface IndicesSimulateTemplate<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface IndicesSplit<T = RequestBody> extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface IndicesSplitRequest<T = RequestBody> extends GenericRequest {
   index: string;
   target: string;
   timeout?: string;
@@ -1164,11 +1101,7 @@ interface NodesInfoRequest extends GenericRequest {
   timeout?: string;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface NodesReloadSecureSettingsRequest extends GenericRequest {
-=======
-export interface NodesReloadSecureSettings<T = RequestBody> extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface NodesReloadSecureSettingsRequest<T = RequestBody> extends GenericRequest {
   node_id?: string | string[];
   timeout?: string;
   body?: T;
@@ -1762,21 +1695,17 @@ interface EnrichPutPolicyRequest<T = RequestBody> extends GenericRequest {
 interface EnrichStatsRequest extends GenericRequest {
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface EqlSearchRequest<T = RequestBody> extends GenericRequest {
-=======
-export interface EqlDelete extends Generic {
+interface EqlDeleteRequest extends GenericRequest {
   id: string;
 }
 
-export interface EqlGet extends Generic {
+interface EqlGetRequest extends GenericRequest {
   id: string;
   wait_for_completion_timeout?: string;
   keep_alive?: string;
 }
 
-export interface EqlSearch<T = RequestBody> extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface EqlSearchRequest<T = RequestBody> extends GenericRequest {
   index: string;
   wait_for_completion_timeout?: string;
   keep_on_completion?: boolean;
@@ -1832,24 +1761,20 @@ interface IlmStartRequest extends GenericRequest {
 interface IlmStopRequest extends GenericRequest {
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface IndicesFreezeRequest extends GenericRequest {
-=======
-export interface IndicesCreateDataStream<T = RequestBody> extends Generic {
+interface IndicesCreateDataStreamRequest<T = RequestBody> extends GenericRequest {
   name: string;
   body?: T;
 }
 
-export interface IndicesDataStreamsStats extends Generic {
+interface IndicesDataStreamsStatsRequest extends GenericRequest {
   name?: string | string[];
 }
 
-export interface IndicesDeleteDataStream extends Generic {
+interface IndicesDeleteDataStreamRequest extends GenericRequest {
   name: string | string[];
 }
 
-export interface IndicesFreeze extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface IndicesFreezeRequest extends GenericRequest {
   index: string;
   timeout?: string;
   master_timeout?: string;
@@ -1859,15 +1784,11 @@ export interface IndicesFreeze extends Generic {
   wait_for_active_shards?: string;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface IndicesReloadSearchAnalyzersRequest extends GenericRequest {
-=======
-export interface IndicesGetDataStream extends Generic {
+interface IndicesGetDataStreamRequest extends GenericRequest {
   name?: string | string[];
 }
 
-export interface IndicesReloadSearchAnalyzers extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface IndicesReloadSearchAnalyzersRequest extends GenericRequest {
   index: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -1949,15 +1870,11 @@ interface MlDeleteDatafeedRequest extends GenericRequest {
   force?: boolean;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface MlDeleteExpiredDataRequest extends GenericRequest {
-=======
-export interface MlDeleteExpiredData<T = RequestBody> extends Generic {
+interface MlDeleteExpiredDataRequest<T = RequestBody> extends GenericRequest {
   job_id?: string;
   requests_per_second?: number;
   timeout?: string;
   body?: T;
->>>>>>> master:api/requestParams.d.ts
 }
 
 interface MlDeleteFilterRequest extends GenericRequest {
@@ -2286,16 +2203,12 @@ interface MlStopDatafeedRequest extends GenericRequest {
   timeout?: string;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface MlUpdateDatafeedRequest<T = RequestBody> extends GenericRequest {
-=======
-export interface MlUpdateDataFrameAnalytics<T = RequestBody> extends Generic {
+interface MlUpdateDataFrameAnalyticsRequest<T = RequestBody> extends GenericRequest {
   id: string;
   body: T;
 }
 
-export interface MlUpdateDatafeed<T = RequestBody> extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface MlUpdateDatafeedRequest<T = RequestBody> extends GenericRequest {
   datafeed_id: string;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -2390,15 +2303,11 @@ interface SearchableSnapshotsMountRequest<T = RequestBody> extends GenericReques
   body: T;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface SearchableSnapshotsStatsRequest extends GenericRequest {
-=======
-export interface SearchableSnapshotsRepositoryStats extends Generic {
+interface SearchableSnapshotsRepositoryStatsRequest extends GenericRequest {
   repository: string;
 }
 
-export interface SearchableSnapshotsStats extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface SearchableSnapshotsStatsRequest extends GenericRequest {
   index?: string | string[];
 }
 
@@ -2411,15 +2320,11 @@ interface SecurityChangePasswordRequest<T = RequestBody> extends GenericRequest 
   body: T;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
-interface SecurityClearCachedRealmsRequest extends GenericRequest {
-=======
-export interface SecurityClearCachedPrivileges extends Generic {
+interface SecurityClearCachedPrivilegesRequest extends GenericRequest {
   application: string | string[];
 }
 
-export interface SecurityClearCachedRealms extends Generic {
->>>>>>> master:api/requestParams.d.ts
+interface SecurityClearCachedRealmsRequest extends GenericRequest {
   realms: string | string[];
   usernames?: string | string[];
 }
@@ -2428,13 +2333,8 @@ interface SecurityClearCachedRolesRequest extends GenericRequest {
   name: string | string[];
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
 interface SecurityCreateApiKeyRequest<T = RequestBody> extends GenericRequest {
-  refresh?: 'true' | 'false' | 'wait_for';
-=======
-export interface SecurityCreateApiKey<T = RequestBody> extends Generic {
   refresh?: 'wait_for' | boolean;
->>>>>>> master:api/requestParams.d.ts
   body: T;
 }
 
@@ -2485,21 +2385,12 @@ interface SecurityGetPrivilegesRequest extends GenericRequest {
   name?: string;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
 interface SecurityGetRoleRequest extends GenericRequest {
-  name?: string;
+  name?: string | string[];
 }
 
 interface SecurityGetRoleMappingRequest extends GenericRequest {
-  name?: string;
-=======
-export interface SecurityGetRole extends Generic {
   name?: string | string[];
-}
-
-export interface SecurityGetRoleMapping extends Generic {
-  name?: string | string[];
->>>>>>> master:api/requestParams.d.ts
 }
 
 interface SecurityGetTokenRequest<T = RequestBody> extends GenericRequest {
@@ -2526,13 +2417,8 @@ interface SecurityInvalidateTokenRequest<T = RequestBody> extends GenericRequest
   body: T;
 }
 
-<<<<<<< HEAD:api/RequestTypes.d.ts
 interface SecurityPutPrivilegesRequest<T = RequestBody> extends GenericRequest {
-  refresh?: 'true' | 'false' | 'wait_for';
-=======
-export interface SecurityPutPrivileges<T = RequestBody> extends Generic {
   refresh?: 'wait_for' | boolean;
->>>>>>> master:api/requestParams.d.ts
   body: T;
 }
 
@@ -2714,68 +2600,72 @@ export {
   CatPluginsRequest, CatRecoveryRequest, CatRepositoriesRequest, CatSegmentsRequest,
   CatShardsRequest, CatSnapshotsRequest, CatTasksRequest, CatTemplatesRequest,
   CatThreadPoolRequest, ClearScrollRequest, ClusterAllocationExplainRequest, ClusterDeleteComponentTemplateRequest,
-  ClusterExistsComponentTemplateRequest, ClusterGetComponentTemplateRequest, ClusterGetSettingsRequest, ClusterHealthRequest,
-  ClusterPendingTasksRequest, ClusterPutComponentTemplateRequest, ClusterPutSettingsRequest, ClusterRemoteInfoRequest,
-  ClusterRerouteRequest, ClusterStateRequest, ClusterStatsRequest, CountRequest,
-  CreateRequest, DeleteRequest, DeleteByQueryRequest, DeleteByQueryRethrottleRequest,
-  DeleteScriptRequest, ExistsRequest, ExistsSourceRequest, ExplainRequest,
-  FieldCapsRequest, GetRequest, GetScriptRequest, GetScriptContextRequest,
-  GetScriptLanguagesRequest, GetSourceRequest, IndexRequest, IndicesAnalyzeRequest,
-  IndicesClearCacheRequest, IndicesCloneRequest, IndicesCloseRequest, IndicesCreateRequest,
-  IndicesCreateDataStreamRequest, IndicesDeleteRequest, IndicesDeleteAliasRequest, IndicesDeleteDataStreamRequest,
+  ClusterDeleteVotingConfigExclusionsRequest, ClusterExistsComponentTemplateRequest, ClusterGetComponentTemplateRequest, ClusterGetSettingsRequest,
+  ClusterHealthRequest, ClusterPendingTasksRequest, ClusterPostVotingConfigExclusionsRequest, ClusterPutComponentTemplateRequest,
+  ClusterPutSettingsRequest, ClusterRemoteInfoRequest, ClusterRerouteRequest, ClusterStateRequest,
+  ClusterStatsRequest, CountRequest, CreateRequest, DanglingIndicesDeleteDanglingIndexRequest,
+  DanglingIndicesImportDanglingIndexRequest, DanglingIndicesListDanglingIndicesRequest, DeleteRequest, DeleteByQueryRequest,
+  DeleteByQueryRethrottleRequest, DeleteScriptRequest, ExistsRequest, ExistsSourceRequest,
+  ExplainRequest, FieldCapsRequest, GetRequest, GetScriptRequest,
+  GetScriptContextRequest, GetScriptLanguagesRequest, GetSourceRequest, IndexRequest,
+  IndicesAddBlockRequest, IndicesAnalyzeRequest, IndicesClearCacheRequest, IndicesCloneRequest,
+  IndicesCloseRequest, IndicesCreateRequest, IndicesDeleteRequest, IndicesDeleteAliasRequest,
   IndicesDeleteIndexTemplateRequest, IndicesDeleteTemplateRequest, IndicesExistsRequest, IndicesExistsAliasRequest,
-  IndicesExistsTemplateRequest, IndicesExistsTypeRequest, IndicesFlushRequest, IndicesForcemergeRequest,
-  IndicesGetRequest, IndicesGetAliasRequest, IndicesGetDataStreamsRequest, IndicesGetFieldMappingRequest,
+  IndicesExistsIndexTemplateRequest, IndicesExistsTemplateRequest, IndicesExistsTypeRequest, IndicesFlushRequest,
+  IndicesForcemergeRequest, IndicesGetRequest, IndicesGetAliasRequest, IndicesGetFieldMappingRequest,
   IndicesGetIndexTemplateRequest, IndicesGetMappingRequest, IndicesGetSettingsRequest, IndicesGetTemplateRequest,
   IndicesGetUpgradeRequest, IndicesOpenRequest, IndicesPutAliasRequest, IndicesPutIndexTemplateRequest,
   IndicesPutMappingRequest, IndicesPutSettingsRequest, IndicesPutTemplateRequest, IndicesRecoveryRequest,
-  IndicesRefreshRequest, IndicesRolloverRequest, IndicesSegmentsRequest, IndicesShardStoresRequest,
-  IndicesShrinkRequest, IndicesSplitRequest, IndicesStatsRequest, IndicesUpdateAliasesRequest,
-  IndicesUpgradeRequest, IndicesValidateQueryRequest, InfoRequest, IngestDeletePipelineRequest,
-  IngestGetPipelineRequest, IngestProcessorGrokRequest, IngestPutPipelineRequest, IngestSimulateRequest,
-  MgetRequest, MsearchRequest, MsearchTemplateRequest, MtermvectorsRequest,
-  NodesHotThreadsRequest, NodesInfoRequest, NodesReloadSecureSettingsRequest, NodesStatsRequest,
-  NodesUsageRequest, PingRequest, PutScriptRequest, RankEvalRequest,
-  ReindexRequest, ReindexRethrottleRequest, RenderSearchTemplateRequest, ScriptsPainlessExecuteRequest,
-  ScrollRequest, SearchRequest, SearchShardsRequest, SearchTemplateRequest,
-  SnapshotCleanupRepositoryRequest, SnapshotCreateRequest, SnapshotCreateRepositoryRequest, SnapshotDeleteRequest,
-  SnapshotDeleteRepositoryRequest, SnapshotGetRequest, SnapshotGetRepositoryRequest, SnapshotRestoreRequest,
-  SnapshotStatusRequest, SnapshotVerifyRepositoryRequest, TasksCancelRequest, TasksGetRequest,
-  TasksListRequest, TermvectorsRequest, UpdateRequest, UpdateByQueryRequest,
-  UpdateByQueryRethrottleRequest, AsyncSearchDeleteRequest, AsyncSearchGetRequest, AsyncSearchSubmitRequest,
-  AutoscalingDeleteAutoscalingPolicyRequest, AutoscalingGetAutoscalingDecisionRequest, AutoscalingGetAutoscalingPolicyRequest, AutoscalingPutAutoscalingPolicyRequest,
-  CatMlDataFrameAnalyticsRequest, CatMlDatafeedsRequest, CatMlJobsRequest, CatMlTrainedModelsRequest,
-  CatTransformsRequest, CcrDeleteAutoFollowPatternRequest, CcrFollowRequest, CcrFollowInfoRequest,
-  CcrFollowStatsRequest, CcrForgetFollowerRequest, CcrGetAutoFollowPatternRequest, CcrPauseAutoFollowPatternRequest,
-  CcrPauseFollowRequest, CcrPutAutoFollowPatternRequest, CcrResumeAutoFollowPatternRequest, CcrResumeFollowRequest,
-  CcrStatsRequest, CcrUnfollowRequest, DataFrameTransformDeprecatedDeleteTransformRequest, DataFrameTransformDeprecatedGetTransformRequest,
-  DataFrameTransformDeprecatedGetTransformStatsRequest, DataFrameTransformDeprecatedPreviewTransformRequest, DataFrameTransformDeprecatedPutTransformRequest, DataFrameTransformDeprecatedStartTransformRequest,
-  DataFrameTransformDeprecatedStopTransformRequest, DataFrameTransformDeprecatedUpdateTransformRequest, EnrichDeletePolicyRequest, EnrichExecutePolicyRequest,
-  EnrichGetPolicyRequest, EnrichPutPolicyRequest, EnrichStatsRequest, EqlSearchRequest,
-  GraphExploreRequest, IlmDeleteLifecycleRequest, IlmExplainLifecycleRequest, IlmGetLifecycleRequest,
-  IlmGetStatusRequest, IlmMoveToStepRequest, IlmPutLifecycleRequest, IlmRemovePolicyRequest,
-  IlmRetryRequest, IlmStartRequest, IlmStopRequest, IndicesFreezeRequest,
-  IndicesReloadSearchAnalyzersRequest, IndicesUnfreezeRequest, LicenseDeleteRequest, LicenseGetRequest,
-  LicenseGetBasicStatusRequest, LicenseGetTrialStatusRequest, LicensePostRequest, LicensePostStartBasicRequest,
-  LicensePostStartTrialRequest, MigrationDeprecationsRequest, MlCloseJobRequest, MlDeleteCalendarRequest,
-  MlDeleteCalendarEventRequest, MlDeleteCalendarJobRequest, MlDeleteDataFrameAnalyticsRequest, MlDeleteDatafeedRequest,
-  MlDeleteExpiredDataRequest, MlDeleteFilterRequest, MlDeleteForecastRequest, MlDeleteJobRequest,
-  MlDeleteModelSnapshotRequest, MlDeleteTrainedModelRequest, MlEstimateModelMemoryRequest, MlEvaluateDataFrameRequest,
-  MlExplainDataFrameAnalyticsRequest, MlFindFileStructureRequest, MlFlushJobRequest, MlForecastRequest,
-  MlGetBucketsRequest, MlGetCalendarEventsRequest, MlGetCalendarsRequest, MlGetCategoriesRequest,
-  MlGetDataFrameAnalyticsRequest, MlGetDataFrameAnalyticsStatsRequest, MlGetDatafeedStatsRequest, MlGetDatafeedsRequest,
-  MlGetFiltersRequest, MlGetInfluencersRequest, MlGetJobStatsRequest, MlGetJobsRequest,
-  MlGetModelSnapshotsRequest, MlGetOverallBucketsRequest, MlGetRecordsRequest, MlGetTrainedModelsRequest,
-  MlGetTrainedModelsStatsRequest, MlInfoRequest, MlOpenJobRequest, MlPostCalendarEventsRequest,
-  MlPostDataRequest, MlPreviewDatafeedRequest, MlPutCalendarRequest, MlPutCalendarJobRequest,
-  MlPutDataFrameAnalyticsRequest, MlPutDatafeedRequest, MlPutFilterRequest, MlPutJobRequest,
-  MlPutTrainedModelRequest, MlRevertModelSnapshotRequest, MlSetUpgradeModeRequest, MlStartDataFrameAnalyticsRequest,
-  MlStartDatafeedRequest, MlStopDataFrameAnalyticsRequest, MlStopDatafeedRequest, MlUpdateDatafeedRequest,
-  MlUpdateFilterRequest, MlUpdateJobRequest, MlUpdateModelSnapshotRequest, MlValidateRequest,
-  MlValidateDetectorRequest, MonitoringBulkRequest, RollupDeleteJobRequest, RollupGetJobsRequest,
-  RollupGetRollupCapsRequest, RollupGetRollupIndexCapsRequest, RollupPutJobRequest, RollupRollupSearchRequest,
-  RollupStartJobRequest, RollupStopJobRequest, SearchableSnapshotsClearCacheRequest, SearchableSnapshotsMountRequest,
-  SearchableSnapshotsStatsRequest, SecurityAuthenticateRequest, SecurityChangePasswordRequest, SecurityClearCachedRealmsRequest,
+  IndicesRefreshRequest, IndicesResolveIndexRequest, IndicesRolloverRequest, IndicesSegmentsRequest,
+  IndicesShardStoresRequest, IndicesShrinkRequest, IndicesSimulateIndexTemplateRequest, IndicesSimulateTemplateRequest,
+  IndicesSplitRequest, IndicesStatsRequest, IndicesUpdateAliasesRequest, IndicesUpgradeRequest,
+  IndicesValidateQueryRequest, InfoRequest, IngestDeletePipelineRequest, IngestGetPipelineRequest,
+  IngestProcessorGrokRequest, IngestPutPipelineRequest, IngestSimulateRequest, MgetRequest,
+  MsearchRequest, MsearchTemplateRequest, MtermvectorsRequest, NodesHotThreadsRequest,
+  NodesInfoRequest, NodesReloadSecureSettingsRequest, NodesStatsRequest, NodesUsageRequest,
+  PingRequest, PutScriptRequest, RankEvalRequest, ReindexRequest,
+  ReindexRethrottleRequest, RenderSearchTemplateRequest, ScriptsPainlessExecuteRequest, ScrollRequest,
+  SearchRequest, SearchShardsRequest, SearchTemplateRequest, SnapshotCleanupRepositoryRequest,
+  SnapshotCreateRequest, SnapshotCreateRepositoryRequest, SnapshotDeleteRequest, SnapshotDeleteRepositoryRequest,
+  SnapshotGetRequest, SnapshotGetRepositoryRequest, SnapshotRestoreRequest, SnapshotStatusRequest,
+  SnapshotVerifyRepositoryRequest, TasksCancelRequest, TasksGetRequest, TasksListRequest,
+  TermvectorsRequest, UpdateRequest, UpdateByQueryRequest, UpdateByQueryRethrottleRequest,
+  AsyncSearchDeleteRequest, AsyncSearchGetRequest, AsyncSearchSubmitRequest, AutoscalingDeleteAutoscalingPolicyRequest,
+  AutoscalingGetAutoscalingDecisionRequest, AutoscalingGetAutoscalingPolicyRequest, AutoscalingPutAutoscalingPolicyRequest, CatMlDataFrameAnalyticsRequest,
+  CatMlDatafeedsRequest, CatMlJobsRequest, CatMlTrainedModelsRequest, CatTransformsRequest,
+  CcrDeleteAutoFollowPatternRequest, CcrFollowRequest, CcrFollowInfoRequest, CcrFollowStatsRequest,
+  CcrForgetFollowerRequest, CcrGetAutoFollowPatternRequest, CcrPauseAutoFollowPatternRequest, CcrPauseFollowRequest,
+  CcrPutAutoFollowPatternRequest, CcrResumeAutoFollowPatternRequest, CcrResumeFollowRequest, CcrStatsRequest,
+  CcrUnfollowRequest, DataFrameTransformDeprecatedDeleteTransformRequest, DataFrameTransformDeprecatedGetTransformRequest, DataFrameTransformDeprecatedGetTransformStatsRequest,
+  DataFrameTransformDeprecatedPreviewTransformRequest, DataFrameTransformDeprecatedPutTransformRequest, DataFrameTransformDeprecatedStartTransformRequest, DataFrameTransformDeprecatedStopTransformRequest,
+  DataFrameTransformDeprecatedUpdateTransformRequest, EnrichDeletePolicyRequest, EnrichExecutePolicyRequest, EnrichGetPolicyRequest,
+  EnrichPutPolicyRequest, EnrichStatsRequest, EqlDeleteRequest, EqlGetRequest,
+  EqlSearchRequest, GraphExploreRequest, IlmDeleteLifecycleRequest, IlmExplainLifecycleRequest,
+  IlmGetLifecycleRequest, IlmGetStatusRequest, IlmMoveToStepRequest, IlmPutLifecycleRequest,
+  IlmRemovePolicyRequest, IlmRetryRequest, IlmStartRequest, IlmStopRequest,
+  IndicesCreateDataStreamRequest, IndicesDataStreamsStatsRequest, IndicesDeleteDataStreamRequest, IndicesFreezeRequest,
+  IndicesGetDataStreamRequest, IndicesReloadSearchAnalyzersRequest, IndicesUnfreezeRequest, LicenseDeleteRequest,
+  LicenseGetRequest, LicenseGetBasicStatusRequest, LicenseGetTrialStatusRequest, LicensePostRequest,
+  LicensePostStartBasicRequest, LicensePostStartTrialRequest, MigrationDeprecationsRequest, MlCloseJobRequest,
+  MlDeleteCalendarRequest, MlDeleteCalendarEventRequest, MlDeleteCalendarJobRequest, MlDeleteDataFrameAnalyticsRequest,
+  MlDeleteDatafeedRequest, MlDeleteExpiredDataRequest, MlDeleteFilterRequest, MlDeleteForecastRequest,
+  MlDeleteJobRequest, MlDeleteModelSnapshotRequest, MlDeleteTrainedModelRequest, MlEstimateModelMemoryRequest,
+  MlEvaluateDataFrameRequest, MlExplainDataFrameAnalyticsRequest, MlFindFileStructureRequest, MlFlushJobRequest,
+  MlForecastRequest, MlGetBucketsRequest, MlGetCalendarEventsRequest, MlGetCalendarsRequest,
+  MlGetCategoriesRequest, MlGetDataFrameAnalyticsRequest, MlGetDataFrameAnalyticsStatsRequest, MlGetDatafeedStatsRequest,
+  MlGetDatafeedsRequest, MlGetFiltersRequest, MlGetInfluencersRequest, MlGetJobStatsRequest,
+  MlGetJobsRequest, MlGetModelSnapshotsRequest, MlGetOverallBucketsRequest, MlGetRecordsRequest,
+  MlGetTrainedModelsRequest, MlGetTrainedModelsStatsRequest, MlInfoRequest, MlOpenJobRequest,
+  MlPostCalendarEventsRequest, MlPostDataRequest, MlPreviewDatafeedRequest, MlPutCalendarRequest,
+  MlPutCalendarJobRequest, MlPutDataFrameAnalyticsRequest, MlPutDatafeedRequest, MlPutFilterRequest,
+  MlPutJobRequest, MlPutTrainedModelRequest, MlRevertModelSnapshotRequest, MlSetUpgradeModeRequest,
+  MlStartDataFrameAnalyticsRequest, MlStartDatafeedRequest, MlStopDataFrameAnalyticsRequest, MlStopDatafeedRequest,
+  MlUpdateDataFrameAnalyticsRequest, MlUpdateDatafeedRequest, MlUpdateFilterRequest, MlUpdateJobRequest,
+  MlUpdateModelSnapshotRequest, MlValidateRequest, MlValidateDetectorRequest, MonitoringBulkRequest,
+  RollupDeleteJobRequest, RollupGetJobsRequest, RollupGetRollupCapsRequest, RollupGetRollupIndexCapsRequest,
+  RollupPutJobRequest, RollupRollupSearchRequest, RollupStartJobRequest, RollupStopJobRequest,
+  SearchableSnapshotsClearCacheRequest, SearchableSnapshotsMountRequest, SearchableSnapshotsRepositoryStatsRequest, SearchableSnapshotsStatsRequest,
+  SecurityAuthenticateRequest, SecurityChangePasswordRequest, SecurityClearCachedPrivilegesRequest, SecurityClearCachedRealmsRequest,
   SecurityClearCachedRolesRequest, SecurityCreateApiKeyRequest, SecurityDeletePrivilegesRequest, SecurityDeleteRoleRequest,
   SecurityDeleteRoleMappingRequest, SecurityDeleteUserRequest, SecurityDisableUserRequest, SecurityEnableUserRequest,
   SecurityGetApiKeyRequest, SecurityGetBuiltinPrivilegesRequest, SecurityGetPrivilegesRequest, SecurityGetRoleRequest,
