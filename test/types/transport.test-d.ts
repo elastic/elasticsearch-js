@@ -14,6 +14,7 @@ import {
   TransportRequestParams,
   TransportRequestOptions,
   TransportRequestCallback,
+  TransportRequestPromise,
   RequestEvent,
   ApiError,
   RequestBody,
@@ -152,7 +153,7 @@ transport.request({
 })
 
 const promise = transport.request(params, options)
-expectType<Promise<ApiResponse>>(promise)
+expectType<TransportRequestPromise<ApiResponse>>(promise)
 promise.then(result => expectType<ApiResponse>(result))
 expectType<ApiResponse>(await promise)
 
