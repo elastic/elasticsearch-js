@@ -26,7 +26,6 @@ import { RequestBody, RequestNDBody } from '../lib/Transport'
 
 export interface Generic {
   method?: string;
-  ignore?: number | number[];
   filter_path?: string | string[];
   pretty?: boolean;
   human?: boolean;
@@ -118,7 +117,31 @@ export interface ${toPascalCase(name)}${body ? `<T = ${bodyGeneric}>` : ''} exte
       case 'timeout':
         return 'string'
       case 'enum':
-        return options.map(k => `'${k}'`).join(' | ')
+        // the following code changes 'true' | 'false' to boolean
+        let foundTrue = false
+        let foundFalse = false
+        options = options
+          .map(k => {
+            if (k === 'true') {
+              foundTrue = true
+              return true
+            } else if (k === 'false') {
+              foundFalse = true
+              return false
+            } else {
+              return `'${k}'`
+            }
+          })
+          .filter(k => {
+            if (foundTrue && foundFalse && (k === true || k === false)) {
+              return false
+            }
+            return true
+          })
+        if (foundTrue && foundFalse) {
+          options.push('boolean')
+        }
+        return options.join(' | ')
       case 'int':
       case 'double':
       case 'long':
