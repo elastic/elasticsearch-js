@@ -27,6 +27,7 @@ export interface Bulk<T = RequestNDBody> extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   pipeline?: string;
+  require_alias?: boolean;
   body: T;
 }
 
@@ -599,6 +600,7 @@ export interface Index<T = RequestBody> extends Generic {
   if_seq_no?: number;
   if_primary_term?: number;
   pipeline?: string;
+  require_alias?: boolean;
   body: T;
 }
 
@@ -655,11 +657,6 @@ export interface IndicesCreate<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface IndicesCreateDataStream<T = RequestBody> extends Generic {
-  name: string;
-  body?: T;
-}
-
 export interface IndicesDelete extends Generic {
   index: string | string[];
   timeout?: string;
@@ -674,10 +671,6 @@ export interface IndicesDeleteAlias extends Generic {
   name: string | string[];
   timeout?: string;
   master_timeout?: string;
-}
-
-export interface IndicesDeleteDataStream extends Generic {
-  name: string | string[];
 }
 
 export interface IndicesDeleteIndexTemplate extends Generic {
@@ -773,10 +766,6 @@ export interface IndicesGetAlias extends Generic {
   local?: boolean;
 }
 
-export interface IndicesGetDataStream extends Generic {
-  name?: string | string[];
-}
-
 export interface IndicesGetFieldMapping extends Generic {
   fields: string | string[];
   index?: string | string[];
@@ -862,6 +851,7 @@ export interface IndicesPutMapping<T = RequestBody> extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+  write_index_only?: boolean;
   body: T;
 }
 
@@ -1395,6 +1385,7 @@ export interface Update<T = RequestBody> extends Generic {
   timeout?: string;
   if_seq_no?: number;
   if_primary_term?: number;
+  require_alias?: boolean;
   body: T;
 }
 
@@ -1771,6 +1762,19 @@ export interface IlmStart extends Generic {
 export interface IlmStop extends Generic {
 }
 
+export interface IndicesCreateDataStream<T = RequestBody> extends Generic {
+  name: string;
+  body?: T;
+}
+
+export interface IndicesDataStreamsStats extends Generic {
+  name?: string | string[];
+}
+
+export interface IndicesDeleteDataStream extends Generic {
+  name: string | string[];
+}
+
 export interface IndicesFreeze extends Generic {
   index: string;
   timeout?: string;
@@ -1779,6 +1783,10 @@ export interface IndicesFreeze extends Generic {
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   wait_for_active_shards?: string;
+}
+
+export interface IndicesGetDataStream extends Generic {
+  name?: string | string[];
 }
 
 export interface IndicesReloadSearchAnalyzers extends Generic {
@@ -1996,6 +2004,7 @@ export interface MlGetDataFrameAnalyticsStats extends Generic {
   allow_no_match?: boolean;
   from?: number;
   size?: number;
+  verbose?: boolean;
 }
 
 export interface MlGetDatafeedStats extends Generic {

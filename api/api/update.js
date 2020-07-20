@@ -25,6 +25,7 @@ function buildUpdate (opts) {
     'timeout',
     'if_seq_no',
     'if_primary_term',
+    'require_alias',
     'pretty',
     'human',
     'error_trace',
@@ -41,6 +42,7 @@ function buildUpdate (opts) {
     retryOnConflict: 'retry_on_conflict',
     ifSeqNo: 'if_seq_no',
     ifPrimaryTerm: 'if_primary_term',
+    requireAlias: 'require_alias',
     errorTrace: 'error_trace',
     filterPath: 'filter_path'
   }

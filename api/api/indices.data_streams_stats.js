@@ -7,7 +7,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndicesDeleteDataStream (opts) {
+function buildIndicesDataStreamsStats (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -20,11 +20,11 @@ function buildIndicesDeleteDataStream (opts) {
   }
 
   /**
-   * Perform a indices.delete_data_stream request
-   * Deletes a data stream.
+   * Perform a indices.data_streams_stats request
+   * Provides statistics on operations happening in a data stream.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
    */
-  return function indicesDeleteDataStream (params, options, callback) {
+  return function indicesDataStreamsStats (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -34,12 +34,6 @@ function buildIndicesDeleteDataStream (opts) {
       callback = params
       params = {}
       options = {}
-    }
-
-    // check required parameters
-    if (params['name'] == null) {
-      const err = new ConfigurationError('Missing required parameter: name')
-      return handleError(err, callback)
     }
 
     // validate headers object
@@ -59,14 +53,19 @@ function buildIndicesDeleteDataStream (opts) {
 
     var path = ''
 
-    if (method == null) method = 'DELETE'
-    path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
+    if ((name) != null) {
+      if (method == null) method = 'GET'
+      path = '/' + '_data_stream' + '/' + encodeURIComponent(name) + '/' + '_stats'
+    } else {
+      if (method == null) method = 'GET'
+      path = '/' + '_data_stream' + '/' + '_stats'
+    }
 
     // build request object
     const request = {
       method,
       path,
-      body: body || '',
+      body: null,
       querystring
     }
 
@@ -75,4 +74,4 @@ function buildIndicesDeleteDataStream (opts) {
   }
 }
 
-module.exports = buildIndicesDeleteDataStream
+module.exports = buildIndicesDataStreamsStats
