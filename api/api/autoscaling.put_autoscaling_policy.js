@@ -21,6 +21,7 @@ function buildAutoscalingPutAutoscalingPolicy (opts) {
 
   /**
    * Perform a autoscaling.put_autoscaling_policy request
+   * Creates a new autoscaling policy.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-put-autoscaling-policy.html
    */
   return function autoscalingPutAutoscalingPolicy (params, options, callback) {

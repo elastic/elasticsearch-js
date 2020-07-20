@@ -242,7 +242,7 @@ interface CatTemplatesRequest extends GenericRequest {
 interface CatThreadPoolRequest extends GenericRequest {
   thread_pool_patterns?: string | string[];
   format?: string;
-  size?: '' | 'k' | 'm' | 'g' | 't' | 'p';
+  time?: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos';
   local?: boolean;
   master_timeout?: string;
   h?: string | string[];
@@ -268,7 +268,11 @@ interface ClusterDeleteComponentTemplateRequest extends GenericRequest {
   master_timeout?: string;
 }
 
-interface ClusterExistsComponentTemplateRequest extends GenericRequest {
+export interface ClusterDeleteVotingConfigExclusionsRequest extends Generic {
+  wait_for_removal?: boolean;
+}
+
+export interface ClusterExistsComponentTemplateRequest extends Generic {
   name: string;
   master_timeout?: string;
   local?: boolean;
@@ -307,7 +311,17 @@ interface ClusterPendingTasksRequest extends GenericRequest {
   master_timeout?: string;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface ClusterPutComponentTemplateRequest<T = RequestBody> extends GenericRequest {
+=======
+export interface ClusterPostVotingConfigExclusions extends Generic {
+  node_ids?: string;
+  node_names?: string;
+  timeout?: string;
+}
+
+export interface ClusterPutComponentTemplate<T = RequestBody> extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   name: string;
   create?: boolean;
   timeout?: string;
@@ -387,7 +401,28 @@ interface CreateRequest<T = RequestBody> extends GenericRequest {
   body: T;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface DeleteRequest extends GenericRequest {
+=======
+export interface DanglingIndicesDeleteDanglingIndex extends Generic {
+  index_uuid: string;
+  accept_data_loss?: boolean;
+  timeout?: string;
+  master_timeout?: string;
+}
+
+export interface DanglingIndicesImportDanglingIndex extends Generic {
+  index_uuid: string;
+  accept_data_loss?: boolean;
+  timeout?: string;
+  master_timeout?: string;
+}
+
+export interface DanglingIndicesListDanglingIndices extends Generic {
+}
+
+export interface Delete extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   id: string;
   index: string;
   type?: string;
@@ -505,13 +540,18 @@ interface ExplainRequest<T = RequestBody> extends GenericRequest {
   body?: T;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface FieldCapsRequest extends GenericRequest {
+=======
+export interface FieldCaps<T = RequestBody> extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   index?: string | string[];
   fields?: string | string[];
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   include_unmapped?: boolean;
+  body?: T;
 }
 
 interface GetRequest extends GenericRequest {
@@ -574,7 +614,21 @@ interface IndexRequest<T = RequestBody> extends GenericRequest {
   body: T;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface IndicesAnalyzeRequest<T = RequestBody> extends GenericRequest {
+=======
+export interface IndicesAddBlock extends Generic {
+  index: string | string[];
+  block: string;
+  timeout?: string;
+  master_timeout?: string;
+  ignore_unavailable?: boolean;
+  allow_no_indices?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+}
+
+export interface IndicesAnalyze<T = RequestBody> extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   index?: string;
   body?: T;
 }
@@ -619,7 +673,7 @@ interface IndicesCreateRequest<T = RequestBody> extends GenericRequest {
 
 interface IndicesCreateDataStreamRequest<T = RequestBody> extends GenericRequest {
   name: string;
-  body: T;
+  body?: T;
 }
 
 interface IndicesDeleteRequest extends GenericRequest {
@@ -638,8 +692,13 @@ interface IndicesDeleteAliasRequest extends GenericRequest {
   master_timeout?: string;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface IndicesDeleteDataStreamRequest extends GenericRequest {
   name: string;
+=======
+export interface IndicesDeleteDataStream extends Generic {
+  name: string | string[];
+>>>>>>> master:api/requestParams.d.ts
 }
 
 interface IndicesDeleteIndexTemplateRequest extends GenericRequest {
@@ -673,7 +732,18 @@ interface IndicesExistsAliasRequest extends GenericRequest {
   local?: boolean;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface IndicesExistsTemplateRequest extends GenericRequest {
+=======
+export interface IndicesExistsIndexTemplate extends Generic {
+  name: string;
+  flat_settings?: boolean;
+  master_timeout?: string;
+  local?: boolean;
+}
+
+export interface IndicesExistsTemplate extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   name: string | string[];
   flat_settings?: boolean;
   master_timeout?: string;
@@ -728,8 +798,13 @@ interface IndicesGetAliasRequest extends GenericRequest {
   local?: boolean;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface IndicesGetDataStreamsRequest extends GenericRequest {
   name?: string;
+=======
+export interface IndicesGetDataStream extends Generic {
+  name?: string | string[];
+>>>>>>> master:api/requestParams.d.ts
 }
 
 interface IndicesGetFieldMappingRequest extends GenericRequest {
@@ -804,8 +879,8 @@ interface IndicesPutAliasRequest<T = RequestBody> extends GenericRequest {
 
 interface IndicesPutIndexTemplateRequest<T = RequestBody> extends GenericRequest {
   name: string;
-  order?: number;
   create?: boolean;
+  cause?: string;
   master_timeout?: string;
   body: T;
 }
@@ -853,7 +928,16 @@ interface IndicesRefreshRequest extends GenericRequest {
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface IndicesRolloverRequest<T = RequestBody> extends GenericRequest {
+=======
+export interface IndicesResolveIndex extends Generic {
+  name: string | string[];
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+}
+
+export interface IndicesRollover<T = RequestBody> extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   alias: string;
   new_index?: string;
   timeout?: string;
@@ -888,7 +972,27 @@ interface IndicesShrinkRequest<T = RequestBody> extends GenericRequest {
   body?: T;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface IndicesSplitRequest<T = RequestBody> extends GenericRequest {
+=======
+export interface IndicesSimulateIndexTemplate<T = RequestBody> extends Generic {
+  name: string;
+  create?: boolean;
+  cause?: string;
+  master_timeout?: string;
+  body?: T;
+}
+
+export interface IndicesSimulateTemplate<T = RequestBody> extends Generic {
+  name?: string;
+  create?: boolean;
+  cause?: string;
+  master_timeout?: string;
+  body?: T;
+}
+
+export interface IndicesSplit<T = RequestBody> extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   index: string;
   target: string;
   timeout?: string;
@@ -1046,9 +1150,14 @@ interface NodesInfoRequest extends GenericRequest {
   timeout?: string;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface NodesReloadSecureSettingsRequest extends GenericRequest {
+=======
+export interface NodesReloadSecureSettings<T = RequestBody> extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   node_id?: string | string[];
   timeout?: string;
+  body?: T;
 }
 
 interface NodesStatsRequest extends GenericRequest {
@@ -1160,7 +1269,7 @@ interface SearchRequest<T = RequestBody> extends GenericRequest {
   suggest_text?: string;
   timeout?: string;
   track_scores?: boolean;
-  track_total_hits?: boolean;
+  track_total_hits?: boolean | number;
   allow_partial_search_results?: boolean;
   typed_keys?: boolean;
   version?: boolean;
@@ -1225,7 +1334,7 @@ interface SnapshotCreateRepositoryRequest<T = RequestBody> extends GenericReques
 
 interface SnapshotDeleteRequest extends GenericRequest {
   repository: string;
-  snapshot: string;
+  snapshot: string | string[];
   master_timeout?: string;
 }
 
@@ -1427,7 +1536,7 @@ interface AsyncSearchSubmitRequest<T = RequestBody> extends GenericRequest {
   suggest_text?: string;
   timeout?: string;
   track_scores?: boolean;
-  track_total_hits?: boolean;
+  track_total_hits?: boolean | number;
   allow_partial_search_results?: boolean;
   typed_keys?: boolean;
   version?: boolean;
@@ -1638,8 +1747,25 @@ interface EnrichPutPolicyRequest<T = RequestBody> extends GenericRequest {
 interface EnrichStatsRequest extends GenericRequest {
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface EqlSearchRequest<T = RequestBody> extends GenericRequest {
+=======
+export interface EqlDelete extends Generic {
+  id: string;
+}
+
+export interface EqlGet extends Generic {
+  id: string;
+  wait_for_completion_timeout?: string;
+  keep_alive?: string;
+}
+
+export interface EqlSearch<T = RequestBody> extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   index: string;
+  wait_for_completion_timeout?: string;
+  keep_on_completion?: boolean;
+  keep_alive?: string;
   body: T;
 }
 
@@ -1775,6 +1901,7 @@ interface MlDeleteCalendarJobRequest extends GenericRequest {
 interface MlDeleteDataFrameAnalyticsRequest extends GenericRequest {
   id: string;
   force?: boolean;
+  timeout?: string;
 }
 
 interface MlDeleteDatafeedRequest extends GenericRequest {
@@ -1782,7 +1909,15 @@ interface MlDeleteDatafeedRequest extends GenericRequest {
   force?: boolean;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface MlDeleteExpiredDataRequest extends GenericRequest {
+=======
+export interface MlDeleteExpiredData<T = RequestBody> extends Generic {
+  job_id?: string;
+  requests_per_second?: number;
+  timeout?: string;
+  body?: T;
+>>>>>>> master:api/requestParams.d.ts
 }
 
 interface MlDeleteFilterRequest extends GenericRequest {
@@ -1856,6 +1991,7 @@ interface MlForecastRequest extends GenericRequest {
   job_id: string;
   duration?: string;
   expires_in?: string;
+  max_model_memory?: string;
 }
 
 interface MlGetBucketsRequest<T = RequestBody> extends GenericRequest {
@@ -1894,6 +2030,7 @@ interface MlGetCategoriesRequest<T = RequestBody> extends GenericRequest {
   category_id?: number;
   from?: number;
   size?: number;
+  partition_field_value?: string;
   body?: T;
 }
 
@@ -1995,6 +2132,7 @@ interface MlGetTrainedModelsRequest extends GenericRequest {
   from?: number;
   size?: number;
   tags?: string | string[];
+  for_export?: boolean;
 }
 
 interface MlGetTrainedModelsStatsRequest extends GenericRequest {
@@ -2107,7 +2245,16 @@ interface MlStopDatafeedRequest extends GenericRequest {
   timeout?: string;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface MlUpdateDatafeedRequest<T = RequestBody> extends GenericRequest {
+=======
+export interface MlUpdateDataFrameAnalytics<T = RequestBody> extends Generic {
+  id: string;
+  body: T;
+}
+
+export interface MlUpdateDatafeed<T = RequestBody> extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   datafeed_id: string;
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
@@ -2202,7 +2349,15 @@ interface SearchableSnapshotsMountRequest<T = RequestBody> extends GenericReques
   body: T;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface SearchableSnapshotsStatsRequest extends GenericRequest {
+=======
+export interface SearchableSnapshotsRepositoryStats extends Generic {
+  repository: string;
+}
+
+export interface SearchableSnapshotsStats extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   index?: string | string[];
 }
 
@@ -2215,7 +2370,15 @@ interface SecurityChangePasswordRequest<T = RequestBody> extends GenericRequest 
   body: T;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface SecurityClearCachedRealmsRequest extends GenericRequest {
+=======
+export interface SecurityClearCachedPrivileges extends Generic {
+  application: string | string[];
+}
+
+export interface SecurityClearCachedRealms extends Generic {
+>>>>>>> master:api/requestParams.d.ts
   realms: string | string[];
   usernames?: string | string[];
 }
@@ -2276,12 +2439,21 @@ interface SecurityGetPrivilegesRequest extends GenericRequest {
   name?: string;
 }
 
+<<<<<<< HEAD:api/RequestTypes.d.ts
 interface SecurityGetRoleRequest extends GenericRequest {
   name?: string;
 }
 
 interface SecurityGetRoleMappingRequest extends GenericRequest {
   name?: string;
+=======
+export interface SecurityGetRole extends Generic {
+  name?: string | string[];
+}
+
+export interface SecurityGetRoleMapping extends Generic {
+  name?: string | string[];
+>>>>>>> master:api/requestParams.d.ts
 }
 
 interface SecurityGetTokenRequest<T = RequestBody> extends GenericRequest {
@@ -2477,6 +2649,7 @@ interface WatcherStopRequest extends GenericRequest {
 
 interface XpackInfoRequest extends GenericRequest {
   categories?: string | string[];
+  accept_enterprise?: boolean;
 }
 
 interface XpackUsageRequest extends GenericRequest {

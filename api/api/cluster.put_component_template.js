@@ -31,7 +31,7 @@ function buildClusterPutComponentTemplate (opts) {
   /**
    * Perform a cluster.put_component_template request
    * Creates or updates a component template
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-templates.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html
    */
   return function clusterPutComponentTemplate (params, options, callback) {
     options = options || {}

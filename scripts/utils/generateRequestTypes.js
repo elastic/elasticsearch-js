@@ -129,6 +129,8 @@ interface ${toPascalCase(name)}Request${body ? `<T = ${bodyGeneric}>` : ''} exte
       case 'double':
       case 'long':
         return 'number'
+      case 'boolean|long':
+        return 'boolean | number'
       default:
         return type
     }

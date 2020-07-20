@@ -3,6 +3,13 @@
   "description": "The official Elasticsearch client for Node.js",
   "main": "index.js",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "import": "./index.mjs"
+    },
+    "./": "./"
+  },
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
   "version": "8.0.0-SNAPSHOT.9f33e3c7",
   "keywords": [
@@ -16,20 +23,20 @@
     "index"
   ],
   "scripts": {
-    "test": "npm run lint && npm run test:unit && npm run test:behavior && npm run test:types",
-    "test:unit": "tap test/unit/*.test.js test/unit/**/*.test.js -t 300 --no-coverage",
-    "test:behavior": "tap test/behavior/*.test.js -t 300 --no-coverage",
+    "test": "npm run lint && tap test/{unit,acceptance}/{*,**/*}.test.js && npm run test:types",
+    "test:node8": "npm run lint && tap test/{unit,acceptance}/*.test.js",
+    "test:unit": "tap test/unit/{*,**/*}.test.js",
+    "test:acceptance": "tap test/acceptance/*.test.js",
     "test:integration": "node test/integration/index.js",
-    "test:integration:helpers": "tap test/integration/helpers/*.test.js --no-coverage -J",
+    "test:integration:helpers": "tap test/integration/helpers/*.test.js",
     "test:types": "tsd",
-    "test:coverage": "tap test/unit/*.test.js test/unit/**/*.test.js test/behavior/*.test.js -t 300 && nyc report --reporter=text-lcov > coverage.lcov",
-    "test:coverage-ui": "tap test/unit/*.test.js test/unit/**/*.test.js test/behavior/*.test.js -t 300 --coverage-report=html",
+    "test:coverage-100": "tap test/{unit,acceptance}/{*,**/*}.test.js --coverage --100 --nyc-arg=\"--exclude=api\"",
+    "test:coverage-report": "tap test/{unit,acceptance}/{*,**/*}.test.js --coverage --nyc-arg=\"--exclude=api\" && nyc report --reporter=text-lcov > coverage.lcov",
+    "test:coverage-ui": "tap test/{unit,acceptance}/{*,**/*}.test.js --coverage --coverage-report=html --nyc-arg=\"--exclude=api\"",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "ci": "npm run license-checker && npm test && npm run test:integration:helpers && npm run test:integration && npm run test:coverage",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'",
-    "elasticsearch": "./scripts/es-docker.sh",
-    "elasticsearch:xpack": "./scripts/es-docker-platinum.sh"
+    "build-esm": "npx gen-esm-wrapper . index.mjs && standard --fix index.mjs"
   },
   "author": {
     "name": "Tomas Della Vedova",
@@ -40,6 +47,7 @@
     "company": "Elasticsearch BV"
   },
   "devDependencies": {
+    "@sinonjs/fake-timers": "github:sinonjs/fake-timers#0bfffc1",
     "@types/node": "^12.6.2",
     "convert-hrtime": "^3.0.0",
     "dedent": "^0.7.0",
@@ -49,7 +57,6 @@
     "into-stream": "^5.1.1",
     "js-yaml": "^3.13.1",
     "license-checker": "^25.0.1",
-    "lolex": "^4.0.1",
     "minimist": "^1.2.0",
     "ora": "^3.4.0",
     "pretty-hrtime": "^1.0.3",
@@ -61,8 +68,9 @@
     "standard": "^13.0.2",
     "stoppable": "^1.1.0",
     "tap": "^14.4.1",
-    "tsd": "^0.11.0",
-    "workq": "^2.1.0"
+    "tsd": "^0.13.1",
+    "workq": "^2.1.0",
+    "xmlbuilder2": "^2.1.2"
   },
   "dependencies": {
     "debug": "^4.1.1",
@@ -84,5 +92,13 @@
   },
   "tsd": {
     "directory": "test/types"
+  },
+  "tap": {
+    "esm": false,
+    "ts": false,
+    "jsx": false,
+    "flow": false,
+    "coverage": false,
+    "jobs-auto": true
   }
 }

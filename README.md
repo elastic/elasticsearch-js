@@ -62,6 +62,7 @@ We recommend that you write a lightweight proxy that uses this client instead.
 - [Extend the client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/extend-client.html)
 - [Client helpers](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-helpers.html)
 - [Typescript support](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html)
+- [Testing](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-testing.html)
 - [Examples](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/examples.html)
 
 ## Quick start
@@ -77,13 +78,21 @@ You can use both the callback-style API and the promise-style API, both behave t
 // promise API
 const result = await client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 })
 
 // callback API
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  body: {
+    query: {
+      match: { hello: 'world' }
+    }
+  }
 }, (err, result) => {
   if (err) console.log(err)
 })

@@ -3,6 +3,7 @@
     name: elastic+elasticsearch-js+7.x
     display-name: 'elastic / elasticsearch-js # 7.x'
     description: Testing the elasticsearch-js 7.x branch.
+    junit_results: "*-junit.xml"
     parameters:
     - string:
         name: branch_specifier
@@ -11,4 +12,4 @@
           &lt;commitId&gt;, etc.)
     triggers:
     - github
-    - timed: '@weekly'
+    - timed: '@daily'

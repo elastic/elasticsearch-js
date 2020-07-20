@@ -46,10 +46,6 @@ function buildIndicesCreateDataStream (opts) {
       const err = new ConfigurationError('Missing required parameter: name')
       return handleError(err, callback)
     }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
 
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {

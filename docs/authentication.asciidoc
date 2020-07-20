@@ -20,6 +20,8 @@ override this option by configuring them.
 
 IMPORTANT: Do not enable sniffing when using Elastic Cloud, since the nodes are 
 behind a load balancer, Elastic Cloud will take care of everything for you.
+Take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here]
+to know more.
 
 [source,js]
 ----
@@ -106,27 +108,22 @@ const client = new Client({
 
 === SSL configuration
 
-Without any additional configuration you can specify `https://` node urls, but 
-the certificates used to sign these requests will not verified 
-(`rejectUnauthorized: false`). To turn on certificate verification, you must 
-specify an `ssl` object either in the top level config or in each host config 
-object and set `rejectUnauthorized: true`. The ssl config object can contain 
-many of the same configuration options that 
-https://nodejs.org/api/tls.html#tls_tls_connect_options_callback[tls.connect()] 
-accepts.
+Without any additional configuration you can specify `https://` node urls, and 
+the certificates used to sign these requests will be verified. To turn off certificate verification, you must specify an `ssl` object in the top level config and set `rejectUnauthorized: false`. The default `ssl` values are the same that Node.js's https://nodejs.org/api/tls.html#tls_tls_connect_options_callback[`tls.connect()`] 
+uses.
 
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
-  node: 'http://localhost:9200',
+  node: 'https://localhost:9200',
   auth: {
     username: 'elastic',
     password: 'changeme'
   },
   ssl: {
     ca: fs.readFileSync('./cacert.pem'),
-    rejectUnauthorized: true
+    rejectUnauthorized: false
   }
 })
 ----

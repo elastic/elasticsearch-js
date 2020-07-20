@@ -3,6 +3,7 @@
     name: elastic+elasticsearch-js+master
     display-name: 'elastic / elasticsearch-js # master'
     description: Testing the elasticsearch-js master branch.
+    junit_results: "*-junit.xml"
     parameters:
     - string:
         name: branch_specifier

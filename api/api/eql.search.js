@@ -12,17 +12,21 @@ function buildEqlSearch (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-
+    'wait_for_completion_timeout',
+    'keep_on_completion',
+    'keep_alive'
   ]
 
   const snakeCase = {
-
+    waitForCompletionTimeout: 'wait_for_completion_timeout',
+    keepOnCompletion: 'keep_on_completion',
+    keepAlive: 'keep_alive'
   }
 
   /**
    * Perform a eql.search request
    * Returns results matching a query expressed in Event Query Language (EQL)
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html
    */
   return function eqlSearch (params, options, callback) {
     options = options || {}

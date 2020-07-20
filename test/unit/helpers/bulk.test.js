@@ -7,6 +7,7 @@
 const { createReadStream } = require('fs')
 const { join } = require('path')
 const split = require('split2')
+const FakeTimers = require('@sinonjs/fake-timers')
 const semver = require('semver')
 const { test } = require('tap')
 const { Client, errors } = require('../../../')
@@ -25,7 +26,7 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -67,7 +68,7 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -108,7 +109,7 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           t.strictEqual(params.body.split('\n').filter(Boolean).length, 6)
           return { body: { errors: false, items: new Array(3).fill({}) } }
         }
@@ -152,7 +153,7 @@ test('bulk index', t => {
             return { body: { acknowledged: true } }
           } else {
             t.strictEqual(params.path, '/_bulk')
-            t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+            t.match(params.headers, { 'content-type': 'application/x-ndjson' })
             const [action, payload] = params.body.split('\n')
             t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
             t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -188,12 +189,57 @@ test('bulk index', t => {
       })
     })
 
+    t.test('refreshOnCompletion custom index', async t => {
+      let count = 0
+      const MockConnection = connection.buildMockConnection({
+        onRequest (params) {
+          if (params.method === 'GET') {
+            t.strictEqual(params.path, '/test/_refresh')
+            return { body: { acknowledged: true } }
+          } else {
+            t.strictEqual(params.path, '/_bulk')
+            t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+            const [action, payload] = params.body.split('\n')
+            t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+            t.deepEqual(JSON.parse(payload), dataset[count++])
+            return { body: { errors: false, items: [{}] } }
+          }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+      const result = await client.helpers.bulk({
+        datasource: dataset.slice(),
+        flushBytes: 1,
+        concurrency: 1,
+        refreshOnCompletion: 'test',
+        onDocument (doc) {
+          return {
+            index: { _index: 'test' }
+          }
+        }
+      })
+
+      t.type(result.time, 'number')
+      t.type(result.bytes, 'number')
+      t.match(result, {
+        total: 3,
+        successful: 3,
+        retry: 0,
+        failed: 0,
+        aborted: false
+      })
+    })
+
     t.test('Should perform a bulk request (custom action)', async t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test', _id: count } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -607,7 +653,7 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test', _id: count } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -659,7 +705,7 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -715,7 +761,7 @@ test('bulk create', t => {
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
         t.strictEqual(params.path, '/_bulk')
-        t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
         const [action, payload] = params.body.split('\n')
         t.deepEqual(JSON.parse(action), { create: { _index: 'test', _id: count } })
         t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -764,7 +810,7 @@ test('bulk update', t => {
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
         t.strictEqual(params.path, '/_bulk')
-        t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
         const [action, payload] = params.body.split('\n')
         t.deepEqual(JSON.parse(action), { update: { _index: 'test', _id: count } })
         t.deepEqual(JSON.parse(payload), { doc: dataset[count++], doc_as_upsert: true })
@@ -806,6 +852,53 @@ test('bulk update', t => {
       aborted: false
     })
   })
+
+  t.test('Should perform a bulk request dataset as string)', async t => {
+    let count = 0
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        t.strictEqual(params.path, '/_bulk')
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+        const [action, payload] = params.body.split('\n')
+        t.deepEqual(JSON.parse(action), { update: { _index: 'test', _id: count } })
+        t.deepEqual(JSON.parse(payload), { doc: dataset[count++] })
+        return { body: { errors: false, items: [{}] } }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+    let id = 0
+    const result = await client.helpers.bulk({
+      datasource: dataset.map(d => JSON.stringify(d)),
+      flushBytes: 1,
+      concurrency: 1,
+      onDocument (doc) {
+        return [{
+          update: {
+            _index: 'test',
+            _id: id++
+          }
+        }]
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
+    })
+
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, {
+      total: 3,
+      successful: 3,
+      retry: 0,
+      failed: 0,
+      aborted: false
+    })
+  })
+
   t.end()
 })
 
@@ -815,7 +908,7 @@ test('bulk delete', t => {
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
         t.strictEqual(params.path, '/_bulk')
-        t.match(params.headers, { 'Content-Type': 'application/x-ndjson' })
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
         t.deepEqual(JSON.parse(params.body), { delete: { _index: 'test', _id: count++ } })
         return { body: { errors: false, items: [{}] } }
       }
@@ -855,10 +948,6 @@ test('bulk delete', t => {
   })
 
   t.test('Should perform a bulk request (failure)', async t => {
-    if (semver.lt(process.versions.node, '10.0.0')) {
-      t.skip('This test will not pass on Node v8')
-      return
-    }
     async function handler (req, res) {
       t.strictEqual(req.url, '/_bulk')
       t.match(req.headers, { 'content-type': 'application/x-ndjson' })
@@ -983,6 +1072,121 @@ test('errors', t => {
       t.true(err instanceof errors.ConfigurationError)
       t.is(err.message, 'bulk helper: the onDocument callback is required')
     }
+  })
+
+  t.end()
+})
+
+test('Flush interval', t => {
+  t.test('Slow producer', async t => {
+    const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+    t.teardown(() => clock.uninstall())
+
+    let count = 0
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        t.strictEqual(params.path, '/_bulk')
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+        const [action, payload] = params.body.split('\n')
+        t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+        t.deepEqual(JSON.parse(payload), dataset[count++])
+        return { body: { errors: false, items: [{}] } }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    const result = await client.helpers.bulk({
+      datasource: (async function * generator () {
+        for (const chunk of dataset) {
+          await clock.nextAsync()
+          yield chunk
+        }
+      })(),
+      flushBytes: 5000000,
+      concurrency: 1,
+      onDocument (doc) {
+        return {
+          index: { _index: 'test' }
+        }
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
+    })
+
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, {
+      total: 3,
+      successful: 3,
+      retry: 0,
+      failed: 0,
+      aborted: false
+    })
+  })
+
+  t.test('Abort operation', async t => {
+    const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+    t.teardown(() => clock.uninstall())
+
+    let count = 0
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        t.true(count < 2)
+        t.strictEqual(params.path, '/_bulk')
+        t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+        const [action, payload] = params.body.split('\n')
+        t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+        t.deepEqual(JSON.parse(payload), dataset[count++])
+        return { body: { errors: false, items: [{}] } }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    const b = client.helpers.bulk({
+      datasource: (async function * generator () {
+        for (const chunk of dataset) {
+          await clock.nextAsync()
+          if (chunk.user === 'tyrion') {
+            // Needed otherwise in Node.js 10
+            // the second request will never be sent
+            await Promise.resolve()
+            b.abort()
+          }
+          yield chunk
+        }
+      })(),
+      flushBytes: 5000000,
+      concurrency: 1,
+      onDocument (doc) {
+        return {
+          index: { _index: 'test' }
+        }
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
+    })
+
+    const result = await b
+
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, {
+      total: 2,
+      successful: 2,
+      retry: 0,
+      failed: 0,
+      aborted: true
+    })
   })
 
   t.end()

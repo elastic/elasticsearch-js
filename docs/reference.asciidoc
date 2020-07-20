@@ -998,7 +998,7 @@ link:{ref}/cat-templates.html[Documentation] +
 client.cat.threadPool({
   thread_pool_patterns: string | string[],
   format: string,
-  size: '' | 'k' | 'm' | 'g' | 't' | 'p',
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
   local: boolean,
   master_timeout: string,
   h: string | string[],
@@ -1016,8 +1016,8 @@ link:{ref}/cat-thread-pool.html[Documentation] +
 |`format`
 |`string` - a short version of the Accept header, e.g. json, yaml
 
-|`size`
-|`'' \| 'k' \| 'm' \| 'g' \| 't' \| 'p'` - The multiplier in which to display values
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -1086,7 +1086,7 @@ link:{ref}/cluster-allocation-explain.html[Documentation] +
 |===
 
 === cluster.deleteComponentTemplate
-
+*Stability:* experimental
 [source,ts]
 ----
 client.cluster.deleteComponentTemplate({
@@ -1095,7 +1095,7 @@ client.cluster.deleteComponentTemplate({
   master_timeout: string
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -1109,8 +1109,25 @@ link:{ref}/indices-component-templates.html[Documentation] +
 
 |===
 
-=== cluster.existsComponentTemplate
+=== cluster.deleteVotingConfigExclusions
 
+[source,ts]
+----
+client.cluster.deleteVotingConfigExclusions({
+  wait_for_removal: boolean
+})
+----
+link:{ref}/voting-config-exclusions.html[Documentation] +
+[cols=2*]
+|===
+|`wait_for_removal` or `waitForRemoval`
+|`boolean` - Specifies whether to wait for all excluded nodes to be removed from the cluster before clearing the voting configuration exclusions list. +
+_Default:_ `true`
+
+|===
+
+=== cluster.existsComponentTemplate
+*Stability:* experimental
 [source,ts]
 ----
 client.cluster.existsComponentTemplate({
@@ -1119,7 +1136,7 @@ client.cluster.existsComponentTemplate({
   local: boolean
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -1134,7 +1151,7 @@ link:{ref}/indices-component-templates.html[Documentation] +
 |===
 
 === cluster.getComponentTemplate
-
+*Stability:* experimental
 [source,ts]
 ----
 client.cluster.getComponentTemplate({
@@ -1143,7 +1160,7 @@ client.cluster.getComponentTemplate({
   local: boolean
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -1267,8 +1284,33 @@ link:{ref}/cluster-pending.html[Documentation] +
 
 |===
 
-=== cluster.putComponentTemplate
+=== cluster.postVotingConfigExclusions
 
+[source,ts]
+----
+client.cluster.postVotingConfigExclusions({
+  node_ids: string,
+  node_names: string,
+  timeout: string
+})
+----
+link:{ref}/voting-config-exclusions.html[Documentation] +
+[cols=2*]
+|===
+|`node_ids` or `nodeIds`
+|`string` - A comma-separated list of the persistent ids of the nodes to exclude from the voting configuration. If specified, you may not also specify ?node_names.
+
+|`node_names` or `nodeNames`
+|`string` - A comma-separated list of the names of the nodes to exclude from the voting configuration. If specified, you may not also specify ?node_ids.
+
+|`timeout`
+|`string` - Explicit operation timeout +
+_Default:_ `30s`
+
+|===
+
+=== cluster.putComponentTemplate
+*Stability:* experimental
 [source,ts]
 ----
 client.cluster.putComponentTemplate({
@@ -1279,7 +1321,7 @@ client.cluster.putComponentTemplate({
   body: object
 })
 ----
-link:{ref}/indices-component-templates.html[Documentation] +
+link:{ref}/indices-component-template.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -1588,6 +1630,71 @@ WARNING: This parameter has been deprecated.
 |`object` - The document
 
 |===
+
+=== danglingIndices.deleteDanglingIndex
+
+[source,ts]
+----
+client.danglingIndices.deleteDanglingIndex({
+  index_uuid: string,
+  accept_data_loss: boolean,
+  timeout: string,
+  master_timeout: string
+})
+----
+link:{ref}/modules-gateway-dangling-indices.html[Documentation] +
+[cols=2*]
+|===
+|`index_uuid` or `indexUuid`
+|`string` - The UUID of the dangling index
+
+|`accept_data_loss` or `acceptDataLoss`
+|`boolean` - Must be set to true in order to delete the dangling index
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|===
+
+=== danglingIndices.importDanglingIndex
+
+[source,ts]
+----
+client.danglingIndices.importDanglingIndex({
+  index_uuid: string,
+  accept_data_loss: boolean,
+  timeout: string,
+  master_timeout: string
+})
+----
+link:{ref}/modules-gateway-dangling-indices.html[Documentation] +
+[cols=2*]
+|===
+|`index_uuid` or `indexUuid`
+|`string` - The UUID of the dangling index
+
+|`accept_data_loss` or `acceptDataLoss`
+|`boolean` - Must be set to true in order to import the dangling index
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|===
+
+=== danglingIndices.listDanglingIndices
+
+[source,ts]
+----
+client.danglingIndices.listDanglingIndices()
+----
+link:{ref}/modules-gateway-dangling-indices.html[Documentation] +
+
 
 === delete
 
@@ -2052,7 +2159,8 @@ client.fieldCaps({
   ignore_unavailable: boolean,
   allow_no_indices: boolean,
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
-  include_unmapped: boolean
+  include_unmapped: boolean,
+  body: object
 })
 ----
 link:{ref}/search-field-caps.html[Documentation] +
@@ -2076,6 +2184,9 @@ _Default:_ `open`
 
 |`include_unmapped` or `includeUnmapped`
 |`boolean` - Indicates whether unmapped fields should be included in the response.
+
+|`body`
+|`object` - An index filter specified with the Query DSL
 
 |===
 
@@ -2295,6 +2406,47 @@ link:{ref}/docs-index_.html[Documentation] +
 
 |`body`
 |`object` - The document
+
+|===
+
+=== indices.addBlock
+
+[source,ts]
+----
+client.indices.addBlock({
+  index: string | string[],
+  block: string,
+  timeout: string,
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
+})
+----
+
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma separated list of indices to add a block to
+
+|`block`
+|`string` - The block to add (one of read, write, read_only or metadata)
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
 
 |===
 
@@ -2562,19 +2714,19 @@ link:{ref}/indices-aliases.html[Documentation] +
 [source,ts]
 ----
 client.indices.deleteDataStream({
-  name: string
+  name: string | string[]
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string` - The name of the data stream
+|`string \| string[]` - A comma-separated list of data streams to delete; use `*` to delete all data streams
 
 |===
 
 === indices.deleteIndexTemplate
-
+*Stability:* experimental
 [source,ts]
 ----
 client.indices.deleteIndexTemplate({
@@ -2693,6 +2845,34 @@ link:{ref}/indices-aliases.html[Documentation] +
 |`expand_wildcards` or `expandWildcards`
 |`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `all`
+
+|`local`
+|`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|===
+
+=== indices.existsIndexTemplate
+*Stability:* experimental
+[source,ts]
+----
+client.indices.existsIndexTemplate({
+  name: string,
+  flat_settings: boolean,
+  master_timeout: string,
+  local: boolean
+})
+----
+link:{ref}/indices-templates.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the template
+
+|`flat_settings` or `flatSettings`
+|`boolean` - Return settings in flat format (default: false)
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -2924,19 +3104,19 @@ _Default:_ `all`
 
 |===
 
-=== indices.getDataStreams
+=== indices.getDataStream
 *Stability:* experimental
 [source,ts]
 ----
-client.indices.getDataStreams({
-  name: string
+client.indices.getDataStream({
+  name: string | string[]
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string` - The name or wildcard expression of the requested data streams
+|`string \| string[]` - A comma-separated list of data streams to get; use `*` to get all data streams
 
 |===
 
@@ -2982,7 +3162,7 @@ _Default:_ `open`
 |===
 
 === indices.getIndexTemplate
-
+*Stability:* experimental
 [source,ts]
 ----
 client.indices.getIndexTemplate({
@@ -3042,7 +3222,9 @@ _Default:_ `open`
 |`string` - Specify timeout for connection to master
 
 |`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
+|`boolean` - Return local information, do not retrieve the state from master node (default: false) +
+
+WARNING: This parameter has been deprecated.
 
 |===
 
@@ -3226,13 +3408,13 @@ link:{ref}/indices-aliases.html[Documentation] +
 |===
 
 === indices.putIndexTemplate
-
+*Stability:* experimental
 [source,ts]
 ----
 client.indices.putIndexTemplate({
   name: string,
-  order: number,
   create: boolean,
+  cause: string,
   master_timeout: string,
   body: object
 })
@@ -3243,11 +3425,11 @@ link:{ref}/indices-templates.html[Documentation] +
 |`name`
 |`string` - The name of the template
 
-|`order`
-|`number` - The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
-
 |`create`
 |`boolean` - Whether the index template should only be added if new or can also replace an existing one
+
+|`cause`
+|`string` - User defined reason for creating/updating the index template
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
@@ -3432,6 +3614,27 @@ _Default:_ `open`
 
 |===
 
+=== indices.resolveIndex
+*Stability:* experimental
+[source,ts]
+----
+client.indices.resolveIndex({
+  name: string | string[],
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
+})
+----
+
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - A comma-separated list of names or wildcard expressions
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+_Default:_ `open`
+
+|===
+
 === indices.rollover
 
 [source,ts]
@@ -3571,6 +3774,70 @@ link:{ref}/indices-shrink-index.html[Documentation] +
 
 |`body`
 |`object` - The configuration for the target index (`settings` and `aliases`)
+
+|===
+
+=== indices.simulateIndexTemplate
+*Stability:* experimental
+[source,ts]
+----
+client.indices.simulateIndexTemplate({
+  name: string,
+  create: boolean,
+  cause: string,
+  master_timeout: string,
+  body: object
+})
+----
+link:{ref}/indices-templates.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the index (it must be a concrete index name)
+
+|`create`
+|`boolean` - Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
+
+|`cause`
+|`string` - User defined reason for dry-run creating the new template for simulation purposes
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`body`
+|`object` - New index template definition, which will be included in the simulation, as if it already exists in the system
+
+|===
+
+=== indices.simulateTemplate
+*Stability:* experimental
+[source,ts]
+----
+client.indices.simulateTemplate({
+  name: string,
+  create: boolean,
+  cause: string,
+  master_timeout: string,
+  body: object
+})
+----
+link:{ref}/indices-templates.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the index template
+
+|`create`
+|`boolean` - Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
+
+|`cause`
+|`string` - User defined reason for dry-run creating the new template for simulation purposes
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`body`
+|`object` - New index template definition to be simulated, if no index template name is specified
 
 |===
 
@@ -4214,7 +4481,8 @@ link:{ref}/cluster-nodes-info.html[Documentation] +
 ----
 client.nodes.reloadSecureSettings({
   node_id: string | string[],
-  timeout: string
+  timeout: string,
+  body: object
 })
 ----
 link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
@@ -4225,6 +4493,9 @@ link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
 
 |`timeout`
 |`string` - Explicit operation timeout
+
+|`body`
+|`object` - An object containing the password for the elasticsearch keystore
 
 |===
 
@@ -4565,7 +4836,7 @@ client.search({
   suggest_text: string,
   timeout: string,
   track_scores: boolean,
-  track_total_hits: boolean,
+  track_total_hits: boolean|long,
   allow_partial_search_results: boolean,
   typed_keys: boolean,
   version: boolean,
@@ -4686,7 +4957,7 @@ _Default:_ `missing`
 |`boolean` - Whether to calculate and return scores even if they are not used for sorting
 
 |`track_total_hits` or `trackTotalHits`
-|`boolean` - Indicate if the number of documents that match the query should be tracked
+|`boolean\|long` - Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
 
 |`allow_partial_search_results` or `allowPartialSearchResults`
 |`boolean` - Indicate if an error should be returned if there is a partial search failure or timeout +
@@ -4848,7 +5119,7 @@ client.snapshot.cleanupRepository({
   timeout: string
 })
 ----
-link:{ref}/modules-snapshots.html[Documentation] +
+link:{ref}/clean-up-snapshot-repo-api.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -4932,7 +5203,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 ----
 client.snapshot.delete({
   repository: string,
-  snapshot: string,
+  snapshot: string | string[],
   master_timeout: string
 })
 ----
@@ -4943,7 +5214,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 |`string` - A repository name
 
 |`snapshot`
-|`string` - A snapshot name
+|`string \| string[]` - A comma-separated list of snapshot names
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -4964,7 +5235,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
-|`string \| string[]` - A comma-separated list of repository names
+|`string \| string[]` - Name of the snapshot repository to unregister. Wildcard (`*`) patterns are supported.
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -5627,7 +5898,7 @@ client.asyncSearch.submit({
   suggest_text: string,
   timeout: string,
   track_scores: boolean,
-  track_total_hits: boolean,
+  track_total_hits: boolean|long,
   allow_partial_search_results: boolean,
   typed_keys: boolean,
   version: boolean,
@@ -5754,7 +6025,7 @@ _Default:_ `missing`
 |`boolean` - Whether to calculate and return scores even if they are not used for sorting
 
 |`track_total_hits` or `trackTotalHits`
-|`boolean` - Indicate if the number of documents that match the query should be tracked
+|`boolean\|long` - Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
 
 |`allow_partial_search_results` or `allowPartialSearchResults`
 |`boolean` - Indicate if an error should be returned if there is a partial search failure or timeout +
@@ -6581,20 +6852,74 @@ client.enrich.stats()
 link:{ref}/enrich-stats-api.html[Documentation] +
 
 
+=== eql.delete
+*Stability:* beta
+[source,ts]
+----
+client.eql.delete({
+  id: string
+})
+----
+link:{ref}/eql-search-api.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|===
+
+=== eql.get
+*Stability:* beta
+[source,ts]
+----
+client.eql.get({
+  id: string,
+  wait_for_completion_timeout: string,
+  keep_alive: string
+})
+----
+link:{ref}/eql-search-api.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Specify the time that the request should block waiting for the final response
+
+|`keep_alive` or `keepAlive`
+|`string` - Update the time interval in which the results (partial or final) for this search will be available +
+_Default:_ `5d`
+
+|===
+
 === eql.search
 *Stability:* beta
 [source,ts]
 ----
 client.eql.search({
   index: string,
+  wait_for_completion_timeout: string,
+  keep_on_completion: boolean,
+  keep_alive: string,
   body: object
 })
 ----
-link:{ref}/eql.html[Documentation] +
+link:{ref}/eql-search-api.html[Documentation] +
 [cols=2*]
 |===
 |`index`
 |`string` - The name of the index to scope the operation
+
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Specify the time that the request should block waiting for the final response
+
+|`keep_on_completion` or `keepOnCompletion`
+|`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
+
+|`keep_alive` or `keepAlive`
+|`string` - Update the time interval in which the results (partial or final) for this search will be available +
+_Default:_ `5d`
 
 |`body`
 |`object` - Eql request body. Use the `query` to limit the query scope.
@@ -7110,7 +7435,8 @@ link:{ref}/ml-delete-calendar-job.html[Documentation] +
 ----
 client.ml.deleteDataFrameAnalytics({
   id: string,
-  force: boolean
+  force: boolean,
+  timeout: string
 })
 ----
 link:{ref}/delete-dfanalytics.html[Documentation] +
@@ -7121,6 +7447,9 @@ link:{ref}/delete-dfanalytics.html[Documentation] +
 
 |`force`
 |`boolean` - True if the job should be forcefully deleted
+
+|`timeout`
+|`string` - Controls the time to wait until a job is deleted. Defaults to 1 minute
 
 |===
 
@@ -7148,10 +7477,29 @@ link:{ref}/ml-delete-datafeed.html[Documentation] +
 
 [source,ts]
 ----
-client.ml.deleteExpiredData()
+client.ml.deleteExpiredData({
+  job_id: string,
+  requests_per_second: number,
+  timeout: string,
+  body: object
+})
 ----
 link:{ref}/ml-delete-expired-data.html[Documentation] +
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job(s) to perform expired data hygiene for
 
+|`requests_per_second` or `requestsPerSecond`
+|`number` - The desired requests per second for the deletion processes.
+
+|`timeout`
+|`string` - How long can the underlying delete processes run until they are canceled
+
+|`body`
+|`object` - deleting expired data parameters
+
+|===
 
 === ml.deleteFilter
 
@@ -7432,7 +7780,8 @@ link:{ref}/ml-flush-job.html[Documentation] +
 client.ml.forecast({
   job_id: string,
   duration: string,
-  expires_in: string
+  expires_in: string,
+  max_model_memory: string
 })
 ----
 link:{ref}/ml-forecast.html[Documentation] +
@@ -7446,6 +7795,9 @@ link:{ref}/ml-forecast.html[Documentation] +
 
 |`expires_in` or `expiresIn`
 |`string` - The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
+
+|`max_model_memory` or `maxModelMemory`
+|`string` - The max memory able to be used by the forecast. Default is 20mb.
 
 |===
 
@@ -7582,6 +7934,7 @@ client.ml.getCategories({
   category_id: number,
   from: number,
   size: number,
+  partition_field_value: string,
   body: object
 })
 ----
@@ -7599,6 +7952,9 @@ link:{ref}/ml-get-category.html[Documentation] +
 
 |`size`
 |`number` - specifies a max number of categories to get
+
+|`partition_field_value` or `partitionFieldValue`
+|`string` - Specifies the partition to retrieve categories for. This is optional, and should never be used for jobs where per-partition categorization is disabled.
 
 |`body`
 |`object` - Category selection details if not provided in URI
@@ -7980,7 +8336,8 @@ client.ml.getTrainedModels({
   decompress_definition: boolean,
   from: number,
   size: number,
-  tags: string | string[]
+  tags: string | string[],
+  for_export: boolean
 })
 ----
 link:{ref}/get-inference.html[Documentation] +
@@ -8009,6 +8366,9 @@ _Default:_ `100`
 
 |`tags`
 |`string \| string[]` - A comma-separated list of tags that the model must have.
+
+|`for_export` or `forExport`
+|`boolean` - Omits fields that are illegal to set on model PUT
 
 |===
 
@@ -8451,6 +8811,26 @@ link:{ref}/ml-stop-datafeed.html[Documentation] +
 
 |===
 
+=== ml.updateDataFrameAnalytics
+*Stability:* experimental
+[source,ts]
+----
+client.ml.updateDataFrameAnalytics({
+  id: string,
+  body: object
+})
+----
+link:{ref}/update-dfanalytics.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to update
+
+|`body`
+|`object` - The data frame analytics settings to update
+
+|===
+
 === ml.updateDatafeed
 
 [source,ts]
@@ -8559,6 +8939,7 @@ client.ml.validate({
   body: object
 })
 ----
+link:https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8574,6 +8955,7 @@ client.ml.validateDetector({
   body: object
 })
 ----
+link:https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -8814,7 +9196,7 @@ client.searchableSnapshots.mount({
   body: object
 })
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-api-mount-snapshot[Documentation] +
+link:{ref}/searchable-snapshots-api-mount-snapshot.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -8831,6 +9213,22 @@ link:https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-
 
 |`body`
 |`object` - The restore configuration for mounting the snapshot as searchable
+
+|===
+
+=== searchableSnapshots.repositoryStats
+*Stability:* experimental
+[source,ts]
+----
+client.searchableSnapshots.repositoryStats({
+  repository: string
+})
+----
+link:{ref}/searchable-snapshots-repository-stats.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - The repository for which to get the stats for
 
 |===
 
@@ -8880,6 +9278,22 @@ link:{ref}/security-api-change-password.html[Documentation] +
 
 |`body`
 |`object` - the new password for the user
+
+|===
+
+=== security.clearCachedPrivileges
+
+[source,ts]
+----
+client.security.clearCachedPrivileges({
+  application: string | string[]
+})
+----
+link:{ref}/security-api-clear-privilege-cache.html[Documentation] +
+[cols=2*]
+|===
+|`application`
+|`string \| string[]` - A comma-separated list of application names
 
 |===
 
@@ -9129,14 +9543,14 @@ link:{ref}/security-api-get-privileges.html[Documentation] +
 [source,ts]
 ----
 client.security.getRole({
-  name: string
+  name: string | string[]
 })
 ----
 link:{ref}/security-api-get-role.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string` - Role name
+|`string \| string[]` - A comma-separated list of role names
 
 |===
 
@@ -9145,14 +9559,14 @@ link:{ref}/security-api-get-role.html[Documentation] +
 [source,ts]
 ----
 client.security.getRoleMapping({
-  name: string
+  name: string | string[]
 })
 ----
 link:{ref}/security-api-get-role-mapping.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string` - Role-Mapping name
+|`string \| string[]` - A comma-separated list of role-mapping names
 
 |===
 
@@ -9899,7 +10313,8 @@ link:{ref}/watcher-api-stop.html[Documentation] +
 [source,ts]
 ----
 client.xpack.info({
-  categories: string | string[]
+  categories: string | string[],
+  accept_enterprise: boolean
 })
 ----
 link:{ref}/info-api.html[Documentation] +
@@ -9907,6 +10322,11 @@ link:{ref}/info-api.html[Documentation] +
 |===
 |`categories`
 |`string \| string[]` - Comma-separated list of info categories. Can be any of: build, license, features
+
+|`accept_enterprise` or `acceptEnterprise`
+|`boolean` - Supported for backwards compatibility with 7.x. If this param is used it must be set to true +
+
+WARNING: This parameter has been deprecated.
 
 |===
 

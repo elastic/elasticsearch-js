@@ -21,6 +21,7 @@ function buildAutoscalingDeleteAutoscalingPolicy (opts) {
 
   /**
    * Perform a autoscaling.delete_autoscaling_policy request
+   * Deletes an autoscaling policy.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-delete-autoscaling-policy.html
    */
   return function autoscalingDeleteAutoscalingPolicy (params, options, callback) {

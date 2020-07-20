@@ -74,6 +74,14 @@ test('API', t => {
     }, 10)
   })
 
+  t.test('markDead should ignore connections that no longer exists', t => {
+    const pool = new ConnectionPool({ Connection, sniffEnabled: true })
+    pool.addConnection('http://localhost:9200/')
+    pool.markDead({ id: 'foo-bar' })
+    t.deepEqual(pool.dead, [])
+    t.end()
+  })
+
   t.test('markAlive', t => {
     const pool = new ConnectionPool({ Connection, sniffEnabled: true })
     const href = 'http://localhost:9200/'

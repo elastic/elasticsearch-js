@@ -28,7 +28,7 @@ function buildSnapshotDelete (opts) {
 
   /**
    * Perform a snapshot.delete request
-   * Deletes a snapshot.
+   * Deletes one or more snapshots.
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
    */
   return function snapshotDelete (params, options, callback) {

@@ -23,7 +23,8 @@ function buildSearchableSnapshotsMount (opts) {
 
   /**
    * Perform a searchable_snapshots.mount request
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-api-mount-snapshot
+   * Mount a snapshot as a searchable index.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-mount-snapshot.html
    */
   return function searchableSnapshotsMount (params, options, callback) {
     options = options || {}

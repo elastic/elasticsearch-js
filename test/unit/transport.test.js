@@ -6,7 +6,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const lolex = require('lolex')
+const FakeTimers = require('@sinonjs/fake-timers')
 const { createGunzip } = require('zlib')
 const os = require('os')
 const intoStream = require('into-stream')
@@ -578,9 +578,8 @@ test('Retry mechanism', t => {
     if (count > 0) {
       res.end(JSON.stringify({ hello: 'world' }))
     } else {
-      setTimeout(() => {
-        res.end(JSON.stringify({ hello: 'world' }))
-      }, 1000)
+      res.statusCode = 504
+      res.end(JSON.stringify({ error: true }))
     }
     count++
   }
@@ -603,7 +602,6 @@ test('Retry mechanism', t => {
       connectionPool: pool,
       serializer: new Serializer(),
       maxRetries: 1,
-      requestTimeout: 250,
       sniffInterval: false,
       sniffOnStart: false
     })
@@ -624,15 +622,10 @@ test('Should not retry if the body is a stream', t => {
 
   var count = 0
   function handler (req, res) {
-    res.setHeader('Content-Type', 'application/json;utf=8')
-    if (count > 0) {
-      res.end(JSON.stringify({ hello: 'world' }))
-    } else {
-      setTimeout(() => {
-        res.end(JSON.stringify({ hello: 'world' }))
-      }, 1000)
-    }
     count++
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.statusCode = 504
+    res.end(JSON.stringify({ error: true }))
   }
 
   buildServer(handler, ({ port }, server) => {
@@ -653,7 +646,6 @@ test('Should not retry if the body is a stream', t => {
       connectionPool: pool,
       serializer: new Serializer(),
       maxRetries: 1,
-      requestTimeout: 10,
       sniffInterval: false,
       sniffOnStart: false
     })
@@ -663,7 +655,7 @@ test('Should not retry if the body is a stream', t => {
       path: '/hello',
       body: intoStream(JSON.stringify({ hello: 'world' }))
     }, (err, { body }) => {
-      t.ok(err instanceof TimeoutError)
+      t.ok(err instanceof ResponseError)
       t.strictEqual(count, 1)
       server.stop()
     })
@@ -679,9 +671,8 @@ test('Custom retry mechanism', t => {
     if (count > 0) {
       res.end(JSON.stringify({ hello: 'world' }))
     } else {
-      setTimeout(() => {
-        res.end(JSON.stringify({ hello: 'world' }))
-      }, 1000)
+      res.statusCode = 504
+      res.end(JSON.stringify({ error: true }))
     }
     count++
   }
@@ -704,7 +695,6 @@ test('Custom retry mechanism', t => {
       connectionPool: pool,
       serializer: new Serializer(),
       maxRetries: 0,
-      requestTimeout: 250,
       sniffInterval: false,
       sniffOnStart: false
     })
@@ -1082,7 +1072,7 @@ test('sniff', t => {
   t.test('sniffInterval', t => {
     t.plan(6)
 
-    const clock = lolex.install({ toFake: ['Date'] })
+    const clock = FakeTimers.install({ toFake: ['Date'] })
     t.teardown(() => clock.uninstall())
 
     class MyTransport extends Transport {
@@ -2425,4 +2415,33 @@ test('Secure json parsing', t => {
   })
 
   t.end()
+})
+
+test('Lowercase headers utilty', t => {
+  t.plan(4)
+  const { lowerCaseHeaders } = Transport.internals
+
+  t.deepEqual(lowerCaseHeaders({
+    Foo: 'bar',
+    Faz: 'baz',
+    'X-Hello': 'world'
+  }), {
+    foo: 'bar',
+    faz: 'baz',
+    'x-hello': 'world'
+  })
+
+  t.deepEqual(lowerCaseHeaders({
+    Foo: 'bar',
+    faz: 'baz',
+    'X-hello': 'world'
+  }), {
+    foo: 'bar',
+    faz: 'baz',
+    'x-hello': 'world'
+  })
+
+  t.strictEqual(lowerCaseHeaders(null), null)
+
+  t.strictEqual(lowerCaseHeaders(undefined), undefined)
 })

@@ -76,19 +76,19 @@ auth: {
 _Default:_ `3`
 
 |`requestTimeout`
-|`number` - Max request timeout for each request. +
+|`number` - Max request timeout in milliseconds for each request. +
 _Default:_ `30000`
 
 |`pingTimeout`
-|`number` - Max ping request timeout for each request. +
+|`number` - Max ping request timeout in milliseconds for each request. +
 _Default:_ `3000`
 
 |`sniffInterval`
-|`number, boolean` - Perform a sniff operation every `n` milliseconds. +
+|`number, boolean` - Perform a sniff operation every `n` milliseconds. Sniffing might not be the best solution for you, take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here] to know more. +
 _Default:_ `false`
 
 |`sniffOnStart`
-|`boolean` - Perform a sniff once the client is started. +
+|`boolean` - Perform a sniff once the client is started. Sniffing might not be the best solution for you, take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here] to know more. +
 _Default:_ `false`
 
 |`sniffEndpoint`
@@ -96,7 +96,7 @@ _Default:_ `false`
 _Default:_ `'_nodes/_all/http'`
 
 |`sniffOnConnectionFault`
-|`boolean` - Perform a sniff on connection fault. +
+|`boolean` - Perform a sniff on connection fault. Sniffing might not be the best solution for you, take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here] to know more. +
 _Default:_ `false`
 
 |`resurrectStrategy`
@@ -119,7 +119,8 @@ _Default:_ `null`
 
 |`agent`
 a|`http.AgentOptions, function` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options], 
-or a function that returns an actual http agent instance. +
+or a function that returns an actual http agent instance. If you want to disable the http agent use entirely
+(and disable the `keep-alive` feature), set the agent to `false`. +
 _Default:_ `null`
 [source,js]
 ----
@@ -131,6 +132,12 @@ const client = new Client({
 const client = new Client({
   node: 'http://localhost:9200',
   agent: () => new CustomAgent()
+})
+
+const client = new Client({
+  node: 'http://localhost:9200',
+  // Disable agent and keep-alive
+  agent: false
 })
 ----
 
@@ -178,7 +185,7 @@ function generateRequestId (params, options) {
 ----
 
 |`name`
-|`string` - The name to identify the client instance in the events. +
+|`string | symbol` - The name to identify the client instance in the events. +
 _Default:_ `elasticsearch-js`
 
 |`opaqueIdPrefix`
@@ -189,6 +196,11 @@ _Default:_ `null`
 |`headers`
 |`object` - A set of custom headers to send in every request. +
 _Default:_ `{}`
+
+|`context`
+|`object` - A custom object that you can use for observability in yoru events.
+It will be merged with the API level context option. +
+_Default:_ `null`
 
 |`cloud`
 a|`object` - Custom configuration for connecting to 

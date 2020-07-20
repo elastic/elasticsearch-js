@@ -21,6 +21,7 @@ function buildAutoscalingGetAutoscalingPolicy (opts) {
 
   /**
    * Perform a autoscaling.get_autoscaling_policy request
+   * Retrieves an autoscaling policy.
    * https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-get-autoscaling-policy.html
    */
   return function autoscalingGetAutoscalingPolicy (params, options, callback) {

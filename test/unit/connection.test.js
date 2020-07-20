@@ -198,7 +198,7 @@ test('Disable keep alive', t => {
   buildServer(handler, ({ port }, server) => {
     const connection = new Connection({
       url: new URL(`http://localhost:${port}`),
-      agent: { keepAlive: false }
+      agent: false
     })
     connection.request({
       path: '/hello',
@@ -499,6 +499,43 @@ test('Should not close a connection if there are open requests', t => {
   })
 })
 
+test('Should not close a connection if there are open requests (with agent disabled)', t => {
+  t.plan(4)
+
+  function handler (req, res) {
+    setTimeout(() => res.end('ok'), 1000)
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      url: new URL(`http://localhost:${port}`),
+      agent: false
+    })
+
+    setTimeout(() => {
+      t.strictEqual(connection._openRequests, 1)
+      connection.close()
+    }, 500)
+
+    connection.request({
+      path: '/hello',
+      method: 'GET'
+    }, (err, res) => {
+      t.error(err)
+      t.strictEqual(connection._openRequests, 0)
+
+      var payload = ''
+      res.setEncoding('utf8')
+      res.on('data', chunk => { payload += chunk })
+      res.on('error', err => t.fail(err))
+      res.on('end', () => {
+        t.strictEqual(payload, 'ok')
+        server.stop()
+      })
+    })
+  })
+})
+
 test('Url with auth', t => {
   t.plan(2)
 
@@ -614,6 +651,14 @@ test('Connection id should not contain credentials', t => {
     url: new URL('http://user:password@localhost:9200')
   })
   t.strictEqual(connection.id, 'http://localhost:9200/')
+  t.end()
+})
+
+test('Ipv6 support', t => {
+  const connection = new Connection({
+    url: new URL('http://[::1]:9200')
+  })
+  t.strictEqual(connection.buildRequestObject({}).hostname, '::1')
   t.end()
 })
 
@@ -899,4 +944,19 @@ test('Abort a request asyncronously', t => {
     })
     setImmediate(() => request.abort())
   })
+})
+
+test('Should correctly resolve request pathname', t => {
+  t.plan(1)
+
+  const connection = new Connection({
+    url: new URL(`http://localhost:80/test`)
+  })
+
+  t.strictEqual(
+    connection.buildRequestObject({
+      path: 'hello'
+    }).pathname,
+    '/test/hello'
+  )
 })

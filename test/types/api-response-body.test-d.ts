@@ -4,7 +4,7 @@
 
 import { expectType, expectError } from 'tsd'
 import { Readable as ReadableStream } from 'stream';
-import { TransportRequestCallback } from '../../lib/Transport'
+import { TransportRequestCallback, Context } from '../../lib/Transport'
 import { Client, ApiError, SearchResponse } from '../../'
 
 const client = new Client({
@@ -41,7 +41,7 @@ expectError(
   })
 
   expectType<SearchResponse>(response.body)
-  expectType<unknown>(response.meta.context)
+  expectType<Context>(response.meta.context)
 }
 
 // Define only the response body (promise style)
@@ -56,7 +56,7 @@ expectError(
   })
 
   expectType<SearchResponse<Source>>(response.body)
-  expectType<unknown>(response.meta.context)
+  expectType<Context>(response.meta.context)
 }
 
 // Define response body and request body (promise style)
@@ -71,12 +71,12 @@ expectError(
   })
 
   expectType<SearchResponse<Source>>(response.body)
-  expectType<unknown>(response.meta.context)
+  expectType<Context>(response.meta.context)
 }
 
 // Define response body, request body and the context (promise style)
 {
-  const response = await client.search<SearchResponse<Source>, SearchBody, string>({
+  const response = await client.search<SearchResponse<Source>, SearchBody, Context>({
     index: 'test',
     body: {
       query: {
@@ -86,7 +86,7 @@ expectError(
   })
 
   expectType<SearchResponse<Source>>(response.body)
-  expectType<string>(response.meta.context)
+  expectType<Context>(response.meta.context)
 }
 
 // Send request body as string (promise style)
@@ -97,7 +97,7 @@ expectError(
   })
 
   expectType<SearchResponse>(response.body)
-  expectType<unknown>(response.meta.context)
+  expectType<Context>(response.meta.context)
 }
 
 // Send request body as buffer (promise style)
@@ -108,7 +108,7 @@ expectError(
   })
 
   expectType<SearchResponse>(response.body)
-  expectType<unknown>(response.meta.context)
+  expectType<Context>(response.meta.context)
 }
 
 // Send request body as readable stream (promise style)
@@ -119,7 +119,7 @@ expectError(
   })
 
   expectType<SearchResponse>(response.body)
-  expectType<unknown>(response.meta.context)
+  expectType<Context>(response.meta.context)
 }
 
 // No generics (callback style)
@@ -134,7 +134,7 @@ expectError(
   }, (err, response) => {
     expectType<ApiError>(err)
     expectType<SearchResponse>(response.body)
-    expectType<unknown>(response.meta.context)
+    expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
 }
@@ -151,7 +151,7 @@ expectError(
   }, (err, response) => {
     expectType<ApiError>(err)
     expectType<SearchResponse<Source>>(response.body)
-    expectType<unknown>(response.meta.context)
+    expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
 }
@@ -168,14 +168,14 @@ expectError(
   }, (err, response) => {
     expectType<ApiError>(err)
     expectType<SearchResponse<Source>>(response.body)
-    expectType<unknown>(response.meta.context)
+    expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
 }
 
 // Define response body, request body and the context (callback style)
 {
-  const result = client.search<SearchResponse<Source>, SearchBody, string>({
+  const result = client.search<SearchResponse<Source>, SearchBody, Context>({
     index: 'test',
     body: {
       query: {
@@ -185,7 +185,7 @@ expectError(
   }, (err, response) => {
     expectType<ApiError>(err)
     expectType<SearchResponse<Source>>(response.body)
-    expectType<string>(response.meta.context)
+    expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
 }
@@ -198,7 +198,7 @@ expectError(
   }, (err, response) => {
     expectType<ApiError>(err)
     expectType<SearchResponse>(response.body)
-    expectType<unknown>(response.meta.context)
+    expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
 }
@@ -211,7 +211,7 @@ expectError(
   }, (err, response) => {
     expectType<ApiError>(err)
     expectType<SearchResponse>(response.body)
-    expectType<unknown>(response.meta.context)
+    expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
 }
@@ -224,7 +224,7 @@ expectError(
   }, (err, response) => {
     expectType<ApiError>(err)
     expectType<SearchResponse>(response.body)
-    expectType<unknown>(response.meta.context)
+    expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
 }

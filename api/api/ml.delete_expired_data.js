@@ -12,10 +12,12 @@ function buildMlDeleteExpiredData (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-
+    'requests_per_second',
+    'timeout'
   ]
 
   const snakeCase = {
+    requestsPerSecond: 'requests_per_second'
 
   }
 
@@ -43,7 +45,7 @@ function buildMlDeleteExpiredData (opts) {
     }
 
     var warnings = []
-    var { method, body, ...querystring } = params
+    var { method, body, jobId, job_id, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -53,8 +55,13 @@ function buildMlDeleteExpiredData (opts) {
 
     var path = ''
 
-    if (method == null) method = 'DELETE'
-    path = '/' + '_ml' + '/' + '_delete_expired_data'
+    if ((job_id || jobId) != null) {
+      if (method == null) method = 'DELETE'
+      path = '/' + '_ml' + '/' + '_delete_expired_data' + '/' + encodeURIComponent(job_id || jobId)
+    } else {
+      if (method == null) method = 'DELETE'
+      path = '/' + '_ml' + '/' + '_delete_expired_data'
+    }
 
     // build request object
     const request = {

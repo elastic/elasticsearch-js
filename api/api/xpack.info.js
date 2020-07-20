@@ -12,11 +12,12 @@ function buildXpackInfo (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'categories'
+    'categories',
+    'accept_enterprise'
   ]
 
   const snakeCase = {
-
+    acceptEnterprise: 'accept_enterprise'
   }
 
   /**
