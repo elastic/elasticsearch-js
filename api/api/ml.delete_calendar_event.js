@@ -1,6 +1,21 @@
-// Licensed to Elasticsearch B.V under one or more agreements.
-// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
-// See the LICENSE file in the project root for more information
+/*
+ * Licensed to Elasticsearch B.V. under one or more contributor
+ * license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright
+ * ownership. Elasticsearch B.V. licenses this file to you under
+ * the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 
 'use strict'
 
@@ -37,17 +52,17 @@ function buildMlDeleteCalendarEvent (opts) {
     }
 
     // check required parameters
-    if (params['calendar_id'] == null && params['calendarId'] == null) {
+    if (params.calendar_id == null && params.calendarId == null) {
       const err = new ConfigurationError('Missing required parameter: calendar_id or calendarId')
       return handleError(err, callback)
     }
-    if (params['event_id'] == null && params['eventId'] == null) {
+    if (params.event_id == null && params.eventId == null) {
       const err = new ConfigurationError('Missing required parameter: event_id or eventId')
       return handleError(err, callback)
     }
 
     // check required url components
-    if ((params['event_id'] != null || params['eventId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
+    if ((params.event_id != null || params.eventId != null) && ((params.calendar_id == null && params.calendarId == null))) {
       const err = new ConfigurationError('Missing required parameter of the url: calendar_id')
       return handleError(err, callback)
     }
