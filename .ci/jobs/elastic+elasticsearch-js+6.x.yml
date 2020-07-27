@@ -12,4 +12,4 @@
           &lt;commitId&gt;, etc.)
     triggers:
     - github
-    - timed: '@weekly'
+    - timed: 'H */12 * * *'
