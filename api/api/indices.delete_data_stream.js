@@ -12,16 +12,11 @@ function buildIndicesDeleteDataStream (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
   /**

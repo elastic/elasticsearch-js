@@ -12,20 +12,11 @@ function buildIndicesDataStreamsStats (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'expand_wildcards',
-    'forbid_closed_indices',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    expandWildcards: 'expand_wildcards',
-    forbidClosedIndices: 'forbid_closed_indices',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
   /**

@@ -650,17 +650,6 @@ export interface IndicesCreate<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface IndicesCreateDataStream<T = RequestBody> extends Generic {
-  name: string;
-  body?: T;
-}
-
-export interface IndicesDataStreamsStats extends Generic {
-  name?: string | string[];
-  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
-  forbid_closed_indices?: boolean;
-}
-
 export interface IndicesDelete extends Generic {
   index: string | string[];
   timeout?: string;
@@ -675,10 +664,6 @@ export interface IndicesDeleteAlias extends Generic {
   name: string | string[];
   timeout?: string;
   master_timeout?: string;
-}
-
-export interface IndicesDeleteDataStream extends Generic {
-  name: string | string[];
 }
 
 export interface IndicesDeleteIndexTemplate extends Generic {
@@ -780,10 +765,6 @@ export interface IndicesGetAlias extends Generic {
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   local?: boolean;
-}
-
-export interface IndicesGetDataStream extends Generic {
-  name?: string | string[];
 }
 
 export interface IndicesGetFieldMapping extends Generic {
@@ -1745,6 +1726,19 @@ export interface IlmStart extends Generic {
 export interface IlmStop extends Generic {
 }
 
+export interface IndicesCreateDataStream<T = RequestBody> extends Generic {
+  name: string;
+  body?: T;
+}
+
+export interface IndicesDataStreamsStats extends Generic {
+  name?: string | string[];
+}
+
+export interface IndicesDeleteDataStream extends Generic {
+  name: string | string[];
+}
+
 export interface IndicesFreeze extends Generic {
   index: string;
   timeout?: string;
@@ -1753,6 +1747,10 @@ export interface IndicesFreeze extends Generic {
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   wait_for_active_shards?: string;
+}
+
+export interface IndicesGetDataStream extends Generic {
+  name?: string | string[];
 }
 
 export interface IndicesReloadSearchAnalyzers extends Generic {
