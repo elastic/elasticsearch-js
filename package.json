@@ -60,6 +60,7 @@
     "minimist": "^1.2.0",
     "ora": "^3.4.0",
     "pretty-hrtime": "^1.0.3",
+    "proxy": "^1.0.2",
     "rimraf": "^2.6.3",
     "semver": "^6.0.0",
     "simple-git": "^1.110.0",
@@ -75,6 +76,7 @@
   "dependencies": {
     "debug": "^4.1.1",
     "decompress-response": "^4.2.0",
+    "hpagent": "^0.1.1",
     "ms": "^2.1.1",
     "pump": "^3.0.0",
     "secure-json-parse": "^2.1.0"

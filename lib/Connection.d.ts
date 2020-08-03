@@ -24,6 +24,8 @@ import { inspect, InspectOptions } from 'util'
 import { Readable as ReadableStream } from 'stream';
 import { ApiKeyAuth, BasicAuth } from './pool'
 import * as http from 'http'
+import * as https from 'https'
+import * as hpagent from 'hpagent'
 import { ConnectionOptions as TlsConnectionOptions } from 'tls'
 
 export declare type agentFn = () => any;
@@ -37,6 +39,7 @@ interface ConnectionOptions {
   status?: string;
   roles?: ConnectionRoles;
   auth?: BasicAuth | ApiKeyAuth;
+  proxy?: string | URL;
 }
 
 interface ConnectionRoles {
@@ -81,7 +84,7 @@ export default class Connection {
   makeRequest: any
   _openRequests: number
   _status: string
-  _agent: http.Agent
+  _agent: http.Agent | https.Agent | hpagent.HttpProxyAgent | hpagent.HttpsProxyAgent
   constructor(opts?: ConnectionOptions)
   request(params: RequestOptions, callback: (err: Error | null, response: http.IncomingMessage | null) => void): http.ClientRequest
   close(): Connection
