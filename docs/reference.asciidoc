@@ -1056,7 +1056,7 @@ client.clearScroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#_clear_scroll_api[Documentation] +
+link:{ref}/clear-scroll-api.html[Documentation] +
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
