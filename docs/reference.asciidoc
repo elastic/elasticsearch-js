@@ -1052,7 +1052,7 @@ client.clearScroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#_clear_scroll_api[Documentation] +
+link:{ref}/clear-scroll-api.html[Documentation] +
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -7074,7 +7074,7 @@ link:{ref}/ilm-stop.html[Documentation] +
 
 
 === indices.createDataStream
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.createDataStream({
@@ -7094,7 +7094,7 @@ link:{ref}/data-streams.html[Documentation] +
 |===
 
 === indices.dataStreamsStats
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.dataStreamsStats({
@@ -7110,7 +7110,7 @@ link:{ref}/data-streams.html[Documentation] +
 |===
 
 === indices.deleteDataStream
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.deleteDataStream({
@@ -7167,7 +7167,7 @@ _Default:_ `closed`
 |===
 
 === indices.getDataStream
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.getDataStream({
