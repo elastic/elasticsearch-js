@@ -51,7 +51,7 @@ It was possible in plain JavaScript, but not in TypeScript, now you can do it in
 ----
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
-  node: 'http://localhost:9200'.
+  node: 'http://localhost:9200',
   name: Symbol('unique')
 })
 ----
@@ -64,6 +64,22 @@ Only `Record<string, any>` was allowed. Now `string` is allowed as well.
 
 * The `transport.request` defintion was incorrect, it was returning a `Promise<T>` instead of `TransportRequestPromise<T>`.
 * The `refresh` parameter of most APIs was declared as `'true' | 'false' | 'wait_for'`, which was clunky. Now is `'wait_for' | boolean`.
+
+===== Generate response type as boolean if the request is HEAD only https://github.com/elastic/elasticsearch-js/pull/1275[#1275]
+
+All HEAD request will have the body casted to a boolean value, `true` in case of a 200 response, `false` in case of
+a 404 response. The type definitions were not reflecting this behavior.
+
+[source,ts]
+----
+import { Client } from '@elastic/elasticsearch'
+const client = new Client({
+  node: 'http://localhost:9200'
+})
+
+const { body } = await client.exist({ index: 'my-index', id: 'my-id' })
+console.log(body) // either `true` or `false`
+----
 
 ==== Internals
 
