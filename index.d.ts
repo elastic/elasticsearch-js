@@ -107,6 +107,7 @@ interface ClientOptions {
   name?: string | symbol;
   auth?: BasicAuth | ApiKeyAuth;
   context?: Context;
+  proxy?: string | URL;
   cloud?: {
     id: string;
     // TODO: remove username and password here in 8

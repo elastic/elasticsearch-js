@@ -100,7 +100,8 @@ class Client {
       name: 'elasticsearch-js',
       auth: null,
       opaqueIdPrefix: null,
-      context: null
+      context: null,
+      proxy: null
     }, opts)
 
     this[kInitialOptions] = options
@@ -119,6 +120,7 @@ class Client {
         resurrectStrategy: options.resurrectStrategy,
         ssl: options.ssl,
         agent: options.agent,
+        proxy: options.proxy,
         Connection: options.Connection,
         auth: options.auth,
         emit: this[kEventEmitter].emit.bind(this[kEventEmitter]),
