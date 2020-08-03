@@ -60,7 +60,7 @@ function buildIndicesUpdateAliases (opts) {
     }
 
     // check required parameters
-    if (params.body == null) {
+    if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }

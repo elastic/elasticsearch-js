@@ -72,7 +72,7 @@ function buildMtermvectors (opts) {
     }
 
     // check required url components
-    if (params.type != null && (params.index == null)) {
+    if (params['type'] != null && (params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
     }

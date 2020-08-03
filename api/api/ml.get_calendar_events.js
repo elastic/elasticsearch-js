@@ -57,7 +57,7 @@ function buildMlGetCalendarEvents (opts) {
     }
 
     // check required parameters
-    if (params.calendar_id == null && params.calendarId == null) {
+    if (params['calendar_id'] == null && params['calendarId'] == null) {
       const err = new ConfigurationError('Missing required parameter: calendar_id or calendarId')
       return handleError(err, callback)
     }

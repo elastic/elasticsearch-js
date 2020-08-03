@@ -61,7 +61,7 @@ function buildIndicesFreeze (opts) {
     }
 
     // check required parameters
-    if (params.index == null) {
+    if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }

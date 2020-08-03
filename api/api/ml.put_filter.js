@@ -52,11 +52,11 @@ function buildMlPutFilter (opts) {
     }
 
     // check required parameters
-    if (params.filter_id == null && params.filterId == null) {
+    if (params['filter_id'] == null && params['filterId'] == null) {
       const err = new ConfigurationError('Missing required parameter: filter_id or filterId')
       return handleError(err, callback)
     }
-    if (params.body == null) {
+    if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }

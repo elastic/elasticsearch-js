@@ -66,17 +66,17 @@ function buildIndicesAddBlock (opts) {
     }
 
     // check required parameters
-    if (params.index == null) {
+    if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.block == null) {
+    if (params['block'] == null) {
       const err = new ConfigurationError('Missing required parameter: block')
       return handleError(err, callback)
     }
 
     // check required url components
-    if (params.block != null && (params.index == null)) {
+    if (params['block'] != null && (params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
     }

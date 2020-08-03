@@ -63,11 +63,11 @@ function buildIndicesPutTemplate (opts) {
     }
 
     // check required parameters
-    if (params.name == null) {
+    if (params['name'] == null) {
       const err = new ConfigurationError('Missing required parameter: name')
       return handleError(err, callback)
     }
-    if (params.body == null) {
+    if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }

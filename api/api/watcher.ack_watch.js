@@ -52,13 +52,13 @@ function buildWatcherAckWatch (opts) {
     }
 
     // check required parameters
-    if (params.watch_id == null && params.watchId == null) {
+    if (params['watch_id'] == null && params['watchId'] == null) {
       const err = new ConfigurationError('Missing required parameter: watch_id or watchId')
       return handleError(err, callback)
     }
 
     // check required url components
-    if ((params.action_id != null || params.actionId != null) && ((params.watch_id == null && params.watchId == null))) {
+    if ((params['action_id'] != null || params['actionId'] != null) && ((params['watch_id'] == null && params['watchId'] == null))) {
       const err = new ConfigurationError('Missing required parameter of the url: watch_id')
       return handleError(err, callback)
     }

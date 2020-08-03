@@ -52,11 +52,11 @@ function buildMlPutTrainedModel (opts) {
     }
 
     // check required parameters
-    if (params.model_id == null && params.modelId == null) {
+    if (params['model_id'] == null && params['modelId'] == null) {
       const err = new ConfigurationError('Missing required parameter: model_id or modelId')
       return handleError(err, callback)
     }
-    if (params.body == null) {
+    if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }

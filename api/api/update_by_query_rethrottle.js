@@ -59,11 +59,11 @@ function buildUpdateByQueryRethrottle (opts) {
     }
 
     // check required parameters
-    if (params.task_id == null && params.taskId == null) {
+    if (params['task_id'] == null && params['taskId'] == null) {
       const err = new ConfigurationError('Missing required parameter: task_id or taskId')
       return handleError(err, callback)
     }
-    if (params.requests_per_second == null && params.requestsPerSecond == null) {
+    if (params['requests_per_second'] == null && params['requestsPerSecond'] == null) {
       const err = new ConfigurationError('Missing required parameter: requests_per_second or requestsPerSecond')
       return handleError(err, callback)
     }

@@ -52,7 +52,7 @@ function buildWatcherDeactivateWatch (opts) {
     }
 
     // check required parameters
-    if (params.watch_id == null && params.watchId == null) {
+    if (params['watch_id'] == null && params['watchId'] == null) {
       const err = new ConfigurationError('Missing required parameter: watch_id or watchId')
       return handleError(err, callback)
     }

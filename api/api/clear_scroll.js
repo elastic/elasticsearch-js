@@ -42,7 +42,7 @@ function buildClearScroll (opts) {
   /**
    * Perform a clear_scroll request
    * Explicitly clears the search context for a scroll.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#_clear_scroll_api
+   * https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-scroll-api.html
    */
   return function clearScroll (params, options, callback) {
     options = options || {}

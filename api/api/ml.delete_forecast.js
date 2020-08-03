@@ -54,13 +54,13 @@ function buildMlDeleteForecast (opts) {
     }
 
     // check required parameters
-    if (params.job_id == null && params.jobId == null) {
+    if (params['job_id'] == null && params['jobId'] == null) {
       const err = new ConfigurationError('Missing required parameter: job_id or jobId')
       return handleError(err, callback)
     }
 
     // check required url components
-    if ((params.forecast_id != null || params.forecastId != null) && ((params.job_id == null && params.jobId == null))) {
+    if ((params['forecast_id'] != null || params['forecastId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
       const err = new ConfigurationError('Missing required parameter of the url: job_id')
       return handleError(err, callback)
     }

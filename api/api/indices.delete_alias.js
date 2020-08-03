@@ -60,17 +60,17 @@ function buildIndicesDeleteAlias (opts) {
     }
 
     // check required parameters
-    if (params.index == null) {
+    if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.name == null) {
+    if (params['name'] == null) {
       const err = new ConfigurationError('Missing required parameter: name')
       return handleError(err, callback)
     }
 
     // check required url components
-    if (params.name != null && (params.index == null)) {
+    if (params['name'] != null && (params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
     }

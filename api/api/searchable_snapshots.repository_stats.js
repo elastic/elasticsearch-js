@@ -52,7 +52,7 @@ function buildSearchableSnapshotsRepositoryStats (opts) {
     }
 
     // check required parameters
-    if (params.repository == null) {
+    if (params['repository'] == null) {
       const err = new ConfigurationError('Missing required parameter: repository')
       return handleError(err, callback)
     }

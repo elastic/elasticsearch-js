@@ -61,7 +61,7 @@ function buildSnapshotStatus (opts) {
     }
 
     // check required url components
-    if (params.snapshot != null && (params.repository == null)) {
+    if (params['snapshot'] != null && (params['repository'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: repository')
       return handleError(err, callback)
     }

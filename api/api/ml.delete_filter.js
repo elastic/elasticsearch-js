@@ -52,7 +52,7 @@ function buildMlDeleteFilter (opts) {
     }
 
     // check required parameters
-    if (params.filter_id == null && params.filterId == null) {
+    if (params['filter_id'] == null && params['filterId'] == null) {
       const err = new ConfigurationError('Missing required parameter: filter_id or filterId')
       return handleError(err, callback)
     }

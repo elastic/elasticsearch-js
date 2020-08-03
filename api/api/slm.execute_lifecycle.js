@@ -52,7 +52,7 @@ function buildSlmExecuteLifecycle (opts) {
     }
 
     // check required parameters
-    if (params.policy_id == null && params.policyId == null) {
+    if (params['policy_id'] == null && params['policyId'] == null) {
       const err = new ConfigurationError('Missing required parameter: policy_id or policyId')
       return handleError(err, callback)
     }

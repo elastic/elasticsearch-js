@@ -64,17 +64,17 @@ function buildIndicesSplit (opts) {
     }
 
     // check required parameters
-    if (params.index == null) {
+    if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.target == null) {
+    if (params['target'] == null) {
       const err = new ConfigurationError('Missing required parameter: target')
       return handleError(err, callback)
     }
 
     // check required url components
-    if (params.target != null && (params.index == null)) {
+    if (params['target'] != null && (params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
     }

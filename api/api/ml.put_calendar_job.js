@@ -52,17 +52,17 @@ function buildMlPutCalendarJob (opts) {
     }
 
     // check required parameters
-    if (params.calendar_id == null && params.calendarId == null) {
+    if (params['calendar_id'] == null && params['calendarId'] == null) {
       const err = new ConfigurationError('Missing required parameter: calendar_id or calendarId')
       return handleError(err, callback)
     }
-    if (params.job_id == null && params.jobId == null) {
+    if (params['job_id'] == null && params['jobId'] == null) {
       const err = new ConfigurationError('Missing required parameter: job_id or jobId')
       return handleError(err, callback)
     }
 
     // check required url components
-    if ((params.job_id != null || params.jobId != null) && ((params.calendar_id == null && params.calendarId == null))) {
+    if ((params['job_id'] != null || params['jobId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
       const err = new ConfigurationError('Missing required parameter of the url: calendar_id')
       return handleError(err, callback)
     }

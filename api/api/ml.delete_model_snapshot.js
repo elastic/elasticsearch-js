@@ -52,17 +52,17 @@ function buildMlDeleteModelSnapshot (opts) {
     }
 
     // check required parameters
-    if (params.job_id == null && params.jobId == null) {
+    if (params['job_id'] == null && params['jobId'] == null) {
       const err = new ConfigurationError('Missing required parameter: job_id or jobId')
       return handleError(err, callback)
     }
-    if (params.snapshot_id == null && params.snapshotId == null) {
+    if (params['snapshot_id'] == null && params['snapshotId'] == null) {
       const err = new ConfigurationError('Missing required parameter: snapshot_id or snapshotId')
       return handleError(err, callback)
     }
 
     // check required url components
-    if ((params.snapshot_id != null || params.snapshotId != null) && ((params.job_id == null && params.jobId == null))) {
+    if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
       const err = new ConfigurationError('Missing required parameter of the url: job_id')
       return handleError(err, callback)
     }

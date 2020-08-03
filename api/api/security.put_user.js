@@ -52,11 +52,11 @@ function buildSecurityPutUser (opts) {
     }
 
     // check required parameters
-    if (params.username == null) {
+    if (params['username'] == null) {
       const err = new ConfigurationError('Missing required parameter: username')
       return handleError(err, callback)
     }
-    if (params.body == null) {
+    if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }

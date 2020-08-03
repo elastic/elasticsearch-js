@@ -27,16 +27,11 @@ function buildIndicesCreateDataStream (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
+
   ]
 
   const snakeCase = {
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+
   }
 
   /**
@@ -57,7 +52,7 @@ function buildIndicesCreateDataStream (opts) {
     }
 
     // check required parameters
-    if (params.name == null) {
+    if (params['name'] == null) {
       const err = new ConfigurationError('Missing required parameter: name')
       return handleError(err, callback)
     }

@@ -68,7 +68,7 @@ function buildIndicesGetFieldMapping (opts) {
     }
 
     // check required parameters
-    if (params.fields == null) {
+    if (params['fields'] == null) {
       const err = new ConfigurationError('Missing required parameter: fields')
       return handleError(err, callback)
     }

@@ -52,7 +52,7 @@ function buildMlPreviewDatafeed (opts) {
     }
 
     // check required parameters
-    if (params.datafeed_id == null && params.datafeedId == null) {
+    if (params['datafeed_id'] == null && params['datafeedId'] == null) {
       const err = new ConfigurationError('Missing required parameter: datafeed_id or datafeedId')
       return handleError(err, callback)
     }

@@ -60,7 +60,7 @@ function buildTasksGet (opts) {
     }
 
     // check required parameters
-    if (params.task_id == null && params.taskId == null) {
+    if (params['task_id'] == null && params['taskId'] == null) {
       const err = new ConfigurationError('Missing required parameter: task_id or taskId')
       return handleError(err, callback)
     }

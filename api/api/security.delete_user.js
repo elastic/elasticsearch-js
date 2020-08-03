@@ -52,7 +52,7 @@ function buildSecurityDeleteUser (opts) {
     }
 
     // check required parameters
-    if (params.username == null) {
+    if (params['username'] == null) {
       const err = new ConfigurationError('Missing required parameter: username')
       return handleError(err, callback)
     }

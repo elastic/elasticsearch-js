@@ -52,17 +52,17 @@ function buildSecurityDeletePrivileges (opts) {
     }
 
     // check required parameters
-    if (params.application == null) {
+    if (params['application'] == null) {
       const err = new ConfigurationError('Missing required parameter: application')
       return handleError(err, callback)
     }
-    if (params.name == null) {
+    if (params['name'] == null) {
       const err = new ConfigurationError('Missing required parameter: name')
       return handleError(err, callback)
     }
 
     // check required url components
-    if (params.name != null && (params.application == null)) {
+    if (params['name'] != null && (params['application'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: application')
       return handleError(err, callback)
     }

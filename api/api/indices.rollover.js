@@ -67,13 +67,13 @@ is considered to be too large or too old.
     }
 
     // check required parameters
-    if (params.alias == null) {
+    if (params['alias'] == null) {
       const err = new ConfigurationError('Missing required parameter: alias')
       return handleError(err, callback)
     }
 
     // check required url components
-    if ((params.new_index != null || params.newIndex != null) && (params.alias == null)) {
+    if ((params['new_index'] != null || params['newIndex'] != null) && (params['alias'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: alias')
       return handleError(err, callback)
     }

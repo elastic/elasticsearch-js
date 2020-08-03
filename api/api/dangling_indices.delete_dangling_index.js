@@ -62,7 +62,7 @@ function buildDanglingIndicesDeleteDanglingIndex (opts) {
     }
 
     // check required parameters
-    if (params.index_uuid == null && params.indexUuid == null) {
+    if (params['index_uuid'] == null && params['indexUuid'] == null) {
       const err = new ConfigurationError('Missing required parameter: index_uuid or indexUuid')
       return handleError(err, callback)
     }

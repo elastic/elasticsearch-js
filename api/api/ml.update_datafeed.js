@@ -58,11 +58,11 @@ function buildMlUpdateDatafeed (opts) {
     }
 
     // check required parameters
-    if (params.datafeed_id == null && params.datafeedId == null) {
+    if (params['datafeed_id'] == null && params['datafeedId'] == null) {
       const err = new ConfigurationError('Missing required parameter: datafeed_id or datafeedId')
       return handleError(err, callback)
     }
-    if (params.body == null) {
+    if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }

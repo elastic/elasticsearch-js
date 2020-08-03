@@ -78,13 +78,13 @@ function buildSearchTemplate (opts) {
     }
 
     // check required parameters
-    if (params.body == null) {
+    if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
     // check required url components
-    if (params.type != null && (params.index == null)) {
+    if (params['type'] != null && (params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
     }

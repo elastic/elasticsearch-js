@@ -110,13 +110,13 @@ for example to pick up a mapping change.
     }
 
     // check required parameters
-    if (params.index == null) {
+    if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
 
     // check required url components
-    if (params.type != null && (params.index == null)) {
+    if (params['type'] != null && (params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
     }

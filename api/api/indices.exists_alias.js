@@ -64,7 +64,7 @@ function buildIndicesExistsAlias (opts) {
     }
 
     // check required parameters
-    if (params.name == null) {
+    if (params['name'] == null) {
       const err = new ConfigurationError('Missing required parameter: name')
       return handleError(err, callback)
     }

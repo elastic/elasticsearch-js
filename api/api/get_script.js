@@ -59,7 +59,7 @@ function buildGetScript (opts) {
     }
 
     // check required parameters
-    if (params.id == null) {
+    if (params['id'] == null) {
       const err = new ConfigurationError('Missing required parameter: id')
       return handleError(err, callback)
     }

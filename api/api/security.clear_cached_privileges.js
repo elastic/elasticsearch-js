@@ -52,7 +52,7 @@ function buildSecurityClearCachedPrivileges (opts) {
     }
 
     // check required parameters
-    if (params.application == null) {
+    if (params['application'] == null) {
       const err = new ConfigurationError('Missing required parameter: application')
       return handleError(err, callback)
     }

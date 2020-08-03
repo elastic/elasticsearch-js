@@ -58,7 +58,7 @@ function buildTransformStopTransform (opts) {
     }
 
     // check required parameters
-    if (params.transform_id == null && params.transformId == null) {
+    if (params['transform_id'] == null && params['transformId'] == null) {
       const err = new ConfigurationError('Missing required parameter: transform_id or transformId')
       return handleError(err, callback)
     }

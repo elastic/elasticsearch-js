@@ -61,17 +61,17 @@ function buildPutScript (opts) {
     }
 
     // check required parameters
-    if (params.id == null) {
+    if (params['id'] == null) {
       const err = new ConfigurationError('Missing required parameter: id')
       return handleError(err, callback)
     }
-    if (params.body == null) {
+    if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }
 
     // check required url components
-    if (params.context != null && (params.id == null)) {
+    if (params['context'] != null && (params['id'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: id')
       return handleError(err, callback)
     }

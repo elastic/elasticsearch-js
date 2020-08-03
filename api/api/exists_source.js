@@ -69,20 +69,20 @@ function buildExistsSource (opts) {
     }
 
     // check required parameters
-    if (params.id == null) {
+    if (params['id'] == null) {
       const err = new ConfigurationError('Missing required parameter: id')
       return handleError(err, callback)
     }
-    if (params.index == null) {
+    if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
 
     // check required url components
-    if (params.id != null && (params.type == null || params.index == null)) {
+    if (params['id'] != null && (params['type'] == null || params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: type, index')
       return handleError(err, callback)
-    } else if (params.type != null && (params.index == null)) {
+    } else if (params['type'] != null && (params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
     }

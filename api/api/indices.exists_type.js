@@ -64,17 +64,17 @@ function buildIndicesExistsType (opts) {
     }
 
     // check required parameters
-    if (params.index == null) {
+    if (params['index'] == null) {
       const err = new ConfigurationError('Missing required parameter: index')
       return handleError(err, callback)
     }
-    if (params.type == null) {
+    if (params['type'] == null) {
       const err = new ConfigurationError('Missing required parameter: type')
       return handleError(err, callback)
     }
 
     // check required url components
-    if (params.type != null && (params.index == null)) {
+    if (params['type'] != null && (params['index'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: index')
       return handleError(err, callback)
     }

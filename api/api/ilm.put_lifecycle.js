@@ -52,7 +52,7 @@ function buildIlmPutLifecycle (opts) {
     }
 
     // check required parameters
-    if (params.policy == null) {
+    if (params['policy'] == null) {
       const err = new ConfigurationError('Missing required parameter: policy')
       return handleError(err, callback)
     }

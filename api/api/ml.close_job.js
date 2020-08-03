@@ -55,7 +55,7 @@ function buildMlCloseJob (opts) {
     }
 
     // check required parameters
-    if (params.job_id == null && params.jobId == null) {
+    if (params['job_id'] == null && params['jobId'] == null) {
       const err = new ConfigurationError('Missing required parameter: job_id or jobId')
       return handleError(err, callback)
     }

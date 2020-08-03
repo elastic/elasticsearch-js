@@ -1060,7 +1060,7 @@ client.clearScroll({
   body: object
 })
 ----
-link:{ref}/search-request-body.html#_clear_scroll_api[Documentation] +
+link:{ref}/clear-scroll-api.html[Documentation] +
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -2686,52 +2686,6 @@ link:{ref}/indices-create-index.html[Documentation] +
 
 |===
 
-=== indices.createDataStream
-*Stability:* experimental
-[source,ts]
-----
-client.indices.createDataStream({
-  name: string,
-  body: object
-})
-----
-link:{ref}/data-streams.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the data stream
-
-|`body`
-|`object` - The data stream definition
-
-|===
-
-=== indices.dataStreamsStats
-*Stability:* experimental
-[source,ts]
-----
-client.indices.dataStreamsStats({
-  name: string | string[],
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
-  forbid_closed_indices: boolean
-})
-----
-link:{ref}/data-streams.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string \| string[]` - A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|`forbid_closed_indices` or `forbidClosedIndices`
-|`boolean` - If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices +
-_Default:_ `true`
-
-|===
-
 === indices.delete
 
 [source,ts]
@@ -2794,22 +2748,6 @@ link:{ref}/indices-aliases.html[Documentation] +
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
-
-|===
-
-=== indices.deleteDataStream
-*Stability:* experimental
-[source,ts]
-----
-client.indices.deleteDataStream({
-  name: string | string[]
-})
-----
-link:{ref}/data-streams.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string \| string[]` - A comma-separated list of data streams to delete; use `*` to delete all data streams
 
 |===
 
@@ -3222,22 +3160,6 @@ _Default:_ `all`
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
-
-|===
-
-=== indices.getDataStream
-*Stability:* experimental
-[source,ts]
-----
-client.indices.getDataStream({
-  name: string | string[]
-})
-----
-link:{ref}/data-streams.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string \| string[]` - A comma-separated list of data streams to get; use `*` to get all data streams
 
 |===
 
@@ -7144,6 +7066,58 @@ client.ilm.stop()
 link:{ref}/ilm-stop.html[Documentation] +
 
 
+=== indices.createDataStream
+
+[source,ts]
+----
+client.indices.createDataStream({
+  name: string,
+  body: object
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the data stream
+
+|`body`
+|`object` - The data stream definition
+
+|===
+
+=== indices.dataStreamsStats
+
+[source,ts]
+----
+client.indices.dataStreamsStats({
+  name: string | string[]
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
+
+|===
+
+=== indices.deleteDataStream
+
+[source,ts]
+----
+client.indices.deleteDataStream({
+  name: string | string[]
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - A comma-separated list of data streams to delete; use `*` to delete all data streams
+
+|===
+
 === indices.freeze
 
 [source,ts]
@@ -7182,6 +7156,22 @@ _Default:_ `closed`
 
 |`wait_for_active_shards` or `waitForActiveShards`
 |`string` - Sets the number of active shards to wait for before the operation returns.
+
+|===
+
+=== indices.getDataStream
+
+[source,ts]
+----
+client.indices.getDataStream({
+  name: string | string[]
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - A comma-separated list of data streams to get; use `*` to get all data streams
 
 |===
 

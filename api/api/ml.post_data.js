@@ -54,11 +54,11 @@ function buildMlPostData (opts) {
     }
 
     // check required parameters
-    if (params.job_id == null && params.jobId == null) {
+    if (params['job_id'] == null && params['jobId'] == null) {
       const err = new ConfigurationError('Missing required parameter: job_id or jobId')
       return handleError(err, callback)
     }
-    if (params.body == null) {
+    if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
       return handleError(err, callback)
     }

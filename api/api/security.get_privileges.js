@@ -52,7 +52,7 @@ function buildSecurityGetPrivileges (opts) {
     }
 
     // check required url components
-    if (params.name != null && (params.application == null)) {
+    if (params['name'] != null && (params['application'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: application')
       return handleError(err, callback)
     }

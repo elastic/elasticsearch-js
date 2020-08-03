@@ -72,7 +72,7 @@ function buildClusterState (opts) {
     }
 
     // check required url components
-    if (params.index != null && (params.metric == null)) {
+    if (params['index'] != null && (params['metric'] == null)) {
       const err = new ConfigurationError('Missing required parameter of the url: metric')
       return handleError(err, callback)
     }

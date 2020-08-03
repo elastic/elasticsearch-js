@@ -52,7 +52,7 @@ function buildMlDeleteTrainedModel (opts) {
     }
 
     // check required parameters
-    if (params.model_id == null && params.modelId == null) {
+    if (params['model_id'] == null && params['modelId'] == null) {
       const err = new ConfigurationError('Missing required parameter: model_id or modelId')
       return handleError(err, callback)
     }
