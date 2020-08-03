@@ -24,6 +24,7 @@ const { inspect } = require('util')
 const { createGzip, createDeflate } = require('zlib')
 const { URL } = require('url')
 const { Agent } = require('http')
+const hpagent = require('hpagent')
 const intoStream = require('into-stream')
 const { buildServer } = require('../utils')
 const Connection = require('../../lib/Connection')
@@ -974,4 +975,26 @@ test('Should correctly resolve request pathname', t => {
     }).pathname,
     '/test/hello'
   )
+})
+
+test('Proxy agent (http)', t => {
+  t.plan(1)
+
+  const connection = new Connection({
+    url: new URL('http://localhost:9200'),
+    proxy: 'http://localhost:8080'
+  })
+
+  t.true(connection.agent instanceof hpagent.HttpProxyAgent)
+})
+
+test('Proxy agent (https)', t => {
+  t.plan(1)
+
+  const connection = new Connection({
+    url: new URL('https://localhost:9200'),
+    proxy: 'http://localhost:8080'
+  })
+
+  t.true(connection.agent instanceof hpagent.HttpsProxyAgent)
 })
