@@ -161,6 +161,8 @@ test('Scroll search (retry)', async t => {
 })
 
 test('Scroll search (retry throws and maxRetries)', async t => {
+  const maxRetries = 5
+  const expectedAttempts = maxRetries + 1
   var count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -172,7 +174,7 @@ test('Scroll search (retry throws and maxRetries)', async t => {
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: MockConnection,
-    maxRetries: 5
+    maxRetries
   })
 
   const scrollSearch = client.helpers.scrollSearch({
@@ -190,11 +192,13 @@ test('Scroll search (retry throws and maxRetries)', async t => {
   } catch (err) {
     t.true(err instanceof errors.ResponseError)
     t.strictEqual(err.statusCode, 429)
-    t.strictEqual(count, 5)
+    t.strictEqual(count, expectedAttempts)
   }
 })
 
 test('Scroll search (retry throws later)', async t => {
+  const maxRetries = 5
+  const expectedAttempts = maxRetries + 1
   var count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
@@ -241,7 +245,7 @@ test('Scroll search (retry throws later)', async t => {
   } catch (err) {
     t.true(err instanceof errors.ResponseError)
     t.strictEqual(err.statusCode, 429)
-    t.strictEqual(count, 5)
+    t.strictEqual(count, expectedAttempts)
   }
 })
 
@@ -249,7 +253,12 @@ test('Scroll search documents', async t => {
   var count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
-      t.strictEqual(params.querystring, 'filter_path=hits.hits._source%2C_scroll_id&scroll=1m')
+      if (count === 0) {
+        t.strictEqual(params.querystring, 'filter_path=hits.hits._source%2C_scroll_id&scroll=1m')
+      } else {
+        t.strictEqual(params.querystring, 'scroll=1m')
+        t.strictEqual(params.body, '{"scroll_id":"id"}')
+      }
       return {
         body: {
           _scroll_id: count === 3 ? undefined : 'id',
