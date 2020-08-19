@@ -2473,7 +2473,7 @@ client.indices.addBlock({
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-blocks.html[Documentation] +
+link:{ref}/index-modules-blocks.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3700,7 +3700,7 @@ client.indices.resolveIndex({
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-resolve-index.html[Documentation] +
+link:{ref}/indices-resolve-index-api.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -7059,8 +7059,7 @@ link:{ref}/ilm-stop.html[Documentation] +
 [source,ts]
 ----
 client.indices.createDataStream({
-  name: string,
-  body: object
+  name: string
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
@@ -7068,9 +7067,6 @@ link:{ref}/data-streams.html[Documentation] +
 |===
 |`name`
 |`string` - The name of the data stream
-
-|`body`
-|`object` - The data stream definition
 
 |===
 
