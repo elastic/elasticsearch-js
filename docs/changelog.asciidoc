@@ -1,6 +1,103 @@
 [[changelog-client]]
 == Changelog
 
+=== 7.9.0
+
+==== Features
+
+===== Add ability to disable the http agent https://github.com/elastic/elasticsearch-js/pull/1251[#1251]
+
+If needed, the http agent can be disabled by setting it to `false`
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'http://localhost:9200'.
+  agent: false
+})
+----
+
+===== Add support for a global context option https://github.com/elastic/elasticsearch-js/pull/1256[#1256]
+
+Before this, you could set a `context` option in each request, but there was no way of setting it globally.
+Now you can by configuring the `context` object in the global configuration, that will be merged with the local one.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'http://localhost:9200'.
+  context: { meta: 'data' }
+})
+----
+
+===== ESM support https://github.com/elastic/elasticsearch-js/pull/1235[#1235]
+
+If you are using ES Modules, now you can easily import the client!
+
+[source,js]
+----
+import { Client } from '@elastic/elasticsearch'
+----
+
+==== Fixes
+
+===== Allow the client name to be a symbol https://github.com/elastic/elasticsearch-js/pull/1254[#1254]
+
+It was possible in plain JavaScript, but not in TypeScript, now you can do it in TypeScript as well.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'http://localhost:9200',
+  name: Symbol('unique')
+})
+----
+
+===== Fixed transport.request querystring type https://github.com/elastic/elasticsearch-js/pull/1240[#1240]
+
+Only `Record<string, any>` was allowed. Now `string` is allowed as well.
+
+===== Fixed type definitions https://github.com/elastic/elasticsearch-js/pull/1263[#1263]
+
+* The `transport.request` defintion was incorrect, it was returning a `Promise<T>` instead of `TransportRequestPromise<T>`.
+* The `refresh` parameter of most APIs was declared as `'true' | 'false' | 'wait_for'`, which was clunky. Now is `'wait_for' | boolean`.
+
+===== Generate response type as boolean if the request is HEAD only https://github.com/elastic/elasticsearch-js/pull/1275[#1275]
+
+All HEAD request will have the body casted to a boolean value, `true` in case of a 200 response, `false` in case of
+a 404 response. The type definitions were not reflecting this behavior.
+
+[source,ts]
+----
+import { Client } from '@elastic/elasticsearch'
+const client = new Client({
+  node: 'http://localhost:9200'
+})
+
+const { body } = await client.exist({ index: 'my-index', id: 'my-id' })
+console.log(body) // either `true` or `false`
+----
+
+==== Internals
+
+===== Updated default http agent configuration https://github.com/elastic/elasticsearch-js/pull/1242[#1242]
+
+Added the scheduling: 'lifo' option to the default HTTP agent configuration to avoid maximizing the open sockets
+against Elasticsearch and lowering the risk of encountering socket timeouts.
+This feature is only available from Node v14.5+, but it should be backported to v10 and v12. (https://github.com/nodejs/node/pull/33278[nodejs/node#33278])
+
+===== Improve child API https://github.com/elastic/elasticsearch-js/pull/1245[#1245]
+
+This pr introduce two changes which should not impact the surface API:
+
+* Refactored the `client.child` API to allocate fewer objects, this change improves memory consumption over time
+and improves the child creation performances by ~12%.
+* The client no longer inherits from the EventEmitter class, but instead has an internal event emitter and exposes
+only the API useful for the users, namely `emit, `on`, `once`, and `off`. The type definitions have been updated accordingly.
+
 === 7.8.0
 
 ==== Features
