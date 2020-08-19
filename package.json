@@ -11,7 +11,7 @@
     "./": "./"
   },
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
-  "version": "7.9.0-rc.2",
+  "version": "7.9.0",
   "keywords": [
     "elasticsearch",
     "elastic",
