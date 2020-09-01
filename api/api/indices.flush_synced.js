@@ -79,13 +79,8 @@ function buildIndicesFlushSynced (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_flush' + '/' + 'synced'
-    } else {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_flush' + '/' + 'synced'
-    }
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_flush' + '/' + 'synced'
 
     // build request object
     const request = {

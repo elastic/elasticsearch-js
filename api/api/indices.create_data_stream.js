@@ -36,7 +36,7 @@ function buildIndicesCreateDataStream (opts) {
 
   /**
    * Perform a indices.create_data_stream request
-   * Creates or updates a data stream
+   * Creates a data stream
    * https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
    */
   return function indicesCreateDataStream (params, options, callback) {

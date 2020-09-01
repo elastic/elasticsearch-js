@@ -27,10 +27,12 @@ function buildMlGetDatafeeds (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
+    'allow_no_match',
     'allow_no_datafeeds'
   ]
 
   const snakeCase = {
+    allowNoMatch: 'allow_no_match',
     allowNoDatafeeds: 'allow_no_datafeeds'
   }
 

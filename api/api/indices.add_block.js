@@ -51,7 +51,7 @@ function buildIndicesAddBlock (opts) {
   /**
    * Perform a indices.add_block request
    * Adds a block to an index.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-blocks.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-blocks.html
    */
   return function indicesAddBlock (params, options, callback) {
     options = options || {}
