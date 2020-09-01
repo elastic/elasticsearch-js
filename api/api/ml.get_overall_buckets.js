@@ -33,6 +33,7 @@ function buildMlGetOverallBuckets (opts) {
     'exclude_interim',
     'start',
     'end',
+    'allow_no_match',
     'allow_no_jobs'
   ]
 
@@ -41,6 +42,7 @@ function buildMlGetOverallBuckets (opts) {
     bucketSpan: 'bucket_span',
     overallScore: 'overall_score',
     excludeInterim: 'exclude_interim',
+    allowNoMatch: 'allow_no_match',
     allowNoJobs: 'allow_no_jobs'
   }
 

@@ -1538,6 +1538,7 @@ export interface CatMlDataFrameAnalytics extends Generic {
 
 export interface CatMlDatafeeds extends Generic {
   datafeed_id?: string;
+  allow_no_match?: boolean;
   allow_no_datafeeds?: boolean;
   format?: string;
   h?: string | string[];
@@ -1549,6 +1550,7 @@ export interface CatMlDatafeeds extends Generic {
 
 export interface CatMlJobs extends Generic {
   job_id?: string;
+  allow_no_match?: boolean;
   allow_no_jobs?: boolean;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
   format?: string;
@@ -1640,6 +1642,10 @@ export interface CcrStats extends Generic {
 
 export interface CcrUnfollow extends Generic {
   index: string;
+}
+
+export interface ClosePointInTime<T = RequestBody> extends Generic {
+  body?: T;
 }
 
 export interface DataFrameTransformDeprecatedDeleteTransform extends Generic {
@@ -1776,9 +1782,8 @@ export interface IlmStart extends Generic {
 export interface IlmStop extends Generic {
 }
 
-export interface IndicesCreateDataStream<T = RequestBody> extends Generic {
+export interface IndicesCreateDataStream extends Generic {
   name: string;
-  body?: T;
 }
 
 export interface IndicesDataStreamsStats extends Generic {
@@ -1854,6 +1859,7 @@ export interface MigrationDeprecations extends Generic {
 
 export interface MlCloseJob<T = RequestBody> extends Generic {
   job_id: string;
+  allow_no_match?: boolean;
   allow_no_jobs?: boolean;
   force?: boolean;
   timeout?: string;
@@ -2023,11 +2029,13 @@ export interface MlGetDataFrameAnalyticsStats extends Generic {
 
 export interface MlGetDatafeedStats extends Generic {
   datafeed_id?: string;
+  allow_no_match?: boolean;
   allow_no_datafeeds?: boolean;
 }
 
 export interface MlGetDatafeeds extends Generic {
   datafeed_id?: string;
+  allow_no_match?: boolean;
   allow_no_datafeeds?: boolean;
 }
 
@@ -2052,11 +2060,13 @@ export interface MlGetInfluencers<T = RequestBody> extends Generic {
 
 export interface MlGetJobStats extends Generic {
   job_id?: string;
+  allow_no_match?: boolean;
   allow_no_jobs?: boolean;
 }
 
 export interface MlGetJobs extends Generic {
   job_id?: string;
+  allow_no_match?: boolean;
   allow_no_jobs?: boolean;
 }
 
@@ -2080,6 +2090,7 @@ export interface MlGetOverallBuckets<T = RequestBody> extends Generic {
   exclude_interim?: boolean;
   start?: string;
   end?: string;
+  allow_no_match?: boolean;
   allow_no_jobs?: boolean;
   body?: T;
 }
@@ -2211,11 +2222,13 @@ export interface MlStopDataFrameAnalytics<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface MlStopDatafeed extends Generic {
+export interface MlStopDatafeed<T = RequestBody> extends Generic {
   datafeed_id: string;
+  allow_no_match?: boolean;
   allow_no_datafeeds?: boolean;
   force?: boolean;
   timeout?: string;
+  body?: T;
 }
 
 export interface MlUpdateDataFrameAnalytics<T = RequestBody> extends Generic {
@@ -2262,6 +2275,15 @@ export interface MonitoringBulk<T = RequestNDBody> extends Generic {
   system_api_version?: string;
   interval?: string;
   body: T;
+}
+
+export interface OpenPointInTime extends Generic {
+  index?: string | string[];
+  preference?: string;
+  routing?: string;
+  ignore_unavailable?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+  keep_alive?: string;
 }
 
 export interface RollupDeleteJob extends Generic {

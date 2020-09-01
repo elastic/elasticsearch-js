@@ -2431,7 +2431,7 @@ client.indices.addBlock({
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
-
+link:{ref}/index-modules-blocks.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3583,7 +3583,7 @@ client.indices.resolveIndex({
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
-
+link:{ref}/indices-resolve-index-api.html[Documentation] +
 [cols=2*]
 |===
 |`name`
@@ -6128,6 +6128,7 @@ link:{ref}/cat-dfanalytics.html[Documentation] +
 ----
 client.cat.mlDatafeeds({
   datafeed_id: string,
+  allow_no_match: boolean,
   allow_no_datafeeds: boolean,
   format: string,
   h: string | string[],
@@ -6143,8 +6144,13 @@ link:{ref}/cat-datafeeds.html[Documentation] +
 |`datafeed_id` or `datafeedId`
 |`string` - The ID of the datafeeds stats to fetch
 
-|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
+
+|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified) +
+
+WARNING: This parameter has been deprecated.
 
 |`format`
 |`string` - a short version of the Accept header, e.g. json, yaml
@@ -6172,6 +6178,7 @@ link:{ref}/cat-datafeeds.html[Documentation] +
 ----
 client.cat.mlJobs({
   job_id: string,
+  allow_no_match: boolean,
   allow_no_jobs: boolean,
   bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
   format: string,
@@ -6188,8 +6195,13 @@ link:{ref}/cat-anomaly-detectors.html[Documentation] +
 |`job_id` or `jobId`
 |`string` - The ID of the jobs stats to fetch
 
-|`allow_no_jobs` or `allowNoJobs`
+|`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) +
+
+WARNING: This parameter has been deprecated.
 
 |`bytes`
 |`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
@@ -6543,6 +6555,22 @@ link:{ref}/ccr-post-unfollow.html[Documentation] +
 |===
 |`index`
 |`string` - The name of the follower index that should be turned into a regular index.
+
+|===
+
+=== closePointInTime
+
+[source,ts]
+----
+client.closePointInTime({
+  body: object
+})
+----
+link:{ref}/point-in-time.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - a point-in-time id to close
 
 |===
 
@@ -7078,8 +7106,7 @@ link:{ref}/ilm-stop.html[Documentation] +
 [source,ts]
 ----
 client.indices.createDataStream({
-  name: string,
-  body: object
+  name: string
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
@@ -7087,9 +7114,6 @@ link:{ref}/data-streams.html[Documentation] +
 |===
 |`name`
 |`string` - The name of the data stream
-
-|`body`
-|`object` - The data stream definition
 
 |===
 
@@ -7379,6 +7403,7 @@ link:{ref}/migration-api-deprecation.html[Documentation] +
 ----
 client.ml.closeJob({
   job_id: string,
+  allow_no_match: boolean,
   allow_no_jobs: boolean,
   force: boolean,
   timeout: string,
@@ -7391,8 +7416,13 @@ link:{ref}/ml-close-job.html[Documentation] +
 |`job_id` or `jobId`
 |`string` - The name of the job to close
 
-|`allow_no_jobs` or `allowNoJobs`
+|`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) +
+
+WARNING: This parameter has been deprecated.
 
 |`force`
 |`boolean` - True if the job should be forcefully closed
@@ -8063,6 +8093,7 @@ _Default:_ `100`
 ----
 client.ml.getDatafeedStats({
   datafeed_id: string,
+  allow_no_match: boolean,
   allow_no_datafeeds: boolean
 })
 ----
@@ -8072,8 +8103,13 @@ link:{ref}/ml-get-datafeed-stats.html[Documentation] +
 |`datafeed_id` or `datafeedId`
 |`string` - The ID of the datafeeds stats to fetch
 
-|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
+
+|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified) +
+
+WARNING: This parameter has been deprecated.
 
 |===
 
@@ -8083,6 +8119,7 @@ link:{ref}/ml-get-datafeed-stats.html[Documentation] +
 ----
 client.ml.getDatafeeds({
   datafeed_id: string,
+  allow_no_match: boolean,
   allow_no_datafeeds: boolean
 })
 ----
@@ -8092,8 +8129,13 @@ link:{ref}/ml-get-datafeed.html[Documentation] +
 |`datafeed_id` or `datafeedId`
 |`string` - The ID of the datafeeds to fetch
 
-|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
+
+|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified) +
+
+WARNING: This parameter has been deprecated.
 
 |===
 
@@ -8179,6 +8221,7 @@ link:{ref}/ml-get-influencer.html[Documentation] +
 ----
 client.ml.getJobStats({
   job_id: string,
+  allow_no_match: boolean,
   allow_no_jobs: boolean
 })
 ----
@@ -8188,8 +8231,13 @@ link:{ref}/ml-get-job-stats.html[Documentation] +
 |`job_id` or `jobId`
 |`string` - The ID of the jobs stats to fetch
 
-|`allow_no_jobs` or `allowNoJobs`
+|`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) +
+
+WARNING: This parameter has been deprecated.
 
 |===
 
@@ -8199,6 +8247,7 @@ link:{ref}/ml-get-job-stats.html[Documentation] +
 ----
 client.ml.getJobs({
   job_id: string,
+  allow_no_match: boolean,
   allow_no_jobs: boolean
 })
 ----
@@ -8208,8 +8257,13 @@ link:{ref}/ml-get-job.html[Documentation] +
 |`job_id` or `jobId`
 |`string` - The ID of the jobs to fetch
 
-|`allow_no_jobs` or `allowNoJobs`
+|`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) +
+
+WARNING: This parameter has been deprecated.
 
 |===
 
@@ -8273,6 +8327,7 @@ client.ml.getOverallBuckets({
   exclude_interim: boolean,
   start: string,
   end: string,
+  allow_no_match: boolean,
   allow_no_jobs: boolean,
   body: object
 })
@@ -8301,8 +8356,13 @@ link:{ref}/ml-get-overall-buckets.html[Documentation] +
 |`end`
 |`string` - Returns overall buckets with timestamps earlier than this time
 
-|`allow_no_jobs` or `allowNoJobs`
+|`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) +
+
+WARNING: This parameter has been deprecated.
 
 |`body`
 |`object` - Overall bucket selection details if not provided in URI
@@ -8825,9 +8885,11 @@ link:{ref}/stop-dfanalytics.html[Documentation] +
 ----
 client.ml.stopDatafeed({
   datafeed_id: string,
+  allow_no_match: boolean,
   allow_no_datafeeds: boolean,
   force: boolean,
-  timeout: string
+  timeout: string,
+  body: object
 })
 ----
 link:{ref}/ml-stop-datafeed.html[Documentation] +
@@ -8836,14 +8898,22 @@ link:{ref}/ml-stop-datafeed.html[Documentation] +
 |`datafeed_id` or `datafeedId`
 |`string` - The ID of the datafeed to stop
 
-|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
+
+|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified) +
+
+WARNING: This parameter has been deprecated.
 
 |`force`
 |`boolean` - True if the datafeed should be forcefully stopped.
 
 |`timeout`
 |`string` - Controls the time to wait until a datafeed has stopped. Default to 20 seconds
+
+|`body`
+|`object` - The URL params optionally sent in the body
 
 |===
 
@@ -9030,6 +9100,43 @@ WARNING: This parameter has been deprecated.
 
 |`body`
 |`object` - The operation definition and data (action-data pairs), separated by newlines
+
+|===
+
+=== openPointInTime
+
+[source,ts]
+----
+client.openPointInTime({
+  index: string | string[],
+  preference: string,
+  routing: string,
+  ignore_unavailable: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  keep_alive: string
+})
+----
+link:{ref}/point-in-time.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to open point in time; use `_all` or empty string to perform the operation on all indices
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
+
+|`routing`
+|`string` - Specific routing value
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|`keep_alive` or `keepAlive`
+|`string` - Specific the time to live for the point in time
 
 |===
 
@@ -10360,7 +10467,7 @@ link:{ref}/info-api.html[Documentation] +
 |`string \| string[]` - Comma-separated list of info categories. Can be any of: build, license, features
 
 |`accept_enterprise` or `acceptEnterprise`
-|`boolean` - Supported for backwards compatibility with 7.x. If this param is used it must be set to true +
+|`boolean` - If this param is used it must be set to true +
 
 WARNING: This parameter has been deprecated.
 

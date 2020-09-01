@@ -22,29 +22,30 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMlStopDatafeed (opts) {
+function buildOpenPointInTime (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-    'allow_no_match',
-    'allow_no_datafeeds',
-    'force',
-    'timeout'
+    'preference',
+    'routing',
+    'ignore_unavailable',
+    'expand_wildcards',
+    'keep_alive'
   ]
 
   const snakeCase = {
-    allowNoMatch: 'allow_no_match',
-    allowNoDatafeeds: 'allow_no_datafeeds'
-
+    ignoreUnavailable: 'ignore_unavailable',
+    expandWildcards: 'expand_wildcards',
+    keepAlive: 'keep_alive'
   }
 
   /**
-   * Perform a ml.stop_datafeed request
-   * Stops one or more datafeeds.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
+   * Perform a open_point_in_time request
+   * Open a point in time that can be used in subsequent searches
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time.html
    */
-  return function mlStopDatafeed (params, options, callback) {
+  return function openPointInTime (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -56,12 +57,6 @@ function buildMlStopDatafeed (opts) {
       options = {}
     }
 
-    // check required parameters
-    if (params['datafeed_id'] == null && params['datafeedId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: datafeed_id or datafeedId')
-      return handleError(err, callback)
-    }
-
     // validate headers object
     if (options.headers != null && typeof options.headers !== 'object') {
       const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
@@ -69,7 +64,7 @@ function buildMlStopDatafeed (opts) {
     }
 
     var warnings = []
-    var { method, body, datafeedId, datafeed_id, ...querystring } = params
+    var { method, body, index, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -79,8 +74,13 @@ function buildMlStopDatafeed (opts) {
 
     var path = ''
 
-    if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_stop'
+    if ((index) != null) {
+      if (method == null) method = 'POST'
+      path = '/' + encodeURIComponent(index) + '/' + '_pit'
+    } else {
+      if (method == null) method = 'POST'
+      path = '/' + '_pit'
+    }
 
     // build request object
     const request = {
@@ -95,4 +95,4 @@ function buildMlStopDatafeed (opts) {
   }
 }
 
-module.exports = buildMlStopDatafeed
+module.exports = buildOpenPointInTime

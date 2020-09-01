@@ -27,6 +27,7 @@ function buildCatMlDatafeeds (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
+    'allow_no_match',
     'allow_no_datafeeds',
     'format',
     'h',
@@ -37,6 +38,7 @@ function buildCatMlDatafeeds (opts) {
   ]
 
   const snakeCase = {
+    allowNoMatch: 'allow_no_match',
     allowNoDatafeeds: 'allow_no_datafeeds'
 
   }

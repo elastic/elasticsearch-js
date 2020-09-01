@@ -44,7 +44,7 @@ function buildIndicesResolveIndex (opts) {
   /**
    * Perform a indices.resolve_index request
    * Returns information about any matching indices, aliases, and data streams
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-index.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-index-api.html
    */
   return function indicesResolveIndex (params, options, callback) {
     options = options || {}

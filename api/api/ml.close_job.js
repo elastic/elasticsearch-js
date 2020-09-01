@@ -27,12 +27,14 @@ function buildMlCloseJob (opts) {
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
+    'allow_no_match',
     'allow_no_jobs',
     'force',
     'timeout'
   ]
 
   const snakeCase = {
+    allowNoMatch: 'allow_no_match',
     allowNoJobs: 'allow_no_jobs'
 
   }
