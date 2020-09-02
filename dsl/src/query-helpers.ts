@@ -26,53 +26,40 @@ import deepMerge from 'deepmerge'
 import * as t from './types'
 
 function Q (...blocks: t.AnyQuery[]): Record<string, any> {
-  const { aggs,
-    collapse,
-    explain,
-    from,
-    highlight,
-    indices_boost,
-    min_score,
-    post_filter,
-    profile,
-    rescore,
-    script_fields,
-    search_after,
-    size,
-    slice,
-    sort,
-    _source,
-    suggest,
-    terminate_after,
-    timeout,
-    track_scores,
-    version,
-    ...queries
-  } = Object.assign.apply({}, blocks.flat())
+  const topLevelKeys = [
+    'aggs',
+    'collapse',
+    'explain',
+    'from',
+    'highlight',
+    'indices_boost',
+    'min_score',
+    'post_filter',
+    'profile',
+    'rescore',
+    'script_fields',
+    'search_after',
+    'size',
+    'slice',
+    'sort',
+    '_source',
+    'suggest',
+    'terminate_after',
+    'timeout',
+    'track_scores',
+    'version'
+  ]
 
-  const query: t.AnyQuery[] = Object.keys(queries).map(q => ({ [q]: queries[q] }))
-  const body: Record<string, any> = query.length > 0 ? Q.bool(...query) : {}
-  if (aggs) body.aggs = aggs
-  if (collapse) body.collapse = collapse
-  if (explain) body.explain = explain
-  if (from) body.from = from
-  if (highlight) body.highlight = highlight
-  if (indices_boost) body.indices_boost = indices_boost
-  if (min_score) body.min_score = min_score
-  if (post_filter) body.post_filter = post_filter
-  if (profile) body.profile = profile
-  if (rescore) body.rescore = rescore
-  if (script_fields) body.script_fields = script_fields
-  if (search_after) body.search_after = search_after
-  if (size) body.size = size
-  if (slice) body.slice = slice
-  if (sort) body.sort = sort
-  if (_source) body._source = _source
-  if (suggest) body.suggest = suggest
-  if (terminate_after) body.terminate_after = terminate_after
-  if (timeout) body.timeout = timeout
-  if (track_scores) body.track_scores = track_scores
-  if (version) body.version = version
+  const queries = blocks.flat().filter(block => {
+    return !topLevelKeys.includes(Object.keys(block)[0])
+  })
+  const body: Record<string, any> = queries.length > 0 ? Q.bool(...queries) : {}
+  for (const block of blocks) {
+    const key = Object.keys(block)[0]
+    if (topLevelKeys.includes(key)) {
+      body[key] = block[key]
+    }
+  }
 
   return body
 }
