@@ -10,18 +10,13 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "emitDecoratorMetadata": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
+    "strict": true,
     "esModuleInterop": true,
     "removeComments": true,
     "noUnusedLocals": true,
     "lib": [
       "esnext"
     ]
-  },
-  "formatCodeOptions": {
-    "identSize": 2,
-    "tabSize": 2
   },
   "exclude": ["examples"],
   "include": ["./src/*.ts"]
