@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "declaration": true,
+    "target": "es2017",
+    "module": "commonjs",
+    "outDir": "lib",
+    "pretty": true,
+    "noEmitOnError": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "esModuleInterop": true,
+    "removeComments": true,
+    "noUnusedLocals": true,
+    "lib": [
+      "esnext"
+    ]
+  },
+  "formatCodeOptions": {
+    "identSize": 2,
+    "tabSize": 2
+  },
+  "exclude": ["examples"],
+  "include": ["./src/*.ts"]
+}
