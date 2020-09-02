@@ -40,6 +40,11 @@ jobs:
       run: |
         npm run test:types
 
+    - name: DSL
+      run: |
+        npm run build:ts
+        npm run test:dsl
+
   test-node-v8:
     name: Test
     runs-on: ${{ matrix.os }}
