@@ -33,10 +33,14 @@
     "test:coverage-100": "tap test/{unit,acceptance}/{*,**/*}.test.js --coverage --100 --nyc-arg=\"--exclude=api\"",
     "test:coverage-report": "tap test/{unit,acceptance}/{*,**/*}.test.js --coverage --nyc-arg=\"--exclude=api\" && nyc report --reporter=text-lcov > coverage.lcov",
     "test:coverage-ui": "tap test/{unit,acceptance}/{*,**/*}.test.js --coverage --coverage-report=html --nyc-arg=\"--exclude=api\"",
+    "test:dls": "npm run lint:ts && tap --ts test/dsl/*.test.ts",
     "lint": "standard",
+    "lint:ts": "standardx --parser @typescript-eslint/parser --plugin @typescript-eslint/eslint-plugin dsl/src/*.ts dsl/examples/*.ts",
     "lint:fix": "standard --fix",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'",
-    "build-esm": "npx gen-esm-wrapper . index.mjs && standard --fix index.mjs"
+    "build:esm": "npx gen-esm-wrapper . index.mjs && standard --fix index.mjs",
+    "build:ts": "rimraf dsl/lib/* && tsc --project dsl/tsconfig.json",
+    "prepublish": "npm run build:ts"
   },
   "author": {
     "name": "Tomas Della Vedova",
@@ -49,9 +53,10 @@
   "devDependencies": {
     "@sinonjs/fake-timers": "github:sinonjs/fake-timers#0bfffc1",
     "@types/node": "^12.6.2",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
     "convert-hrtime": "^3.0.0",
     "dedent": "^0.7.0",
-    "deepmerge": "^4.0.0",
     "dezalgo": "^1.0.3",
     "fast-deep-equal": "^3.1.1",
     "into-stream": "^5.1.1",
@@ -67,15 +72,18 @@
     "simple-statistics": "^7.0.2",
     "split2": "^3.1.1",
     "standard": "^13.0.2",
+    "standardx": "^5.0.0",
     "stoppable": "^1.1.0",
     "tap": "^14.4.1",
     "tsd": "^0.13.1",
+    "typescript": "^4.0.2",
     "workq": "^2.1.0",
     "xmlbuilder2": "^2.1.2"
   },
   "dependencies": {
     "debug": "^4.1.1",
     "decompress-response": "^4.2.0",
+    "deepmerge": "^4.2.2",
     "hpagent": "^0.1.1",
     "ms": "^2.1.1",
     "pump": "^3.0.0",
