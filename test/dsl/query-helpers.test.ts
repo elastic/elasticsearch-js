@@ -21,6 +21,44 @@ test('Q is a function that creates the final query object', t => {
     }
   })
 
+  const topLevelKeys = [
+    'aggs',
+    'collapse',
+    'explain',
+    'from',
+    'highlight',
+    'indices_boost',
+    'min_score',
+    'post_filter',
+    'profile',
+    'rescore',
+    'script_fields',
+    'search_after',
+    'size',
+    'slice',
+    'sort',
+    '_source',
+    'suggest',
+    'terminate_after',
+    'timeout',
+    'track_scores',
+    'version'
+  ]
+
+  const randomTopLevelKey = topLevelKeys[Math.floor(Math.random() * topLevelKeys.length)]
+
+  t.deepEqual(Q({ match: { foo: 'bar' } }, { match: { foo: 'baz' } }, { [randomTopLevelKey]: 42 }), {
+    query: {
+      bool: {
+        must: [
+          { match: { foo: 'bar' } },
+          { match: { foo: 'baz' } }
+        ]
+      }
+    },
+    [randomTopLevelKey]: 42
+  })
+
   t.end()
 })
 
