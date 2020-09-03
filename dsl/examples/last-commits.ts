@@ -18,9 +18,12 @@
  */
 
 import { Client } from '../../'
-import { Q } from '../'
+import { Q, F } from '../'
 
-async function run () {
+/**
+ * Pure function API
+ */
+async function run1 () {
   const client = new Client({ node: 'http://localhost:9200' })
 
   // last 10 commits for 'elasticsearch-js' repo
@@ -36,4 +39,23 @@ async function run () {
   console.log(body.hits.hits)
 }
 
-run().catch(console.log)
+/**
+ * Fluent API
+ */
+async function run2 () {
+  const client = new Client({ node: 'http://localhost:9200' })
+
+  // last 10 commits for 'elasticsearch-js' repo
+  const { body } = await client.search({
+    index: 'git',
+    body: new F()
+      .term('repository', 'elasticsearch-js')
+      .sort('committed_date', { order: 'desc' })
+      .size(10)
+  })
+
+  console.log(body.hits.hits)
+}
+
+run1().catch(console.log)
+run2().catch(console.log)

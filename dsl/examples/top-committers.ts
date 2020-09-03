@@ -18,9 +18,12 @@
  */
 
 import { Client } from '../../'
-import { Q, A } from '../'
+import { Q, A, F } from '../'
 
-async function run () {
+/**
+ * Pure function API
+ */
+async function run1 () {
   const client = new Client({ node: 'http://localhost:9200' })
 
   // top committers aggregation
@@ -44,4 +47,31 @@ async function run () {
   console.log(body.aggregations)
 }
 
-run().catch(console.log)
+/**
+ * Fluent API
+ */
+async function run2 () {
+  const client = new Client({ node: 'http://localhost:9200' })
+
+  // top committers aggregation
+  // 'committers' is the name of the aggregation
+  const committersAgg = A.committers.terms(
+    { field: 'committer.name.keyword' },
+    // you can nest multiple aggregations by
+    // passing them to the aggregation constructor
+    // 'line_stats' is the name of the aggregation
+    A.line_stats.stats({ field: 'stat.insertions' })
+  )
+  const { body } = await client.search({
+    index: 'git',
+    body: new F()
+      .matchAll()
+      .size(0)
+      .aggs(committersAgg)
+  })
+
+  console.log(body.aggregations)
+}
+
+run1().catch(console.log)
+run2().catch(console.log)

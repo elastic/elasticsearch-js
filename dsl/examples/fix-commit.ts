@@ -18,9 +18,12 @@
  */
 
 import { Client } from '../../'
-import { Q } from '../'
+import { Q, F } from '../'
 
-async function run () {
+/**
+ * Pure function API
+ */
+async function run1 () {
   const client = new Client({ node: 'http://localhost:9200' })
 
   // search commits that contains 'fix' but do not changes test files
@@ -37,4 +40,24 @@ async function run () {
   console.log(body.hits.hits)
 }
 
-run().catch(console.log)
+/**
+ * Fluent API
+ */
+async function run2 () {
+  const client = new Client({ node: 'http://localhost:9200' })
+
+  // search commits that contains 'fix' but do not changes test files
+  const { body } = await client.search({
+    index: 'git',
+    body: new F()
+      // You can avoid to call `.must`, as any query will be
+      // sent inside a `must` block unless specified otherwise
+      .must(f => f.match('description', 'fix'))
+      .mustNot(f => f.term('files', 'test'))
+  })
+
+  console.log(body.hits.hits)
+}
+
+run1().catch(console.log)
+run2().catch(console.log)

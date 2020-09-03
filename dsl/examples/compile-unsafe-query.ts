@@ -51,16 +51,16 @@ import { Q, F } from '../'
     description: string
     author: string
   }
-  // In this example we will use `Q.compile`, the returned function
-  // works in the same way as `Q.compileUnsafe` but the function returned by the
-  // safe API is an order of magnitude slower.
-  // `Q.compile` can be used with unstrusted input (but it's not recommended).
+  // In this example we will use `Q.compileUnsafe`, the returned function
+  // works in the same way as `Q.compile` but the function returned by the
+  // unsafe API is an order of magnitude faster.
+  // You should NEVER use `Q.compileUnsafe` with untrusted input.
   // Once you have created the query and the input interface,
-  // you must pass the  query to `Q.compile` and store the result
+  // you must pass the  query to `Q.compileUnsafe` and store the result
   // in a variable. `Q.compile` returns a function that accepts
   // a single object parameter, which is the same you have declared
   // in the interface before.
-  const compiledQuery = Q.compile<Input>(query)
+  const compiledQuery = Q.compileUnsafe<Input>(query)
 
   async function run () {
     const client = new Client({ node: 'http://localhost:9200' })
@@ -100,7 +100,7 @@ import { Q, F } from '../'
     author: string
   }
 
-  const compiledQuery = query.compile<Input>()
+  const compiledQuery = query.compileUnsafe<Input>()
 
   async function run () {
     const client = new Client({ node: 'http://localhost:9200' })
