@@ -25,12 +25,13 @@
 /* eslint lines-between-class-members: 0 */
 
 import Q from './query'
+import A from './aggregation'
 import * as t from './types'
 
-const kState = Symbol('dsl-state')
-type nestedQFn = (f: Fluent) => Fluent
+const kState = Symbol('dsl-query-state')
+type nestedQFn = (f: FluentQ) => FluentQ
 
-class Fluent {
+class FluentQ {
   [kState]: Record<string, any>[]
   constructor () {
     this[kState] = []
@@ -257,6 +258,11 @@ class Fluent {
     this[kState].push(Q.size(s))
     return this
   }
+
+  aggs (...aggregations: Record<string, any>[]): this {
+    this[kState].push(A(...aggregations))
+    return this
+  }
 }
 
-export default Fluent
+export default FluentQ

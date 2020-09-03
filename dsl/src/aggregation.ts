@@ -24,11 +24,7 @@
 
 import * as t from './types'
 
-interface anyObject {
-  [key: string]: any
-}
-
-type aggsOptions = anyObject | string
+type aggsOptions = Record<string, any> | string
 
 function _A (...aggregations: any[]): any {
   return {
@@ -106,7 +102,7 @@ interface Aggregations {
 }
 
 const aggregations = {
-  get: function (target: unknown, name: string) {
+  get (target: unknown, name: string) {
     return {
       // add aggregations to a parent aggregation
       aggs (...aggregations: any[]): t.Aggregation {

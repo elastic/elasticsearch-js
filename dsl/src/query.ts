@@ -27,6 +27,7 @@ import deepMerge from 'deepmerge'
 import * as t from './types'
 
 function Q (...blocks: t.AnyQuery[]): Record<string, any> {
+  blocks = blocks.flat()
   const topLevelKeys = [
     'aggs',
     'collapse',
@@ -51,10 +52,10 @@ function Q (...blocks: t.AnyQuery[]): Record<string, any> {
     'version'
   ]
 
-  const queries = blocks.flat().filter(block => {
-    return !topLevelKeys.includes(Object.keys(block)[0])
-  })
-  const body: Record<string, any> = queries.length > 0 ? Q.bool(...queries) : {}
+  const queries = blocks.filter(block => !topLevelKeys.includes(Object.keys(block)[0]))
+  const body: Record<string, any> = queries.length === 1 && !isClause(queries[0]) && !isBool(queries[0])
+    ? { query: queries[0] }
+    : queries.length > 0 ? Q.bool(...queries) : {}
   for (const block of blocks) {
     const key = Object.keys(block)[0]
     if (topLevelKeys.includes(key)) {
