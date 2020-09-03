@@ -59,10 +59,24 @@ test('Q is a function that creates the final query object', t => {
     [randomTopLevelKey]: 42
   })
 
+  t.deepEqual(Q({ match: { foo: 'bar' } }, { [randomTopLevelKey]: 42 }), {
+    query: {
+      match: { foo: 'bar' }
+    },
+    [randomTopLevelKey]: 42
+  })
+
+  t.deepEqual(Q({ function_score: { foo: 'bar' } }, { [randomTopLevelKey]: 42 }), {
+    query: {
+      function_score: { foo: 'bar' }
+    },
+    [randomTopLevelKey]: 42
+  })
+
   t.end()
 })
 
-test('Compile a query', t => {
+test('Compile a query (safe)', t => {
   t.type(Q.param, 'function')
   t.type(Q.compile, 'function')
 
@@ -78,6 +92,38 @@ test('Compile a query', t => {
     c: number
   }
   const compiledQuery = Q.compile<Input>(query)
+
+  t.deepEqual(compiledQuery({ a: 1, b: 2, c: 3 }), {
+    query: {
+      bool: {
+        must: [
+          { a: 1 },
+          { b: 2 },
+          { c: 3 }
+        ]
+      }
+    }
+  })
+
+  t.end()
+})
+
+test('Compile a query (unsafe)', t => {
+  t.type(Q.param, 'function')
+  t.type(Q.compile, 'function')
+
+  const query = Q(
+    { a: Q.param('a') },
+    { b: Q.param('b') },
+    { c: Q.param('c') }
+  )
+
+  interface Input {
+    a: number,
+    b: number,
+    c: number
+  }
+  const compiledQuery = Q.compileUnsafe<Input>(query)
 
   t.deepEqual(compiledQuery({ a: 1, b: 2, c: 3 }), {
     query: {
