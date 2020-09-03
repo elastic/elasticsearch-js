@@ -21,5 +21,6 @@
 
 const Q = require('./lib/query-helpers').default
 const A = require('./lib/aggregation-helpers').default
+const F = require('./lib/fluent').default
 
-module.exports = { Q, A }
+module.exports = { Q, A, F }
