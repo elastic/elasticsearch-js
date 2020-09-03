@@ -19,8 +19,8 @@
 
 'use strict'
 
-const Q = require('./lib/query-helpers').default
-const A = require('./lib/aggregation-helpers').default
+const Q = require('./lib/query').default
+const A = require('./lib/aggregation').default
 const F = require('./lib/fluent').default
 
 module.exports = { Q, A, F }

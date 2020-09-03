@@ -17,7 +17,8 @@
  * under the License.
  */
 
-import Q from './lib/query-helpers'
-import A from './lib/aggregation-helpers'
+import Q from './lib/query'
+import A from './lib/aggregation'
+import F from './lib/fluent'
 
-export { Q, A }
+export { Q, A, F }

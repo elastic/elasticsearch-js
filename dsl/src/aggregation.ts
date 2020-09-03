@@ -32,7 +32,8 @@ type aggsOptions = anyObject | string
 
 function _A (...aggregations: any[]): any {
   return {
-    aggs: Object.assign.apply(null, aggregations.filter(falsy))
+    // @ts-ignore
+    aggs: Object.assign.apply(null, aggregations)
   }
 }
 
@@ -356,7 +357,8 @@ function generateAggsObject (type: string, name: string, defaultField: string | 
     return {
       [name]: {
         [type]: opts,
-        aggs: Object.assign.apply(null, aggregations.filter(falsy))
+        // @ts-ignore
+        aggs: Object.assign.apply(null, aggregations)
       }
     }
   } else {
