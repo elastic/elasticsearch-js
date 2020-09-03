@@ -61,10 +61,6 @@ jobs:
       run: |
         npm install
 
-    - name: Build
-      run: |
-        npm run build:ts
-
     - name: Test
       run: |
         npm run test:dsl
