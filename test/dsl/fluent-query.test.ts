@@ -7,7 +7,7 @@ import * as types from '../../dsl/lib/types'
 import { F } from '../../dsl'
 
 test('match', t => {
-  t.deepEqual(new F()
+  t.deepEqual(F()
     .match('foo', 'bar')
     .match('foo', 'baz')
     .build(), {
@@ -21,7 +21,7 @@ test('match', t => {
     }
   })
 
-  t.deepEqual(new F()
+  t.deepEqual(F()
     .match('foo', ['bar', 'baz'])
     .build(), {
     query: {
@@ -38,7 +38,7 @@ test('match', t => {
 })
 
 test('matchPhrase', t => {
-  t.deepEqual(new F()
+  t.deepEqual(F()
     .matchPhrase('foo', 'bar')
     .build(), {
     query: {
@@ -50,7 +50,7 @@ test('matchPhrase', t => {
 })
 
 test('matchPhrasePrefix', t => {
-  t.deepEqual(new F()
+  t.deepEqual(F()
     .matchPhrasePrefix('foo', 'bar')
     .build(), {
     query: {

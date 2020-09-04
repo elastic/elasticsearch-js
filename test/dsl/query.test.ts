@@ -66,9 +66,16 @@ test('Q is a function that creates the final query object', t => {
     [randomTopLevelKey]: 42
   })
 
-  t.deepEqual(Q({ function_score: { foo: 'bar' } }, { [randomTopLevelKey]: 42 }), {
+  t.deepEqual(Q({ query: { function_score: { foo: 'bar' } } }, { [randomTopLevelKey]: 42 }), {
     query: {
       function_score: { foo: 'bar' }
+    },
+    [randomTopLevelKey]: 42
+  })
+
+  t.deepEqual(Q({ query: { bool: {} } }, { [randomTopLevelKey]: 42 }), {
+    query: {
+      bool: {}
     },
     [randomTopLevelKey]: 42
   })

@@ -557,7 +557,7 @@ test('nested with only should', t => {
   t.end()
 })
 
-test('nested with only should and minimum_should_match', t => {
+test('nested with only should and minimum_should_match / 1', t => {
   const query = Q.bool(
     Q.should(
       Q.bool(
@@ -581,6 +581,40 @@ test('nested with only should and minimum_should_match', t => {
             ],
             minimum_should_match: 1
           }
+        }]
+      }
+    }
+  })
+
+  t.end()
+})
+
+test('nested with only should and minimum_should_match / 2', t => {
+  const query = Q.bool(
+    Q.bool(
+      Q.should(
+        Q.match('1', '2'),
+        Q.term('3', '4')
+      ),
+      Q.minShouldMatch(2)
+    ),
+    Q.should(Q.match('5', '6'))
+  )
+
+  t.deepEqual(query, {
+    query: {
+      bool: {
+        must: [{
+          bool: {
+            should: [
+              { match: { 1: '2' } },
+              { term: { 3: '4' } }
+            ],
+            minimum_should_match: 2
+          }
+        }],
+        should: [{
+          match: { 5: '6' }
         }]
       }
     }
@@ -761,16 +795,29 @@ test('Should not merge up named queries / 2', t => {
   t.end()
 })
 
-test('should throw if it can\'t merge the query', t => {
+test('_name defined twice', t => {
   try {
     Q.bool(
-      Q.must(),
-      Q.must(),
-      Q.should()
+      Q.name('foo'),
+      Q.name('bar')
     )
-    t.fail('It should throw')
+    t.fail('should throw')
   } catch (err) {
-    t.is(err.message, 'Cannot merge this query')
+    t.is(err.message, 'The query name has already been defined')
+  }
+
+  t.end()
+})
+
+test('minimum_should_match defined twice', t => {
+  try {
+    Q.bool(
+      Q.minShouldMatch(4),
+      Q.minShouldMatch(2)
+    )
+    t.fail('should throw')
+  } catch (err) {
+    t.is(err.message, 'minimum_should_match has already been defined')
   }
 
   t.end()
