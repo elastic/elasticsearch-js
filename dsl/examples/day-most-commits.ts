@@ -53,7 +53,7 @@ async function run2 () {
   // get the day where the most commits were made
   const { body } = await client.search({
     index: 'git',
-    body: new F()
+    body: F()
       .size(0)
       // 'day_most_commits' is the name of the aggregation
       .aggs(

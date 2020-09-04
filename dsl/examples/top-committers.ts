@@ -64,7 +64,7 @@ async function run2 () {
   )
   const { body } = await client.search({
     index: 'git',
-    body: new F()
+    body: F()
       .matchAll()
       .size(0)
       .aggs(committersAgg)

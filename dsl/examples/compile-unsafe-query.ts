@@ -88,7 +88,7 @@ import { Q, F } from '../'
   // The theory behind query compilation is the same here,
   // the query crafting and compilation should be done
   // outside of your hot code path.
-  const query = new F()
+  const query = F()
     .match('description', Q.param('description'))
     .filter(f => f
       .term('author.name', Q.param('author'))

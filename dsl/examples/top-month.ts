@@ -91,7 +91,7 @@ async function run2 () {
 
   const { body: topMonths } = await client.search({
     index: 'git',
-    body: new F()
+    body: F()
       // we want to know the top month for 'delvedor'
       .filter(f => f.term('author', 'delvedor'))
       .size(0)

@@ -48,7 +48,7 @@ async function run2 () {
   // last 10 commits for 'elasticsearch-js' repo
   const { body } = await client.search({
     index: 'git',
-    body: new F()
+    body: F()
       .term('repository', 'elasticsearch-js')
       .sort('committed_date', { order: 'desc' })
       .size(10)
