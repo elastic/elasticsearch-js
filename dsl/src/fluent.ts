@@ -31,6 +31,9 @@ import * as t from './types'
 const kState = Symbol('dsl-query-state')
 type nestedQFn = (f: FluentQ) => FluentQ
 
+// TODO: the client should detect a fluent query
+//       and automatically call `query.build()`
+
 class FluentQ {
   [kState]: Record<string, any>[]
   constructor () {
@@ -265,4 +268,6 @@ class FluentQ {
   }
 }
 
-export default FluentQ
+export default function build () {
+  return new FluentQ()
+}

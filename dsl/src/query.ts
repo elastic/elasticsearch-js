@@ -23,7 +23,6 @@
 /* eslint no-redeclare: 0 */
 /* eslint no-inner-declarations: 0 */
 
-import deepMerge from 'deepmerge'
 import * as t from './types'
 
 function Q (...blocks: t.AnyQuery[]): Record<string, any> {
@@ -53,13 +52,14 @@ function Q (...blocks: t.AnyQuery[]): Record<string, any> {
   ]
 
   const queries = blocks.filter(block => !topLevelKeys.includes(Object.keys(block)[0]))
-  const body: Record<string, any> = queries.length === 1 && !isClause(queries[0]) && !isBool(queries[0])
-    ? { query: queries[0] }
+  const body: Record<string, any> = queries.length === 1 && !isClause(queries[0])
+    ? isQuery(queries[0]) ? queries[0] : { query: queries[0] }
     : queries.length > 0 ? Q.bool(...queries) : {}
   for (const block of blocks) {
     const key = Object.keys(block)[0]
     if (topLevelKeys.includes(key)) {
-      body[key] = (block as Record<string, any>)[key]
+      // @ts-expect-error
+      body[key] = block[key]
     }
   }
 
@@ -278,7 +278,7 @@ namespace Q {
     return { filter: queries.flatMap(mergeableFilter) }
   }
 
-  export function bool (...queries: t.AnyQuery[]): t.BoolQuery {
+  export function bool (...queries: t.AnyBoolQuery[]): t.BoolQuery {
     if (queries.length === 0) {
       return { query: { bool: {} } }
     }
@@ -297,7 +297,20 @@ namespace Q {
           if (q.query.bool._name) {
             return { must: [q.query] }
           }
+          if (q.query.bool.minimum_should_match) {
+            return { must: [q.query] }
+          }
           return q.query.bool
+        }
+
+        if (isBoolBlock(q)) {
+          if (q.bool._name) {
+            return { must: [q] }
+          }
+          if (q.bool.minimum_should_match) {
+            return { must: [q] }
+          }
+          return q.bool
         }
 
         if (isClause(q)) {
@@ -307,33 +320,50 @@ namespace Q {
         return { must: [q] }
       })
 
-    const clauseCount = {
-      must: 0,
-      should: 0,
-      must_not: 0,
-      filter: 0
-    }
-    for (let i = 0; i < normalizedQueries.length; i++) {
-      const q = normalizedQueries[i]
-      if (q.must !== undefined) { clauseCount.must++ }
-      if (q.should !== undefined) { clauseCount.should++ }
-      if (q.must_not !== undefined) { clauseCount.must_not++ }
-      if (q.filter !== undefined) { clauseCount.filter++ }
-    }
+    const mustClauses: t.AnyQuery[] = []
+    const mustNotClauses: t.AnyQuery[] = []
+    const shouldClauses: t.AnyQuery[] = []
+    const filterClauses: t.AnyQuery[] = []
+    let minimum_should_match: number | null = null
+    let _name: string | null = null
 
-    // if there is at least one should, we cannot deep merge
-    // multiple clauses, so we check how many clauses we have per type
-    // and we throw an error if there is more than one per type
-    if (clauseCount.should > 0) {
-      if (clauseCount.must > 1 || clauseCount.must_not > 1 || clauseCount.filter > 1) {
-        throw new Error('Cannot merge this query')
+    for (const query of normalizedQueries) {
+      if (query.must) {
+        mustClauses.push(query.must)
+      }
+      if (query.must_not) {
+        mustNotClauses.push(query.must_not)
+      }
+      if (query.should) {
+        shouldClauses.push(query.should)
+      }
+      if (query.filter) {
+        filterClauses.push(query.filter)
+      }
+      if (query._name) {
+        if (_name !== null) {
+          throw new Error('The query name has already been defined')
+        }
+        _name = query._name
+      }
+      if (query.minimum_should_match) {
+        if (minimum_should_match !== null) {
+          throw new Error('minimum_should_match has already been defined')
+        }
+        minimum_should_match = query.minimum_should_match
       }
     }
 
-    const bool: t.BoolQueryOptions = deepMerge.all(normalizedQueries)
+    const bool: t.BoolQueryOptions = {
+      ...(mustClauses.length && Q.must(...mustClauses)),
+      ...(mustNotClauses.length && Q.mustNot(...mustNotClauses)),
+      ...(shouldClauses.length && Q.should(...shouldClauses)),
+      ...(filterClauses.length && Q.filter(...filterClauses))
+    }
 
-    // if there are not should clauses,
-    // we can safely deepmerge queries
+    if (_name) bool._name = _name
+    if (minimum_should_match) bool.minimum_should_match = minimum_should_match
+
     return {
       query: {
         bool: optimize(bool)
@@ -341,33 +371,44 @@ namespace Q {
     }
   }
 
-  export function and (...queries: t.AnyQuery[]): t.BoolQuery {
+  export function and (...queries: t.AnyBoolQuery[]): t.BoolQuery {
     let query = queries[0]
     for (let i = 1; i < queries.length; i++) {
       query = andOp(query, queries[i])
     }
-    return query as t.BoolQuery
+    return { query: toBoolBlock(query) }
 
-    function andOp (q1: t.AnyQuery, q2: t.AnyQuery): t.BoolQuery {
-      const b1: t.BoolQuery = toMustQuery(q1)
-      const b2: t.BoolQuery = toMustQuery(q2)
-      if (!onlyShould(b1.query.bool) && !onlyShould(b2.query.bool)) {
-        return deepMerge(b1, b2)
+    function andOp (q1: t.AnyBoolQuery, q2: t.AnyBoolQuery): t.BoolBlock {
+      const b1: t.BoolBlock = toBoolBlock(q1)
+      const b2: t.BoolBlock = toBoolBlock(q2)
+      if (!onlyShould(b1.bool) && !onlyShould(b2.bool)) {
+        const mustClauses: t.AnyQuery[] = (b1.bool.must || []).concat(b2.bool.must || [])
+        const mustNotClauses: t.AnyQuery[] = (b1.bool.must_not || []).concat(b2.bool.must_not || [])
+        const filterClauses: t.AnyQuery[] = (b1.bool.filter || []).concat(b2.bool.filter || [])
+        return {
+          bool: {
+            ...(mustClauses.length && Q.must(...mustClauses)),
+            ...(mustNotClauses.length && Q.mustNot(...mustNotClauses)),
+            ...(filterClauses.length && Q.filter(...filterClauses))
+          }
+        }
       } else {
-        const { must, ...clauses } = b1.query.bool
-        return Q.bool(
-          must == null ? Q.must(b2) : Q.must(must, b2),
-          clauses
-        )
+        const { must, ...clauses } = b1.bool
+        return {
+          bool: {
+            ...(must == null ? Q.must(b2) : Q.must(must, b2)),
+            ...clauses
+          }
+        }
       }
     }
   }
 
-  export function or (...queries: t.AnyQuery[]): t.BoolQuery {
+  export function or (...queries: t.AnyBoolQuery[]): t.BoolQuery {
     return Q.bool(Q.should(...queries))
   }
 
-  export function not (q: t.AnyQuery): t.BoolQuery {
+  export function not (q: t.AnyBoolQuery): t.BoolQuery {
     if (!isBool(q) && !isClause(q)) {
       return Q.bool(Q.mustNot(q))
     }
@@ -584,6 +625,10 @@ function generateValueObject (queryType: string, key: string, val: any, opts?: R
   }
 }
 
+function isQuery (q: any): q is t.QueryBlock {
+  return !!q.query
+}
+
 function isBool (q: any): q is t.BoolQuery {
   return q.query && q.query.bool
 }
@@ -638,20 +683,24 @@ function onlyFilter (bool: t.BoolQueryOptions): bool is t.FilterClause {
   return true
 }
 
-// for a given query it always return a bool query:
-//  - if is a bool query returns the query
+// for a given query it always return a bool block:
+//  - if is a bool query returns the bool block
 //  - if is a clause, wraps the query in a bool block
 //  - if is condition, wraps the query into a must clause and then in a bool block
-function toMustQuery (query: t.AnyQuery): t.BoolQuery {
+function toBoolBlock (query: t.AnyBoolQuery): t.BoolBlock {
   if (isBool(query)) {
+    return query.query
+  }
+
+  if (isBoolBlock(query)) {
     return query
   }
 
   if (isClause(query)) {
-    return { query: { bool: query } }
+    return { bool: query }
   }
 
-  return { query: { bool: { must: [query] } } }
+  return { bool: { must: [query] } }
 }
 
 // the aim of this mergeable functions
@@ -665,6 +714,12 @@ function mergeableMust (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
       return q.query.bool.must
     } else {
       return q.query
+    }
+  } else if (isBoolBlock(q)) {
+    if (onlyMust(q.bool)) {
+      return q.bool.must
+    } else {
+      return q
     }
   } else if (isClause(q)) {
     if (onlyMust(q)) {
@@ -687,6 +742,12 @@ function mergeableShould (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
     } else {
       return q.query
     }
+  } else if (isBoolBlock(q)) {
+    if (onlyShould(q.bool)) {
+      return q.bool.should
+    } else {
+      return q
+    }
   } else if (isClause(q)) {
     if (onlyShould(q)) {
       return q.should
@@ -708,6 +769,12 @@ function mergeableMustNot (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
     } else {
       return q.query
     }
+  } else if (isBoolBlock(q)) {
+    if (onlyMustNot(q.bool)) {
+      return q.bool.must_not
+    } else {
+      return q
+    }
   } else if (isClause(q)) {
     if (onlyMustNot(q)) {
       return q.must_not
@@ -728,6 +795,12 @@ function mergeableFilter (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
       return q.query.bool.filter
     } else {
       return q.query
+    }
+  } else if (isBoolBlock(q)) {
+    if (onlyFilter(q.bool)) {
+      return q.bool.filter
+    } else {
+      return q
     }
   } else if (isClause(q)) {
     if (onlyFilter(q)) {

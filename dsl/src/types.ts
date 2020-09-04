@@ -20,14 +20,10 @@
 /* eslint camelcase: 0 */
 /* eslint no-use-before-define: 0 */
 
-export interface Condition {
-  [key: string]: any
-}
+export type Condition = Record<string, any>
 
 export interface QueryBlock {
-  query: {
-    [key: string]: any
-  }
+  query: Record<string, any>
 }
 
 export interface MustClause {
@@ -66,10 +62,10 @@ export interface BoolQueryOptions {
   _name?: string
 }
 
-export type AnyQuery = BoolQuery | BoolQueryOptions | Condition | Condition[]
+export type AnyQuery = QueryBlock | BoolQueryOptions | Condition | Condition[]
 
-export interface Aggregation {
-  [key: string]: any
-}
+export type AnyBoolQuery = BoolQuery | BoolQueryOptions | Condition | Condition[]
+
+export type Aggregation = Record<string, any>
 
 export type compiledFunction<TInput> = (input: TInput) => Record<string, any>;
