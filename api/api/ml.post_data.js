@@ -81,7 +81,7 @@ function buildMlPostData (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_data'
+    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_data' + '/'
 
     // build request object
     const request = {

@@ -80,10 +80,10 @@ function buildScroll (opts) {
 
     if ((scroll_id || scrollId) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_search' + '/' + 'scroll' + '/' + encodeURIComponent(scroll_id || scrollId)
+      path = '/' + '_search' + '/' + 'scroll' + '/' + encodeURIComponent(scroll_id || scrollId) + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_search' + '/' + 'scroll'
+      path = '/' + '_search' + '/' + 'scroll' + '/'
     }
 
     // build request object

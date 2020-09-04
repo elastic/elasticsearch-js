@@ -85,7 +85,7 @@ function buildMlDeleteModelSnapshot (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId)
+    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId) + '/'
 
     // build request object
     const request = {

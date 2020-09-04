@@ -75,7 +75,7 @@ function buildMlEstimateModelMemory (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + '_estimate_model_memory'
+    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + '_estimate_model_memory' + '/'
 
     // build request object
     const request = {

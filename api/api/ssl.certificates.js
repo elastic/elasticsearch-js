@@ -69,7 +69,7 @@ function buildSslCertificates (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_ssl' + '/' + 'certificates'
+    path = '/' + '_ssl' + '/' + 'certificates' + '/'
 
     // build request object
     const request = {

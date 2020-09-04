@@ -70,7 +70,7 @@ function buildLicensePostStartTrial (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_license' + '/' + 'start_trial'
+    path = '/' + '_license' + '/' + 'start_trial' + '/'
 
     // build request object
     const request = {

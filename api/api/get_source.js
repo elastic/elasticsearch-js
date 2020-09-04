@@ -100,7 +100,7 @@ function buildGetSource (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
+    path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

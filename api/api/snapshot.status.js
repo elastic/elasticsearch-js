@@ -85,13 +85,13 @@ function buildSnapshotStatus (opts) {
 
     if ((repository) != null && (snapshot) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_status'
+      path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_status' + '/'
     } else if ((repository) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_status'
+      path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_status' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_snapshot' + '/' + '_status'
+      path = '/' + '_snapshot' + '/' + '_status' + '/'
     }
 
     // build request object

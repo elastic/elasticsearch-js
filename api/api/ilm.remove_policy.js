@@ -75,7 +75,7 @@ function buildIlmRemovePolicy (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'remove'
+    path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'remove' + '/'
 
     // build request object
     const request = {

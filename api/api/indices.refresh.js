@@ -81,10 +81,10 @@ function buildIndicesRefresh (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_refresh'
+      path = '/' + encodeURIComponent(index) + '/' + '_refresh' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_refresh'
+      path = '/' + '_refresh' + '/'
     }
 
     // build request object

@@ -94,7 +94,7 @@ documents from a remote cluster.
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_reindex'
+    path = '/' + '_reindex' + '/'
 
     // build request object
     const request = {

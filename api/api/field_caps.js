@@ -84,10 +84,10 @@ function buildFieldCaps (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_field_caps'
+      path = '/' + encodeURIComponent(index) + '/' + '_field_caps' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_field_caps'
+      path = '/' + '_field_caps' + '/'
     }
 
     // build request object

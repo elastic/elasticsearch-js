@@ -95,7 +95,7 @@ function buildSnapshotGet (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/'
 
     // build request object
     const request = {

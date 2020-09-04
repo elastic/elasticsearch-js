@@ -92,10 +92,10 @@ function buildMlGetBuckets (opts) {
 
     if ((job_id || jobId) != null && (timestamp) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'buckets' + '/' + encodeURIComponent(timestamp)
+      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'buckets' + '/' + encodeURIComponent(timestamp) + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'buckets'
+      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'buckets' + '/'
     }
 
     // build request object

@@ -75,7 +75,7 @@ function buildCcrResumeAutoFollowPattern (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name) + '/' + 'resume'
+    path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name) + '/' + 'resume' + '/'
 
     // build request object
     const request = {

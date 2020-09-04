@@ -83,7 +83,7 @@ function buildClusterReroute (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_cluster' + '/' + 'reroute'
+    path = '/' + '_cluster' + '/' + 'reroute' + '/'
 
     // build request object
     const request = {

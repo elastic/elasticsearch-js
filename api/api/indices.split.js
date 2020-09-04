@@ -95,7 +95,7 @@ function buildIndicesSplit (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + encodeURIComponent(index) + '/' + '_split' + '/' + encodeURIComponent(target)
+    path = '/' + encodeURIComponent(index) + '/' + '_split' + '/' + encodeURIComponent(target) + '/'
 
     // build request object
     const request = {

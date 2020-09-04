@@ -97,10 +97,10 @@ function buildCount (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_count'
+      path = '/' + encodeURIComponent(index) + '/' + '_count' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_count'
+      path = '/' + '_count' + '/'
     }
 
     // build request object

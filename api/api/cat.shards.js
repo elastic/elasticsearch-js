@@ -85,10 +85,10 @@ function buildCatShards (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'shards' + '/' + encodeURIComponent(index)
+      path = '/' + '_cat' + '/' + 'shards' + '/' + encodeURIComponent(index) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'shards'
+      path = '/' + '_cat' + '/' + 'shards' + '/'
     }
 
     // build request object

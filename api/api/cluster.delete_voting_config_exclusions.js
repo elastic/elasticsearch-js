@@ -76,7 +76,7 @@ function buildClusterDeleteVotingConfigExclusions (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_cluster' + '/' + 'voting_config_exclusions'
+    path = '/' + '_cluster' + '/' + 'voting_config_exclusions' + '/'
 
     // build request object
     const request = {

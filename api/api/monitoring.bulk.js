@@ -80,10 +80,10 @@ function buildMonitoringBulk (opts) {
 
     if ((type) != null) {
       if (method == null) method = 'POST'
-      path = '/' + '_monitoring' + '/' + encodeURIComponent(type) + '/' + 'bulk'
+      path = '/' + '_monitoring' + '/' + encodeURIComponent(type) + '/' + 'bulk' + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + '_monitoring' + '/' + 'bulk'
+      path = '/' + '_monitoring' + '/' + 'bulk' + '/'
     }
 
     // build request object

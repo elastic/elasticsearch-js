@@ -69,7 +69,7 @@ function buildLicenseGetBasicStatus (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_license' + '/' + 'basic_status'
+    path = '/' + '_license' + '/' + 'basic_status' + '/'
 
     // build request object
     const request = {

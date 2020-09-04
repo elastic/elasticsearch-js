@@ -96,13 +96,13 @@ function buildClusterState (opts) {
 
     if ((metric) != null && (index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cluster' + '/' + 'state' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index)
+      path = '/' + '_cluster' + '/' + 'state' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index) + '/'
     } else if ((metric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cluster' + '/' + 'state' + '/' + encodeURIComponent(metric)
+      path = '/' + '_cluster' + '/' + 'state' + '/' + encodeURIComponent(metric) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cluster' + '/' + 'state'
+      path = '/' + '_cluster' + '/' + 'state' + '/'
     }
 
     // build request object

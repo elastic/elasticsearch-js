@@ -78,7 +78,7 @@ function buildMlForecast (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast'
+    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast' + '/'
 
     // build request object
     const request = {

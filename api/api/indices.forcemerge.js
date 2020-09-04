@@ -86,10 +86,10 @@ function buildIndicesForcemerge (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_forcemerge'
+      path = '/' + encodeURIComponent(index) + '/' + '_forcemerge' + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + '_forcemerge'
+      path = '/' + '_forcemerge' + '/'
     }
 
     // build request object

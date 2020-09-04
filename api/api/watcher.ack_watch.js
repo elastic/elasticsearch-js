@@ -82,10 +82,10 @@ function buildWatcherAckWatch (opts) {
 
     if ((watch_id || watchId) != null && (action_id || actionId) != null) {
       if (method == null) method = 'PUT'
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack' + '/' + encodeURIComponent(action_id || actionId)
+      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack' + '/' + encodeURIComponent(action_id || actionId) + '/'
     } else {
       if (method == null) method = 'PUT'
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack'
+      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack' + '/'
     }
 
     // build request object

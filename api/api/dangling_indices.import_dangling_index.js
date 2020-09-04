@@ -85,7 +85,7 @@ function buildDanglingIndicesImportDanglingIndex (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_dangling' + '/' + encodeURIComponent(index_uuid || indexUuid)
+    path = '/' + '_dangling' + '/' + encodeURIComponent(index_uuid || indexUuid) + '/'
 
     // build request object
     const request = {

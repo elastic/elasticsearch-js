@@ -79,7 +79,7 @@ function buildMlUpdateDataFrameAnalytics (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_update'
+    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_update' + '/'
 
     // build request object
     const request = {

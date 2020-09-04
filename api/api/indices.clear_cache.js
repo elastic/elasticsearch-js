@@ -86,10 +86,10 @@ function buildIndicesClearCache (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_cache' + '/' + 'clear'
+      path = '/' + encodeURIComponent(index) + '/' + '_cache' + '/' + 'clear' + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + '_cache' + '/' + 'clear'
+      path = '/' + '_cache' + '/' + 'clear' + '/'
     }
 
     // build request object

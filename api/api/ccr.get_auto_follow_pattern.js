@@ -70,10 +70,10 @@ function buildCcrGetAutoFollowPattern (opts) {
 
     if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name)
+      path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_ccr' + '/' + 'auto_follow'
+      path = '/' + '_ccr' + '/' + 'auto_follow' + '/'
     }
 
     // build request object

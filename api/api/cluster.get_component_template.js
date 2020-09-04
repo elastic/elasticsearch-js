@@ -78,10 +78,10 @@ function buildClusterGetComponentTemplate (opts) {
 
     if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_component_template' + '/' + encodeURIComponent(name)
+      path = '/' + '_component_template' + '/' + encodeURIComponent(name) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_component_template'
+      path = '/' + '_component_template' + '/'
     }
 
     // build request object

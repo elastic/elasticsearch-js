@@ -79,10 +79,10 @@ function buildCatMlDatafeeds (opts) {
 
     if ((datafeed_id || datafeedId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId)
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds'
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds' + '/'
     }
 
     // build request object

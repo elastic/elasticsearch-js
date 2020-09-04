@@ -75,7 +75,7 @@ function buildCcrPauseFollow (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'pause_follow'
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'pause_follow' + '/'
 
     // build request object
     const request = {

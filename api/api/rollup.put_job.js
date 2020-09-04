@@ -79,7 +79,7 @@ function buildRollupPutJob (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
+    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

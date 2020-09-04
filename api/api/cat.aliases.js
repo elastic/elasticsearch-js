@@ -83,10 +83,10 @@ function buildCatAliases (opts) {
 
     if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'aliases' + '/' + encodeURIComponent(name)
+      path = '/' + '_cat' + '/' + 'aliases' + '/' + encodeURIComponent(name) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'aliases'
+      path = '/' + '_cat' + '/' + 'aliases' + '/'
     }
 
     // build request object

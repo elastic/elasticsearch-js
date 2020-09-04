@@ -71,10 +71,10 @@ function buildWatcherStats (opts) {
 
     if ((metric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_watcher' + '/' + 'stats' + '/' + encodeURIComponent(metric)
+      path = '/' + '_watcher' + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_watcher' + '/' + 'stats'
+      path = '/' + '_watcher' + '/' + 'stats' + '/'
     }
 
     // build request object

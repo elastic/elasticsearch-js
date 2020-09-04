@@ -82,7 +82,7 @@ function buildCatNodeattrs (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'nodeattrs'
+    path = '/' + '_cat' + '/' + 'nodeattrs' + '/'
 
     // build request object
     const request = {

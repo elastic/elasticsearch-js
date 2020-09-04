@@ -78,16 +78,16 @@ function buildNodesInfo (opts) {
 
     if ((node_id || nodeId) != null && (metric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + encodeURIComponent(metric)
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + encodeURIComponent(metric) + '/'
     } else if ((node_id || nodeId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId)
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/'
     } else if ((metric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + encodeURIComponent(metric)
+      path = '/' + '_nodes' + '/' + encodeURIComponent(metric) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes'
+      path = '/' + '_nodes' + '/'
     }
 
     // build request object

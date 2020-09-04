@@ -84,10 +84,10 @@ function buildIndicesGetMapping (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_mapping'
+      path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_mapping'
+      path = '/' + '_mapping' + '/'
     }
 
     // build request object

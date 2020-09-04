@@ -82,7 +82,7 @@ function buildGetScript (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_scripts' + '/' + encodeURIComponent(id)
+    path = '/' + '_scripts' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

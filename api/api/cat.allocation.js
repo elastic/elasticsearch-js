@@ -84,10 +84,10 @@ function buildCatAllocation (opts) {
 
     if ((node_id || nodeId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'allocation' + '/' + encodeURIComponent(node_id || nodeId)
+      path = '/' + '_cat' + '/' + 'allocation' + '/' + encodeURIComponent(node_id || nodeId) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'allocation'
+      path = '/' + '_cat' + '/' + 'allocation' + '/'
     }
 
     // build request object

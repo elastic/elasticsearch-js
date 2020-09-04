@@ -70,10 +70,10 @@ function buildMlExplainDataFrameAnalytics (opts) {
 
     if ((id) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_explain'
+      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_explain' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_explain'
+      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_explain' + '/'
     }
 
     // build request object

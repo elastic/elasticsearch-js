@@ -75,7 +75,7 @@ function buildSecurityPutPrivileges (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_security' + '/' + 'privilege'
+    path = '/' + '_security' + '/' + 'privilege' + '/'
 
     // build request object
     const request = {

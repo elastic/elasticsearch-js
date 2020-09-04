@@ -69,7 +69,7 @@ function buildLicenseGetTrialStatus (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_license' + '/' + 'trial_status'
+    path = '/' + '_license' + '/' + 'trial_status' + '/'
 
     // build request object
     const request = {

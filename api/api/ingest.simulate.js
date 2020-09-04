@@ -82,10 +82,10 @@ function buildIngestSimulate (opts) {
 
     if ((id) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id) + '/' + '_simulate'
+      path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id) + '/' + '_simulate' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_ingest' + '/' + 'pipeline' + '/' + '_simulate'
+      path = '/' + '_ingest' + '/' + 'pipeline' + '/' + '_simulate' + '/'
     }
 
     // build request object

@@ -75,7 +75,7 @@ function buildEqlDelete (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_eql' + '/' + 'search' + '/' + encodeURIComponent(id)
+    path = '/' + '_eql' + '/' + 'search' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

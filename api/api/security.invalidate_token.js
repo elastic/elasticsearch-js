@@ -75,7 +75,7 @@ function buildSecurityInvalidateToken (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_security' + '/' + 'oauth2' + '/' + 'token'
+    path = '/' + '_security' + '/' + 'oauth2' + '/' + 'token' + '/'
 
     // build request object
     const request = {

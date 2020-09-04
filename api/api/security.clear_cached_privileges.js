@@ -75,7 +75,7 @@ function buildSecurityClearCachedPrivileges (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + '_clear_cache'
+    path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + '_clear_cache' + '/'
 
     // build request object
     const request = {

@@ -91,7 +91,7 @@ function buildSearchableSnapshotsMount (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_mount'
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_mount' + '/'
 
     // build request object
     const request = {

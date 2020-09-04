@@ -75,7 +75,7 @@ function buildIlmMoveToStep (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ilm' + '/' + 'move' + '/' + encodeURIComponent(index)
+    path = '/' + '_ilm' + '/' + 'move' + '/' + encodeURIComponent(index) + '/'
 
     // build request object
     const request = {

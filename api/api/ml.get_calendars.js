@@ -71,10 +71,10 @@ function buildMlGetCalendars (opts) {
 
     if ((calendar_id || calendarId) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId)
+      path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_ml' + '/' + 'calendars'
+      path = '/' + '_ml' + '/' + 'calendars' + '/'
     }
 
     // build request object

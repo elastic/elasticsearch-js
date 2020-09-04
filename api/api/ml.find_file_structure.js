@@ -96,7 +96,7 @@ function buildMlFindFileStructure (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'find_file_structure'
+    path = '/' + '_ml' + '/' + 'find_file_structure' + '/'
 
     // build request object
     const request = {

@@ -70,10 +70,10 @@ function buildSecurityGetUser (opts) {
 
     if ((username) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username)
+      path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_security' + '/' + 'user'
+      path = '/' + '_security' + '/' + 'user' + '/'
     }
 
     // build request object

@@ -69,7 +69,7 @@ function buildLicensePostStartBasic (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_license' + '/' + 'start_basic'
+    path = '/' + '_license' + '/' + 'start_basic' + '/'
 
     // build request object
     const request = {

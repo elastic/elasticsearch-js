@@ -69,7 +69,7 @@ function buildXpackUsage (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_xpack' + '/' + 'usage'
+    path = '/' + '_xpack' + '/' + 'usage' + '/'
 
     // build request object
     const request = {

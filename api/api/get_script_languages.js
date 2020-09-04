@@ -74,7 +74,7 @@ function buildGetScriptLanguages (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_script_language'
+    path = '/' + '_script_language' + '/'
 
     // build request object
     const request = {

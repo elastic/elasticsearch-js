@@ -94,10 +94,10 @@ function buildIndicesPutAlias (opts) {
 
     if ((index) != null && (name) != null) {
       if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
+      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name) + '/'
     } else {
       if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + '_aliases' + '/' + encodeURIComponent(name)
+      path = '/' + encodeURIComponent(index) + '/' + '_aliases' + '/' + encodeURIComponent(name) + '/'
     }
 
     // build request object

@@ -82,10 +82,10 @@ function buildCatFielddata (opts) {
 
     if ((fields) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'fielddata' + '/' + encodeURIComponent(fields)
+      path = '/' + '_cat' + '/' + 'fielddata' + '/' + encodeURIComponent(fields) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'fielddata'
+      path = '/' + '_cat' + '/' + 'fielddata' + '/'
     }
 
     // build request object

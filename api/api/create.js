@@ -100,10 +100,10 @@ Returns a 409 response when a document with a same ID already exists in the inde
 
     if ((index) != null && (type) != null && (id) != null) {
       if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_create'
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_create' + '/'
     } else {
       if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + '_create' + '/' + encodeURIComponent(id)
+      path = '/' + encodeURIComponent(index) + '/' + '_create' + '/' + encodeURIComponent(id) + '/'
     }
 
     // build request object

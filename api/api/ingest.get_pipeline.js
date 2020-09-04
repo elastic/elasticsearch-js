@@ -77,10 +77,10 @@ function buildIngestGetPipeline (opts) {
 
     if ((id) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id)
+      path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_ingest' + '/' + 'pipeline'
+      path = '/' + '_ingest' + '/' + 'pipeline' + '/'
     }
 
     // build request object

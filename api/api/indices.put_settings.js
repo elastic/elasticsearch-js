@@ -94,10 +94,10 @@ function buildIndicesPutSettings (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + '_settings'
+      path = '/' + encodeURIComponent(index) + '/' + '_settings' + '/'
     } else {
       if (method == null) method = 'PUT'
-      path = '/' + '_settings'
+      path = '/' + '_settings' + '/'
     }
 
     // build request object

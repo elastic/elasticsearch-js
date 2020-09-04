@@ -83,7 +83,7 @@ function buildDeleteScript (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_scripts' + '/' + encodeURIComponent(id)
+    path = '/' + '_scripts' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

@@ -78,7 +78,7 @@ function buildDataFrameTransformDeprecatedStopTransform (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stop'
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stop' + '/'
 
     // build request object
     const request = {

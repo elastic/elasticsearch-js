@@ -69,7 +69,7 @@ function buildAutoscalingGetAutoscalingDecision (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_autoscaling' + '/' + 'decision'
+    path = '/' + '_autoscaling' + '/' + 'decision' + '/'
 
     // build request object
     const request = {

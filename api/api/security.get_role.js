@@ -70,10 +70,10 @@ function buildSecurityGetRole (opts) {
 
     if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name)
+      path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_security' + '/' + 'role'
+      path = '/' + '_security' + '/' + 'role' + '/'
     }
 
     // build request object

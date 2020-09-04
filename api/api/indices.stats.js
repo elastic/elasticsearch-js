@@ -91,16 +91,16 @@ function buildIndicesStats (opts) {
 
     if ((index) != null && (metric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_stats' + '/' + encodeURIComponent(metric)
+      path = '/' + encodeURIComponent(index) + '/' + '_stats' + '/' + encodeURIComponent(metric) + '/'
     } else if ((metric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_stats' + '/' + encodeURIComponent(metric)
+      path = '/' + '_stats' + '/' + encodeURIComponent(metric) + '/'
     } else if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_stats'
+      path = '/' + encodeURIComponent(index) + '/' + '_stats' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_stats'
+      path = '/' + '_stats' + '/'
     }
 
     // build request object

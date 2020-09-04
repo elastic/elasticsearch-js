@@ -70,7 +70,7 @@ function buildMlSetUpgradeMode (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'set_upgrade_mode'
+    path = '/' + '_ml' + '/' + 'set_upgrade_mode' + '/'
 
     // build request object
     const request = {

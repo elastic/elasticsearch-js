@@ -82,7 +82,7 @@ function buildCatRepositories (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'repositories'
+    path = '/' + '_cat' + '/' + 'repositories' + '/'
 
     // build request object
     const request = {

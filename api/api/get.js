@@ -102,7 +102,7 @@ function buildGet (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
+    path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

@@ -85,10 +85,10 @@ By default the active, queue and rejected statistics are returned for all thread
 
     if ((thread_pool_patterns || threadPoolPatterns) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'thread_pool' + '/' + encodeURIComponent(thread_pool_patterns || threadPoolPatterns)
+      path = '/' + '_cat' + '/' + 'thread_pool' + '/' + encodeURIComponent(thread_pool_patterns || threadPoolPatterns) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'thread_pool'
+      path = '/' + '_cat' + '/' + 'thread_pool' + '/'
     }
 
     // build request object

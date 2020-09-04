@@ -93,7 +93,7 @@ function buildIndicesGet (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + encodeURIComponent(index)
+    path = '/' + encodeURIComponent(index) + '/'
 
     // build request object
     const request = {

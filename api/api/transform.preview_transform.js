@@ -75,7 +75,7 @@ function buildTransformPreviewTransform (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_transform' + '/' + '_preview'
+    path = '/' + '_transform' + '/' + '_preview' + '/'
 
     // build request object
     const request = {

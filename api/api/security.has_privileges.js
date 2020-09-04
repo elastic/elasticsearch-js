@@ -76,10 +76,10 @@ function buildSecurityHasPrivileges (opts) {
 
     if ((user) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(user) + '/' + '_has_privileges'
+      path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(user) + '/' + '_has_privileges' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_security' + '/' + 'user' + '/' + '_has_privileges'
+      path = '/' + '_security' + '/' + 'user' + '/' + '_has_privileges' + '/'
     }
 
     // build request object

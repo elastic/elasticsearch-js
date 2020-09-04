@@ -74,7 +74,7 @@ function buildScriptsPainlessExecute (opts) {
     var path = ''
 
     if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + '_scripts' + '/' + 'painless' + '/' + '_execute'
+    path = '/' + '_scripts' + '/' + 'painless' + '/' + '_execute' + '/'
 
     // build request object
     const request = {

@@ -95,7 +95,7 @@ function buildIndicesShrink (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + encodeURIComponent(index) + '/' + '_shrink' + '/' + encodeURIComponent(target)
+    path = '/' + encodeURIComponent(index) + '/' + '_shrink' + '/' + encodeURIComponent(target) + '/'
 
     // build request object
     const request = {

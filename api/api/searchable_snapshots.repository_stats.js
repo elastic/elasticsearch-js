@@ -75,7 +75,7 @@ function buildSearchableSnapshotsRepositoryStats (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_stats'
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_stats' + '/'
 
     // build request object
     const request = {

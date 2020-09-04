@@ -75,7 +75,7 @@ function buildCcrResumeFollow (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'resume_follow'
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'resume_follow' + '/'
 
     // build request object
     const request = {

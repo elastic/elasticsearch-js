@@ -75,7 +75,7 @@ function buildIlmRetry (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'retry'
+    path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'retry' + '/'
 
     // build request object
     const request = {

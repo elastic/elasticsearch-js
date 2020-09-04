@@ -75,7 +75,7 @@ function buildWatcherGetWatch (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

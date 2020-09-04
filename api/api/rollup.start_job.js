@@ -75,7 +75,7 @@ function buildRollupStartJob (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/' + '_start'
+    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/' + '_start' + '/'
 
     // build request object
     const request = {

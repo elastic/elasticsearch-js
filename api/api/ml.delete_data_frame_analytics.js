@@ -76,7 +76,7 @@ function buildMlDeleteDataFrameAnalytics (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
+    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

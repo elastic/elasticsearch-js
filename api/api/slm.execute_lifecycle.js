@@ -75,7 +75,7 @@ function buildSlmExecuteLifecycle (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId) + '/' + '_execute'
+    path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId) + '/' + '_execute' + '/'
 
     // build request object
     const request = {

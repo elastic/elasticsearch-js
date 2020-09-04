@@ -69,7 +69,7 @@ function buildClosePointInTime (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_pit'
+    path = '/' + '_pit' + '/'
 
     // build request object
     const request = {

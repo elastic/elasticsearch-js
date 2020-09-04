@@ -70,10 +70,10 @@ function buildRollupGetJobs (opts) {
 
     if ((id) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
+      path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_rollup' + '/' + 'job'
+      path = '/' + '_rollup' + '/' + 'job' + '/'
     }
 
     // build request object

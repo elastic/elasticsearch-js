@@ -79,10 +79,10 @@ function buildIndicesSimulateTemplate (opts) {
 
     if ((name) != null) {
       if (method == null) method = 'POST'
-      path = '/' + '_index_template' + '/' + '_simulate' + '/' + encodeURIComponent(name)
+      path = '/' + '_index_template' + '/' + '_simulate' + '/' + encodeURIComponent(name) + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + '_index_template' + '/' + '_simulate'
+      path = '/' + '_index_template' + '/' + '_simulate' + '/'
     }
 
     // build request object

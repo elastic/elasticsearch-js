@@ -69,7 +69,7 @@ function buildIlmStart (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ilm' + '/' + 'start'
+    path = '/' + '_ilm' + '/' + 'start' + '/'
 
     // build request object
     const request = {

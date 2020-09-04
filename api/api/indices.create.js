@@ -85,7 +85,7 @@ function buildIndicesCreate (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + encodeURIComponent(index)
+    path = '/' + encodeURIComponent(index) + '/'
 
     // build request object
     const request = {

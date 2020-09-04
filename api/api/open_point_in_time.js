@@ -76,10 +76,10 @@ function buildOpenPointInTime (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_pit'
+      path = '/' + encodeURIComponent(index) + '/' + '_pit' + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + '_pit'
+      path = '/' + '_pit' + '/'
     }
 
     // build request object

@@ -75,7 +75,7 @@ function buildAutoscalingGetAutoscalingPolicy (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_autoscaling' + '/' + 'policy' + '/' + encodeURIComponent(name)
+    path = '/' + '_autoscaling' + '/' + 'policy' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

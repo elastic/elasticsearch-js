@@ -84,10 +84,10 @@ function buildMlDeleteForecast (opts) {
 
     if ((job_id || jobId) != null && (forecast_id || forecastId) != null) {
       if (method == null) method = 'DELETE'
-      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast' + '/' + encodeURIComponent(forecast_id || forecastId)
+      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast' + '/' + encodeURIComponent(forecast_id || forecastId) + '/'
     } else {
       if (method == null) method = 'DELETE'
-      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast'
+      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast' + '/'
     }
 
     // build request object

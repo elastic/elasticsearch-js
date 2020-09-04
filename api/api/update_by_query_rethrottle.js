@@ -86,7 +86,7 @@ function buildUpdateByQueryRethrottle (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_update_by_query' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle'
+    path = '/' + '_update_by_query' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle' + '/'
 
     // build request object
     const request = {

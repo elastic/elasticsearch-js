@@ -72,10 +72,10 @@ function buildTransformGetTransform (opts) {
 
     if ((transform_id || transformId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId)
+      path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_transform'
+      path = '/' + '_transform' + '/'
     }
 
     // build request object

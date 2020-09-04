@@ -75,7 +75,7 @@ function buildSecurityClearCachedRoles (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name) + '/' + '_clear_cache'
+    path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name) + '/' + '_clear_cache' + '/'
 
     // build request object
     const request = {

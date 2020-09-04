@@ -75,7 +75,7 @@ function buildIlmDeleteLifecycle (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy)
+    path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy) + '/'
 
     // build request object
     const request = {

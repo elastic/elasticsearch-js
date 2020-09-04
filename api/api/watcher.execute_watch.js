@@ -70,10 +70,10 @@ function buildWatcherExecuteWatch (opts) {
 
     if ((id) != null) {
       if (method == null) method = 'PUT'
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id) + '/' + '_execute'
+      path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id) + '/' + '_execute' + '/'
     } else {
       if (method == null) method = 'PUT'
-      path = '/' + '_watcher' + '/' + 'watch' + '/' + '_execute'
+      path = '/' + '_watcher' + '/' + 'watch' + '/' + '_execute' + '/'
     }
 
     // build request object

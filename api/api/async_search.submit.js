@@ -140,10 +140,10 @@ function buildAsyncSearchSubmit (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_async_search'
+      path = '/' + encodeURIComponent(index) + '/' + '_async_search' + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + '_async_search'
+      path = '/' + '_async_search' + '/'
     }
 
     // build request object

@@ -95,10 +95,10 @@ function buildTermvectors (opts) {
 
     if ((index) != null && (id) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_termvectors' + '/' + encodeURIComponent(id)
+      path = '/' + encodeURIComponent(index) + '/' + '_termvectors' + '/' + encodeURIComponent(id) + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_termvectors'
+      path = '/' + encodeURIComponent(index) + '/' + '_termvectors' + '/'
     }
 
     // build request object

@@ -75,7 +75,7 @@ function buildRollupGetRollupIndexCaps (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + encodeURIComponent(index) + '/' + '_rollup' + '/' + 'data'
+    path = '/' + encodeURIComponent(index) + '/' + '_rollup' + '/' + 'data' + '/'
 
     // build request object
     const request = {

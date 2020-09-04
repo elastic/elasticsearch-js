@@ -80,10 +80,10 @@ function buildIndicesGetIndexTemplate (opts) {
 
     if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_index_template' + '/' + encodeURIComponent(name)
+      path = '/' + '_index_template' + '/' + encodeURIComponent(name) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_index_template'
+      path = '/' + '_index_template' + '/'
     }
 
     // build request object

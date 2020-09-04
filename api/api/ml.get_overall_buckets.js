@@ -87,7 +87,7 @@ function buildMlGetOverallBuckets (opts) {
     var path = ''
 
     if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'overall_buckets'
+    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'overall_buckets' + '/'
 
     // build request object
     const request = {

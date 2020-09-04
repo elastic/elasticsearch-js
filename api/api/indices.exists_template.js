@@ -85,7 +85,7 @@ function buildIndicesExistsTemplate (opts) {
     var path = ''
 
     if (method == null) method = 'HEAD'
-    path = '/' + '_template' + '/' + encodeURIComponent(name)
+    path = '/' + '_template' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

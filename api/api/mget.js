@@ -96,10 +96,10 @@ function buildMget (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_mget'
+      path = '/' + encodeURIComponent(index) + '/' + '_mget' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_mget'
+      path = '/' + '_mget' + '/'
     }
 
     // build request object

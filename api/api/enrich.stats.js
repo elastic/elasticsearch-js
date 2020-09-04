@@ -69,7 +69,7 @@ function buildEnrichStats (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_enrich' + '/' + '_stats'
+    path = '/' + '_enrich' + '/' + '_stats' + '/'
 
     // build request object
     const request = {

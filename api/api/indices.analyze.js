@@ -76,10 +76,10 @@ function buildIndicesAnalyze (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_analyze'
+      path = '/' + encodeURIComponent(index) + '/' + '_analyze' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_analyze'
+      path = '/' + '_analyze' + '/'
     }
 
     // build request object

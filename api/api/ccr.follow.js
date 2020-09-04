@@ -79,7 +79,7 @@ function buildCcrFollow (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'follow'
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'follow' + '/'
 
     // build request object
     const request = {

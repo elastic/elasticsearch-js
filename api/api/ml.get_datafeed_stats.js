@@ -72,10 +72,10 @@ function buildMlGetDatafeedStats (opts) {
 
     if ((datafeed_id || datafeedId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_stats'
+      path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_stats' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'datafeeds' + '/' + '_stats'
+      path = '/' + '_ml' + '/' + 'datafeeds' + '/' + '_stats' + '/'
     }
 
     // build request object

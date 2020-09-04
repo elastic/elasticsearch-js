@@ -105,7 +105,7 @@ function buildExplain (opts) {
     var path = ''
 
     if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_explain' + '/' + encodeURIComponent(id)
+    path = '/' + encodeURIComponent(index) + '/' + '_explain' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

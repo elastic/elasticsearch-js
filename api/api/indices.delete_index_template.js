@@ -83,7 +83,7 @@ function buildIndicesDeleteIndexTemplate (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_index_template' + '/' + encodeURIComponent(name)
+    path = '/' + '_index_template' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

@@ -91,7 +91,7 @@ function buildIndicesExists (opts) {
     var path = ''
 
     if (method == null) method = 'HEAD'
-    path = '/' + encodeURIComponent(index)
+    path = '/' + encodeURIComponent(index) + '/'
 
     // build request object
     const request = {

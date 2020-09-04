@@ -82,7 +82,7 @@ function buildIndicesResolveIndex (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_resolve' + '/' + 'index' + '/' + encodeURIComponent(name)
+    path = '/' + '_resolve' + '/' + 'index' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

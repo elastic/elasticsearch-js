@@ -75,7 +75,7 @@ function buildIndicesCreateDataStream (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
+    path = '/' + '_data_stream' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

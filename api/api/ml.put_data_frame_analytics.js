@@ -79,7 +79,7 @@ function buildMlPutDataFrameAnalytics (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
+    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

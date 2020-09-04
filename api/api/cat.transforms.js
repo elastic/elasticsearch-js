@@ -79,10 +79,10 @@ function buildCatTransforms (opts) {
 
     if ((transform_id || transformId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+      path = '/' + '_cat' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'transforms'
+      path = '/' + '_cat' + '/' + 'transforms' + '/'
     }
 
     // build request object

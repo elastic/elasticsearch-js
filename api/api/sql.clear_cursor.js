@@ -75,7 +75,7 @@ function buildSqlClearCursor (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_sql' + '/' + 'close'
+    path = '/' + '_sql' + '/' + 'close' + '/'
 
     // build request object
     const request = {

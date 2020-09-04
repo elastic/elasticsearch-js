@@ -97,10 +97,10 @@ function buildDelete (opts) {
 
     if ((index) != null && (type) != null && (id) != null) {
       if (method == null) method = 'DELETE'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/'
     } else {
       if (method == null) method = 'DELETE'
-      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
+      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id) + '/'
     }
 
     // build request object

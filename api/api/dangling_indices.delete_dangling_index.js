@@ -85,7 +85,7 @@ function buildDanglingIndicesDeleteDanglingIndex (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_dangling' + '/' + encodeURIComponent(index_uuid || indexUuid)
+    path = '/' + '_dangling' + '/' + encodeURIComponent(index_uuid || indexUuid) + '/'
 
     // build request object
     const request = {

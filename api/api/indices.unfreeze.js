@@ -84,7 +84,7 @@ function buildIndicesUnfreeze (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_unfreeze'
+    path = '/' + encodeURIComponent(index) + '/' + '_unfreeze' + '/'
 
     // build request object
     const request = {

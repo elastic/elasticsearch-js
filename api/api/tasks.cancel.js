@@ -81,10 +81,10 @@ function buildTasksCancel (opts) {
 
     if ((task_id || taskId) != null) {
       if (method == null) method = 'POST'
-      path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_cancel'
+      path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_cancel' + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + '_tasks' + '/' + '_cancel'
+      path = '/' + '_tasks' + '/' + '_cancel' + '/'
     }
 
     // build request object

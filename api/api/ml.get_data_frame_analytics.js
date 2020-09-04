@@ -73,10 +73,10 @@ function buildMlGetDataFrameAnalytics (opts) {
 
     if ((id) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
+      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics'
+      path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/'
     }
 
     // build request object

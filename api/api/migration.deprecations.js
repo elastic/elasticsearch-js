@@ -70,10 +70,10 @@ function buildMigrationDeprecations (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_migration' + '/' + 'deprecations'
+      path = '/' + encodeURIComponent(index) + '/' + '_migration' + '/' + 'deprecations' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_migration' + '/' + 'deprecations'
+      path = '/' + '_migration' + '/' + 'deprecations' + '/'
     }
 
     // build request object

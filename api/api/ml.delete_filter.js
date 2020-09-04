@@ -75,7 +75,7 @@ function buildMlDeleteFilter (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId)
+    path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId) + '/'
 
     // build request object
     const request = {

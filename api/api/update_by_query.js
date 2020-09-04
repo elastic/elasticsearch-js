@@ -136,7 +136,7 @@ for example to pick up a mapping change.
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_update_by_query'
+    path = '/' + encodeURIComponent(index) + '/' + '_update_by_query' + '/'
 
     // build request object
     const request = {

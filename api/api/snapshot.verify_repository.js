@@ -83,7 +83,7 @@ function buildSnapshotVerifyRepository (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_verify'
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_verify' + '/'
 
     // build request object
     const request = {

@@ -71,7 +71,7 @@ function buildDataFrameTransformDeprecatedGetTransform (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/'
 
     // build request object
     const request = {

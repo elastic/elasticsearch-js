@@ -75,10 +75,10 @@ function buildRenderSearchTemplate (opts) {
 
     if ((id) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_render' + '/' + 'template' + '/' + encodeURIComponent(id)
+      path = '/' + '_render' + '/' + 'template' + '/' + encodeURIComponent(id) + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_render' + '/' + 'template'
+      path = '/' + '_render' + '/' + 'template' + '/'
     }
 
     // build request object

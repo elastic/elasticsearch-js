@@ -82,10 +82,10 @@ function buildNodesHotThreads (opts) {
 
     if ((node_id || nodeId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads'
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + 'hot_threads'
+      path = '/' + '_nodes' + '/' + 'hot_threads' + '/'
     }
 
     // build request object

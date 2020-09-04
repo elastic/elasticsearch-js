@@ -76,7 +76,7 @@ function buildMlDeleteJob (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
+    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/'
 
     // build request object
     const request = {

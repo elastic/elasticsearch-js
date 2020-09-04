@@ -75,7 +75,7 @@ function buildMlEvaluateDataFrame (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'data_frame' + '/' + '_evaluate'
+    path = '/' + '_ml' + '/' + 'data_frame' + '/' + '_evaluate' + '/'
 
     // build request object
     const request = {

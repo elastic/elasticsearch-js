@@ -90,10 +90,10 @@ function buildIndicesGetFieldMapping (opts) {
 
     if ((index) != null && (fields) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields)
+      path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields)
+      path = '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields) + '/'
     }
 
     // build request object

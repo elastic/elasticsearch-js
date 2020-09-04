@@ -70,10 +70,10 @@ function buildEnrichGetPolicy (opts) {
 
     if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name)
+      path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_enrich' + '/' + 'policy'
+      path = '/' + '_enrich' + '/' + 'policy' + '/'
     }
 
     // build request object

@@ -85,7 +85,7 @@ function buildMlDeleteCalendarEvent (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'events' + '/' + encodeURIComponent(event_id || eventId)
+    path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'events' + '/' + encodeURIComponent(event_id || eventId) + '/'
 
     // build request object
     const request = {

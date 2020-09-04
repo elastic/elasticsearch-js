@@ -88,16 +88,16 @@ function buildIndicesGetSettings (opts) {
 
     if ((index) != null && (name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_settings' + '/' + encodeURIComponent(name)
+      path = '/' + encodeURIComponent(index) + '/' + '_settings' + '/' + encodeURIComponent(name) + '/'
     } else if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_settings'
+      path = '/' + encodeURIComponent(index) + '/' + '_settings' + '/'
     } else if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_settings' + '/' + encodeURIComponent(name)
+      path = '/' + '_settings' + '/' + encodeURIComponent(name) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_settings'
+      path = '/' + '_settings' + '/'
     }
 
     // build request object

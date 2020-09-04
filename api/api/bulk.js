@@ -105,13 +105,13 @@ function buildBulk (opts) {
 
     if ((index) != null && (type) != null) {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_bulk'
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_bulk' + '/'
     } else if ((index) != null) {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_bulk'
+      path = '/' + encodeURIComponent(index) + '/' + '_bulk' + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + '_bulk'
+      path = '/' + '_bulk' + '/'
     }
 
     // build request object

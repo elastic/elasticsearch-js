@@ -75,7 +75,7 @@ function buildDataFrameTransformDeprecatedDeleteTransform (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)
+    path = '/' + '_data_frame' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId) + '/'
 
     // build request object
     const request = {

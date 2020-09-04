@@ -85,7 +85,7 @@ function buildMlPutDatafeed (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId)
+    path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/'
 
     // build request object
     const request = {

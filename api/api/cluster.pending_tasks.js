@@ -78,7 +78,7 @@ allocate or fail shard) which have not yet been executed.
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_cluster' + '/' + 'pending_tasks'
+    path = '/' + '_cluster' + '/' + 'pending_tasks' + '/'
 
     // build request object
     const request = {

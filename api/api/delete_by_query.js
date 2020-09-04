@@ -136,7 +136,7 @@ function buildDeleteByQuery (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_delete_by_query'
+    path = '/' + encodeURIComponent(index) + '/' + '_delete_by_query' + '/'
 
     // build request object
     const request = {

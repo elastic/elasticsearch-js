@@ -85,7 +85,7 @@ function buildCatNodes (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'nodes'
+    path = '/' + '_cat' + '/' + 'nodes' + '/'
 
     // build request object
     const request = {

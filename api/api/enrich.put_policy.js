@@ -79,7 +79,7 @@ function buildEnrichPutPolicy (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name)
+    path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

@@ -95,7 +95,7 @@ function buildIndicesPutMapping (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + encodeURIComponent(index) + '/' + '_mapping'
+    path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/'
 
     // build request object
     const request = {

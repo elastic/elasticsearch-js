@@ -87,7 +87,7 @@ function buildIngestPutPipeline (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id)
+    path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

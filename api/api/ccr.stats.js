@@ -69,7 +69,7 @@ function buildCcrStats (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_ccr' + '/' + 'stats'
+    path = '/' + '_ccr' + '/' + 'stats' + '/'
 
     // build request object
     const request = {

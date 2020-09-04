@@ -75,7 +75,7 @@ function buildCcrDeleteAutoFollowPattern (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name)
+    path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

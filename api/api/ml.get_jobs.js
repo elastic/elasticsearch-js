@@ -72,10 +72,10 @@ function buildMlGetJobs (opts) {
 
     if ((job_id || jobId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
+      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'anomaly_detectors'
+      path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/'
     }
 
     // build request object

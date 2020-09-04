@@ -84,7 +84,7 @@ function buildTasksList (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_tasks'
+    path = '/' + '_tasks' + '/'
 
     // build request object
     const request = {

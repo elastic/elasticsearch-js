@@ -148,10 +148,10 @@ function buildSearch (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_search'
+      path = '/' + encodeURIComponent(index) + '/' + '_search' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_search'
+      path = '/' + '_search' + '/'
     }
 
     // build request object

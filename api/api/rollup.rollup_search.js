@@ -88,10 +88,10 @@ function buildRollupRollupSearch (opts) {
 
     if ((index) != null && (type) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_rollup_search'
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_rollup_search' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_rollup_search'
+      path = '/' + encodeURIComponent(index) + '/' + '_rollup_search' + '/'
     }
 
     // build request object

@@ -83,7 +83,7 @@ function buildIndicesUpdateAliases (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_aliases'
+    path = '/' + '_aliases' + '/'
 
     // build request object
     const request = {

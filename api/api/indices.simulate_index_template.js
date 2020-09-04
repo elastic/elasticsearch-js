@@ -84,7 +84,7 @@ function buildIndicesSimulateIndexTemplate (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_index_template' + '/' + '_simulate_index' + '/' + encodeURIComponent(name)
+    path = '/' + '_index_template' + '/' + '_simulate_index' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

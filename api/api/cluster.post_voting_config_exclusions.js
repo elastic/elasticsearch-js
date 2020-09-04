@@ -79,7 +79,7 @@ function buildClusterPostVotingConfigExclusions (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_cluster' + '/' + 'voting_config_exclusions'
+    path = '/' + '_cluster' + '/' + 'voting_config_exclusions' + '/'
 
     // build request object
     const request = {

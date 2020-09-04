@@ -79,7 +79,7 @@ function buildSecurityPutUser (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username)
+    path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/'
 
     // build request object
     const request = {

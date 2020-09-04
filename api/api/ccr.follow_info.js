@@ -75,7 +75,7 @@ function buildCcrFollowInfo (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'info'
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'info' + '/'
 
     // build request object
     const request = {

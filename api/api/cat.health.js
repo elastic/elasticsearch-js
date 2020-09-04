@@ -81,7 +81,7 @@ function buildCatHealth (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'health'
+    path = '/' + '_cat' + '/' + 'health' + '/'
 
     // build request object
     const request = {

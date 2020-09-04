@@ -71,10 +71,10 @@ function buildMlGetFilters (opts) {
 
     if ((filter_id || filterId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId)
+      path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'filters'
+      path = '/' + '_ml' + '/' + 'filters' + '/'
     }
 
     // build request object

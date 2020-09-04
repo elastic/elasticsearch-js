@@ -72,10 +72,10 @@ function buildMlDeleteExpiredData (opts) {
 
     if ((job_id || jobId) != null) {
       if (method == null) method = 'DELETE'
-      path = '/' + '_ml' + '/' + '_delete_expired_data' + '/' + encodeURIComponent(job_id || jobId)
+      path = '/' + '_ml' + '/' + '_delete_expired_data' + '/' + encodeURIComponent(job_id || jobId) + '/'
     } else {
       if (method == null) method = 'DELETE'
-      path = '/' + '_ml' + '/' + '_delete_expired_data'
+      path = '/' + '_ml' + '/' + '_delete_expired_data' + '/'
     }
 
     // build request object

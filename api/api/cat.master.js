@@ -82,7 +82,7 @@ function buildCatMaster (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'master'
+    path = '/' + '_cat' + '/' + 'master' + '/'
 
     // build request object
     const request = {

@@ -69,7 +69,7 @@ function buildSlmGetStatus (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_slm' + '/' + 'status'
+    path = '/' + '_slm' + '/' + 'status' + '/'
 
     // build request object
     const request = {

@@ -74,7 +74,7 @@ function buildGetScriptContext (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_script_context'
+    path = '/' + '_script_context' + '/'
 
     // build request object
     const request = {

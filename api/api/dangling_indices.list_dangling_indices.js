@@ -74,7 +74,7 @@ function buildDanglingIndicesListDanglingIndices (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_dangling'
+    path = '/' + '_dangling' + '/'
 
     // build request object
     const request = {

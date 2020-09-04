@@ -102,10 +102,10 @@ function buildSearchTemplate (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_search' + '/' + 'template'
+      path = '/' + encodeURIComponent(index) + '/' + '_search' + '/' + 'template' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_search' + '/' + 'template'
+      path = '/' + '_search' + '/' + 'template' + '/'
     }
 
     // build request object

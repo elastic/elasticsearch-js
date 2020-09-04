@@ -75,7 +75,7 @@ function buildWatcherActivateWatch (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_activate'
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_activate' + '/'
 
     // build request object
     const request = {

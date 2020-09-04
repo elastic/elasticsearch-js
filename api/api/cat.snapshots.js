@@ -85,10 +85,10 @@ function buildCatSnapshots (opts) {
 
     if ((repository) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'snapshots' + '/' + encodeURIComponent(repository)
+      path = '/' + '_cat' + '/' + 'snapshots' + '/' + encodeURIComponent(repository) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'snapshots'
+      path = '/' + '_cat' + '/' + 'snapshots' + '/'
     }
 
     // build request object

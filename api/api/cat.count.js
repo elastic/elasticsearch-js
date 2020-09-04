@@ -80,10 +80,10 @@ function buildCatCount (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'count' + '/' + encodeURIComponent(index)
+      path = '/' + '_cat' + '/' + 'count' + '/' + encodeURIComponent(index) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'count'
+      path = '/' + '_cat' + '/' + 'count' + '/'
     }
 
     // build request object

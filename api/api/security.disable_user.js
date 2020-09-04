@@ -75,7 +75,7 @@ function buildSecurityDisableUser (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_disable'
+    path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_disable' + '/'
 
     // build request object
     const request = {

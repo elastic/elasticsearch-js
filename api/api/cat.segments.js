@@ -81,10 +81,10 @@ function buildCatSegments (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'segments' + '/' + encodeURIComponent(index)
+      path = '/' + '_cat' + '/' + 'segments' + '/' + encodeURIComponent(index) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'segments'
+      path = '/' + '_cat' + '/' + 'segments' + '/'
     }
 
     // build request object

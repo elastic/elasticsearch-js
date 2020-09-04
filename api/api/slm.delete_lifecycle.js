@@ -75,7 +75,7 @@ function buildSlmDeleteLifecycle (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
+    path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId) + '/'
 
     // build request object
     const request = {

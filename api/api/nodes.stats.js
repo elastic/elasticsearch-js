@@ -86,22 +86,22 @@ function buildNodesStats (opts) {
 
     if ((node_id || nodeId) != null && (metric) != null && (index_metric || indexMetric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index_metric || indexMetric)
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index_metric || indexMetric) + '/'
     } else if ((node_id || nodeId) != null && (metric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats' + '/' + encodeURIComponent(metric)
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/'
     } else if ((metric) != null && (index_metric || indexMetric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index_metric || indexMetric)
+      path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index_metric || indexMetric) + '/'
     } else if ((node_id || nodeId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats'
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats' + '/'
     } else if ((metric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(metric)
+      path = '/' + '_nodes' + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + 'stats'
+      path = '/' + '_nodes' + '/' + 'stats' + '/'
     }
 
     // build request object

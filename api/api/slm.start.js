@@ -69,7 +69,7 @@ function buildSlmStart (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_slm' + '/' + 'start'
+    path = '/' + '_slm' + '/' + 'start' + '/'
 
     // build request object
     const request = {

@@ -91,10 +91,10 @@ function buildMsearchTemplate (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_msearch' + '/' + 'template'
+      path = '/' + encodeURIComponent(index) + '/' + '_msearch' + '/' + 'template' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_msearch' + '/' + 'template'
+      path = '/' + '_msearch' + '/' + 'template' + '/'
     }
 
     // build request object

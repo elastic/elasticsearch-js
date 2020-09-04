@@ -83,7 +83,7 @@ function buildClusterExistsComponentTemplate (opts) {
     var path = ''
 
     if (method == null) method = 'HEAD'
-    path = '/' + '_component_template' + '/' + encodeURIComponent(name)
+    path = '/' + '_component_template' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

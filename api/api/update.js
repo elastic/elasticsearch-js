@@ -112,10 +112,10 @@ function buildUpdate (opts) {
 
     if ((index) != null && (type) != null && (id) != null) {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_update'
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_update' + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_update' + '/' + encodeURIComponent(id)
+      path = '/' + encodeURIComponent(index) + '/' + '_update' + '/' + encodeURIComponent(id) + '/'
     }
 
     // build request object

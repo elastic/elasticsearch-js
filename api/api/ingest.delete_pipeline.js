@@ -83,7 +83,7 @@ function buildIngestDeletePipeline (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id)
+    path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

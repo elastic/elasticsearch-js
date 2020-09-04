@@ -95,10 +95,10 @@ is considered to be too large or too old.
 
     if ((alias) != null && (new_index || newIndex) != null) {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(alias) + '/' + '_rollover' + '/' + encodeURIComponent(new_index || newIndex)
+      path = '/' + encodeURIComponent(alias) + '/' + '_rollover' + '/' + encodeURIComponent(new_index || newIndex) + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(alias) + '/' + '_rollover'
+      path = '/' + encodeURIComponent(alias) + '/' + '_rollover' + '/'
     }
 
     // build request object

@@ -88,10 +88,10 @@ function buildIndicesExistsAlias (opts) {
 
     if ((index) != null && (name) != null) {
       if (method == null) method = 'HEAD'
-      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
+      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name) + '/'
     } else {
       if (method == null) method = 'HEAD'
-      path = '/' + '_alias' + '/' + encodeURIComponent(name)
+      path = '/' + '_alias' + '/' + encodeURIComponent(name) + '/'
     }
 
     // build request object

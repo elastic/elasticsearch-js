@@ -75,7 +75,7 @@ function buildWatcherDeleteWatch (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

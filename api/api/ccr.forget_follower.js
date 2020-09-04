@@ -79,7 +79,7 @@ function buildCcrForgetFollower (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'forget_follower'
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'forget_follower' + '/'
 
     // build request object
     const request = {

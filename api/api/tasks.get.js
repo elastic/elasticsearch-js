@@ -83,7 +83,7 @@ function buildTasksGet (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId)
+    path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId) + '/'
 
     // build request object
     const request = {

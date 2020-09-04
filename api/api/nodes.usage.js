@@ -76,16 +76,16 @@ function buildNodesUsage (opts) {
 
     if ((node_id || nodeId) != null && (metric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'usage' + '/' + encodeURIComponent(metric)
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'usage' + '/' + encodeURIComponent(metric) + '/'
     } else if ((node_id || nodeId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'usage'
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'usage' + '/'
     } else if ((metric) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + 'usage' + '/' + encodeURIComponent(metric)
+      path = '/' + '_nodes' + '/' + 'usage' + '/' + encodeURIComponent(metric) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_nodes' + '/' + 'usage'
+      path = '/' + '_nodes' + '/' + 'usage' + '/'
     }
 
     // build request object

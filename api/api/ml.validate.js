@@ -75,7 +75,7 @@ function buildMlValidate (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + '_validate'
+    path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + '_validate' + '/'
 
     // build request object
     const request = {

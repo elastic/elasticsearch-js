@@ -82,16 +82,16 @@ function buildIndicesGetAlias (opts) {
 
     if ((index) != null && (name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
+      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name) + '/'
     } else if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_alias' + '/' + encodeURIComponent(name)
+      path = '/' + '_alias' + '/' + encodeURIComponent(name) + '/'
     } else if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_alias'
+      path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_alias'
+      path = '/' + '_alias' + '/'
     }
 
     // build request object

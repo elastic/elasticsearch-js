@@ -79,7 +79,7 @@ function buildWatcherPutWatch (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

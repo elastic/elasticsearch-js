@@ -75,7 +75,7 @@ function buildSecurityDeleteRoleMapping (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
+    path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

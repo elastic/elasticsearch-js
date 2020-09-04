@@ -69,7 +69,7 @@ function buildLicensePost (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_license'
+    path = '/' + '_license' + '/'
 
     // build request object
     const request = {

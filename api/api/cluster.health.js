@@ -94,10 +94,10 @@ function buildClusterHealth (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cluster' + '/' + 'health' + '/' + encodeURIComponent(index)
+      path = '/' + '_cluster' + '/' + 'health' + '/' + encodeURIComponent(index) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cluster' + '/' + 'health'
+      path = '/' + '_cluster' + '/' + 'health' + '/'
     }
 
     // build request object

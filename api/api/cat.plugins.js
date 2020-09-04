@@ -82,7 +82,7 @@ function buildCatPlugins (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'plugins'
+    path = '/' + '_cat' + '/' + 'plugins' + '/'
 
     // build request object
     const request = {

@@ -75,7 +75,7 @@ function buildRollupDeleteJob (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
+    path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

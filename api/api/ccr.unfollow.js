@@ -75,7 +75,7 @@ function buildCcrUnfollow (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'unfollow'
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'unfollow' + '/'
 
     // build request object
     const request = {

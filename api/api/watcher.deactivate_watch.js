@@ -75,7 +75,7 @@ function buildWatcherDeactivateWatch (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_deactivate'
+    path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_deactivate' + '/'
 
     // build request object
     const request = {

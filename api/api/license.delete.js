@@ -69,7 +69,7 @@ function buildLicenseDelete (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_license'
+    path = '/' + '_license' + '/'
 
     // build request object
     const request = {

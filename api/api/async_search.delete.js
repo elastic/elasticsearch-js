@@ -75,7 +75,7 @@ function buildAsyncSearchDelete (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_async_search' + '/' + encodeURIComponent(id)
+    path = '/' + '_async_search' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

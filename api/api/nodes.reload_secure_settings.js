@@ -76,10 +76,10 @@ function buildNodesReloadSecureSettings (opts) {
 
     if ((node_id || nodeId) != null) {
       if (method == null) method = 'POST'
-      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'reload_secure_settings'
+      path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'reload_secure_settings' + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + '_nodes' + '/' + 'reload_secure_settings'
+      path = '/' + '_nodes' + '/' + 'reload_secure_settings' + '/'
     }
 
     // build request object

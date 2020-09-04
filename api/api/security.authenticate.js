@@ -69,7 +69,7 @@ function buildSecurityAuthenticate (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_security' + '/' + '_authenticate'
+    path = '/' + '_security' + '/' + '_authenticate' + '/'
 
     // build request object
     const request = {

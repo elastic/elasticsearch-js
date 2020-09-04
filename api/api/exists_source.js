@@ -110,10 +110,10 @@ function buildExistsSource (opts) {
 
     if ((index) != null && (type) != null && (id) != null) {
       if (method == null) method = 'HEAD'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source'
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_source' + '/'
     } else {
       if (method == null) method = 'HEAD'
-      path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id)
+      path = '/' + encodeURIComponent(index) + '/' + '_source' + '/' + encodeURIComponent(id) + '/'
     }
 
     // build request object

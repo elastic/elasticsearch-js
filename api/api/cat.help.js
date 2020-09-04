@@ -76,7 +76,7 @@ function buildCatHelp (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_cat'
+    path = '/' + '_cat' + '/'
 
     // build request object
     const request = {

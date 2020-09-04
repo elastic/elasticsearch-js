@@ -85,7 +85,7 @@ function buildClusterPutSettings (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_cluster' + '/' + 'settings'
+    path = '/' + '_cluster' + '/' + 'settings' + '/'
 
     // build request object
     const request = {

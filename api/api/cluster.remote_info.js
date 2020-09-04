@@ -74,7 +74,7 @@ function buildClusterRemoteInfo (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_remote' + '/' + 'info'
+    path = '/' + '_remote' + '/' + 'info' + '/'
 
     // build request object
     const request = {

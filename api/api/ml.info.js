@@ -69,7 +69,7 @@ function buildMlInfo (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_ml' + '/' + 'info'
+    path = '/' + '_ml' + '/' + 'info' + '/'
 
     // build request object
     const request = {

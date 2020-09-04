@@ -81,7 +81,7 @@ function buildTransformStopTransform (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stop'
+    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stop' + '/'
 
     // build request object
     const request = {

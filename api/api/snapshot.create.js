@@ -94,7 +94,7 @@ function buildSnapshotCreate (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/'
 
     // build request object
     const request = {

@@ -76,10 +76,10 @@ function buildSecurityChangePassword (opts) {
 
     if ((username) != null) {
       if (method == null) method = 'PUT'
-      path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_password'
+      path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_password' + '/'
     } else {
       if (method == null) method = 'PUT'
-      path = '/' + '_security' + '/' + 'user' + '/' + '_password'
+      path = '/' + '_security' + '/' + 'user' + '/' + '_password' + '/'
     }
 
     // build request object

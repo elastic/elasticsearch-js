@@ -70,7 +70,7 @@ function buildXpackInfo (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_xpack'
+    path = '/' + '_xpack' + '/'
 
     // build request object
     const request = {

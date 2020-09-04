@@ -70,10 +70,10 @@ function buildSearchableSnapshotsStats (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_searchable_snapshots' + '/' + 'stats'
+      path = '/' + encodeURIComponent(index) + '/' + '_searchable_snapshots' + '/' + 'stats' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_searchable_snapshots' + '/' + 'stats'
+      path = '/' + '_searchable_snapshots' + '/' + 'stats' + '/'
     }
 
     // build request object

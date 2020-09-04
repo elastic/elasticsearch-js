@@ -75,7 +75,7 @@ function buildIndicesDeleteDataStream (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
+    path = '/' + '_data_stream' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

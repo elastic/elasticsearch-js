@@ -89,10 +89,10 @@ function buildRankEval (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_rank_eval'
+      path = '/' + encodeURIComponent(index) + '/' + '_rank_eval' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_rank_eval'
+      path = '/' + '_rank_eval' + '/'
     }
 
     // build request object

@@ -88,7 +88,7 @@ function buildClusterPutComponentTemplate (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_component_template' + '/' + encodeURIComponent(name)
+    path = '/' + '_component_template' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

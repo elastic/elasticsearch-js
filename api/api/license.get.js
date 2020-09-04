@@ -70,7 +70,7 @@ function buildLicenseGet (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_license'
+    path = '/' + '_license' + '/'
 
     // build request object
     const request = {

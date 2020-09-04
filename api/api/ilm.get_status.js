@@ -69,7 +69,7 @@ function buildIlmGetStatus (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_ilm' + '/' + 'status'
+    path = '/' + '_ilm' + '/' + 'status' + '/'
 
     // build request object
     const request = {

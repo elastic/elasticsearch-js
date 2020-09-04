@@ -102,10 +102,10 @@ function buildIndex (opts) {
 
     if ((index) != null && (id) != null) {
       if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
+      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id) + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_doc'
+      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/'
     }
 
     // build request object

@@ -91,7 +91,7 @@ function buildIndicesClose (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_close'
+    path = '/' + encodeURIComponent(index) + '/' + '_close' + '/'
 
     // build request object
     const request = {

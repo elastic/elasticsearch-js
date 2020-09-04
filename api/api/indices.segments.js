@@ -82,10 +82,10 @@ function buildIndicesSegments (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_segments'
+      path = '/' + encodeURIComponent(index) + '/' + '_segments' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_segments'
+      path = '/' + '_segments' + '/'
     }
 
     // build request object

@@ -80,7 +80,7 @@ function buildMlGetCalendarEvents (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'events'
+    path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'events' + '/'
 
     // build request object
     const request = {

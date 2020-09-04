@@ -91,7 +91,7 @@ function buildIndicesOpen (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_open'
+    path = '/' + encodeURIComponent(index) + '/' + '_open' + '/'
 
     // build request object
     const request = {

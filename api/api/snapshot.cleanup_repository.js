@@ -83,7 +83,7 @@ function buildSnapshotCleanupRepository (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_cleanup'
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_cleanup' + '/'
 
     // build request object
     const request = {

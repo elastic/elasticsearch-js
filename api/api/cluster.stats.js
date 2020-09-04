@@ -78,10 +78,10 @@ function buildClusterStats (opts) {
 
     if ((node_id || nodeId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cluster' + '/' + 'stats' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId)
+      path = '/' + '_cluster' + '/' + 'stats' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cluster' + '/' + 'stats'
+      path = '/' + '_cluster' + '/' + 'stats' + '/'
     }
 
     // build request object

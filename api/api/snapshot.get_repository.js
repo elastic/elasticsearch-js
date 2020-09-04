@@ -78,10 +78,10 @@ function buildSnapshotGetRepository (opts) {
 
     if ((repository) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_snapshot' + '/' + encodeURIComponent(repository)
+      path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_snapshot'
+      path = '/' + '_snapshot' + '/'
     }
 
     // build request object

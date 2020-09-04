@@ -81,7 +81,7 @@ function buildClusterGetSettings (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_cluster' + '/' + 'settings'
+    path = '/' + '_cluster' + '/' + 'settings' + '/'
 
     // build request object
     const request = {

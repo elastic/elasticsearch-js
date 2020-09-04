@@ -79,7 +79,7 @@ function buildAutoscalingPutAutoscalingPolicy (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_autoscaling' + '/' + 'policy' + '/' + encodeURIComponent(name)
+    path = '/' + '_autoscaling' + '/' + 'policy' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

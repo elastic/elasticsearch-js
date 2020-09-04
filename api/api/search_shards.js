@@ -84,10 +84,10 @@ function buildSearchShards (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_search_shards'
+      path = '/' + encodeURIComponent(index) + '/' + '_search_shards' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_search_shards'
+      path = '/' + '_search_shards' + '/'
     }
 
     // build request object

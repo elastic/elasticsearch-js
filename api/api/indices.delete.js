@@ -89,7 +89,7 @@ function buildIndicesDelete (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + encodeURIComponent(index)
+    path = '/' + encodeURIComponent(index) + '/'
 
     // build request object
     const request = {

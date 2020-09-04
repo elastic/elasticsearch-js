@@ -79,7 +79,7 @@ function buildMlPutTrainedModel (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
+    path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId) + '/'
 
     // build request object
     const request = {

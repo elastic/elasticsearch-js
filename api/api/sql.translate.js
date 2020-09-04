@@ -75,7 +75,7 @@ function buildSqlTranslate (opts) {
     var path = ''
 
     if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + '_sql' + '/' + 'translate'
+    path = '/' + '_sql' + '/' + 'translate' + '/'
 
     // build request object
     const request = {

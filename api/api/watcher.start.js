@@ -69,7 +69,7 @@ function buildWatcherStart (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_watcher' + '/' + '_start'
+    path = '/' + '_watcher' + '/' + '_start' + '/'
 
     // build request object
     const request = {

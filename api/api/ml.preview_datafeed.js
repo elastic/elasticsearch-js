@@ -75,7 +75,7 @@ function buildMlPreviewDatafeed (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_preview'
+    path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_preview' + '/'
 
     // build request object
     const request = {

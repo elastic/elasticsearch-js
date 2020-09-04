@@ -75,7 +75,7 @@ function buildCcrFollowStats (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'stats'
+    path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'stats' + '/'
 
     // build request object
     const request = {

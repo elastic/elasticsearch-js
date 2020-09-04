@@ -78,7 +78,7 @@ function buildClusterAllocationExplain (opts) {
     var path = ''
 
     if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + '_cluster' + '/' + 'allocation' + '/' + 'explain'
+    path = '/' + '_cluster' + '/' + 'allocation' + '/' + 'explain' + '/'
 
     // build request object
     const request = {

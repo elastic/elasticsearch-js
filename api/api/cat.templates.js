@@ -83,10 +83,10 @@ function buildCatTemplates (opts) {
 
     if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'templates' + '/' + encodeURIComponent(name)
+      path = '/' + '_cat' + '/' + 'templates' + '/' + encodeURIComponent(name) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'templates'
+      path = '/' + '_cat' + '/' + 'templates' + '/'
     }
 
     // build request object

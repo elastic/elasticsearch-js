@@ -75,7 +75,7 @@ function buildEnrichDeletePolicy (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name)
+    path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

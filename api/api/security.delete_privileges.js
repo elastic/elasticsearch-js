@@ -85,7 +85,7 @@ function buildSecurityDeletePrivileges (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name)
+    path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

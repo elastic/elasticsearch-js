@@ -80,7 +80,7 @@ function buildIndicesGetUpgrade (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
+    path = '/' + encodeURIComponent(index) + '/' + '_upgrade' + '/'
 
     // build request object
     const request = {

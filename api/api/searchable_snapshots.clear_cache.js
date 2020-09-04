@@ -76,10 +76,10 @@ function buildSearchableSnapshotsClearCache (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_searchable_snapshots' + '/' + 'cache' + '/' + 'clear'
+      path = '/' + encodeURIComponent(index) + '/' + '_searchable_snapshots' + '/' + 'cache' + '/' + 'clear' + '/'
     } else {
       if (method == null) method = 'POST'
-      path = '/' + '_searchable_snapshots' + '/' + 'cache' + '/' + 'clear'
+      path = '/' + '_searchable_snapshots' + '/' + 'cache' + '/' + 'clear' + '/'
     }
 
     // build request object

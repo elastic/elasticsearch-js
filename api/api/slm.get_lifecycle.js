@@ -70,10 +70,10 @@ function buildSlmGetLifecycle (opts) {
 
     if ((policy_id || policyId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
+      path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_slm' + '/' + 'policy'
+      path = '/' + '_slm' + '/' + 'policy' + '/'
     }
 
     // build request object

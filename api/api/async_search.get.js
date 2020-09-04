@@ -79,7 +79,7 @@ function buildAsyncSearchGet (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_async_search' + '/' + encodeURIComponent(id)
+    path = '/' + '_async_search' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

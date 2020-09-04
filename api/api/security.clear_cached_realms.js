@@ -75,7 +75,7 @@ function buildSecurityClearCachedRealms (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_security' + '/' + 'realm' + '/' + encodeURIComponent(realms) + '/' + '_clear_cache'
+    path = '/' + '_security' + '/' + 'realm' + '/' + encodeURIComponent(realms) + '/' + '_clear_cache' + '/'
 
     // build request object
     const request = {

@@ -74,7 +74,7 @@ function buildIngestProcessorGrok (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_ingest' + '/' + 'processor' + '/' + 'grok'
+    path = '/' + '_ingest' + '/' + 'processor' + '/' + 'grok' + '/'
 
     // build request object
     const request = {

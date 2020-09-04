@@ -75,7 +75,7 @@ function buildSecurityDeleteUser (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username)
+    path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/'
 
     // build request object
     const request = {

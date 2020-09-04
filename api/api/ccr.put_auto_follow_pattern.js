@@ -79,7 +79,7 @@ function buildCcrPutAutoFollowPattern (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name)
+    path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

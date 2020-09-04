@@ -95,10 +95,10 @@ function buildPutScript (opts) {
 
     if ((id) != null && (context) != null) {
       if (method == null) method = 'PUT'
-      path = '/' + '_scripts' + '/' + encodeURIComponent(id) + '/' + encodeURIComponent(context)
+      path = '/' + '_scripts' + '/' + encodeURIComponent(id) + '/' + encodeURIComponent(context) + '/'
     } else {
       if (method == null) method = 'PUT'
-      path = '/' + '_scripts' + '/' + encodeURIComponent(id)
+      path = '/' + '_scripts' + '/' + encodeURIComponent(id) + '/'
     }
 
     // build request object

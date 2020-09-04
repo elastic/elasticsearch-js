@@ -74,7 +74,7 @@ function buildSecurityGetApiKey (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_security' + '/' + 'api_key'
+    path = '/' + '_security' + '/' + 'api_key' + '/'
 
     // build request object
     const request = {

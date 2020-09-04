@@ -82,10 +82,10 @@ function buildIndicesShardStores (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_shard_stores'
+      path = '/' + encodeURIComponent(index) + '/' + '_shard_stores' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_shard_stores'
+      path = '/' + '_shard_stores' + '/'
     }
 
     // build request object

@@ -70,10 +70,10 @@ function buildIndicesDataStreamsStats (opts) {
 
     if ((name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_data_stream' + '/' + encodeURIComponent(name) + '/' + '_stats'
+      path = '/' + '_data_stream' + '/' + encodeURIComponent(name) + '/' + '_stats' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_data_stream' + '/' + '_stats'
+      path = '/' + '_data_stream' + '/' + '_stats' + '/'
     }
 
     // build request object

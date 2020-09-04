@@ -85,7 +85,7 @@ function buildMlPutCalendarJob (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'jobs' + '/' + encodeURIComponent(job_id || jobId)
+    path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'jobs' + '/' + encodeURIComponent(job_id || jobId) + '/'
 
     // build request object
     const request = {

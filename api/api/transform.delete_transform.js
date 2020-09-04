@@ -75,7 +75,7 @@ function buildTransformDeleteTransform (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId)
+    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/'
 
     // build request object
     const request = {

@@ -79,7 +79,7 @@ function buildTransformUpdateTransform (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_update'
+    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_update' + '/'
 
     // build request object
     const request = {

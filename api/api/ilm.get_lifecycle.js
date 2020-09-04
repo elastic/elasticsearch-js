@@ -70,10 +70,10 @@ function buildIlmGetLifecycle (opts) {
 
     if ((policy) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy)
+      path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_ilm' + '/' + 'policy'
+      path = '/' + '_ilm' + '/' + 'policy' + '/'
     }
 
     // build request object

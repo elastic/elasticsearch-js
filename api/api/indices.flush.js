@@ -84,10 +84,10 @@ function buildIndicesFlush (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_flush'
+      path = '/' + encodeURIComponent(index) + '/' + '_flush' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_flush'
+      path = '/' + '_flush' + '/'
     }
 
     // build request object

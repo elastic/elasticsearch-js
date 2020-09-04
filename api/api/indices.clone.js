@@ -95,7 +95,7 @@ function buildIndicesClone (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + encodeURIComponent(index) + '/' + '_clone' + '/' + encodeURIComponent(target)
+    path = '/' + encodeURIComponent(index) + '/' + '_clone' + '/' + encodeURIComponent(target) + '/'
 
     // build request object
     const request = {

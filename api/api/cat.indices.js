@@ -91,10 +91,10 @@ function buildCatIndices (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'indices' + '/' + encodeURIComponent(index)
+      path = '/' + '_cat' + '/' + 'indices' + '/' + encodeURIComponent(index) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'indices'
+      path = '/' + '_cat' + '/' + 'indices' + '/'
     }
 
     // build request object

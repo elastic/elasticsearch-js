@@ -102,7 +102,7 @@ function buildExists (opts) {
     var path = ''
 
     if (method == null) method = 'HEAD'
-    path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
+    path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

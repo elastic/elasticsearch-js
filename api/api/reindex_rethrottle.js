@@ -86,7 +86,7 @@ function buildReindexRethrottle (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_reindex' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle'
+    path = '/' + '_reindex' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle' + '/'
 
     // build request object
     const request = {

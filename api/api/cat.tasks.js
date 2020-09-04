@@ -86,7 +86,7 @@ function buildCatTasks (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'tasks'
+    path = '/' + '_cat' + '/' + 'tasks' + '/'
 
     // build request object
     const request = {

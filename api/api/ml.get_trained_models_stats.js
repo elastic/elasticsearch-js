@@ -73,10 +73,10 @@ function buildMlGetTrainedModelsStats (opts) {
 
     if ((model_id || modelId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId) + '/' + '_stats'
+      path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId) + '/' + '_stats' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_ml' + '/' + 'inference' + '/' + '_stats'
+      path = '/' + '_ml' + '/' + 'inference' + '/' + '_stats' + '/'
     }
 
     // build request object

@@ -78,10 +78,10 @@ function buildIndicesRecovery (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_recovery'
+      path = '/' + encodeURIComponent(index) + '/' + '_recovery' + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_recovery'
+      path = '/' + '_recovery' + '/'
     }
 
     // build request object

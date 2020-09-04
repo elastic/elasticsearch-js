@@ -94,7 +94,7 @@ function buildSnapshotRestore (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_restore'
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_restore' + '/'
 
     // build request object
     const request = {

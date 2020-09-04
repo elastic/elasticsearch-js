@@ -79,7 +79,7 @@ function buildIndicesReloadSearchAnalyzers (opts) {
     var path = ''
 
     if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_reload_search_analyzers'
+    path = '/' + encodeURIComponent(index) + '/' + '_reload_search_analyzers' + '/'
 
     // build request object
     const request = {

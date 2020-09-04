@@ -69,7 +69,7 @@ function buildSlmGetStats (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_slm' + '/' + 'stats'
+    path = '/' + '_slm' + '/' + 'stats' + '/'
 
     // build request object
     const request = {

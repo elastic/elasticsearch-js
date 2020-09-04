@@ -99,13 +99,13 @@ function buildIndicesValidateQuery (opts) {
 
     if ((index) != null && (type) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_validate' + '/' + 'query'
+      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_validate' + '/' + 'query' + '/'
     } else if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_validate' + '/' + 'query'
+      path = '/' + encodeURIComponent(index) + '/' + '_validate' + '/' + 'query' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_validate' + '/' + 'query'
+      path = '/' + '_validate' + '/' + 'query' + '/'
     }
 
     // build request object

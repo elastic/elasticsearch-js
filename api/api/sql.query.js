@@ -75,7 +75,7 @@ function buildSqlQuery (opts) {
     var path = ''
 
     if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + '_sql'
+    path = '/' + '_sql' + '/'
 
     // build request object
     const request = {

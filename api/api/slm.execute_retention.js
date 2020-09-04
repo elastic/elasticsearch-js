@@ -69,7 +69,7 @@ function buildSlmExecuteRetention (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_slm' + '/' + '_execute_retention'
+    path = '/' + '_slm' + '/' + '_execute_retention' + '/'
 
     // build request object
     const request = {

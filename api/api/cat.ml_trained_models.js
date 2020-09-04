@@ -80,10 +80,10 @@ function buildCatMlTrainedModels (opts) {
 
     if ((model_id || modelId) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models'
+      path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models' + '/'
     }
 
     // build request object

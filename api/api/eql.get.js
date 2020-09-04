@@ -77,7 +77,7 @@ function buildEqlGet (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_eql' + '/' + 'search' + '/' + encodeURIComponent(id)
+    path = '/' + '_eql' + '/' + 'search' + '/' + encodeURIComponent(id) + '/'
 
     // build request object
     const request = {

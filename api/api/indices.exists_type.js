@@ -97,7 +97,7 @@ function buildIndicesExistsType (opts) {
     var path = ''
 
     if (method == null) method = 'HEAD'
-    path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type)
+    path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type) + '/'
 
     // build request object
     const request = {

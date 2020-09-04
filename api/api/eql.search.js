@@ -83,7 +83,7 @@ function buildEqlSearch (opts) {
     var path = ''
 
     if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_eql' + '/' + 'search'
+    path = '/' + encodeURIComponent(index) + '/' + '_eql' + '/' + 'search' + '/'
 
     // build request object
     const request = {

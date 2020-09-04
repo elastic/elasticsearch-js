@@ -69,7 +69,7 @@ function buildSlmStop (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_slm' + '/' + 'stop'
+    path = '/' + '_slm' + '/' + 'stop' + '/'
 
     // build request object
     const request = {

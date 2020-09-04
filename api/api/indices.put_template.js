@@ -88,7 +88,7 @@ function buildIndicesPutTemplate (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + '_template' + '/' + encodeURIComponent(name)
+    path = '/' + '_template' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

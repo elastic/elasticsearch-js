@@ -75,7 +75,7 @@ function buildSecurityInvalidateApiKey (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_security' + '/' + 'api_key'
+    path = '/' + '_security' + '/' + 'api_key' + '/'
 
     // build request object
     const request = {

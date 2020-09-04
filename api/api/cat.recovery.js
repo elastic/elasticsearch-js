@@ -86,10 +86,10 @@ function buildCatRecovery (opts) {
 
     if ((index) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'recovery' + '/' + encodeURIComponent(index)
+      path = '/' + '_cat' + '/' + 'recovery' + '/' + encodeURIComponent(index) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_cat' + '/' + 'recovery'
+      path = '/' + '_cat' + '/' + 'recovery' + '/'
     }
 
     // build request object

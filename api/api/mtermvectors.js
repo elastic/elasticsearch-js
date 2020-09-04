@@ -90,10 +90,10 @@ function buildMtermvectors (opts) {
 
     if ((index) != null) {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_mtermvectors'
+      path = '/' + encodeURIComponent(index) + '/' + '_mtermvectors' + '/'
     } else {
       if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_mtermvectors'
+      path = '/' + '_mtermvectors' + '/'
     }
 
     // build request object

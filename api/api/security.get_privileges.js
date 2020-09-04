@@ -76,13 +76,13 @@ function buildSecurityGetPrivileges (opts) {
 
     if ((application) != null && (name) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name)
+      path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name) + '/'
     } else if ((application) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application)
+      path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_security' + '/' + 'privilege'
+      path = '/' + '_security' + '/' + 'privilege' + '/'
     }
 
     // build request object

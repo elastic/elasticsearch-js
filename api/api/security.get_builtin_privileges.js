@@ -69,7 +69,7 @@ function buildSecurityGetBuiltinPrivileges (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_security' + '/' + 'privilege' + '/' + '_builtin'
+    path = '/' + '_security' + '/' + 'privilege' + '/' + '_builtin' + '/'
 
     // build request object
     const request = {

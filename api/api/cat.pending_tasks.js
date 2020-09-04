@@ -83,7 +83,7 @@ function buildCatPendingTasks (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'pending_tasks'
+    path = '/' + '_cat' + '/' + 'pending_tasks' + '/'
 
     // build request object
     const request = {

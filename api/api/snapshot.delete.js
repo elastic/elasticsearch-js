@@ -92,7 +92,7 @@ function buildSnapshotDelete (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
+    path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/'
 
     // build request object
     const request = {

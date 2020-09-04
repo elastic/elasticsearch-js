@@ -83,7 +83,7 @@ function buildClusterDeleteComponentTemplate (opts) {
     var path = ''
 
     if (method == null) method = 'DELETE'
-    path = '/' + '_component_template' + '/' + encodeURIComponent(name)
+    path = '/' + '_component_template' + '/' + encodeURIComponent(name) + '/'
 
     // build request object
     const request = {

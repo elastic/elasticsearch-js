@@ -75,7 +75,7 @@ function buildCcrPauseAutoFollowPattern (opts) {
     var path = ''
 
     if (method == null) method = 'POST'
-    path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name) + '/' + 'pause'
+    path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name) + '/' + 'pause' + '/'
 
     // build request object
     const request = {

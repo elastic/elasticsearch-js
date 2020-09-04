@@ -76,7 +76,7 @@ function buildGraphExplore (opts) {
     var path = ''
 
     if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_graph' + '/' + 'explore'
+    path = '/' + encodeURIComponent(index) + '/' + '_graph' + '/' + 'explore' + '/'
 
     // build request object
     const request = {

@@ -99,7 +99,7 @@ function buildIndicesAddBlock (opts) {
     var path = ''
 
     if (method == null) method = 'PUT'
-    path = '/' + encodeURIComponent(index) + '/' + '_block' + '/' + encodeURIComponent(block)
+    path = '/' + encodeURIComponent(index) + '/' + '_block' + '/' + encodeURIComponent(block) + '/'
 
     // build request object
     const request = {

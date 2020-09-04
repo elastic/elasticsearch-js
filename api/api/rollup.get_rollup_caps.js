@@ -70,10 +70,10 @@ function buildRollupGetRollupCaps (opts) {
 
     if ((id) != null) {
       if (method == null) method = 'GET'
-      path = '/' + '_rollup' + '/' + 'data' + '/' + encodeURIComponent(id)
+      path = '/' + '_rollup' + '/' + 'data' + '/' + encodeURIComponent(id) + '/'
     } else {
       if (method == null) method = 'GET'
-      path = '/' + '_rollup' + '/' + 'data'
+      path = '/' + '_rollup' + '/' + 'data' + '/'
     }
 
     // build request object

@@ -77,7 +77,7 @@ function buildIlmExplainLifecycle (opts) {
     var path = ''
 
     if (method == null) method = 'GET'
-    path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'explain'
+    path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'explain' + '/'
 
     // build request object
     const request = {
