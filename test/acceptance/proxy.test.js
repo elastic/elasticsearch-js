@@ -18,7 +18,7 @@ test('http-http proxy support', async t => {
   const server = await createServer()
   const proxy = await createProxy()
   server.on('request', (req, res) => {
-    t.strictEqual(req.url, '/_cluster/health')
+    t.strictEqual(req.url, '/_cluster/health/')
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ hello: 'world' }))
   })
@@ -39,7 +39,7 @@ test('http-https proxy support', async t => {
   const server = await createSecureServer()
   const proxy = await createProxy()
   server.on('request', (req, res) => {
-    t.strictEqual(req.url, '/_cluster/health')
+    t.strictEqual(req.url, '/_cluster/health/')
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ hello: 'world' }))
   })
@@ -60,7 +60,7 @@ test('https-http proxy support', async t => {
   const server = await createServer()
   const proxy = await createSecureProxy()
   server.on('request', (req, res) => {
-    t.strictEqual(req.url, '/_cluster/health')
+    t.strictEqual(req.url, '/_cluster/health/')
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ hello: 'world' }))
   })
@@ -81,7 +81,7 @@ test('https-https proxy support', async t => {
   const server = await createSecureServer()
   const proxy = await createSecureProxy()
   server.on('request', (req, res) => {
-    t.strictEqual(req.url, '/_cluster/health')
+    t.strictEqual(req.url, '/_cluster/health/')
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ hello: 'world' }))
   })
@@ -102,7 +102,7 @@ test('http basic authentication', async t => {
   const server = await createServer()
   const proxy = await createProxy()
   server.on('request', (req, res) => {
-    t.strictEqual(req.url, '/_cluster/health')
+    t.strictEqual(req.url, '/_cluster/health/')
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ hello: 'world' }))
   })
@@ -127,7 +127,7 @@ test('https basic authentication', async t => {
   const server = await createSecureServer()
   const proxy = await createProxy()
   server.on('request', (req, res) => {
-    t.strictEqual(req.url, '/_cluster/health')
+    t.strictEqual(req.url, '/_cluster/health/')
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ hello: 'world' }))
   })

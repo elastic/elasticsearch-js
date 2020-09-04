@@ -237,7 +237,7 @@ test('Pass unknown parameters as query parameters (and get a warning)', t => {
   t.plan(4)
 
   function handler (req, res) {
-    t.strictEqual(req.url, '/test/_search?q=foo%3Abar&winter=is%20coming')
+    t.strictEqual(req.url, '/test/_search/?q=foo%3Abar&winter=is%20coming')
     res.setHeader('Content-Type', 'application/json;utf=8')
     res.end(JSON.stringify({ hello: 'world' }))
   }
@@ -264,7 +264,7 @@ test('If the API uses the same key for both url and query parameter, the url sho
   t.plan(2)
 
   function handler (req, res) {
-    t.strictEqual(req.url, '/index/_bulk')
+    t.strictEqual(req.url, '/index/_bulk/')
     res.setHeader('Content-Type', 'application/json;utf=8')
     res.end(JSON.stringify({ hello: 'world' }))
   }
