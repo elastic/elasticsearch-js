@@ -9,13 +9,13 @@ import { Q } from '../../dsl'
 test('Q is a function that creates the final query object', t => {
   t.type(Q, 'function')
 
-  t.deepEqual(Q({ a: 1 }, { b: 2 }, { c: 3 }), {
+  t.deepEqual(Q(c('a'), c('b'), c('c')), {
     query: {
       bool: {
         must: [
-          { a: 1 },
-          { b: 2 },
-          { c: 3 }
+          c('a'),
+          c('b'),
+          c('c')
         ]
       }
     }
@@ -66,9 +66,9 @@ test('Q is a function that creates the final query object', t => {
     [randomTopLevelKey]: 42
   })
 
-  t.deepEqual(Q({ query: { function_score: { foo: 'bar' } } }, { [randomTopLevelKey]: 42 }), {
+  t.deepEqual(Q({ query: { function_score: { max_boost: 42 } } }, { [randomTopLevelKey]: 42 }), {
     query: {
-      function_score: { foo: 'bar' }
+      function_score: { max_boost: 42 }
     },
     [randomTopLevelKey]: 42
   })
@@ -88,9 +88,9 @@ test('Compile a query (safe)', t => {
   t.type(Q.compile, 'function')
 
   const query = Q(
-    { a: Q.param('a') },
-    { b: Q.param('b') },
-    { c: Q.param('c') }
+    Q.match('a', Q.param('a')),
+    Q.match('b', Q.param('b')),
+    Q.match('c', Q.param('c'))
   )
 
   interface Input {
@@ -104,9 +104,9 @@ test('Compile a query (safe)', t => {
     query: {
       bool: {
         must: [
-          { a: 1 },
-          { b: 2 },
-          { c: 3 }
+          { match: { a: 1 } },
+          { match: { b: 2 } },
+          { match: { c: 3 } }
         ]
       }
     }
@@ -126,9 +126,9 @@ test('Compile a query (unsafe)', t => {
   t.type(Q.compile, 'function')
 
   const query = Q(
-    { a: Q.param('a') },
-    { b: Q.param('b') },
-    { c: Q.param('c') }
+    Q.match('a', Q.param('a')),
+    Q.match('b', Q.param('b')),
+    Q.match('c', Q.param('c'))
   )
 
   interface Input {
@@ -142,9 +142,9 @@ test('Compile a query (unsafe)', t => {
     query: {
       bool: {
         must: [
-          { a: 1 },
-          { b: 2 },
-          { c: 3 }
+          { match: { a: 1 } },
+          { match: { b: 2 } },
+          { match: { c: 3 } }
         ]
       }
     }
@@ -170,11 +170,11 @@ test('match returns a match query', t => {
   })
 
   t.test('complex query', t => {
-    t.deepEqual(Q.match('foo', 'bar', { operator: 'and' }), {
+    t.deepEqual(Q.match('foo', 'bar', { analyzer: 'and' }), {
       match: {
         foo: {
           query: 'bar',
-          operator: 'and'
+          analyzer: 'and'
         }
       }
     })
@@ -237,11 +237,11 @@ test('matchPhrasePrefix returns a match_phrase_prefix query', t => {
 test('multiMatch returns a multi_match query', t => {
   t.type(Q.multiMatch, 'function')
 
-  t.deepEqual(Q.multiMatch(['foo', 'baz'], 'bar', { type: 'best_fields' }), {
+  t.deepEqual(Q.multiMatch(['foo', 'baz'], 'bar', { analyzer: 'best_fields' }), {
     multi_match: {
       query: 'bar',
       fields: ['foo', 'baz'],
-      type: 'best_fields'
+      analyzer: 'best_fields'
     }
   })
 
@@ -251,8 +251,8 @@ test('multiMatch returns a multi_match query', t => {
 test('matchAll returns a match_all query', t => {
   t.type(Q.matchAll, 'function')
 
-  t.deepEqual(Q.matchAll({ boost: 1.2 }), {
-    match_all: { boost: 1.2 }
+  t.deepEqual(Q.matchAll({ norm_field: 'foobar' }), {
+    match_all: { norm_field: 'foobar' }
   })
 
   t.end()
@@ -299,10 +299,10 @@ test('queryString returns a query_string query', t => {
 test('simpleQueryString returns a simple_query_string query', t => {
   t.type(Q.simpleQueryString, 'function')
 
-  t.deepEqual(Q.simpleQueryString('foo', { default_field: 'content' }), {
+  t.deepEqual(Q.simpleQueryString('foo', { analyzer: 'content' }), {
     simple_query_string: {
       query: 'foo',
-      default_field: 'content'
+      analyzer: 'content'
     }
   })
 
@@ -756,26 +756,22 @@ test('bool returns a bool query block', t => {
   t.type(Q.bool, 'function')
 
   t.deepEqual(Q.bool(Q.must(c('foo')), Q.should(c('bar')), Q.filter(c('baz'))), {
-    query: {
-      bool: {
-        must: [c('foo')],
-        should: [c('bar')],
-        filter: [c('baz')]
-      }
+    bool: {
+      must: [c('foo')],
+      should: [c('bar')],
+      filter: [c('baz')]
     }
   })
 
-  t.deepEqual(Q.bool(), { query: { bool: {} } })
-  t.deepEqual(Q.bool(undefined), { query: { bool: {} } })
+  t.deepEqual(Q.bool(), { bool: {} })
+  t.deepEqual(Q.bool(undefined), { bool: {} })
 
   t.deepEqual(Q.bool(Q.must(c('foo')), Q.should(c('bar')), Q.mustNot(c('foz')), Q.filter(c('baz'), c('faz'))), {
-    query: {
-      bool: {
-        must: [c('foo')],
-        must_not: [c('foz')],
-        should: [c('bar')],
-        filter: [c('baz'), c('faz')]
-      }
+    bool: {
+      must: [c('foo')],
+      must_not: [c('foz')],
+      should: [c('bar')],
+      filter: [c('baz'), c('faz')]
     }
   })
 
@@ -788,15 +784,13 @@ test('bool returns a bool query block', t => {
     Q.should(c('bar')),
     Q.filter(c('baz'))
   ), {
-    query: {
-      bool: {
-        must: [
-          c('foo'),
-          { bool: { must: [c('faz')], _name: 'name' } }
-        ],
-        should: [c('bar')],
-        filter: [c('baz')]
-      }
+    bool: {
+      must: [
+        c('foo'),
+        { bool: { must: [c('faz')], _name: 'name' } }
+      ],
+      should: [c('bar')],
+      filter: [c('baz')]
     }
   })
 
@@ -806,17 +800,15 @@ test('bool returns a bool query block', t => {
     Q.match('baz', 'faz'),
     Q.minShouldMatch(1)
   ), {
-    query: {
-      bool: {
-        must: [
-          { term: { hello: 'world' } }
-        ],
-        should: [
-          { match: { foo: 'bar' } },
-          { match: { baz: 'faz' } }
-        ],
-        minimum_should_match: 1
-      }
+    bool: {
+      must: [
+        { term: { hello: 'world' } }
+      ],
+      should: [
+        { match: { foo: 'bar' } },
+        { match: { baz: 'faz' } }
+      ],
+      minimum_should_match: 1
     }
   })
 
@@ -826,14 +818,12 @@ test('bool returns a bool query block', t => {
     Q.match('baz', 'faz'),
     Q.minShouldMatch(2)
   ), {
-    query: {
-      bool: {
-        must: [
-          { term: { hello: 'world' } },
-          { match: { foo: 'bar' } },
-          { match: { baz: 'faz' } }
-        ]
-      }
+    bool: {
+      must: [
+        { term: { hello: 'world' } },
+        { match: { foo: 'bar' } },
+        { match: { baz: 'faz' } }
+      ]
     }
   })
 
@@ -842,13 +832,11 @@ test('bool returns a bool query block', t => {
     Q.match('baz', 'faz'),
     Q.minShouldMatch(2)
   ), {
-    query: {
-      bool: {
-        must: [
-          { match: { foo: 'bar' } },
-          { match: { baz: 'faz' } }
-        ]
-      }
+    bool: {
+      must: [
+        { match: { foo: 'bar' } },
+        { match: { baz: 'faz' } }
+      ]
     }
   })
 
@@ -892,10 +880,10 @@ test('disMax returns a dis_max query block', t => {
   t.type(Q.disMax, 'function')
 
   t.test('simple query', t => {
-    t.deepEqual(Q.disMax([{ a: 1 }, { b: 2 }, { c: 3 }]), {
+    t.deepEqual(Q.disMax([c('a'), c('b'), c('c')]), {
       query: {
         dis_max: {
-          queries: [{ a: 1 }, { b: 2 }, { c: 3 }]
+          queries: [c('a'), c('b'), c('c')]
         }
       }
     })
@@ -903,12 +891,12 @@ test('disMax returns a dis_max query block', t => {
   })
 
   t.test('complex query', t => {
-    t.deepEqual(Q.disMax([{ a: 1 }, { b: 2 }, { c: 3 }], { tie_breaker: 1.0, boost: 1.0 }), {
+    t.deepEqual(Q.disMax([c('a'), c('b'), c('c')], { tie_breaker: 1.0, boost: 1.0 }), {
       query: {
         dis_max: {
           tie_breaker: 1.0,
           boost: 1.0,
-          queries: [{ a: 1 }, { b: 2 }, { c: 3 }]
+          queries: [c('a'), c('b'), c('c')]
         }
       }
     })
@@ -987,5 +975,5 @@ test('name', t => {
 
 // build a condition bloc
 function c (key: string): types.Condition {
-  return { [key]: key }
+  return { match: { [key]: key } }
 }

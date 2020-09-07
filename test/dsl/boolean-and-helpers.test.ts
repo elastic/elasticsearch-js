@@ -183,13 +183,11 @@ test('AND', t => {
     const query2 = Q.term('baz', 'faz')
 
     t.deepEqual(Q.and(query1, query2), {
-      query: {
-        bool: {
-          must: [
-            { match: { foo: 'bar' } },
-            { term: { baz: 'faz' } }
-          ]
-        }
+      bool: {
+        must: [
+          { match: { foo: 'bar' } },
+          { term: { baz: 'faz' } }
+        ]
       }
     })
 
@@ -201,11 +199,9 @@ test('AND', t => {
     const query2 = Q.term('baz', 'faz')
 
     t.deepEqual(Q.and(query1, query2), {
-      query: {
-        bool: {
-          must: [{ term: { baz: 'faz' } }],
-          should: [{ match: { foo: 'bar' } }]
-        }
+      bool: {
+        must: [{ term: { baz: 'faz' } }],
+        should: [{ match: { foo: 'bar' } }]
       }
     })
 
@@ -217,13 +213,11 @@ test('AND', t => {
     const query2 = Q.term('baz', 'faz')
 
     t.deepEqual(Q.and(query1, query2), {
-      query: {
-        bool: {
-          must: [
-            { match: { foo: 'bar' } },
-            { term: { baz: 'faz' } }
-          ]
-        }
+      bool: {
+        must: [
+          { match: { foo: 'bar' } },
+          { term: { baz: 'faz' } }
+        ]
       }
     })
 
@@ -235,11 +229,9 @@ test('AND', t => {
   function noShouldClauses (t, query1, query2) {
     t.test('No should clauses', t => {
       t.deepEqual(Q.and(query1, query2), {
-        query: {
-          bool: {
-            must: [{ match: { foo: 'bar' } }],
-            filter: [{ term: { baz: 'faz' } }]
-          }
+        bool: {
+          must: [{ match: { foo: 'bar' } }],
+          filter: [{ term: { baz: 'faz' } }]
         }
       })
 
@@ -250,16 +242,14 @@ test('AND', t => {
   function noShouldClausesWithName (t, query1, query2) {
     t.test('No should clauses with name', t => {
       t.deepEqual(Q.and(query1, query2), {
-        query: {
-          bool: {
-            must: [{
-              bool: {
-                must: [{ match: { foo: 'bar' } }],
-                _name: 'name'
-              }
-            }],
-            filter: [{ term: { baz: 'faz' } }]
-          }
+        bool: {
+          must: [{
+            bool: {
+              must: [{ match: { foo: 'bar' } }],
+              _name: 'name'
+            }
+          }],
+          filter: [{ term: { baz: 'faz' } }]
         }
       })
 
@@ -272,19 +262,17 @@ test('AND', t => {
   function shouldClauses (t, query1, query2) {
     t.test('Should clauses', t => {
       t.deepEqual(Q.and(query1, query2), {
-        query: {
-          bool: {
-            must: [
-              { match: { foo: 'bar' } },
-              {
-                bool: {
-                  should: [
-                    { term: { baz: 'faz' } }
-                  ]
-                }
+        bool: {
+          must: [
+            { match: { foo: 'bar' } },
+            {
+              bool: {
+                should: [
+                  { term: { baz: 'faz' } }
+                ]
               }
-            ]
-          }
+            }
+          ]
         }
       })
 
@@ -295,13 +283,11 @@ test('AND', t => {
   function sameClauseNoShould (t, query1, query2) {
     t.test('same clauses without should', t => {
       t.deepEqual(Q.and(query1, query2), {
-        query: {
-          bool: {
-            must: [
-              { match: { foo: 'bar' } },
-              { term: { baz: 'faz' } }
-            ]
-          }
+        bool: {
+          must: [
+            { match: { foo: 'bar' } },
+            { term: { baz: 'faz' } }
+          ]
         }
       })
 
@@ -312,21 +298,19 @@ test('AND', t => {
   function sameClauseYesShould (t, query1, query2) {
     t.test('same clauses with should', t => {
       t.deepEqual(Q.and(query1, query2), {
-        query: {
-          bool: {
-            must: [
-              {
-                bool: {
-                  should: [
-                    { term: { baz: 'faz' } }
-                  ]
-                }
+        bool: {
+          must: [
+            {
+              bool: {
+                should: [
+                  { term: { baz: 'faz' } }
+                ]
               }
-            ],
-            should: [
-              { match: { foo: 'bar' } }
-            ]
-          }
+            }
+          ],
+          should: [
+            { match: { foo: 'bar' } }
+          ]
         }
       })
 
@@ -337,14 +321,12 @@ test('AND', t => {
   function moreNoShould (t, query1, query2, query3) {
     t.test('More than two clauses without should', t => {
       t.deepEqual(Q.and(query1, query2, query3), {
-        query: {
-          bool: {
-            must: [{ match: { foo: 'bar' } }],
-            filter: [
-              { term: { baz: 'faz' } },
-              { term: { winter: 'is coming' } }
-            ]
-          }
+        bool: {
+          must: [{ match: { foo: 'bar' } }],
+          filter: [
+            { term: { baz: 'faz' } },
+            { term: { winter: 'is coming' } }
+          ]
         }
       })
 
@@ -355,20 +337,18 @@ test('AND', t => {
   function moreYesShould (t, query1, query2, query3) {
     t.test('More than two clauses with should', t => {
       t.deepEqual(Q.and(query1, query2, query3), {
-        query: {
-          bool: {
-            must: [
-              { match: { foo: 'bar' } },
-              {
-                bool: {
-                  should: [
-                    { term: { winter: 'is coming' } }
-                  ]
-                }
+        bool: {
+          must: [
+            { match: { foo: 'bar' } },
+            {
+              bool: {
+                should: [
+                  { term: { winter: 'is coming' } }
+                ]
               }
-            ],
-            filter: [{ term: { baz: 'faz' } }]
-          }
+            }
+          ],
+          filter: [{ term: { baz: 'faz' } }]
         }
       })
 

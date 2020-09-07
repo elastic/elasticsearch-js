@@ -20,17 +20,15 @@ test('must only query', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } },
-          { match: { 5: '6' } },
-          { term: { 7: '8' } },
-          { match: { 9: '10' } },
-          { term: { 11: '12' } }
-        ]
-      }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } },
+        { match: { 5: '6' } },
+        { term: { 7: '8' } },
+        { match: { 9: '10' } },
+        { term: { 11: '12' } }
+      ]
     }
   })
 
@@ -60,21 +58,19 @@ test('must and must_not query', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } },
-          { match: { 9: '10' } },
-          { term: { 11: '12' } }
-        ],
-        must_not: [
-          { match: { 5: '6' } },
-          { term: { 7: '8' } },
-          { match: { 13: '14' } },
-          { term: { 15: '16' } }
-        ]
-      }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } },
+        { match: { 9: '10' } },
+        { term: { 11: '12' } }
+      ],
+      must_not: [
+        { match: { 5: '6' } },
+        { term: { 7: '8' } },
+        { match: { 13: '14' } },
+        { term: { 15: '16' } }
+      ]
     }
   })
 
@@ -106,21 +102,19 @@ test('must and must_not query (mixed and nested)', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } },
-          { match: { 9: '10' } },
-          { term: { 11: '12' } },
-          { term: { 15: '16' } }
-        ],
-        must_not: [
-          { match: { 5: '6' } },
-          { term: { 7: '8' } },
-          { match: { 13: '14' } }
-        ]
-      }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } },
+        { match: { 9: '10' } },
+        { term: { 11: '12' } },
+        { term: { 15: '16' } }
+      ],
+      must_not: [
+        { match: { 5: '6' } },
+        { term: { 7: '8' } },
+        { match: { 13: '14' } }
+      ]
     }
   })
 
@@ -140,17 +134,15 @@ test('must and should query', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } }
-        ],
-        should: [
-          { match: { 5: '6' } },
-          { term: { 7: '8' } }
-        ]
-      }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } }
+      ],
+      should: [
+        { match: { 5: '6' } },
+        { term: { 7: '8' } }
+      ]
     }
   })
 
@@ -178,25 +170,23 @@ test('must and should query (nested) / 1', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } },
-          {
-            bool: {
-              must: [
-                { match: { 5: '6' } },
-                { term: { 7: '8' } }
-              ],
-              should: [
-                { match: { 9: '10' } },
-                { term: { 11: '12' } }
-              ]
-            }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } },
+        {
+          bool: {
+            must: [
+              { match: { 5: '6' } },
+              { term: { 7: '8' } }
+            ],
+            should: [
+              { match: { 9: '10' } },
+              { term: { 11: '12' } }
+            ]
           }
-        ]
-      }
+        }
+      ]
     }
   })
 
@@ -222,25 +212,23 @@ test('must and should query (nested) / 2', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } },
-          {
-            bool: {
-              must: [
-                { match: { 5: '6' } },
-                { term: { 7: '8' } }
-              ],
-              should: [
-                { match: { 9: '10' } },
-                { term: { 11: '12' } }
-              ]
-            }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } },
+        {
+          bool: {
+            must: [
+              { match: { 5: '6' } },
+              { term: { 7: '8' } }
+            ],
+            should: [
+              { match: { 9: '10' } },
+              { term: { 11: '12' } }
+            ]
           }
-        ]
-      }
+        }
+      ]
     }
   })
 
@@ -266,19 +254,17 @@ test('must and filter query / 1', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } }
-        ],
-        filter: [
-          { match: { 5: '6' } },
-          { term: { 7: '8' } },
-          { match: { 9: '10' } },
-          { term: { 11: '12' } }
-        ]
-      }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } }
+      ],
+      filter: [
+        { match: { 5: '6' } },
+        { term: { 7: '8' } },
+        { match: { 9: '10' } },
+        { term: { 11: '12' } }
+      ]
     }
   })
 
@@ -302,19 +288,17 @@ test('must and filter query / 2', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } }
-        ],
-        filter: [
-          { match: { 5: '6' } },
-          { term: { 7: '8' } },
-          { match: { 9: '10' } },
-          { term: { 11: '12' } }
-        ]
-      }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } }
+      ],
+      filter: [
+        { match: { 5: '6' } },
+        { term: { 7: '8' } },
+        { match: { 9: '10' } },
+        { term: { 11: '12' } }
+      ]
     }
   })
 
@@ -338,21 +322,19 @@ test('all but should query / 1', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } }
-        ],
-        must_not: [
-          { match: { 5: '6' } },
-          { term: { 7: '8' } }
-        ],
-        filter: [
-          { match: { 9: '10' } },
-          { term: { 11: '12' } }
-        ]
-      }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } }
+      ],
+      must_not: [
+        { match: { 5: '6' } },
+        { term: { 7: '8' } }
+      ],
+      filter: [
+        { match: { 9: '10' } },
+        { term: { 11: '12' } }
+      ]
     }
   })
 
@@ -376,21 +358,19 @@ test('all but should query / 2', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } }
-        ],
-        must_not: [
-          { match: { 5: '6' } },
-          { term: { 7: '8' } }
-        ],
-        filter: [
-          { match: { 9: '10' } },
-          { term: { 11: '12' } }
-        ]
-      }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } }
+      ],
+      must_not: [
+        { match: { 5: '6' } },
+        { term: { 7: '8' } }
+      ],
+      filter: [
+        { match: { 9: '10' } },
+        { term: { 11: '12' } }
+      ]
     }
   })
 
@@ -418,19 +398,17 @@ test('all but should query / 3', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must_not: [
-          { match: { 5: '6' } },
-          { term: { 7: '8' } },
-          { match: { 1: '2' } },
-          { term: { 3: '4' } }
-        ],
-        filter: [
-          { match: { 9: '10' } },
-          { term: { 11: '12' } }
-        ]
-      }
+    bool: {
+      must_not: [
+        { match: { 5: '6' } },
+        { term: { 7: '8' } },
+        { match: { 1: '2' } },
+        { term: { 3: '4' } }
+      ],
+      filter: [
+        { match: { 9: '10' } },
+        { term: { 11: '12' } }
+      ]
     }
   })
 
@@ -466,25 +444,23 @@ test('all but should query / 4', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 17: '18' } },
-          { term: { 19: '20' } },
-          { match: { 13: '14' } },
-          { term: { 15: '16' } }
-        ],
-        must_not: [
-          { match: { 5: '6' } },
-          { term: { 7: '8' } },
-          { match: { 1: '2' } },
-          { term: { 3: '4' } }
-        ],
-        filter: [
-          { match: { 9: '10' } },
-          { term: { 11: '12' } }
-        ]
-      }
+    bool: {
+      must: [
+        { match: { 17: '18' } },
+        { term: { 19: '20' } },
+        { match: { 13: '14' } },
+        { term: { 15: '16' } }
+      ],
+      must_not: [
+        { match: { 5: '6' } },
+        { term: { 7: '8' } },
+        { match: { 1: '2' } },
+        { term: { 3: '4' } }
+      ],
+      filter: [
+        { match: { 9: '10' } },
+        { term: { 11: '12' } }
+      ]
     }
   })
 
@@ -508,23 +484,21 @@ test('filter with should', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        filter: [
-          {
-            bool: {
-              must: [
-                { match: { 1: '2' } },
-                { term: { 3: '4' } }
-              ],
-              should: [
-                { match: { 5: '6' } },
-                { term: { 7: '8' } }
-              ]
-            }
+    bool: {
+      filter: [
+        {
+          bool: {
+            must: [
+              { match: { 1: '2' } },
+              { term: { 3: '4' } }
+            ],
+            should: [
+              { match: { 5: '6' } },
+              { term: { 7: '8' } }
+            ]
           }
-        ]
-      }
+        }
+      ]
     }
   })
 
@@ -544,13 +518,11 @@ test('nested with only should', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        should: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } }
-        ]
-      }
+    bool: {
+      should: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } }
+      ]
     }
   })
 
@@ -571,18 +543,16 @@ test('nested with only should and minimum_should_match / 1', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        should: [{
-          bool: {
-            should: [
-              { match: { 1: '2' } },
-              { term: { 3: '4' } }
-            ],
-            minimum_should_match: 1
-          }
-        }]
-      }
+    bool: {
+      should: [{
+        bool: {
+          should: [
+            { match: { 1: '2' } },
+            { term: { 3: '4' } }
+          ],
+          minimum_should_match: 1
+        }
+      }]
     }
   })
 
@@ -602,21 +572,19 @@ test('nested with only should and minimum_should_match / 2', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [{
-          bool: {
-            should: [
-              { match: { 1: '2' } },
-              { term: { 3: '4' } }
-            ],
-            minimum_should_match: 1
-          }
-        }],
-        should: [{
-          match: { 5: '6' }
-        }]
-      }
+    bool: {
+      must: [{
+        bool: {
+          should: [
+            { match: { 1: '2' } },
+            { term: { 3: '4' } }
+          ],
+          minimum_should_match: 1
+        }
+      }],
+      should: [{
+        match: { 5: '6' }
+      }]
     }
   })
 
@@ -640,21 +608,19 @@ test('nested with should and other clause', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        should: [{
-          bool: {
-            should: [
-              { match: { 1: '2' } },
-              { term: { 3: '4' } }
-            ],
-            must_not: [
-              { match: { 5: '6' } },
-              { term: { 7: '8' } }
-            ]
-          }
-        }]
-      }
+    bool: {
+      should: [{
+        bool: {
+          should: [
+            { match: { 1: '2' } },
+            { term: { 3: '4' } }
+          ],
+          must_not: [
+            { match: { 5: '6' } },
+            { term: { 7: '8' } }
+          ]
+        }
+      }]
     }
   })
 
@@ -672,13 +638,11 @@ test('nested with only should', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        should: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } }
-        ]
-      }
+    bool: {
+      should: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } }
+      ]
     }
   })
 
@@ -697,14 +661,12 @@ test('nested with only should and minimum_should_match', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        should: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } }
-        ],
-        minimum_should_match: 1
-      }
+    bool: {
+      should: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } }
+      ],
+      minimum_should_match: 1
     }
   })
 
@@ -729,24 +691,22 @@ test('Should not merge up named queries / 1', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } },
-          { match: { 5: '6' } },
-          { term: { 7: '8' } },
-          {
-            bool: {
-              _name: 'test',
-              must: [
-                { match: { 9: '10' } },
-                { term: { 11: '12' } }
-              ]
-            }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } },
+        { match: { 5: '6' } },
+        { term: { 7: '8' } },
+        {
+          bool: {
+            _name: 'test',
+            must: [
+              { match: { 9: '10' } },
+              { term: { 11: '12' } }
+            ]
           }
-        ]
-      }
+        }
+      ]
     }
   })
 
@@ -771,24 +731,22 @@ test('Should not merge up named queries / 2', t => {
   )
 
   t.deepEqual(query, {
-    query: {
-      bool: {
-        must: [
-          { match: { 1: '2' } },
-          { term: { 3: '4' } },
-          { match: { 5: '6' } },
-          { term: { 7: '8' } },
-          {
-            bool: {
-              _name: 'test',
-              must: [
-                { match: { 9: '10' } },
-                { term: { 11: '12' } }
-              ]
-            }
+    bool: {
+      must: [
+        { match: { 1: '2' } },
+        { term: { 3: '4' } },
+        { match: { 5: '6' } },
+        { term: { 7: '8' } },
+        {
+          bool: {
+            _name: 'test',
+            must: [
+              { match: { 9: '10' } },
+              { term: { 11: '12' } }
+            ]
           }
-        ]
-      }
+        }
+      ]
     }
   })
 

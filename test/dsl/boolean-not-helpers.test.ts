@@ -11,15 +11,13 @@ test('NOT', t => {
     )
 
     t.deepEqual(Q.not(query), {
-      query: {
-        bool: {
-          must_not: [{
-            bool: {
-              must: [{ match: { foo: 'bar' } }],
-              filter: [{ term: { baz: 'faz' } }]
-            }
-          }]
-        }
+      bool: {
+        must_not: [{
+          bool: {
+            must: [{ match: { foo: 'bar' } }],
+            filter: [{ term: { baz: 'faz' } }]
+          }
+        }]
       }
     })
 
@@ -32,11 +30,9 @@ test('NOT', t => {
       Q.mustNot(Q.term('baz', 'faz'))
     )
     t.deepEqual(Q.not(query), {
-      query: {
-        bool: {
-          must_not: [{ match: { foo: 'bar' } }],
-          must: [{ term: { baz: 'faz' } }]
-        }
+      bool: {
+        must_not: [{ match: { foo: 'bar' } }],
+        must: [{ term: { baz: 'faz' } }]
       }
     })
 
@@ -49,12 +45,10 @@ test('NOT', t => {
     )
 
     t.deepEqual(Q.not(query), {
-      query: {
-        bool: {
-          must_not: [{
-            match: { foo: 'bar' }
-          }]
-        }
+      bool: {
+        must_not: [{
+          match: { foo: 'bar' }
+        }]
       }
     })
 
@@ -67,12 +61,10 @@ test('NOT', t => {
     )
 
     t.deepEqual(Q.not(query), {
-      query: {
-        bool: {
-          must: [{
-            match: { foo: 'bar' }
-          }]
-        }
+      bool: {
+        must: [{
+          match: { foo: 'bar' }
+        }]
       }
     })
 
@@ -83,12 +75,10 @@ test('NOT', t => {
     const query = Q.must(Q.match('foo', 'bar'))
 
     t.deepEqual(Q.not(query), {
-      query: {
-        bool: {
-          must_not: [{
-            match: { foo: 'bar' }
-          }]
-        }
+      bool: {
+        must_not: [{
+          match: { foo: 'bar' }
+        }]
       }
     })
 
@@ -99,16 +89,14 @@ test('NOT', t => {
     const query = Q.should(Q.match('foo', 'bar'))
 
     t.deepEqual(Q.not(query), {
-      query: {
-        bool: {
-          must_not: [{
-            bool: {
-              should: [{
-                match: { foo: 'bar' }
-              }]
-            }
-          }]
-        }
+      bool: {
+        must_not: [{
+          bool: {
+            should: [{
+              match: { foo: 'bar' }
+            }]
+          }
+        }]
       }
     })
 
@@ -119,16 +107,14 @@ test('NOT', t => {
     const query = Q.filter(Q.match('foo', 'bar'))
 
     t.deepEqual(Q.not(query), {
-      query: {
-        bool: {
-          must_not: [{
-            bool: {
-              filter: [{
-                match: { foo: 'bar' }
-              }]
-            }
-          }]
-        }
+      bool: {
+        must_not: [{
+          bool: {
+            filter: [{
+              match: { foo: 'bar' }
+            }]
+          }
+        }]
       }
     })
 
@@ -139,12 +125,10 @@ test('NOT', t => {
     const query = Q.mustNot(Q.match('foo', 'bar'))
 
     t.deepEqual(Q.not(query), {
-      query: {
-        bool: {
-          must: [{
-            match: { foo: 'bar' }
-          }]
-        }
+      bool: {
+        must: [{
+          match: { foo: 'bar' }
+        }]
       }
     })
 
@@ -155,12 +139,10 @@ test('NOT', t => {
     const query = Q.match('foo', 'bar')
 
     t.deepEqual(Q.not(query), {
-      query: {
-        bool: {
-          must_not: [{
-            match: { foo: 'bar' }
-          }]
-        }
+      bool: {
+        must_not: [{
+          match: { foo: 'bar' }
+        }]
       }
     })
 
