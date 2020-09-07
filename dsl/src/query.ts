@@ -24,8 +24,12 @@
 /* eslint no-inner-declarations: 0 */
 
 import * as t from './types'
+import T from '../es-types'
 
-function Q (...blocks: t.AnyQuery[]): Record<string, any> {
+type SearchRequest = Required<T.SearchRequest>['body']
+type BoolBlock = { bool: T.BoolQuery }
+type QueryBlock = { query: T.QueryContainer }
+function Q (...blocks: (SearchRequest | T.QueryContainer)[]): SearchRequest {
   blocks = blocks.flat()
   const topLevelKeys = [
     'aggs',
@@ -51,10 +55,23 @@ function Q (...blocks: t.AnyQuery[]): Record<string, any> {
     'version'
   ]
 
-  const queries = blocks.filter(block => !topLevelKeys.includes(Object.keys(block)[0]))
-  const body: Record<string, any> = queries.length === 1 && !isClause(queries[0])
-    ? isQuery(queries[0]) ? queries[0] : { query: queries[0] }
-    : queries.length > 0 ? Q.bool(...queries) : {}
+  // @ts-ignore
+  const queries: (T.QueryContainer | T.BoolQuery)[] = blocks.filter(block => !topLevelKeys.includes(Object.keys(block)[0]))
+
+  let body: SearchRequest
+  if (queries.length === 1 && !isBoolQuery(queries[0])) {
+    if (isQuery(queries[0])) {
+      body = queries[0]
+    } else {
+      body = { query: queries[0] }
+    }
+  } else {
+    if (queries.length > 0) {
+      body = { query: Q.bool(...queries) }
+    } else {
+      body = {}
+    }
+  }
   for (const block of blocks) {
     const key = Object.keys(block)[0]
     if (topLevelKeys.includes(key)) {
@@ -168,20 +185,35 @@ namespace Q {
       }
     }
   }
+
+  // type MatchContainer<K> = { match: Record<keyof K, T.MatchQuery | string> }
+  export function match (key: string, val: string | Symbol): { match: Record<string, string> }
+  export function match (key: string, val: string | Symbol, opts: T.MatchQuery): { match: T.MatchQuery }
+  export function match (key: string, val: (string | Symbol)[]): { match: Record<string, string> }[]
+  export function match (key: string, val: (string | Symbol)[], opts: T.MatchQuery): { match: T.MatchQuery }[]
+  export function match (key: string, val: any, opts?: T.MatchQuery): any {
     return generateQueryObject('match', key, val, opts)
   }
 
-  export function matchPhrase (key: string, val: string | Symbol, opts?: Record<string, any>): t.Condition {
+  type MatchPhraseContainer = { match_phrase: Record<string, T.MatchPhraseQuery | string> }
+  export function matchPhrase (key: string, val: string | Symbol, opts?: T.MatchPhraseQuery): MatchPhraseContainer
+  export function matchPhrase (key: string, val: string[], opts?: T.MatchPhraseQuery): MatchPhraseContainer[]
+  export function matchPhrase (key: string, val: any, opts?: T.MatchPhraseQuery): any {
     return generateQueryObject('match_phrase', key, val, opts)
   }
 
-  export function matchPhrasePrefix (key: string, val: string | Symbol, opts?: Record<string, any>): t.Condition {
+  type MatchPhrasePrefixContainer = { match_phrase_prefix: Record<string, T.MatchBoolPrefixQuery | string> }
+  export function matchPhrasePrefix (key: string, val: string | Symbol, opts?: T.MatchPhrasePrefixQuery): MatchPhrasePrefixContainer
+  export function matchPhrasePrefix (key: string, val: string[], opts?: T.MatchPhrasePrefixQuery): MatchPhrasePrefixContainer[]
+  export function matchPhrasePrefix (key: string, val: any, opts?: T.MatchPhrasePrefixQuery): any {
     return generateQueryObject('match_phrase_prefix', key, val, opts)
   }
 
-  export function multiMatch (keys: string[], val: string | Symbol, opts?: Record<string, any>): t.Condition {
+  type MultiMatchContainer = { multi_match: T.MultiMatchQuery }
+  export function multiMatch (keys: string[], val: string | Symbol, opts?: T.MultiMatchQuery): MultiMatchContainer {
     return {
       multi_match: {
+        // @ts-expect-error
         query: val,
         fields: keys,
         ...opts
@@ -189,46 +221,57 @@ namespace Q {
     }
   }
 
-  export function matchAll (opts?: Record<string, any>): t.Condition {
+  type MatchAllContainer = { match_all: T.MatchAllQuery }
+  export function matchAll (opts?: T.MatchAllQuery): MatchAllContainer {
     return { match_all: { ...opts } }
   }
 
-  export function matchNone (): t.Condition {
+  type MatchNoneContainer = { match_none: {} }
+  export function matchNone (): MatchNoneContainer {
     return { match_none: {} }
   }
 
-  export function common (key: string, val: string | Symbol, opts: Record<string, any>): t.Condition {
+  type CommonContainer = { common: Record<string, T.CommonTermsQuery | string> }
+  export function common (key: string, val: string | Symbol, opts: T.CommonTermsQuery): CommonContainer
+  export function common (key: string, val: string[], opts: T.CommonTermsQuery): CommonContainer[]
+  export function common (key: string, val: any, opts: T.CommonTermsQuery): any {
     return generateQueryObject('common', key, val, opts)
   }
 
-  export function queryString (val: string | Symbol, opts: Record<string, any>): t.Condition {
+  type QueryStringContainer = { query_string: T.QueryStringQuery }
+  export function queryString (val: string | Symbol, opts: T.QueryStringQuery): QueryStringContainer {
     return {
       query_string: {
+        // @ts-expect-error
         query: val,
         ...opts
       }
     }
   }
 
-  export function simpleQueryString (val: string | Symbol, opts: Record<string, any>): t.Condition {
+  type SimpleQueryStringContainer = { simple_query_string: T.SimpleQueryStringQuery }
+  export function simpleQueryString (val: string | Symbol, opts: T.SimpleQueryStringQuery): SimpleQueryStringContainer {
     return {
       simple_query_string: {
+        // @ts-expect-error
         query: val,
         ...opts
       }
     }
   }
 
-  export function term (key: string, val: string | Symbol, opts?: Record<string, any>): t.Condition
-  export function term (key: string, val: string[], opts?: Record<string, any>): t.Condition
-  export function term (key: string, val: any, opts?: Record<string, any>): t.Condition {
+  type TermContainer = { term: Record<string, T.TermQuery | string> }
+  export function term (key: string, val: string | Symbol, opts?: T.TermQuery): TermContainer
+  export function term (key: string, val: string[], opts?: T.TermQuery): TermsContainer
+  export function term (key: string, val: any, opts?: Record<string, any>): any {
     if (Array.isArray(val)) {
       return Q.terms(key, val, opts)
     }
     return generateValueObject('term', key, val, opts)
   }
 
-  export function terms (key: string, val: string[] | Symbol, opts?: Record<string, any>): t.Condition {
+  type TermsContainer = { terms: T.TermsQuery }
+  export function terms (key: string, val: string[] | Symbol, opts?: T.TermsQuery): TermsContainer {
     return {
       terms: {
         [key]: val,
@@ -237,7 +280,8 @@ namespace Q {
     }
   }
 
-  export function termsSet (key: string, val: string[] | Symbol, opts: Record<string, any>): t.Condition {
+  type TermsSetContainer = { terms_set: T.TermsSetQuery }
+  export function termsSet (key: string, val: string[] | Symbol, opts: T.TermsSetQuery): TermsSetContainer {
     return {
       terms_set: {
         [key]: {
@@ -248,45 +292,53 @@ namespace Q {
     }
   }
 
-  export function range (key: string, val: any): t.Condition {
+  type RangeContainer = { range: T.RangeQuery }
+  export function range (key: string, val: T.RangeQuery): RangeContainer {
     return { range: { [key]: val } }
   }
 
-  export function exists (key: string): t.Condition
-  export function exists (key: string[]): t.Condition[]
-  export function exists (key: any): t.Condition | t.Condition[] {
+  type ExistContainer = { exists: T.ExistsQuery }
+  export function exists (key: string): ExistContainer
+  export function exists (key: string[]): ExistContainer[]
+  export function exists (key: any): any {
     if (Array.isArray(key)) {
       return key.map(k => exists(k))
     }
     return { exists: { field: key } }
   }
 
-  export function prefix (key: string, val: string | Symbol, opts?: Record<string, any>): t.Condition
-  export function prefix (key: string, val: string[], opts?: Record<string, any>): t.Condition[]
-  export function prefix (key: string, val: any, opts?: Record<string, any>): t.Condition | t.Condition[] {
+  type PrefixContainer = { prefix: Record<string, T.PrefixQuery | string> }
+  export function prefix (key: string, val: string | Symbol, opts?: T.PrefixQuery): PrefixContainer
+  export function prefix (key: string, val: string[], opts?: T.PrefixQuery): PrefixContainer[]
+  export function prefix (key: string, val: any, opts?: T.PrefixQuery): any {
     return generateValueObject('prefix', key, val, opts)
   }
 
-  export function wildcard (key: string, val: string | Symbol, opts?: Record<string, any>): t.Condition
-  export function wildcard (key: string, val: string[], opts?: Record<string, any>): t.Condition[]
-  export function wildcard (key: string, val: any, opts?: Record<string, any>): t.Condition | t.Condition[] {
+  type WildcardContainer = { wildcard: Record<string, T.WildcardQuery | string> }
+  export function wildcard (key: string, val: string | Symbol, opts?: T.WildcardQuery): WildcardContainer
+  export function wildcard (key: string, val: string[], opts?: T.WildcardQuery): WildcardContainer[]
+  export function wildcard (key: string, val: any, opts?: T.WildcardQuery): any {
     return generateValueObject('wildcard', key, val, opts)
   }
 
-  export function regexp (key: string, val: string | Symbol, opts?: Record<string, any>): t.Condition
-  export function regexp (key: string, val: string[], opts?: Record<string, any>): t.Condition[]
-  export function regexp (key: string, val: any, opts?: Record<string, any>): t.Condition | t.Condition[] {
+  type RegExpContainer = { regexp: Record<string, T.RegexpQuery | string> }
+  export function regexp (key: string, val: string | Symbol, opts?: T.RegexpQuery): RegExpContainer
+  export function regexp (key: string, val: string[], opts?: T.RegexpQuery): RegExpContainer[]
+  export function regexp (key: string, val: any, opts?: T.RegexpQuery): any {
     return generateValueObject('regexp', key, val, opts)
   }
 
-  export function fuzzy (key: string, val: string | Symbol, opts?: Record<string, any>): t.Condition
-  export function fuzzy (key: string, val: string[], opts?: Record<string, any>): t.Condition[]
-  export function fuzzy (key: string, val: any, opts?: Record<string, any>): t.Condition | t.Condition[] {
+  type FuzzyContainer = { fuzzy: Record<string, T.FuzzyQuery | string> }
+  export function fuzzy (key: string, val: string | Symbol, opts?: T.FuzzyQuery): FuzzyContainer
+  export function fuzzy (key: string, val: string[], opts?: T.FuzzyQuery): FuzzyContainer[]
+  export function fuzzy (key: string, val: any, opts?: T.FuzzyQuery): any {
     return generateValueObject('fuzzy', key, val, opts)
   }
 
-  export function ids (key: string, val: string[] | Symbol, opts: Record<string, any>): t.Condition {
+  type IdsContainer = { ids: Record<string, T.IdsQuery> }
+  export function ids (key: string, val: string[] | Symbol, opts: T.IdsQuery): IdsContainer {
     return {
+      // @ts-expect-error
       ids: {
         [key]: {
           values: val,
@@ -296,30 +348,36 @@ namespace Q {
     }
   }
 
-  export function must (...queries: t.AnyQuery[]): t.MustClause {
+  type AnyQueryWithArray = T.QueryContainer | T.BoolQuery | T.QueryContainer[] | T.BoolQuery[]
+  type AnyQuery = T.QueryContainer | T.BoolQuery
+  export function must (...queries: AnyQueryWithArray[]): { must: T.QueryContainer[] } {
+    // @ts-ignore
     return { must: queries.flatMap(mergeableMust) }
   }
 
-  export function should (...queries: t.AnyQuery[]): t.ShouldClause {
+  export function should (...queries: AnyQueryWithArray[]): { should: T.QueryContainer[] } {
+    // @ts-ignore
     return { should: queries.flatMap(mergeableShould) }
   }
 
-  export function mustNot (...queries: t.AnyQuery[]): t.MustNotClause {
+  export function mustNot (...queries: AnyQueryWithArray[]): { must_not: T.QueryContainer[] } {
+    // @ts-ignore
     return { must_not: queries.flatMap(mergeableMustNot) }
   }
 
-  export function filter (...queries: t.AnyQuery[]): t.FilterClause {
+  export function filter (...queries: AnyQueryWithArray[]): { filter: T.QueryContainer[] } {
+    // @ts-ignore
     return { filter: queries.flatMap(mergeableFilter) }
   }
 
-  export function bool (...queries: t.AnyBoolQuery[]): t.BoolQuery {
+  export function bool (...queries: (T.QueryContainer | T.BoolQuery)[]): BoolBlock {
     if (queries.length === 0) {
-      return { query: { bool: {} } }
+      return { bool: {} }
     }
 
     // @ts-expect-error
     const defaultClause = queries.find(q => q && !!q.minimum_should_match) ? 'should' : 'must'
-    const normalizedQueries: t.BoolQueryOptions[] = queries
+    const normalizedQueries = queries
       .flat()
       .filter(val => {
         // filters empty objects/arrays as well
@@ -328,13 +386,13 @@ namespace Q {
         }
         return !!val
       })
-      .map(q => toClause(q, defaultClause))
+      .map(q => toBoolQuery(q, defaultClause))
 
-    const mustClauses: t.AnyQuery[] = []
-    const mustNotClauses: t.AnyQuery[] = []
-    const shouldClauses: t.AnyQuery[] = []
-    const filterClauses: t.AnyQuery[] = []
-    let minimum_should_match: number | null = null
+    const mustClauses: T.QueryContainer[] = []
+    const mustNotClauses: T.QueryContainer[] = []
+    const shouldClauses: T.QueryContainer[] = []
+    const filterClauses: T.QueryContainer[] = []
+    let minimum_should_match: number | string | null = null
     let _name: string | null = null
 
     for (const query of normalizedQueries) {
@@ -373,33 +431,31 @@ namespace Q {
     }
 
     return {
-      query: {
-        bool: booptimize({
-          ...(mustClauses.length && Q.must(...mustClauses)),
-          ...(mustNotClauses.length && Q.mustNot(...mustNotClauses)),
-          ...(shouldClauses.length && Q.should(...shouldClauses)),
-          ...(filterClauses.length && Q.filter(...filterClauses)),
-          ...(_name && { _name }),
-          ...(minimum_should_match && { minimum_should_match })
-        })
-      }
+      bool: booptimize({
+        ...(mustClauses.length && Q.must(...mustClauses)),
+        ...(mustNotClauses.length && Q.mustNot(...mustNotClauses)),
+        ...(shouldClauses.length && Q.should(...shouldClauses)),
+        ...(filterClauses.length && Q.filter(...filterClauses)),
+        ...(_name && { _name }),
+        ...(minimum_should_match && { minimum_should_match })
+      })
     }
   }
 
-  export function and (...queries: t.AnyBoolQuery[]): t.BoolQuery {
+  export function and (...queries: AnyQuery[]): BoolBlock {
     let query = queries[0]
     for (let i = 1; i < queries.length; i++) {
       query = andOp(query, queries[i])
     }
-    return { query: toBoolBlock(query) }
+    return toBoolBlock(query)
 
-    function andOp (q1: t.AnyBoolQuery, q2: t.AnyBoolQuery): t.BoolBlock {
-      const b1: t.BoolQueryOptions = toClause(q1)
-      const b2: t.BoolQueryOptions = toClause(q2)
+    function andOp (q1: AnyQuery, q2: AnyQuery): BoolBlock {
+      const b1 = toBoolQuery(q1)
+      const b2 = toBoolQuery(q2)
       if (b1.should == null && b2.should == null) {
-        const mustClauses: t.AnyQuery[] = (b1.must || []).concat(b2.must || [])
-        const mustNotClauses: t.AnyQuery[] = (b1.must_not || []).concat(b2.must_not || [])
-        const filterClauses: t.AnyQuery[] = (b1.filter || []).concat(b2.filter || [])
+        const mustClauses: T.QueryContainer[] = (b1.must || []).concat(b2.must || [])
+        const mustNotClauses: T.QueryContainer[] = (b1.must_not || []).concat(b2.must_not || [])
+        const filterClauses: T.QueryContainer[] = (b1.filter || []).concat(b2.filter || [])
         return {
           bool: booptimize({
             ...(mustClauses.length && Q.must(...mustClauses)),
@@ -419,55 +475,42 @@ namespace Q {
     }
   }
 
-  export function or (...queries: t.AnyBoolQuery[]): t.BoolQuery {
+  export function or (...queries: AnyQuery[]): BoolBlock {
     return {
-      query: {
-        bool: booptimize(Q.should(...queries))
-      }
+      bool: booptimize(Q.should(...queries))
     }
   }
 
-  export function not (q: t.AnyBoolQuery): t.BoolQuery {
-    if (!isBool(q) && !isBoolBlock(q) && !isClause(q)) {
-      return {
-        query: {
-          bool: Q.mustNot(q)
-        }
-      }
-    }
-
-    const b = toClause(q)
+  export function not (q: T.QueryContainer): BoolBlock
+  export function not (q: T.BoolQuery): BoolBlock
+  export function not (q: any): BoolBlock {
+    const b = toBoolQuery(q)
 
     if (onlyMust(b)) {
       return {
-        query: {
-          bool: booptimize(Q.mustNot(...b.must))
-        }
+        bool: booptimize(Q.mustNot(...b.must))
       }
     } else if (onlyMustNot(b)) {
       return {
-        query: {
-          bool: booptimize(Q.must(...b.must_not))
-        }
+        bool: booptimize(Q.must(...b.must_not))
       }
     } else {
       return {
-        query: {
-          bool: booptimize(Q.mustNot(toBoolBlock(b)))
-        }
+        bool: booptimize(Q.mustNot(toBoolBlock(b)))
       }
     }
   }
 
-  export function minShouldMatch (int: number): t.BoolQueryOptions {
+  export function minShouldMatch (int: number): T.BoolQuery {
     return { minimum_should_match: int }
   }
 
-  export function name (queryName: string): t.BoolQueryOptions {
+  export function name (queryName: string): T.BoolQuery {
     return { _name: queryName }
   }
 
-  export function nested (path: string, query: any, opts: Record<string, any>): t.QueryBlock {
+  type NestedContainer = { query: { nested: T.NestedQuery } }
+  export function nested (path: string, query: any, opts: Record<string, any>): NestedContainer {
     return {
       query: {
         nested: {
@@ -479,7 +522,8 @@ namespace Q {
     }
   }
 
-  export function constantScore (query: any, boost: number): t.QueryBlock {
+  type ConstantScoreContainer = { query: { constant_score: T.ConstantScoreQuery } }
+  export function constantScore (query: any, boost: number): ConstantScoreContainer {
     return {
       query: {
         constant_score: {
@@ -490,7 +534,8 @@ namespace Q {
     }
   }
 
-  export function disMax (queries: t.AnyQuery[], opts?: Record<string, any>): t.QueryBlock {
+  type DisMaxContainer = { query: { dis_max: T.DisMaxQuery } }
+  export function disMax (queries: T.QueryContainer[], opts?: Record<string, any>): DisMaxContainer {
     return {
       query: {
         dis_max: {
@@ -509,7 +554,7 @@ namespace Q {
     return { query: { boosting: boostOpts } }
   }
 
-  export function sort (key: string | any[], opts?: Record<string, any>): t.Condition {
+  export function sort (key: string | any[], opts: Record<string, any> | string): t.Condition {
     if (Array.isArray(key) === true) {
       return { sort: key }
     }
@@ -525,7 +570,7 @@ namespace Q {
 }
 
 // Tries to flat a bool query based on the content
-function booptimize (q: t.BoolQueryOptions): t.BoolQueryOptions {
+function booptimize (q: T.BoolQuery): T.BoolQuery {
   const clauses: t.BoolQueryOptions = {}
 
   if (q.minimum_should_match !== undefined ||
@@ -622,7 +667,7 @@ function booptimize (q: t.BoolQueryOptions): t.BoolQueryOptions {
 
 function generateQueryObject (queryType: string, key: string, val: string | Symbol, opts?: Record<string, any>): t.Condition
 function generateQueryObject (queryType: string, key: string, val: string[], opts?: Record<string, any>): t.Condition[]
-function generateQueryObject (queryType: string, key: string, val: any, opts?: Record<string, any>): t.Condition | t.Condition[] {
+function generateQueryObject (queryType: string, key: string, val: any, opts?: Record<string, any>): any {
   if (Array.isArray(val)) {
     return val.map(v => generateQueryObject(queryType, key, v, opts))
   }
@@ -641,7 +686,7 @@ function generateQueryObject (queryType: string, key: string, val: any, opts?: R
 
 function generateValueObject (queryType: string, key: string, val: string | Symbol, opts?: Record<string, any>): t.Condition
 function generateValueObject (queryType: string, key: string, val: string[], opts?: Record<string, any>): t.Condition[]
-function generateValueObject (queryType: string, key: string, val: any, opts?: Record<string, any>): t.Condition | t.Condition[] {
+function generateValueObject (queryType: string, key: string, val: any, opts?: Record<string, any>): any {
   if (Array.isArray(val)) {
     return val.map(v => generateValueObject(queryType, key, v, opts))
   }
@@ -658,19 +703,15 @@ function generateValueObject (queryType: string, key: string, val: any, opts?: R
   }
 }
 
-function isQuery (q: any): q is t.QueryBlock {
+function isQuery (q: any): q is QueryBlock {
   return !!q.query
 }
 
-function isBool (q: any): q is t.BoolQuery {
-  return q.query && q.query.bool
-}
-
-function isBoolBlock (q: any): q is t.BoolBlock {
+function isBoolBlock (q: any): q is BoolBlock {
   return !!q.bool
 }
 
-function isClause (q: any): q is t.BoolQueryOptions {
+function isBoolQuery (q: any): q is T.BoolQuery {
   if (q.must !== undefined) return true
   if (q.should !== undefined) return true
   if (q.must_not !== undefined) return true
@@ -680,7 +721,7 @@ function isClause (q: any): q is t.BoolQueryOptions {
   return false
 }
 
-function onlyShould (bool: t.BoolQueryOptions): bool is t.ShouldClause {
+function onlyShould (bool: T.BoolQuery): bool is t.ShouldClause {
   if (bool.must !== undefined) return false
   if (bool.must_not !== undefined) return false
   if (bool.filter !== undefined) return false
@@ -689,7 +730,7 @@ function onlyShould (bool: t.BoolQueryOptions): bool is t.ShouldClause {
   return true
 }
 
-function onlyMust (bool: t.BoolQueryOptions): bool is t.MustClause {
+function onlyMust (bool: T.BoolQuery): bool is t.MustClause {
   if (bool.should !== undefined) return false
   if (bool.must_not !== undefined) return false
   if (bool.filter !== undefined) return false
@@ -698,7 +739,7 @@ function onlyMust (bool: t.BoolQueryOptions): bool is t.MustClause {
   return true
 }
 
-function onlyMustNot (bool: t.BoolQueryOptions): bool is t.MustNotClause {
+function onlyMustNot (bool: T.BoolQuery): bool is t.MustNotClause {
   if (bool.should !== undefined) return false
   if (bool.must !== undefined) return false
   if (bool.filter !== undefined) return false
@@ -707,7 +748,7 @@ function onlyMustNot (bool: t.BoolQueryOptions): bool is t.MustNotClause {
   return true
 }
 
-function onlyFilter (bool: t.BoolQueryOptions): bool is t.FilterClause {
+function onlyFilter (bool: T.BoolQuery): bool is t.FilterClause {
   if (bool.should !== undefined) return false
   if (bool.must !== undefined) return false
   if (bool.must_not !== undefined) return false
@@ -720,17 +761,13 @@ function onlyFilter (bool: t.BoolQueryOptions): bool is t.FilterClause {
 //  - if is a bool query returns the bool block
 //  - if is a clause, wraps the query in a bool block
 //  - if is condition, wraps the query into a must clause and then in a bool block
-function toBoolBlock (query: t.AnyBoolQuery): t.BoolBlock {
-  if (isBool(query)) {
-    return query.query
+function toBoolBlock (query: T.QueryContainer | T.BoolQuery): BoolBlock {
+  if (isBoolQuery(query)) {
+    return { bool: query }
   }
 
   if (isBoolBlock(query)) {
     return query
-  }
-
-  if (isClause(query)) {
-    return { bool: query }
   }
 
   return { bool: { must: [query] } }
@@ -740,16 +777,10 @@ function toBoolBlock (query: t.AnyBoolQuery): t.BoolBlock {
 //  - if is a bool query returns the bool query options
 //  - if is a clause, it returns it
 //  - if is condition, wraps the query into a must clause and returns it
-type toClauseDefault = 'must' | 'must_not' | 'should' | 'filter'
-function toClause (query: t.AnyBoolQuery, def: toClauseDefault = 'must'): t.BoolQueryOptions {
-  if (isBool(query)) {
-    if (query.query.bool._name) {
-      return { [def]: [query.query] }
-    }
-    if (query.query.bool.minimum_should_match) {
-      return { [def]: [query.query] }
-    }
-    return query.query.bool
+type toBoolQueryDefault = 'must' | 'must_not' | 'should' | 'filter'
+function toBoolQuery (query: T.QueryContainer | T.BoolQuery, def: toBoolQueryDefault = 'must'): T.BoolQuery {
+  if (isBoolQuery(query)) {
+    return query
   }
 
   if (isBoolBlock(query)) {
@@ -762,32 +793,24 @@ function toClause (query: t.AnyBoolQuery, def: toClauseDefault = 'must'): t.Bool
     return query.bool
   }
 
-  if (isClause(query)) {
-    return query
-  }
-
   return { [def]: [query] }
 }
 
 // the aim of this mergeable functions
 // is to reduce the depth of the query objects
-function mergeableMust (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
+function mergeableMust (q: T.QueryContainer | T.BoolQuery): T.QueryContainer
+function mergeableMust (q: (T.QueryContainer | T.BoolQuery)[]): T.QueryContainer[]
+function mergeableMust (q: any): any {
   if (Array.isArray(q)) {
     return q.map(mergeableMust)
   }
-  if (isBool(q)) {
-    if (onlyMust(q.query.bool)) {
-      return q.query.bool.must
-    } else {
-      return q.query
-    }
-  } else if (isBoolBlock(q)) {
+  if (isBoolBlock(q)) {
     if (onlyMust(q.bool)) {
       return q.bool.must
     } else {
       return q
     }
-  } else if (isClause(q)) {
+  } else if (isBoolQuery(q)) {
     if (onlyMust(q)) {
       return q.must
     } else {
@@ -798,23 +821,19 @@ function mergeableMust (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
   }
 }
 
-function mergeableShould (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
+function mergeableShould (q: T.QueryContainer | T.BoolQuery): T.QueryContainer
+function mergeableShould (q: (T.QueryContainer | T.BoolQuery)[]): T.QueryContainer[]
+function mergeableShould (q: any): any {
   if (Array.isArray(q)) {
     return q.map(mergeableShould)
   }
-  if (isBool(q)) {
-    if (onlyShould(q.query.bool)) {
-      return q.query.bool.should
-    } else {
-      return q.query
-    }
-  } else if (isBoolBlock(q)) {
+  if (isBoolBlock(q)) {
     if (onlyShould(q.bool)) {
       return q.bool.should
     } else {
       return q
     }
-  } else if (isClause(q)) {
+  } else if (isBoolQuery(q)) {
     if (onlyShould(q)) {
       return q.should
     } else {
@@ -825,23 +844,20 @@ function mergeableShould (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
   }
 }
 
-function mergeableMustNot (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
+function mergeableMustNot (q: T.QueryContainer | T.BoolQuery): T.QueryContainer
+function mergeableMustNot (q: (T.QueryContainer | T.BoolQuery)[]): T.QueryContainer[]
+function mergeableMustNot (q: any): any {
   if (Array.isArray(q)) {
     return q.map(mergeableMustNot)
   }
-  if (isBool(q)) {
-    if (onlyMustNot(q.query.bool)) {
-      return q.query.bool.must_not
-    } else {
-      return q.query
-    }
-  } else if (isBoolBlock(q)) {
+
+  if (isBoolBlock(q)) {
     if (onlyMustNot(q.bool)) {
       return q.bool.must_not
     } else {
       return q
     }
-  } else if (isClause(q)) {
+  } else if (isBoolQuery(q)) {
     if (onlyMustNot(q)) {
       return q.must_not
     } else {
@@ -852,23 +868,19 @@ function mergeableMustNot (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
   }
 }
 
-function mergeableFilter (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
+function mergeableFilter (q: T.QueryContainer | T.BoolQuery): T.QueryContainer
+function mergeableFilter (q: (T.QueryContainer | T.BoolQuery)[]): T.QueryContainer[]
+function mergeableFilter (q: any): any {
   if (Array.isArray(q)) {
     return q.map(mergeableFilter)
   }
-  if (isBool(q)) {
-    if (onlyFilter(q.query.bool)) {
-      return q.query.bool.filter
-    } else {
-      return q.query
-    }
-  } else if (isBoolBlock(q)) {
+  if (isBoolBlock(q)) {
     if (onlyFilter(q.bool)) {
       return q.bool.filter
     } else {
       return q
     }
-  } else if (isClause(q)) {
+  } else if (isBoolQuery(q)) {
     if (onlyFilter(q)) {
       return q.filter
     } else {

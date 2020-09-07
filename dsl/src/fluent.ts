@@ -27,6 +27,7 @@
 import Q from './query'
 import A from './aggregation'
 import * as t from './types'
+import T from '../es-types'
 
 const kState = Symbol('dsl-query-state')
 
@@ -55,9 +56,11 @@ class FluentQ {
     return Q.compile(this.build())
   }
 
-  match (key: string, val: string | Symbol, opts?: Record<string, any>): this
-  match (key: string, val: string[], opts?: Record<string, any>): this
-  match (key: string, val: any, opts?: Record<string, any>): this {
+  match (key: string, val: string | Symbol): this
+  match (key: string, val: string | Symbol, opts: T.MatchQuery): this
+  match (key: string, val: (string | Symbol)[]): this
+  match (key: string, val: (string | Symbol)[], opts: T.MatchQuery): this
+  match (key: string, val: any, opts?: any): this {
     this[kState].push(Q.match(key, val, opts))
     return this
   }
@@ -166,7 +169,7 @@ class FluentQ {
     return this
   }
 
-  ids (key: string, val: string[] | Symbol, opts: Record<string, any>): this {
+  ids (key: string, val: string[] | Symbol, opts: T.IdsQuery): this {
     this[kState].push(Q.ids(key, val, opts))
     return this
   }
@@ -231,7 +234,7 @@ class FluentQ {
     return this
   }
 
-  disMax (queries: t.AnyQuery[], opts?: Record<string, any>): this {
+  disMax (queries: Record<string, any>[], opts?: Record<string, any>): this {
     this[kState].push(Q.disMax(queries, opts))
     return this
   }
