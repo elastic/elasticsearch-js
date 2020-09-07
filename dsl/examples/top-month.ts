@@ -93,7 +93,7 @@ async function run2 () {
     index: 'git',
     body: F()
       // we want to know the top month for 'delvedor'
-      .filter(f => f.term('author', 'delvedor'))
+      .filter(F().term('author', 'delvedor'))
       .size(0)
       .aggs(commitsPerMonth, topCommittersPerMonthGlobal)
   })

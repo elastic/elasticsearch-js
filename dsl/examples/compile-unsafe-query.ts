@@ -90,8 +90,8 @@ import { Q, F } from '../'
   // outside of your hot code path.
   const query = F()
     .match('description', Q.param('description'))
-    .filter(f => f
-      .term('author.name', Q.param('author'))
+    .filter(
+      F().term('author.name', Q.param('author'))
     )
     .size(10)
 

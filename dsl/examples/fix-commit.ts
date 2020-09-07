@@ -52,8 +52,8 @@ async function run2 () {
     body: F()
       // You can avoid to call `.must`, as any query will be
       // sent inside a `must` block unless specified otherwise
-      .must(f => f.match('description', 'fix'))
-      .mustNot(f => f.term('files', 'test'))
+      .match('description', 'fix')
+      .mustNot(F().term('files', 'test'))
   })
 
   console.log(body.hits.hits)
