@@ -104,6 +104,9 @@ namespace Q {
   export function compile<TInput extends Record<string, any> = Record<string, any>> (query: Record<string, any>): t.compiledFunction<TInput> {
     const params: Array<{ path: string[], key: string }> = []
     traverse(query, [])
+    if (params.length === 0) {
+      throw new Error('The query does not contain any use of `Q.params`')
+    }
 
     return function (input: TInput): Record<string, any> {
       let q = query
@@ -131,9 +134,40 @@ namespace Q {
     }
   }
 
-  export function match (key: string, val: string | Symbol, opts?: Record<string, any>): t.Condition
-  export function match (key: string, val: string[], opts?: Record<string, any>): t.Condition[]
-  export function match (key: string, val: any, opts?: Record<string, any>): t.Condition | t.Condition[] {
+  export function compileJson<TInput extends Record<string, any> = Record<string, any>> (query: Record<string, any>): t.compiledFunction<TInput> {
+    const params: Array<{ path: string[], key: string }> = []
+    traverse(query, [])
+    if (params.length === 0) {
+      throw new Error('The query does not contain any use of `Q.params`')
+    }
+
+    const stringified = JSON.stringify(query, (key, value) => typeof value === 'symbol' ? `###${value.description!}###` : value)
+
+    return function (input: TInput): Record<string, any> {
+      const q = JSON.parse(stringified)
+      for (const param of params) {
+        setParam2(q, param.path, input[param.key])
+      }
+      return q
+    }
+
+    function traverse (obj: Record<string, any>, path: string[]) {
+      for (const key in obj) {
+        const value = obj[key]
+        if (typeof value === 'symbol') {
+          params.push({ path: path.concat(key), key: value.description! })
+        } else if (Array.isArray(value)) {
+          for (var i = 0; i < value.length; i++) {
+            traverse(value[i], path.concat(key, '' + i))
+          }
+        } else if (typeof value === 'object' && value !== null) {
+          traverse(value, path.concat(key))
+        } else {
+          // do nothing
+        }
+      }
+    }
+  }
     return generateQueryObject('match', key, val, opts)
   }
 
@@ -283,6 +317,8 @@ namespace Q {
       return { query: { bool: {} } }
     }
 
+    // @ts-expect-error
+    const defaultClause = queries.find(q => q && !!q.minimum_should_match) ? 'should' : 'must'
     const normalizedQueries: t.BoolQueryOptions[] = queries
       .flat()
       .filter(val => {
@@ -292,33 +328,7 @@ namespace Q {
         }
         return !!val
       })
-      .map(q => {
-        if (isBool(q)) {
-          if (q.query.bool._name) {
-            return { must: [q.query] }
-          }
-          if (q.query.bool.minimum_should_match) {
-            return { must: [q.query] }
-          }
-          return q.query.bool
-        }
-
-        if (isBoolBlock(q)) {
-          if (q.bool._name) {
-            return { must: [q] }
-          }
-          if (q.bool.minimum_should_match) {
-            return { must: [q] }
-          }
-          return q.bool
-        }
-
-        if (isClause(q)) {
-          return q
-        }
-
-        return { must: [q] }
-      })
+      .map(q => toClause(q, defaultClause))
 
     const mustClauses: t.AnyQuery[] = []
     const mustNotClauses: t.AnyQuery[] = []
@@ -329,16 +339,16 @@ namespace Q {
 
     for (const query of normalizedQueries) {
       if (query.must) {
-        mustClauses.push(query.must)
+        mustClauses.push.apply(mustClauses, query.must)
       }
       if (query.must_not) {
-        mustNotClauses.push(query.must_not)
+        mustNotClauses.push.apply(mustNotClauses, query.must_not)
       }
       if (query.should) {
-        shouldClauses.push(query.should)
+        shouldClauses.push.apply(shouldClauses, query.should)
       }
       if (query.filter) {
-        filterClauses.push(query.filter)
+        filterClauses.push.apply(filterClauses, query.filter)
       }
       if (query._name) {
         if (_name !== null) {
@@ -354,19 +364,24 @@ namespace Q {
       }
     }
 
-    const bool: t.BoolQueryOptions = {
-      ...(mustClauses.length && Q.must(...mustClauses)),
-      ...(mustNotClauses.length && Q.mustNot(...mustNotClauses)),
-      ...(shouldClauses.length && Q.should(...shouldClauses)),
-      ...(filterClauses.length && Q.filter(...filterClauses))
+    // If minimum_should_match is the same of should.length,
+    // then all the should clauses are required.
+    if (shouldClauses.length === minimum_should_match) {
+      mustClauses.push.apply(mustClauses, shouldClauses)
+      shouldClauses.length = 0
+      minimum_should_match = null
     }
-
-    if (_name) bool._name = _name
-    if (minimum_should_match) bool.minimum_should_match = minimum_should_match
 
     return {
       query: {
-        bool: optimize(bool)
+        bool: booptimize({
+          ...(mustClauses.length && Q.must(...mustClauses)),
+          ...(mustNotClauses.length && Q.mustNot(...mustNotClauses)),
+          ...(shouldClauses.length && Q.should(...shouldClauses)),
+          ...(filterClauses.length && Q.filter(...filterClauses)),
+          ...(_name && { _name }),
+          ...(minimum_should_match && { minimum_should_match })
+        })
       }
     }
   }
@@ -379,50 +394,68 @@ namespace Q {
     return { query: toBoolBlock(query) }
 
     function andOp (q1: t.AnyBoolQuery, q2: t.AnyBoolQuery): t.BoolBlock {
-      const b1: t.BoolBlock = toBoolBlock(q1)
-      const b2: t.BoolBlock = toBoolBlock(q2)
-      if (!onlyShould(b1.bool) && !onlyShould(b2.bool)) {
-        const mustClauses: t.AnyQuery[] = (b1.bool.must || []).concat(b2.bool.must || [])
-        const mustNotClauses: t.AnyQuery[] = (b1.bool.must_not || []).concat(b2.bool.must_not || [])
-        const filterClauses: t.AnyQuery[] = (b1.bool.filter || []).concat(b2.bool.filter || [])
+      const b1: t.BoolQueryOptions = toClause(q1)
+      const b2: t.BoolQueryOptions = toClause(q2)
+      if (b1.should == null && b2.should == null) {
+        const mustClauses: t.AnyQuery[] = (b1.must || []).concat(b2.must || [])
+        const mustNotClauses: t.AnyQuery[] = (b1.must_not || []).concat(b2.must_not || [])
+        const filterClauses: t.AnyQuery[] = (b1.filter || []).concat(b2.filter || [])
         return {
-          bool: {
+          bool: booptimize({
             ...(mustClauses.length && Q.must(...mustClauses)),
             ...(mustNotClauses.length && Q.mustNot(...mustNotClauses)),
             ...(filterClauses.length && Q.filter(...filterClauses))
-          }
+          })
         }
       } else {
-        const { must, ...clauses } = b1.bool
+        const { must, ...clauses } = b1
         return {
-          bool: {
-            ...(must == null ? Q.must(b2) : Q.must(must, b2)),
+          bool: booptimize({
+            ...(must == null ? Q.must(toBoolBlock(b2)) : Q.must(must, toBoolBlock(b2))),
             ...clauses
-          }
+          })
         }
       }
     }
   }
 
   export function or (...queries: t.AnyBoolQuery[]): t.BoolQuery {
-    return Q.bool(Q.should(...queries))
+    return {
+      query: {
+        bool: booptimize(Q.should(...queries))
+      }
+    }
   }
 
   export function not (q: t.AnyBoolQuery): t.BoolQuery {
-    if (!isBool(q) && !isClause(q)) {
-      return Q.bool(Q.mustNot(q))
+    if (!isBool(q) && !isBoolBlock(q) && !isClause(q)) {
+      return {
+        query: {
+          bool: Q.mustNot(q)
+        }
+      }
     }
 
-    const b: t.BoolQuery = isClause(q)
-      ? Q.bool(q as t.BoolQueryOptions)
-      : q as t.BoolQuery
+    const b = toClause(q)
 
-    if (onlyMust(b.query.bool)) {
-      return Q.bool(Q.mustNot(...b.query.bool.must))
-    } else if (onlyMustNot(b.query.bool)) {
-      return Q.bool(Q.must(...b.query.bool.must_not))
+    if (onlyMust(b)) {
+      return {
+        query: {
+          bool: booptimize(Q.mustNot(...b.must))
+        }
+      }
+    } else if (onlyMustNot(b)) {
+      return {
+        query: {
+          bool: booptimize(Q.must(...b.must_not))
+        }
+      }
     } else {
-      return Q.bool(Q.mustNot(b))
+      return {
+        query: {
+          bool: booptimize(Q.mustNot(toBoolBlock(b)))
+        }
+      }
     }
   }
 
@@ -491,8 +524,8 @@ namespace Q {
   }
 }
 
-// Tries to flat the query based on the content
-function optimize (q: t.BoolQueryOptions): t.BoolQueryOptions {
+// Tries to flat a bool query based on the content
+function booptimize (q: t.BoolQueryOptions): t.BoolQueryOptions {
   const clauses: t.BoolQueryOptions = {}
 
   if (q.minimum_should_match !== undefined ||
@@ -703,6 +736,39 @@ function toBoolBlock (query: t.AnyBoolQuery): t.BoolBlock {
   return { bool: { must: [query] } }
 }
 
+// for a given query it always return a bool query options:
+//  - if is a bool query returns the bool query options
+//  - if is a clause, it returns it
+//  - if is condition, wraps the query into a must clause and returns it
+type toClauseDefault = 'must' | 'must_not' | 'should' | 'filter'
+function toClause (query: t.AnyBoolQuery, def: toClauseDefault = 'must'): t.BoolQueryOptions {
+  if (isBool(query)) {
+    if (query.query.bool._name) {
+      return { [def]: [query.query] }
+    }
+    if (query.query.bool.minimum_should_match) {
+      return { [def]: [query.query] }
+    }
+    return query.query.bool
+  }
+
+  if (isBoolBlock(query)) {
+    if (query.bool._name) {
+      return { [def]: [query] }
+    }
+    if (query.bool.minimum_should_match) {
+      return { [def]: [query] }
+    }
+    return query.bool
+  }
+
+  if (isClause(query)) {
+    return query
+  }
+
+  return { [def]: [query] }
+}
+
 // the aim of this mergeable functions
 // is to reduce the depth of the query objects
 function mergeableMust (q: t.AnyQuery): t.AnyQuery | t.AnyQuery[] {
@@ -832,6 +898,23 @@ function setParam (source: Record<string, any>, keys: string[], update: any) {
       to[i] = source[i]
     }
     return to
+  }
+}
+
+// code from https://github.com/lukeed/dset
+function setParam2 (obj: Record<string, any>, keys: string[], val: any) {
+  let x
+  for (let i = 0, len = keys.length; i < len; i++) {
+    x = obj[keys[i]]
+    if (i === len - 1) {
+      obj = obj[keys[i]] = val
+    } else if (x != null) {
+      obj = obj[keys[i]] = x
+    } else if (!!~keys[i + 1].indexOf('.') || !(+keys[i + 1] > -1)) {
+      obj = obj[keys[i]] = {}
+    } else {
+      obj = obj[keys[i]] = []
+    }
   }
 }
 
