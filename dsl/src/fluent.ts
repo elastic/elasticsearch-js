@@ -29,7 +29,6 @@ import A from './aggregation'
 import * as t from './types'
 
 const kState = Symbol('dsl-query-state')
-type nestedQFn = (f: FluentQ) => FluentQ
 
 // TODO: the client should detect a fluent query
 //       and automatically call `query.build()`
@@ -121,8 +120,8 @@ class FluentQ {
     return this
   }
 
-  range (key: string, val: any): this {
-    this[kState].push(Q.range(key, val))
+  range (key: string, opts: Record<string, any>): this {
+    this[kState].push(Q.range(key, opts))
     return this
   }
 
@@ -172,48 +171,43 @@ class FluentQ {
     return this
   }
 
-  must (fn: nestedQFn): this {
-    const state = this[kState]
-    this[kState] = []
-    const queries = fn(this)[kState]
-    this[kState] = state
-    this[kState].push(Q.must(queries))
+  must (...queries: FluentQ[]): this {
+    this[kState].push(Q.must(...queries.map(q => q.build())))
     return this
   }
 
-  should (fn: nestedQFn): this {
-    const state = this[kState]
-    this[kState] = []
-    const queries = fn(this)[kState]
-    this[kState] = state
-    this[kState].push(Q.should((queries)))
+  should (...queries: FluentQ[]): this {
+    this[kState].push(Q.should(...queries.map(q => q.build())))
     return this
   }
 
-  mustNot (fn: nestedQFn): this {
-    const state = this[kState]
-    this[kState] = []
-    const queries = fn(this)[kState]
-    this[kState] = state
-    this[kState].push(Q.mustNot(queries))
+  mustNot (...queries: FluentQ[]): this {
+    this[kState].push(Q.mustNot(...queries.map(q => q.build())))
     return this
   }
 
-  filter (fn: nestedQFn): this {
-    const state = this[kState]
-    this[kState] = []
-    const queries = fn(this)[kState]
-    this[kState] = state
-    this[kState].push(Q.filter(queries))
+  filter (...queries: FluentQ[]): this {
+    this[kState].push(Q.filter(...queries.map(q => q.build())))
     return this
   }
 
-  bool (fn: nestedQFn): this {
-    const state = this[kState]
-    this[kState] = []
-    const queries = fn(this)[kState]
-    this[kState] = state
-    this[kState].push(Q.bool(queries))
+  bool (...queries: FluentQ[]): this {
+    this[kState].push(Q.bool(...queries.map(q => q.build())))
+    return this
+  }
+
+  and (...queries: FluentQ[]): this {
+    this[kState].push(Q.and(...queries.map(q => q.build())))
+    return this
+  }
+
+  or (...queries: FluentQ[]): this {
+    this[kState].push(Q.or(...queries.map(q => q.build())))
+    return this
+  }
+
+  not (query: FluentQ): this {
+    this[kState].push(Q.not(query.build()))
     return this
   }
 
@@ -252,8 +246,9 @@ class FluentQ {
     return this
   }
 
-  sort (key: string | any[], opts?: Record<string, any>): this {
-    this[kState].push(Q.sort(key))
+  sort (key: string | any[], opts: Record<string, any>): this
+  sort (key: string | any[], opts: any): this {
+    this[kState].push(Q.sort(key, opts))
     return this
   }
 
