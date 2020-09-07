@@ -2,21 +2,18 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "declaration": true,
-    "target": "es2017",
+    "target": "es2019",
     "module": "commonjs",
     "outDir": "lib",
     "pretty": true,
     "noEmitOnError": true,
-    "experimentalDecorators": true,
+    "experimentalDecorators": false,
     "sourceMap": true,
-    "emitDecoratorMetadata": true,
+    "emitDecoratorMetadata": false,
     "strict": true,
     "esModuleInterop": true,
     "removeComments": true,
-    "noUnusedLocals": true,
-    "lib": [
-      "esnext"
-    ]
+    "noUnusedLocals": true
   },
   "exclude": ["examples"],
   "include": ["./src/*.ts"]

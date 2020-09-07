@@ -35,7 +35,7 @@
     "test:coverage-ui": "tap test/{unit,acceptance}/{*,**/*}.test.js --coverage --coverage-report=html --nyc-arg=\"--exclude=api\"",
     "test:dsl": "npm run lint:dsl && npm run build:ts && tap --ts test/dsl/*.test.ts",
     "lint": "standard",
-    "lint:dsl": "standardx --parser @typescript-eslint/parser --plugin @typescript-eslint/eslint-plugin dsl/src/*.ts dsl/examples/*.ts",
+    "lint:dsl": "standardx --parser @typescript-eslint/parser --plugin @typescript-eslint/eslint-plugin dsl/src/*.ts dsl/examples/*.ts test/dsl/*.ts",
     "lint:fix": "standard --fix",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause'",
     "build:esm": "npx gen-esm-wrapper . index.mjs && standard --fix index.mjs",
