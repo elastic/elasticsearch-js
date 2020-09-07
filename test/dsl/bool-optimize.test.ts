@@ -596,7 +596,7 @@ test('nested with only should and minimum_should_match / 2', t => {
         Q.match('1', '2'),
         Q.term('3', '4')
       ),
-      Q.minShouldMatch(2)
+      Q.minShouldMatch(1)
     ),
     Q.should(Q.match('5', '6'))
   )
@@ -610,7 +610,7 @@ test('nested with only should and minimum_should_match / 2', t => {
               { match: { 1: '2' } },
               { term: { 3: '4' } }
             ],
-            minimum_should_match: 2
+            minimum_should_match: 1
           }
         }],
         should: [{

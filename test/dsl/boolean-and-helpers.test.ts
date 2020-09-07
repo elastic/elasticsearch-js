@@ -11,6 +11,12 @@ test('AND', t => {
       Q.bool(Q.filter(Q.term('baz', 'faz')))
     )
 
+    noShouldClausesWithName(
+      t,
+      Q.bool(Q.must(Q.match('foo', 'bar')), Q.name('name')),
+      Q.bool(Q.filter(Q.term('baz', 'faz')))
+    )
+
     shouldClauses(
       t,
       Q.bool(Q.must(Q.match('foo', 'bar'))),
@@ -236,6 +242,28 @@ test('AND', t => {
           }
         }
       })
+
+      t.end()
+    })
+  }
+
+  function noShouldClausesWithName (t, query1, query2) {
+    t.test('No should clauses with name', t => {
+      t.deepEqual(Q.and(query1, query2), {
+        query: {
+          bool: {
+            must: [{
+              bool: {
+                must: [{ match: { foo: 'bar' } }],
+                _name: 'name'
+              }
+            }],
+            filter: [{ term: { baz: 'faz' } }]
+          }
+        }
+      })
+
+      t.deepEqual(Q.and(query1, query2), Q.and(query2, query1))
 
       t.end()
     })

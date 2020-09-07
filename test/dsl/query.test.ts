@@ -112,6 +112,12 @@ test('Compile a query (safe)', t => {
     }
   })
 
+  try {
+    Q.compile(Q.bool())
+  } catch (err) {
+    t.is(err.message, 'The query does not contain any use of `Q.params`')
+  }
+
   t.end()
 })
 
@@ -143,6 +149,12 @@ test('Compile a query (unsafe)', t => {
       }
     }
   })
+
+  try {
+    Q.compileUnsafe(Q.bool())
+  } catch (err) {
+    t.is(err.message, 'The query does not contain any use of `Q.params`')
+  }
 
   t.end()
 })
@@ -329,6 +341,11 @@ test('terms returns a terms query', t => {
     terms: { foo: ['bar', 'baz'] }
   })
 
+  t.deepEqual(
+    Q.terms('foo', ['bar', 'baz']),
+    Q.term('foo', ['bar', 'baz'])
+  )
+
   t.end()
 })
 
@@ -363,6 +380,12 @@ test('exists returns a exists query', t => {
   t.deepEqual(Q.exists('foo'), {
     exists: { field: 'foo' }
   })
+
+  t.deepEqual(Q.exists(['foo', 'bar']), [{
+    exists: { field: 'foo' }
+  }, {
+    exists: { field: 'bar' }
+  }])
 
   t.end()
 })
@@ -743,6 +766,91 @@ test('bool returns a bool query block', t => {
   })
 
   t.deepEqual(Q.bool(), { query: { bool: {} } })
+  t.deepEqual(Q.bool(undefined), { query: { bool: {} } })
+
+  t.deepEqual(Q.bool(Q.must(c('foo')), Q.should(c('bar')), Q.mustNot(c('foz')), Q.filter(c('baz'), c('faz'))), {
+    query: {
+      bool: {
+        must: [c('foo')],
+        must_not: [c('foz')],
+        should: [c('bar')],
+        filter: [c('baz'), c('faz')]
+      }
+    }
+  })
+
+  t.deepEqual(Q.bool(
+    c('foo'),
+    Q.bool(
+      Q.name('name'),
+      Q.must(c('faz'))
+    ),
+    Q.should(c('bar')),
+    Q.filter(c('baz'))
+  ), {
+    query: {
+      bool: {
+        must: [
+          c('foo'),
+          { bool: { must: [c('faz')], _name: 'name' } }
+        ],
+        should: [c('bar')],
+        filter: [c('baz')]
+      }
+    }
+  })
+
+  t.deepEqual(Q.bool(
+    Q.must(Q.term('hello', 'world')),
+    Q.match('foo', 'bar'),
+    Q.match('baz', 'faz'),
+    Q.minShouldMatch(1)
+  ), {
+    query: {
+      bool: {
+        must: [
+          { term: { hello: 'world' } }
+        ],
+        should: [
+          { match: { foo: 'bar' } },
+          { match: { baz: 'faz' } }
+        ],
+        minimum_should_match: 1
+      }
+    }
+  })
+
+  t.deepEqual(Q.bool(
+    Q.must(Q.term('hello', 'world')),
+    Q.match('foo', 'bar'),
+    Q.match('baz', 'faz'),
+    Q.minShouldMatch(2)
+  ), {
+    query: {
+      bool: {
+        must: [
+          { term: { hello: 'world' } },
+          { match: { foo: 'bar' } },
+          { match: { baz: 'faz' } }
+        ]
+      }
+    }
+  })
+
+  t.deepEqual(Q.bool(
+    Q.match('foo', 'bar'),
+    Q.match('baz', 'faz'),
+    Q.minShouldMatch(2)
+  ), {
+    query: {
+      bool: {
+        must: [
+          { match: { foo: 'bar' } },
+          { match: { baz: 'faz' } }
+        ]
+      }
+    }
+  })
 
   t.end()
 })
@@ -840,15 +948,15 @@ test('sort returns a sort block', t => {
     t.end()
   })
 
-  t.test('multiple sorts', t => {
-    t.deepEqual(Q.sort([{ foo: { order: 'asc' } }, { bar: { order: 'desc' } }]), {
-      sort: [
-        { foo: { order: 'asc' } },
-        { bar: { order: 'desc' } }
-      ]
-    })
-    t.end()
-  })
+  // t.test('multiple sorts', t => {
+  //   t.deepEqual(Q.sort([{ foo: { order: 'asc' } }, { bar: { order: 'desc' } }]), {
+  //     sort: [
+  //       { foo: { order: 'asc' } },
+  //       { bar: { order: 'desc' } }
+  //     ]
+  //   })
+  //   t.end()
+  // })
 
   t.end()
 })
