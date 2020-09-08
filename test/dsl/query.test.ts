@@ -169,6 +169,14 @@ test('match returns a match query', t => {
     t.end()
   })
 
+  t.test('simple query', t => {
+    t.deepEqual(Q.match('foo', ['bar', 'baz']), [
+      { match: { foo: 'bar' } },
+      { match: { foo: 'baz' } }
+    ])
+    t.end()
+  })
+
   t.test('complex query', t => {
     t.deepEqual(Q.match('foo', 'bar', { analyzer: 'and' }), {
       match: {
@@ -840,6 +848,17 @@ test('bool returns a bool query block', t => {
     }
   })
 
+  t.deepEqual(Q.bool(
+    Q.match('foo', ['bar', 'baz'])
+  ), {
+    bool: {
+      must: [
+        { match: { foo: 'bar' } },
+        { match: { foo: 'baz'} }
+      ]
+    }
+  })
+
   t.end()
 })
 
@@ -847,13 +866,11 @@ test('nested returns a nested query block', t => {
   t.type(Q.nested, 'function')
 
   const query = Q.bool(Q.must(c('foo')), Q.should(c('bar')), Q.filter(c('baz')))
-  t.deepEqual(Q.nested('foo', query, { score_mode: 'max' }), {
-    query: {
-      nested: {
-        path: 'foo',
-        score_mode: 'max',
-        ...query
-      }
+  t.deepEqual(Q.nested('foo', query, { ignore_unmapped: true }), {
+    nested: {
+      path: 'foo',
+      ignore_unmapped: true,
+      ...query
     }
   })
 
@@ -865,11 +882,9 @@ test('constantScore returns a constant_score query block', t => {
 
   const query = Q.bool(Q.must(c('foo')), Q.should(c('bar')), Q.filter(c('baz')))
   t.deepEqual(Q.constantScore(query, 2.0), {
-    query: {
-      constant_score: {
-        boost: 2.0,
-        ...query
-      }
+    constant_score: {
+      boost: 2.0,
+      filter: query
     }
   })
 
@@ -881,10 +896,8 @@ test('disMax returns a dis_max query block', t => {
 
   t.test('simple query', t => {
     t.deepEqual(Q.disMax([c('a'), c('b'), c('c')]), {
-      query: {
-        dis_max: {
-          queries: [c('a'), c('b'), c('c')]
-        }
+      dis_max: {
+        queries: [c('a'), c('b'), c('c')]
       }
     })
     t.end()
@@ -892,12 +905,10 @@ test('disMax returns a dis_max query block', t => {
 
   t.test('complex query', t => {
     t.deepEqual(Q.disMax([c('a'), c('b'), c('c')], { tie_breaker: 1.0, boost: 1.0 }), {
-      query: {
-        dis_max: {
-          tie_breaker: 1.0,
-          boost: 1.0,
-          queries: [c('a'), c('b'), c('c')]
-        }
+      dis_max: {
+        tie_breaker: 1.0,
+        boost: 1.0,
+        queries: [c('a'), c('b'), c('c')]
       }
     })
     t.end()
@@ -909,8 +920,8 @@ test('disMax returns a dis_max query block', t => {
 test('functionScore returns a function_score query block', t => {
   t.type(Q.functionScore, 'function')
 
-  t.deepEqual(Q.functionScore({ foo: 'bar' }), {
-    query: { function_score: { foo: 'bar' } }
+  t.deepEqual(Q.functionScore({ max_boost: 42 }), {
+    function_score: { max_boost: 42 }
   })
 
   t.end()
@@ -919,8 +930,8 @@ test('functionScore returns a function_score query block', t => {
 test('boosting returns a boosting query block', t => {
   t.type(Q.boosting, 'function')
 
-  t.deepEqual(Q.boosting({ foo: 'bar' }), {
-    query: { boosting: { foo: 'bar' } }
+  t.deepEqual(Q.boosting({ negative_boost: 42 }), {
+    boosting: { negative_boost: 42 }
   })
 
   t.end()
