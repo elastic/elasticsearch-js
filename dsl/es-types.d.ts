@@ -6607,7 +6607,7 @@ declare namespace T {
 
   export interface MatchAllQuery {
     norm_field?: string
-    boost?: number
+    boost?: float
   }
 
   export interface MatchNoneQuery {
@@ -6694,7 +6694,6 @@ declare namespace T {
 
   export interface BoolQuery {
     filter?: QueryContainer[]
-    locked?: boolean
     minimum_should_match?: MinimumShouldMatch
     must?: QueryContainer[]
     must_not?: QueryContainer[]
@@ -6710,13 +6709,13 @@ declare namespace T {
 
   export interface ConstantScoreQuery {
     filter?: QueryContainer
-    boost?: number
+    boost?: float
   }
 
   export interface DisMaxQuery {
     queries?: QueryContainer[]
     tie_breaker?: double
-    boost?: number
+    boost?: float
   }
 
   export interface FunctionScoreQuery {
@@ -6726,6 +6725,7 @@ declare namespace T {
     min_score?: double
     query?: QueryContainer
     score_mode?: FunctionScoreMode
+    boost?: float
   }
 
   export interface ScoreFunction {
@@ -6740,6 +6740,7 @@ declare namespace T {
     low_freq_operator?: Operator
     minimum_should_match?: MinimumShouldMatch
     query?: string
+    boost?: float
   }
 
   export interface Intervals {
@@ -6826,6 +6827,7 @@ declare namespace T {
     prefix_length?: integer
     query?: string
     zero_terms_query?: ZeroTermsQuery
+    boost?: float
   }
 
   export interface MatchBoolPrefixQuery {
@@ -6838,12 +6840,14 @@ declare namespace T {
     operator?: Operator
     prefix_length?: integer
     query?: string
+    boost?: float
   }
 
   export interface MatchPhraseQuery {
     analyzer?: string
     query?: string
     slop?: integer
+    boost?: float
   }
 
   export interface MatchPhrasePrefixQuery {
@@ -6852,6 +6856,7 @@ declare namespace T {
     query?: string
     slop?: integer
     zero_terms_query?: ZeroTermsQuery
+    boost?: float
   }
 
   export interface MultiMatchQuery {
@@ -6873,6 +6878,7 @@ declare namespace T {
     type?: TextQueryType
     use_dis_max?: boolean
     zero_terms_query?: ZeroTermsQuery
+    boost?: float
   }
 
   export interface QueryStringQuery {
@@ -6901,6 +6907,7 @@ declare namespace T {
     tie_breaker?: double
     time_zone?: string
     type?: TextQueryType
+    boost?: float
   }
 
   export interface SimpleQueryStringQuery {
@@ -6917,6 +6924,7 @@ declare namespace T {
     minimum_should_match?: MinimumShouldMatch
     query?: string
     quote_field_suffix?: string
+    boost?: float
   }
 
   export interface GeoCoordinate extends GeoLocation {
@@ -7158,48 +7166,57 @@ declare namespace T {
     prefix_length?: integer
     rewrite?: MultiTermQueryRewrite
     transpositions?: boolean
-    boost?: number
+    boost?: float
   }
 
   export interface IdsQuery {
     values?: Id[]
-    type: string
+    boost?: float
   }
 
   export interface PrefixQuery {
     rewrite?: MultiTermQueryRewrite
-    boost?: number
+    boost?: float
   }
 
   export interface RangeQuery {
+    gt?: double | DateMath
+    gte?: double | DateMath
+    lt?: double | DateMath
+    lte?: double | DateMath
+    relation?: RangeRelation
+    boost?: float
+    time_zone?: string
   }
 
   export interface RegexpQuery {
     flags?: string
     max_determinized_states?: integer
     value?: string
-    boost?: number
+    boost?: float
   }
 
   export interface TermQuery {
-    value?: object,
-    boost?: number
+    value?: string
+    boost?: float
   }
 
   export interface TermsQuery {
-    terms?: object[]
+    terms?: string[]
     terms_lookup?: FieldLookup
+    boost?: float
   }
 
   export interface TermsSetQuery {
     minimum_should_match_field?: Field
     minimum_should_match_script?: Script
     terms?: string[]
+    boost?: float
   }
 
   export interface WildcardQuery {
     rewrite?: MultiTermQueryRewrite
-    boost?: number
+    boost?: float
   }
 
   /**
