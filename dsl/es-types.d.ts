@@ -6607,6 +6607,7 @@ declare namespace T {
 
   export interface MatchAllQuery {
     norm_field?: string
+    boost?: number
   }
 
   export interface MatchNoneQuery {
@@ -6709,11 +6710,13 @@ declare namespace T {
 
   export interface ConstantScoreQuery {
     filter?: QueryContainer
+    boost?: number
   }
 
   export interface DisMaxQuery {
     queries?: QueryContainer[]
     tie_breaker?: double
+    boost?: number
   }
 
   export interface FunctionScoreQuery {
@@ -7191,7 +7194,7 @@ declare namespace T {
   export interface TermsSetQuery {
     minimum_should_match_field?: Field
     minimum_should_match_script?: Script
-    terms?: object[]
+    terms?: string[]
   }
 
   export interface WildcardQuery {

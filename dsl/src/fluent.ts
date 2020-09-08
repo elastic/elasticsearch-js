@@ -65,22 +65,30 @@ class FluentQ {
     return this
   }
 
-  matchPhrase (key: string, val: string | Symbol, opts?: Record<string, any>): this {
+  matchPhrase (key: string, val: string | Symbol): this
+  matchPhrase (key: string, val: string | Symbol, opts: T.MatchPhraseQuery): this
+  matchPhrase (key: string, val: (string | Symbol)[]): this
+  matchPhrase (key: string, val: (string | Symbol)[], opts: T.MatchPhraseQuery): this
+  matchPhrase (key: string, val: any, opts?: any): this {
     this[kState].push(Q.matchPhrase(key, val, opts))
     return this
   }
 
-  matchPhrasePrefix (key: string, val: string | Symbol, opts?: Record<string, any>): this {
+  matchPhrasePrefix (key: string, val: string | Symbol): this
+  matchPhrasePrefix (key: string, val: string | Symbol, opts: T.MatchPhrasePrefixQuery): this
+  matchPhrasePrefix (key: string, val: (string | Symbol)[]): this
+  matchPhrasePrefix (key: string, val: (string | Symbol)[], opts: T.MatchPhrasePrefixQuery): this
+  matchPhrasePrefix (key: string, val: any, opts?: any): this {
     this[kState].push(Q.matchPhrasePrefix(key, val, opts))
     return this
   }
 
-  multiMatch (keys: string[], val: string | Symbol, opts?: Record<string, any>): this {
+  multiMatch (keys: string[], val: string | Symbol, opts?: T.MultiMatchQuery): this {
     this[kState].push(Q.multiMatch(keys, val, opts))
     return this
   }
 
-  matchAll (opts?: Record<string, any>): this {
+  matchAll (opts?: T.MatchAllQuery): this {
     this[kState].push(Q.matchAll(opts))
     return this
   }
@@ -90,22 +98,30 @@ class FluentQ {
     return this
   }
 
-  common (key: string, val: string | Symbol, opts: Record<string, any>): this {
+  common (key: string, val: string | Symbol): this
+  common (key: string, val: string | Symbol, opts: T.CommonTermsQuery): this
+  common (key: string, val: (string | Symbol)[]): this
+  common (key: string, val: (string | Symbol)[], opts: T.CommonTermsQuery): this
+  common (key: string, val: any, opts?: any): this {
     this[kState].push(Q.common(key, val, opts))
     return this
   }
 
-  queryString (val: string | Symbol, opts: Record<string, any>): this {
+  queryString (val: string | Symbol, opts: T.QueryStringQuery): this {
     this[kState].push(Q.queryString(val, opts))
     return this
   }
 
-  simpleQueryString (val: string | Symbol, opts: Record<string, any>): this {
+  simpleQueryString (val: string | Symbol, opts: T.SimpleQueryStringQuery): this {
     this[kState].push(Q.simpleQueryString(val, opts))
     return this
   }
 
-  term (key: string, val: string | string[] | Symbol, opts?: Record<string, any>): this {
+  term (key: string, val: string | Symbol): this
+  term (key: string, val: string | Symbol, opts: T.TermQuery): this
+  term (key: string, val: (string | Symbol)[]): this
+  term (key: string, val: (string | Symbol)[], opts: T.TermsQuery): this
+  term (key: string, val: any, opts?: any): this {
     if (Array.isArray(val)) {
       return this.terms(key, val, opts)
     }
@@ -113,23 +129,23 @@ class FluentQ {
     return this
   }
 
-  terms (key: string, val: string[] | Symbol, opts?: Record<string, any>): this {
+  terms (key: string, val: string[] | Symbol, opts?: T.TermsQuery): this {
     this[kState].push(Q.terms(key, val, opts))
     return this
   }
 
-  termsSet (key: string, val: string[] | Symbol, opts: Record<string, any>): this {
+  termsSet (key: string, val: (string | Symbol)[], opts?: T.TermsSetQuery): this {
     this[kState].push(Q.termsSet(key, val, opts))
     return this
   }
 
-  range (key: string, opts: Record<string, any>): this {
+  range (key: string, opts: T.RangeQuery): this {
     this[kState].push(Q.range(key, opts))
     return this
   }
 
   exists (key: string | Symbol): this
-  exists (key: string[]): this
+  exists (key: (string | Symbol)[]): this
   exists (key: any): this {
     if (Array.isArray(key)) {
       for (const k of key) {
@@ -141,30 +157,38 @@ class FluentQ {
     return this
   }
 
-  prefix (key: string, val: string | Symbol, opts?: Record<string, any>): this
-  prefix (key: string, val: string[], opts?: Record<string, any>): this
-  prefix (key: string, val: any, opts?: Record<string, any>): this {
+  prefix (key: string, val: string | Symbol): this
+  prefix (key: string, val: string | Symbol, opts: T.PrefixQuery): this
+  prefix (key: string, val: (string | Symbol)[]): this
+  prefix (key: string, val: (string | Symbol)[], opts: T.PrefixQuery): this
+  prefix (key: string, val: any, opts?: any): this {
     this[kState].push(Q.prefix(key, val, opts))
     return this
   }
 
-  wildcard (key: string, val: string | Symbol, opts?: Record<string, any>): this
-  wildcard (key: string, val: string[], opts?: Record<string, any>): this
-  wildcard (key: string, val: any, opts?: Record<string, any>): this {
+  wildcard (key: string, val: string | Symbol): this
+  wildcard (key: string, val: string | Symbol, opts: T.WildcardQuery): this
+  wildcard (key: string, val: (string | Symbol)[]): this
+  wildcard (key: string, val: (string | Symbol)[], opts: T.WildcardQuery): this
+  wildcard (key: string, val: any, opts?: any): any {
     this[kState].push(Q.wildcard(key, val, opts))
     return this
   }
 
-  regexp (key: string, val: string | Symbol, opts?: Record<string, any>): this
-  regexp (key: string, val: string[], opts?: Record<string, any>): this
-  regexp (key: string, val: any, opts?: Record<string, any>): this {
+  regexp (key: string, val: string | Symbol): this
+  regexp (key: string, val: string | Symbol, opts: T.RegexpQuery): this
+  regexp (key: string, val: (string | Symbol)[]): this
+  regexp (key: string, val: (string | Symbol)[], opts: T.RegexpQuery): this
+  regexp (key: string, val: any, opts?: any): this {
     this[kState].push(Q.regexp(key, val, opts))
     return this
   }
 
-  fuzzy (key: string, val: string | Symbol, opts?: Record<string, any>): this
-  fuzzy (key: string, val: string[], opts?: Record<string, any>): this
-  fuzzy (key: string, val: any, opts?: Record<string, any>): this {
+  fuzzy (key: string, val: string | Symbol): this
+  fuzzy (key: string, val: string | Symbol, opts: T.FuzzyQuery): this
+  fuzzy (key: string, val: (string | Symbol)[]): this
+  fuzzy (key: string, val: (string | Symbol)[], opts: T.FuzzyQuery): this
+  fuzzy (key: string, val: any, opts?: any): this {
     this[kState].push(Q.fuzzy(key, val, opts))
     return this
   }
@@ -224,27 +248,27 @@ class FluentQ {
     return this
   }
 
-  nested (path: string, query: any, opts: Record<string, any>): this {
+  nested (path: string, query: T.QueryContainer, opts: T.NestedQuery): this {
     this[kState].push(Q.nested(path, query, opts))
     return this
   }
 
-  constantScore (query: any, boost: number): this {
+  constantScore (query: T.QueryContainer, boost: number): this {
     this[kState].push(Q.constantScore(query, boost))
     return this
   }
 
-  disMax (queries: Record<string, any>[], opts?: Record<string, any>): this {
+  disMax (queries: T.QueryContainer[], opts?: T.DisMaxQuery): this {
     this[kState].push(Q.disMax(queries, opts))
     return this
   }
 
-  functionScore (function_score: any): this {
+  functionScore (function_score: T.FunctionScoreQuery): this {
     this[kState].push(Q.functionScore(function_score))
     return this
   }
 
-  boosting (boostOpts: Record<string, any>): this {
+  boosting (boostOpts: T.BoostingQuery): this {
     this[kState].push(Q.boosting(boostOpts))
     return this
   }

@@ -29,7 +29,7 @@ import T from '../es-types'
 type SearchRequest = Required<T.SearchRequest>['body']
 type BoolBlock = { bool: T.BoolQuery }
 type QueryBlock = { query: T.QueryContainer }
-function Q (...blocks: (SearchRequest | T.QueryContainer)[]): SearchRequest {
+function Q (...blocks: (SearchRequest | T.QueryContainer | T.QueryContainer[])[]): SearchRequest {
   blocks = blocks.flat()
   const topLevelKeys = [
     'aggs',
@@ -186,31 +186,31 @@ namespace Q {
     }
   }
 
-  // type MatchContainer<K> = { match: Record<keyof K, T.MatchQuery | string> }
   export function match (key: string, val: string | Symbol): { match: Record<string, string> }
-  export function match (key: string, val: string | Symbol, opts: T.MatchQuery): { match: T.MatchQuery }
+  export function match (key: string, val: string | Symbol, opts: T.MatchQuery): { match: Record<string, T.MatchQuery> }
   export function match (key: string, val: (string | Symbol)[]): { match: Record<string, string> }[]
-  export function match (key: string, val: (string | Symbol)[], opts: T.MatchQuery): { match: T.MatchQuery }[]
+  export function match (key: string, val: (string | Symbol)[], opts: T.MatchQuery): { match: Record<string, T.MatchQuery> }[]
   export function match (key: string, val: any, opts?: T.MatchQuery): any {
     return generateQueryObject('match', key, val, opts)
   }
 
-  type MatchPhraseContainer = { match_phrase: Record<string, T.MatchPhraseQuery | string> }
-  export function matchPhrase (key: string, val: string | Symbol, opts?: T.MatchPhraseQuery): MatchPhraseContainer
-  export function matchPhrase (key: string, val: string[], opts?: T.MatchPhraseQuery): MatchPhraseContainer[]
+  export function matchPhrase (key: string, val: string | Symbol): { match_phrase: Record<string, string> }
+  export function matchPhrase (key: string, val: string | Symbol, opts: T.MatchPhraseQuery): { match_phrase: Record<string, T.MatchPhraseQuery> }
+  export function matchPhrase (key: string, val: (string | Symbol)[]): { match_phrase: Record<string, string> }[]
+  export function matchPhrase (key: string, val: (string | Symbol)[], opts: T.MatchPhraseQuery): { match_phrase: Record<string, T.MatchPhraseQuery> }[]
   export function matchPhrase (key: string, val: any, opts?: T.MatchPhraseQuery): any {
     return generateQueryObject('match_phrase', key, val, opts)
   }
 
-  type MatchPhrasePrefixContainer = { match_phrase_prefix: Record<string, T.MatchBoolPrefixQuery | string> }
-  export function matchPhrasePrefix (key: string, val: string | Symbol, opts?: T.MatchPhrasePrefixQuery): MatchPhrasePrefixContainer
-  export function matchPhrasePrefix (key: string, val: string[], opts?: T.MatchPhrasePrefixQuery): MatchPhrasePrefixContainer[]
+  export function matchPhrasePrefix (key: string, val: string | Symbol): { match_phrase_prefix: Record<string, string> }
+  export function matchPhrasePrefix (key: string, val: string | Symbol, opts: T.MatchPhrasePrefixQuery): { match_phrase_prefix: Record<string, T.MatchPhrasePrefixQuery> }
+  export function matchPhrasePrefix (key: string, val: (string | Symbol)[]): { match_phrase_prefix: Record<string, string> }[]
+  export function matchPhrasePrefix (key: string, val: (string | Symbol)[], opts: T.MatchPhrasePrefixQuery): { match_phrase_prefix: Record<string, T.MatchPhrasePrefixQuery> }[]
   export function matchPhrasePrefix (key: string, val: any, opts?: T.MatchPhrasePrefixQuery): any {
     return generateQueryObject('match_phrase_prefix', key, val, opts)
   }
 
-  type MultiMatchContainer = { multi_match: T.MultiMatchQuery }
-  export function multiMatch (keys: string[], val: string | Symbol, opts?: T.MultiMatchQuery): MultiMatchContainer {
+  export function multiMatch (keys: string[], val: string | Symbol, opts?: T.MultiMatchQuery): { multi_match: T.MultiMatchQuery } {
     return {
       multi_match: {
         // @ts-expect-error
@@ -221,25 +221,23 @@ namespace Q {
     }
   }
 
-  type MatchAllContainer = { match_all: T.MatchAllQuery }
-  export function matchAll (opts?: T.MatchAllQuery): MatchAllContainer {
+  export function matchAll (opts?: T.MatchAllQuery): { match_all: T.MatchAllQuery } {
     return { match_all: { ...opts } }
   }
 
-  type MatchNoneContainer = { match_none: {} }
-  export function matchNone (): MatchNoneContainer {
+  export function matchNone (): { match_none: {} } {
     return { match_none: {} }
   }
 
-  type CommonContainer = { common: Record<string, T.CommonTermsQuery | string> }
-  export function common (key: string, val: string | Symbol, opts: T.CommonTermsQuery): CommonContainer
-  export function common (key: string, val: string[], opts: T.CommonTermsQuery): CommonContainer[]
-  export function common (key: string, val: any, opts: T.CommonTermsQuery): any {
+  export function common (key: string, val: string | Symbol): { common: Record<string, string> }
+  export function common (key: string, val: string | Symbol, opts: T.CommonTermsQuery): { common: Record<string, T.CommonTermsQuery> }
+  export function common (key: string, val: (string | Symbol)[]): { common: Record<string, string> }[]
+  export function common (key: string, val: (string | Symbol)[], opts: T.CommonTermsQuery): { common: Record<string, T.CommonTermsQuery> }[]
+  export function common (key: string, val: any, opts?: T.CommonTermsQuery): any {
     return generateQueryObject('common', key, val, opts)
   }
 
-  type QueryStringContainer = { query_string: T.QueryStringQuery }
-  export function queryString (val: string | Symbol, opts: T.QueryStringQuery): QueryStringContainer {
+  export function queryString (val: string | Symbol, opts: T.QueryStringQuery): { query_string: T.QueryStringQuery } {
     return {
       query_string: {
         // @ts-expect-error
@@ -249,8 +247,7 @@ namespace Q {
     }
   }
 
-  type SimpleQueryStringContainer = { simple_query_string: T.SimpleQueryStringQuery }
-  export function simpleQueryString (val: string | Symbol, opts: T.SimpleQueryStringQuery): SimpleQueryStringContainer {
+  export function simpleQueryString (val: string | Symbol, opts: T.SimpleQueryStringQuery): { simple_query_string: T.SimpleQueryStringQuery } {
     return {
       simple_query_string: {
         // @ts-expect-error
@@ -260,18 +257,18 @@ namespace Q {
     }
   }
 
-  type TermContainer = { term: Record<string, T.TermQuery | string> }
-  export function term (key: string, val: string | Symbol, opts?: T.TermQuery): TermContainer
-  export function term (key: string, val: string[], opts?: T.TermQuery): TermsContainer
-  export function term (key: string, val: any, opts?: Record<string, any>): any {
+  export function term (key: string, val: string | Symbol): { term: Record<string, string> }
+  export function term (key: string, val: string | Symbol, opts: T.TermQuery): { term: Record<string, T.TermQuery> }
+  export function term (key: string, val: (string | Symbol)[]): { terms: T.TermsQuery }
+  export function term (key: string, val: (string | Symbol)[], opts: T.TermsQuery): { terms: T.TermsQuery }
+  export function term (key: string, val: any, opts?: any): any {
     if (Array.isArray(val)) {
       return Q.terms(key, val, opts)
     }
     return generateValueObject('term', key, val, opts)
   }
 
-  type TermsContainer = { terms: T.TermsQuery }
-  export function terms (key: string, val: string[] | Symbol, opts?: T.TermsQuery): TermsContainer {
+  export function terms (key: string, val: string[] | Symbol, opts?: T.TermsQuery): { terms: T.TermsQuery } {
     return {
       terms: {
         [key]: val,
@@ -280,9 +277,9 @@ namespace Q {
     }
   }
 
-  type TermsSetContainer = { terms_set: T.TermsSetQuery }
-  export function termsSet (key: string, val: string[] | Symbol, opts: T.TermsSetQuery): TermsSetContainer {
+  export function termsSet (key: string, val: (string | Symbol)[], opts?: T.TermsSetQuery): { terms_set: Record<string, T.TermsSetQuery> } {
     return {
+      // @ts-ignore
       terms_set: {
         [key]: {
           terms: val,
@@ -292,14 +289,12 @@ namespace Q {
     }
   }
 
-  type RangeContainer = { range: T.RangeQuery }
-  export function range (key: string, val: T.RangeQuery): RangeContainer {
+  export function range (key: string, val: T.RangeQuery): { range: Record<string, T.RangeQuery> } {
     return { range: { [key]: val } }
   }
 
-  type ExistContainer = { exists: T.ExistsQuery }
-  export function exists (key: string): ExistContainer
-  export function exists (key: string[]): ExistContainer[]
+  export function exists (key: string | Symbol): { exists: T.ExistsQuery }
+  export function exists (key: (string | Symbol)[]): { exists: T.ExistsQuery }[]
   export function exists (key: any): any {
     if (Array.isArray(key)) {
       return key.map(k => exists(k))
@@ -307,36 +302,39 @@ namespace Q {
     return { exists: { field: key } }
   }
 
-  type PrefixContainer = { prefix: Record<string, T.PrefixQuery | string> }
-  export function prefix (key: string, val: string | Symbol, opts?: T.PrefixQuery): PrefixContainer
-  export function prefix (key: string, val: string[], opts?: T.PrefixQuery): PrefixContainer[]
-  export function prefix (key: string, val: any, opts?: T.PrefixQuery): any {
+  export function prefix (key: string, val: string | Symbol): { prefix: Record<string, string> }
+  export function prefix (key: string, val: string | Symbol, opts: T.PrefixQuery): { prefix: Record<string, T.PrefixQuery> }
+  export function prefix (key: string, val: (string | Symbol)[]): { prefix: Record<string, string> }[]
+  export function prefix (key: string, val: (string | Symbol)[], opts: T.PrefixQuery): { prefix: Record<string, T.PrefixQuery> }
+  export function prefix (key: string, val: any, opts?: any): any {
     return generateValueObject('prefix', key, val, opts)
   }
 
-  type WildcardContainer = { wildcard: Record<string, T.WildcardQuery | string> }
-  export function wildcard (key: string, val: string | Symbol, opts?: T.WildcardQuery): WildcardContainer
-  export function wildcard (key: string, val: string[], opts?: T.WildcardQuery): WildcardContainer[]
-  export function wildcard (key: string, val: any, opts?: T.WildcardQuery): any {
+  export function wildcard (key: string, val: string | Symbol): { wildcard: Record<string, string> }
+  export function wildcard (key: string, val: string | Symbol, opts: T.WildcardQuery): { wildcard: Record<string, T.WildcardQuery> }
+  export function wildcard (key: string, val: (string | Symbol)[]): { wildcard: Record<string, string> }[]
+  export function wildcard (key: string, val: (string | Symbol)[], opts: T.WildcardQuery): { wildcard: Record<string, T.WildcardQuery> }
+  export function wildcard (key: string, val: any, opts?: any): any {
     return generateValueObject('wildcard', key, val, opts)
   }
 
-  type RegExpContainer = { regexp: Record<string, T.RegexpQuery | string> }
-  export function regexp (key: string, val: string | Symbol, opts?: T.RegexpQuery): RegExpContainer
-  export function regexp (key: string, val: string[], opts?: T.RegexpQuery): RegExpContainer[]
-  export function regexp (key: string, val: any, opts?: T.RegexpQuery): any {
+  export function regexp (key: string, val: string | Symbol): { regexp: Record<string, string> }
+  export function regexp (key: string, val: string | Symbol, opts: T.RegexpQuery): { regexp: Record<string, T.RegexpQuery> }
+  export function regexp (key: string, val: (string | Symbol)[]): { regexp: Record<string, string> }[]
+  export function regexp (key: string, val: (string | Symbol)[], opts: T.RegexpQuery): { regexp: Record<string, T.RegexpQuery> }
+  export function regexp (key: string, val: any, opts?: any): any {
     return generateValueObject('regexp', key, val, opts)
   }
 
-  type FuzzyContainer = { fuzzy: Record<string, T.FuzzyQuery | string> }
-  export function fuzzy (key: string, val: string | Symbol, opts?: T.FuzzyQuery): FuzzyContainer
-  export function fuzzy (key: string, val: string[], opts?: T.FuzzyQuery): FuzzyContainer[]
-  export function fuzzy (key: string, val: any, opts?: T.FuzzyQuery): any {
+  export function fuzzy (key: string, val: string | Symbol): { fuzzy: Record<string, string> }
+  export function fuzzy (key: string, val: string | Symbol, opts: T.FuzzyQuery): { fuzzy: Record<string, T.FuzzyQuery> }
+  export function fuzzy (key: string, val: (string | Symbol)[]): { fuzzy: Record<string, string> }[]
+  export function fuzzy (key: string, val: (string | Symbol)[], opts: T.FuzzyQuery): { fuzzy: Record<string, T.FuzzyQuery> }
+  export function fuzzy (key: string, val: any, opts?: any): any {
     return generateValueObject('fuzzy', key, val, opts)
   }
 
-  type IdsContainer = { ids: Record<string, T.IdsQuery> }
-  export function ids (key: string, val: string[] | Symbol, opts: T.IdsQuery): IdsContainer {
+  export function ids (key: string, val: string[] | Symbol, opts: T.IdsQuery): { ids: Record<string, T.IdsQuery> } {
     return {
       // @ts-expect-error
       ids: {
@@ -370,7 +368,7 @@ namespace Q {
     return { filter: queries.flatMap(mergeableFilter) }
   }
 
-  export function bool (...queries: (T.QueryContainer | T.BoolQuery)[]): BoolBlock {
+  export function bool (...queries: (T.QueryContainer | T.QueryContainer[] | T.BoolQuery)[]): BoolBlock {
     if (queries.length === 0) {
       return { bool: {} }
     }
@@ -509,52 +507,43 @@ namespace Q {
     return { _name: queryName }
   }
 
-  type NestedContainer = { query: { nested: T.NestedQuery } }
-  export function nested (path: string, query: any, opts: Record<string, any>): NestedContainer {
+  export function nested (path: string, query: T.QueryContainer, opts: T.NestedQuery): { nested: T.NestedQuery } {
     return {
-      query: {
-        nested: {
-          path,
-          ...opts,
-          ...query
-        }
+      nested: {
+        path,
+        ...opts,
+        ...query
       }
     }
   }
 
-  type ConstantScoreContainer = { query: { constant_score: T.ConstantScoreQuery } }
-  export function constantScore (query: any, boost: number): ConstantScoreContainer {
+  export function constantScore (query: T.QueryContainer, boost: number): { constant_score: T.ConstantScoreQuery } {
     return {
-      query: {
-        constant_score: {
-          ...query,
-          boost
-        }
+      constant_score: {
+        filter: query,
+        boost
       }
     }
   }
 
-  type DisMaxContainer = { query: { dis_max: T.DisMaxQuery } }
-  export function disMax (queries: T.QueryContainer[], opts?: Record<string, any>): DisMaxContainer {
+  export function disMax (queries: T.QueryContainer[], opts?: T.DisMaxQuery): { dis_max: T.DisMaxQuery } {
     return {
-      query: {
-        dis_max: {
-          ...opts,
-          queries: queries.flat()
-        }
+      dis_max: {
+        ...opts,
+        queries: queries.flat()
       }
     }
   }
 
-  export function functionScore (function_score: any): t.QueryBlock {
-    return { query: { function_score } }
+  export function functionScore (function_score: T.FunctionScoreQuery): { function_score: T.FunctionScoreQuery } {
+    return { function_score }
   }
 
-  export function boosting (boostOpts: Record<string, any>): t.QueryBlock {
-    return { query: { boosting: boostOpts } }
+  export function boosting (boostOpts: T.BoostingQuery): { boosting: T.BoostingQuery } {
+    return { boosting: boostOpts }
   }
 
-  export function sort (key: string | any[], opts: Record<string, any> | string): t.Condition {
+  export function sort (key: string | any[], opts: Record<string, any> | string): Record<string, any> | Record<string, any>[] {
     if (Array.isArray(key) === true) {
       return { sort: key }
     }
@@ -564,7 +553,7 @@ namespace Q {
     }
   }
 
-  export function size (s: number | Symbol): t.Condition {
+  export function size (s: number | Symbol): { size: number | Symbol } {
     return { size: s }
   }
 }
