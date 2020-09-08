@@ -156,6 +156,30 @@ test('Compile a query (unsafe)', t => {
     t.is(err.message, 'The query does not contain any use of `Q.params`')
   }
 
+  const badQuery = Q(
+    Q.match('a', Q.param('a')),
+    Q.match('b', Q.param('b')),
+    Q.match('c', Q.param('c')),
+    // @ts-expect-error
+    { ['__proto__']: 42 },
+    { constructor: { prototype: 42 } }
+  )
+
+  const compiledBadQuery = Q.compileUnsafe<Input>(badQuery)
+
+  t.deepEqual(compiledBadQuery({ a: 1, b: 2, c: 3 }), {
+    query: {
+      bool: {
+        must: [
+          { match: { a: 1 } },
+          { match: { b: 2 } },
+          { match: { c: 3 } },
+          {}
+        ]
+      }
+    }
+  })
+
   t.end()
 })
 
@@ -501,11 +525,10 @@ test('fuzzy returns a fuzzy query', t => {
 test('ids returns a ids query', t => {
   t.type(Q.ids, 'function')
 
-  t.deepEqual(Q.ids('foo', ['bar', 'baz'], { type: '_doc' }), {
+  t.deepEqual(Q.ids('foo', ['bar', 'baz']), {
     ids: {
       foo: {
-        values: ['bar', 'baz'],
-        type: '_doc'
+        values: ['bar', 'baz']
       }
     }
   })
@@ -854,7 +877,7 @@ test('bool returns a bool query block', t => {
     bool: {
       must: [
         { match: { foo: 'bar' } },
-        { match: { foo: 'baz'} }
+        { match: { foo: 'baz' } }
       ]
     }
   })
