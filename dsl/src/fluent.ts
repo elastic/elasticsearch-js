@@ -193,8 +193,8 @@ class FluentQ {
     return this
   }
 
-  ids (key: string, val: string[] | Symbol, opts: T.IdsQuery): this {
-    this[kState].push(Q.ids(key, val, opts))
+  ids (key: string, val: (string | Symbol)[]): this {
+    this[kState].push(Q.ids(key, val))
     return this
   }
 

@@ -91,7 +91,19 @@ namespace Q {
   }
 
   export function compileUnsafe<TInput extends Record<string, any> = Record<string, any>> (query: Record<string, any>): t.compiledFunction<TInput> {
-    let stringified = JSON.stringify(query, (key, value) => typeof value === 'symbol' ? `###${value.description!}###` : value)
+    let stringified = JSON.stringify(query, (key, value) => {
+      if (typeof value === 'symbol') {
+        return `###${value.description!}###`
+      } else if (key === '__proto__') {
+        return undefined
+      } else if (key === 'constructor' && typeof value === 'object' &&
+                 value !== null && value.prototype !== undefined) {
+        return undefined
+      } else {
+        return value
+      }
+    })
+
     const keys: string[] = []
     const matches = stringified.match(/"###\w+###"/g)
     if (matches === null) {
@@ -121,6 +133,7 @@ namespace Q {
   export function compile<TInput extends Record<string, any> = Record<string, any>> (query: Record<string, any>): t.compiledFunction<TInput> {
     const params: Array<{ path: string[], key: string }> = []
     traverse(query, [])
+
     if (params.length === 0) {
       throw new Error('The query does not contain any use of `Q.params`')
     }
@@ -154,11 +167,23 @@ namespace Q {
   export function compileJson<TInput extends Record<string, any> = Record<string, any>> (query: Record<string, any>): t.compiledFunction<TInput> {
     const params: Array<{ path: string[], key: string }> = []
     traverse(query, [])
+
     if (params.length === 0) {
       throw new Error('The query does not contain any use of `Q.params`')
     }
 
-    const stringified = JSON.stringify(query, (key, value) => typeof value === 'symbol' ? `###${value.description!}###` : value)
+    const stringified = JSON.stringify(query, (key, value) => {
+      if (typeof value === 'symbol') {
+        return `###${value.description!}###`
+      } else if (key === '__proto__') {
+        return undefined
+      } else if (key === 'constructor' && typeof value === 'object' &&
+                 value !== null && value.prototype !== undefined) {
+        return undefined
+      } else {
+        return value
+      }
+    })
 
     return function (input: TInput): Record<string, any> {
       const q = JSON.parse(stringified)
@@ -334,13 +359,12 @@ namespace Q {
     return generateValueObject('fuzzy', key, val, opts)
   }
 
-  export function ids (key: string, val: string[] | Symbol, opts: T.IdsQuery): { ids: Record<string, T.IdsQuery> } {
+  export function ids (key: string, val: (string | Symbol)[]): { ids: Record<string, T.IdsQuery> } {
     return {
       // @ts-expect-error
       ids: {
         [key]: {
-          values: val,
-          ...opts
+          values: val
         }
       }
     }
