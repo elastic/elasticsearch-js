@@ -85,8 +85,14 @@ function Q (...blocks: (SearchRequest | T.QueryContainer | T.QueryContainer[] | 
   for (const block of blocks) {
     const key = Object.keys(block)[0]
     if (topLevelKeys.includes(key)) {
-      // @ts-expect-error
-      body[key] = block[key]
+      if (key === 'sort') {
+        body.sort = body.sort || []
+        // @ts-expect-error
+        body.sort.push.apply(body.sort, block[key])
+      } else {
+        // @ts-expect-error
+        body[key] = block[key]
+      }
     }
   }
 
@@ -577,14 +583,17 @@ namespace Q {
     return { boosting: boostOpts }
   }
 
-  export function sort (key: string | any[], opts: Record<string, any> | string): Record<string, any> | Record<string, any>[] {
-    if (Array.isArray(key) === true) {
-      return { sort: key }
+  export function sort (key: string | string[]): { sort: string[] }
+  export function sort (key: string | string[], order: T.SortOrder): { sort: Record<string, T.SortOrder>[] }
+  export function sort (key: string | string[], opts: T.Sort): { sort: Record<string, T.Sort>[] }
+  export function sort (key: string | string[], opts?: any): any {
+    if (opts == null) {
+      return { sort: Array.isArray(key) ? key : [key] }
     }
-    return {
-      // @ts-ignore
-      sort: [{ [key]: opts }]
+    if (Array.isArray(key)) {
+      return { sort: key.map(k => ({ [k]: opts })) }
     }
+    return { sort: [{ [key]: opts }] }
   }
 
   export function size (s: number | Symbol): { size: number } {

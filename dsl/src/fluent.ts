@@ -274,8 +274,10 @@ class FluentQ {
     return this
   }
 
-  sort (key: string | any[], opts: Record<string, any>): this
-  sort (key: string | any[], opts: any): this {
+  sort (key: string | string[]): this
+  sort (key: string | string[], order: T.SortOrder): this
+  sort (key: string | string[], opts: T.Sort): this
+  sort (key: string | string[], opts?: any): this {
     this[kState].push(Q.sort(key, opts))
     return this
   }
@@ -287,6 +289,11 @@ class FluentQ {
 
   aggs (...aggregations: Record<string, any>[]): this {
     this[kState].push(A(...aggregations))
+    return this
+  }
+
+  raw (obj: Record<string, any>): this {
+    this[kState].push(obj)
     return this
   }
 }
