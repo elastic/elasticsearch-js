@@ -9298,35 +9298,6 @@ link:{ref}/rollup-stop-job.html[Documentation] +
 
 |===
 
-=== searchableSnapshots.clearCache
-*Stability:* experimental
-[source,ts]
-----
-client.searchableSnapshots.clearCache({
-  index: string | string[],
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'none' | 'all'
-})
-----
-link:{ref}/searchable-snapshots-api-clear-cache.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|===
-
 === searchableSnapshots.mount
 *Stability:* experimental
 [source,ts]
@@ -9356,38 +9327,6 @@ link:{ref}/searchable-snapshots-api-mount-snapshot.html[Documentation] +
 
 |`body`
 |`object` - The restore configuration for mounting the snapshot as searchable
-
-|===
-
-=== searchableSnapshots.repositoryStats
-*Stability:* experimental
-[source,ts]
-----
-client.searchableSnapshots.repositoryStats({
-  repository: string
-})
-----
-link:{ref}/searchable-snapshots-repository-stats.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string` - The repository for which to get the stats for
-
-|===
-
-=== searchableSnapshots.stats
-*Stability:* experimental
-[source,ts]
-----
-client.searchableSnapshots.stats({
-  index: string | string[]
-})
-----
-link:{ref}/searchable-snapshots-api-stats.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names
 
 |===
 

@@ -549,16 +549,12 @@ function ESAPI (opts) {
       clear_cache: lazyLoad('searchable_snapshots.clear_cache', opts),
       clearCache: lazyLoad('searchable_snapshots.clear_cache', opts),
       mount: lazyLoad('searchable_snapshots.mount', opts),
-      repository_stats: lazyLoad('searchable_snapshots.repository_stats', opts),
-      repositoryStats: lazyLoad('searchable_snapshots.repository_stats', opts),
       stats: lazyLoad('searchable_snapshots.stats', opts)
     },
     searchableSnapshots: {
       clear_cache: lazyLoad('searchable_snapshots.clear_cache', opts),
       clearCache: lazyLoad('searchable_snapshots.clear_cache', opts),
       mount: lazyLoad('searchable_snapshots.mount', opts),
-      repository_stats: lazyLoad('searchable_snapshots.repository_stats', opts),
-      repositoryStats: lazyLoad('searchable_snapshots.repository_stats', opts),
       stats: lazyLoad('searchable_snapshots.stats', opts)
     },
     security: {
