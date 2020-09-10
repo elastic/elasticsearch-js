@@ -717,7 +717,10 @@ function ESAPI (opts) {
   return apis
 
   function handleError (err, callback) {
-    if (callback) return callback(err, result)
+    if (callback) {
+      process.nextTick(callback, err, result)
+      return { then: noop, catch: noop, abort: noop }
+    }
     return Promise.reject(err)
   }
 
@@ -751,5 +754,7 @@ function lazyLoad (file, opts) {
     return fn(params, options, callback)
   }
 }
+
+function noop () {}
 
 module.exports = ESAPI
