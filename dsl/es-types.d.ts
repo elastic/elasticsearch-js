@@ -1,3 +1,22 @@
+/*
+ * Licensed to Elasticsearch B.V. under one or more contributor
+ * license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright
+ * ownership. Elasticsearch B.V. licenses this file to you under
+ * the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 declare namespace T {
   export type Uri = string
 
@@ -96,6 +115,14 @@ declare namespace T {
 
   export type Timestamp = string
 
+  export type Fuzziness = string | integer
+
+  export type MultiTermQueryRewrite = string
+
+  export type GeoTilePrecision = number
+
+  export type GeoHashPrecision = number
+
   export interface Aggregate {
     meta?: Record<string, object>
   }
@@ -108,6 +135,7 @@ declare namespace T {
   export interface AggregationContainer {
     adjacency_matrix?: AdjacencyMatrixAggregation
     aggs?: Record<string, AggregationContainer>
+    aggregations?: Record<string, AggregationContainer>
     auto_date_histogram?: AutoDateHistogramAggregation
     avg?: AverageAggregation
     avg_bucket?: AverageBucketAggregation
@@ -125,7 +153,7 @@ declare namespace T {
     derivative?: DerivativeAggregation
     extended_stats?: ExtendedStatsAggregation
     extended_stats_bucket?: ExtendedStatsBucketAggregation
-    filter?: FilterAggregation
+    filter?: QueryContainer
     filters?: FiltersAggregation
     geo_bounds?: GeoBoundsAggregation
     geo_centroid?: GeoCentroidAggregation
@@ -139,7 +167,7 @@ declare namespace T {
     max?: MaxAggregation
     max_bucket?: MaxBucketAggregation
     median_absolute_deviation?: MedianAbsoluteDeviationAggregation
-    meta?: Record<string, object>
+    meta?: Record<string, string | number | boolean>
     min?: MinAggregation
     min_bucket?: MinBucketAggregation
     missing?: MissingAggregation
@@ -170,6 +198,8 @@ declare namespace T {
     weighted_avg?: WeightedAverageAggregation
   }
 
+  export type Missing = string | integer | boolean
+
   export interface BucketAggregation {
     aggregations?: Record<string, AggregationContainer>
   }
@@ -195,17 +225,16 @@ declare namespace T {
   }
 
   export interface CompositeAggregation {
-    after?: Record<string, object>
+    after?: Record<string, string | float>
     size?: integer
-    sources?: CompositeAggregationSource[]
+    sources?: Array<Record<string, CompositeAggregationSource>>
   }
 
   export interface CompositeAggregationSource {
-    field?: Field
-    missing_bucket?: boolean
-    name?: string
-    order?: SortOrder
-    source_type?: string
+    terms?: TermsAggregation
+    histogram?: HistogramAggregation
+    date_histogram?: DateHistogramAggregation
+    geotile_grid?: GeoTileGridAggregation
   }
 
   export interface DateHistogramAggregation {
@@ -227,19 +256,15 @@ declare namespace T {
   export interface DateRangeAggregation {
     field?: Field
     format?: string
-    missing?: object
+    missing?: Missing
     ranges?: DateRangeExpression[]
     time_zone?: string
   }
 
   export interface DateRangeExpression {
-    from?: DateMath
+    from?: DateMath | float
     key?: string
-    to?: DateMath
-  }
-
-  export interface FilterAggregation {
-    filter?: QueryContainer
+    to?: DateMath | float
   }
 
   export interface FiltersAggregation {
@@ -251,7 +276,7 @@ declare namespace T {
   export interface GeoDistanceAggregation {
     distance_type?: GeoDistanceType
     field?: Field
-    origin?: GeoLocation
+    origin?: GeoLocation | string
     ranges?: AggregationRange[]
     unit?: DistanceUnit
   }
@@ -288,6 +313,7 @@ declare namespace T {
     offset?: double
     order?: HistogramOrder
     script?: Script
+    format?: string
   }
 
   export interface HistogramOrder {
@@ -312,6 +338,7 @@ declare namespace T {
 
   export interface MissingAggregation {
     field?: Field
+    missing?: Missing
   }
 
   export interface NestedAggregation {
@@ -329,12 +356,13 @@ declare namespace T {
   }
 
   export interface RareTermsAggregation {
-    exclude?: TermsExclude
+    exclude?: string | string[]
     field?: Field
-    include?: TermsInclude
+    include?: string | string[] | TermsInclude
     max_doc_count?: long
-    missing?: object
+    missing?: Missing
     precision?: double
+    value_type?: string
   }
 
   export interface ReverseNestedAggregation {
@@ -348,19 +376,14 @@ declare namespace T {
     shard_size?: integer
   }
 
-  export interface IncludeExclude {
-    pattern?: string
-    values?: string[]
-  }
-
   export interface SignificantTermsAggregation {
     background_filter?: QueryContainer
     chi_square?: ChiSquareHeuristic
-    exclude?: IncludeExclude
+    exclude?: string | string[]
     execution_hint?: TermsAggregationExecutionHint
     field?: Field
     gnd?: GoogleNormalizedDistanceHeuristic
-    include?: IncludeExclude
+    include?: string | string[]
     min_doc_count?: long
     mutual_information?: MutualInformationHeuristic
     percentage?: PercentageScoreHeuristic
@@ -394,12 +417,12 @@ declare namespace T {
   export interface SignificantTextAggregation {
     background_filter?: QueryContainer
     chi_square?: ChiSquareHeuristic
-    exclude?: IncludeExclude
+    exclude?: string | string[]
     execution_hint?: TermsAggregationExecutionHint
     field?: Field
     filter_duplicate_text?: boolean
     gnd?: GoogleNormalizedDistanceHeuristic
-    include?: IncludeExclude
+    include?: string | string[]
     min_doc_count?: long
     mutual_information?: MutualInformationHeuristic
     percentage?: PercentageScoreHeuristic
@@ -412,38 +435,23 @@ declare namespace T {
 
   export interface TermsAggregation {
     collect_mode?: TermsAggregationCollectMode
-    exclude?: TermsExclude
+    exclude?: string | string[]
     execution_hint?: TermsAggregationExecutionHint
     field?: Field
-    include?: TermsInclude
+    include?: string | string[] | TermsInclude
     min_doc_count?: integer
-    missing?: object
-    order?: TermsOrder[]
+    missing?: Missing
+    value_type?: string
+    order?: Record<string, SortOrder>
     script?: Script
     shard_size?: integer
     show_term_doc_count_error?: boolean
     size?: integer
   }
 
-  export interface TermsExclude {
-    pattern?: string
-    values?: string[]
-  }
-
   export interface TermsInclude {
     num_partitions?: long
     partition?: long
-    pattern?: string
-    values?: string[]
-  }
-
-  export interface TermsOrder {
-    count_ascending?: TermsOrder
-    count_descending?: TermsOrder
-    key?: string
-    key_ascending?: TermsOrder
-    key_descending?: TermsOrder
-    order?: SortOrder
   }
 
   export interface MatrixAggregation {
@@ -475,10 +483,12 @@ declare namespace T {
   export interface CardinalityAggregation {
     precision_threshold?: integer
     rehash?: boolean
+    field?: Field
   }
 
   export interface ExtendedStatsAggregation {
     sigma?: double
+    field?: Field
   }
 
   export interface GeoBoundsAggregation {
@@ -493,6 +503,8 @@ declare namespace T {
 
   export interface MedianAbsoluteDeviationAggregation {
     compression?: double
+    field?: Field
+    missing?: Missing
   }
 
   export interface MinAggregation {
@@ -500,17 +512,27 @@ declare namespace T {
 
   export interface PercentileRanksAggregation {
     keyed?: boolean
-    method?: PercentilesMethod
     values?: double[]
+    field?: Field
+    hdr?: HdrMethod
+    tdigest?: TDigest
   }
 
   export interface PercentilesAggregation {
     keyed?: boolean
-    method?: PercentilesMethod
     percents?: double[]
+    field?: Field
+    missing?: Missing
+    hdr?: HdrMethod
+    tdigest?: TDigest
   }
 
-  export interface PercentilesMethod {
+  export interface HdrMethod {
+    number_of_significant_value_digits?: integer
+  }
+
+  export interface TDigest {
+    compression?: integer
   }
 
   export interface ScriptedMetricAggregation {
@@ -541,11 +563,12 @@ declare namespace T {
     highlight?: Highlight
     script_fields?: Record<string, ScriptField>
     size?: integer
-    sort?: Sort[]
+    sort?: string | Array<Record<string, Sort | SortOrder>>
     _source?: boolean | SourceFilter
     stored_fields?: Field[]
     track_scores?: boolean
     version?: boolean
+    seq_no_primary_term?: boolean
   }
 
   export interface TopMetricsAggregation {
@@ -3304,14 +3327,6 @@ declare namespace T {
   export interface DateMathTime {
     factor?: integer
     interval?: DateMathTimeUnit
-  }
-
-  export interface Fuzziness {
-    auto?: boolean
-    edit_distance?: integer
-    high?: integer
-    low?: integer
-    ratio?: double
   }
 
   export interface Distance {
@@ -6605,12 +6620,11 @@ declare namespace T {
     snapshots?: SnapshotStatus[]
   }
 
-  export interface MatchAllQuery {
+  export interface MatchAllQuery extends QueryBase {
     norm_field?: string
-    boost?: float
   }
 
-  export interface MatchNoneQuery {
+  export interface MatchNoneQuery extends QueryBase {
   }
 
   export interface QueryContainer {
@@ -6635,7 +6649,7 @@ declare namespace T {
     is_strict?: boolean
     is_verbatim?: boolean
     is_writable?: boolean
-    match?: Record<string, MatchQuery | string>
+    match?: Record<string, MatchQuery | string | float | boolean>
     match_all?: MatchAllQuery
     match_bool_prefix?: Record<string, MatchBoolPrefixQuery | string>
     match_none?: MatchNoneQuery
@@ -6649,7 +6663,7 @@ declare namespace T {
     pinned?: PinnedQuery
     prefix?: Record<string, PrefixQuery | string>
     query_string?: QueryStringQuery
-    range?: RangeQuery
+    range?: Record<string, RangeQuery>
     rank_feature?: Record<string, RankFeatureQuery | string>
     raw_query?: RawQuery
     regexp?: Record<string, RegexpQuery | string>
@@ -6666,8 +6680,8 @@ declare namespace T {
     span_or?: SpanOrQuery
     span_term?: Record<string, SpanTermQuery | string>
     span_within?: SpanWithinQuery
-    term?: Record<string, TermQuery | string>
-    terms?: Record<string, TermsQuery | string>
+    term?: Record<string, TermQuery | string | float | boolean>
+    terms?: Record<string, TermsQuery | string[]>
     terms_set?: Record<string, TermsSetQuery | string>
     wildcard?: Record<string, WildcardQuery | string>
   }
@@ -6683,21 +6697,17 @@ declare namespace T {
     field?: Field
   }
 
-  export interface Query {
-    boost?: double
-    conditionless?: boolean
-    is_strict?: boolean
-    is_verbatim?: boolean
-    is_writable?: boolean
+  export interface QueryBase {
+    boost?: float
     _name?: string
   }
 
   export interface BoolQuery {
-    filter?: QueryContainer[]
+    filter?: QueryContainer | QueryContainer[]
     minimum_should_match?: MinimumShouldMatch
-    must?: QueryContainer[]
-    must_not?: QueryContainer[]
-    should?: QueryContainer[]
+    must?: QueryContainer | QueryContainer[]
+    must_not?: QueryContainer | QueryContainer[]
+    should?: QueryContainer | QueryContainer[]
     _name?: string
   }
 
@@ -6733,14 +6743,13 @@ declare namespace T {
     weight?: double
   }
 
-  export interface CommonTermsQuery {
+  export interface CommonTermsQuery extends QueryBase {
     analyzer?: string
     cutoff_frequency?: double
     high_freq_operator?: Operator
     low_freq_operator?: Operator
     minimum_should_match?: MinimumShouldMatch
     query?: string
-    boost?: float
   }
 
   export interface Intervals {
@@ -6751,10 +6760,12 @@ declare namespace T {
     intervals?: IntervalsContainer[]
     max_gaps?: integer
     ordered?: boolean
+    filter?: IntervalsFilter
   }
 
   export interface IntervalsAnyOf {
     intervals?: IntervalsContainer[]
+    filter?: IntervalsFilter
   }
 
   export interface IntervalsContainer {
@@ -6793,9 +6804,7 @@ declare namespace T {
     ordered?: boolean
     query?: string
     use_field?: Field
-  }
-
-  export interface IntervalsNoFilter {
+    filter?: IntervalsFilter
   }
 
   export interface IntervalsPrefix {
@@ -6804,7 +6813,13 @@ declare namespace T {
     use_field?: Field
   }
 
-  export interface IntervalsQuery {
+  export interface IntervalsQuery extends QueryBase {
+    all_of?: IntervalsAllOf
+    any_of?: IntervalsAnyOf
+    fuzzy?: IntervalsFuzzy
+    match?: IntervalsMatch
+    prefix?: IntervalsPrefix
+    wildcard?: IntervalsWildcard
   }
 
   export interface IntervalsWildcard {
@@ -6813,7 +6828,7 @@ declare namespace T {
     use_field?: Field
   }
 
-  export interface MatchQuery {
+  export interface MatchQuery extends QueryBase {
     analyzer?: string
     auto_generate_synonyms_phrase_query?: boolean
     cutoff_frequency?: double
@@ -6825,12 +6840,11 @@ declare namespace T {
     minimum_should_match?: MinimumShouldMatch
     operator?: Operator
     prefix_length?: integer
-    query?: string
+    query?: string | float | boolean
     zero_terms_query?: ZeroTermsQuery
-    boost?: float
   }
 
-  export interface MatchBoolPrefixQuery {
+  export interface MatchBoolPrefixQuery extends QueryBase {
     analyzer?: string
     fuzziness?: Fuzziness
     fuzzy_rewrite?: MultiTermQueryRewrite
@@ -6840,26 +6854,23 @@ declare namespace T {
     operator?: Operator
     prefix_length?: integer
     query?: string
-    boost?: float
   }
 
-  export interface MatchPhraseQuery {
+  export interface MatchPhraseQuery extends QueryBase {
     analyzer?: string
     query?: string
     slop?: integer
-    boost?: float
   }
 
-  export interface MatchPhrasePrefixQuery {
+  export interface MatchPhrasePrefixQuery extends QueryBase {
     analyzer?: string
     max_expansions?: integer
     query?: string
     slop?: integer
     zero_terms_query?: ZeroTermsQuery
-    boost?: float
   }
 
-  export interface MultiMatchQuery {
+  export interface MultiMatchQuery extends QueryBase {
     analyzer?: string
     auto_generate_synonyms_phrase_query?: boolean
     cutoff_frequency?: double
@@ -6878,10 +6889,9 @@ declare namespace T {
     type?: TextQueryType
     use_dis_max?: boolean
     zero_terms_query?: ZeroTermsQuery
-    boost?: float
   }
 
-  export interface QueryStringQuery {
+  export interface QueryStringQuery extends QueryBase {
     allow_leading_wildcard?: boolean
     analyzer?: string
     analyze_wildcard?: boolean
@@ -6907,10 +6917,9 @@ declare namespace T {
     tie_breaker?: double
     time_zone?: string
     type?: TextQueryType
-    boost?: float
   }
 
-  export interface SimpleQueryStringQuery {
+  export interface SimpleQueryStringQuery extends QueryBase {
     analyzer?: string
     analyze_wildcard?: boolean
     auto_generate_synonyms_phrase_query?: boolean
@@ -6924,7 +6933,6 @@ declare namespace T {
     minimum_should_match?: MinimumShouldMatch
     query?: string
     quote_field_suffix?: string
-    boost?: float
   }
 
   export interface GeoCoordinate extends GeoLocation {
@@ -6942,20 +6950,20 @@ declare namespace T {
     wkt?: string
   }
 
-  export interface GeoBoundingBoxQuery {
+  export interface GeoBoundingBoxQuery extends QueryBase {
     bounding_box?: BoundingBox
     type?: GeoExecution
     validation_method?: GeoValidationMethod
   }
 
-  export interface GeoDistanceQuery {
+  export interface GeoDistanceQuery extends QueryBase {
     distance?: Distance
     distance_type?: GeoDistanceType
     location?: GeoLocation
     validation_method?: GeoValidationMethod
   }
 
-  export interface GeoPolygonQuery {
+  export interface GeoPolygonQuery extends QueryBase {
     points?: GeoLocation[]
     validation_method?: GeoValidationMethod
   }
@@ -6964,14 +6972,14 @@ declare namespace T {
     type?: string
   }
 
-  export interface GeoShapeQuery {
+  export interface GeoShapeQuery extends QueryBase {
     ignore_unmapped?: boolean
     indexed_shape?: FieldLookup
     relation?: GeoShapeRelation
     shape?: GeoShape
   }
 
-  export interface HasChildQuery {
+  export interface HasChildQuery extends QueryBase {
     ignore_unmapped?: boolean
     inner_hits?: InnerHits
     max_children?: integer
@@ -6981,7 +6989,7 @@ declare namespace T {
     type?: RelationName
   }
 
-  export interface HasParentQuery {
+  export interface HasParentQuery extends QueryBase {
     ignore_unmapped?: boolean
     inner_hits?: InnerHits
     parent_type?: RelationName
@@ -6989,7 +6997,7 @@ declare namespace T {
     score?: boolean
   }
 
-  export interface NestedQuery {
+  export interface NestedQuery extends QueryBase {
     ignore_unmapped?: boolean
     inner_hits?: InnerHits
     path?: Field
@@ -6997,25 +7005,17 @@ declare namespace T {
     score_mode?: NestedScoreMode
   }
 
-  export interface ParentIdQuery {
+  export interface ParentIdQuery extends QueryBase {
     id?: Id
     ignore_unmapped?: boolean
     type?: RelationName
-  }
-
-  export interface MultiTermQueryRewrite {
-    constant_score?: MultiTermQueryRewrite
-    constant_score_boolean?: MultiTermQueryRewrite
-    rewrite?: RewriteMultiTerm
-    scoring_boolean?: MultiTermQueryRewrite
-    size?: integer
   }
 
   export interface RawQuery {
     raw?: string
   }
 
-  export interface SpanQuery {
+  export interface SpanQuery extends QueryBase {
     span_containing?: SpanContainingQuery
     field_masking_span?: SpanFieldMaskingQuery
     span_first?: SpanFirstQuery
@@ -7081,12 +7081,12 @@ declare namespace T {
     little?: SpanQuery
   }
 
-  export interface DistanceFeatureQuery {
+  export interface DistanceFeatureQuery extends QueryBase {
     origin?: GeoCoordinate | DateMath
     pivot?: Distance | Time
   }
 
-  export interface MoreLikeThisQuery {
+  export interface MoreLikeThisQuery extends QueryBase {
     analyzer?: string
     boost_terms?: double
     fields?: Field[]
@@ -7118,7 +7118,7 @@ declare namespace T {
     routing?: Routing
   }
 
-  export interface PercolateQuery {
+  export interface PercolateQuery extends QueryBase {
     document?: object
     documents?: object[]
     field?: Field
@@ -7129,7 +7129,7 @@ declare namespace T {
     version?: long
   }
 
-  export interface PinnedQuery {
+  export interface PinnedQuery extends QueryBase {
     ids?: Id[]
     organic?: QueryContainer
   }
@@ -7137,86 +7137,80 @@ declare namespace T {
   export interface RankFeatureFunction {
   }
 
-  export interface RankFeatureQuery {
+  export interface RankFeatureQuery extends QueryBase {
     function?: RankFeatureFunction
   }
 
-  export interface ScriptQuery {
+  export interface ScriptQuery extends QueryBase {
     script?: Script
   }
 
-  export interface ScriptScoreQuery {
+  export interface ScriptScoreQuery extends QueryBase {
     query?: QueryContainer
     script?: Script
   }
 
-  export interface ShapeQuery {
+  export interface ShapeQuery extends QueryBase {
     ignore_unmapped?: boolean
     indexed_shape?: FieldLookup
     relation?: ShapeRelation
     shape?: GeoShape
   }
 
-  export interface ExistsQuery {
+  export interface ExistsQuery extends QueryBase {
     field?: Field
   }
 
-  export interface FuzzyQuery {
+  export interface FuzzyQuery extends QueryBase {
     max_expansions?: integer
     prefix_length?: integer
     rewrite?: MultiTermQueryRewrite
     transpositions?: boolean
-    boost?: float
   }
 
-  export interface IdsQuery {
+  export interface IdsQuery extends QueryBase {
     values?: Id[]
-    boost?: float
   }
 
-  export interface PrefixQuery {
+  export interface PrefixQuery extends QueryBase {
     rewrite?: MultiTermQueryRewrite
-    boost?: float
   }
 
-  export interface RangeQuery {
+  export interface RangeQuery extends QueryBase {
     gt?: double | DateMath
     gte?: double | DateMath
     lt?: double | DateMath
     lte?: double | DateMath
     relation?: RangeRelation
-    boost?: float
     time_zone?: string
   }
 
-  export interface RegexpQuery {
+  export interface RegexpQuery extends QueryBase {
     flags?: string
     max_determinized_states?: integer
     value?: string
-    boost?: float
   }
 
-  export interface TermQuery {
-    value?: string
-    boost?: float
+  export interface TermQuery extends QueryBase {
+    value?: string | float | boolean
   }
 
-  export interface TermsQuery {
+  export interface TermsQuery extends QueryBase {
     terms?: string[]
-    terms_lookup?: FieldLookup
-    boost?: float
+    index?: IndexName
+    id?: Id
+    path?: string
+    routing?: Routing
   }
 
-  export interface TermsSetQuery {
+  export interface TermsSetQuery extends QueryBase {
     minimum_should_match_field?: Field
     minimum_should_match_script?: Script
     terms?: string[]
-    boost?: float
   }
 
-  export interface WildcardQuery {
+  export interface WildcardQuery extends QueryBase {
     rewrite?: MultiTermQueryRewrite
-    boost?: float
   }
 
   /**
@@ -7415,7 +7409,7 @@ declare namespace T {
   }
 
   /**
-   * @description Stability: UNSTABLE
+   * @description Stability: STABLE
    */
   export interface SearchRequest extends RequestBase {
     index?: Indices
@@ -7449,25 +7443,31 @@ declare namespace T {
     suggest_size?: long
     suggest_text?: string
     total_hits_as_integer?: boolean
-    track_total_hits?: boolean
+    track_total_hits?: boolean | integer
     typed_keys?: boolean
     rest_total_hits_as_int?: boolean
     _source_excludes?: Field | Field[]
     _source_includes?: Field | Field[]
+    seq_no_primary_term?: boolean
+    q?: string
+    size?: integer
     body?: {
       aggs?: Record<string, AggregationContainer>
+      aggregations?: Record<string, AggregationContainer>
       collapse?: FieldCollapse
       explain?: boolean
       from?: integer
       highlight?: Highlight
-      indices_boost?: Record<IndexName, double>
+      track_total_hits?: boolean | integer
+      indices_boost?: Array<Record<IndexName, double>>
+      docvalue_fields?: Array<Field | DocValueField>
       min_score?: double
       post_filter?: QueryContainer
       profile?: boolean
       query?: QueryContainer
-      rescore?: Rescore[]
+      rescore?: Rescore | Rescore[]
       script_fields?: Record<string, ScriptField>
-      search_after?: object[]
+      search_after?: Array<integer | string>
       size?: integer
       slice?: SlicedScroll
       sort?: Array<Record<string, Sort | SortOrder>>
@@ -7477,6 +7477,8 @@ declare namespace T {
       timeout?: string
       track_scores?: boolean
       version?: boolean
+      seq_no_primary_term?: boolean
+      stored_fields?: Field | Field[]
     }
   }
 
@@ -7503,7 +7505,7 @@ declare namespace T {
 
   export interface FieldCollapse {
     field?: Field
-    inner_hits?: InnerHits
+    inner_hits?: InnerHits | InnerHits[]
     max_concurrent_group_searches?: integer
   }
 
@@ -7525,6 +7527,7 @@ declare namespace T {
     pre_tags?: string[]
     require_field_match?: boolean
     tags_schema?: HighlighterTagsSchema
+    type?: HighlighterType
   }
 
   export interface HighlightField {
@@ -7609,6 +7612,7 @@ declare namespace T {
     ignore_unmapped?: boolean
     name?: string
     script_fields?: Record<string, ScriptField>
+    seq_no_primary_term?: boolean
     size?: integer
     sort?: Array<Record<string, Sort | SortOrder>>
     _source?: boolean | SourceFilter
@@ -7693,7 +7697,7 @@ declare namespace T {
   }
 
   export interface Sort {
-    missing?: object
+    missing?: Missing
     mode?: SortMode
     nested?: NestedSort
     numeric_type?: NumericType
@@ -7703,6 +7707,11 @@ declare namespace T {
   export interface SourceFilter {
     excludes?: Field | Field[]
     includes?: Field | Field[]
+  }
+
+  export interface DocValueField {
+    field?: Field
+    format?: string
   }
 
   export interface SearchNode {
@@ -12483,54 +12492,6 @@ declare namespace T {
     year = "year",
   }
 
-  export enum GeoHashPrecision {
-    Precision1 = "Precision1",
-    Precision2 = "Precision2",
-    Precision3 = "Precision3",
-    Precision4 = "Precision4",
-    Precision5 = "Precision5",
-    Precision6 = "Precision6",
-    Precision7 = "Precision7",
-    Precision8 = "Precision8",
-    Precision9 = "Precision9",
-    Precision10 = "Precision10",
-    Precision11 = "Precision11",
-    Precision12 = "Precision12",
-  }
-
-  export enum GeoTilePrecision {
-    Precision0 = "Precision0",
-    Precision1 = "Precision1",
-    Precision2 = "Precision2",
-    Precision3 = "Precision3",
-    Precision4 = "Precision4",
-    Precision5 = "Precision5",
-    Precision6 = "Precision6",
-    Precision7 = "Precision7",
-    Precision8 = "Precision8",
-    Precision9 = "Precision9",
-    Precision10 = "Precision10",
-    Precision11 = "Precision11",
-    Precision12 = "Precision12",
-    Precision13 = "Precision13",
-    Precision14 = "Precision14",
-    Precision15 = "Precision15",
-    Precision16 = "Precision16",
-    Precision17 = "Precision17",
-    Precision18 = "Precision18",
-    Precision19 = "Precision19",
-    Precision20 = "Precision20",
-    Precision21 = "Precision21",
-    Precision22 = "Precision22",
-    Precision23 = "Precision23",
-    Precision24 = "Precision24",
-    Precision25 = "Precision25",
-    Precision26 = "Precision26",
-    Precision27 = "Precision27",
-    Precision28 = "Precision28",
-    Precision29 = "Precision29",
-  }
-
   export enum SamplerAggregationExecutionHint {
     map = "map",
     global_ordinals = "global_ordinals",
@@ -13343,6 +13304,8 @@ declare namespace T {
   export enum Operator {
     and = "and",
     or = "or",
+    AND = "AND",
+    OR = "OR",
   }
 
   export enum FunctionBoostMode {
