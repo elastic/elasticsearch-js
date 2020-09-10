@@ -80,6 +80,10 @@ test('Q is a function that creates the final query object', t => {
     [randomTopLevelKey]: 42
   })
 
+  t.deepEqual(Q({ sort: ['foo'] }, { sort: ['bar'] }), {
+    sort: ['foo', 'bar']
+  })
+
   t.end()
 })
 
@@ -963,22 +967,29 @@ test('boosting returns a boosting query block', t => {
 test('sort returns a sort block', t => {
   t.type(Q.sort, 'function')
 
-  t.test('simple sort', t => {
-    t.deepEqual(Q.sort('foo', { order: 'asc' }), {
-      sort: [{ foo: { order: 'asc' } }]
-    })
-    t.end()
+  t.deepEqual(Q.sort('foo'), {
+    sort: ['foo']
   })
 
-  // t.test('multiple sorts', t => {
-  //   t.deepEqual(Q.sort([{ foo: { order: 'asc' } }, { bar: { order: 'desc' } }]), {
-  //     sort: [
-  //       { foo: { order: 'asc' } },
-  //       { bar: { order: 'desc' } }
-  //     ]
-  //   })
-  //   t.end()
-  // })
+  t.deepEqual(Q.sort(['foo', 'bar']), {
+    sort: ['foo', 'bar']
+  })
+
+  t.deepEqual(Q.sort('foo', 'desc'), {
+    sort: [{ foo: 'desc' }]
+  })
+
+  t.deepEqual(Q.sort(['foo', 'bar'], 'desc'), {
+    sort: [{ foo: 'desc' }, { bar: 'desc' }]
+  })
+
+  t.deepEqual(Q.sort('foo', { order: 'desc' }), {
+    sort: [{ foo: { order: 'desc' } }]
+  })
+
+  t.deepEqual(Q.sort(['foo', 'bar'], { order: 'desc' }), {
+    sort: [{ foo: { order: 'desc' } }, { bar: { order: 'desc' } }]
+  })
 
   t.end()
 })
