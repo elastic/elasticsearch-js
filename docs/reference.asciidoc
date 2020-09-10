@@ -6566,7 +6566,7 @@ client.closePointInTime({
   body: object
 })
 ----
-link:{ref}/point-in-time.html[Documentation] +
+link:{ref}/point-in-time-api.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -9116,7 +9116,7 @@ client.openPointInTime({
   keep_alive: string
 })
 ----
-link:{ref}/point-in-time.html[Documentation] +
+link:{ref}/point-in-time-api.html[Documentation] +
 [cols=2*]
 |===
 |`index`

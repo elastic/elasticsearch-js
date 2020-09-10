@@ -37,7 +37,7 @@ function buildClosePointInTime (opts) {
   /**
    * Perform a close_point_in_time request
    * Close a point in time
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api.html
    */
   return function closePointInTime (params, options, callback) {
     options = options || {}

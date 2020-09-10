@@ -43,7 +43,7 @@ function buildOpenPointInTime (opts) {
   /**
    * Perform a open_point_in_time request
    * Open a point in time that can be used in subsequent searches
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api.html
    */
   return function openPointInTime (params, options, callback) {
     options = options || {}
