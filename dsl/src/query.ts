@@ -26,11 +26,21 @@
 import * as t from './types'
 import T from '../es-types'
 
+interface BoolQuery {
+  filter?: T.QueryContainer[]
+  minimum_should_match?: T.MinimumShouldMatch
+  must?: T.QueryContainer[]
+  must_not?: T.QueryContainer[]
+  should?: T.QueryContainer[]
+  _name?: string
+}
 type SearchRequest = Required<T.SearchRequest>['body']
-type BoolBlock = { bool: T.BoolQuery }
+type BoolBlock = { bool: BoolQuery }
 type QueryBlock = { query: T.QueryContainer }
-function Q (...blocks: (SearchRequest | T.QueryContainer | T.QueryContainer[])[]): SearchRequest {
-  blocks = blocks.flat()
+type MultiType = string | number | boolean
+
+function Q (...blocks: (SearchRequest | T.QueryContainer | T.QueryContainer[] | BoolQuery)[]): SearchRequest {
+  blocks = blocks.flat() as (SearchRequest | T.QueryContainer | BoolQuery)[]
   const topLevelKeys = [
     'aggs',
     'collapse',
@@ -55,8 +65,8 @@ function Q (...blocks: (SearchRequest | T.QueryContainer | T.QueryContainer[])[]
     'version'
   ]
 
-  // @ts-ignore
-  const queries: (T.QueryContainer | T.BoolQuery)[] = blocks.filter(block => !topLevelKeys.includes(Object.keys(block)[0]))
+  // @ts-expect-error
+  const queries: (T.QueryContainer | BoolQuery)[] = blocks.filter(block => !topLevelKeys.includes(Object.keys(block)[0]))
 
   let body: SearchRequest
   if (queries.length === 1 && !isBoolQuery(queries[0])) {
@@ -211,10 +221,10 @@ namespace Q {
     }
   }
 
-  export function match (key: string, val: string | Symbol): { match: Record<string, string> }
-  export function match (key: string, val: string | Symbol, opts: T.MatchQuery): { match: Record<string, T.MatchQuery> }
-  export function match (key: string, val: (string | Symbol)[]): { match: Record<string, string> }[]
-  export function match (key: string, val: (string | Symbol)[], opts: T.MatchQuery): { match: Record<string, T.MatchQuery> }[]
+  export function match (key: string, val: MultiType | Symbol): { match: Record<string, MultiType> }
+  export function match (key: string, val: MultiType | Symbol, opts: T.MatchQuery): { match: Record<string, T.MatchQuery> }
+  export function match (key: string, val: (MultiType | Symbol)[]): { match: Record<string, MultiType> }[]
+  export function match (key: string, val: (MultiType | Symbol)[], opts: T.MatchQuery): { match: Record<string, T.MatchQuery> }[]
   export function match (key: string, val: any, opts?: T.MatchQuery): any {
     return generateQueryObject('match', key, val, opts)
   }
@@ -282,10 +292,10 @@ namespace Q {
     }
   }
 
-  export function term (key: string, val: string | Symbol): { term: Record<string, string> }
-  export function term (key: string, val: string | Symbol, opts: T.TermQuery): { term: Record<string, T.TermQuery> }
-  export function term (key: string, val: (string | Symbol)[]): { terms: T.TermsQuery }
-  export function term (key: string, val: (string | Symbol)[], opts: T.TermsQuery): { terms: T.TermsQuery }
+  export function term (key: string, val: MultiType | Symbol): { term: Record<string, MultiType> }
+  export function term (key: string, val: MultiType | Symbol, opts: T.TermQuery): { term: Record<string, T.TermQuery> }
+  export function term (key: string, val: (MultiType | Symbol)[]): { terms: T.TermsQuery }
+  export function term (key: string, val: (MultiType | Symbol)[], opts: T.TermsQuery): { terms: T.TermsQuery }
   export function term (key: string, val: any, opts?: any): any {
     if (Array.isArray(val)) {
       return Q.terms(key, val, opts)
@@ -293,7 +303,7 @@ namespace Q {
     return generateValueObject('term', key, val, opts)
   }
 
-  export function terms (key: string, val: string[] | Symbol, opts?: T.TermsQuery): { terms: T.TermsQuery } {
+  export function terms (key: string, val: (MultiType | Symbol)[], opts?: T.TermsQuery): { terms: T.TermsQuery } {
     return {
       terms: {
         [key]: val,
@@ -370,8 +380,8 @@ namespace Q {
     }
   }
 
-  type AnyQueryWithArray = T.QueryContainer | T.BoolQuery | T.QueryContainer[] | T.BoolQuery[]
-  type AnyQuery = T.QueryContainer | T.BoolQuery
+  type AnyQueryWithArray = T.QueryContainer | BoolQuery | T.QueryContainer[] | BoolQuery[]
+  type AnyQuery = T.QueryContainer | BoolQuery
   export function must (...queries: AnyQueryWithArray[]): { must: T.QueryContainer[] } {
     // @ts-ignore
     return { must: queries.flatMap(mergeableMust) }
@@ -392,14 +402,14 @@ namespace Q {
     return { filter: queries.flatMap(mergeableFilter) }
   }
 
-  export function bool (...queries: (T.QueryContainer | T.QueryContainer[] | T.BoolQuery)[]): BoolBlock {
+  export function bool (...queries: (T.QueryContainer | T.QueryContainer[] | BoolQuery)[]): BoolBlock {
     if (queries.length === 0) {
       return { bool: {} }
     }
 
     // @ts-expect-error
     const defaultClause = queries.find(q => q && !!q.minimum_should_match) ? 'should' : 'must'
-    const normalizedQueries = queries
+    const normalizedQueries: BoolQuery[] = queries
       .flat()
       .filter(val => {
         // filters empty objects/arrays as well
@@ -504,7 +514,7 @@ namespace Q {
   }
 
   export function not (q: T.QueryContainer): BoolBlock
-  export function not (q: T.BoolQuery): BoolBlock
+  export function not (q: BoolQuery): BoolBlock
   export function not (q: any): BoolBlock {
     const b = toBoolQuery(q)
 
@@ -523,11 +533,11 @@ namespace Q {
     }
   }
 
-  export function minShouldMatch (int: number): T.BoolQuery {
+  export function minShouldMatch (int: number): BoolQuery {
     return { minimum_should_match: int }
   }
 
-  export function name (queryName: string): T.BoolQuery {
+  export function name (queryName: string): BoolQuery {
     return { _name: queryName }
   }
 
@@ -577,13 +587,14 @@ namespace Q {
     }
   }
 
-  export function size (s: number | Symbol): { size: number | Symbol } {
+  export function size (s: number | Symbol): { size: number } {
+    // @ts-expect-error
     return { size: s }
   }
 }
 
 // Tries to flat a bool query based on the content
-function booptimize (q: T.BoolQuery): T.BoolQuery {
+function booptimize (q: BoolQuery): BoolQuery {
   const clauses: t.BoolQueryOptions = {}
 
   if (q.minimum_should_match !== undefined ||
@@ -724,7 +735,7 @@ function isBoolBlock (q: any): q is BoolBlock {
   return !!q.bool
 }
 
-function isBoolQuery (q: any): q is T.BoolQuery {
+function isBoolQuery (q: any): q is BoolQuery {
   if (q.must !== undefined) return true
   if (q.should !== undefined) return true
   if (q.must_not !== undefined) return true
@@ -734,7 +745,7 @@ function isBoolQuery (q: any): q is T.BoolQuery {
   return false
 }
 
-function onlyShould (bool: T.BoolQuery): bool is t.ShouldClause {
+function onlyShould (bool: BoolQuery): bool is t.ShouldClause {
   if (bool.must !== undefined) return false
   if (bool.must_not !== undefined) return false
   if (bool.filter !== undefined) return false
@@ -743,7 +754,7 @@ function onlyShould (bool: T.BoolQuery): bool is t.ShouldClause {
   return true
 }
 
-function onlyMust (bool: T.BoolQuery): bool is t.MustClause {
+function onlyMust (bool: BoolQuery): bool is t.MustClause {
   if (bool.should !== undefined) return false
   if (bool.must_not !== undefined) return false
   if (bool.filter !== undefined) return false
@@ -752,7 +763,7 @@ function onlyMust (bool: T.BoolQuery): bool is t.MustClause {
   return true
 }
 
-function onlyMustNot (bool: T.BoolQuery): bool is t.MustNotClause {
+function onlyMustNot (bool: BoolQuery): bool is t.MustNotClause {
   if (bool.should !== undefined) return false
   if (bool.must !== undefined) return false
   if (bool.filter !== undefined) return false
@@ -761,7 +772,7 @@ function onlyMustNot (bool: T.BoolQuery): bool is t.MustNotClause {
   return true
 }
 
-function onlyFilter (bool: T.BoolQuery): bool is t.FilterClause {
+function onlyFilter (bool: BoolQuery): bool is t.FilterClause {
   if (bool.should !== undefined) return false
   if (bool.must !== undefined) return false
   if (bool.must_not !== undefined) return false
@@ -774,7 +785,7 @@ function onlyFilter (bool: T.BoolQuery): bool is t.FilterClause {
 //  - if is a bool query returns the bool block
 //  - if is a clause, wraps the query in a bool block
 //  - if is condition, wraps the query into a must clause and then in a bool block
-function toBoolBlock (query: T.QueryContainer | T.BoolQuery): BoolBlock {
+function toBoolBlock (query: T.QueryContainer | BoolQuery): BoolBlock {
   if (isBoolQuery(query)) {
     return { bool: query }
   }
@@ -791,7 +802,7 @@ function toBoolBlock (query: T.QueryContainer | T.BoolQuery): BoolBlock {
 //  - if is a clause, it returns it
 //  - if is condition, wraps the query into a must clause and returns it
 type toBoolQueryDefault = 'must' | 'must_not' | 'should' | 'filter'
-function toBoolQuery (query: T.QueryContainer | T.BoolQuery, def: toBoolQueryDefault = 'must'): T.BoolQuery {
+function toBoolQuery (query: T.QueryContainer | BoolQuery, def: toBoolQueryDefault = 'must'): BoolQuery {
   if (isBoolQuery(query)) {
     return query
   }
@@ -811,8 +822,8 @@ function toBoolQuery (query: T.QueryContainer | T.BoolQuery, def: toBoolQueryDef
 
 // the aim of this mergeable functions
 // is to reduce the depth of the query objects
-function mergeableMust (q: T.QueryContainer | T.BoolQuery): T.QueryContainer
-function mergeableMust (q: (T.QueryContainer | T.BoolQuery)[]): T.QueryContainer[]
+function mergeableMust (q: T.QueryContainer | BoolQuery): T.QueryContainer
+function mergeableMust (q: (T.QueryContainer | BoolQuery)[]): T.QueryContainer[]
 function mergeableMust (q: any): any {
   if (Array.isArray(q)) {
     return q.map(mergeableMust)
@@ -834,8 +845,8 @@ function mergeableMust (q: any): any {
   }
 }
 
-function mergeableShould (q: T.QueryContainer | T.BoolQuery): T.QueryContainer
-function mergeableShould (q: (T.QueryContainer | T.BoolQuery)[]): T.QueryContainer[]
+function mergeableShould (q: T.QueryContainer | BoolQuery): T.QueryContainer
+function mergeableShould (q: (T.QueryContainer | BoolQuery)[]): T.QueryContainer[]
 function mergeableShould (q: any): any {
   if (Array.isArray(q)) {
     return q.map(mergeableShould)
@@ -857,8 +868,8 @@ function mergeableShould (q: any): any {
   }
 }
 
-function mergeableMustNot (q: T.QueryContainer | T.BoolQuery): T.QueryContainer
-function mergeableMustNot (q: (T.QueryContainer | T.BoolQuery)[]): T.QueryContainer[]
+function mergeableMustNot (q: T.QueryContainer | BoolQuery): T.QueryContainer
+function mergeableMustNot (q: (T.QueryContainer | BoolQuery)[]): T.QueryContainer[]
 function mergeableMustNot (q: any): any {
   if (Array.isArray(q)) {
     return q.map(mergeableMustNot)
@@ -881,8 +892,8 @@ function mergeableMustNot (q: any): any {
   }
 }
 
-function mergeableFilter (q: T.QueryContainer | T.BoolQuery): T.QueryContainer
-function mergeableFilter (q: (T.QueryContainer | T.BoolQuery)[]): T.QueryContainer[]
+function mergeableFilter (q: T.QueryContainer | BoolQuery): T.QueryContainer
+function mergeableFilter (q: (T.QueryContainer | BoolQuery)[]): T.QueryContainer[]
 function mergeableFilter (q: any): any {
   if (Array.isArray(q)) {
     return q.map(mergeableFilter)

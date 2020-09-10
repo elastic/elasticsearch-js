@@ -30,6 +30,7 @@ import * as t from './types'
 import T from '../es-types'
 
 const kState = Symbol('dsl-query-state')
+type MultiType = string | number | boolean
 
 // TODO: the client should detect a fluent query
 //       and automatically call `query.build()`
@@ -56,10 +57,10 @@ class FluentQ {
     return Q.compile(this.build())
   }
 
-  match (key: string, val: string | Symbol): this
-  match (key: string, val: string | Symbol, opts: T.MatchQuery): this
-  match (key: string, val: (string | Symbol)[]): this
-  match (key: string, val: (string | Symbol)[], opts: T.MatchQuery): this
+  match (key: string, val: MultiType | Symbol): this
+  match (key: string, val: MultiType | Symbol, opts: T.MatchQuery): this
+  match (key: string, val: (MultiType | Symbol)[]): this
+  match (key: string, val: (MultiType | Symbol)[], opts: T.MatchQuery): this
   match (key: string, val: any, opts?: any): this {
     this[kState].push(Q.match(key, val, opts))
     return this
@@ -117,10 +118,10 @@ class FluentQ {
     return this
   }
 
-  term (key: string, val: string | Symbol): this
-  term (key: string, val: string | Symbol, opts: T.TermQuery): this
-  term (key: string, val: (string | Symbol)[]): this
-  term (key: string, val: (string | Symbol)[], opts: T.TermsQuery): this
+  term (key: string, val: MultiType | Symbol): this
+  term (key: string, val: MultiType | Symbol, opts: T.TermQuery): this
+  term (key: string, val: (MultiType | Symbol)[]): this
+  term (key: string, val: (MultiType | Symbol)[], opts: T.TermsQuery): this
   term (key: string, val: any, opts?: any): this {
     if (Array.isArray(val)) {
       return this.terms(key, val, opts)
@@ -129,7 +130,7 @@ class FluentQ {
     return this
   }
 
-  terms (key: string, val: string[] | Symbol, opts?: T.TermsQuery): this {
+  terms (key: string, val: (MultiType | Symbol)[], opts?: T.TermsQuery): this {
     this[kState].push(Q.terms(key, val, opts))
     return this
   }
