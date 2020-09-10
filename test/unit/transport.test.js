@@ -2537,3 +2537,65 @@ test('Lowercase headers utilty', t => {
 
   t.strictEqual(lowerCaseHeaders(undefined), undefined)
 })
+
+test('The callback with a sync error should be called in the next tick - json', t => {
+  t.plan(4)
+  const pool = new ConnectionPool({ Connection })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  const body = { a: true }
+  body.o = body
+
+  const transportReturn = transport.request({
+    method: 'POST',
+    path: '/hello',
+    body
+  }, (err, { body }) => {
+    t.ok(err instanceof SerializationError)
+  })
+
+  t.type(transportReturn.then, 'function')
+  t.type(transportReturn.catch, 'function')
+  t.type(transportReturn.abort, 'function')
+})
+
+test('The callback with a sync error should be called in the next tick - ndjson', t => {
+  t.plan(4)
+  const pool = new ConnectionPool({ Connection })
+  pool.addConnection('http://localhost:9200')
+
+  const transport = new Transport({
+    emit: () => {},
+    connectionPool: pool,
+    serializer: new Serializer(),
+    maxRetries: 3,
+    requestTimeout: 30000,
+    sniffInterval: false,
+    sniffOnStart: false
+  })
+
+  const field = { a: true }
+  field.o = field
+
+  const transportReturn = transport.request({
+    method: 'POST',
+    path: '/hello',
+    bulkBody: [field]
+  }, (err, { body }) => {
+    t.ok(err instanceof SerializationError)
+  })
+
+  t.type(transportReturn.then, 'function')
+  t.type(transportReturn.catch, 'function')
+  t.type(transportReturn.abort, 'function')
+})

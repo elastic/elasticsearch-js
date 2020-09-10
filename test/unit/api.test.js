@@ -299,6 +299,22 @@ test('ConfigurationError (promises)', t => {
     })
 })
 
+test('The callback with a sync error should be called in the next tick', t => {
+  t.plan(4)
+
+  const client = new Client({
+    node: 'http://localhost:9200'
+  })
+
+  const transportReturn = client.index({ body: { foo: 'bar' } }, (err, result) => {
+    t.ok(err instanceof errors.ConfigurationError)
+  })
+
+  t.type(transportReturn.then, 'function')
+  t.type(transportReturn.catch, 'function')
+  t.type(transportReturn.abort, 'function')
+})
+
 if (Number(process.version.split('.')[0].slice(1)) >= 8) {
   require('./api-async')(test)
 }
