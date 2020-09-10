@@ -1,6 +1,21 @@
-// Licensed to Elasticsearch B.V under one or more agreements.
-// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
-// See the LICENSE file in the project root for more information
+/*
+ * Licensed to Elasticsearch B.V. under one or more contributor
+ * license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright
+ * ownership. Elasticsearch B.V. licenses this file to you under
+ * the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 
 /// <reference types="node" />
 
@@ -92,6 +107,7 @@ interface ClientOptions {
   name?: string | symbol;
   auth?: BasicAuth | ApiKeyAuth;
   context?: Context;
+  proxy?: string | URL;
   cloud?: {
     id: string;
     // TODO: remove username and password here in 8
@@ -442,14 +458,14 @@ declare class Client {
     deleteVotingConfigExclusions<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteVotingConfigExclusions<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.ClusterDeleteVotingConfigExclusions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteVotingConfigExclusions<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.ClusterDeleteVotingConfigExclusions, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_component_template<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.ClusterExistsComponentTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    exists_component_template<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_component_template<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.ClusterExistsComponentTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_component_template<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.ClusterExistsComponentTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsComponentTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.ClusterExistsComponentTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    existsComponentTemplate<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsComponentTemplate<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.ClusterExistsComponentTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsComponentTemplate<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.ClusterExistsComponentTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_component_template<TResponse = boolean, TContext = Context>(params?: RequestParams.ClusterExistsComponentTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    exists_component_template<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_component_template<TResponse = boolean, TContext = Context>(params: RequestParams.ClusterExistsComponentTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_component_template<TResponse = boolean, TContext = Context>(params: RequestParams.ClusterExistsComponentTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsComponentTemplate<TResponse = boolean, TContext = Context>(params?: RequestParams.ClusterExistsComponentTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    existsComponentTemplate<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsComponentTemplate<TResponse = boolean, TContext = Context>(params: RequestParams.ClusterExistsComponentTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsComponentTemplate<TResponse = boolean, TContext = Context>(params: RequestParams.ClusterExistsComponentTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_component_template<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.ClusterGetComponentTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     get_component_template<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_component_template<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.ClusterGetComponentTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -663,18 +679,18 @@ declare class Client {
     search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.EqlSearch<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.EqlSearch<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
-  exists<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.Exists, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  exists<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  exists<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.Exists, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  exists<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.Exists, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  exists_source<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.ExistsSource, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  exists_source<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  exists_source<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.ExistsSource, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  exists_source<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.ExistsSource, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  existsSource<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.ExistsSource, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  existsSource<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  existsSource<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.ExistsSource, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  existsSource<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.ExistsSource, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  exists<TResponse = boolean, TContext = Context>(params?: RequestParams.Exists, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  exists<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  exists<TResponse = boolean, TContext = Context>(params: RequestParams.Exists, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  exists<TResponse = boolean, TContext = Context>(params: RequestParams.Exists, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  exists_source<TResponse = boolean, TContext = Context>(params?: RequestParams.ExistsSource, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  exists_source<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  exists_source<TResponse = boolean, TContext = Context>(params: RequestParams.ExistsSource, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  exists_source<TResponse = boolean, TContext = Context>(params: RequestParams.ExistsSource, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  existsSource<TResponse = boolean, TContext = Context>(params?: RequestParams.ExistsSource, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  existsSource<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  existsSource<TResponse = boolean, TContext = Context>(params: RequestParams.ExistsSource, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  existsSource<TResponse = boolean, TContext = Context>(params: RequestParams.ExistsSource, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Explain<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Explain<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -836,14 +852,14 @@ declare class Client {
     create<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     create<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.IndicesCreate<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     create<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.IndicesCreate<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    create_data_stream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesCreateDataStream<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    create_data_stream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    create_data_stream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.IndicesCreateDataStream<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    create_data_stream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.IndicesCreateDataStream<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    createDataStream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesCreateDataStream<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    createDataStream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    createDataStream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.IndicesCreateDataStream<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    createDataStream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.IndicesCreateDataStream<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_data_stream<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesCreateDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    create_data_stream<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_data_stream<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesCreateDataStream, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_data_stream<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesCreateDataStream, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createDataStream<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesCreateDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    createDataStream<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createDataStream<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesCreateDataStream, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createDataStream<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesCreateDataStream, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     data_streams_stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDataStreamsStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     data_streams_stats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     data_streams_stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesDataStreamsStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -888,42 +904,42 @@ declare class Client {
     deleteTemplate<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteTemplate<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesDeleteTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteTemplate<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesDeleteTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesExists, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    exists<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExists, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExists, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_alias<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesExistsAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    exists_alias<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_alias<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_alias<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsAlias<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesExistsAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    existsAlias<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsAlias<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsAlias<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_index_template<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesExistsIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    exists_index_template<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_index_template<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_index_template<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsIndexTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesExistsIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    existsIndexTemplate<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsIndexTemplate<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsIndexTemplate<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_template<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesExistsTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    exists_template<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_template<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_template<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesExistsTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    existsTemplate<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsTemplate<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsTemplate<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_type<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesExistsType, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    exists_type<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_type<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsType, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    exists_type<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsType, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsType<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesExistsType, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    existsType<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsType<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsType, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    existsType<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesExistsType, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExists, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    exists<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExists, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExists, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_alias<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    exists_alias<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_alias<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_alias<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsAlias<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    existsAlias<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsAlias<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsAlias<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_index_template<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    exists_index_template<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_index_template<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_index_template<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsIndexTemplate<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    existsIndexTemplate<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsIndexTemplate<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsIndexTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsIndexTemplate<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsIndexTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_template<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    exists_template<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_template<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_template<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsTemplate<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    existsTemplate<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsTemplate<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsTemplate, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsTemplate<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsTemplate, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_type<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsType, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    exists_type<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_type<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsType, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    exists_type<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsType, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsType<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsType, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    existsType<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsType<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsType, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    existsType<TResponse = boolean, TContext = Context>(params: RequestParams.IndicesExistsType, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     flush<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesFlush, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     flush<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     flush<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesFlush, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1656,14 +1672,14 @@ declare class Client {
     stopDataFrameAnalytics<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     stopDataFrameAnalytics<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlStopDataFrameAnalytics<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     stopDataFrameAnalytics<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlStopDataFrameAnalytics<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stop_datafeed<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MlStopDatafeed, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    stop_datafeed<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stop_datafeed<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlStopDatafeed, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stop_datafeed<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlStopDatafeed, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stopDatafeed<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MlStopDatafeed, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    stopDatafeed<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stopDatafeed<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlStopDatafeed, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    stopDatafeed<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlStopDatafeed, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stop_datafeed<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MlStopDatafeed<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    stop_datafeed<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stop_datafeed<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlStopDatafeed<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stop_datafeed<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlStopDatafeed<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stopDatafeed<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MlStopDatafeed<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    stopDatafeed<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stopDatafeed<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlStopDatafeed<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    stopDatafeed<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlStopDatafeed<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     update_data_frame_analytics<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MlUpdateDataFrameAnalytics<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     update_data_frame_analytics<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     update_data_frame_analytics<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlUpdateDataFrameAnalytics<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1769,10 +1785,10 @@ declare class Client {
     usage<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesUsage, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     usage<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesUsage, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
-  ping<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.Ping, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  ping<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  ping<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.Ping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  ping<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.Ping, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  ping<TResponse = boolean, TContext = Context>(params?: RequestParams.Ping, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  ping<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  ping<TResponse = boolean, TContext = Context>(params: RequestParams.Ping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  ping<TResponse = boolean, TContext = Context>(params: RequestParams.Ping, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   put_script<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.PutScript<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   put_script<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   put_script<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.PutScript<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

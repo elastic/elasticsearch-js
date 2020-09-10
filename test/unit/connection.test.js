@@ -1,6 +1,21 @@
-// Licensed to Elasticsearch B.V under one or more agreements.
-// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
-// See the LICENSE file in the project root for more information
+/*
+ * Licensed to Elasticsearch B.V. under one or more contributor
+ * license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright
+ * ownership. Elasticsearch B.V. licenses this file to you under
+ * the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 
 'use strict'
 
@@ -9,6 +24,7 @@ const { inspect } = require('util')
 const { createGzip, createDeflate } = require('zlib')
 const { URL } = require('url')
 const { Agent } = require('http')
+const hpagent = require('hpagent')
 const intoStream = require('into-stream')
 const { buildServer } = require('../utils')
 const Connection = require('../../lib/Connection')
@@ -950,7 +966,7 @@ test('Should correctly resolve request pathname', t => {
   t.plan(1)
 
   const connection = new Connection({
-    url: new URL(`http://localhost:80/test`)
+    url: new URL('http://localhost:80/test')
   })
 
   t.strictEqual(
@@ -959,4 +975,26 @@ test('Should correctly resolve request pathname', t => {
     }).pathname,
     '/test/hello'
   )
+})
+
+test('Proxy agent (http)', t => {
+  t.plan(1)
+
+  const connection = new Connection({
+    url: new URL('http://localhost:9200'),
+    proxy: 'http://localhost:8080'
+  })
+
+  t.true(connection.agent instanceof hpagent.HttpProxyAgent)
+})
+
+test('Proxy agent (https)', t => {
+  t.plan(1)
+
+  const connection = new Connection({
+    url: new URL('https://localhost:9200'),
+    proxy: 'http://localhost:8080'
+  })
+
+  t.true(connection.agent instanceof hpagent.HttpsProxyAgent)
 })

@@ -117,6 +117,24 @@ _Default:_ `false`
 |`http.SecureContextOptions` - ssl https://nodejs.org/api/tls.html[configuraton]. +
 _Default:_ `null`
 
+|`proxy`
+a|`string, URL` - If you are using an http(s) proxy, you can put its url here.
+The client will automatically handle the connection to it. +
+_Default:_ `null`
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200',
+  proxy: 'http://localhost:8080'
+})
+
+// Proxy with basic authentication
+const client = new Client({
+  node: 'http://localhost:9200',
+  proxy: 'http://user:pwd@localhost:8080'
+})
+----
+
 |`agent`
 a|`http.AgentOptions, function` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options], 
 or a function that returns an actual http agent instance. If you want to disable the http agent use entirely

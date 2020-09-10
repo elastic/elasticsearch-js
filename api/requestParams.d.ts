@@ -1,6 +1,21 @@
-// Licensed to Elasticsearch B.V under one or more agreements.
-// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
-// See the LICENSE file in the project root for more information
+/*
+ * Licensed to Elasticsearch B.V. under one or more contributor
+ * license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright
+ * ownership. Elasticsearch B.V. licenses this file to you under
+ * the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 
 import { RequestBody, RequestNDBody } from '../lib/Transport'
 
@@ -652,17 +667,6 @@ export interface IndicesCreate<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface IndicesCreateDataStream<T = RequestBody> extends Generic {
-  name: string;
-  body?: T;
-}
-
-export interface IndicesDataStreamsStats extends Generic {
-  name?: string | string[];
-  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
-  forbid_closed_indices?: boolean;
-}
-
 export interface IndicesDelete extends Generic {
   index: string | string[];
   timeout?: string;
@@ -677,10 +681,6 @@ export interface IndicesDeleteAlias extends Generic {
   name: string | string[];
   timeout?: string;
   master_timeout?: string;
-}
-
-export interface IndicesDeleteDataStream extends Generic {
-  name: string | string[];
 }
 
 export interface IndicesDeleteIndexTemplate extends Generic {
@@ -782,10 +782,6 @@ export interface IndicesGetAlias extends Generic {
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   local?: boolean;
-}
-
-export interface IndicesGetDataStream extends Generic {
-  name?: string | string[];
 }
 
 export interface IndicesGetFieldMapping extends Generic {
@@ -1556,6 +1552,7 @@ export interface CatMlDataFrameAnalytics extends Generic {
 
 export interface CatMlDatafeeds extends Generic {
   datafeed_id?: string;
+  allow_no_match?: boolean;
   allow_no_datafeeds?: boolean;
   format?: string;
   h?: string | string[];
@@ -1567,6 +1564,7 @@ export interface CatMlDatafeeds extends Generic {
 
 export interface CatMlJobs extends Generic {
   job_id?: string;
+  allow_no_match?: boolean;
   allow_no_jobs?: boolean;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
   format?: string;
@@ -1748,6 +1746,18 @@ export interface IlmStart extends Generic {
 export interface IlmStop extends Generic {
 }
 
+export interface IndicesCreateDataStream extends Generic {
+  name: string;
+}
+
+export interface IndicesDataStreamsStats extends Generic {
+  name?: string | string[];
+}
+
+export interface IndicesDeleteDataStream extends Generic {
+  name: string | string[];
+}
+
 export interface IndicesFreeze extends Generic {
   index: string;
   timeout?: string;
@@ -1756,6 +1766,10 @@ export interface IndicesFreeze extends Generic {
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
   wait_for_active_shards?: string;
+}
+
+export interface IndicesGetDataStream extends Generic {
+  name?: string | string[];
 }
 
 export interface IndicesReloadSearchAnalyzers extends Generic {
@@ -1809,6 +1823,7 @@ export interface MigrationDeprecations extends Generic {
 
 export interface MlCloseJob<T = RequestBody> extends Generic {
   job_id: string;
+  allow_no_match?: boolean;
   allow_no_jobs?: boolean;
   force?: boolean;
   timeout?: string;
@@ -1978,11 +1993,13 @@ export interface MlGetDataFrameAnalyticsStats extends Generic {
 
 export interface MlGetDatafeedStats extends Generic {
   datafeed_id?: string;
+  allow_no_match?: boolean;
   allow_no_datafeeds?: boolean;
 }
 
 export interface MlGetDatafeeds extends Generic {
   datafeed_id?: string;
+  allow_no_match?: boolean;
   allow_no_datafeeds?: boolean;
 }
 
@@ -2007,11 +2024,13 @@ export interface MlGetInfluencers<T = RequestBody> extends Generic {
 
 export interface MlGetJobStats extends Generic {
   job_id?: string;
+  allow_no_match?: boolean;
   allow_no_jobs?: boolean;
 }
 
 export interface MlGetJobs extends Generic {
   job_id?: string;
+  allow_no_match?: boolean;
   allow_no_jobs?: boolean;
 }
 
@@ -2035,6 +2054,7 @@ export interface MlGetOverallBuckets<T = RequestBody> extends Generic {
   exclude_interim?: boolean;
   start?: string;
   end?: string;
+  allow_no_match?: boolean;
   allow_no_jobs?: boolean;
   body?: T;
 }
@@ -2166,11 +2186,13 @@ export interface MlStopDataFrameAnalytics<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface MlStopDatafeed extends Generic {
+export interface MlStopDatafeed<T = RequestBody> extends Generic {
   datafeed_id: string;
+  allow_no_match?: boolean;
   allow_no_datafeeds?: boolean;
   force?: boolean;
   timeout?: string;
+  body?: T;
 }
 
 export interface MlUpdateDataFrameAnalytics<T = RequestBody> extends Generic {
