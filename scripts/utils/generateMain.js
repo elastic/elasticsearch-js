@@ -164,8 +164,11 @@ function genFactory (folder, paths) {
 
     return apis
 
-    function handleError(err, callback) {
-      if (callback) return callback(err, result)
+    function handleError (err, callback) {
+      if (callback) {
+        process.nextTick(callback, err, result)
+        return { then: noop, catch: noop, abort: noop }
+      }
       return Promise.reject(err)
     }
 
@@ -199,6 +202,8 @@ function genFactory (folder, paths) {
       return fn(params, options, callback)
     }
   }
+
+  function noop () {}
 
   module.exports = ESAPI
   `
