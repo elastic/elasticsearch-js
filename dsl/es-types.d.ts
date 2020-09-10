@@ -7470,7 +7470,7 @@ declare namespace T {
       search_after?: Array<integer | string>
       size?: integer
       slice?: SlicedScroll
-      sort?: Array<Record<string, Sort | SortOrder>>
+      sort?: Array<Record<string, Sort | SortOrder> | string>
       _source?: boolean | Field | Field[] | SourceFilter
       suggest?: Record<string, SuggestBucket>
       terminate_after?: long
@@ -12472,1404 +12472,373 @@ declare namespace T {
     stats?: WatcherNodeStats[]
   }
 
-  export enum MinimumInterval {
-    second = "second",
-    minute = "minute",
-    hour = "hour",
-    day = "day",
-    month = "month",
-    year = "year",
-  }
-
-  export enum DateInterval {
-    second = "second",
-    minute = "minute",
-    hour = "hour",
-    day = "day",
-    week = "week",
-    month = "month",
-    quarter = "quarter",
-    year = "year",
-  }
-
-  export enum SamplerAggregationExecutionHint {
-    map = "map",
-    global_ordinals = "global_ordinals",
-    bytes_hash = "bytes_hash",
-  }
-
-  export enum TermsAggregationCollectMode {
-    depth_first = "depth_first",
-    breadth_first = "breadth_first",
-  }
-
-  export enum TermsAggregationExecutionHint {
-    map = "map",
-    global_ordinals = "global_ordinals",
-    global_ordinals_hash = "global_ordinals_hash",
-    global_ordinals_low_cardinality = "global_ordinals_low_cardinality",
-  }
-
-  export enum MatrixStatsMode {
-    avg = "avg",
-    min = "min",
-    max = "max",
-    sum = "sum",
-    median = "median",
-  }
-
-  export enum ValueType {
-    string = "string",
-    long = "long",
-    double = "double",
-    number = "number",
-    date = "date",
-    date_nanos = "date_nanos",
-    ip = "ip",
-    numeric = "numeric",
-    geo_point = "geo_point",
-    boolean = "boolean",
-  }
-
-  export enum GapPolicy {
-    skip = "skip",
-    insert_zeros = "insert_zeros",
-  }
-
-  export enum HoltWintersType {
-    add = "add",
-    mult = "mult",
-  }
-
-  export enum AggregationVisitorScope {
-    Unknown = "Unknown",
-    Aggregation = "Aggregation",
-    Bucket = "Bucket",
-  }
-
-  export enum Language {
-    Arabic = "Arabic",
-    Armenian = "Armenian",
-    Basque = "Basque",
-    Brazilian = "Brazilian",
-    Bulgarian = "Bulgarian",
-    Catalan = "Catalan",
-    Chinese = "Chinese",
-    Cjk = "Cjk",
-    Czech = "Czech",
-    Danish = "Danish",
-    Dutch = "Dutch",
-    English = "English",
-    Estonian = "Estonian",
-    Finnish = "Finnish",
-    French = "French",
-    Galician = "Galician",
-    German = "German",
-    Greek = "Greek",
-    Hindi = "Hindi",
-    Hungarian = "Hungarian",
-    Indonesian = "Indonesian",
-    Irish = "Irish",
-    Italian = "Italian",
-    Latvian = "Latvian",
-    Norwegian = "Norwegian",
-    Persian = "Persian",
-    Portuguese = "Portuguese",
-    Romanian = "Romanian",
-    Russian = "Russian",
-    Sorani = "Sorani",
-    Spanish = "Spanish",
-    Swedish = "Swedish",
-    Turkish = "Turkish",
-    Thai = "Thai",
-  }
-
-  export enum SnowballLanguage {
-    Armenian = "Armenian",
-    Basque = "Basque",
-    Catalan = "Catalan",
-    Danish = "Danish",
-    Dutch = "Dutch",
-    English = "English",
-    Finnish = "Finnish",
-    French = "French",
-    German = "German",
-    German2 = "German2",
-    Hungarian = "Hungarian",
-    Italian = "Italian",
-    Kp = "Kp",
-    Lovins = "Lovins",
-    Norwegian = "Norwegian",
-    Porter = "Porter",
-    Portuguese = "Portuguese",
-    Romanian = "Romanian",
-    Russian = "Russian",
-    Spanish = "Spanish",
-    Swedish = "Swedish",
-    Turkish = "Turkish",
-  }
-
-  export enum IcuCollationAlternate {
-    shifted = "shifted",
-    "non-ignorable" = "non-ignorable",
-  }
-
-  export enum IcuCollationCaseFirst {
-    lower = "lower",
-    upper = "upper",
-  }
-
-  export enum IcuCollationDecomposition {
-    no = "no",
-    identical = "identical",
-  }
-
-  export enum IcuCollationStrength {
-    primary = "primary",
-    secondary = "secondary",
-    tertiary = "tertiary",
-    quaternary = "quaternary",
-    identical = "identical",
-  }
-
-  export enum IcuNormalizationMode {
-    decompose = "decompose",
-    compose = "compose",
-  }
-
-  export enum IcuNormalizationType {
-    nfc = "nfc",
-    nfkc = "nfkc",
-    nfkc_cf = "nfkc_cf",
-  }
-
-  export enum IcuTransformDirection {
-    forward = "forward",
-    reverse = "reverse",
-  }
-
-  export enum KuromojiTokenizationMode {
-    normal = "normal",
-    search = "search",
-    extended = "extended",
-  }
-
-  export enum PhoneticEncoder {
-    metaphone = "metaphone",
-    double_metaphone = "double_metaphone",
-    soundex = "soundex",
-    refined_soundex = "refined_soundex",
-    caverphone1 = "caverphone1",
-    caverphone2 = "caverphone2",
-    cologne = "cologne",
-    nysiis = "nysiis",
-    koelnerphonetik = "koelnerphonetik",
-    haasephonetik = "haasephonetik",
-    beider_morse = "beider_morse",
-    daitch_mokotoff = "daitch_mokotoff",
-  }
-
-  export enum PhoneticLanguage {
-    any = "any",
-    comomon = "comomon",
-    cyrillic = "cyrillic",
-    english = "english",
-    french = "french",
-    german = "german",
-    hebrew = "hebrew",
-    hungarian = "hungarian",
-    polish = "polish",
-    romanian = "romanian",
-    russian = "russian",
-    spanish = "spanish",
-  }
-
-  export enum PhoneticNameType {
-    generic = "generic",
-    ashkenazi = "ashkenazi",
-    sephardic = "sephardic",
-  }
-
-  export enum PhoneticRuleType {
-    approx = "approx",
-    exact = "exact",
-  }
-
-  export enum KeepTypesMode {
-    include = "include",
-    exclude = "exclude",
-  }
-
-  export enum DelimitedPayloadEncoding {
-    int = "int",
-    float = "float",
-    identity = "identity",
-  }
-
-  export enum EdgeNGramSide {
-    front = "front",
-    back = "back",
-  }
-
-  export enum SynonymFormat {
-    solr = "solr",
-    wordnet = "wordnet",
-  }
-
-  export enum NoriDecompoundMode {
-    discard = "discard",
-    none = "none",
-    mixed = "mixed",
-  }
-
-  export enum TokenChar {
-    letter = "letter",
-    digit = "digit",
-    whitespace = "whitespace",
-    punctuation = "punctuation",
-    symbol = "symbol",
-    custom = "custom",
-  }
-
-  export enum ModelCategorizationStatus {
-    ok = "ok",
-    warn = "warn",
-  }
-
-  export enum ModelMemoryStatus {
-    ok = "ok",
-    soft_limit = "soft_limit",
-    hard_limit = "hard_limit",
-  }
-
-  export enum TransformState {
-    STARTED = "STARTED",
-    INDEXING = "INDEXING",
-    ABORTING = "ABORTING",
-    STOPPING = "STOPPING",
-    STOPPED = "STOPPED",
-    FAILED = "FAILED",
-  }
-
-  export enum TransformType {
-    batch = "batch",
-    continuous = "continuous",
-  }
-
-  export enum ClusterStatus {
-    green = "green",
-    yellow = "yellow",
-    red = "red",
-  }
-
-  export enum AllocationExplainDecision {
-    NO = "NO",
-    YES = "YES",
-    THROTTLE = "THROTTLE",
-    ALWAYS = "ALWAYS",
-  }
-
-  export enum Decision {
-    yes = "yes",
-    no = "no",
-    worse_balance = "worse_balance",
-    throttled = "throttled",
-    awaiting_info = "awaiting_info",
-    allocation_delayed = "allocation_delayed",
-    no_valid_shard_copy = "no_valid_shard_copy",
-    no_attempt = "no_attempt",
-  }
-
-  export enum StoreCopy {
-    NONE = "NONE",
-    AVAILABLE = "AVAILABLE",
-    CORRUPT = "CORRUPT",
-    IO_ERROR = "IO_ERROR",
-    STALE = "STALE",
-    UNKNOWN = "UNKNOWN",
-  }
-
-  export enum UnassignedInformationReason {
-    INDEX_CREATED = "INDEX_CREATED",
-    CLUSTER_RECOVERED = "CLUSTER_RECOVERED",
-    INDEX_REOPENED = "INDEX_REOPENED",
-    DANGLING_INDEX_IMPORTED = "DANGLING_INDEX_IMPORTED",
-    NEW_INDEX_RESTORED = "NEW_INDEX_RESTORED",
-    EXISTING_INDEX_RESTORED = "EXISTING_INDEX_RESTORED",
-    REPLICA_ADDED = "REPLICA_ADDED",
-    ALLOCATION_FAILED = "ALLOCATION_FAILED",
-    NODE_LEFT = "NODE_LEFT",
-    REROUTE_CANCELLED = "REROUTE_CANCELLED",
-    REINITIALIZED = "REINITIALIZED",
-    REALLOCATED_REPLICA = "REALLOCATED_REPLICA",
-    PRIMARY_FAILED = "PRIMARY_FAILED",
-    FORCED_EMPTY_PRIMARY = "FORCED_EMPTY_PRIMARY",
-    MANUAL_ALLOCATION = "MANUAL_ALLOCATION",
-  }
-
-  export enum NodeRole {
-    master = "master",
-    data = "data",
-    client = "client",
-    ingest = "ingest",
-    ml = "ml",
-    voting_only = "voting_only",
-    transform = "transform",
-    remote_cluster_client = "remote_cluster_client",
-    coordinating_only = "coordinating_only",
-  }
-
-  export enum Bytes {
-    b = "b",
-    k = "k",
-    kb = "kb",
-    m = "m",
-    mb = "mb",
-    g = "g",
-    gb = "gb",
-    t = "t",
-    tb = "tb",
-    p = "p",
-    pb = "pb",
-  }
-
-  export enum Conflicts {
-    abort = "abort",
-    proceed = "proceed",
-  }
-
-  export enum DefaultOperator {
-    AND = "AND",
-    OR = "OR",
-  }
-
-  export enum ExpandWildcards {
-    open = "open",
-    closed = "closed",
-    hidden = "hidden",
-    none = "none",
-    all = "all",
-  }
-
-  export enum GroupBy {
-    nodes = "nodes",
-    parents = "parents",
-    none = "none",
-  }
-
-  export enum Health {
-    green = "green",
-    yellow = "yellow",
-    red = "red",
-  }
-
-  export enum HttpMethod {
-    GET = "GET",
-    POST = "POST",
-    PUT = "PUT",
-    DELETE = "DELETE",
-    HEAD = "HEAD",
-  }
-
-  export enum Level {
-    cluster = "cluster",
-    indices = "indices",
-    shards = "shards",
-  }
-
-  export enum OpType {
-    index = "index",
-    create = "create",
-  }
-
-  export enum PipelineFailure {
-    BadAuthentication = "BadAuthentication",
-    BadResponse = "BadResponse",
-    PingFailure = "PingFailure",
-    SniffFailure = "SniffFailure",
-    CouldNotStartSniffOnStartup = "CouldNotStartSniffOnStartup",
-    MaxTimeoutReached = "MaxTimeoutReached",
-    MaxRetriesReached = "MaxRetriesReached",
-    Unexpected = "Unexpected",
-    BadRequest = "BadRequest",
-    NoNodesAttempted = "NoNodesAttempted",
-  }
-
-  export enum Refresh {
-    true = "true",
-    false = "false",
-    wait_for = "wait_for",
-  }
-
-  export enum SearchType {
-    query_then_fetch = "query_then_fetch",
-    dfs_query_then_fetch = "dfs_query_then_fetch",
-  }
-
-  export enum Size {
-    Raw = "Raw",
-    k = "k",
-    m = "m",
-    g = "g",
-    t = "t",
-    p = "p",
-  }
-
-  export enum SuggestMode {
-    missing = "missing",
-    popular = "popular",
-    always = "always",
-  }
-
-  export enum ThreadType {
-    cpu = "cpu",
-    wait = "wait",
-    block = "block",
-  }
-
-  export enum VersionType {
-    internal = "internal",
-    external = "external",
-    external_gte = "external_gte",
-    force = "force",
-  }
-
-  export enum WaitForEvents {
-    immediate = "immediate",
-    urgent = "urgent",
-    high = "high",
-    normal = "normal",
-    low = "low",
-    languid = "languid",
-  }
-
-  export enum WaitForStatus {
-    green = "green",
-    yellow = "yellow",
-    red = "red",
-  }
-
-  export enum DateMathOperation {
-    "+" = "+",
-    "-" = "-",
-  }
-
-  export enum DateMathTimeUnit {
-    Second = "s",
-    Minute = "m",
-    Hour = "h",
-    Day = "d",
-    Week = "w",
-    Month = "M",
-    Year = "y",
-  }
-
-  export enum DistanceUnit {
-    in = "in",
-    ft = "ft",
-    yd = "yd",
-    mi = "mi",
-    nmi = "nmi",
-    km = "km",
-    m = "m",
-    cm = "cm",
-    mm = "mm",
-  }
-
-  export enum GeoDistanceType {
-    arc = "arc",
-    plane = "plane",
-  }
-
-  export enum GeoShapeRelation {
-    intersects = "intersects",
-    disjoint = "disjoint",
-    within = "within",
-    contains = "contains",
-  }
-
-  export enum ShapeRelation {
-    intersects = "intersects",
-    disjoint = "disjoint",
-    within = "within",
-  }
-
-  export enum TimeUnit {
-    nanos = "nanos",
-    micros = "micros",
-    ms = "ms",
-    s = "s",
-    m = "m",
-    h = "h",
-    d = "d",
-  }
-
-  export enum Result {
-    Error = "Error",
-    created = "created",
-    updated = "updated",
-    deleted = "deleted",
-    not_found = "not_found",
-    noop = "noop",
-  }
-
-  export enum RecoveryInitialShards {
-    quorem = "quorem",
-    "quorem-1" = "quorem-1",
-    full = "full",
-    "full-1" = "full-1",
-  }
-
-  export enum LogLevel {
-    error = "error",
-    warn = "warn",
-    info = "info",
-    debug = "debug",
-    trace = "trace",
-  }
-
-  export enum IndexSortMissing {
-    _first = "_first",
-    _last = "_last",
-  }
-
-  export enum IndexSortMode {
-    min = "min",
-    max = "max",
-  }
-
-  export enum IndexSortOrder {
-    asc = "asc",
-    desc = "desc",
-  }
-
-  export enum FileSystemStorageImplementation {
-    simplefs = "simplefs",
-    niofs = "niofs",
-    mmapfs = "mmapfs",
-    default_fs = "default_fs",
-  }
-
-  export enum TranslogDurability {
-    request = "request",
-    async = "async",
-  }
-
-  export enum Normalization {
-    no = "no",
-    h1 = "h1",
-    h2 = "h2",
-    h3 = "h3",
-    z = "z",
-  }
-
-  export enum DFIIndependenceMeasure {
-    standardized = "standardized",
-    saturated = "saturated",
-    chisquared = "chisquared",
-  }
-
-  export enum DFRAfterEffect {
-    no = "no",
-    b = "b",
-    l = "l",
-  }
-
-  export enum DFRBasicModel {
-    be = "be",
-    d = "d",
-    g = "g",
-    if = "if",
-    in = "in",
-    ine = "ine",
-    p = "p",
-  }
-
-  export enum IBDistribution {
-    ll = "ll",
-    spl = "spl",
-  }
-
-  export enum IBLambda {
-    df = "df",
-    ttf = "ttf",
-  }
-
-  export enum ShardStoreAllocation {
-    primary = "primary",
-    replica = "replica",
-    unused = "unused",
-  }
-
-  export enum ShardRoutingState {
-    UNASSIGNED = "UNASSIGNED",
-    INITIALIZING = "INITIALIZING",
-    STARTED = "STARTED",
-    RELOCATING = "RELOCATING",
-  }
-
-  export enum ConvertProcessorType {
-    integer = "integer",
-    long = "long",
-    float = "float",
-    double = "double",
-    string = "string",
-    boolean = "boolean",
-    auto = "auto",
-  }
-
-  export enum DateRounding {
-    s = "s",
-    m = "m",
-    h = "h",
-    d = "d",
-    w = "w",
-    M = "M",
-    y = "y",
-  }
-
-  export enum ShapeType {
-    geo_shape = "geo_shape",
-    shape = "shape",
-  }
-
-  export enum UserAgentProperty {
-    NAME = "NAME",
-    MAJOR = "MAJOR",
-    MINOR = "MINOR",
-    PATCH = "PATCH",
-    OS = "OS",
-    OS_NAME = "OS_NAME",
-    OS_MAJOR = "OS_MAJOR",
-    OS_MINOR = "OS_MINOR",
-    DEVICE = "DEVICE",
-    BUILD = "BUILD",
-  }
-
-  export enum DynamicMapping {
-    strict = "strict",
-  }
-
-  export enum TermVectorOption {
-    no = "no",
-    yes = "yes",
-    with_offsets = "with_offsets",
-    with_positions = "with_positions",
-    with_positions_offsets = "with_positions_offsets",
-    with_positions_offsets_payloads = "with_positions_offsets_payloads",
-  }
-
-  export enum MatchType {
-    simple = "simple",
-    regex = "regex",
-  }
-
-  export enum FieldType {
-    none = "none",
-    geo_point = "geo_point",
-    geo_shape = "geo_shape",
-    ip = "ip",
-    binary = "binary",
-    keyword = "keyword",
-    text = "text",
-    search_as_you_type = "search_as_you_type",
-    date = "date",
-    date_nanos = "date_nanos",
-    boolean = "boolean",
-    completion = "completion",
-    nested = "nested",
-    object = "object",
-    murmur3 = "murmur3",
-    token_count = "token_count",
-    percolator = "percolator",
-    integer = "integer",
-    long = "long",
-    short = "short",
-    byte = "byte",
-    float = "float",
-    half_float = "half_float",
-    scaled_float = "scaled_float",
-    double = "double",
-    integer_range = "integer_range",
-    float_range = "float_range",
-    long_range = "long_range",
-    double_range = "double_range",
-    date_range = "date_range",
-    ip_range = "ip_range",
-    alias = "alias",
-    join = "join",
-    rank_feature = "rank_feature",
-    rank_features = "rank_features",
-    flattened = "flattened",
-    shape = "shape",
-    histogram = "histogram",
-    constant_keyword = "constant_keyword",
-  }
-
-  export enum NumberType {
-    float = "float",
-    half_float = "half_float",
-    scaled_float = "scaled_float",
-    double = "double",
-    integer = "integer",
-    long = "long",
-    short = "short",
-    byte = "byte",
-  }
-
-  export enum RangeType {
-    integer_range = "integer_range",
-    float_range = "float_range",
-    long_range = "long_range",
-    double_range = "double_range",
-    date_range = "date_range",
-    ip_range = "ip_range",
-  }
-
-  export enum IndexOptions {
-    docs = "docs",
-    freqs = "freqs",
-    positions = "positions",
-    offsets = "offsets",
-  }
-
-  export enum GeoOrientation {
-    ClockWise = "ClockWise",
-    CounterClockWise = "CounterClockWise",
-  }
-
-  export enum GeoStrategy {
-    recursive = "recursive",
-    term = "term",
-  }
-
-  export enum GeoTree {
-    geohash = "geohash",
-    quadtree = "quadtree",
-  }
-
-  export enum ShapeOrientation {
-    ClockWise = "ClockWise",
-    CounterClockWise = "CounterClockWise",
-  }
-
-  export enum AllocationEnable {
-    all = "all",
-    primaries = "primaries",
-    new_primaries = "new_primaries",
-    none = "none",
-  }
-
-  export enum AllowRebalance {
-    always = "always",
-    indices_primaries_active = "indices_primaries_active",
-    indices_all_active = "indices_all_active",
-  }
-
-  export enum RebalanceEnable {
-    all = "all",
-    primaries = "primaries",
-    replicas = "replicas",
-    none = "none",
-  }
-
-  export enum FielddataLoading {
-    eager = "eager",
-    eager_global_ordinals = "eager_global_ordinals",
-  }
-
-  export enum GeoPointFielddataFormat {
-    array = "array",
-    doc_values = "doc_values",
-    compressed = "compressed",
-    disabled = "disabled",
-  }
-
-  export enum NumericFielddataFormat {
-    array = "array",
-    disabled = "disabled",
-  }
-
-  export enum StringFielddataFormat {
-    paged_bytes = "paged_bytes",
-    disabled = "disabled",
-  }
-
-  export enum ScriptLang {
-    painless = "painless",
-    expression = "expression",
-    mustache = "mustache",
-  }
-
-  export enum Operator {
-    and = "and",
-    or = "or",
-    AND = "AND",
-    OR = "OR",
-  }
-
-  export enum FunctionBoostMode {
-    multiply = "multiply",
-    replace = "replace",
-    sum = "sum",
-    avg = "avg",
-    max = "max",
-    min = "min",
-  }
-
-  export enum FunctionScoreMode {
-    multiply = "multiply",
-    sum = "sum",
-    avg = "avg",
-    first = "first",
-    max = "max",
-    min = "min",
-  }
-
-  export enum MultiValueMode {
-    min = "min",
-    max = "max",
-    avg = "avg",
-    sum = "sum",
-  }
-
-  export enum FieldValueFactorModifier {
-    none = "none",
-    log = "log",
-    log1p = "log1p",
-    log2p = "log2p",
-    ln = "ln",
-    ln1p = "ln1p",
-    ln2p = "ln2p",
-    square = "square",
-    sqrt = "sqrt",
-    reciprocal = "reciprocal",
-  }
-
-  export enum TextQueryType {
-    best_fields = "best_fields",
-    most_fields = "most_fields",
-    cross_fields = "cross_fields",
-    phrase = "phrase",
-    phrase_prefix = "phrase_prefix",
-    bool_prefix = "bool_prefix",
-  }
-
-  export enum ZeroTermsQuery {
-    all = "all",
-    none = "none",
-  }
-
-  export enum SimpleQueryStringFlags {
-    NONE = "NONE",
-    AND = "AND",
-    OR = "OR",
-    NOT = "NOT",
-    PREFIX = "PREFIX",
-    PHRASE = "PHRASE",
-    PRECEDENCE = "PRECEDENCE",
-    ESCAPE = "ESCAPE",
-    WHITESPACE = "WHITESPACE",
-    FUZZY = "FUZZY",
-    NEAR = "NEAR",
-    SLOP = "SLOP",
-    ALL = "ALL",
-  }
-
-  export enum GeoValidationMethod {
-    coerce = "coerce",
-    ignore_malformed = "ignore_malformed",
-    strict = "strict",
-  }
-
-  export enum GeoExecution {
-    memory = "memory",
-    indexed = "indexed",
-  }
-
-  export enum GeoFormat {
-    GeoJson = "GeoJson",
-    WellKnownText = "WellKnownText",
-  }
-
-  export enum CharacterType {
-    Whitespace = "Whitespace",
-    Alpha = "Alpha",
-    Comment = "Comment",
-  }
-
-  export enum TokenType {
-    None = "None",
-    Word = "Word",
-    LParen = "LParen",
-    RParen = "RParen",
-    Comma = "Comma",
-  }
-
-  export enum ChildScoreMode {
-    none = "none",
-    avg = "avg",
-    sum = "sum",
-    max = "max",
-    min = "min",
-  }
-
-  export enum NestedScoreMode {
-    avg = "avg",
-    sum = "sum",
-    min = "min",
-    max = "max",
-    none = "none",
-  }
-
-  export enum RewriteMultiTerm {
-    constant_score = "constant_score",
-    scoring_boolean = "scoring_boolean",
-    constant_score_boolean = "constant_score_boolean",
-    top_terms_N = "top_terms_N",
-    top_terms_boost_N = "top_terms_boost_N",
-    top_terms_blended_freqs_N = "top_terms_blended_freqs_N",
-  }
-
-  export enum RangeRelation {
-    within = "within",
-    contains = "contains",
-    intersects = "intersects",
-  }
-
-  export enum VisitorScope {
-    Unknown = "Unknown",
-    Query = "Query",
-    Filter = "Filter",
-    Must = "Must",
-    MustNot = "MustNot",
-    Should = "Should",
-    PositiveQuery = "PositiveQuery",
-    NegativeQuery = "NegativeQuery",
-    Span = "Span",
-  }
-
-  export enum BoundaryScanner {
-    chars = "chars",
-    sentence = "sentence",
-    word = "word",
-  }
-
-  export enum HighlighterEncoder {
-    default = "default",
-    html = "html",
-  }
-
-  export enum HighlighterFragmenter {
-    simple = "simple",
-    span = "span",
-  }
-
-  export enum HighlighterOrder {
-    score = "score",
-  }
-
-  export enum HighlighterTagsSchema {
-    styled = "styled",
-  }
-
-  export enum HighlighterType {
-    plain = "plain",
-    fvh = "fvh",
-    unified = "unified",
-  }
-
-  export enum TotalHitsRelation {
-    eq = "eq",
-    gte = "gte",
-  }
-
-  export enum ScoreMode {
-    avg = "avg",
-    max = "max",
-    min = "min",
-    multiply = "multiply",
-    total = "total",
-  }
-
-  export enum NumericType {
-    long = "long",
-    double = "double",
-    date = "date",
-    date_nanos = "date_nanos",
-  }
-
-  export enum SortMode {
-    min = "min",
-    max = "max",
-    sum = "sum",
-    avg = "avg",
-    median = "median",
-  }
-
-  export enum SortOrder {
-    asc = "asc",
-    desc = "desc",
-  }
-
-  export enum SortSpecialField {
-    _score = "_score",
-    _doc = "_doc",
-  }
-
-  export enum StringDistance {
-    internal = "internal",
-    damerau_levenshtein = "damerau_levenshtein",
-    levenshtein = "levenshtein",
-    jaro_winkler = "jaro_winkler",
-    ngram = "ngram",
-  }
-
-  export enum SuggestSort {
-    score = "score",
-    frequency = "frequency",
-  }
-
-  export enum FollowerIndexStatus {
-    active = "active",
-    paused = "paused",
-  }
-
-  export enum EnrichPolicyPhase {
-    SCHEDULED = "SCHEDULED",
-    RUNNING = "RUNNING",
-    COMPLETE = "COMPLETE",
-    FAILED = "FAILED",
-  }
-
-  export enum LifecycleOperationMode {
-    RUNNING = "RUNNING",
-    STOPPING = "STOPPING",
-    STOPPED = "STOPPED",
-  }
-
-  export enum LicenseStatus {
-    active = "active",
-    valid = "valid",
-    invalid = "invalid",
-    expired = "expired",
-  }
-
-  export enum LicenseType {
-    missing = "missing",
-    trial = "trial",
-    basic = "basic",
-    standard = "standard",
-    dev = "dev",
-    silver = "silver",
-    gold = "gold",
-    platinum = "platinum",
-    enterprise = "enterprise",
-  }
-
-  export enum ChunkingMode {
-    auto = "auto",
-    manual = "manual",
-    off = "off",
-  }
-
-  export enum DatafeedState {
-    started = "started",
-    stopped = "stopped",
-    starting = "starting",
-    stopping = "stopping",
-  }
-
-  export enum JobState {
-    closing = "closing",
-    closed = "closed",
-    opened = "opened",
-    failed = "failed",
-    opening = "opening",
-  }
-
-  export enum MemoryStatus {
-    ok = "ok",
-    soft_limit = "soft_limit",
-    hard_limit = "hard_limit",
-  }
-
-  export enum AppliesTo {
-    actual = "actual",
-    typical = "typical",
-    diff_from_typical = "diff_from_typical",
-    time = "time",
-  }
-
-  export enum ConditionOperator {
-    gt = "gt",
-    gte = "gte",
-    lt = "lt",
-    lte = "lte",
-  }
-
-  export enum CountFunction {
-    Count = "Count",
-    HighCount = "HighCount",
-    LowCount = "LowCount",
-  }
-
-  export enum DistinctCountFunction {
-    DistinctCount = "DistinctCount",
-    LowDistinctCount = "LowDistinctCount",
-    HighDistinctCount = "HighDistinctCount",
-  }
-
-  export enum GeographicFunction {
-    LatLong = "LatLong",
-  }
-
-  export enum InfoContentFunction {
-    InfoContent = "InfoContent",
-    HighInfoContent = "HighInfoContent",
-    LowInfoContent = "LowInfoContent",
-  }
-
-  export enum MetricFunction {
-    Min = "Min",
-    Max = "Max",
-    Median = "Median",
-    HighMedian = "HighMedian",
-    LowMedian = "LowMedian",
-    Mean = "Mean",
-    HighMean = "HighMean",
-    LowMean = "LowMean",
-    Metric = "Metric",
-    Varp = "Varp",
-    HighVarp = "HighVarp",
-    LowVarp = "LowVarp",
-  }
-
-  export enum NonNullSumFunction {
-    NonNullSum = "NonNullSum",
-    HighNonNullSum = "HighNonNullSum",
-    LowNonNullSum = "LowNonNullSum",
-  }
-
-  export enum NonZeroCountFunction {
-    NonZeroCount = "NonZeroCount",
-    LowNonZeroCount = "LowNonZeroCount",
-    HighNonZeroCount = "HighNonZeroCount",
-  }
-
-  export enum RareFunction {
-    Rare = "Rare",
-    FreqRare = "FreqRare",
-  }
-
-  export enum RuleAction {
-    skip_result = "skip_result",
-    skip_model_update = "skip_model_update",
-  }
-
-  export enum RuleFilterType {
-    include = "include",
-    exclude = "exclude",
-  }
-
-  export enum SumFunction {
-    Sum = "Sum",
-    HighSum = "HighSum",
-    LowSum = "LowSum",
-  }
-
-  export enum TimeFunction {
-    TimeOfDay = "TimeOfDay",
-    TimeOfWeek = "TimeOfWeek",
-  }
-
-  export enum ExcludeFrequent {
-    all = "all",
-    none = "none",
-    by = "by",
-    over = "over",
-  }
-
-  export enum DeprecationWarningLevel {
-    none = "none",
-    info = "info",
-    warning = "warning",
-    critical = "critical",
-  }
-
-  export enum IndexingJobState {
-    started = "started",
-    indexing = "indexing",
-    stopping = "stopping",
-    stopped = "stopped",
-    aborting = "aborting",
-  }
-
-  export enum RollupMetric {
-    min = "min",
-    max = "max",
-    sum = "sum",
-    avg = "avg",
-    value_count = "value_count",
-  }
-
-  export enum AccessTokenGrantType {
-    password = "password",
-  }
-
-  export enum AcknowledgementState {
-    awaits_successful_execution = "awaits_successful_execution",
-    ackable = "ackable",
-    acked = "acked",
-  }
-
-  export enum ActionType {
-    email = "email",
-    webhook = "webhook",
-    index = "index",
-    logging = "logging",
-    slack = "slack",
-    pagerduty = "pagerduty",
-  }
-
-  export enum DataAttachmentFormat {
-    json = "json",
-    yaml = "yaml",
-  }
-
-  export enum EmailPriority {
-    lowest = "lowest",
-    low = "low",
-    normal = "normal",
-    high = "high",
-    highest = "highest",
-  }
-
-  export enum PagerDutyContextType {
-    link = "link",
-    image = "image",
-  }
-
-  export enum PagerDutyEventType {
-    trigger = "trigger",
-    resolve = "resolve",
-    acknowledge = "acknowledge",
-  }
-
-  export enum ConditionType {
-    always = "always",
-    never = "never",
-    script = "script",
-    compare = "compare",
-    array_compare = "array_compare",
-  }
-
-  export enum Quantifier {
-    some = "some",
-    all = "all",
-  }
-
-  export enum ActionExecutionState {
-    awaits_execution = "awaits_execution",
-    checking = "checking",
-    execution_not_needed = "execution_not_needed",
-    throttled = "throttled",
-    executed = "executed",
-    failed = "failed",
-    deleted_while_queued = "deleted_while_queued",
-    not_executed_already_queued = "not_executed_already_queued",
-  }
-
-  export enum ActionExecutionMode {
-    simulate = "simulate",
-    force_simulate = "force_simulate",
-    execute = "execute",
-    force_execute = "force_execute",
-    skip = "skip",
-  }
-
-  export enum Status {
-    success = "success",
-    failure = "failure",
-    simulated = "simulated",
-    throttled = "throttled",
-  }
-
-  export enum ConnectionScheme {
-    http = "http",
-    https = "https",
-  }
-
-  export enum HttpInputMethod {
-    head = "head",
-    get = "get",
-    post = "post",
-    put = "put",
-    delete = "delete",
-  }
-
-  export enum InputType {
-    http = "http",
-    search = "search",
-    simple = "simple",
-  }
-
-  export enum ResponseContentType {
-    json = "json",
-    yaml = "yaml",
-    text = "text",
-  }
-
-  export enum Day {
-    sunday = "sunday",
-    monday = "monday",
-    tuesday = "tuesday",
-    wednesday = "wednesday",
-    thursday = "thursday",
-    friday = "friday",
-    saturday = "saturday",
-  }
-
-  export enum IntervalUnit {
-    s = "s",
-    m = "m",
-    h = "h",
-    d = "d",
-    w = "w",
-  }
-
-  export enum Month {
-    january = "january",
-    february = "february",
-    march = "march",
-    april = "april",
-    may = "may",
-    june = "june",
-    july = "july",
-    august = "august",
-    september = "september",
-    october = "october",
-    november = "november",
-    december = "december",
-  }
-
-  export enum ExecutionPhase {
-    awaits_execution = "awaits_execution",
-    started = "started",
-    input = "input",
-    condition = "condition",
-    actions = "actions",
-    watch_transform = "watch_transform",
-    aborted = "aborted",
-    finished = "finished",
-  }
-
-  export enum WatcherState {
-    stopped = "stopped",
-    starting = "starting",
-    started = "started",
-    stopping = "stopping",
-  }
+  export type MinimumInterval = "second" | "minute" | "hour" | "day" | "month" | "year"
+
+  export type DateInterval = "second" | "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year"
+
+  export type SamplerAggregationExecutionHint = "map" | "global_ordinals" | "bytes_hash"
+
+  export type TermsAggregationCollectMode = "depth_first" | "breadth_first"
+
+  export type TermsAggregationExecutionHint = "map" | "global_ordinals" | "global_ordinals_hash" | "global_ordinals_low_cardinality"
+
+  export type MatrixStatsMode = "avg" | "min" | "max" | "sum" | "median"
+
+  export type ValueType = "string" | "long" | "double" | "number" | "date" | "date_nanos" | "ip" | "numeric" | "geo_point" | "boolean"
+
+  export type GapPolicy = "skip" | "insert_zeros"
+
+  export type HoltWintersType = "add" | "mult"
+
+  export type AggregationVisitorScope = "Unknown" | "Aggregation" | "Bucket"
+
+  export type Language = "Arabic" | "Armenian" | "Basque" | "Brazilian" | "Bulgarian" | "Catalan" | "Chinese" | "Cjk" | "Czech" | "Danish" | "Dutch" | "English" | "Estonian" | "Finnish" | "French" | "Galician" | "German" | "Greek" | "Hindi" | "Hungarian" | "Indonesian" | "Irish" | "Italian" | "Latvian" | "Norwegian" | "Persian" | "Portuguese" | "Romanian" | "Russian" | "Sorani" | "Spanish" | "Swedish" | "Turkish" | "Thai"
+
+  export type SnowballLanguage = "Armenian" | "Basque" | "Catalan" | "Danish" | "Dutch" | "English" | "Finnish" | "French" | "German" | "German2" | "Hungarian" | "Italian" | "Kp" | "Lovins" | "Norwegian" | "Porter" | "Portuguese" | "Romanian" | "Russian" | "Spanish" | "Swedish" | "Turkish"
+
+  export type IcuCollationAlternate = "shifted" | "non-ignorable"
+
+  export type IcuCollationCaseFirst = "lower" | "upper"
+
+  export type IcuCollationDecomposition = "no" | "identical"
+
+  export type IcuCollationStrength = "primary" | "secondary" | "tertiary" | "quaternary" | "identical"
+
+  export type IcuNormalizationMode = "decompose" | "compose"
+
+  export type IcuNormalizationType = "nfc" | "nfkc" | "nfkc_cf"
+
+  export type IcuTransformDirection = "forward" | "reverse"
+
+  export type KuromojiTokenizationMode = "normal" | "search" | "extended"
+
+  export type PhoneticEncoder = "metaphone" | "double_metaphone" | "soundex" | "refined_soundex" | "caverphone1" | "caverphone2" | "cologne" | "nysiis" | "koelnerphonetik" | "haasephonetik" | "beider_morse" | "daitch_mokotoff"
+
+  export type PhoneticLanguage = "any" | "comomon" | "cyrillic" | "english" | "french" | "german" | "hebrew" | "hungarian" | "polish" | "romanian" | "russian" | "spanish"
+
+  export type PhoneticNameType = "generic" | "ashkenazi" | "sephardic"
+
+  export type PhoneticRuleType = "approx" | "exact"
+
+  export type KeepTypesMode = "include" | "exclude"
+
+  export type DelimitedPayloadEncoding = "int" | "float" | "identity"
+
+  export type EdgeNGramSide = "front" | "back"
+
+  export type SynonymFormat = "solr" | "wordnet"
+
+  export type NoriDecompoundMode = "discard" | "none" | "mixed"
+
+  export type TokenChar = "letter" | "digit" | "whitespace" | "punctuation" | "symbol" | "custom"
+
+  export type ModelCategorizationStatus = "ok" | "warn"
+
+  export type ModelMemoryStatus = "ok" | "soft_limit" | "hard_limit"
+
+  export type TransformState = "STARTED" | "INDEXING" | "ABORTING" | "STOPPING" | "STOPPED" | "FAILED"
+
+  export type TransformType = "batch" | "continuous"
+
+  export type ClusterStatus = "green" | "yellow" | "red"
+
+  export type AllocationExplainDecision = "NO" | "YES" | "THROTTLE" | "ALWAYS"
+
+  export type Decision = "yes" | "no" | "worse_balance" | "throttled" | "awaiting_info" | "allocation_delayed" | "no_valid_shard_copy" | "no_attempt"
+
+  export type StoreCopy = "NONE" | "AVAILABLE" | "CORRUPT" | "IO_ERROR" | "STALE" | "UNKNOWN"
+
+  export type UnassignedInformationReason = "INDEX_CREATED" | "CLUSTER_RECOVERED" | "INDEX_REOPENED" | "DANGLING_INDEX_IMPORTED" | "NEW_INDEX_RESTORED" | "EXISTING_INDEX_RESTORED" | "REPLICA_ADDED" | "ALLOCATION_FAILED" | "NODE_LEFT" | "REROUTE_CANCELLED" | "REINITIALIZED" | "REALLOCATED_REPLICA" | "PRIMARY_FAILED" | "FORCED_EMPTY_PRIMARY" | "MANUAL_ALLOCATION"
+
+  export type NodeRole = "master" | "data" | "client" | "ingest" | "ml" | "voting_only" | "transform" | "remote_cluster_client" | "coordinating_only"
+
+  export type Bytes = "b" | "k" | "kb" | "m" | "mb" | "g" | "gb" | "t" | "tb" | "p" | "pb"
+
+  export type Conflicts = "abort" | "proceed"
+
+  export type DefaultOperator = "AND" | "OR"
+
+  export type ExpandWildcards = "open" | "closed" | "hidden" | "none" | "all"
+
+  export type GroupBy = "nodes" | "parents" | "none"
+
+  export type Health = "green" | "yellow" | "red"
+
+  export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "HEAD"
+
+  export type Level = "cluster" | "indices" | "shards"
+
+  export type OpType = "index" | "create"
+
+  export type PipelineFailure = "BadAuthentication" | "BadResponse" | "PingFailure" | "SniffFailure" | "CouldNotStartSniffOnStartup" | "MaxTimeoutReached" | "MaxRetriesReached" | "Unexpected" | "BadRequest" | "NoNodesAttempted"
+
+  export type Refresh = true | false | "wait_for"
+
+  export type SearchType = "query_then_fetch" | "dfs_query_then_fetch"
+
+  export type Size = "Raw" | "k" | "m" | "g" | "t" | "p"
+
+  export type SuggestMode = "missing" | "popular" | "always"
+
+  export type ThreadType = "cpu" | "wait" | "block"
+
+  export type VersionType = "internal" | "external" | "external_gte" | "force"
+
+  export type WaitForEvents = "immediate" | "urgent" | "high" | "normal" | "low" | "languid"
+
+  export type WaitForStatus = "green" | "yellow" | "red"
+
+  export type DateMathOperation = "+" | "-"
+
+  export type DateMathTimeUnit = "s" | "m" | "h" | "d" | "w" | "M" | "y"
+
+  export type DistanceUnit = "in" | "ft" | "yd" | "mi" | "nmi" | "km" | "m" | "cm" | "mm"
+
+  export type GeoDistanceType = "arc" | "plane"
+
+  export type GeoShapeRelation = "intersects" | "disjoint" | "within" | "contains"
+
+  export type ShapeRelation = "intersects" | "disjoint" | "within"
+
+  export type TimeUnit = "nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"
+
+  export type Result = "Error" | "created" | "updated" | "deleted" | "not_found" | "noop"
+
+  export type RecoveryInitialShards = "quorem" | "quorem-1" | "full" | "full-1"
+
+  export type LogLevel = "error" | "warn" | "info" | "debug" | "trace"
+
+  export type IndexSortMissing = "_first" | "_last"
+
+  export type IndexSortMode = "min" | "max"
+
+  export type IndexSortOrder = "asc" | "desc"
+
+  export type FileSystemStorageImplementation = "simplefs" | "niofs" | "mmapfs" | "default_fs"
+
+  export type TranslogDurability = "request" | "async"
+
+  export type Normalization = "no" | "h1" | "h2" | "h3" | "z"
+
+  export type DFIIndependenceMeasure = "standardized" | "saturated" | "chisquared"
+
+  export type DFRAfterEffect = "no" | "b" | "l"
+
+  export type DFRBasicModel = "be" | "d" | "g" | "if" | "in" | "ine" | "p"
+
+  export type IBDistribution = "ll" | "spl"
+
+  export type IBLambda = "df" | "ttf"
+
+  export type ShardStoreAllocation = "primary" | "replica" | "unused"
+
+  export type ShardRoutingState = "UNASSIGNED" | "INITIALIZING" | "STARTED" | "RELOCATING"
+
+  export type ConvertProcessorType = "integer" | "long" | "float" | "double" | "string" | "boolean" | "auto"
+
+  export type DateRounding = "s" | "m" | "h" | "d" | "w" | "M" | "y"
+
+  export type ShapeType = "geo_shape" | "shape"
+
+  export type UserAgentProperty = "NAME" | "MAJOR" | "MINOR" | "PATCH" | "OS" | "OS_NAME" | "OS_MAJOR" | "OS_MINOR" | "DEVICE" | "BUILD"
+
+  export type DynamicMapping = "strict"
+
+  export type TermVectorOption = "no" | "yes" | "with_offsets" | "with_positions" | "with_positions_offsets" | "with_positions_offsets_payloads"
+
+  export type MatchType = "simple" | "regex"
+
+  export type FieldType = "none" | "geo_point" | "geo_shape" | "ip" | "binary" | "keyword" | "text" | "search_as_you_type" | "date" | "date_nanos" | "boolean" | "completion" | "nested" | "object" | "murmur3" | "token_count" | "percolator" | "integer" | "long" | "short" | "byte" | "float" | "half_float" | "scaled_float" | "double" | "integer_range" | "float_range" | "long_range" | "double_range" | "date_range" | "ip_range" | "alias" | "join" | "rank_feature" | "rank_features" | "flattened" | "shape" | "histogram" | "constant_keyword"
+
+  export type NumberType = "float" | "half_float" | "scaled_float" | "double" | "integer" | "long" | "short" | "byte"
+
+  export type RangeType = "integer_range" | "float_range" | "long_range" | "double_range" | "date_range" | "ip_range"
+
+  export type IndexOptions = "docs" | "freqs" | "positions" | "offsets"
+
+  export type GeoOrientation = "ClockWise" | "CounterClockWise"
+
+  export type GeoStrategy = "recursive" | "term"
+
+  export type GeoTree = "geohash" | "quadtree"
+
+  export type ShapeOrientation = "ClockWise" | "CounterClockWise"
+
+  export type AllocationEnable = "all" | "primaries" | "new_primaries" | "none"
+
+  export type AllowRebalance = "always" | "indices_primaries_active" | "indices_all_active"
+
+  export type RebalanceEnable = "all" | "primaries" | "replicas" | "none"
+
+  export type FielddataLoading = "eager" | "eager_global_ordinals"
+
+  export type GeoPointFielddataFormat = "array" | "doc_values" | "compressed" | "disabled"
+
+  export type NumericFielddataFormat = "array" | "disabled"
+
+  export type StringFielddataFormat = "paged_bytes" | "disabled"
+
+  export type ScriptLang = "painless" | "expression" | "mustache"
+
+  export type Operator = "and" | "or" | "AND" | "OR"
+
+  export type FunctionBoostMode = "multiply" | "replace" | "sum" | "avg" | "max" | "min"
+
+  export type FunctionScoreMode = "multiply" | "sum" | "avg" | "first" | "max" | "min"
+
+  export type MultiValueMode = "min" | "max" | "avg" | "sum"
+
+  export type FieldValueFactorModifier = "none" | "log" | "log1p" | "log2p" | "ln" | "ln1p" | "ln2p" | "square" | "sqrt" | "reciprocal"
+
+  export type TextQueryType = "best_fields" | "most_fields" | "cross_fields" | "phrase" | "phrase_prefix" | "bool_prefix"
+
+  export type ZeroTermsQuery = "all" | "none"
+
+  export type SimpleQueryStringFlags = "NONE" | "AND" | "OR" | "NOT" | "PREFIX" | "PHRASE" | "PRECEDENCE" | "ESCAPE" | "WHITESPACE" | "FUZZY" | "NEAR" | "SLOP" | "ALL"
+
+  export type GeoValidationMethod = "coerce" | "ignore_malformed" | "strict"
+
+  export type GeoExecution = "memory" | "indexed"
+
+  export type GeoFormat = "GeoJson" | "WellKnownText"
+
+  export type CharacterType = "Whitespace" | "Alpha" | "Comment"
+
+  export type TokenType = "None" | "Word" | "LParen" | "RParen" | "Comma"
+
+  export type ChildScoreMode = "none" | "avg" | "sum" | "max" | "min"
+
+  export type NestedScoreMode = "avg" | "sum" | "min" | "max" | "none"
+
+  export type RewriteMultiTerm = "constant_score" | "scoring_boolean" | "constant_score_boolean" | "top_terms_N" | "top_terms_boost_N" | "top_terms_blended_freqs_N"
+
+  export type RangeRelation = "within" | "contains" | "intersects"
+
+  export type VisitorScope = "Unknown" | "Query" | "Filter" | "Must" | "MustNot" | "Should" | "PositiveQuery" | "NegativeQuery" | "Span"
+
+  export type BoundaryScanner = "chars" | "sentence" | "word"
+
+  export type HighlighterEncoder = "default" | "html"
+
+  export type HighlighterFragmenter = "simple" | "span"
+
+  export type HighlighterOrder = "score"
+
+  export type HighlighterTagsSchema = "styled"
+
+  export type HighlighterType = "plain" | "fvh" | "unified"
+
+  export type TotalHitsRelation = "eq" | "gte"
+
+  export type ScoreMode = "avg" | "max" | "min" | "multiply" | "total"
+
+  export type NumericType = "long" | "double" | "date" | "date_nanos"
+
+  export type SortMode = "min" | "max" | "sum" | "avg" | "median"
+
+  export type SortOrder = "asc" | "desc"
+
+  export type SortSpecialField = "_score" | "_doc"
+
+  export type StringDistance = "internal" | "damerau_levenshtein" | "levenshtein" | "jaro_winkler" | "ngram"
+
+  export type SuggestSort = "score" | "frequency"
+
+  export type FollowerIndexStatus = "active" | "paused"
+
+  export type EnrichPolicyPhase = "SCHEDULED" | "RUNNING" | "COMPLETE" | "FAILED"
+
+  export type LifecycleOperationMode = "RUNNING" | "STOPPING" | "STOPPED"
+
+  export type LicenseStatus = "active" | "valid" | "invalid" | "expired"
+
+  export type LicenseType = "missing" | "trial" | "basic" | "standard" | "dev" | "silver" | "gold" | "platinum" | "enterprise"
+
+  export type ChunkingMode = "auto" | "manual" | "off"
+
+  export type DatafeedState = "started" | "stopped" | "starting" | "stopping"
+
+  export type JobState = "closing" | "closed" | "opened" | "failed" | "opening"
+
+  export type MemoryStatus = "ok" | "soft_limit" | "hard_limit"
+
+  export type AppliesTo = "actual" | "typical" | "diff_from_typical" | "time"
+
+  export type ConditionOperator = "gt" | "gte" | "lt" | "lte"
+
+  export type CountFunction = "Count" | "HighCount" | "LowCount"
+
+  export type DistinctCountFunction = "DistinctCount" | "LowDistinctCount" | "HighDistinctCount"
+
+  export type GeographicFunction = "LatLong"
+
+  export type InfoContentFunction = "InfoContent" | "HighInfoContent" | "LowInfoContent"
+
+  export type MetricFunction = "Min" | "Max" | "Median" | "HighMedian" | "LowMedian" | "Mean" | "HighMean" | "LowMean" | "Metric" | "Varp" | "HighVarp" | "LowVarp"
+
+  export type NonNullSumFunction = "NonNullSum" | "HighNonNullSum" | "LowNonNullSum"
+
+  export type NonZeroCountFunction = "NonZeroCount" | "LowNonZeroCount" | "HighNonZeroCount"
+
+  export type RareFunction = "Rare" | "FreqRare"
+
+  export type RuleAction = "skip_result" | "skip_model_update"
+
+  export type RuleFilterType = "include" | "exclude"
+
+  export type SumFunction = "Sum" | "HighSum" | "LowSum"
+
+  export type TimeFunction = "TimeOfDay" | "TimeOfWeek"
+
+  export type ExcludeFrequent = "all" | "none" | "by" | "over"
+
+  export type DeprecationWarningLevel = "none" | "info" | "warning" | "critical"
+
+  export type IndexingJobState = "started" | "indexing" | "stopping" | "stopped" | "aborting"
+
+  export type RollupMetric = "min" | "max" | "sum" | "avg" | "value_count"
+
+  export type AccessTokenGrantType = "password"
+
+  export type AcknowledgementState = "awaits_successful_execution" | "ackable" | "acked"
+
+  export type ActionType = "email" | "webhook" | "index" | "logging" | "slack" | "pagerduty"
+
+  export type DataAttachmentFormat = "json" | "yaml"
+
+  export type EmailPriority = "lowest" | "low" | "normal" | "high" | "highest"
+
+  export type PagerDutyContextType = "link" | "image"
+
+  export type PagerDutyEventType = "trigger" | "resolve" | "acknowledge"
+
+  export type ConditionType = "always" | "never" | "script" | "compare" | "array_compare"
+
+  export type Quantifier = "some" | "all"
+
+  export type ActionExecutionState = "awaits_execution" | "checking" | "execution_not_needed" | "throttled" | "executed" | "failed" | "deleted_while_queued" | "not_executed_already_queued"
+
+  export type ActionExecutionMode = "simulate" | "force_simulate" | "execute" | "force_execute" | "skip"
+
+  export type Status = "success" | "failure" | "simulated" | "throttled"
+
+  export type ConnectionScheme = "http" | "https"
+
+  export type HttpInputMethod = "head" | "get" | "post" | "put" | "delete"
+
+  export type InputType = "http" | "search" | "simple"
+
+  export type ResponseContentType = "json" | "yaml" | "text"
+
+  export type Day = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday"
+
+  export type IntervalUnit = "s" | "m" | "h" | "d" | "w"
+
+  export type Month = "january" | "february" | "march" | "april" | "may" | "june" | "july" | "august" | "september" | "october" | "november" | "december"
+
+  export type ExecutionPhase = "awaits_execution" | "started" | "input" | "condition" | "actions" | "watch_transform" | "aborted" | "finished"
+
+  export type WatcherState = "stopped" | "starting" | "started" | "stopping"
 }
 
 export default T
