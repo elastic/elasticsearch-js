@@ -29,10 +29,10 @@ async function run1 () {
   // search commits that contains 'fix' but do not changes test files
   const { body } = await client.search({
     index: 'git',
-    body: Q.bool(
+    body: Q(
       // You can avoid to call `Q.must`, as any query will be
       // sent inside a `must` block unless specified otherwise
-      Q.must(Q.match('description', 'fix')),
+      Q.match('description', 'fix'),
       Q.mustNot(Q.term('files', 'test'))
     )
   })

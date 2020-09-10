@@ -30,7 +30,7 @@ async function run () {
   const { body } = await client.search({
     index: 'git',
     // use the boolean utilities to craft the final query
-    body: Q.and(fixDescription, files, author)
+    body: Q(Q.and(fixDescription, files, author))
   })
 
   console.log(body.hits.hits)

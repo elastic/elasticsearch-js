@@ -57,7 +57,7 @@ async function run () {
 
   const { body } = await client.search({
     index: 'git',
-    body: query
+    body: Q(query)
   })
 
   console.log(body.hits.hits)
