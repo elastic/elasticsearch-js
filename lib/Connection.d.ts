@@ -51,7 +51,7 @@ interface ConnectionRoles {
 
 interface RequestOptions extends http.ClientRequestArgs {
   asStream?: boolean;
-  body?: string | Buffer | ReadableStream;
+  body?: string | Buffer | ReadableStream | null;
   querystring?: string;
 }
 
