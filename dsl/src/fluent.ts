@@ -29,6 +29,16 @@ import A from './aggregation'
 import * as t from './types'
 import T from '../es-types'
 
+type SearchRequest = Required<T.SearchRequest>['body']
+interface BoolQuery {
+  filter?: T.QueryContainer[]
+  minimum_should_match?: T.MinimumShouldMatch
+  must?: T.QueryContainer[]
+  must_not?: T.QueryContainer[]
+  should?: T.QueryContainer[]
+  _name?: string
+}
+
 const kState = Symbol('dsl-query-state')
 type MultiType = string | number | boolean
 
@@ -36,13 +46,18 @@ type MultiType = string | number | boolean
 //       and automatically call `query.build()`
 
 class FluentQ {
-  [kState]: Record<string, any>[]
+  [kState]: (SearchRequest | T.QueryContainer | T.QueryContainer[] | BoolQuery)[]
   constructor () {
     this[kState] = []
   }
 
-  build (): Record<string, any> {
+  build (): SearchRequest {
     return Q(...this[kState])
+  }
+
+  buildQuery (): T.QueryContainer {
+    const b = Q(...this[kState])
+    return b.query != null ? b.query : {}
   }
 
   param (key: string): Symbol {
@@ -123,14 +138,16 @@ class FluentQ {
   term (key: string, val: (MultiType | Symbol)[]): this
   term (key: string, val: (MultiType | Symbol)[], opts: T.TermsQuery): this
   term (key: string, val: any, opts?: any): this {
-    if (Array.isArray(val)) {
-      return this.terms(key, val, opts)
+    if (Array.isArray(val) && opts == null) {
+      return this.terms(key, val)
     }
     this[kState].push(Q.term(key, val, opts))
     return this
   }
 
-  terms (key: string, val: (MultiType | Symbol)[], opts?: T.TermsQuery): this {
+  terms (key: string, val: (MultiType | Symbol)[]): this
+  terms (key: string, val: (MultiType | Symbol)[], opts: T.TermsQuery): this
+  terms (key: string, val: (MultiType | Symbol)[], opts?: any): this {
     this[kState].push(Q.terms(key, val, opts))
     return this
   }
@@ -200,42 +217,49 @@ class FluentQ {
   }
 
   must (...queries: FluentQ[]): this {
-    this[kState].push(Q.must(...queries.map(q => q.build())))
+    // @ts-expect-error
+    this[kState].push(Q.must(...queries.flatMap(q => q[kState])))
     return this
   }
 
   should (...queries: FluentQ[]): this {
-    this[kState].push(Q.should(...queries.map(q => q.build())))
+    // @ts-expect-error
+    this[kState].push(Q.should(...queries.flatMap(q => q[kState])))
     return this
   }
 
   mustNot (...queries: FluentQ[]): this {
-    this[kState].push(Q.mustNot(...queries.map(q => q.build())))
+    // @ts-expect-error
+    this[kState].push(Q.mustNot(...queries.flatMap(q => q[kState])))
     return this
   }
 
   filter (...queries: FluentQ[]): this {
-    this[kState].push(Q.filter(...queries.map(q => q.build())))
+    // @ts-expect-error
+    this[kState].push(Q.filter(...queries.flatMap(q => q[kState])))
     return this
   }
 
   bool (...queries: FluentQ[]): this {
-    this[kState].push(Q.bool(...queries.map(q => q.build())))
+    // @ts-expect-error
+    this[kState].push(Q.bool(...queries.flatMap(q => q[kState])))
     return this
   }
 
-  and (...queries: FluentQ[]): this {
-    this[kState].push(Q.and(...queries.map(q => q.build())))
+  and (...blocks: FluentQ[]): this {
+    const { query = {}, ...searchRequest } = this.build()
+    this[kState] = [searchRequest, Q.and(query, ...blocks.map(q => q.buildQuery()))]
     return this
   }
 
-  or (...queries: FluentQ[]): this {
-    this[kState].push(Q.or(...queries.map(q => q.build())))
+  or (...blocks: FluentQ[]): this {
+    const { query = {}, ...searchRequest } = this.build()
+    this[kState] = [searchRequest, Q.and(query, ...blocks.map(q => q.buildQuery()))]
     return this
   }
 
   not (query: FluentQ): this {
-    this[kState].push(Q.not(query.build()))
+    this[kState].push(Q.not(query.buildQuery()))
     return this
   }
 
@@ -295,6 +319,16 @@ class FluentQ {
   raw (obj: Record<string, any>): this {
     this[kState].push(obj)
     return this
+  }
+
+  clone (): FluentQ {
+    const F = new FluentQ()
+    F[kState] = this[kState].slice()
+    return F
+  }
+
+  toJSON () {
+    return this.build()
   }
 }
 

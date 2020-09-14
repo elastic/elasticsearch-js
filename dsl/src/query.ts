@@ -40,7 +40,7 @@ type QueryBlock = { query: T.QueryContainer }
 type MultiType = string | number | boolean
 
 function Q (...blocks: (SearchRequest | T.QueryContainer | T.QueryContainer[] | BoolQuery)[]): SearchRequest {
-  blocks = blocks.flat() as (SearchRequest | T.QueryContainer | BoolQuery)[]
+  blocks = blocks.flat()
   const topLevelKeys = [
     'aggs',
     'collapse',
@@ -300,22 +300,24 @@ namespace Q {
 
   export function term (key: string, val: MultiType | Symbol): { term: Record<string, MultiType> }
   export function term (key: string, val: MultiType | Symbol, opts: T.TermQuery): { term: Record<string, T.TermQuery> }
-  export function term (key: string, val: (MultiType | Symbol)[]): { terms: T.TermsQuery }
-  export function term (key: string, val: (MultiType | Symbol)[], opts: T.TermsQuery): { terms: T.TermsQuery }
+  export function term (key: string, val: (MultiType | Symbol)[]): { terms: Record<string, string[]> }
+  export function term (key: string, val: (MultiType | Symbol)[], opts: T.TermsQuery): { term: Record<string, T.TermQuery> }[]
   export function term (key: string, val: any, opts?: any): any {
-    if (Array.isArray(val)) {
-      return Q.terms(key, val, opts)
+    if (Array.isArray(val) && opts == null) {
+      return Q.terms(key, val)
     }
     return generateValueObject('term', key, val, opts)
   }
 
-  export function terms (key: string, val: (MultiType | Symbol)[], opts?: T.TermsQuery): { terms: T.TermsQuery } {
-    return {
-      terms: {
-        [key]: val,
-        ...opts
+  export function terms (key: string, val: (MultiType | Symbol)[]): { terms: Record<string, string[]> }
+  export function terms (key: string, val: (MultiType | Symbol)[], opts: T.TermsQuery): { terms: Record<string, T.TermsQuery> }
+  export function terms (key: string, val: (MultiType | Symbol)[], opts?: any): any {
+    if (opts == null) {
+      return {
+        terms: { [key]: val }
       }
     }
+    return { terms: opts }
   }
 
   export function termsSet (key: string, val: (string | Symbol)[], opts?: T.TermsSetQuery): { terms_set: Record<string, T.TermsSetQuery> } {
