@@ -282,8 +282,9 @@ function now () {
 }
 
 function parse (data) {
+  const schema = yaml.Schema.create(yaml.CORE_SCHEMA, [])
   try {
-    var doc = yaml.safeLoad(data)
+    var doc = yaml.safeLoad(data, { schema })
   } catch (err) {
     console.error(err)
     return
