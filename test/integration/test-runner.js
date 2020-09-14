@@ -69,11 +69,7 @@ function build (opts = {}) {
     }
 
     try {
-      const { body: templates } = await client.indices.getTemplate()
-      await helper.runInParallel(
-        client, 'indices.deleteTemplate',
-        Object.keys(templates).map(t => ({ name: t }))
-      )
+      await client.indices.deleteTemplate({ name: '*' })
     } catch (err) {
       assert.ifError(err, 'should not error: indices.deleteTemplate')
     }
@@ -81,12 +77,7 @@ function build (opts = {}) {
     try {
       const { body: repositories } = await client.snapshot.getRepository()
       for (const repository of Object.keys(repositories)) {
-        const { body: snapshots } = await client.snapshot.get({ repository, snapshot: '_all' })
-        await helper.runInParallel(
-          client, 'snapshot.delete',
-          Object.keys(snapshots).map(snapshot => ({ snapshot, repository })),
-          { ignore: [404] }
-        )
+        await client.snapshot.delete({ repository, snapshot: '*' }, { ignore: [404] })
         await client.snapshot.deleteRepository({ repository }, { ignore: [404] })
       }
     } catch (err) {
