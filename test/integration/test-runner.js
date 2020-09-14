@@ -75,7 +75,7 @@ function build (opts = {}) {
     }
 
     try {
-      await client.indices.deleteTemplate({ name: '*'})
+      await client.indices.deleteTemplate({ name: '*' })
     } catch (err) {
       assert.ifError(err, 'should not error: indices.deleteTemplate')
     }
@@ -83,7 +83,7 @@ function build (opts = {}) {
     try {
       const { body: repositories } = await client.snapshot.getRepository()
       for (const repository of Object.keys(repositories)) {
-        await client.snapshot.delete({ repository, snapshot: '*'}, { ignore: [404] })
+        await client.snapshot.delete({ repository, snapshot: '*' }, { ignore: [404] })
         await client.snapshot.deleteRepository({ repository }, { ignore: [404] })
       }
     } catch (err) {
