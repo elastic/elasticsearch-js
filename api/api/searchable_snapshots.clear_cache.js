@@ -43,7 +43,7 @@ function buildSearchableSnapshotsClearCache (opts) {
   /**
    * Perform a searchable_snapshots.clear_cache request
    * Clear the cache of searchable snapshots.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-clear-cache.html
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-apis.html
    */
   return function searchableSnapshotsClearCache (params, options, callback) {
     options = options || {}

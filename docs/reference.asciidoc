@@ -9309,7 +9309,7 @@ client.searchableSnapshots.clearCache({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/searchable-snapshots-api-clear-cache.html[Documentation] +
+link:{ref}/searchable-snapshots-apis.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -9367,7 +9367,7 @@ client.searchableSnapshots.repositoryStats({
   repository: string
 })
 ----
-link:{ref}/searchable-snapshots-repository-stats.html[Documentation] +
+link:{ref}/searchable-snapshots-apis.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -9383,7 +9383,7 @@ client.searchableSnapshots.stats({
   index: string | string[]
 })
 ----
-link:{ref}/searchable-snapshots-api-stats.html[Documentation] +
+link:{ref}/searchable-snapshots-apis.html[Documentation] +
 [cols=2*]
 |===
 |`index`

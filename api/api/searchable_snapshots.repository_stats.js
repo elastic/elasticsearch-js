@@ -36,8 +36,8 @@ function buildSearchableSnapshotsRepositoryStats (opts) {
 
   /**
    * Perform a searchable_snapshots.repository_stats request
-   * Retrieve usage statistics about a snapshot repository.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-repository-stats.html
+   * DEPRECATED: This API is replaced by the Repositories Metering API.
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-apis.html
    */
   return function searchableSnapshotsRepositoryStats (params, options, callback) {
     options = options || {}
