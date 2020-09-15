@@ -22,24 +22,30 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSearchableSnapshotsStats (opts) {
+function buildOpenPointInTime (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
   const acceptedQuerystring = [
-
+    'preference',
+    'routing',
+    'ignore_unavailable',
+    'expand_wildcards',
+    'keep_alive'
   ]
 
   const snakeCase = {
-
+    ignoreUnavailable: 'ignore_unavailable',
+    expandWildcards: 'expand_wildcards',
+    keepAlive: 'keep_alive'
   }
 
   /**
-   * Perform a searchable_snapshots.stats request
-   * Retrieve various statistics about searchable snapshots.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-apis.html
+   * Perform a open_point_in_time request
+   * Open a point in time that can be used in subsequent searches
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time.html
    */
-  return function searchableSnapshotsStats (params, options, callback) {
+  return function openPointInTime (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -69,18 +75,18 @@ function buildSearchableSnapshotsStats (opts) {
     var path = ''
 
     if ((index) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_searchable_snapshots' + '/' + 'stats'
+      if (method == null) method = 'POST'
+      path = '/' + encodeURIComponent(index) + '/' + '_pit'
     } else {
-      if (method == null) method = 'GET'
-      path = '/' + '_searchable_snapshots' + '/' + 'stats'
+      if (method == null) method = 'POST'
+      path = '/' + '_pit'
     }
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -89,4 +95,4 @@ function buildSearchableSnapshotsStats (opts) {
   }
 }
 
-module.exports = buildSearchableSnapshotsStats
+module.exports = buildOpenPointInTime

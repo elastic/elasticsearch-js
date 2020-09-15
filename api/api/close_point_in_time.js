@@ -22,7 +22,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSearchableSnapshotsStats (opts) {
+function buildClosePointInTime (opts) {
   // eslint-disable-next-line no-unused-vars
   const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
 
@@ -35,11 +35,11 @@ function buildSearchableSnapshotsStats (opts) {
   }
 
   /**
-   * Perform a searchable_snapshots.stats request
-   * Retrieve various statistics about searchable snapshots.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-apis.html
+   * Perform a close_point_in_time request
+   * Close a point in time
+   * https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time.html
    */
-  return function searchableSnapshotsStats (params, options, callback) {
+  return function closePointInTime (params, options, callback) {
     options = options || {}
     if (typeof options === 'function') {
       callback = options
@@ -58,7 +58,7 @@ function buildSearchableSnapshotsStats (opts) {
     }
 
     var warnings = []
-    var { method, body, index, ...querystring } = params
+    var { method, body, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
 
     var ignore = options.ignore
@@ -68,19 +68,14 @@ function buildSearchableSnapshotsStats (opts) {
 
     var path = ''
 
-    if ((index) != null) {
-      if (method == null) method = 'GET'
-      path = '/' + encodeURIComponent(index) + '/' + '_searchable_snapshots' + '/' + 'stats'
-    } else {
-      if (method == null) method = 'GET'
-      path = '/' + '_searchable_snapshots' + '/' + 'stats'
-    }
+    if (method == null) method = 'DELETE'
+    path = '/' + '_pit'
 
     // build request object
     const request = {
       method,
       path,
-      body: null,
+      body: body || '',
       querystring
     }
 
@@ -89,4 +84,4 @@ function buildSearchableSnapshotsStats (opts) {
   }
 }
 
-module.exports = buildSearchableSnapshotsStats
+module.exports = buildClosePointInTime

@@ -1658,6 +1658,10 @@ export interface CcrUnfollow extends Generic {
   index: string;
 }
 
+export interface ClosePointInTime<T = RequestBody> extends Generic {
+  body?: T;
+}
+
 export interface EnrichDeletePolicy extends Generic {
   name: string;
 }
@@ -2239,6 +2243,15 @@ export interface MonitoringBulk<T = RequestNDBody> extends Generic {
   system_api_version?: string;
   interval?: string;
   body: T;
+}
+
+export interface OpenPointInTime extends Generic {
+  index?: string | string[];
+  preference?: string;
+  routing?: string;
+  ignore_unavailable?: boolean;
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+  keep_alive?: string;
 }
 
 export interface RollupDeleteJob extends Generic {

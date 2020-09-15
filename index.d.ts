@@ -433,6 +433,14 @@ declare class Client {
   clearScroll<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   clearScroll<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.ClearScroll<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   clearScroll<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.ClearScroll<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  close_point_in_time<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.ClosePointInTime<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  close_point_in_time<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  close_point_in_time<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.ClosePointInTime<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  close_point_in_time<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.ClosePointInTime<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  closePointInTime<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.ClosePointInTime<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  closePointInTime<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  closePointInTime<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.ClosePointInTime<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  closePointInTime<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.ClosePointInTime<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   cluster: {
     allocation_explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.ClusterAllocationExplain<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     allocation_explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1785,6 +1793,14 @@ declare class Client {
     usage<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesUsage, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     usage<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesUsage, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
+  open_point_in_time<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.OpenPointInTime, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  open_point_in_time<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  open_point_in_time<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.OpenPointInTime, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  open_point_in_time<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.OpenPointInTime, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  openPointInTime<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.OpenPointInTime, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  openPointInTime<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  openPointInTime<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.OpenPointInTime, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  openPointInTime<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.OpenPointInTime, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   ping<TResponse = boolean, TContext = Context>(params?: RequestParams.Ping, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   ping<TResponse = boolean, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   ping<TResponse = boolean, TContext = Context>(params: RequestParams.Ping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

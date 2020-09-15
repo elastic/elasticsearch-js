@@ -112,6 +112,8 @@ function ESAPI (opts) {
     },
     clear_scroll: lazyLoad('clear_scroll', opts),
     clearScroll: lazyLoad('clear_scroll', opts),
+    close_point_in_time: lazyLoad('close_point_in_time', opts),
+    closePointInTime: lazyLoad('close_point_in_time', opts),
     cluster: {
       allocation_explain: lazyLoad('cluster.allocation_explain', opts),
       allocationExplain: lazyLoad('cluster.allocation_explain', opts),
@@ -471,6 +473,8 @@ function ESAPI (opts) {
       stats: lazyLoad('nodes.stats', opts),
       usage: lazyLoad('nodes.usage', opts)
     },
+    open_point_in_time: lazyLoad('open_point_in_time', opts),
+    openPointInTime: lazyLoad('open_point_in_time', opts),
     ping: lazyLoad('ping', opts),
     put_script: lazyLoad('put_script', opts),
     putScript: lazyLoad('put_script', opts),

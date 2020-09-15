@@ -6733,6 +6733,22 @@ link:{ref}/ccr-post-unfollow.html[Documentation] +
 
 |===
 
+=== closePointInTime
+
+[source,ts]
+----
+client.closePointInTime({
+  body: object
+})
+----
+link:{ref}/point-in-time.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - a point-in-time id to close
+
+|===
+
 === enrich.deletePolicy
 
 [source,ts]
@@ -9078,6 +9094,43 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+=== openPointInTime
+
+[source,ts]
+----
+client.openPointInTime({
+  index: string | string[],
+  preference: string,
+  routing: string,
+  ignore_unavailable: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  keep_alive: string
+})
+----
+link:{ref}/point-in-time.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to open point in time; use `_all` or empty string to perform the operation on all indices
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
+
+|`routing`
+|`string` - Specific routing value
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|`keep_alive` or `keepAlive`
+|`string` - Specific the time to live for the point in time
+
+|===
+
 === rollup.deleteJob
 *Stability:* experimental
 [source,ts]
@@ -9247,7 +9300,7 @@ client.searchableSnapshots.clearCache({
   expand_wildcards: 'open' | 'closed' | 'none' | 'all'
 })
 ----
-link:{ref}/searchable-snapshots-api-clear-cache.html[Documentation] +
+link:{ref}/searchable-snapshots-apis.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -9305,7 +9358,7 @@ client.searchableSnapshots.repositoryStats({
   repository: string
 })
 ----
-link:{ref}/searchable-snapshots-repository-stats.html[Documentation] +
+link:{ref}/searchable-snapshots-apis.html[Documentation] +
 [cols=2*]
 |===
 |`repository`
@@ -9321,7 +9374,7 @@ client.searchableSnapshots.stats({
   index: string | string[]
 })
 ----
-link:{ref}/searchable-snapshots-api-stats.html[Documentation] +
+link:{ref}/searchable-snapshots-apis.html[Documentation] +
 [cols=2*]
 |===
 |`index`
