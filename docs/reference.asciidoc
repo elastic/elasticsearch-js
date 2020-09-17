@@ -3052,7 +3052,7 @@ client.indices.getAlias({
   local: boolean
 })
 ----
-link:{ref}/indices-aliases.html[Documentation] +
+link:{ref}/indices-get-alias.html[Documentation] +
 [cols=2*]
 |===
 |`name`
