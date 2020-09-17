@@ -38,10 +38,11 @@ const kChild = Symbol('elasticsearchjs-child')
 const kExtensions = Symbol('elasticsearchjs-extensions')
 const kEventEmitter = Symbol('elasticsearchjs-event-emitter')
 
-const buildApi = require('./api')
+const ESAPI = require('./new-api')
 
-class Client {
+class Client extends ESAPI {
   constructor (opts = {}) {
+    super()
     if (opts.cloud) {
       const { id, username, password } = opts.cloud
       // the cloud id is `cluster-name:base64encodedurl`
@@ -71,38 +72,42 @@ class Client {
       throw new ConfigurationError('Missing node(s) option')
     }
 
-    const checkAuth = getAuth(opts.node || opts.nodes)
-    if (checkAuth && checkAuth.username && checkAuth.password) {
-      opts.auth = Object.assign({}, opts.auth, { username: checkAuth.username, password: checkAuth.password })
+    if (opts[kChild] === undefined) {
+      const checkAuth = getAuth(opts.node || opts.nodes)
+      if (checkAuth && checkAuth.username && checkAuth.password) {
+        opts.auth = Object.assign({}, opts.auth, { username: checkAuth.username, password: checkAuth.password })
+      }
     }
 
-    const options = Object.assign({}, {
-      Connection,
-      Transport,
-      Serializer,
-      ConnectionPool: opts.cloud ? CloudConnectionPool : ConnectionPool,
-      maxRetries: 3,
-      requestTimeout: 30000,
-      pingTimeout: 3000,
-      sniffInterval: false,
-      sniffOnStart: false,
-      sniffEndpoint: '_nodes/_all/http',
-      sniffOnConnectionFault: false,
-      resurrectStrategy: 'ping',
-      suggestCompression: false,
-      compression: false,
-      ssl: null,
-      agent: null,
-      headers: {},
-      nodeFilter: null,
-      nodeSelector: 'round-robin',
-      generateRequestId: null,
-      name: 'elasticsearch-js',
-      auth: null,
-      opaqueIdPrefix: null,
-      context: null,
-      proxy: null
-    }, opts)
+    const options = opts[kChild] !== undefined
+      ? opts[kChild].initialOptions
+      : Object.assign({}, {
+        Connection,
+        Transport,
+        Serializer,
+        ConnectionPool: opts.cloud ? CloudConnectionPool : ConnectionPool,
+        maxRetries: 3,
+        requestTimeout: 30000,
+        pingTimeout: 3000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        sniffEndpoint: '_nodes/_all/http',
+        sniffOnConnectionFault: false,
+        resurrectStrategy: 'ping',
+        suggestCompression: false,
+        compression: false,
+        ssl: null,
+        agent: null,
+        headers: {},
+        nodeFilter: null,
+        nodeSelector: 'round-robin',
+        generateRequestId: null,
+        name: 'elasticsearch-js',
+        auth: null,
+        opaqueIdPrefix: null,
+        context: null,
+        proxy: null
+      }, opts)
 
     this[kInitialOptions] = options
     this[kExtensions] = []
@@ -156,17 +161,6 @@ class Client {
     /* istanbul ignore else */
     if (Helpers !== null) {
       this.helpers = new Helpers({ client: this, maxRetries: options.maxRetries })
-    }
-
-    const apis = buildApi({
-      makeRequest: this.transport.request.bind(this.transport),
-      result: { body: null, statusCode: null, headers: null, warnings: null },
-      ConfigurationError
-    })
-
-    const apiNames = Object.keys(apis)
-    for (var i = 0, len = apiNames.length; i < len; i++) {
-      this[apiNames[i]] = apis[apiNames[i]]
     }
   }
 
@@ -231,7 +225,8 @@ class Client {
     initialOptions[kChild] = {
       connectionPool: this.connectionPool,
       serializer: this.serializer,
-      eventEmitter: this[kEventEmitter]
+      eventEmitter: this[kEventEmitter],
+      initialOptions
     }
 
     const client = new Client(initialOptions)
