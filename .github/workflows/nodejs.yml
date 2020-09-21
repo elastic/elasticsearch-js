@@ -127,6 +127,7 @@ jobs:
 
     - name: Install
       run: |
+        npm install
         npm install --prefix test/bundlers/parcel-test
         npm install --prefix test/bundlers/rollup-test
         npm install --prefix test/bundlers/webpack-test
