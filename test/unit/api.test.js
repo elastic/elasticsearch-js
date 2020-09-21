@@ -285,7 +285,7 @@ test('If the API uses the same key for both url and query parameter, the url sho
   })
 })
 
-test('ConfigurationError (callback)', { skip: 'different type of error' }, t => {
+test('ConfigurationError (callback)', t => {
   t.plan(1)
 
   const client = new Client({
@@ -299,7 +299,7 @@ test('ConfigurationError (callback)', { skip: 'different type of error' }, t => 
   })
 })
 
-test('ConfigurationError (promises)', { skip: 'different type of error' }, t => {
+test('ConfigurationError (promises)', t => {
   t.plan(1)
 
   const client = new Client({
@@ -314,7 +314,7 @@ test('ConfigurationError (promises)', { skip: 'different type of error' }, t => 
     })
 })
 
-test('The callback with a sync error should be called in the next tick', { skip: 'different type of error' }, t => {
+test('The callback with a sync error should be called in the next tick', t => {
   t.plan(4)
 
   const client = new Client({
