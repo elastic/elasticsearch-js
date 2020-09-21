@@ -233,7 +233,7 @@ test('Basic (options and promises)', t => {
   })
 })
 
-test('Pass unknown parameters as query parameters (and get a warning)', t => {
+test('Pass unknown parameters as query parameters (and get a warning)', { skip: 'avoid creating a warning' }, t => {
   t.plan(4)
 
   function handler (req, res) {
