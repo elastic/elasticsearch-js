@@ -32,6 +32,7 @@ const Helpers = nodeMajor < 10 ? /* istanbul ignore next */ null : require('./li
 const Serializer = require('./lib/Serializer')
 const errors = require('./lib/errors')
 const { ConfigurationError } = errors
+const { prepareHeaders } = Connection.internals
 
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
 const kChild = Symbol('elasticsearchjs-child')
@@ -42,7 +43,7 @@ const ESAPI = require('./api')
 
 class Client extends ESAPI {
   constructor (opts = {}) {
-    super({ ConfigurationError: errors.ConfigurationError })
+    super({ ConfigurationError })
     if (opts.cloud && opts[kChild] === undefined) {
       const { id, username, password } = opts.cloud
       // the cloud id is `cluster-name:base64encodedurl`
@@ -197,7 +198,7 @@ class Client extends ESAPI {
         throw new Error(`The method "${method}" already exists on namespace "${namespace}"`)
       }
 
-      this[namespace] = this[namespace] || {}
+      if (this[namespace] == null) this[namespace] = {}
       this[namespace][method] = fn({
         makeRequest: this.transport.request.bind(this.transport),
         result: { body: null, statusCode: null, headers: null, warnings: null },
@@ -220,16 +221,20 @@ class Client extends ESAPI {
 
   child (opts) {
     // Merge the new options with the initial ones
-    const initialOptions = Object.assign({}, this[kInitialOptions], opts)
+    const options = Object.assign({}, this[kInitialOptions], opts)
     // Pass to the child client the parent instances that cannot be overriden
-    initialOptions[kChild] = {
+    options[kChild] = {
       connectionPool: this.connectionPool,
       serializer: this.serializer,
       eventEmitter: this[kEventEmitter],
-      initialOptions
+      initialOptions: options
     }
 
-    const client = new Client(initialOptions)
+    if (options.auth !== undefined) {
+      options.headers = prepareHeaders(options.headers, options.auth)
+    }
+
+    const client = new Client(options)
     // Add parent extensions
     if (this[kExtensions].length > 0) {
       this[kExtensions].forEach(({ name, opts, fn }) => {
