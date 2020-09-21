@@ -2111,7 +2111,7 @@ export interface MlGetRecords<T = RequestBody> extends Generic {
 export interface MlGetTrainedModels extends Generic {
   model_id?: string;
   allow_no_match?: boolean;
-  include_model_definition?: boolean;
+  include?: string;
   decompress_definition?: boolean;
   from?: number;
   size?: number;

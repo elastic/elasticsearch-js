@@ -75,17 +75,6 @@ interface KibanaClient {
   once(event: 'resurrect', listener: (err: null, meta: ResurrectEvent) => void): this;
   off(event: string | symbol, listener: (...args: any[]) => void): this;
   /* GENERATED */
-  asyncSearch: {
-    delete<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AsyncSearchDelete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AsyncSearchGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    submit<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.AsyncSearchSubmit<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  }
-  autoscaling: {
-    deleteAutoscalingPolicy<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AutoscalingDeleteAutoscalingPolicy, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getAutoscalingDecision<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AutoscalingGetAutoscalingDecision, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getAutoscalingPolicy<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AutoscalingGetAutoscalingPolicy, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    putAutoscalingPolicy<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.AutoscalingPutAutoscalingPolicy<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  }
   bulk<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params?: RequestParams.Bulk<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   cat: {
     aliases<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatAliases, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -96,10 +85,6 @@ interface KibanaClient {
     help<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatHelp, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     indices<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatIndices, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     master<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatMaster, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    mlDataFrameAnalytics<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatMlDataFrameAnalytics, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    mlDatafeeds<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatMlDatafeeds, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    mlJobs<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatMlJobs, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    mlTrainedModels<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatMlTrainedModels, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     nodeattrs<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatNodeattrs, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     nodes<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatNodes, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     pendingTasks<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatPendingTasks, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -112,25 +97,13 @@ interface KibanaClient {
     tasks<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatTasks, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     templates<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatTemplates, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     threadPool<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatThreadPool, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    mlDataFrameAnalytics<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatMlDataFrameAnalytics, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    mlDatafeeds<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatMlDatafeeds, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    mlJobs<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatMlJobs, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    mlTrainedModels<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatMlTrainedModels, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     transforms<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CatTransforms, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
-  ccr: {
-    deleteAutoFollowPattern<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrDeleteAutoFollowPattern, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    follow<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.CcrFollow<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    followInfo<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrFollowInfo, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    followStats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrFollowStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    forgetFollower<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.CcrForgetFollower<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getAutoFollowPattern<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrGetAutoFollowPattern, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    pauseAutoFollowPattern<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrPauseAutoFollowPattern, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    pauseFollow<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrPauseFollow, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    putAutoFollowPattern<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.CcrPutAutoFollowPattern<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    resumeAutoFollowPattern<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrResumeAutoFollowPattern, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    resumeFollow<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.CcrResumeFollow<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    unfollow<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrUnfollow, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  }
   clearScroll<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.ClearScroll<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  closePointInTime<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.ClosePointInTime<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   cluster: {
     allocationExplain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.ClusterAllocationExplain<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     deleteComponentTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.ClusterDeleteComponentTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -155,6 +128,152 @@ interface KibanaClient {
     importDanglingIndex<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.DanglingIndicesImportDanglingIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     listDanglingIndices<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.DanglingIndicesListDanglingIndices, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
+  delete<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.Delete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  deleteByQuery<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.DeleteByQuery<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  deleteByQueryRethrottle<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.DeleteByQueryRethrottle, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  deleteScript<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.DeleteScript, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  exists<TResponse = boolean, TContext = Context>(params?: RequestParams.Exists, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  existsSource<TResponse = boolean, TContext = Context>(params?: RequestParams.ExistsSource, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Explain<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  fieldCaps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.FieldCaps<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.Get, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  getScript<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.GetScript, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  getScriptContext<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.GetScriptContext, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  getScriptLanguages<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.GetScriptLanguages, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  getSource<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.GetSource, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  index<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Index<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  indices: {
+    addBlock<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesAddBlock, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    analyze<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesAnalyze<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clearCache<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesClearCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clone<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesClone<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    close<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesClose, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    create<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesCreate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    delete<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDelete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    deleteAlias<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDeleteAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    deleteIndexTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDeleteIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    deleteTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDeleteTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    exists<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExists, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    existsAlias<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    existsIndexTemplate<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    existsTemplate<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    existsType<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsType, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    flush<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesFlush, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    forcemerge<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesForcemerge, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getAlias<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getFieldMapping<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetFieldMapping, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getIndexTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getMapping<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetMapping, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getSettings<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetSettings, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getUpgrade<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetUpgrade, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    open<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesOpen, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    putAlias<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesPutAlias<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    putIndexTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesPutIndexTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    putMapping<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesPutMapping<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    putSettings<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesPutSettings<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    putTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesPutTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    recovery<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesRecovery, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    refresh<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesRefresh, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    resolveIndex<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesResolveIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    rollover<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesRollover<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    segments<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesSegments, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    shardStores<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesShardStores, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    shrink<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesShrink<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    simulateIndexTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesSimulateIndexTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    simulateTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesSimulateTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    split<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesSplit<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    updateAliases<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesUpdateAliases<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    upgrade<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesUpgrade, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    validateQuery<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesValidateQuery<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    createDataStream<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesCreateDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    dataStreamsStats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDataStreamsStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    deleteDataStream<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDeleteDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    freeze<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesFreeze, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getDataStream<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    reloadSearchAnalyzers<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesReloadSearchAnalyzers, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    unfreeze<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesUnfreeze, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  }
+  info<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.Info, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  ingest: {
+    deletePipeline<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IngestDeletePipeline, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getPipeline<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IngestGetPipeline, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    processorGrok<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IngestProcessorGrok, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    putPipeline<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IngestPutPipeline<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    simulate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IngestSimulate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  }
+  mget<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Mget<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  msearch<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params?: RequestParams.Msearch<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  msearchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params?: RequestParams.MsearchTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  mtermvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Mtermvectors<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  nodes: {
+    hotThreads<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesHotThreads, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    info<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesInfo, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    reloadSecureSettings<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.NodesReloadSecureSettings<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    usage<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesUsage, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  }
+  ping<TResponse = boolean, TContext = Context>(params?: RequestParams.Ping, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  putScript<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.PutScript<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  rankEval<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.RankEval<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  reindex<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Reindex<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  reindexRethrottle<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.ReindexRethrottle, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  renderSearchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.RenderSearchTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  scriptsPainlessExecute<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.ScriptsPainlessExecute<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  scroll<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Scroll<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Search<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  searchShards<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchShards, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  searchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SearchTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  snapshot: {
+    cleanupRepository<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotCleanupRepository, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    create<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotCreate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    createRepository<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotCreateRepository<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    delete<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotDelete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    deleteRepository<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotDeleteRepository, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getRepository<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotGetRepository, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    restore<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotRestore<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    status<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotStatus, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    verifyRepository<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotVerifyRepository, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  }
+  tasks: {
+    cancel<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.TasksCancel, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.TasksGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    list<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.TasksList, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  }
+  termvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Termvectors<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  update<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Update<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  updateByQuery<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.UpdateByQuery<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  updateByQueryRethrottle<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.UpdateByQueryRethrottle, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  asyncSearch: {
+    delete<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AsyncSearchDelete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AsyncSearchGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    submit<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.AsyncSearchSubmit<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  }
+  autoscaling: {
+    deleteAutoscalingPolicy<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AutoscalingDeleteAutoscalingPolicy, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getAutoscalingDecision<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AutoscalingGetAutoscalingDecision, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getAutoscalingPolicy<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AutoscalingGetAutoscalingPolicy, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    putAutoscalingPolicy<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.AutoscalingPutAutoscalingPolicy<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  }
+  ccr: {
+    deleteAutoFollowPattern<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrDeleteAutoFollowPattern, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    follow<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.CcrFollow<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    followInfo<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrFollowInfo, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    followStats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrFollowStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    forgetFollower<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.CcrForgetFollower<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getAutoFollowPattern<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrGetAutoFollowPattern, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    pauseAutoFollowPattern<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrPauseAutoFollowPattern, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    pauseFollow<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrPauseFollow, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    putAutoFollowPattern<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.CcrPutAutoFollowPattern<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    resumeAutoFollowPattern<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrResumeAutoFollowPattern, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    resumeFollow<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.CcrResumeFollow<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    unfollow<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.CcrUnfollow, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  }
+  closePointInTime<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.ClosePointInTime<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   dataFrameTransformDeprecated: {
     deleteTransform<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.DataFrameTransformDeprecatedDeleteTransform, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     getTransform<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.DataFrameTransformDeprecatedGetTransform, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -165,10 +284,6 @@ interface KibanaClient {
     stopTransform<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.DataFrameTransformDeprecatedStopTransform, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     updateTransform<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.DataFrameTransformDeprecatedUpdateTransform<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
-  delete<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.Delete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  deleteByQuery<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.DeleteByQuery<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  deleteByQueryRethrottle<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.DeleteByQueryRethrottle, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  deleteScript<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.DeleteScript, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   enrich: {
     deletePolicy<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.EnrichDeletePolicy, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     executePolicy<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.EnrichExecutePolicy, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -181,15 +296,6 @@ interface KibanaClient {
     get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.EqlGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.EqlSearch<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
-  exists<TResponse = boolean, TContext = Context>(params?: RequestParams.Exists, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  existsSource<TResponse = boolean, TContext = Context>(params?: RequestParams.ExistsSource, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Explain<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  fieldCaps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.FieldCaps<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.Get, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  getScript<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.GetScript, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  getScriptContext<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.GetScriptContext, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  getScriptLanguages<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.GetScriptLanguages, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  getSource<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.GetSource, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   graph: {
     explore<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.GraphExplore<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
@@ -205,69 +311,6 @@ interface KibanaClient {
     start<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IlmStart, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     stop<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IlmStop, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
-  index<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Index<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  indices: {
-    addBlock<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesAddBlock, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    analyze<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesAnalyze<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    clearCache<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesClearCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    clone<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesClone<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    close<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesClose, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    create<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesCreate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    createDataStream<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesCreateDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    dataStreamsStats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDataStreamsStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    delete<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDelete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    deleteAlias<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDeleteAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    deleteDataStream<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDeleteDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    deleteIndexTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDeleteIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    deleteTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesDeleteTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    exists<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExists, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    existsAlias<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    existsIndexTemplate<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    existsTemplate<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    existsType<TResponse = boolean, TContext = Context>(params?: RequestParams.IndicesExistsType, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    flush<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesFlush, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    forcemerge<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesForcemerge, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    freeze<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesFreeze, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getAlias<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getDataStream<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getFieldMapping<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetFieldMapping, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getIndexTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetIndexTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getMapping<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetMapping, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getSettings<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetSettings, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getTemplate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetTemplate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getUpgrade<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesGetUpgrade, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    open<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesOpen, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    putAlias<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesPutAlias<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    putIndexTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesPutIndexTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    putMapping<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesPutMapping<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    putSettings<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesPutSettings<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    putTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesPutTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    recovery<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesRecovery, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    refresh<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesRefresh, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    reloadSearchAnalyzers<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesReloadSearchAnalyzers, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    resolveIndex<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesResolveIndex, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    rollover<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesRollover<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    segments<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesSegments, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    shardStores<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesShardStores, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    shrink<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesShrink<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    simulateIndexTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesSimulateIndexTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    simulateTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesSimulateTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    split<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesSplit<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    unfreeze<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesUnfreeze, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    updateAliases<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesUpdateAliases<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    upgrade<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesUpgrade, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    validateQuery<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesValidateQuery<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  }
-  info<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.Info, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  ingest: {
-    deletePipeline<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IngestDeletePipeline, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getPipeline<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IngestGetPipeline, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    processorGrok<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IngestProcessorGrok, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    putPipeline<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IngestPutPipeline<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    simulate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IngestSimulate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  }
   license: {
     delete<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.LicenseDelete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.LicenseGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -277,7 +320,6 @@ interface KibanaClient {
     postStartBasic<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.LicensePostStartBasic, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     postStartTrial<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.LicensePostStartTrial, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
-  mget<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Mget<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   migration: {
     deprecations<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MigrationDeprecations, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
@@ -346,23 +388,7 @@ interface KibanaClient {
   monitoring: {
     bulk<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params?: RequestParams.MonitoringBulk<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
-  msearch<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params?: RequestParams.Msearch<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  msearchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params?: RequestParams.MsearchTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  mtermvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Mtermvectors<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  nodes: {
-    hotThreads<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesHotThreads, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    info<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesInfo, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    reloadSecureSettings<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.NodesReloadSecureSettings<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    usage<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesUsage, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  }
   openPointInTime<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.OpenPointInTime, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  ping<TResponse = boolean, TContext = Context>(params?: RequestParams.Ping, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  putScript<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.PutScript<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  rankEval<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.RankEval<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  reindex<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Reindex<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  reindexRethrottle<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.ReindexRethrottle, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  renderSearchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.RenderSearchTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   rollup: {
     deleteJob<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.RollupDeleteJob, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     getJobs<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.RollupGetJobs, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -373,11 +399,6 @@ interface KibanaClient {
     startJob<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.RollupStartJob, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     stopJob<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.RollupStopJob, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
-  scriptsPainlessExecute<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.ScriptsPainlessExecute<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  scroll<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Scroll<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Search<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  searchShards<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchShards, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  searchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SearchTemplate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   searchableSnapshots: {
     clearCache<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsClearCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsMount<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -424,18 +445,6 @@ interface KibanaClient {
     start<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SlmStart, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     stop<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SlmStop, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
-  snapshot: {
-    cleanupRepository<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotCleanupRepository, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    create<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotCreate<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    createRepository<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotCreateRepository<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    delete<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotDelete, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    deleteRepository<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotDeleteRepository, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getRepository<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotGetRepository, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    restore<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotRestore<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    status<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotStatus, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    verifyRepository<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotVerifyRepository, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  }
   sql: {
     clearCursor<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SqlClearCursor<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     query<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SqlQuery<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -444,12 +453,6 @@ interface KibanaClient {
   ssl: {
     certificates<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SslCertificates, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
-  tasks: {
-    cancel<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.TasksCancel, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.TasksGet, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    list<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.TasksList, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  }
-  termvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Termvectors<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   transform: {
     deleteTransform<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.TransformDeleteTransform, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     getTransform<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.TransformGetTransform, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -460,9 +463,6 @@ interface KibanaClient {
     stopTransform<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.TransformStopTransform, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     updateTransform<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.TransformUpdateTransform<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   }
-  update<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Update<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  updateByQuery<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.UpdateByQuery<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  updateByQueryRethrottle<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.UpdateByQueryRethrottle, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   watcher: {
     ackWatch<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.WatcherAckWatch, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     activateWatch<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.WatcherActivateWatch, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
