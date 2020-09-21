@@ -230,6 +230,7 @@ class Client extends ESAPI {
       initialOptions: options
     }
 
+    /* istanbul ignore else */
     if (options.auth !== undefined) {
       options.headers = prepareHeaders(options.headers, options.auth)
     }
