@@ -95,6 +95,303 @@ link:{ref}/common-options.html[Documentation]
 |`list` - A comma-separated list of filters used to reduce the response.
 
 |===
+=== asyncSearch.delete
+
+[source,ts]
+----
+client.asyncSearch.delete({
+  id: string
+})
+----
+link:{ref}/async-search.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|===
+
+=== asyncSearch.get
+
+[source,ts]
+----
+client.asyncSearch.get({
+  id: string,
+  wait_for_completion_timeout: string,
+  keep_alive: string,
+  typed_keys: boolean
+})
+----
+link:{ref}/async-search.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Specify the time that the request should block waiting for the final response
+
+|`keep_alive` or `keepAlive`
+|`string` - Specify the time interval in which the results (partial or final) for this search will be available
+
+|`typed_keys` or `typedKeys`
+|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+
+|===
+
+=== asyncSearch.submit
+
+[source,ts]
+----
+client.asyncSearch.submit({
+  index: string | string[],
+  wait_for_completion_timeout: string,
+  keep_on_completion: boolean,
+  keep_alive: string,
+  batched_reduce_size: number,
+  request_cache: boolean,
+  analyzer: string,
+  analyze_wildcard: boolean,
+  default_operator: 'AND' | 'OR',
+  df: string,
+  explain: boolean,
+  stored_fields: string | string[],
+  docvalue_fields: string | string[],
+  from: number,
+  ignore_unavailable: boolean,
+  ignore_throttled: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  lenient: boolean,
+  preference: string,
+  q: string,
+  routing: string | string[],
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
+  size: number,
+  sort: string | string[],
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  terminate_after: number,
+  stats: string | string[],
+  suggest_field: string,
+  suggest_mode: 'missing' | 'popular' | 'always',
+  suggest_size: number,
+  suggest_text: string,
+  timeout: string,
+  track_scores: boolean,
+  track_total_hits: boolean|long,
+  allow_partial_search_results: boolean,
+  typed_keys: boolean,
+  version: boolean,
+  seq_no_primary_term: boolean,
+  max_concurrent_shard_requests: number,
+  body: object
+})
+----
+link:{ref}/async-search.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Specify the time that the request should block waiting for the final response +
+_Default:_ `1s`
+
+|`keep_on_completion` or `keepOnCompletion`
+|`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
+
+|`keep_alive` or `keepAlive`
+|`string` - Update the time interval in which the results (partial or final) for this search will be available +
+_Default:_ `5d`
+
+|`batched_reduce_size` or `batchedReduceSize`
+|`number` - The number of shard results that should be reduced at once on the coordinating node. This value should be used as the granularity at which progress results will be made available. +
+_Default:_ `5`
+
+|`request_cache` or `requestCache`
+|`boolean` - Specify if request cache should be used for this request or not, defaults to true
+
+|`analyzer`
+|`string` - The analyzer to use for the query string
+
+|`analyze_wildcard` or `analyzeWildcard`
+|`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
+
+|`default_operator` or `defaultOperator`
+|`'AND' \| 'OR'` - The default operator for query string query (AND or OR) +
+_Default:_ `OR`
+
+|`df`
+|`string` - The field to use as default where no field prefix is given in the query string
+
+|`explain`
+|`boolean` - Specify whether to return detailed information about score computation as part of a hit
+
+|`stored_fields` or `storedFields`
+|`string \| string[]` - A comma-separated list of stored fields to return as part of a hit
+
+|`docvalue_fields` or `docvalueFields`
+|`string \| string[]` - A comma-separated list of fields to return as the docvalue representation of a field for each hit
+
+|`from`
+|`number` - Starting offset (default: 0)
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`ignore_throttled` or `ignoreThrottled`
+|`boolean` - Whether specified concrete, expanded or aliased indices should be ignored when throttled
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|`lenient`
+|`boolean` - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
+
+|`q`
+|`string` - Query in the Lucene query string syntax
+
+|`routing`
+|`string \| string[]` - A comma-separated list of specific routing values
+
+|`search_type` or `searchType`
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
+
+|`size`
+|`number` - Number of hits to return (default: 10)
+
+|`sort`
+|`string \| string[]` - A comma-separated list of <field>:<direction> pairs
+
+|`_source`
+|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
+
+|`_source_excludes` or `_sourceExcludes`
+|`string \| string[]` - A list of fields to exclude from the returned _source field
+
+|`_source_includes` or `_sourceIncludes`
+|`string \| string[]` - A list of fields to extract and return from the _source field
+
+|`terminate_after` or `terminateAfter`
+|`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
+
+|`stats`
+|`string \| string[]` - Specific 'tag' of the request for logging and statistical purposes
+
+|`suggest_field` or `suggestField`
+|`string` - Specify which field to use for suggestions
+
+|`suggest_mode` or `suggestMode`
+|`'missing' \| 'popular' \| 'always'` - Specify suggest mode +
+_Default:_ `missing`
+
+|`suggest_size` or `suggestSize`
+|`number` - How many suggestions to return in response
+
+|`suggest_text` or `suggestText`
+|`string` - The source text for which the suggestions should be returned
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`track_scores` or `trackScores`
+|`boolean` - Whether to calculate and return scores even if they are not used for sorting
+
+|`track_total_hits` or `trackTotalHits`
+|`boolean\|long` - Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
+
+|`allow_partial_search_results` or `allowPartialSearchResults`
+|`boolean` - Indicate if an error should be returned if there is a partial search failure or timeout +
+_Default:_ `true`
+
+|`typed_keys` or `typedKeys`
+|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+
+|`version`
+|`boolean` - Specify whether to return document version as part of a hit
+
+|`seq_no_primary_term` or `seqNoPrimaryTerm`
+|`boolean` - Specify whether to return sequence number and primary term of the last modification of each hit
+
+|`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
+|`number` - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
+_Default:_ `5`
+
+|`body`
+|`object` - The search definition using the Query DSL
+
+|===
+
+=== autoscaling.deleteAutoscalingPolicy
+*Stability:* experimental
+[source,ts]
+----
+client.autoscaling.deleteAutoscalingPolicy({
+  name: string
+})
+----
+link:{ref}/autoscaling-delete-autoscaling-policy.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - the name of the autoscaling policy
+
+|===
+
+=== autoscaling.getAutoscalingDecision
+*Stability:* experimental
+[source,ts]
+----
+client.autoscaling.getAutoscalingDecision()
+----
+link:{ref}/autoscaling-get-autoscaling-decision.html[Documentation] +
+
+
+=== autoscaling.getAutoscalingPolicy
+*Stability:* experimental
+[source,ts]
+----
+client.autoscaling.getAutoscalingPolicy({
+  name: string
+})
+----
+link:{ref}/autoscaling-get-autoscaling-policy.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - the name of the autoscaling policy
+
+|===
+
+=== autoscaling.putAutoscalingPolicy
+*Stability:* experimental
+[source,ts]
+----
+client.autoscaling.putAutoscalingPolicy({
+  name: string,
+  body: object
+})
+----
+link:{ref}/autoscaling-put-autoscaling-policy.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - the name of the autoscaling policy
+
+|`body`
+|`object` - the specification of the autoscaling policy
+
+|===
+
 === bulk
 
 [source,ts]
@@ -489,6 +786,216 @@ link:{ref}/cat-master.html[Documentation] +
 
 |`s`
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
+=== cat.mlDataFrameAnalytics
+
+[source,ts]
+----
+client.cat.mlDataFrameAnalytics({
+  id: string,
+  allow_no_match: boolean,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
+  v: boolean
+})
+----
+link:{ref}/cat-dfanalytics.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
+
+|`bytes`
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
+=== cat.mlDatafeeds
+
+[source,ts]
+----
+client.cat.mlDatafeeds({
+  datafeed_id: string,
+  allow_no_match: boolean,
+  allow_no_datafeeds: boolean,
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
+  v: boolean
+})
+----
+link:{ref}/cat-datafeeds.html[Documentation] +
+[cols=2*]
+|===
+|`datafeed_id` or `datafeedId`
+|`string` - The ID of the datafeeds stats to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
+
+|`allow_no_datafeeds` or `allowNoDatafeeds`
+|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified) +
+
+WARNING: This parameter has been deprecated.
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
+=== cat.mlJobs
+
+[source,ts]
+----
+client.cat.mlJobs({
+  job_id: string,
+  allow_no_match: boolean,
+  allow_no_jobs: boolean,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
+  v: boolean
+})
+----
+link:{ref}/cat-anomaly-detectors.html[Documentation] +
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the jobs stats to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+|`allow_no_jobs` or `allowNoJobs`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) +
+
+WARNING: This parameter has been deprecated.
+
+|`bytes`
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
+=== cat.mlTrainedModels
+
+[source,ts]
+----
+client.cat.mlTrainedModels({
+  model_id: string,
+  allow_no_match: boolean,
+  from: number,
+  size: number,
+  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
+  v: boolean
+})
+----
+link:{ref}/cat-trained-model.html[Documentation] +
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the trained models stats to fetch
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified) +
+_Default:_ `true`
+
+|`from`
+|`number` - skips a number of trained models
+
+|`size`
+|`number` - specifies a max number of trained models to get +
+_Default:_ `100`
+
+|`bytes`
+|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
@@ -1043,6 +1550,280 @@ link:{ref}/cat-thread-pool.html[Documentation] +
 
 |===
 
+=== cat.transforms
+
+[source,ts]
+----
+client.cat.transforms({
+  transform_id: string,
+  from: number,
+  size: number,
+  allow_no_match: boolean,
+  format: string,
+  h: string | string[],
+  help: boolean,
+  s: string | string[],
+  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
+  v: boolean
+})
+----
+link:{ref}/cat-transforms.html[Documentation] +
+[cols=2*]
+|===
+|`transform_id` or `transformId`
+|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
+
+|`from`
+|`number` - skips a number of transform configs, defaults to 0
+
+|`size`
+|`number` - specifies a max number of transforms to get, defaults to 100
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|`format`
+|`string` - a short version of the Accept header, e.g. json, yaml
+
+|`h`
+|`string \| string[]` - Comma-separated list of column names to display
+
+|`help`
+|`boolean` - Return help information
+
+|`s`
+|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
+
+|`time`
+|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
+
+|`v`
+|`boolean` - Verbose mode. Display column headers
+
+|===
+
+=== ccr.deleteAutoFollowPattern
+
+[source,ts]
+----
+client.ccr.deleteAutoFollowPattern({
+  name: string
+})
+----
+link:{ref}/ccr-delete-auto-follow-pattern.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the auto follow pattern.
+
+|===
+
+=== ccr.follow
+
+[source,ts]
+----
+client.ccr.follow({
+  index: string,
+  wait_for_active_shards: string,
+  body: object
+})
+----
+link:{ref}/ccr-put-follow.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the follower index
+
+|`wait_for_active_shards` or `waitForActiveShards`
+|`string` - Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1) +
+_Default:_ `0`
+
+|`body`
+|`object` - The name of the leader index and other optional ccr related parameters
+
+|===
+
+=== ccr.followInfo
+
+[source,ts]
+----
+client.ccr.followInfo({
+  index: string | string[]
+})
+----
+link:{ref}/ccr-get-follow-info.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
+
+|===
+
+=== ccr.followStats
+
+[source,ts]
+----
+client.ccr.followStats({
+  index: string | string[]
+})
+----
+link:{ref}/ccr-get-follow-stats.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
+
+|===
+
+=== ccr.forgetFollower
+
+[source,ts]
+----
+client.ccr.forgetFollower({
+  index: string,
+  body: object
+})
+----
+link:{ref}/ccr-post-forget-follower.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - the name of the leader index for which specified follower retention leases should be removed
+
+|`body`
+|`object` - the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index
+
+|===
+
+=== ccr.getAutoFollowPattern
+
+[source,ts]
+----
+client.ccr.getAutoFollowPattern({
+  name: string
+})
+----
+link:{ref}/ccr-get-auto-follow-pattern.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the auto follow pattern.
+
+|===
+
+=== ccr.pauseAutoFollowPattern
+
+[source,ts]
+----
+client.ccr.pauseAutoFollowPattern({
+  name: string
+})
+----
+link:{ref}/ccr-pause-auto-follow-pattern.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the auto follow pattern that should pause discovering new indices to follow.
+
+|===
+
+=== ccr.pauseFollow
+
+[source,ts]
+----
+client.ccr.pauseFollow({
+  index: string
+})
+----
+link:{ref}/ccr-post-pause-follow.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the follower index that should pause following its leader index.
+
+|===
+
+=== ccr.putAutoFollowPattern
+
+[source,ts]
+----
+client.ccr.putAutoFollowPattern({
+  name: string,
+  body: object
+})
+----
+link:{ref}/ccr-put-auto-follow-pattern.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the auto follow pattern.
+
+|`body`
+|`object` - The specification of the auto follow pattern
+
+|===
+
+=== ccr.resumeAutoFollowPattern
+
+[source,ts]
+----
+client.ccr.resumeAutoFollowPattern({
+  name: string
+})
+----
+link:{ref}/ccr-resume-auto-follow-pattern.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the auto follow pattern to resume discovering new indices to follow.
+
+|===
+
+=== ccr.resumeFollow
+
+[source,ts]
+----
+client.ccr.resumeFollow({
+  index: string,
+  body: object
+})
+----
+link:{ref}/ccr-post-resume-follow.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the follow index to resume following.
+
+|`body`
+|`object` - The name of the leader index and other optional ccr related parameters
+
+|===
+
+=== ccr.stats
+
+[source,ts]
+----
+client.ccr.stats()
+----
+link:{ref}/ccr-get-stats.html[Documentation] +
+
+
+=== ccr.unfollow
+
+[source,ts]
+----
+client.ccr.unfollow({
+  index: string
+})
+----
+link:{ref}/ccr-post-unfollow.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the follower index that should be turned into a regular index.
+
+|===
+
 === clearScroll
 
 [source,ts]
@@ -1062,6 +1843,22 @@ WARNING: This parameter has been deprecated.
 
 |`body`
 |`object` - A comma-separated list of scroll IDs to clear if none was specified via the scroll_id parameter
+
+|===
+
+=== closePointInTime
+
+[source,ts]
+----
+client.closePointInTime({
+  body: object
+})
+----
+link:{ref}/point-in-time-api.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - a point-in-time id to close
 
 |===
 
@@ -1427,8 +2224,8 @@ link:{ref}/cluster-reroute.html[Documentation] +
 [source,ts]
 ----
 client.cluster.state({
-  index: string | string[],
   metric: string | string[],
+  index: string | string[],
   local: boolean,
   master_timeout: string,
   flat_settings: boolean,
@@ -1442,11 +2239,11 @@ client.cluster.state({
 link:{ref}/cluster-state.html[Documentation] +
 [cols=2*]
 |===
-|`index`
-|`string \| string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
 |`metric`
 |`string \| string[]` - Limit the information returned to the specified metrics
+
+|`index`
+|`string \| string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -1957,6 +2754,162 @@ link:{ref}/modules-scripting.html[Documentation] +
 
 |===
 
+=== enrich.deletePolicy
+
+[source,ts]
+----
+client.enrich.deletePolicy({
+  name: string
+})
+----
+link:{ref}/delete-enrich-policy-api.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the enrich policy
+
+|===
+
+=== enrich.executePolicy
+
+[source,ts]
+----
+client.enrich.executePolicy({
+  name: string,
+  wait_for_completion: boolean
+})
+----
+link:{ref}/execute-enrich-policy-api.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the enrich policy
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should the request should block until the execution is complete. +
+_Default:_ `true`
+
+|===
+
+=== enrich.getPolicy
+
+[source,ts]
+----
+client.enrich.getPolicy({
+  name: string | string[]
+})
+----
+link:{ref}/get-enrich-policy-api.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - A comma-separated list of enrich policy names
+
+|===
+
+=== enrich.putPolicy
+
+[source,ts]
+----
+client.enrich.putPolicy({
+  name: string,
+  body: object
+})
+----
+link:{ref}/put-enrich-policy-api.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the enrich policy
+
+|`body`
+|`object` - The enrich policy to register
+
+|===
+
+=== enrich.stats
+
+[source,ts]
+----
+client.enrich.stats()
+----
+link:{ref}/enrich-stats-api.html[Documentation] +
+
+
+=== eql.delete
+*Stability:* beta
+[source,ts]
+----
+client.eql.delete({
+  id: string
+})
+----
+link:{ref}/eql-search-api.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|===
+
+=== eql.get
+*Stability:* beta
+[source,ts]
+----
+client.eql.get({
+  id: string,
+  wait_for_completion_timeout: string,
+  keep_alive: string
+})
+----
+link:{ref}/eql-search-api.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Specify the time that the request should block waiting for the final response
+
+|`keep_alive` or `keepAlive`
+|`string` - Update the time interval in which the results (partial or final) for this search will be available +
+_Default:_ `5d`
+
+|===
+
+=== eql.search
+*Stability:* beta
+[source,ts]
+----
+client.eql.search({
+  index: string,
+  wait_for_completion_timeout: string,
+  keep_on_completion: boolean,
+  keep_alive: string,
+  body: object
+})
+----
+link:{ref}/eql-search-api.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the index to scope the operation
+
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Specify the time that the request should block waiting for the final response
+
+|`keep_on_completion` or `keepOnCompletion`
+|`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
+
+|`keep_alive` or `keepAlive`
+|`string` - Update the time interval in which the results (partial or final) for this search will be available +
+_Default:_ `5d`
+
+|`body`
+|`object` - Eql request body. Use the `query` to limit the query scope.
+
+|===
+
 === exists
 
 [source,ts]
@@ -2349,6 +3302,189 @@ link:{ref}/docs-get.html[Documentation] +
 
 |===
 
+=== graph.explore
+
+[source,ts]
+----
+client.graph.explore({
+  index: string | string[],
+  routing: string,
+  timeout: string,
+  body: object
+})
+----
+link:{ref}/graph-explore-api.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`routing`
+|`string` - Specific routing value
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`body`
+|`object` - Graph Query DSL
+
+|===
+
+=== ilm.deleteLifecycle
+
+[source,ts]
+----
+client.ilm.deleteLifecycle({
+  policy: string
+})
+----
+link:{ref}/ilm-delete-lifecycle.html[Documentation] +
+[cols=2*]
+|===
+|`policy`
+|`string` - The name of the index lifecycle policy
+
+|===
+
+=== ilm.explainLifecycle
+
+[source,ts]
+----
+client.ilm.explainLifecycle({
+  index: string,
+  only_managed: boolean,
+  only_errors: boolean
+})
+----
+link:{ref}/ilm-explain-lifecycle.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the index to explain
+
+|`only_managed` or `onlyManaged`
+|`boolean` - filters the indices included in the response to ones managed by ILM
+
+|`only_errors` or `onlyErrors`
+|`boolean` - filters the indices included in the response to ones in an ILM error state, implies only_managed
+
+|===
+
+=== ilm.getLifecycle
+
+[source,ts]
+----
+client.ilm.getLifecycle({
+  policy: string
+})
+----
+link:{ref}/ilm-get-lifecycle.html[Documentation] +
+[cols=2*]
+|===
+|`policy`
+|`string` - The name of the index lifecycle policy
+
+|===
+
+=== ilm.getStatus
+
+[source,ts]
+----
+client.ilm.getStatus()
+----
+link:{ref}/ilm-get-status.html[Documentation] +
+
+
+=== ilm.moveToStep
+
+[source,ts]
+----
+client.ilm.moveToStep({
+  index: string,
+  body: object
+})
+----
+link:{ref}/ilm-move-to-step.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the index whose lifecycle step is to change
+
+|`body`
+|`object` - The new lifecycle step to move to
+
+|===
+
+=== ilm.putLifecycle
+
+[source,ts]
+----
+client.ilm.putLifecycle({
+  policy: string,
+  body: object
+})
+----
+link:{ref}/ilm-put-lifecycle.html[Documentation] +
+[cols=2*]
+|===
+|`policy`
+|`string` - The name of the index lifecycle policy
+
+|`body`
+|`object` - The lifecycle policy definition to register
+
+|===
+
+=== ilm.removePolicy
+
+[source,ts]
+----
+client.ilm.removePolicy({
+  index: string
+})
+----
+link:{ref}/ilm-remove-policy.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the index to remove policy on
+
+|===
+
+=== ilm.retry
+
+[source,ts]
+----
+client.ilm.retry({
+  index: string
+})
+----
+link:{ref}/ilm-retry-policy.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the indices (comma-separated) whose failed lifecycle step is to be retry
+
+|===
+
+=== ilm.start
+
+[source,ts]
+----
+client.ilm.start()
+----
+link:{ref}/ilm-start.html[Documentation] +
+
+
+=== ilm.stop
+
+[source,ts]
+----
+client.ilm.stop()
+----
+link:{ref}/ilm-stop.html[Documentation] +
+
+
 === index
 
 [source,ts]
@@ -2632,6 +3768,38 @@ link:{ref}/indices-create-index.html[Documentation] +
 
 |===
 
+=== indices.createDataStream
+
+[source,ts]
+----
+client.indices.createDataStream({
+  name: string
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the data stream
+
+|===
+
+=== indices.dataStreamsStats
+
+[source,ts]
+----
+client.indices.dataStreamsStats({
+  name: string | string[]
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
+
+|===
+
 === indices.delete
 
 [source,ts]
@@ -2694,6 +3862,22 @@ link:{ref}/indices-aliases.html[Documentation] +
 
 |`master_timeout` or `masterTimeout`
 |`string` - Specify timeout for connection to master
+
+|===
+
+=== indices.deleteDataStream
+
+[source,ts]
+----
+client.indices.deleteDataStream({
+  name: string | string[]
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - A comma-separated list of data streams to delete; use `*` to delete all data streams
 
 |===
 
@@ -2994,6 +4178,47 @@ _Default:_ `open`
 
 |===
 
+=== indices.freeze
+
+[source,ts]
+----
+client.indices.freeze({
+  index: string,
+  timeout: string,
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  wait_for_active_shards: string
+})
+----
+link:{ref}/freeze-index-api.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the index to freeze
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `closed`
+
+|`wait_for_active_shards` or `waitForActiveShards`
+|`string` - Sets the number of active shards to wait for before the operation returns.
+
+|===
+
 === indices.get
 
 [source,ts]
@@ -3073,6 +4298,22 @@ _Default:_ `all`
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|===
+
+=== indices.getDataStream
+
+[source,ts]
+----
+client.indices.getDataStream({
+  name: string | string[]
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string \| string[]` - A comma-separated list of data streams to get; use `*` to get all data streams
 
 |===
 
@@ -3574,6 +4815,35 @@ _Default:_ `open`
 
 |===
 
+=== indices.reloadSearchAnalyzers
+
+[source,ts]
+----
+client.indices.reloadSearchAnalyzers({
+  index: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
+})
+----
+link:{ref}/indices-reload-analyzers.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to reload analyzers for
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|===
+
 === indices.resolveIndex
 *Stability:* experimental
 [source,ts]
@@ -3900,6 +5170,47 @@ _Default:_ `true`
 
 |===
 
+=== indices.unfreeze
+
+[source,ts]
+----
+client.indices.unfreeze({
+  index: string,
+  timeout: string,
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  wait_for_active_shards: string
+})
+----
+link:{ref}/unfreeze-index-api.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the index to unfreeze
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `closed`
+
+|`wait_for_active_shards` or `waitForActiveShards`
+|`string` - Sets the number of active shards to wait for before the operation returns.
+
+|===
+
 === indices.updateAliases
 
 [source,ts]
@@ -4151,3131 +5462,6 @@ link:{ref}/simulate-pipeline-api.html[Documentation] +
 
 |===
 
-=== mget
-
-[source,ts]
-----
-client.mget({
-  index: string,
-  stored_fields: string | string[],
-  preference: string,
-  realtime: boolean,
-  refresh: boolean,
-  routing: string,
-  _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
-  body: object
-})
-----
-link:{ref}/docs-multi-get.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index
-
-|`stored_fields` or `storedFields`
-|`string \| string[]` - A comma-separated list of stored fields to return in the response
-
-|`preference`
-|`string` - Specify the node or shard the operation should be performed on (default: random)
-
-|`realtime`
-|`boolean` - Specify whether to perform the operation in realtime or search mode
-
-|`refresh`
-|`boolean` - Refresh the shard containing the document before performing the operation
-
-|`routing`
-|`string` - Specific routing value
-
-|`_source`
-|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
-
-|`_source_excludes` or `_sourceExcludes`
-|`string \| string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_includes` or `_sourceIncludes`
-|`string \| string[]` - A list of fields to extract and return from the _source field
-
-|`body`
-|`object` - Document identifiers; can be either `docs` (containing full document information) or `ids` (when index is provided in the URL.
-
-|===
-
-=== msearch
-
-[source,ts]
-----
-client.msearch({
-  index: string | string[],
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
-  max_concurrent_searches: number,
-  typed_keys: boolean,
-  pre_filter_shard_size: number,
-  max_concurrent_shard_requests: number,
-  rest_total_hits_as_int: boolean,
-  ccs_minimize_roundtrips: boolean,
-  body: object
-})
-----
-link:{ref}/search-multi-search.html[Documentation] +
-{jsclient}/msearch_examples.html[Code Example] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to use as default
-
-|`search_type` or `searchType`
-|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
-
-|`max_concurrent_searches` or `maxConcurrentSearches`
-|`number` - Controls the maximum number of concurrent searches the multi search api will execute
-
-|`typed_keys` or `typedKeys`
-|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-
-|`pre_filter_shard_size` or `preFilterShardSize`
-|`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
-
-|`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
-|`number` - The number of concurrent shard requests each sub search executes concurrently per node. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
-_Default:_ `5`
-
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-_Default:_ `true`
-
-|`body`
-|`object` - The request definitions (metadata-search request definition pairs), separated by newlines
-
-|===
-
-=== msearchTemplate
-
-[source,ts]
-----
-client.msearchTemplate({
-  index: string | string[],
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
-  typed_keys: boolean,
-  max_concurrent_searches: number,
-  rest_total_hits_as_int: boolean,
-  ccs_minimize_roundtrips: boolean,
-  body: object
-})
-----
-link:{ref}/search-multi-search.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to use as default
-
-|`search_type` or `searchType`
-|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
-
-|`typed_keys` or `typedKeys`
-|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-
-|`max_concurrent_searches` or `maxConcurrentSearches`
-|`number` - Controls the maximum number of concurrent searches the multi search api will execute
-
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-_Default:_ `true`
-
-|`body`
-|`object` - The request definitions (metadata-search request definition pairs), separated by newlines
-
-|===
-
-=== mtermvectors
-
-[source,ts]
-----
-client.mtermvectors({
-  index: string,
-  ids: string | string[],
-  term_statistics: boolean,
-  field_statistics: boolean,
-  fields: string | string[],
-  offsets: boolean,
-  positions: boolean,
-  payloads: boolean,
-  preference: string,
-  routing: string,
-  realtime: boolean,
-  version: number,
-  version_type: 'internal' | 'external' | 'external_gte',
-  body: object
-})
-----
-link:{ref}/docs-multi-termvectors.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The index in which the document resides.
-
-|`ids`
-|`string \| string[]` - A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
-
-|`term_statistics` or `termStatistics`
-|`boolean` - Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-
-|`field_statistics` or `fieldStatistics`
-|`boolean` - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs". +
-_Default:_ `true`
-
-|`fields`
-|`string \| string[]` - A comma-separated list of fields to return. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-
-|`offsets`
-|`boolean` - Specifies if term offsets should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs". +
-_Default:_ `true`
-
-|`positions`
-|`boolean` - Specifies if term positions should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs". +
-_Default:_ `true`
-
-|`payloads`
-|`boolean` - Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs". +
-_Default:_ `true`
-
-|`preference`
-|`string` - Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body "params" or "docs".
-
-|`routing`
-|`string` - Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-
-|`realtime`
-|`boolean` - Specifies if requests are real-time as opposed to near-real-time (default: true).
-
-|`version`
-|`number` - Explicit version number for concurrency control
-
-|`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte'` - Specific version type
-
-|`body`
-|`object` - Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
-
-|===
-
-=== nodes.hotThreads
-
-[source,ts]
-----
-client.nodes.hotThreads({
-  node_id: string | string[],
-  interval: string,
-  snapshots: number,
-  threads: number,
-  ignore_idle_threads: boolean,
-  type: 'cpu' | 'wait' | 'block',
-  timeout: string
-})
-----
-link:{ref}/cluster-nodes-hot-threads.html[Documentation] +
-[cols=2*]
-|===
-|`node_id` or `nodeId`
-|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-
-|`interval`
-|`string` - The interval for the second sampling of threads
-
-|`snapshots`
-|`number` - Number of samples of thread stacktrace (default: 10)
-
-|`threads`
-|`number` - Specify the number of threads to provide information for (default: 3)
-
-|`ignore_idle_threads` or `ignoreIdleThreads`
-|`boolean` - Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
-
-|`type`
-|`'cpu' \| 'wait' \| 'block'` - The type to sample (default: cpu)
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|===
-
-=== nodes.info
-
-[source,ts]
-----
-client.nodes.info({
-  node_id: string | string[],
-  metric: string | string[],
-  flat_settings: boolean,
-  timeout: string
-})
-----
-link:{ref}/cluster-nodes-info.html[Documentation] +
-[cols=2*]
-|===
-|`node_id` or `nodeId`
-|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-
-|`metric`
-|`string \| string[]` - A comma-separated list of metrics you wish returned. Leave empty to return all.
-
-|`flat_settings` or `flatSettings`
-|`boolean` - Return settings in flat format (default: false)
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|===
-
-=== nodes.reloadSecureSettings
-
-[source,ts]
-----
-client.nodes.reloadSecureSettings({
-  node_id: string | string[],
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
-[cols=2*]
-|===
-|`node_id` or `nodeId`
-|`string \| string[]` - A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`body`
-|`object` - An object containing the password for the elasticsearch keystore
-
-|===
-
-=== nodes.stats
-
-[source,ts]
-----
-client.nodes.stats({
-  node_id: string | string[],
-  metric: string | string[],
-  index_metric: string | string[],
-  completion_fields: string | string[],
-  fielddata_fields: string | string[],
-  fields: string | string[],
-  groups: boolean,
-  level: 'indices' | 'node' | 'shards',
-  types: string | string[],
-  timeout: string,
-  include_segment_file_sizes: boolean
-})
-----
-link:{ref}/cluster-nodes-stats.html[Documentation] +
-[cols=2*]
-|===
-|`node_id` or `nodeId`
-|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-
-|`metric`
-|`string \| string[]` - Limit the information returned to the specified metrics
-
-|`index_metric` or `indexMetric`
-|`string \| string[]` - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
-
-|`completion_fields` or `completionFields`
-|`string \| string[]` - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
-
-|`fielddata_fields` or `fielddataFields`
-|`string \| string[]` - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
-
-|`fields`
-|`string \| string[]` - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
-
-|`groups`
-|`boolean` - A comma-separated list of search groups for `search` index metric
-
-|`level`
-|`'indices' \| 'node' \| 'shards'` - Return indices stats aggregated at index, node or shard level +
-_Default:_ `node`
-
-|`types`
-|`string \| string[]` - A comma-separated list of document types for the `indexing` index metric
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`include_segment_file_sizes` or `includeSegmentFileSizes`
-|`boolean` - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
-
-|===
-
-=== nodes.usage
-
-[source,ts]
-----
-client.nodes.usage({
-  node_id: string | string[],
-  metric: string | string[],
-  timeout: string
-})
-----
-link:{ref}/cluster-nodes-usage.html[Documentation] +
-[cols=2*]
-|===
-|`node_id` or `nodeId`
-|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-
-|`metric`
-|`string \| string[]` - Limit the information returned to the specified metrics
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|===
-
-=== ping
-
-[source,ts]
-----
-client.ping()
-----
-link:{ref}/index.html[Documentation] +
-
-
-=== putScript
-
-[source,ts]
-----
-client.putScript({
-  id: string,
-  context: string,
-  timeout: string,
-  master_timeout: string,
-  body: object
-})
-----
-link:{ref}/modules-scripting.html[Documentation] +
-[cols=2*]
-|===
-|`id`
-|`string` - Script ID
-
-|`context`
-|`string` - Script context
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
-|`body`
-|`object` - The document
-
-|===
-
-=== rankEval
-*Stability:* experimental
-[source,ts]
-----
-client.rankEval({
-  index: string | string[],
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
-  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
-  body: object
-})
-----
-link:{ref}/search-rank-eval.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|`search_type` or `searchType`
-|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
-
-|`body`
-|`object` - The ranking evaluation search definition, including search requests, document ratings and ranking metric definition.
-
-|===
-
-=== reindex
-
-[source,ts]
-----
-client.reindex({
-  refresh: boolean,
-  timeout: string,
-  wait_for_active_shards: string,
-  wait_for_completion: boolean,
-  requests_per_second: number,
-  scroll: string,
-  slices: number|string,
-  max_docs: number,
-  body: object
-})
-----
-link:{ref}/docs-reindex.html[Documentation] +
-{jsclient}/reindex_examples.html[Code Example] +
-[cols=2*]
-|===
-|`refresh`
-|`boolean` - Should the affected indexes be refreshed?
-
-|`timeout`
-|`string` - Time each individual bulk request should wait for shards that are unavailable. +
-_Default:_ `1m`
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should the request should block until the reindex is complete. +
-_Default:_ `true`
-
-|`requests_per_second` or `requestsPerSecond`
-|`number` - The throttle to set on this request in sub-requests per second. -1 means no throttle.
-
-|`scroll`
-|`string` - Control how long to keep the search context alive +
-_Default:_ `5m`
-
-|`slices`
-|`number\|string` - The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`. +
-_Default:_ `1`
-
-|`max_docs` or `maxDocs`
-|`number` - Maximum number of documents to process (default: all documents)
-
-|`body`
-|`object` - The search definition using the Query DSL and the prototype for the index request.
-
-|===
-
-=== reindexRethrottle
-
-[source,ts]
-----
-client.reindexRethrottle({
-  task_id: string,
-  requests_per_second: number
-})
-----
-link:{ref}/docs-reindex.html[Documentation] +
-[cols=2*]
-|===
-|`task_id` or `taskId`
-|`string` - The task id to rethrottle
-
-|`requests_per_second` or `requestsPerSecond`
-|`number` - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
-
-|===
-
-=== renderSearchTemplate
-
-[source,ts]
-----
-client.renderSearchTemplate({
-  id: string,
-  body: object
-})
-----
-link:{ref}/search-template.html#_validating_templates[Documentation] +
-[cols=2*]
-|===
-|`id`
-|`string` - The id of the stored search template
-
-|`body`
-|`object` - The search definition template and its params
-
-|===
-
-=== scriptsPainlessExecute
-*Stability:* experimental
-[source,ts]
-----
-client.scriptsPainlessExecute({
-  body: object
-})
-----
-link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Documentation] +
-[cols=2*]
-|===
-|`body`
-|`object` - The script to execute
-
-|===
-
-=== scroll
-
-[source,ts]
-----
-client.scroll({
-  scroll_id: string,
-  scroll: string,
-  rest_total_hits_as_int: boolean,
-  body: object
-})
-----
-link:{ref}/search-request-body.html#request-body-search-scroll[Documentation] +
-{jsclient}/scroll_examples.html[Code Example] +
-[cols=2*]
-|===
-|`scroll_id` or `scrollId`
-|`string` - The scroll ID +
-
-WARNING: This parameter has been deprecated.
-
-|`scroll`
-|`string` - Specify how long a consistent view of the index should be maintained for scrolled search
-
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`body`
-|`object` - The scroll ID if not passed by URL or query parameter.
-
-|===
-
-=== search
-
-[source,ts]
-----
-client.search({
-  index: string | string[],
-  analyzer: string,
-  analyze_wildcard: boolean,
-  ccs_minimize_roundtrips: boolean,
-  default_operator: 'AND' | 'OR',
-  df: string,
-  explain: boolean,
-  stored_fields: string | string[],
-  docvalue_fields: string | string[],
-  from: number,
-  ignore_unavailable: boolean,
-  ignore_throttled: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
-  lenient: boolean,
-  preference: string,
-  q: string,
-  routing: string | string[],
-  scroll: string,
-  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
-  size: number,
-  sort: string | string[],
-  _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
-  terminate_after: number,
-  stats: string | string[],
-  suggest_field: string,
-  suggest_mode: 'missing' | 'popular' | 'always',
-  suggest_size: number,
-  suggest_text: string,
-  timeout: string,
-  track_scores: boolean,
-  track_total_hits: boolean|long,
-  allow_partial_search_results: boolean,
-  typed_keys: boolean,
-  version: boolean,
-  seq_no_primary_term: boolean,
-  request_cache: boolean,
-  batched_reduce_size: number,
-  max_concurrent_shard_requests: number,
-  pre_filter_shard_size: number,
-  rest_total_hits_as_int: boolean,
-  body: object
-})
-----
-link:{ref}/search-search.html[Documentation] +
-{jsclient}/search_examples.html[Code Example] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`analyzer`
-|`string` - The analyzer to use for the query string
-
-|`analyze_wildcard` or `analyzeWildcard`
-|`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-_Default:_ `true`
-
-|`default_operator` or `defaultOperator`
-|`'AND' \| 'OR'` - The default operator for query string query (AND or OR) +
-_Default:_ `OR`
-
-|`df`
-|`string` - The field to use as default where no field prefix is given in the query string
-
-|`explain`
-|`boolean` - Specify whether to return detailed information about score computation as part of a hit
-
-|`stored_fields` or `storedFields`
-|`string \| string[]` - A comma-separated list of stored fields to return as part of a hit
-
-|`docvalue_fields` or `docvalueFields`
-|`string \| string[]` - A comma-separated list of fields to return as the docvalue representation of a field for each hit
-
-|`from`
-|`number` - Starting offset (default: 0)
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`ignore_throttled` or `ignoreThrottled`
-|`boolean` - Whether specified concrete, expanded or aliased indices should be ignored when throttled
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|`lenient`
-|`boolean` - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-
-|`preference`
-|`string` - Specify the node or shard the operation should be performed on (default: random)
-
-|`q`
-|`string` - Query in the Lucene query string syntax
-
-|`routing`
-|`string \| string[]` - A comma-separated list of specific routing values
-
-|`scroll`
-|`string` - Specify how long a consistent view of the index should be maintained for scrolled search
-
-|`search_type` or `searchType`
-|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
-
-|`size`
-|`number` - Number of hits to return (default: 10)
-
-|`sort`
-|`string \| string[]` - A comma-separated list of <field>:<direction> pairs
-
-|`_source`
-|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
-
-|`_source_excludes` or `_sourceExcludes`
-|`string \| string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_includes` or `_sourceIncludes`
-|`string \| string[]` - A list of fields to extract and return from the _source field
-
-|`terminate_after` or `terminateAfter`
-|`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
-
-|`stats`
-|`string \| string[]` - Specific 'tag' of the request for logging and statistical purposes
-
-|`suggest_field` or `suggestField`
-|`string` - Specify which field to use for suggestions
-
-|`suggest_mode` or `suggestMode`
-|`'missing' \| 'popular' \| 'always'` - Specify suggest mode +
-_Default:_ `missing`
-
-|`suggest_size` or `suggestSize`
-|`number` - How many suggestions to return in response
-
-|`suggest_text` or `suggestText`
-|`string` - The source text for which the suggestions should be returned
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`track_scores` or `trackScores`
-|`boolean` - Whether to calculate and return scores even if they are not used for sorting
-
-|`track_total_hits` or `trackTotalHits`
-|`boolean\|long` - Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
-
-|`allow_partial_search_results` or `allowPartialSearchResults`
-|`boolean` - Indicate if an error should be returned if there is a partial search failure or timeout +
-_Default:_ `true`
-
-|`typed_keys` or `typedKeys`
-|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-
-|`version`
-|`boolean` - Specify whether to return document version as part of a hit
-
-|`seq_no_primary_term` or `seqNoPrimaryTerm`
-|`boolean` - Specify whether to return sequence number and primary term of the last modification of each hit
-
-|`request_cache` or `requestCache`
-|`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
-
-|`batched_reduce_size` or `batchedReduceSize`
-|`number` - The number of shard results that should be reduced at once on the coordinating node. This value should be used as a protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large. +
-_Default:_ `512`
-
-|`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
-|`number` - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
-_Default:_ `5`
-
-|`pre_filter_shard_size` or `preFilterShardSize`
-|`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
-
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`body`
-|`object` - The search definition using the Query DSL
-
-|===
-
-=== searchShards
-
-[source,ts]
-----
-client.searchShards({
-  index: string | string[],
-  preference: string,
-  routing: string,
-  local: boolean,
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
-})
-----
-link:{ref}/search-shards.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`preference`
-|`string` - Specify the node or shard the operation should be performed on (default: random)
-
-|`routing`
-|`string` - Specific routing value
-
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|===
-
-=== searchTemplate
-
-[source,ts]
-----
-client.searchTemplate({
-  index: string | string[],
-  ignore_unavailable: boolean,
-  ignore_throttled: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
-  preference: string,
-  routing: string | string[],
-  scroll: string,
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
-  explain: boolean,
-  profile: boolean,
-  typed_keys: boolean,
-  rest_total_hits_as_int: boolean,
-  ccs_minimize_roundtrips: boolean,
-  body: object
-})
-----
-link:{ref}/search-template.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`ignore_throttled` or `ignoreThrottled`
-|`boolean` - Whether specified concrete, expanded or aliased indices should be ignored when throttled
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|`preference`
-|`string` - Specify the node or shard the operation should be performed on (default: random)
-
-|`routing`
-|`string \| string[]` - A comma-separated list of specific routing values
-
-|`scroll`
-|`string` - Specify how long a consistent view of the index should be maintained for scrolled search
-
-|`search_type` or `searchType`
-|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
-
-|`explain`
-|`boolean` - Specify whether to return detailed information about score computation as part of a hit
-
-|`profile`
-|`boolean` - Specify whether to profile the query execution
-
-|`typed_keys` or `typedKeys`
-|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-
-|`rest_total_hits_as_int` or `restTotalHitsAsInt`
-|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
-|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
-|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
-_Default:_ `true`
-
-|`body`
-|`object` - The search definition template and its params
-
-|===
-
-=== snapshot.cleanupRepository
-
-[source,ts]
-----
-client.snapshot.cleanupRepository({
-  repository: string,
-  master_timeout: string,
-  timeout: string
-})
-----
-link:{ref}/clean-up-snapshot-repo-api.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string` - A repository name
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|===
-
-=== snapshot.create
-
-[source,ts]
-----
-client.snapshot.create({
-  repository: string,
-  snapshot: string,
-  master_timeout: string,
-  wait_for_completion: boolean,
-  body: object
-})
-----
-link:{ref}/modules-snapshots.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string` - A repository name
-
-|`snapshot`
-|`string` - A snapshot name
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should this request wait until the operation has completed before returning
-
-|`body`
-|`object` - The snapshot definition
-
-|===
-
-=== snapshot.createRepository
-
-[source,ts]
-----
-client.snapshot.createRepository({
-  repository: string,
-  master_timeout: string,
-  timeout: string,
-  verify: boolean,
-  body: object
-})
-----
-link:{ref}/modules-snapshots.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string` - A repository name
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`verify`
-|`boolean` - Whether to verify the repository after creation
-
-|`body`
-|`object` - The repository definition
-
-|===
-
-=== snapshot.delete
-
-[source,ts]
-----
-client.snapshot.delete({
-  repository: string,
-  snapshot: string | string[],
-  master_timeout: string
-})
-----
-link:{ref}/modules-snapshots.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string` - A repository name
-
-|`snapshot`
-|`string \| string[]` - A comma-separated list of snapshot names
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
-|===
-
-=== snapshot.deleteRepository
-
-[source,ts]
-----
-client.snapshot.deleteRepository({
-  repository: string | string[],
-  master_timeout: string,
-  timeout: string
-})
-----
-link:{ref}/modules-snapshots.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string \| string[]` - Name of the snapshot repository to unregister. Wildcard (`*`) patterns are supported.
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|===
-
-=== snapshot.get
-
-[source,ts]
-----
-client.snapshot.get({
-  repository: string,
-  snapshot: string | string[],
-  master_timeout: string,
-  ignore_unavailable: boolean,
-  verbose: boolean
-})
-----
-link:{ref}/modules-snapshots.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string` - A repository name
-
-|`snapshot`
-|`string \| string[]` - A comma-separated list of snapshot names
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
-
-|`verbose`
-|`boolean` - Whether to show verbose snapshot info or only show the basic info found in the repository index blob
-
-|===
-
-=== snapshot.getRepository
-
-[source,ts]
-----
-client.snapshot.getRepository({
-  repository: string | string[],
-  master_timeout: string,
-  local: boolean
-})
-----
-link:{ref}/modules-snapshots.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string \| string[]` - A comma-separated list of repository names
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
-
-|===
-
-=== snapshot.restore
-
-[source,ts]
-----
-client.snapshot.restore({
-  repository: string,
-  snapshot: string,
-  master_timeout: string,
-  wait_for_completion: boolean,
-  body: object
-})
-----
-link:{ref}/modules-snapshots.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string` - A repository name
-
-|`snapshot`
-|`string` - A snapshot name
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should this request wait until the operation has completed before returning
-
-|`body`
-|`object` - Details of what to restore
-
-|===
-
-=== snapshot.status
-
-[source,ts]
-----
-client.snapshot.status({
-  repository: string,
-  snapshot: string | string[],
-  master_timeout: string,
-  ignore_unavailable: boolean
-})
-----
-link:{ref}/modules-snapshots.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string` - A repository name
-
-|`snapshot`
-|`string \| string[]` - A comma-separated list of snapshot names
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
-
-|===
-
-=== snapshot.verifyRepository
-
-[source,ts]
-----
-client.snapshot.verifyRepository({
-  repository: string,
-  master_timeout: string,
-  timeout: string
-})
-----
-link:{ref}/modules-snapshots.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string` - A repository name
-
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|===
-
-=== tasks.cancel
-
-[source,ts]
-----
-client.tasks.cancel({
-  task_id: string,
-  nodes: string | string[],
-  actions: string | string[],
-  parent_task_id: string,
-  wait_for_completion: boolean
-})
-----
-link:{ref}/tasks.html[Documentation] +
-[cols=2*]
-|===
-|`task_id` or `taskId`
-|`string` - Cancel the task with specified task id (node_id:task_number)
-
-|`nodes`
-|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-
-|`actions`
-|`string \| string[]` - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
-
-|`parent_task_id` or `parentTaskId`
-|`string` - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should the request block until the cancellation of the task and its descendant tasks is completed. Defaults to false
-
-|===
-
-=== tasks.get
-
-[source,ts]
-----
-client.tasks.get({
-  task_id: string,
-  wait_for_completion: boolean,
-  timeout: string
-})
-----
-link:{ref}/tasks.html[Documentation] +
-[cols=2*]
-|===
-|`task_id` or `taskId`
-|`string` - Return the task with specified id (node_id:task_number)
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Wait for the matching tasks to complete (default: false)
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|===
-
-=== tasks.list
-
-[source,ts]
-----
-client.tasks.list({
-  nodes: string | string[],
-  actions: string | string[],
-  detailed: boolean,
-  parent_task_id: string,
-  wait_for_completion: boolean,
-  group_by: 'nodes' | 'parents' | 'none',
-  timeout: string
-})
-----
-link:{ref}/tasks.html[Documentation] +
-[cols=2*]
-|===
-|`nodes`
-|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-
-|`actions`
-|`string \| string[]` - A comma-separated list of actions that should be returned. Leave empty to return all.
-
-|`detailed`
-|`boolean` - Return detailed task information (default: false)
-
-|`parent_task_id` or `parentTaskId`
-|`string` - Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Wait for the matching tasks to complete (default: false)
-
-|`group_by` or `groupBy`
-|`'nodes' \| 'parents' \| 'none'` - Group tasks by nodes or parent/child relationships +
-_Default:_ `nodes`
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|===
-
-=== termvectors
-
-[source,ts]
-----
-client.termvectors({
-  index: string,
-  id: string,
-  term_statistics: boolean,
-  field_statistics: boolean,
-  fields: string | string[],
-  offsets: boolean,
-  positions: boolean,
-  payloads: boolean,
-  preference: string,
-  routing: string,
-  realtime: boolean,
-  version: number,
-  version_type: 'internal' | 'external' | 'external_gte',
-  body: object
-})
-----
-link:{ref}/docs-termvectors.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The index in which the document resides.
-
-|`id`
-|`string` - The id of the document, when not specified a doc param should be supplied.
-
-|`term_statistics` or `termStatistics`
-|`boolean` - Specifies if total term frequency and document frequency should be returned.
-
-|`field_statistics` or `fieldStatistics`
-|`boolean` - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. +
-_Default:_ `true`
-
-|`fields`
-|`string \| string[]` - A comma-separated list of fields to return.
-
-|`offsets`
-|`boolean` - Specifies if term offsets should be returned. +
-_Default:_ `true`
-
-|`positions`
-|`boolean` - Specifies if term positions should be returned. +
-_Default:_ `true`
-
-|`payloads`
-|`boolean` - Specifies if term payloads should be returned. +
-_Default:_ `true`
-
-|`preference`
-|`string` - Specify the node or shard the operation should be performed on (default: random).
-
-|`routing`
-|`string` - Specific routing value.
-
-|`realtime`
-|`boolean` - Specifies if request is real-time as opposed to near-real-time (default: true).
-
-|`version`
-|`number` - Explicit version number for concurrency control
-
-|`version_type` or `versionType`
-|`'internal' \| 'external' \| 'external_gte'` - Specific version type
-
-|`body`
-|`object` - Define parameters and or supply a document to get termvectors for. See documentation.
-
-|===
-
-=== update
-
-[source,ts]
-----
-client.update({
-  id: string,
-  index: string,
-  type: string,
-  wait_for_active_shards: string,
-  _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
-  lang: string,
-  refresh: 'true' | 'false' | 'wait_for',
-  retry_on_conflict: number,
-  routing: string,
-  timeout: string,
-  if_seq_no: number,
-  if_primary_term: number,
-  require_alias: boolean,
-  body: object
-})
-----
-link:{ref}/docs-update.html[Documentation] +
-{jsclient}/update_examples.html[Code Example] +
-[cols=2*]
-|===
-|`id`
-|`string` - Document ID
-
-|`index`
-|`string` - The name of the index
-
-|`type`
-|`string` - The type of the document +
-
-WARNING: This parameter has been deprecated.
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of shard copies that must be active before proceeding with the update operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-
-|`_source`
-|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
-
-|`_source_excludes` or `_sourceExcludes`
-|`string \| string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_includes` or `_sourceIncludes`
-|`string \| string[]` - A list of fields to extract and return from the _source field
-
-|`lang`
-|`string` - The script language (default: painless)
-
-|`refresh`
-|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
-
-|`retry_on_conflict` or `retryOnConflict`
-|`number` - Specify how many times should the operation be retried when a conflict occurs (default: 0)
-
-|`routing`
-|`string` - Specific routing value
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`if_seq_no` or `ifSeqNo`
-|`number` - only perform the update operation if the last operation that has changed the document has the specified sequence number
-
-|`if_primary_term` or `ifPrimaryTerm`
-|`number` - only perform the update operation if the last operation that has changed the document has the specified primary term
-
-|`require_alias` or `requireAlias`
-|`boolean` - When true, requires destination is an alias. Default is false
-
-|`body`
-|`object` - The request definition requires either `script` or partial `doc`
-
-|===
-
-=== updateByQuery
-
-[source,ts]
-----
-client.updateByQuery({
-  index: string | string[],
-  analyzer: string,
-  analyze_wildcard: boolean,
-  default_operator: 'AND' | 'OR',
-  df: string,
-  from: number,
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  conflicts: 'abort' | 'proceed',
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
-  lenient: boolean,
-  pipeline: string,
-  preference: string,
-  q: string,
-  routing: string | string[],
-  scroll: string,
-  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
-  search_timeout: string,
-  max_docs: number,
-  sort: string | string[],
-  _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
-  terminate_after: number,
-  stats: string | string[],
-  version: boolean,
-  version_type: boolean,
-  request_cache: boolean,
-  refresh: boolean,
-  timeout: string,
-  wait_for_active_shards: string,
-  scroll_size: number,
-  wait_for_completion: boolean,
-  requests_per_second: number,
-  slices: number|string,
-  body: object
-})
-----
-link:{ref}/docs-update-by-query.html[Documentation] +
-{jsclient}/update_by_query_examples.html[Code Example] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`analyzer`
-|`string` - The analyzer to use for the query string
-
-|`analyze_wildcard` or `analyzeWildcard`
-|`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
-
-|`default_operator` or `defaultOperator`
-|`'AND' \| 'OR'` - The default operator for query string query (AND or OR) +
-_Default:_ `OR`
-
-|`df`
-|`string` - The field to use as default where no field prefix is given in the query string
-
-|`from`
-|`number` - Starting offset (default: 0)
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`conflicts`
-|`'abort' \| 'proceed'` - What to do when the update by query hits version conflicts? +
-_Default:_ `abort`
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|`lenient`
-|`boolean` - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-
-|`pipeline`
-|`string` - Ingest pipeline to set on index requests made by this action. (default: none)
-
-|`preference`
-|`string` - Specify the node or shard the operation should be performed on (default: random)
-
-|`q`
-|`string` - Query in the Lucene query string syntax
-
-|`routing`
-|`string \| string[]` - A comma-separated list of specific routing values
-
-|`scroll`
-|`string` - Specify how long a consistent view of the index should be maintained for scrolled search
-
-|`search_type` or `searchType`
-|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
-
-|`search_timeout` or `searchTimeout`
-|`string` - Explicit timeout for each search request. Defaults to no timeout.
-
-|`max_docs` or `maxDocs`
-|`number` - Maximum number of documents to process (default: all documents)
-
-|`sort`
-|`string \| string[]` - A comma-separated list of <field>:<direction> pairs
-
-|`_source`
-|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
-
-|`_source_excludes` or `_sourceExcludes`
-|`string \| string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_includes` or `_sourceIncludes`
-|`string \| string[]` - A list of fields to extract and return from the _source field
-
-|`terminate_after` or `terminateAfter`
-|`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
-
-|`stats`
-|`string \| string[]` - Specific 'tag' of the request for logging and statistical purposes
-
-|`version`
-|`boolean` - Specify whether to return document version as part of a hit
-
-|`version_type` or `versionType`
-|`boolean` - Should the document increment the version number (internal) on hit or not (reindex)
-
-|`request_cache` or `requestCache`
-|`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
-
-|`refresh`
-|`boolean` - Should the affected indexes be refreshed?
-
-|`timeout`
-|`string` - Time each individual bulk request should wait for shards that are unavailable. +
-_Default:_ `1m`
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-
-|`scroll_size` or `scrollSize`
-|`number` - Size on the scroll request powering the update by query +
-_Default:_ `100`
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should the request should block until the update by query operation is complete. +
-_Default:_ `true`
-
-|`requests_per_second` or `requestsPerSecond`
-|`number` - The throttle to set on this request in sub-requests per second. -1 means no throttle.
-
-|`slices`
-|`number\|string` - The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`. +
-_Default:_ `1`
-
-|`body`
-|`object` - The search definition using the Query DSL
-
-|===
-
-=== updateByQueryRethrottle
-
-[source,ts]
-----
-client.updateByQueryRethrottle({
-  task_id: string,
-  requests_per_second: number
-})
-----
-link:{ref}/docs-update-by-query.html[Documentation] +
-[cols=2*]
-|===
-|`task_id` or `taskId`
-|`string` - The task id to rethrottle
-
-|`requests_per_second` or `requestsPerSecond`
-|`number` - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
-
-|===
-
-=== asyncSearch.delete
-
-[source,ts]
-----
-client.asyncSearch.delete({
-  id: string
-})
-----
-link:{ref}/async-search.html[Documentation] +
-[cols=2*]
-|===
-|`id`
-|`string` - The async search ID
-
-|===
-
-=== asyncSearch.get
-
-[source,ts]
-----
-client.asyncSearch.get({
-  id: string,
-  wait_for_completion_timeout: string,
-  keep_alive: string,
-  typed_keys: boolean
-})
-----
-link:{ref}/async-search.html[Documentation] +
-[cols=2*]
-|===
-|`id`
-|`string` - The async search ID
-
-|`wait_for_completion_timeout` or `waitForCompletionTimeout`
-|`string` - Specify the time that the request should block waiting for the final response
-
-|`keep_alive` or `keepAlive`
-|`string` - Specify the time interval in which the results (partial or final) for this search will be available
-
-|`typed_keys` or `typedKeys`
-|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-
-|===
-
-=== asyncSearch.submit
-
-[source,ts]
-----
-client.asyncSearch.submit({
-  index: string | string[],
-  wait_for_completion_timeout: string,
-  keep_on_completion: boolean,
-  keep_alive: string,
-  batched_reduce_size: number,
-  request_cache: boolean,
-  analyzer: string,
-  analyze_wildcard: boolean,
-  default_operator: 'AND' | 'OR',
-  df: string,
-  explain: boolean,
-  stored_fields: string | string[],
-  docvalue_fields: string | string[],
-  from: number,
-  ignore_unavailable: boolean,
-  ignore_throttled: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
-  lenient: boolean,
-  preference: string,
-  q: string,
-  routing: string | string[],
-  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
-  size: number,
-  sort: string | string[],
-  _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
-  terminate_after: number,
-  stats: string | string[],
-  suggest_field: string,
-  suggest_mode: 'missing' | 'popular' | 'always',
-  suggest_size: number,
-  suggest_text: string,
-  timeout: string,
-  track_scores: boolean,
-  track_total_hits: boolean|long,
-  allow_partial_search_results: boolean,
-  typed_keys: boolean,
-  version: boolean,
-  seq_no_primary_term: boolean,
-  max_concurrent_shard_requests: number,
-  body: object
-})
-----
-link:{ref}/async-search.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`wait_for_completion_timeout` or `waitForCompletionTimeout`
-|`string` - Specify the time that the request should block waiting for the final response +
-_Default:_ `1s`
-
-|`keep_on_completion` or `keepOnCompletion`
-|`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
-
-|`keep_alive` or `keepAlive`
-|`string` - Update the time interval in which the results (partial or final) for this search will be available +
-_Default:_ `5d`
-
-|`batched_reduce_size` or `batchedReduceSize`
-|`number` - The number of shard results that should be reduced at once on the coordinating node. This value should be used as the granularity at which progress results will be made available. +
-_Default:_ `5`
-
-|`request_cache` or `requestCache`
-|`boolean` - Specify if request cache should be used for this request or not, defaults to true
-
-|`analyzer`
-|`string` - The analyzer to use for the query string
-
-|`analyze_wildcard` or `analyzeWildcard`
-|`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
-
-|`default_operator` or `defaultOperator`
-|`'AND' \| 'OR'` - The default operator for query string query (AND or OR) +
-_Default:_ `OR`
-
-|`df`
-|`string` - The field to use as default where no field prefix is given in the query string
-
-|`explain`
-|`boolean` - Specify whether to return detailed information about score computation as part of a hit
-
-|`stored_fields` or `storedFields`
-|`string \| string[]` - A comma-separated list of stored fields to return as part of a hit
-
-|`docvalue_fields` or `docvalueFields`
-|`string \| string[]` - A comma-separated list of fields to return as the docvalue representation of a field for each hit
-
-|`from`
-|`number` - Starting offset (default: 0)
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`ignore_throttled` or `ignoreThrottled`
-|`boolean` - Whether specified concrete, expanded or aliased indices should be ignored when throttled
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|`lenient`
-|`boolean` - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-
-|`preference`
-|`string` - Specify the node or shard the operation should be performed on (default: random)
-
-|`q`
-|`string` - Query in the Lucene query string syntax
-
-|`routing`
-|`string \| string[]` - A comma-separated list of specific routing values
-
-|`search_type` or `searchType`
-|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
-
-|`size`
-|`number` - Number of hits to return (default: 10)
-
-|`sort`
-|`string \| string[]` - A comma-separated list of <field>:<direction> pairs
-
-|`_source`
-|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
-
-|`_source_excludes` or `_sourceExcludes`
-|`string \| string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_includes` or `_sourceIncludes`
-|`string \| string[]` - A list of fields to extract and return from the _source field
-
-|`terminate_after` or `terminateAfter`
-|`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
-
-|`stats`
-|`string \| string[]` - Specific 'tag' of the request for logging and statistical purposes
-
-|`suggest_field` or `suggestField`
-|`string` - Specify which field to use for suggestions
-
-|`suggest_mode` or `suggestMode`
-|`'missing' \| 'popular' \| 'always'` - Specify suggest mode +
-_Default:_ `missing`
-
-|`suggest_size` or `suggestSize`
-|`number` - How many suggestions to return in response
-
-|`suggest_text` or `suggestText`
-|`string` - The source text for which the suggestions should be returned
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`track_scores` or `trackScores`
-|`boolean` - Whether to calculate and return scores even if they are not used for sorting
-
-|`track_total_hits` or `trackTotalHits`
-|`boolean\|long` - Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
-
-|`allow_partial_search_results` or `allowPartialSearchResults`
-|`boolean` - Indicate if an error should be returned if there is a partial search failure or timeout +
-_Default:_ `true`
-
-|`typed_keys` or `typedKeys`
-|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-
-|`version`
-|`boolean` - Specify whether to return document version as part of a hit
-
-|`seq_no_primary_term` or `seqNoPrimaryTerm`
-|`boolean` - Specify whether to return sequence number and primary term of the last modification of each hit
-
-|`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
-|`number` - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
-_Default:_ `5`
-
-|`body`
-|`object` - The search definition using the Query DSL
-
-|===
-
-=== autoscaling.deleteAutoscalingPolicy
-*Stability:* experimental
-[source,ts]
-----
-client.autoscaling.deleteAutoscalingPolicy({
-  name: string
-})
-----
-link:{ref}/autoscaling-delete-autoscaling-policy.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - the name of the autoscaling policy
-
-|===
-
-=== autoscaling.getAutoscalingDecision
-*Stability:* experimental
-[source,ts]
-----
-client.autoscaling.getAutoscalingDecision()
-----
-link:{ref}/autoscaling-get-autoscaling-decision.html[Documentation] +
-
-
-=== autoscaling.getAutoscalingPolicy
-*Stability:* experimental
-[source,ts]
-----
-client.autoscaling.getAutoscalingPolicy({
-  name: string
-})
-----
-link:{ref}/autoscaling-get-autoscaling-policy.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - the name of the autoscaling policy
-
-|===
-
-=== autoscaling.putAutoscalingPolicy
-*Stability:* experimental
-[source,ts]
-----
-client.autoscaling.putAutoscalingPolicy({
-  name: string,
-  body: object
-})
-----
-link:{ref}/autoscaling-put-autoscaling-policy.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - the name of the autoscaling policy
-
-|`body`
-|`object` - the specification of the autoscaling policy
-
-|===
-
-=== cat.mlDataFrameAnalytics
-
-[source,ts]
-----
-client.cat.mlDataFrameAnalytics({
-  id: string,
-  allow_no_match: boolean,
-  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
-  format: string,
-  h: string | string[],
-  help: boolean,
-  s: string | string[],
-  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
-  v: boolean
-})
-----
-link:{ref}/cat-dfanalytics.html[Documentation] +
-[cols=2*]
-|===
-|`id`
-|`string` - The ID of the data frame analytics to fetch
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
-
-|`bytes`
-|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
-
-|`format`
-|`string` - a short version of the Accept header, e.g. json, yaml
-
-|`h`
-|`string \| string[]` - Comma-separated list of column names to display
-
-|`help`
-|`boolean` - Return help information
-
-|`s`
-|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
-
-|`time`
-|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
-
-|`v`
-|`boolean` - Verbose mode. Display column headers
-
-|===
-
-=== cat.mlDatafeeds
-
-[source,ts]
-----
-client.cat.mlDatafeeds({
-  datafeed_id: string,
-  allow_no_match: boolean,
-  allow_no_datafeeds: boolean,
-  format: string,
-  h: string | string[],
-  help: boolean,
-  s: string | string[],
-  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
-  v: boolean
-})
-----
-link:{ref}/cat-datafeeds.html[Documentation] +
-[cols=2*]
-|===
-|`datafeed_id` or `datafeedId`
-|`string` - The ID of the datafeeds stats to fetch
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-
-|`allow_no_datafeeds` or `allowNoDatafeeds`
-|`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified) +
-
-WARNING: This parameter has been deprecated.
-
-|`format`
-|`string` - a short version of the Accept header, e.g. json, yaml
-
-|`h`
-|`string \| string[]` - Comma-separated list of column names to display
-
-|`help`
-|`boolean` - Return help information
-
-|`s`
-|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
-
-|`time`
-|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
-
-|`v`
-|`boolean` - Verbose mode. Display column headers
-
-|===
-
-=== cat.mlJobs
-
-[source,ts]
-----
-client.cat.mlJobs({
-  job_id: string,
-  allow_no_match: boolean,
-  allow_no_jobs: boolean,
-  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
-  format: string,
-  h: string | string[],
-  help: boolean,
-  s: string | string[],
-  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
-  v: boolean
-})
-----
-link:{ref}/cat-anomaly-detectors.html[Documentation] +
-[cols=2*]
-|===
-|`job_id` or `jobId`
-|`string` - The ID of the jobs stats to fetch
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
-|`allow_no_jobs` or `allowNoJobs`
-|`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) +
-
-WARNING: This parameter has been deprecated.
-
-|`bytes`
-|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
-
-|`format`
-|`string` - a short version of the Accept header, e.g. json, yaml
-
-|`h`
-|`string \| string[]` - Comma-separated list of column names to display
-
-|`help`
-|`boolean` - Return help information
-
-|`s`
-|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
-
-|`time`
-|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
-
-|`v`
-|`boolean` - Verbose mode. Display column headers
-
-|===
-
-=== cat.mlTrainedModels
-
-[source,ts]
-----
-client.cat.mlTrainedModels({
-  model_id: string,
-  allow_no_match: boolean,
-  from: number,
-  size: number,
-  bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
-  format: string,
-  h: string | string[],
-  help: boolean,
-  s: string | string[],
-  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
-  v: boolean
-})
-----
-link:{ref}/cat-trained-model.html[Documentation] +
-[cols=2*]
-|===
-|`model_id` or `modelId`
-|`string` - The ID of the trained models stats to fetch
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified) +
-_Default:_ `true`
-
-|`from`
-|`number` - skips a number of trained models
-
-|`size`
-|`number` - specifies a max number of trained models to get +
-_Default:_ `100`
-
-|`bytes`
-|`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
-
-|`format`
-|`string` - a short version of the Accept header, e.g. json, yaml
-
-|`h`
-|`string \| string[]` - Comma-separated list of column names to display
-
-|`help`
-|`boolean` - Return help information
-
-|`s`
-|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
-
-|`time`
-|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
-
-|`v`
-|`boolean` - Verbose mode. Display column headers
-
-|===
-
-=== cat.transforms
-
-[source,ts]
-----
-client.cat.transforms({
-  transform_id: string,
-  from: number,
-  size: number,
-  allow_no_match: boolean,
-  format: string,
-  h: string | string[],
-  help: boolean,
-  s: string | string[],
-  time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
-  v: boolean
-})
-----
-link:{ref}/cat-transforms.html[Documentation] +
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
-
-|`from`
-|`number` - skips a number of transform configs, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transforms to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
-
-|`format`
-|`string` - a short version of the Accept header, e.g. json, yaml
-
-|`h`
-|`string \| string[]` - Comma-separated list of column names to display
-
-|`help`
-|`boolean` - Return help information
-
-|`s`
-|`string \| string[]` - Comma-separated list of column names or column aliases to sort by
-
-|`time`
-|`'d' \| 'h' \| 'm' \| 's' \| 'ms' \| 'micros' \| 'nanos'` - The unit in which to display time values
-
-|`v`
-|`boolean` - Verbose mode. Display column headers
-
-|===
-
-=== ccr.deleteAutoFollowPattern
-
-[source,ts]
-----
-client.ccr.deleteAutoFollowPattern({
-  name: string
-})
-----
-link:{ref}/ccr-delete-auto-follow-pattern.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the auto follow pattern.
-
-|===
-
-=== ccr.follow
-
-[source,ts]
-----
-client.ccr.follow({
-  index: string,
-  wait_for_active_shards: string,
-  body: object
-})
-----
-link:{ref}/ccr-put-follow.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follower index
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1) +
-_Default:_ `0`
-
-|`body`
-|`object` - The name of the leader index and other optional ccr related parameters
-
-|===
-
-=== ccr.followInfo
-
-[source,ts]
-----
-client.ccr.followInfo({
-  index: string | string[]
-})
-----
-link:{ref}/ccr-get-follow-info.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-
-|===
-
-=== ccr.followStats
-
-[source,ts]
-----
-client.ccr.followStats({
-  index: string | string[]
-})
-----
-link:{ref}/ccr-get-follow-stats.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-
-|===
-
-=== ccr.forgetFollower
-
-[source,ts]
-----
-client.ccr.forgetFollower({
-  index: string,
-  body: object
-})
-----
-link:{ref}/ccr-post-forget-follower.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - the name of the leader index for which specified follower retention leases should be removed
-
-|`body`
-|`object` - the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index
-
-|===
-
-=== ccr.getAutoFollowPattern
-
-[source,ts]
-----
-client.ccr.getAutoFollowPattern({
-  name: string
-})
-----
-link:{ref}/ccr-get-auto-follow-pattern.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the auto follow pattern.
-
-|===
-
-=== ccr.pauseAutoFollowPattern
-
-[source,ts]
-----
-client.ccr.pauseAutoFollowPattern({
-  name: string
-})
-----
-link:{ref}/ccr-pause-auto-follow-pattern.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the auto follow pattern that should pause discovering new indices to follow.
-
-|===
-
-=== ccr.pauseFollow
-
-[source,ts]
-----
-client.ccr.pauseFollow({
-  index: string
-})
-----
-link:{ref}/ccr-post-pause-follow.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follower index that should pause following its leader index.
-
-|===
-
-=== ccr.putAutoFollowPattern
-
-[source,ts]
-----
-client.ccr.putAutoFollowPattern({
-  name: string,
-  body: object
-})
-----
-link:{ref}/ccr-put-auto-follow-pattern.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the auto follow pattern.
-
-|`body`
-|`object` - The specification of the auto follow pattern
-
-|===
-
-=== ccr.resumeAutoFollowPattern
-
-[source,ts]
-----
-client.ccr.resumeAutoFollowPattern({
-  name: string
-})
-----
-link:{ref}/ccr-resume-auto-follow-pattern.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the auto follow pattern to resume discovering new indices to follow.
-
-|===
-
-=== ccr.resumeFollow
-
-[source,ts]
-----
-client.ccr.resumeFollow({
-  index: string,
-  body: object
-})
-----
-link:{ref}/ccr-post-resume-follow.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follow index to resume following.
-
-|`body`
-|`object` - The name of the leader index and other optional ccr related parameters
-
-|===
-
-=== ccr.stats
-
-[source,ts]
-----
-client.ccr.stats()
-----
-link:{ref}/ccr-get-stats.html[Documentation] +
-
-
-=== ccr.unfollow
-
-[source,ts]
-----
-client.ccr.unfollow({
-  index: string
-})
-----
-link:{ref}/ccr-post-unfollow.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the follower index that should be turned into a regular index.
-
-|===
-
-=== closePointInTime
-
-[source,ts]
-----
-client.closePointInTime({
-  body: object
-})
-----
-link:{ref}/point-in-time-api.html[Documentation] +
-[cols=2*]
-|===
-|`body`
-|`object` - a point-in-time id to close
-
-|===
-
-=== dataFrameTransformDeprecated.deleteTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrameTransformDeprecated.deleteTransform({
-  transform_id: string,
-  force: boolean
-})
-----
-link:{ref}/delete-transform.html[Documentation] +
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to delete
-
-|`force`
-|`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
-
-|===
-
-=== dataFrameTransformDeprecated.getTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrameTransformDeprecated.getTransform({
-  transform_id: string,
-  from: number,
-  size: number,
-  allow_no_match: boolean
-})
-----
-link:{ref}/get-transform.html[Documentation] +
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
-
-|`from`
-|`number` - skips a number of transform configs, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transforms to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
-
-|===
-
-=== dataFrameTransformDeprecated.getTransformStats
-*Stability:* beta
-[source,ts]
-----
-client.dataFrameTransformDeprecated.getTransformStats({
-  transform_id: string,
-  from: number,
-  size: number,
-  allow_no_match: boolean
-})
-----
-link:{ref}/get-transform-stats.html[Documentation] +
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform for which to get stats. '_all' or '*' implies all transforms
-
-|`from`
-|`number` - skips a number of transform stats, defaults to 0
-
-|`size`
-|`number` - specifies a max number of transform stats to get, defaults to 100
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
-
-|===
-
-=== dataFrameTransformDeprecated.previewTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrameTransformDeprecated.previewTransform({
-  body: object
-})
-----
-link:{ref}/preview-transform.html[Documentation] +
-[cols=2*]
-|===
-|`body`
-|`object` - The definition for the transform to preview
-
-|===
-
-=== dataFrameTransformDeprecated.putTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrameTransformDeprecated.putTransform({
-  transform_id: string,
-  defer_validation: boolean,
-  body: object
-})
-----
-link:{ref}/put-transform.html[Documentation] +
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the new transform.
-
-|`defer_validation` or `deferValidation`
-|`boolean` - If validations should be deferred until transform starts, defaults to false.
-
-|`body`
-|`object` - The transform definition
-
-|===
-
-=== dataFrameTransformDeprecated.startTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrameTransformDeprecated.startTransform({
-  transform_id: string,
-  timeout: string
-})
-----
-link:{ref}/start-transform.html[Documentation] +
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to start
-
-|`timeout`
-|`string` - Controls the time to wait for the transform to start
-
-|===
-
-=== dataFrameTransformDeprecated.stopTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrameTransformDeprecated.stopTransform({
-  transform_id: string,
-  wait_for_completion: boolean,
-  timeout: string,
-  allow_no_match: boolean
-})
-----
-link:{ref}/stop-transform.html[Documentation] +
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform to stop
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Whether to wait for the transform to fully stop before returning or not. Default to false
-
-|`timeout`
-|`string` - Controls the time to wait until the transform has stopped. Default to 30 seconds
-
-|`allow_no_match` or `allowNoMatch`
-|`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
-
-|===
-
-=== dataFrameTransformDeprecated.updateTransform
-*Stability:* beta
-[source,ts]
-----
-client.dataFrameTransformDeprecated.updateTransform({
-  transform_id: string,
-  defer_validation: boolean,
-  body: object
-})
-----
-link:{ref}/update-transform.html[Documentation] +
-[cols=2*]
-|===
-|`transform_id` or `transformId`
-|`string` - The id of the transform.
-
-|`defer_validation` or `deferValidation`
-|`boolean` - If validations should be deferred until transform starts, defaults to false.
-
-|`body`
-|`object` - The update transform definition
-
-|===
-
-=== enrich.deletePolicy
-
-[source,ts]
-----
-client.enrich.deletePolicy({
-  name: string
-})
-----
-link:{ref}/delete-enrich-policy-api.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the enrich policy
-
-|===
-
-=== enrich.executePolicy
-
-[source,ts]
-----
-client.enrich.executePolicy({
-  name: string,
-  wait_for_completion: boolean
-})
-----
-link:{ref}/execute-enrich-policy-api.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the enrich policy
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Should the request should block until the execution is complete. +
-_Default:_ `true`
-
-|===
-
-=== enrich.getPolicy
-
-[source,ts]
-----
-client.enrich.getPolicy({
-  name: string | string[]
-})
-----
-link:{ref}/get-enrich-policy-api.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string \| string[]` - A comma-separated list of enrich policy names
-
-|===
-
-=== enrich.putPolicy
-
-[source,ts]
-----
-client.enrich.putPolicy({
-  name: string,
-  body: object
-})
-----
-link:{ref}/put-enrich-policy-api.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the enrich policy
-
-|`body`
-|`object` - The enrich policy to register
-
-|===
-
-=== enrich.stats
-
-[source,ts]
-----
-client.enrich.stats()
-----
-link:{ref}/enrich-stats-api.html[Documentation] +
-
-
-=== eql.delete
-*Stability:* beta
-[source,ts]
-----
-client.eql.delete({
-  id: string
-})
-----
-link:{ref}/eql-search-api.html[Documentation] +
-[cols=2*]
-|===
-|`id`
-|`string` - The async search ID
-
-|===
-
-=== eql.get
-*Stability:* beta
-[source,ts]
-----
-client.eql.get({
-  id: string,
-  wait_for_completion_timeout: string,
-  keep_alive: string
-})
-----
-link:{ref}/eql-search-api.html[Documentation] +
-[cols=2*]
-|===
-|`id`
-|`string` - The async search ID
-
-|`wait_for_completion_timeout` or `waitForCompletionTimeout`
-|`string` - Specify the time that the request should block waiting for the final response
-
-|`keep_alive` or `keepAlive`
-|`string` - Update the time interval in which the results (partial or final) for this search will be available +
-_Default:_ `5d`
-
-|===
-
-=== eql.search
-*Stability:* beta
-[source,ts]
-----
-client.eql.search({
-  index: string,
-  wait_for_completion_timeout: string,
-  keep_on_completion: boolean,
-  keep_alive: string,
-  body: object
-})
-----
-link:{ref}/eql-search-api.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to scope the operation
-
-|`wait_for_completion_timeout` or `waitForCompletionTimeout`
-|`string` - Specify the time that the request should block waiting for the final response
-
-|`keep_on_completion` or `keepOnCompletion`
-|`boolean` - Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
-
-|`keep_alive` or `keepAlive`
-|`string` - Update the time interval in which the results (partial or final) for this search will be available +
-_Default:_ `5d`
-
-|`body`
-|`object` - Eql request body. Use the `query` to limit the query scope.
-
-|===
-
-=== graph.explore
-
-[source,ts]
-----
-client.graph.explore({
-  index: string | string[],
-  routing: string,
-  timeout: string,
-  body: object
-})
-----
-link:{ref}/graph-explore-api.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-
-|`routing`
-|`string` - Specific routing value
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`body`
-|`object` - Graph Query DSL
-
-|===
-
-=== ilm.deleteLifecycle
-
-[source,ts]
-----
-client.ilm.deleteLifecycle({
-  policy: string
-})
-----
-link:{ref}/ilm-delete-lifecycle.html[Documentation] +
-[cols=2*]
-|===
-|`policy`
-|`string` - The name of the index lifecycle policy
-
-|===
-
-=== ilm.explainLifecycle
-
-[source,ts]
-----
-client.ilm.explainLifecycle({
-  index: string,
-  only_managed: boolean,
-  only_errors: boolean
-})
-----
-link:{ref}/ilm-explain-lifecycle.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to explain
-
-|`only_managed` or `onlyManaged`
-|`boolean` - filters the indices included in the response to ones managed by ILM
-
-|`only_errors` or `onlyErrors`
-|`boolean` - filters the indices included in the response to ones in an ILM error state, implies only_managed
-
-|===
-
-=== ilm.getLifecycle
-
-[source,ts]
-----
-client.ilm.getLifecycle({
-  policy: string
-})
-----
-link:{ref}/ilm-get-lifecycle.html[Documentation] +
-[cols=2*]
-|===
-|`policy`
-|`string` - The name of the index lifecycle policy
-
-|===
-
-=== ilm.getStatus
-
-[source,ts]
-----
-client.ilm.getStatus()
-----
-link:{ref}/ilm-get-status.html[Documentation] +
-
-
-=== ilm.moveToStep
-
-[source,ts]
-----
-client.ilm.moveToStep({
-  index: string,
-  body: object
-})
-----
-link:{ref}/ilm-move-to-step.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index whose lifecycle step is to change
-
-|`body`
-|`object` - The new lifecycle step to move to
-
-|===
-
-=== ilm.putLifecycle
-
-[source,ts]
-----
-client.ilm.putLifecycle({
-  policy: string,
-  body: object
-})
-----
-link:{ref}/ilm-put-lifecycle.html[Documentation] +
-[cols=2*]
-|===
-|`policy`
-|`string` - The name of the index lifecycle policy
-
-|`body`
-|`object` - The lifecycle policy definition to register
-
-|===
-
-=== ilm.removePolicy
-
-[source,ts]
-----
-client.ilm.removePolicy({
-  index: string
-})
-----
-link:{ref}/ilm-remove-policy.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to remove policy on
-
-|===
-
-=== ilm.retry
-
-[source,ts]
-----
-client.ilm.retry({
-  index: string
-})
-----
-link:{ref}/ilm-retry-policy.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the indices (comma-separated) whose failed lifecycle step is to be retry
-
-|===
-
-=== ilm.start
-
-[source,ts]
-----
-client.ilm.start()
-----
-link:{ref}/ilm-start.html[Documentation] +
-
-
-=== ilm.stop
-
-[source,ts]
-----
-client.ilm.stop()
-----
-link:{ref}/ilm-stop.html[Documentation] +
-
-
-=== indices.createDataStream
-
-[source,ts]
-----
-client.indices.createDataStream({
-  name: string
-})
-----
-link:{ref}/data-streams.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string` - The name of the data stream
-
-|===
-
-=== indices.dataStreamsStats
-
-[source,ts]
-----
-client.indices.dataStreamsStats({
-  name: string | string[]
-})
-----
-link:{ref}/data-streams.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string \| string[]` - A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
-
-|===
-
-=== indices.deleteDataStream
-
-[source,ts]
-----
-client.indices.deleteDataStream({
-  name: string | string[]
-})
-----
-link:{ref}/data-streams.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string \| string[]` - A comma-separated list of data streams to delete; use `*` to delete all data streams
-
-|===
-
-=== indices.freeze
-
-[source,ts]
-----
-client.indices.freeze({
-  index: string,
-  timeout: string,
-  master_timeout: string,
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
-  wait_for_active_shards: string
-})
-----
-link:{ref}/freeze-index-api.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to freeze
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `closed`
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of active shards to wait for before the operation returns.
-
-|===
-
-=== indices.getDataStream
-
-[source,ts]
-----
-client.indices.getDataStream({
-  name: string | string[]
-})
-----
-link:{ref}/data-streams.html[Documentation] +
-[cols=2*]
-|===
-|`name`
-|`string \| string[]` - A comma-separated list of data streams to get; use `*` to get all data streams
-
-|===
-
-=== indices.reloadSearchAnalyzers
-
-[source,ts]
-----
-client.indices.reloadSearchAnalyzers({
-  index: string | string[],
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
-})
-----
-link:{ref}/indices-reload-analyzers.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names to reload analyzers for
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|===
-
-=== indices.unfreeze
-
-[source,ts]
-----
-client.indices.unfreeze({
-  index: string,
-  timeout: string,
-  master_timeout: string,
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
-  wait_for_active_shards: string
-})
-----
-link:{ref}/unfreeze-index-api.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string` - The name of the index to unfreeze
-
-|`timeout`
-|`string` - Explicit operation timeout
-
-|`master_timeout` or `masterTimeout`
-|`string` - Specify timeout for connection to master
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `closed`
-
-|`wait_for_active_shards` or `waitForActiveShards`
-|`string` - Sets the number of active shards to wait for before the operation returns.
-
-|===
-
 === license.delete
 
 [source,ts]
@@ -7378,6 +5564,58 @@ link:{ref}/start-trial.html[Documentation] +
 
 |`acknowledge`
 |`boolean` - whether the user has acknowledged acknowledge messages (default: false)
+
+|===
+
+=== mget
+
+[source,ts]
+----
+client.mget({
+  index: string,
+  stored_fields: string | string[],
+  preference: string,
+  realtime: boolean,
+  refresh: boolean,
+  routing: string,
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  body: object
+})
+----
+link:{ref}/docs-multi-get.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the index
+
+|`stored_fields` or `storedFields`
+|`string \| string[]` - A comma-separated list of stored fields to return in the response
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
+
+|`realtime`
+|`boolean` - Specify whether to perform the operation in realtime or search mode
+
+|`refresh`
+|`boolean` - Refresh the shard containing the document before performing the operation
+
+|`routing`
+|`string` - Specific routing value
+
+|`_source`
+|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
+
+|`_source_excludes` or `_sourceExcludes`
+|`string \| string[]` - A list of fields to exclude from the returned _source field
+
+|`_source_includes` or `_sourceIncludes`
+|`string \| string[]` - A list of fields to extract and return from the _source field
+
+|`body`
+|`object` - Document identifiers; can be either `docs` (containing full document information) or `ids` (when index is provided in the URL.
 
 |===
 
@@ -8428,7 +6666,7 @@ link:{ref}/ml-get-record.html[Documentation] +
 client.ml.getTrainedModels({
   model_id: string,
   allow_no_match: boolean,
-  include_model_definition: boolean,
+  include: string,
   decompress_definition: boolean,
   from: number,
   size: number,
@@ -8446,8 +6684,8 @@ link:{ref}/get-inference.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified) +
 _Default:_ `true`
 
-|`include_model_definition` or `includeModelDefinition`
-|`boolean` - Should the full model definition be included in the results. These definitions can be large. So be cautious when including them. Defaults to false.
+|`include`
+|`string` - A comma-separate list of fields to optionally include. Valid options are 'definition' and 'total_feature_importance'. Default is none.
 
 |`decompress_definition` or `decompressDefinition`
 |`boolean` - Should the model definition be decompressed into valid JSON or returned in a custom compressed format. Defaults to true. +
@@ -9103,6 +7341,343 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+=== msearch
+
+[source,ts]
+----
+client.msearch({
+  index: string | string[],
+  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  max_concurrent_searches: number,
+  typed_keys: boolean,
+  pre_filter_shard_size: number,
+  max_concurrent_shard_requests: number,
+  rest_total_hits_as_int: boolean,
+  ccs_minimize_roundtrips: boolean,
+  body: object
+})
+----
+link:{ref}/search-multi-search.html[Documentation] +
+{jsclient}/msearch_examples.html[Code Example] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to use as default
+
+|`search_type` or `searchType`
+|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
+
+|`max_concurrent_searches` or `maxConcurrentSearches`
+|`number` - Controls the maximum number of concurrent searches the multi search api will execute
+
+|`typed_keys` or `typedKeys`
+|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+
+|`pre_filter_shard_size` or `preFilterShardSize`
+|`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
+
+|`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
+|`number` - The number of concurrent shard requests each sub search executes concurrently per node. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
+_Default:_ `5`
+
+|`rest_total_hits_as_int` or `restTotalHitsAsInt`
+|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+
+|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
+|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
+_Default:_ `true`
+
+|`body`
+|`object` - The request definitions (metadata-search request definition pairs), separated by newlines
+
+|===
+
+=== msearchTemplate
+
+[source,ts]
+----
+client.msearchTemplate({
+  index: string | string[],
+  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  typed_keys: boolean,
+  max_concurrent_searches: number,
+  rest_total_hits_as_int: boolean,
+  ccs_minimize_roundtrips: boolean,
+  body: object
+})
+----
+link:{ref}/search-multi-search.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to use as default
+
+|`search_type` or `searchType`
+|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
+
+|`typed_keys` or `typedKeys`
+|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+
+|`max_concurrent_searches` or `maxConcurrentSearches`
+|`number` - Controls the maximum number of concurrent searches the multi search api will execute
+
+|`rest_total_hits_as_int` or `restTotalHitsAsInt`
+|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+
+|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
+|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
+_Default:_ `true`
+
+|`body`
+|`object` - The request definitions (metadata-search request definition pairs), separated by newlines
+
+|===
+
+=== mtermvectors
+
+[source,ts]
+----
+client.mtermvectors({
+  index: string,
+  ids: string | string[],
+  term_statistics: boolean,
+  field_statistics: boolean,
+  fields: string | string[],
+  offsets: boolean,
+  positions: boolean,
+  payloads: boolean,
+  preference: string,
+  routing: string,
+  realtime: boolean,
+  version: number,
+  version_type: 'internal' | 'external' | 'external_gte',
+  body: object
+})
+----
+link:{ref}/docs-multi-termvectors.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The index in which the document resides.
+
+|`ids`
+|`string \| string[]` - A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
+
+|`term_statistics` or `termStatistics`
+|`boolean` - Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+
+|`field_statistics` or `fieldStatistics`
+|`boolean` - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs". +
+_Default:_ `true`
+
+|`fields`
+|`string \| string[]` - A comma-separated list of fields to return. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+
+|`offsets`
+|`boolean` - Specifies if term offsets should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs". +
+_Default:_ `true`
+
+|`positions`
+|`boolean` - Specifies if term positions should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs". +
+_Default:_ `true`
+
+|`payloads`
+|`boolean` - Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs". +
+_Default:_ `true`
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body "params" or "docs".
+
+|`routing`
+|`string` - Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+
+|`realtime`
+|`boolean` - Specifies if requests are real-time as opposed to near-real-time (default: true).
+
+|`version`
+|`number` - Explicit version number for concurrency control
+
+|`version_type` or `versionType`
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
+
+|`body`
+|`object` - Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
+
+|===
+
+=== nodes.hotThreads
+
+[source,ts]
+----
+client.nodes.hotThreads({
+  node_id: string | string[],
+  interval: string,
+  snapshots: number,
+  threads: number,
+  ignore_idle_threads: boolean,
+  type: 'cpu' | 'wait' | 'block',
+  timeout: string
+})
+----
+link:{ref}/cluster-nodes-hot-threads.html[Documentation] +
+[cols=2*]
+|===
+|`node_id` or `nodeId`
+|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+|`interval`
+|`string` - The interval for the second sampling of threads
+
+|`snapshots`
+|`number` - Number of samples of thread stacktrace (default: 10)
+
+|`threads`
+|`number` - Specify the number of threads to provide information for (default: 3)
+
+|`ignore_idle_threads` or `ignoreIdleThreads`
+|`boolean` - Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
+
+|`type`
+|`'cpu' \| 'wait' \| 'block'` - The type to sample (default: cpu)
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|===
+
+=== nodes.info
+
+[source,ts]
+----
+client.nodes.info({
+  node_id: string | string[],
+  metric: string | string[],
+  flat_settings: boolean,
+  timeout: string
+})
+----
+link:{ref}/cluster-nodes-info.html[Documentation] +
+[cols=2*]
+|===
+|`node_id` or `nodeId`
+|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+|`metric`
+|`string \| string[]` - A comma-separated list of metrics you wish returned. Leave empty to return all.
+
+|`flat_settings` or `flatSettings`
+|`boolean` - Return settings in flat format (default: false)
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|===
+
+=== nodes.reloadSecureSettings
+
+[source,ts]
+----
+client.nodes.reloadSecureSettings({
+  node_id: string | string[],
+  timeout: string,
+  body: object
+})
+----
+link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
+[cols=2*]
+|===
+|`node_id` or `nodeId`
+|`string \| string[]` - A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`body`
+|`object` - An object containing the password for the elasticsearch keystore
+
+|===
+
+=== nodes.stats
+
+[source,ts]
+----
+client.nodes.stats({
+  node_id: string | string[],
+  metric: string | string[],
+  index_metric: string | string[],
+  completion_fields: string | string[],
+  fielddata_fields: string | string[],
+  fields: string | string[],
+  groups: boolean,
+  level: 'indices' | 'node' | 'shards',
+  types: string | string[],
+  timeout: string,
+  include_segment_file_sizes: boolean
+})
+----
+link:{ref}/cluster-nodes-stats.html[Documentation] +
+[cols=2*]
+|===
+|`node_id` or `nodeId`
+|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+|`metric`
+|`string \| string[]` - Limit the information returned to the specified metrics
+
+|`index_metric` or `indexMetric`
+|`string \| string[]` - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
+
+|`completion_fields` or `completionFields`
+|`string \| string[]` - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
+
+|`fielddata_fields` or `fielddataFields`
+|`string \| string[]` - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
+
+|`fields`
+|`string \| string[]` - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
+
+|`groups`
+|`boolean` - A comma-separated list of search groups for `search` index metric
+
+|`level`
+|`'indices' \| 'node' \| 'shards'` - Return indices stats aggregated at index, node or shard level +
+_Default:_ `node`
+
+|`types`
+|`string \| string[]` - A comma-separated list of document types for the `indexing` index metric
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`include_segment_file_sizes` or `includeSegmentFileSizes`
+|`boolean` - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
+
+|===
+
+=== nodes.usage
+
+[source,ts]
+----
+client.nodes.usage({
+  node_id: string | string[],
+  metric: string | string[],
+  timeout: string
+})
+----
+link:{ref}/cluster-nodes-usage.html[Documentation] +
+[cols=2*]
+|===
+|`node_id` or `nodeId`
+|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+|`metric`
+|`string \| string[]` - Limit the information returned to the specified metrics
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|===
+
 === openPointInTime
 
 [source,ts]
@@ -9137,6 +7712,177 @@ _Default:_ `open`
 
 |`keep_alive` or `keepAlive`
 |`string` - Specific the time to live for the point in time
+
+|===
+
+=== ping
+
+[source,ts]
+----
+client.ping()
+----
+link:{ref}/index.html[Documentation] +
+
+
+=== putScript
+
+[source,ts]
+----
+client.putScript({
+  id: string,
+  context: string,
+  timeout: string,
+  master_timeout: string,
+  body: object
+})
+----
+link:{ref}/modules-scripting.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - Script ID
+
+|`context`
+|`string` - Script context
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`master_timeout` or `masterTimeout`
+|`string` - Specify timeout for connection to master
+
+|`body`
+|`object` - The document
+
+|===
+
+=== rankEval
+*Stability:* experimental
+[source,ts]
+----
+client.rankEval({
+  index: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
+  body: object
+})
+----
+link:{ref}/search-rank-eval.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|`search_type` or `searchType`
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
+
+|`body`
+|`object` - The ranking evaluation search definition, including search requests, document ratings and ranking metric definition.
+
+|===
+
+=== reindex
+
+[source,ts]
+----
+client.reindex({
+  refresh: boolean,
+  timeout: string,
+  wait_for_active_shards: string,
+  wait_for_completion: boolean,
+  requests_per_second: number,
+  scroll: string,
+  slices: number|string,
+  max_docs: number,
+  body: object
+})
+----
+link:{ref}/docs-reindex.html[Documentation] +
+{jsclient}/reindex_examples.html[Code Example] +
+[cols=2*]
+|===
+|`refresh`
+|`boolean` - Should the affected indexes be refreshed?
+
+|`timeout`
+|`string` - Time each individual bulk request should wait for shards that are unavailable. +
+_Default:_ `1m`
+
+|`wait_for_active_shards` or `waitForActiveShards`
+|`string` - Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should the request should block until the reindex is complete. +
+_Default:_ `true`
+
+|`requests_per_second` or `requestsPerSecond`
+|`number` - The throttle to set on this request in sub-requests per second. -1 means no throttle.
+
+|`scroll`
+|`string` - Control how long to keep the search context alive +
+_Default:_ `5m`
+
+|`slices`
+|`number\|string` - The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`. +
+_Default:_ `1`
+
+|`max_docs` or `maxDocs`
+|`number` - Maximum number of documents to process (default: all documents)
+
+|`body`
+|`object` - The search definition using the Query DSL and the prototype for the index request.
+
+|===
+
+=== reindexRethrottle
+
+[source,ts]
+----
+client.reindexRethrottle({
+  task_id: string,
+  requests_per_second: number
+})
+----
+link:{ref}/docs-reindex.html[Documentation] +
+[cols=2*]
+|===
+|`task_id` or `taskId`
+|`string` - The task id to rethrottle
+
+|`requests_per_second` or `requestsPerSecond`
+|`number` - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
+
+|===
+
+=== renderSearchTemplate
+
+[source,ts]
+----
+client.renderSearchTemplate({
+  id: string,
+  body: object
+})
+----
+link:{ref}/search-template.html#_validating_templates[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The id of the stored search template
+
+|`body`
+|`object` - The search definition template and its params
 
 |===
 
@@ -9295,6 +8041,364 @@ link:{ref}/rollup-stop-job.html[Documentation] +
 
 |`timeout`
 |`string` - Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
+
+|===
+
+=== scriptsPainlessExecute
+*Stability:* experimental
+[source,ts]
+----
+client.scriptsPainlessExecute({
+  body: object
+})
+----
+link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - The script to execute
+
+|===
+
+=== scroll
+
+[source,ts]
+----
+client.scroll({
+  scroll_id: string,
+  scroll: string,
+  rest_total_hits_as_int: boolean,
+  body: object
+})
+----
+link:{ref}/search-request-body.html#request-body-search-scroll[Documentation] +
+{jsclient}/scroll_examples.html[Code Example] +
+[cols=2*]
+|===
+|`scroll_id` or `scrollId`
+|`string` - The scroll ID +
+
+WARNING: This parameter has been deprecated.
+
+|`scroll`
+|`string` - Specify how long a consistent view of the index should be maintained for scrolled search
+
+|`rest_total_hits_as_int` or `restTotalHitsAsInt`
+|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+
+|`body`
+|`object` - The scroll ID if not passed by URL or query parameter.
+
+|===
+
+=== search
+
+[source,ts]
+----
+client.search({
+  index: string | string[],
+  analyzer: string,
+  analyze_wildcard: boolean,
+  ccs_minimize_roundtrips: boolean,
+  default_operator: 'AND' | 'OR',
+  df: string,
+  explain: boolean,
+  stored_fields: string | string[],
+  docvalue_fields: string | string[],
+  from: number,
+  ignore_unavailable: boolean,
+  ignore_throttled: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  lenient: boolean,
+  preference: string,
+  q: string,
+  routing: string | string[],
+  scroll: string,
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
+  size: number,
+  sort: string | string[],
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  terminate_after: number,
+  stats: string | string[],
+  suggest_field: string,
+  suggest_mode: 'missing' | 'popular' | 'always',
+  suggest_size: number,
+  suggest_text: string,
+  timeout: string,
+  track_scores: boolean,
+  track_total_hits: boolean|long,
+  allow_partial_search_results: boolean,
+  typed_keys: boolean,
+  version: boolean,
+  seq_no_primary_term: boolean,
+  request_cache: boolean,
+  batched_reduce_size: number,
+  max_concurrent_shard_requests: number,
+  pre_filter_shard_size: number,
+  rest_total_hits_as_int: boolean,
+  body: object
+})
+----
+link:{ref}/search-search.html[Documentation] +
+{jsclient}/search_examples.html[Code Example] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`analyzer`
+|`string` - The analyzer to use for the query string
+
+|`analyze_wildcard` or `analyzeWildcard`
+|`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
+
+|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
+|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
+_Default:_ `true`
+
+|`default_operator` or `defaultOperator`
+|`'AND' \| 'OR'` - The default operator for query string query (AND or OR) +
+_Default:_ `OR`
+
+|`df`
+|`string` - The field to use as default where no field prefix is given in the query string
+
+|`explain`
+|`boolean` - Specify whether to return detailed information about score computation as part of a hit
+
+|`stored_fields` or `storedFields`
+|`string \| string[]` - A comma-separated list of stored fields to return as part of a hit
+
+|`docvalue_fields` or `docvalueFields`
+|`string \| string[]` - A comma-separated list of fields to return as the docvalue representation of a field for each hit
+
+|`from`
+|`number` - Starting offset (default: 0)
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`ignore_throttled` or `ignoreThrottled`
+|`boolean` - Whether specified concrete, expanded or aliased indices should be ignored when throttled
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|`lenient`
+|`boolean` - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
+
+|`q`
+|`string` - Query in the Lucene query string syntax
+
+|`routing`
+|`string \| string[]` - A comma-separated list of specific routing values
+
+|`scroll`
+|`string` - Specify how long a consistent view of the index should be maintained for scrolled search
+
+|`search_type` or `searchType`
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
+
+|`size`
+|`number` - Number of hits to return (default: 10)
+
+|`sort`
+|`string \| string[]` - A comma-separated list of <field>:<direction> pairs
+
+|`_source`
+|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
+
+|`_source_excludes` or `_sourceExcludes`
+|`string \| string[]` - A list of fields to exclude from the returned _source field
+
+|`_source_includes` or `_sourceIncludes`
+|`string \| string[]` - A list of fields to extract and return from the _source field
+
+|`terminate_after` or `terminateAfter`
+|`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
+
+|`stats`
+|`string \| string[]` - Specific 'tag' of the request for logging and statistical purposes
+
+|`suggest_field` or `suggestField`
+|`string` - Specify which field to use for suggestions
+
+|`suggest_mode` or `suggestMode`
+|`'missing' \| 'popular' \| 'always'` - Specify suggest mode +
+_Default:_ `missing`
+
+|`suggest_size` or `suggestSize`
+|`number` - How many suggestions to return in response
+
+|`suggest_text` or `suggestText`
+|`string` - The source text for which the suggestions should be returned
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`track_scores` or `trackScores`
+|`boolean` - Whether to calculate and return scores even if they are not used for sorting
+
+|`track_total_hits` or `trackTotalHits`
+|`boolean\|long` - Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
+
+|`allow_partial_search_results` or `allowPartialSearchResults`
+|`boolean` - Indicate if an error should be returned if there is a partial search failure or timeout +
+_Default:_ `true`
+
+|`typed_keys` or `typedKeys`
+|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+
+|`version`
+|`boolean` - Specify whether to return document version as part of a hit
+
+|`seq_no_primary_term` or `seqNoPrimaryTerm`
+|`boolean` - Specify whether to return sequence number and primary term of the last modification of each hit
+
+|`request_cache` or `requestCache`
+|`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
+
+|`batched_reduce_size` or `batchedReduceSize`
+|`number` - The number of shard results that should be reduced at once on the coordinating node. This value should be used as a protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large. +
+_Default:_ `512`
+
+|`max_concurrent_shard_requests` or `maxConcurrentShardRequests`
+|`number` - The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests +
+_Default:_ `5`
+
+|`pre_filter_shard_size` or `preFilterShardSize`
+|`number` - A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
+
+|`rest_total_hits_as_int` or `restTotalHitsAsInt`
+|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+
+|`body`
+|`object` - The search definition using the Query DSL
+
+|===
+
+=== searchShards
+
+[source,ts]
+----
+client.searchShards({
+  index: string | string[],
+  preference: string,
+  routing: string,
+  local: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
+})
+----
+link:{ref}/search-shards.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
+
+|`routing`
+|`string` - Specific routing value
+
+|`local`
+|`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|===
+
+=== searchTemplate
+
+[source,ts]
+----
+client.searchTemplate({
+  index: string | string[],
+  ignore_unavailable: boolean,
+  ignore_throttled: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  preference: string,
+  routing: string | string[],
+  scroll: string,
+  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  explain: boolean,
+  profile: boolean,
+  typed_keys: boolean,
+  rest_total_hits_as_int: boolean,
+  ccs_minimize_roundtrips: boolean,
+  body: object
+})
+----
+link:{ref}/search-template.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`ignore_throttled` or `ignoreThrottled`
+|`boolean` - Whether specified concrete, expanded or aliased indices should be ignored when throttled
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
+
+|`routing`
+|`string \| string[]` - A comma-separated list of specific routing values
+
+|`scroll`
+|`string` - Specify how long a consistent view of the index should be maintained for scrolled search
+
+|`search_type` or `searchType`
+|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
+
+|`explain`
+|`boolean` - Specify whether to return detailed information about score computation as part of a hit
+
+|`profile`
+|`boolean` - Specify whether to profile the query execution
+
+|`typed_keys` or `typedKeys`
+|`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+
+|`rest_total_hits_as_int` or `restTotalHitsAsInt`
+|`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+
+|`ccs_minimize_roundtrips` or `ccsMinimizeRoundtrips`
+|`boolean` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution +
+_Default:_ `true`
+
+|`body`
+|`object` - The search definition template and its params
 
 |===
 
@@ -10011,6 +9115,282 @@ client.slm.stop()
 link:{ref}/slm-api-stop.html[Documentation] +
 
 
+=== snapshot.cleanupRepository
+
+[source,ts]
+----
+client.snapshot.cleanupRepository({
+  repository: string,
+  master_timeout: string,
+  timeout: string
+})
+----
+link:{ref}/clean-up-snapshot-repo-api.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|===
+
+=== snapshot.create
+
+[source,ts]
+----
+client.snapshot.create({
+  repository: string,
+  snapshot: string,
+  master_timeout: string,
+  wait_for_completion: boolean,
+  body: object
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`snapshot`
+|`string` - A snapshot name
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should this request wait until the operation has completed before returning
+
+|`body`
+|`object` - The snapshot definition
+
+|===
+
+=== snapshot.createRepository
+
+[source,ts]
+----
+client.snapshot.createRepository({
+  repository: string,
+  master_timeout: string,
+  timeout: string,
+  verify: boolean,
+  body: object
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`verify`
+|`boolean` - Whether to verify the repository after creation
+
+|`body`
+|`object` - The repository definition
+
+|===
+
+=== snapshot.delete
+
+[source,ts]
+----
+client.snapshot.delete({
+  repository: string,
+  snapshot: string | string[],
+  master_timeout: string
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`snapshot`
+|`string \| string[]` - A comma-separated list of snapshot names
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|===
+
+=== snapshot.deleteRepository
+
+[source,ts]
+----
+client.snapshot.deleteRepository({
+  repository: string | string[],
+  master_timeout: string,
+  timeout: string
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string \| string[]` - Name of the snapshot repository to unregister. Wildcard (`*`) patterns are supported.
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|===
+
+=== snapshot.get
+
+[source,ts]
+----
+client.snapshot.get({
+  repository: string,
+  snapshot: string | string[],
+  master_timeout: string,
+  ignore_unavailable: boolean,
+  verbose: boolean
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`snapshot`
+|`string \| string[]` - A comma-separated list of snapshot names
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
+
+|`verbose`
+|`boolean` - Whether to show verbose snapshot info or only show the basic info found in the repository index blob
+
+|===
+
+=== snapshot.getRepository
+
+[source,ts]
+----
+client.snapshot.getRepository({
+  repository: string | string[],
+  master_timeout: string,
+  local: boolean
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string \| string[]` - A comma-separated list of repository names
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`local`
+|`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|===
+
+=== snapshot.restore
+
+[source,ts]
+----
+client.snapshot.restore({
+  repository: string,
+  snapshot: string,
+  master_timeout: string,
+  wait_for_completion: boolean,
+  body: object
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`snapshot`
+|`string` - A snapshot name
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should this request wait until the operation has completed before returning
+
+|`body`
+|`object` - Details of what to restore
+
+|===
+
+=== snapshot.status
+
+[source,ts]
+----
+client.snapshot.status({
+  repository: string,
+  snapshot: string | string[],
+  master_timeout: string,
+  ignore_unavailable: boolean
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`snapshot`
+|`string \| string[]` - A comma-separated list of snapshot names
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
+
+|===
+
+=== snapshot.verifyRepository
+
+[source,ts]
+----
+client.snapshot.verifyRepository({
+  repository: string,
+  master_timeout: string,
+  timeout: string
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|===
+
 === sql.clearCursor
 
 [source,ts]
@@ -10072,6 +9452,175 @@ client.ssl.certificates()
 ----
 link:{ref}/security-api-ssl.html[Documentation] +
 
+
+=== tasks.cancel
+
+[source,ts]
+----
+client.tasks.cancel({
+  task_id: string,
+  nodes: string | string[],
+  actions: string | string[],
+  parent_task_id: string,
+  wait_for_completion: boolean
+})
+----
+link:{ref}/tasks.html[Documentation] +
+[cols=2*]
+|===
+|`task_id` or `taskId`
+|`string` - Cancel the task with specified task id (node_id:task_number)
+
+|`nodes`
+|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+|`actions`
+|`string \| string[]` - A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
+
+|`parent_task_id` or `parentTaskId`
+|`string` - Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should the request block until the cancellation of the task and its descendant tasks is completed. Defaults to false
+
+|===
+
+=== tasks.get
+
+[source,ts]
+----
+client.tasks.get({
+  task_id: string,
+  wait_for_completion: boolean,
+  timeout: string
+})
+----
+link:{ref}/tasks.html[Documentation] +
+[cols=2*]
+|===
+|`task_id` or `taskId`
+|`string` - Return the task with specified id (node_id:task_number)
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Wait for the matching tasks to complete (default: false)
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|===
+
+=== tasks.list
+
+[source,ts]
+----
+client.tasks.list({
+  nodes: string | string[],
+  actions: string | string[],
+  detailed: boolean,
+  parent_task_id: string,
+  wait_for_completion: boolean,
+  group_by: 'nodes' | 'parents' | 'none',
+  timeout: string
+})
+----
+link:{ref}/tasks.html[Documentation] +
+[cols=2*]
+|===
+|`nodes`
+|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+
+|`actions`
+|`string \| string[]` - A comma-separated list of actions that should be returned. Leave empty to return all.
+
+|`detailed`
+|`boolean` - Return detailed task information (default: false)
+
+|`parent_task_id` or `parentTaskId`
+|`string` - Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Wait for the matching tasks to complete (default: false)
+
+|`group_by` or `groupBy`
+|`'nodes' \| 'parents' \| 'none'` - Group tasks by nodes or parent/child relationships +
+_Default:_ `nodes`
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|===
+
+=== termvectors
+
+[source,ts]
+----
+client.termvectors({
+  index: string,
+  id: string,
+  term_statistics: boolean,
+  field_statistics: boolean,
+  fields: string | string[],
+  offsets: boolean,
+  positions: boolean,
+  payloads: boolean,
+  preference: string,
+  routing: string,
+  realtime: boolean,
+  version: number,
+  version_type: 'internal' | 'external' | 'external_gte',
+  body: object
+})
+----
+link:{ref}/docs-termvectors.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The index in which the document resides.
+
+|`id`
+|`string` - The id of the document, when not specified a doc param should be supplied.
+
+|`term_statistics` or `termStatistics`
+|`boolean` - Specifies if total term frequency and document frequency should be returned.
+
+|`field_statistics` or `fieldStatistics`
+|`boolean` - Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. +
+_Default:_ `true`
+
+|`fields`
+|`string \| string[]` - A comma-separated list of fields to return.
+
+|`offsets`
+|`boolean` - Specifies if term offsets should be returned. +
+_Default:_ `true`
+
+|`positions`
+|`boolean` - Specifies if term positions should be returned. +
+_Default:_ `true`
+
+|`payloads`
+|`boolean` - Specifies if term payloads should be returned. +
+_Default:_ `true`
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random).
+
+|`routing`
+|`string` - Specific routing value.
+
+|`realtime`
+|`boolean` - Specifies if request is real-time as opposed to near-real-time (default: true).
+
+|`version`
+|`number` - Explicit version number for concurrency control
+
+|`version_type` or `versionType`
+|`'internal' \| 'external' \| 'external_gte'` - Specific version type
+
+|`body`
+|`object` - Define parameters and or supply a document to get termvectors for. See documentation.
+
+|===
 
 === transform.deleteTransform
 
@@ -10266,6 +9815,269 @@ link:{ref}/update-transform.html[Documentation] +
 
 |`body`
 |`object` - The update transform definition
+
+|===
+
+=== update
+
+[source,ts]
+----
+client.update({
+  id: string,
+  index: string,
+  type: string,
+  wait_for_active_shards: string,
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  lang: string,
+  refresh: 'true' | 'false' | 'wait_for',
+  retry_on_conflict: number,
+  routing: string,
+  timeout: string,
+  if_seq_no: number,
+  if_primary_term: number,
+  require_alias: boolean,
+  body: object
+})
+----
+link:{ref}/docs-update.html[Documentation] +
+{jsclient}/update_examples.html[Code Example] +
+[cols=2*]
+|===
+|`id`
+|`string` - Document ID
+
+|`index`
+|`string` - The name of the index
+
+|`type`
+|`string` - The type of the document +
+
+WARNING: This parameter has been deprecated.
+
+|`wait_for_active_shards` or `waitForActiveShards`
+|`string` - Sets the number of shard copies that must be active before proceeding with the update operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
+
+|`_source`
+|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
+
+|`_source_excludes` or `_sourceExcludes`
+|`string \| string[]` - A list of fields to exclude from the returned _source field
+
+|`_source_includes` or `_sourceIncludes`
+|`string \| string[]` - A list of fields to extract and return from the _source field
+
+|`lang`
+|`string` - The script language (default: painless)
+
+|`refresh`
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
+
+|`retry_on_conflict` or `retryOnConflict`
+|`number` - Specify how many times should the operation be retried when a conflict occurs (default: 0)
+
+|`routing`
+|`string` - Specific routing value
+
+|`timeout`
+|`string` - Explicit operation timeout
+
+|`if_seq_no` or `ifSeqNo`
+|`number` - only perform the update operation if the last operation that has changed the document has the specified sequence number
+
+|`if_primary_term` or `ifPrimaryTerm`
+|`number` - only perform the update operation if the last operation that has changed the document has the specified primary term
+
+|`require_alias` or `requireAlias`
+|`boolean` - When true, requires destination is an alias. Default is false
+
+|`body`
+|`object` - The request definition requires either `script` or partial `doc`
+
+|===
+
+=== updateByQuery
+
+[source,ts]
+----
+client.updateByQuery({
+  index: string | string[],
+  analyzer: string,
+  analyze_wildcard: boolean,
+  default_operator: 'AND' | 'OR',
+  df: string,
+  from: number,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  conflicts: 'abort' | 'proceed',
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
+  lenient: boolean,
+  pipeline: string,
+  preference: string,
+  q: string,
+  routing: string | string[],
+  scroll: string,
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
+  search_timeout: string,
+  max_docs: number,
+  sort: string | string[],
+  _source: string | string[],
+  _source_excludes: string | string[],
+  _source_includes: string | string[],
+  terminate_after: number,
+  stats: string | string[],
+  version: boolean,
+  version_type: boolean,
+  request_cache: boolean,
+  refresh: boolean,
+  timeout: string,
+  wait_for_active_shards: string,
+  scroll_size: number,
+  wait_for_completion: boolean,
+  requests_per_second: number,
+  slices: number|string,
+  body: object
+})
+----
+link:{ref}/docs-update-by-query.html[Documentation] +
+{jsclient}/update_by_query_examples.html[Code Example] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+
+|`analyzer`
+|`string` - The analyzer to use for the query string
+
+|`analyze_wildcard` or `analyzeWildcard`
+|`boolean` - Specify whether wildcard and prefix queries should be analyzed (default: false)
+
+|`default_operator` or `defaultOperator`
+|`'AND' \| 'OR'` - The default operator for query string query (AND or OR) +
+_Default:_ `OR`
+
+|`df`
+|`string` - The field to use as default where no field prefix is given in the query string
+
+|`from`
+|`number` - Starting offset (default: 0)
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`conflicts`
+|`'abort' \| 'proceed'` - What to do when the update by query hits version conflicts? +
+_Default:_ `abort`
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|`lenient`
+|`boolean` - Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+
+|`pipeline`
+|`string` - Ingest pipeline to set on index requests made by this action. (default: none)
+
+|`preference`
+|`string` - Specify the node or shard the operation should be performed on (default: random)
+
+|`q`
+|`string` - Query in the Lucene query string syntax
+
+|`routing`
+|`string \| string[]` - A comma-separated list of specific routing values
+
+|`scroll`
+|`string` - Specify how long a consistent view of the index should be maintained for scrolled search
+
+|`search_type` or `searchType`
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
+
+|`search_timeout` or `searchTimeout`
+|`string` - Explicit timeout for each search request. Defaults to no timeout.
+
+|`max_docs` or `maxDocs`
+|`number` - Maximum number of documents to process (default: all documents)
+
+|`sort`
+|`string \| string[]` - A comma-separated list of <field>:<direction> pairs
+
+|`_source`
+|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
+
+|`_source_excludes` or `_sourceExcludes`
+|`string \| string[]` - A list of fields to exclude from the returned _source field
+
+|`_source_includes` or `_sourceIncludes`
+|`string \| string[]` - A list of fields to extract and return from the _source field
+
+|`terminate_after` or `terminateAfter`
+|`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
+
+|`stats`
+|`string \| string[]` - Specific 'tag' of the request for logging and statistical purposes
+
+|`version`
+|`boolean` - Specify whether to return document version as part of a hit
+
+|`version_type` or `versionType`
+|`boolean` - Should the document increment the version number (internal) on hit or not (reindex)
+
+|`request_cache` or `requestCache`
+|`boolean` - Specify if request cache should be used for this request or not, defaults to index level setting
+
+|`refresh`
+|`boolean` - Should the affected indexes be refreshed?
+
+|`timeout`
+|`string` - Time each individual bulk request should wait for shards that are unavailable. +
+_Default:_ `1m`
+
+|`wait_for_active_shards` or `waitForActiveShards`
+|`string` - Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
+
+|`scroll_size` or `scrollSize`
+|`number` - Size on the scroll request powering the update by query +
+_Default:_ `100`
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should the request should block until the update by query operation is complete. +
+_Default:_ `true`
+
+|`requests_per_second` or `requestsPerSecond`
+|`number` - The throttle to set on this request in sub-requests per second. -1 means no throttle.
+
+|`slices`
+|`number\|string` - The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`. +
+_Default:_ `1`
+
+|`body`
+|`object` - The search definition using the Query DSL
+
+|===
+
+=== updateByQueryRethrottle
+
+[source,ts]
+----
+client.updateByQueryRethrottle({
+  task_id: string,
+  requests_per_second: number
+})
+----
+link:{ref}/docs-update-by-query.html[Documentation] +
+[cols=2*]
+|===
+|`task_id` or `taskId`
+|`string` - The task id to rethrottle
+
+|`requests_per_second` or `requestsPerSecond`
+|`number` - The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
 
 |===
 
