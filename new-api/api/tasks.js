@@ -21,66 +21,22 @@
 
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
-const acceptedQuerystring = ['nodes', 'actions', 'parent_task_id', 'wait_for_completion', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'timeout', 'detailed', 'group_by']
 
+const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const acceptedQuerystring = ['nodes', 'actions', 'parent_task_id', 'wait_for_completion', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'timeout', 'detailed', 'group_by']
 const snakeCase = { parentTaskId: 'parent_task_id', waitForCompletion: 'wait_for_completion', errorTrace: 'error_trace', filterPath: 'filter_path', groupBy: 'group_by' }
 
-function handleError (err, callback) {
-  if (callback) {
-    process.nextTick(callback, err, { body: null, statusCode: null, headers: null, warnings: null })
-    return { then: noop, catch: noop, abort: noop }
-  }
-  return Promise.reject(err)
-}
-
-function snakeCaseKeys (acceptedQuerystring, snakeCase, querystring, warnings) {
-  var target = {}
-  var keys = Object.keys(querystring)
-  for (var i = 0, len = keys.length; i < len; i++) {
-    var key = keys[i]
-    target[snakeCase[key] || key] = querystring[key]
-    if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
-      warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-    }
-  }
-  return target
-}
-
-function noop () {}
-
-function Tasks (transport) {
+function TasksApi (transport) {
   this.transport = transport
 }
 
-Tasks.prototype.cancel = function tasksCancelApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+TasksApi.prototype.cancel = function tasksCancelApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, taskId, task_id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((task_id || taskId) != null) {
     if (method == null) method = 'POST'
     path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_cancel'
@@ -97,21 +53,11 @@ Tasks.prototype.cancel = function tasksCancelApi (params, options, callback) {
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Tasks.prototype.get = function tasksGetApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+TasksApi.prototype.get = function tasksGetApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['task_id'] == null && params['taskId'] == null) {
@@ -119,23 +65,10 @@ Tasks.prototype.get = function tasksGetApi (params, options, callback) {
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, taskId, task_id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'GET'
   path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId)
 
@@ -147,39 +80,16 @@ Tasks.prototype.get = function tasksGetApi (params, options, callback) {
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Tasks.prototype.list = function tasksListApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+TasksApi.prototype.list = function tasksListApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'GET'
   path = '/' + '_tasks'
 
@@ -191,8 +101,7 @@ Tasks.prototype.list = function tasksListApi (params, options, callback) {
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-module.exports = Tasks
+module.exports = TasksApi

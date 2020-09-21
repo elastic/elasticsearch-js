@@ -21,48 +21,17 @@
 
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
-const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'only_managed', 'only_errors']
 
+const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'only_managed', 'only_errors']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', onlyManaged: 'only_managed', onlyErrors: 'only_errors' }
 
-function handleError (err, callback) {
-  if (callback) {
-    process.nextTick(callback, err, { body: null, statusCode: null, headers: null, warnings: null })
-    return { then: noop, catch: noop, abort: noop }
-  }
-  return Promise.reject(err)
-}
-
-function snakeCaseKeys (acceptedQuerystring, snakeCase, querystring, warnings) {
-  var target = {}
-  var keys = Object.keys(querystring)
-  for (var i = 0, len = keys.length; i < len; i++) {
-    var key = keys[i]
-    target[snakeCase[key] || key] = querystring[key]
-    if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
-      warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-    }
-  }
-  return target
-}
-
-function noop () {}
-
-function Ilm (transport) {
+function IlmApi (transport) {
   this.transport = transport
 }
 
-Ilm.prototype.deleteLifecycle = function ilmDeleteLifecycleApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+IlmApi.prototype.deleteLifecycle = function ilmDeleteLifecycleApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['policy'] == null) {
@@ -70,23 +39,10 @@ Ilm.prototype.deleteLifecycle = function ilmDeleteLifecycleApi (params, options,
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, policy, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'DELETE'
   path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy)
 
@@ -98,21 +54,11 @@ Ilm.prototype.deleteLifecycle = function ilmDeleteLifecycleApi (params, options,
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Ilm.prototype.explainLifecycle = function ilmExplainLifecycleApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+IlmApi.prototype.explainLifecycle = function ilmExplainLifecycleApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['index'] == null) {
@@ -120,23 +66,10 @@ Ilm.prototype.explainLifecycle = function ilmExplainLifecycleApi (params, option
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, index, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'GET'
   path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'explain'
 
@@ -148,39 +81,16 @@ Ilm.prototype.explainLifecycle = function ilmExplainLifecycleApi (params, option
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Ilm.prototype.getLifecycle = function ilmGetLifecycleApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+IlmApi.prototype.getLifecycle = function ilmGetLifecycleApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, policy, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((policy) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy)
@@ -197,39 +107,16 @@ Ilm.prototype.getLifecycle = function ilmGetLifecycleApi (params, options, callb
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Ilm.prototype.getStatus = function ilmGetStatusApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+IlmApi.prototype.getStatus = function ilmGetStatusApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'GET'
   path = '/' + '_ilm' + '/' + 'status'
 
@@ -241,21 +128,11 @@ Ilm.prototype.getStatus = function ilmGetStatusApi (params, options, callback) {
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Ilm.prototype.moveToStep = function ilmMoveToStepApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+IlmApi.prototype.moveToStep = function ilmMoveToStepApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['index'] == null) {
@@ -263,23 +140,10 @@ Ilm.prototype.moveToStep = function ilmMoveToStepApi (params, options, callback)
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, index, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_ilm' + '/' + 'move' + '/' + encodeURIComponent(index)
 
@@ -291,21 +155,11 @@ Ilm.prototype.moveToStep = function ilmMoveToStepApi (params, options, callback)
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Ilm.prototype.putLifecycle = function ilmPutLifecycleApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+IlmApi.prototype.putLifecycle = function ilmPutLifecycleApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['policy'] == null) {
@@ -313,23 +167,10 @@ Ilm.prototype.putLifecycle = function ilmPutLifecycleApi (params, options, callb
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, policy, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy)
 
@@ -341,21 +182,11 @@ Ilm.prototype.putLifecycle = function ilmPutLifecycleApi (params, options, callb
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Ilm.prototype.removePolicy = function ilmRemovePolicyApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+IlmApi.prototype.removePolicy = function ilmRemovePolicyApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['index'] == null) {
@@ -363,23 +194,10 @@ Ilm.prototype.removePolicy = function ilmRemovePolicyApi (params, options, callb
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, index, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'remove'
 
@@ -391,21 +209,11 @@ Ilm.prototype.removePolicy = function ilmRemovePolicyApi (params, options, callb
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Ilm.prototype.retry = function ilmRetryApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+IlmApi.prototype.retry = function ilmRetryApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['index'] == null) {
@@ -413,23 +221,10 @@ Ilm.prototype.retry = function ilmRetryApi (params, options, callback) {
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, index, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'retry'
 
@@ -441,39 +236,16 @@ Ilm.prototype.retry = function ilmRetryApi (params, options, callback) {
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Ilm.prototype.start = function ilmStartApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+IlmApi.prototype.start = function ilmStartApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_ilm' + '/' + 'start'
 
@@ -485,39 +257,16 @@ Ilm.prototype.start = function ilmStartApi (params, options, callback) {
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Ilm.prototype.stop = function ilmStopApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+IlmApi.prototype.stop = function ilmStopApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_ilm' + '/' + 'stop'
 
@@ -529,8 +278,17 @@ Ilm.prototype.stop = function ilmStopApi (params, options, callback) {
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-module.exports = Ilm
+Object.defineProperties(IlmApi.prototype, {
+  delete_lifecycle: { get () { return this.deleteLifecycle } },
+  explain_lifecycle: { get () { return this.explainLifecycle } },
+  get_lifecycle: { get () { return this.getLifecycle } },
+  get_status: { get () { return this.getStatus } },
+  move_to_step: { get () { return this.moveToStep } },
+  put_lifecycle: { get () { return this.putLifecycle } },
+  remove_policy: { get () { return this.removePolicy } }
+})
+
+module.exports = IlmApi

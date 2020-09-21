@@ -21,48 +21,17 @@
 
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
-const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'debug', 'active', 'version', 'if_seq_no', 'if_primary_term', 'metric', 'emit_stacktraces']
 
+const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'debug', 'active', 'version', 'if_seq_no', 'if_primary_term', 'metric', 'emit_stacktraces']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', ifSeqNo: 'if_seq_no', ifPrimaryTerm: 'if_primary_term', emitStacktraces: 'emit_stacktraces' }
 
-function handleError (err, callback) {
-  if (callback) {
-    process.nextTick(callback, err, { body: null, statusCode: null, headers: null, warnings: null })
-    return { then: noop, catch: noop, abort: noop }
-  }
-  return Promise.reject(err)
-}
-
-function snakeCaseKeys (acceptedQuerystring, snakeCase, querystring, warnings) {
-  var target = {}
-  var keys = Object.keys(querystring)
-  for (var i = 0, len = keys.length; i < len; i++) {
-    var key = keys[i]
-    target[snakeCase[key] || key] = querystring[key]
-    if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
-      warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-    }
-  }
-  return target
-}
-
-function noop () {}
-
-function Watcher (transport) {
+function WatcherApi (transport) {
   this.transport = transport
 }
 
-Watcher.prototype.ackWatch = function watcherAckWatchApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+WatcherApi.prototype.ackWatch = function watcherAckWatchApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['watch_id'] == null && params['watchId'] == null) {
@@ -76,23 +45,10 @@ Watcher.prototype.ackWatch = function watcherAckWatchApi (params, options, callb
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, watchId, watch_id, actionId, action_id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((watch_id || watchId) != null && (action_id || actionId) != null) {
     if (method == null) method = 'PUT'
     path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack' + '/' + encodeURIComponent(action_id || actionId)
@@ -109,21 +65,11 @@ Watcher.prototype.ackWatch = function watcherAckWatchApi (params, options, callb
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Watcher.prototype.activateWatch = function watcherActivateWatchApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+WatcherApi.prototype.activateWatch = function watcherActivateWatchApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['watch_id'] == null && params['watchId'] == null) {
@@ -131,23 +77,10 @@ Watcher.prototype.activateWatch = function watcherActivateWatchApi (params, opti
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, watchId, watch_id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_activate'
 
@@ -159,21 +92,11 @@ Watcher.prototype.activateWatch = function watcherActivateWatchApi (params, opti
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Watcher.prototype.deactivateWatch = function watcherDeactivateWatchApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+WatcherApi.prototype.deactivateWatch = function watcherDeactivateWatchApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['watch_id'] == null && params['watchId'] == null) {
@@ -181,23 +104,10 @@ Watcher.prototype.deactivateWatch = function watcherDeactivateWatchApi (params, 
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, watchId, watch_id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_deactivate'
 
@@ -209,21 +119,11 @@ Watcher.prototype.deactivateWatch = function watcherDeactivateWatchApi (params, 
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Watcher.prototype.deleteWatch = function watcherDeleteWatchApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+WatcherApi.prototype.deleteWatch = function watcherDeleteWatchApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['id'] == null) {
@@ -231,23 +131,10 @@ Watcher.prototype.deleteWatch = function watcherDeleteWatchApi (params, options,
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'DELETE'
   path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
@@ -259,39 +146,16 @@ Watcher.prototype.deleteWatch = function watcherDeleteWatchApi (params, options,
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Watcher.prototype.executeWatch = function watcherExecuteWatchApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+WatcherApi.prototype.executeWatch = function watcherExecuteWatchApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((id) != null) {
     if (method == null) method = 'PUT'
     path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id) + '/' + '_execute'
@@ -308,21 +172,11 @@ Watcher.prototype.executeWatch = function watcherExecuteWatchApi (params, option
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Watcher.prototype.getWatch = function watcherGetWatchApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+WatcherApi.prototype.getWatch = function watcherGetWatchApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['id'] == null) {
@@ -330,23 +184,10 @@ Watcher.prototype.getWatch = function watcherGetWatchApi (params, options, callb
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'GET'
   path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
@@ -358,21 +199,11 @@ Watcher.prototype.getWatch = function watcherGetWatchApi (params, options, callb
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Watcher.prototype.putWatch = function watcherPutWatchApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+WatcherApi.prototype.putWatch = function watcherPutWatchApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['id'] == null) {
@@ -380,23 +211,10 @@ Watcher.prototype.putWatch = function watcherPutWatchApi (params, options, callb
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
@@ -408,39 +226,16 @@ Watcher.prototype.putWatch = function watcherPutWatchApi (params, options, callb
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Watcher.prototype.start = function watcherStartApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+WatcherApi.prototype.start = function watcherStartApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_watcher' + '/' + '_start'
 
@@ -452,39 +247,16 @@ Watcher.prototype.start = function watcherStartApi (params, options, callback) {
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Watcher.prototype.stats = function watcherStatsApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+WatcherApi.prototype.stats = function watcherStatsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, metric, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((metric) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_watcher' + '/' + 'stats' + '/' + encodeURIComponent(metric)
@@ -501,39 +273,16 @@ Watcher.prototype.stats = function watcherStatsApi (params, options, callback) {
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Watcher.prototype.stop = function watcherStopApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+WatcherApi.prototype.stop = function watcherStopApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_watcher' + '/' + '_stop'
 
@@ -545,8 +294,17 @@ Watcher.prototype.stop = function watcherStopApi (params, options, callback) {
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-module.exports = Watcher
+Object.defineProperties(WatcherApi.prototype, {
+  ack_watch: { get () { return this.ackWatch } },
+  activate_watch: { get () { return this.activateWatch } },
+  deactivate_watch: { get () { return this.deactivateWatch } },
+  delete_watch: { get () { return this.deleteWatch } },
+  execute_watch: { get () { return this.executeWatch } },
+  get_watch: { get () { return this.getWatch } },
+  put_watch: { get () { return this.putWatch } }
+})
+
+module.exports = WatcherApi

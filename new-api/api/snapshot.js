@@ -21,48 +21,17 @@
 
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
-const acceptedQuerystring = ['master_timeout', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'wait_for_completion', 'verify', 'ignore_unavailable', 'verbose', 'local']
 
+const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const acceptedQuerystring = ['master_timeout', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'wait_for_completion', 'verify', 'ignore_unavailable', 'verbose', 'local']
 const snakeCase = { masterTimeout: 'master_timeout', errorTrace: 'error_trace', filterPath: 'filter_path', waitForCompletion: 'wait_for_completion', ignoreUnavailable: 'ignore_unavailable' }
 
-function handleError (err, callback) {
-  if (callback) {
-    process.nextTick(callback, err, { body: null, statusCode: null, headers: null, warnings: null })
-    return { then: noop, catch: noop, abort: noop }
-  }
-  return Promise.reject(err)
-}
-
-function snakeCaseKeys (acceptedQuerystring, snakeCase, querystring, warnings) {
-  var target = {}
-  var keys = Object.keys(querystring)
-  for (var i = 0, len = keys.length; i < len; i++) {
-    var key = keys[i]
-    target[snakeCase[key] || key] = querystring[key]
-    if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
-      warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-    }
-  }
-  return target
-}
-
-function noop () {}
-
-function Snapshot (transport) {
+function SnapshotApi (transport) {
   this.transport = transport
 }
 
-Snapshot.prototype.cleanupRepository = function snapshotCleanupRepositoryApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SnapshotApi.prototype.cleanupRepository = function snapshotCleanupRepositoryApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['repository'] == null) {
@@ -70,23 +39,10 @@ Snapshot.prototype.cleanupRepository = function snapshotCleanupRepositoryApi (pa
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, repository, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_cleanup'
 
@@ -98,21 +54,11 @@ Snapshot.prototype.cleanupRepository = function snapshotCleanupRepositoryApi (pa
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Snapshot.prototype.create = function snapshotCreateApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SnapshotApi.prototype.create = function snapshotCreateApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['repository'] == null) {
@@ -130,23 +76,10 @@ Snapshot.prototype.create = function snapshotCreateApi (params, options, callbac
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, repository, snapshot, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
 
@@ -158,21 +91,11 @@ Snapshot.prototype.create = function snapshotCreateApi (params, options, callbac
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Snapshot.prototype.createRepository = function snapshotCreateRepositoryApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SnapshotApi.prototype.createRepository = function snapshotCreateRepositoryApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['repository'] == null) {
@@ -184,23 +107,10 @@ Snapshot.prototype.createRepository = function snapshotCreateRepositoryApi (para
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, repository, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository)
 
@@ -212,21 +122,11 @@ Snapshot.prototype.createRepository = function snapshotCreateRepositoryApi (para
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Snapshot.prototype.delete = function snapshotDeleteApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SnapshotApi.prototype.delete = function snapshotDeleteApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['repository'] == null) {
@@ -244,23 +144,10 @@ Snapshot.prototype.delete = function snapshotDeleteApi (params, options, callbac
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, repository, snapshot, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'DELETE'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
 
@@ -272,21 +159,11 @@ Snapshot.prototype.delete = function snapshotDeleteApi (params, options, callbac
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Snapshot.prototype.deleteRepository = function snapshotDeleteRepositoryApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SnapshotApi.prototype.deleteRepository = function snapshotDeleteRepositoryApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['repository'] == null) {
@@ -294,23 +171,10 @@ Snapshot.prototype.deleteRepository = function snapshotDeleteRepositoryApi (para
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, repository, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'DELETE'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository)
 
@@ -322,21 +186,11 @@ Snapshot.prototype.deleteRepository = function snapshotDeleteRepositoryApi (para
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Snapshot.prototype.get = function snapshotGetApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SnapshotApi.prototype.get = function snapshotGetApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['repository'] == null) {
@@ -354,23 +208,10 @@ Snapshot.prototype.get = function snapshotGetApi (params, options, callback) {
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, repository, snapshot, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'GET'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
 
@@ -382,39 +223,16 @@ Snapshot.prototype.get = function snapshotGetApi (params, options, callback) {
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Snapshot.prototype.getRepository = function snapshotGetRepositoryApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SnapshotApi.prototype.getRepository = function snapshotGetRepositoryApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, repository, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((repository) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_snapshot' + '/' + encodeURIComponent(repository)
@@ -431,21 +249,11 @@ Snapshot.prototype.getRepository = function snapshotGetRepositoryApi (params, op
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Snapshot.prototype.restore = function snapshotRestoreApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SnapshotApi.prototype.restore = function snapshotRestoreApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['repository'] == null) {
@@ -463,23 +271,10 @@ Snapshot.prototype.restore = function snapshotRestoreApi (params, options, callb
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, repository, snapshot, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_restore'
 
@@ -491,21 +286,11 @@ Snapshot.prototype.restore = function snapshotRestoreApi (params, options, callb
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Snapshot.prototype.status = function snapshotStatusApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SnapshotApi.prototype.status = function snapshotStatusApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required url components
   if (params['snapshot'] != null && (params['repository'] == null)) {
@@ -513,23 +298,10 @@ Snapshot.prototype.status = function snapshotStatusApi (params, options, callbac
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, repository, snapshot, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((repository) != null && (snapshot) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_status'
@@ -549,21 +321,11 @@ Snapshot.prototype.status = function snapshotStatusApi (params, options, callbac
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Snapshot.prototype.verifyRepository = function snapshotVerifyRepositoryApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SnapshotApi.prototype.verifyRepository = function snapshotVerifyRepositoryApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['repository'] == null) {
@@ -571,23 +333,10 @@ Snapshot.prototype.verifyRepository = function snapshotVerifyRepositoryApi (para
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, repository, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_verify'
 
@@ -599,8 +348,15 @@ Snapshot.prototype.verifyRepository = function snapshotVerifyRepositoryApi (para
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-module.exports = Snapshot
+Object.defineProperties(SnapshotApi.prototype, {
+  cleanup_repository: { get () { return this.cleanupRepository } },
+  create_repository: { get () { return this.createRepository } },
+  delete_repository: { get () { return this.deleteRepository } },
+  get_repository: { get () { return this.getRepository } },
+  verify_repository: { get () { return this.verifyRepository } }
+})
+
+module.exports = SnapshotApi

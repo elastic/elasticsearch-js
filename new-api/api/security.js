@@ -21,66 +21,22 @@
 
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
-const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'refresh', 'usernames', 'id', 'name', 'username', 'realm_name', 'owner']
 
+const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'refresh', 'usernames', 'id', 'name', 'username', 'realm_name', 'owner']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', realmName: 'realm_name' }
 
-function handleError (err, callback) {
-  if (callback) {
-    process.nextTick(callback, err, { body: null, statusCode: null, headers: null, warnings: null })
-    return { then: noop, catch: noop, abort: noop }
-  }
-  return Promise.reject(err)
-}
-
-function snakeCaseKeys (acceptedQuerystring, snakeCase, querystring, warnings) {
-  var target = {}
-  var keys = Object.keys(querystring)
-  for (var i = 0, len = keys.length; i < len; i++) {
-    var key = keys[i]
-    target[snakeCase[key] || key] = querystring[key]
-    if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
-      warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-    }
-  }
-  return target
-}
-
-function noop () {}
-
-function Security (transport) {
+function SecurityApi (transport) {
   this.transport = transport
 }
 
-Security.prototype.authenticate = function securityAuthenticateApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.authenticate = function securityAuthenticateApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'GET'
   path = '/' + '_security' + '/' + '_authenticate'
 
@@ -92,21 +48,11 @@ Security.prototype.authenticate = function securityAuthenticateApi (params, opti
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.changePassword = function securityChangePasswordApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.changePassword = function securityChangePasswordApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['body'] == null) {
@@ -114,23 +60,10 @@ Security.prototype.changePassword = function securityChangePasswordApi (params, 
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, username, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((username) != null) {
     if (method == null) method = 'PUT'
     path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_password'
@@ -147,21 +80,11 @@ Security.prototype.changePassword = function securityChangePasswordApi (params, 
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.clearCachedPrivileges = function securityClearCachedPrivilegesApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.clearCachedPrivileges = function securityClearCachedPrivilegesApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['application'] == null) {
@@ -169,23 +92,10 @@ Security.prototype.clearCachedPrivileges = function securityClearCachedPrivilege
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, application, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + '_clear_cache'
 
@@ -197,21 +107,11 @@ Security.prototype.clearCachedPrivileges = function securityClearCachedPrivilege
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.clearCachedRealms = function securityClearCachedRealmsApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.clearCachedRealms = function securityClearCachedRealmsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['realms'] == null) {
@@ -219,23 +119,10 @@ Security.prototype.clearCachedRealms = function securityClearCachedRealmsApi (pa
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, realms, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_security' + '/' + 'realm' + '/' + encodeURIComponent(realms) + '/' + '_clear_cache'
 
@@ -247,21 +134,11 @@ Security.prototype.clearCachedRealms = function securityClearCachedRealmsApi (pa
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.clearCachedRoles = function securityClearCachedRolesApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.clearCachedRoles = function securityClearCachedRolesApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['name'] == null) {
@@ -269,23 +146,10 @@ Security.prototype.clearCachedRoles = function securityClearCachedRolesApi (para
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name) + '/' + '_clear_cache'
 
@@ -297,21 +161,11 @@ Security.prototype.clearCachedRoles = function securityClearCachedRolesApi (para
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.createApiKey = function securityCreateApiKeyApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.createApiKey = function securityCreateApiKeyApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['body'] == null) {
@@ -319,23 +173,10 @@ Security.prototype.createApiKey = function securityCreateApiKeyApi (params, opti
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'api_key'
 
@@ -347,21 +188,11 @@ Security.prototype.createApiKey = function securityCreateApiKeyApi (params, opti
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.deletePrivileges = function securityDeletePrivilegesApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.deletePrivileges = function securityDeletePrivilegesApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['application'] == null) {
@@ -379,23 +210,10 @@ Security.prototype.deletePrivileges = function securityDeletePrivilegesApi (para
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, application, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name)
 
@@ -407,21 +225,11 @@ Security.prototype.deletePrivileges = function securityDeletePrivilegesApi (para
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.deleteRole = function securityDeleteRoleApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.deleteRole = function securityDeleteRoleApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['name'] == null) {
@@ -429,23 +237,10 @@ Security.prototype.deleteRole = function securityDeleteRoleApi (params, options,
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name)
 
@@ -457,21 +252,11 @@ Security.prototype.deleteRole = function securityDeleteRoleApi (params, options,
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.deleteRoleMapping = function securityDeleteRoleMappingApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.deleteRoleMapping = function securityDeleteRoleMappingApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['name'] == null) {
@@ -479,23 +264,10 @@ Security.prototype.deleteRoleMapping = function securityDeleteRoleMappingApi (pa
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
 
@@ -507,21 +279,11 @@ Security.prototype.deleteRoleMapping = function securityDeleteRoleMappingApi (pa
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.deleteUser = function securityDeleteUserApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.deleteUser = function securityDeleteUserApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['username'] == null) {
@@ -529,23 +291,10 @@ Security.prototype.deleteUser = function securityDeleteUserApi (params, options,
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, username, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username)
 
@@ -557,21 +306,11 @@ Security.prototype.deleteUser = function securityDeleteUserApi (params, options,
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.disableUser = function securityDisableUserApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.disableUser = function securityDisableUserApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['username'] == null) {
@@ -579,23 +318,10 @@ Security.prototype.disableUser = function securityDisableUserApi (params, option
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, username, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_disable'
 
@@ -607,21 +333,11 @@ Security.prototype.disableUser = function securityDisableUserApi (params, option
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.enableUser = function securityEnableUserApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.enableUser = function securityEnableUserApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['username'] == null) {
@@ -629,23 +345,10 @@ Security.prototype.enableUser = function securityEnableUserApi (params, options,
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, username, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_enable'
 
@@ -657,39 +360,16 @@ Security.prototype.enableUser = function securityEnableUserApi (params, options,
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.getApiKey = function securityGetApiKeyApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.getApiKey = function securityGetApiKeyApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'GET'
   path = '/' + '_security' + '/' + 'api_key'
 
@@ -701,39 +381,16 @@ Security.prototype.getApiKey = function securityGetApiKeyApi (params, options, c
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.getBuiltinPrivileges = function securityGetBuiltinPrivilegesApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.getBuiltinPrivileges = function securityGetBuiltinPrivilegesApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'GET'
   path = '/' + '_security' + '/' + 'privilege' + '/' + '_builtin'
 
@@ -745,21 +402,11 @@ Security.prototype.getBuiltinPrivileges = function securityGetBuiltinPrivilegesA
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.getPrivileges = function securityGetPrivilegesApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.getPrivileges = function securityGetPrivilegesApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required url components
   if (params['name'] != null && (params['application'] == null)) {
@@ -767,23 +414,10 @@ Security.prototype.getPrivileges = function securityGetPrivilegesApi (params, op
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, application, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((application) != null && (name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name)
@@ -803,39 +437,16 @@ Security.prototype.getPrivileges = function securityGetPrivilegesApi (params, op
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.getRole = function securityGetRoleApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.getRole = function securityGetRoleApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name)
@@ -852,39 +463,16 @@ Security.prototype.getRole = function securityGetRoleApi (params, options, callb
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.getRoleMapping = function securityGetRoleMappingApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.getRoleMapping = function securityGetRoleMappingApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
@@ -901,21 +489,11 @@ Security.prototype.getRoleMapping = function securityGetRoleMappingApi (params, 
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.getToken = function securityGetTokenApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.getToken = function securityGetTokenApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['body'] == null) {
@@ -923,23 +501,10 @@ Security.prototype.getToken = function securityGetTokenApi (params, options, cal
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'POST'
   path = '/' + '_security' + '/' + 'oauth2' + '/' + 'token'
 
@@ -951,39 +516,16 @@ Security.prototype.getToken = function securityGetTokenApi (params, options, cal
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.getUser = function securityGetUserApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.getUser = function securityGetUserApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, username, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((username) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username)
@@ -1000,39 +542,16 @@ Security.prototype.getUser = function securityGetUserApi (params, options, callb
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.getUserPrivileges = function securityGetUserPrivilegesApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.getUserPrivileges = function securityGetUserPrivilegesApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'GET'
   path = '/' + '_security' + '/' + 'user' + '/' + '_privileges'
 
@@ -1044,21 +563,11 @@ Security.prototype.getUserPrivileges = function securityGetUserPrivilegesApi (pa
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.hasPrivileges = function securityHasPrivilegesApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.hasPrivileges = function securityHasPrivilegesApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['body'] == null) {
@@ -1066,23 +575,10 @@ Security.prototype.hasPrivileges = function securityHasPrivilegesApi (params, op
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, user, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if ((user) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(user) + '/' + '_has_privileges'
@@ -1099,21 +595,11 @@ Security.prototype.hasPrivileges = function securityHasPrivilegesApi (params, op
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.invalidateApiKey = function securityInvalidateApiKeyApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.invalidateApiKey = function securityInvalidateApiKeyApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['body'] == null) {
@@ -1121,23 +607,10 @@ Security.prototype.invalidateApiKey = function securityInvalidateApiKeyApi (para
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'api_key'
 
@@ -1149,21 +622,11 @@ Security.prototype.invalidateApiKey = function securityInvalidateApiKeyApi (para
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.invalidateToken = function securityInvalidateTokenApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.invalidateToken = function securityInvalidateTokenApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['body'] == null) {
@@ -1171,23 +634,10 @@ Security.prototype.invalidateToken = function securityInvalidateTokenApi (params
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'oauth2' + '/' + 'token'
 
@@ -1199,21 +649,11 @@ Security.prototype.invalidateToken = function securityInvalidateTokenApi (params
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.putPrivileges = function securityPutPrivilegesApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.putPrivileges = function securityPutPrivilegesApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['body'] == null) {
@@ -1221,23 +661,10 @@ Security.prototype.putPrivileges = function securityPutPrivilegesApi (params, op
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'privilege'
 
@@ -1249,21 +676,11 @@ Security.prototype.putPrivileges = function securityPutPrivilegesApi (params, op
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.putRole = function securityPutRoleApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.putRole = function securityPutRoleApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['name'] == null) {
@@ -1275,23 +692,10 @@ Security.prototype.putRole = function securityPutRoleApi (params, options, callb
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name)
 
@@ -1303,21 +707,11 @@ Security.prototype.putRole = function securityPutRoleApi (params, options, callb
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.putRoleMapping = function securityPutRoleMappingApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.putRoleMapping = function securityPutRoleMappingApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['name'] == null) {
@@ -1329,23 +723,10 @@ Security.prototype.putRoleMapping = function securityPutRoleMappingApi (params, 
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
 
@@ -1357,21 +738,11 @@ Security.prototype.putRoleMapping = function securityPutRoleMappingApi (params, 
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-Security.prototype.putUser = function securityPutUserApi (params, options, callback) {
-  options = options || {}
-  if (typeof options === 'function') {
-    callback = options
-    options = {}
-  }
-  if (typeof params === 'function' || params == null) {
-    callback = params
-    params = {}
-    options = {}
-  }
+SecurityApi.prototype.putUser = function securityPutUserApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
   if (params['username'] == null) {
@@ -1383,23 +754,10 @@ Security.prototype.putUser = function securityPutUserApi (params, options, callb
     return handleError(err, callback)
   }
 
-  // validate headers object
-  if (options.headers != null && typeof options.headers !== 'object') {
-    const err = new Error(`Headers should be an object, instead got: ${typeof options.headers}`)
-    return handleError(err, callback)
-  }
-
-  var warnings = []
   var { method, body, username, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-  var ignore = options.ignore
-  if (typeof ignore === 'number') {
-    options.ignore = [ignore]
-  }
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username)
 
@@ -1411,8 +769,36 @@ Security.prototype.putUser = function securityPutUserApi (params, options, callb
     querystring
   }
 
-  options.warnings = warnings.length === 0 ? null : warnings
   return this.transport.request(request, options, callback)
 }
 
-module.exports = Security
+Object.defineProperties(SecurityApi.prototype, {
+  change_password: { get () { return this.changePassword } },
+  clear_cached_privileges: { get () { return this.clearCachedPrivileges } },
+  clear_cached_realms: { get () { return this.clearCachedRealms } },
+  clear_cached_roles: { get () { return this.clearCachedRoles } },
+  create_api_key: { get () { return this.createApiKey } },
+  delete_privileges: { get () { return this.deletePrivileges } },
+  delete_role: { get () { return this.deleteRole } },
+  delete_role_mapping: { get () { return this.deleteRoleMapping } },
+  delete_user: { get () { return this.deleteUser } },
+  disable_user: { get () { return this.disableUser } },
+  enable_user: { get () { return this.enableUser } },
+  get_api_key: { get () { return this.getApiKey } },
+  get_builtin_privileges: { get () { return this.getBuiltinPrivileges } },
+  get_privileges: { get () { return this.getPrivileges } },
+  get_role: { get () { return this.getRole } },
+  get_role_mapping: { get () { return this.getRoleMapping } },
+  get_token: { get () { return this.getToken } },
+  get_user: { get () { return this.getUser } },
+  get_user_privileges: { get () { return this.getUserPrivileges } },
+  has_privileges: { get () { return this.hasPrivileges } },
+  invalidate_api_key: { get () { return this.invalidateApiKey } },
+  invalidate_token: { get () { return this.invalidateToken } },
+  put_privileges: { get () { return this.putPrivileges } },
+  put_role: { get () { return this.putRole } },
+  put_role_mapping: { get () { return this.putRoleMapping } },
+  put_user: { get () { return this.putUser } }
+})
+
+module.exports = SecurityApi

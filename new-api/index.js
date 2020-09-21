@@ -20,12 +20,12 @@
 'use strict'
 
 const bulkApi = require('./api/bulk')
-const Cat = require('./api/cat')
+const CatApi = require('./api/cat')
 const clearScrollApi = require('./api/clear_scroll')
-const Cluster = require('./api/cluster')
+const ClusterApi = require('./api/cluster')
 const countApi = require('./api/count')
 const createApi = require('./api/create')
-const DanglingIndices = require('./api/dangling_indices')
+const DanglingIndicesApi = require('./api/dangling_indices')
 const deleteApi = require('./api/delete')
 const deleteByQueryApi = require('./api/delete_by_query')
 const deleteByQueryRethrottleApi = require('./api/delete_by_query_rethrottle')
@@ -40,14 +40,14 @@ const getScriptContextApi = require('./api/get_script_context')
 const getScriptLanguagesApi = require('./api/get_script_languages')
 const getSourceApi = require('./api/get_source')
 const indexApi = require('./api/index')
-const Indices = require('./api/indices')
+const IndicesApi = require('./api/indices')
 const infoApi = require('./api/info')
-const Ingest = require('./api/ingest')
+const IngestApi = require('./api/ingest')
 const mgetApi = require('./api/mget')
 const msearchApi = require('./api/msearch')
 const msearchTemplateApi = require('./api/msearch_template')
 const mtermvectorsApi = require('./api/mtermvectors')
-const Nodes = require('./api/nodes')
+const NodesApi = require('./api/nodes')
 const pingApi = require('./api/ping')
 const putScriptApi = require('./api/put_script')
 const rankEvalApi = require('./api/rank_eval')
@@ -59,35 +59,34 @@ const scrollApi = require('./api/scroll')
 const searchApi = require('./api/search')
 const searchShardsApi = require('./api/search_shards')
 const searchTemplateApi = require('./api/search_template')
-const Snapshot = require('./api/snapshot')
-const Tasks = require('./api/tasks')
+const SnapshotApi = require('./api/snapshot')
+const TasksApi = require('./api/tasks')
 const termvectorsApi = require('./api/termvectors')
 const updateApi = require('./api/update')
 const updateByQueryApi = require('./api/update_by_query')
 const updateByQueryRethrottleApi = require('./api/update_by_query_rethrottle')
-const AsyncSearch = require('./api/async_search')
-const Autoscaling = require('./api/autoscaling')
-const Ccr = require('./api/ccr')
+const AsyncSearchApi = require('./api/async_search')
+const AutoscalingApi = require('./api/autoscaling')
+const CcrApi = require('./api/ccr')
 const closePointInTimeApi = require('./api/close_point_in_time')
-const DataFrameTransformDeprecated = require('./api/data_frame_transform_deprecated')
-const Enrich = require('./api/enrich')
-const Eql = require('./api/eql')
-const Graph = require('./api/graph')
-const Ilm = require('./api/ilm')
-const License = require('./api/license')
-const Migration = require('./api/migration')
-const Ml = require('./api/ml')
-const Monitoring = require('./api/monitoring')
+const EnrichApi = require('./api/enrich')
+const EqlApi = require('./api/eql')
+const GraphApi = require('./api/graph')
+const IlmApi = require('./api/ilm')
+const LicenseApi = require('./api/license')
+const MigrationApi = require('./api/migration')
+const MlApi = require('./api/ml')
+const MonitoringApi = require('./api/monitoring')
 const openPointInTimeApi = require('./api/open_point_in_time')
-const Rollup = require('./api/rollup')
-const SearchableSnapshots = require('./api/searchable_snapshots')
-const Security = require('./api/security')
-const Slm = require('./api/slm')
-const Sql = require('./api/sql')
-const Ssl = require('./api/ssl')
-const Transform = require('./api/transform')
-const Watcher = require('./api/watcher')
-const Xpack = require('./api/xpack')
+const RollupApi = require('./api/rollup')
+const SearchableSnapshotsApi = require('./api/searchable_snapshots')
+const SecurityApi = require('./api/security')
+const SlmApi = require('./api/slm')
+const SqlApi = require('./api/sql')
+const SslApi = require('./api/ssl')
+const TransformApi = require('./api/transform')
+const WatcherApi = require('./api/watcher')
+const XpackApi = require('./api/xpack')
 
 const kCat = Symbol('Cat')
 const kCluster = Symbol('Cluster')
@@ -100,7 +99,6 @@ const kTasks = Symbol('Tasks')
 const kAsyncSearch = Symbol('AsyncSearch')
 const kAutoscaling = Symbol('Autoscaling')
 const kCcr = Symbol('Ccr')
-const kDataFrameTransformDeprecated = Symbol('DataFrameTransformDeprecated')
 const kEnrich = Symbol('Enrich')
 const kEql = Symbol('Eql')
 const kGraph = Symbol('Graph')
@@ -131,7 +129,6 @@ function ESAPI () {
   this[kAsyncSearch] = null
   this[kAutoscaling] = null
   this[kCcr] = null
-  this[kDataFrameTransformDeprecated] = null
   this[kEnrich] = null
   this[kEql] = null
   this[kGraph] = null
@@ -196,15 +193,16 @@ Object.defineProperties(ESAPI.prototype, {
   cat: {
     get () {
       if (this[kCat] === null) {
-        this[kCat] = new Cat(this.transport)
+        this[kCat] = new CatApi(this.transport)
       }
       return this[kCat]
     }
   },
+  clear_scroll: { get () { return this.clearScroll } },
   cluster: {
     get () {
       if (this[kCluster] === null) {
-        this[kCluster] = new Cluster(this.transport)
+        this[kCluster] = new ClusterApi(this.transport)
       }
       return this[kCluster]
     }
@@ -212,20 +210,25 @@ Object.defineProperties(ESAPI.prototype, {
   danglingIndices: {
     get () {
       if (this[kDanglingIndices] === null) {
-        this[kDanglingIndices] = new DanglingIndices(this.transport)
+        this[kDanglingIndices] = new DanglingIndicesApi(this.transport)
       }
       return this[kDanglingIndices]
     }
   },
-  dangling_indices: {
-    get () {
-      return this.danglingIndices
-    }
-  },
+  dangling_indices: { get () { return this.danglingIndices } },
+  delete_by_query: { get () { return this.deleteByQuery } },
+  delete_by_query_rethrottle: { get () { return this.deleteByQueryRethrottle } },
+  delete_script: { get () { return this.deleteScript } },
+  exists_source: { get () { return this.existsSource } },
+  field_caps: { get () { return this.fieldCaps } },
+  get_script: { get () { return this.getScript } },
+  get_script_context: { get () { return this.getScriptContext } },
+  get_script_languages: { get () { return this.getScriptLanguages } },
+  get_source: { get () { return this.getSource } },
   indices: {
     get () {
       if (this[kIndices] === null) {
-        this[kIndices] = new Indices(this.transport)
+        this[kIndices] = new IndicesApi(this.transport)
       }
       return this[kIndices]
     }
@@ -233,23 +236,31 @@ Object.defineProperties(ESAPI.prototype, {
   ingest: {
     get () {
       if (this[kIngest] === null) {
-        this[kIngest] = new Ingest(this.transport)
+        this[kIngest] = new IngestApi(this.transport)
       }
       return this[kIngest]
     }
   },
+  msearch_template: { get () { return this.msearchTemplate } },
   nodes: {
     get () {
       if (this[kNodes] === null) {
-        this[kNodes] = new Nodes(this.transport)
+        this[kNodes] = new NodesApi(this.transport)
       }
       return this[kNodes]
     }
   },
+  put_script: { get () { return this.putScript } },
+  rank_eval: { get () { return this.rankEval } },
+  reindex_rethrottle: { get () { return this.reindexRethrottle } },
+  render_search_template: { get () { return this.renderSearchTemplate } },
+  scripts_painless_execute: { get () { return this.scriptsPainlessExecute } },
+  search_shards: { get () { return this.searchShards } },
+  search_template: { get () { return this.searchTemplate } },
   snapshot: {
     get () {
       if (this[kSnapshot] === null) {
-        this[kSnapshot] = new Snapshot(this.transport)
+        this[kSnapshot] = new SnapshotApi(this.transport)
       }
       return this[kSnapshot]
     }
@@ -257,28 +268,26 @@ Object.defineProperties(ESAPI.prototype, {
   tasks: {
     get () {
       if (this[kTasks] === null) {
-        this[kTasks] = new Tasks(this.transport)
+        this[kTasks] = new TasksApi(this.transport)
       }
       return this[kTasks]
     }
   },
+  update_by_query: { get () { return this.updateByQuery } },
+  update_by_query_rethrottle: { get () { return this.updateByQueryRethrottle } },
   asyncSearch: {
     get () {
       if (this[kAsyncSearch] === null) {
-        this[kAsyncSearch] = new AsyncSearch(this.transport)
+        this[kAsyncSearch] = new AsyncSearchApi(this.transport)
       }
       return this[kAsyncSearch]
     }
   },
-  async_search: {
-    get () {
-      return this.asyncSearch
-    }
-  },
+  async_search: { get () { return this.asyncSearch } },
   autoscaling: {
     get () {
       if (this[kAutoscaling] === null) {
-        this[kAutoscaling] = new Autoscaling(this.transport)
+        this[kAutoscaling] = new AutoscalingApi(this.transport)
       }
       return this[kAutoscaling]
     }
@@ -286,28 +295,16 @@ Object.defineProperties(ESAPI.prototype, {
   ccr: {
     get () {
       if (this[kCcr] === null) {
-        this[kCcr] = new Ccr(this.transport)
+        this[kCcr] = new CcrApi(this.transport)
       }
       return this[kCcr]
     }
   },
-  dataFrameTransformDeprecated: {
-    get () {
-      if (this[kDataFrameTransformDeprecated] === null) {
-        this[kDataFrameTransformDeprecated] = new DataFrameTransformDeprecated(this.transport)
-      }
-      return this[kDataFrameTransformDeprecated]
-    }
-  },
-  data_frame_transform_deprecated: {
-    get () {
-      return this.dataFrameTransformDeprecated
-    }
-  },
+  close_point_in_time: { get () { return this.closePointInTime } },
   enrich: {
     get () {
       if (this[kEnrich] === null) {
-        this[kEnrich] = new Enrich(this.transport)
+        this[kEnrich] = new EnrichApi(this.transport)
       }
       return this[kEnrich]
     }
@@ -315,7 +312,7 @@ Object.defineProperties(ESAPI.prototype, {
   eql: {
     get () {
       if (this[kEql] === null) {
-        this[kEql] = new Eql(this.transport)
+        this[kEql] = new EqlApi(this.transport)
       }
       return this[kEql]
     }
@@ -323,7 +320,7 @@ Object.defineProperties(ESAPI.prototype, {
   graph: {
     get () {
       if (this[kGraph] === null) {
-        this[kGraph] = new Graph(this.transport)
+        this[kGraph] = new GraphApi(this.transport)
       }
       return this[kGraph]
     }
@@ -331,7 +328,7 @@ Object.defineProperties(ESAPI.prototype, {
   ilm: {
     get () {
       if (this[kIlm] === null) {
-        this[kIlm] = new Ilm(this.transport)
+        this[kIlm] = new IlmApi(this.transport)
       }
       return this[kIlm]
     }
@@ -339,7 +336,7 @@ Object.defineProperties(ESAPI.prototype, {
   license: {
     get () {
       if (this[kLicense] === null) {
-        this[kLicense] = new License(this.transport)
+        this[kLicense] = new LicenseApi(this.transport)
       }
       return this[kLicense]
     }
@@ -347,7 +344,7 @@ Object.defineProperties(ESAPI.prototype, {
   migration: {
     get () {
       if (this[kMigration] === null) {
-        this[kMigration] = new Migration(this.transport)
+        this[kMigration] = new MigrationApi(this.transport)
       }
       return this[kMigration]
     }
@@ -355,7 +352,7 @@ Object.defineProperties(ESAPI.prototype, {
   ml: {
     get () {
       if (this[kMl] === null) {
-        this[kMl] = new Ml(this.transport)
+        this[kMl] = new MlApi(this.transport)
       }
       return this[kMl]
     }
@@ -363,15 +360,16 @@ Object.defineProperties(ESAPI.prototype, {
   monitoring: {
     get () {
       if (this[kMonitoring] === null) {
-        this[kMonitoring] = new Monitoring(this.transport)
+        this[kMonitoring] = new MonitoringApi(this.transport)
       }
       return this[kMonitoring]
     }
   },
+  open_point_in_time: { get () { return this.openPointInTime } },
   rollup: {
     get () {
       if (this[kRollup] === null) {
-        this[kRollup] = new Rollup(this.transport)
+        this[kRollup] = new RollupApi(this.transport)
       }
       return this[kRollup]
     }
@@ -379,20 +377,16 @@ Object.defineProperties(ESAPI.prototype, {
   searchableSnapshots: {
     get () {
       if (this[kSearchableSnapshots] === null) {
-        this[kSearchableSnapshots] = new SearchableSnapshots(this.transport)
+        this[kSearchableSnapshots] = new SearchableSnapshotsApi(this.transport)
       }
       return this[kSearchableSnapshots]
     }
   },
-  searchable_snapshots: {
-    get () {
-      return this.searchableSnapshots
-    }
-  },
+  searchable_snapshots: { get () { return this.searchableSnapshots } },
   security: {
     get () {
       if (this[kSecurity] === null) {
-        this[kSecurity] = new Security(this.transport)
+        this[kSecurity] = new SecurityApi(this.transport)
       }
       return this[kSecurity]
     }
@@ -400,7 +394,7 @@ Object.defineProperties(ESAPI.prototype, {
   slm: {
     get () {
       if (this[kSlm] === null) {
-        this[kSlm] = new Slm(this.transport)
+        this[kSlm] = new SlmApi(this.transport)
       }
       return this[kSlm]
     }
@@ -408,7 +402,7 @@ Object.defineProperties(ESAPI.prototype, {
   sql: {
     get () {
       if (this[kSql] === null) {
-        this[kSql] = new Sql(this.transport)
+        this[kSql] = new SqlApi(this.transport)
       }
       return this[kSql]
     }
@@ -416,7 +410,7 @@ Object.defineProperties(ESAPI.prototype, {
   ssl: {
     get () {
       if (this[kSsl] === null) {
-        this[kSsl] = new Ssl(this.transport)
+        this[kSsl] = new SslApi(this.transport)
       }
       return this[kSsl]
     }
@@ -424,7 +418,7 @@ Object.defineProperties(ESAPI.prototype, {
   transform: {
     get () {
       if (this[kTransform] === null) {
-        this[kTransform] = new Transform(this.transport)
+        this[kTransform] = new TransformApi(this.transport)
       }
       return this[kTransform]
     }
@@ -432,7 +426,7 @@ Object.defineProperties(ESAPI.prototype, {
   watcher: {
     get () {
       if (this[kWatcher] === null) {
-        this[kWatcher] = new Watcher(this.transport)
+        this[kWatcher] = new WatcherApi(this.transport)
       }
       return this[kWatcher]
     }
@@ -440,7 +434,7 @@ Object.defineProperties(ESAPI.prototype, {
   xpack: {
     get () {
       if (this[kXpack] === null) {
-        this[kXpack] = new Xpack(this.transport)
+        this[kXpack] = new XpackApi(this.transport)
       }
       return this[kXpack]
     }
