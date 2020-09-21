@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['system_id', 'system_api_version', 'interval', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
 const snakeCase = { systemId: 'system_id', systemApiVersion: 'system_api_version', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-function MonitoringApi (transport) {
+function MonitoringApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 MonitoringApi.prototype.bulk = function monitoringBulkApi (params, options, callback) {
@@ -35,7 +36,7 @@ MonitoringApi.prototype.bulk = function monitoringBulkApi (params, options, call
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 

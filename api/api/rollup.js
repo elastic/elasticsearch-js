@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'typed_keys', 'rest_total_hits_as_int', 'wait_for_completion', 'timeout']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', typedKeys: 'typed_keys', restTotalHitsAsInt: 'rest_total_hits_as_int', waitForCompletion: 'wait_for_completion' }
 
-function RollupApi (transport) {
+function RollupApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 RollupApi.prototype.deleteJob = function rollupDeleteJobApi (params, options, callback) {
@@ -35,7 +36,7 @@ RollupApi.prototype.deleteJob = function rollupDeleteJobApi (params, options, ca
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
@@ -114,7 +115,7 @@ RollupApi.prototype.getRollupIndexCaps = function rollupGetRollupIndexCapsApi (p
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -141,11 +142,11 @@ RollupApi.prototype.putJob = function rollupPutJobApi (params, options, callback
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -172,17 +173,17 @@ RollupApi.prototype.rollupSearch = function rollupRollupSearchApi (params, optio
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['type'] != null && (params['index'] == null)) {
-    const err = new Error('Missing required parameter of the url: index')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
@@ -214,7 +215,7 @@ RollupApi.prototype.startJob = function rollupStartJobApi (params, options, call
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
@@ -241,7 +242,7 @@ RollupApi.prototype.stopJob = function rollupStopJobApi (params, options, callba
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 

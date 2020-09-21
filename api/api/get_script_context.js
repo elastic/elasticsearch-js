@@ -22,7 +22,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
 

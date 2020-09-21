@@ -22,7 +22,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['wait_for_active_shards', 'op_type', 'refresh', 'routing', 'timeout', 'version', 'version_type', 'if_seq_no', 'if_primary_term', 'pipeline', 'require_alias', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
 const snakeCase = { waitForActiveShards: 'wait_for_active_shards', opType: 'op_type', versionType: 'version_type', ifSeqNo: 'if_seq_no', ifPrimaryTerm: 'if_primary_term', requireAlias: 'require_alias', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
@@ -31,11 +31,11 @@ function indexApi (params, options, callback) {
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 

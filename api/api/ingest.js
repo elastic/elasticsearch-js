@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['master_timeout', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'verbose']
 const snakeCase = { masterTimeout: 'master_timeout', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-function IngestApi (transport) {
+function IngestApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 IngestApi.prototype.deletePipeline = function ingestDeletePipelineApi (params, options, callback) {
@@ -35,7 +36,7 @@ IngestApi.prototype.deletePipeline = function ingestDeletePipelineApi (params, o
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
@@ -109,11 +110,11 @@ IngestApi.prototype.putPipeline = function ingestPutPipelineApi (params, options
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -140,7 +141,7 @@ IngestApi.prototype.simulate = function ingestSimulateApi (params, options, call
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 

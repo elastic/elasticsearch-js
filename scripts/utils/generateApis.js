@@ -96,7 +96,7 @@ function generateNamespace (namespace, nested, folders, version) {
   /* eslint camelcase: 0 */
   /* eslint no-unused-vars: 0 */
 
-  const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+  const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 `
   if (nested.length > 0) {
     let getters = ''
@@ -117,8 +117,9 @@ function generateNamespace (namespace, nested, folders, version) {
   const acceptedQuerystring = ${JSON.stringify(api.acceptedQuerystring)}
   const snakeCase = ${JSON.stringify(api.snakeCase)}
 
-  function ${api.namespace}Api (transport) {
+  function ${api.namespace}Api (transport, ConfigurationError) {
     this.transport = transport
+    this[kConfigurationError] = ConfigurationError
   }
 
   ${api.code}
@@ -295,7 +296,7 @@ function generateSingleApi (version, spec, common) {
       if (param === camelCased) {
         const check = `
           if (params['${param}'] == null) {
-            const err = new Error('Missing required parameter: ${param}')
+            const err = new this[kConfigurationError]('Missing required parameter: ${param}')
             return handleError(err, callback)
           }
         `
@@ -303,7 +304,7 @@ function generateSingleApi (version, spec, common) {
       } else {
         const check = `
           if (params['${param}'] == null && params['${camelCased}'] == null) {
-            const err = new Error('Missing required parameter: ${param} or ${camelCased}')
+            const err = new this[kConfigurationError]('Missing required parameter: ${param} or ${camelCased}')
             return handleError(err, callback)
           }
         `
@@ -314,7 +315,7 @@ function generateSingleApi (version, spec, common) {
     function _noBody () {
       const check = `
         if (params.body != null) {
-          const err = new Error('This API does not require a body')
+          const err = new this[kConfigurationError]('This API does not require a body')
           return handleError(err, callback)
         }
       `
@@ -518,7 +519,7 @@ function genUrlValidation (paths, api) {
       }
     }
     code += `)) {
-      const err = new Error('Missing required parameter of the url: ${params.join(', ')}')
+      const err = new this[kConfigurationError]('Missing required parameter of the url: ${params.join(', ')}')
       return handleError(err, callback)
     `
   })

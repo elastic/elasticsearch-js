@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'format']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-function SqlApi (transport) {
+function SqlApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 SqlApi.prototype.clearCursor = function sqlClearCursorApi (params, options, callback) {
@@ -35,7 +36,7 @@ SqlApi.prototype.clearCursor = function sqlClearCursorApi (params, options, call
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -62,7 +63,7 @@ SqlApi.prototype.query = function sqlQueryApi (params, options, callback) {
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -89,7 +90,7 @@ SqlApi.prototype.translate = function sqlTranslateApi (params, options, callback
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 

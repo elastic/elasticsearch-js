@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['include_yes_decisions', 'include_disk_info', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'timeout', 'master_timeout', 'wait_for_removal', 'local', 'flat_settings', 'include_defaults', 'expand_wildcards', 'level', 'wait_for_active_shards', 'wait_for_nodes', 'wait_for_events', 'wait_for_no_relocating_shards', 'wait_for_no_initializing_shards', 'wait_for_status', 'node_ids', 'node_names', 'create', 'dry_run', 'explain', 'retry_failed', 'metric', 'wait_for_metadata_version', 'wait_for_timeout', 'ignore_unavailable', 'allow_no_indices']
 const snakeCase = { includeYesDecisions: 'include_yes_decisions', includeDiskInfo: 'include_disk_info', errorTrace: 'error_trace', filterPath: 'filter_path', masterTimeout: 'master_timeout', waitForRemoval: 'wait_for_removal', flatSettings: 'flat_settings', includeDefaults: 'include_defaults', expandWildcards: 'expand_wildcards', waitForActiveShards: 'wait_for_active_shards', waitForNodes: 'wait_for_nodes', waitForEvents: 'wait_for_events', waitForNoRelocatingShards: 'wait_for_no_relocating_shards', waitForNoInitializingShards: 'wait_for_no_initializing_shards', waitForStatus: 'wait_for_status', nodeIds: 'node_ids', nodeNames: 'node_names', dryRun: 'dry_run', retryFailed: 'retry_failed', waitForMetadataVersion: 'wait_for_metadata_version', waitForTimeout: 'wait_for_timeout', ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices' }
 
-function ClusterApi (transport) {
+function ClusterApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 ClusterApi.prototype.allocationExplain = function clusterAllocationExplainApi (params, options, callback) {
@@ -56,7 +57,7 @@ ClusterApi.prototype.deleteComponentTemplate = function clusterDeleteComponentTe
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -104,7 +105,7 @@ ClusterApi.prototype.existsComponentTemplate = function clusterExistsComponentTe
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -246,11 +247,11 @@ ClusterApi.prototype.putComponentTemplate = function clusterPutComponentTemplate
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -277,7 +278,7 @@ ClusterApi.prototype.putSettings = function clusterPutSettingsApi (params, optio
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -346,7 +347,7 @@ ClusterApi.prototype.state = function clusterStateApi (params, options, callback
 
   // check required url components
   if (params['index'] != null && (params['metric'] == null)) {
-    const err = new Error('Missing required parameter of the url: metric')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: metric')
     return handleError(err, callback)
   }
 

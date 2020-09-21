@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'wait_for_active_shards']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', waitForActiveShards: 'wait_for_active_shards' }
 
-function CcrApi (transport) {
+function CcrApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 CcrApi.prototype.deleteAutoFollowPattern = function ccrDeleteAutoFollowPatternApi (params, options, callback) {
@@ -35,7 +36,7 @@ CcrApi.prototype.deleteAutoFollowPattern = function ccrDeleteAutoFollowPatternAp
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -62,11 +63,11 @@ CcrApi.prototype.follow = function ccrFollowApi (params, options, callback) {
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -93,7 +94,7 @@ CcrApi.prototype.followInfo = function ccrFollowInfoApi (params, options, callba
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -120,7 +121,7 @@ CcrApi.prototype.followStats = function ccrFollowStatsApi (params, options, call
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -147,11 +148,11 @@ CcrApi.prototype.forgetFollower = function ccrForgetFollowerApi (params, options
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -204,7 +205,7 @@ CcrApi.prototype.pauseAutoFollowPattern = function ccrPauseAutoFollowPatternApi 
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -231,7 +232,7 @@ CcrApi.prototype.pauseFollow = function ccrPauseFollowApi (params, options, call
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -258,11 +259,11 @@ CcrApi.prototype.putAutoFollowPattern = function ccrPutAutoFollowPatternApi (par
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -289,7 +290,7 @@ CcrApi.prototype.resumeAutoFollowPattern = function ccrResumeAutoFollowPatternAp
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -316,7 +317,7 @@ CcrApi.prototype.resumeFollow = function ccrResumeFollowApi (params, options, ca
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -364,7 +365,7 @@ CcrApi.prototype.unfollow = function ccrUnfollowApi (params, options, callback) 
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 

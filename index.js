@@ -42,7 +42,7 @@ const ESAPI = require('./api')
 
 class Client extends ESAPI {
   constructor (opts = {}) {
-    super()
+    super({ ConfigurationError: errors.ConfigurationError })
     if (opts.cloud && opts[kChild] === undefined) {
       const { id, username, password } = opts.cloud
       // the cloud id is `cluster-name:base64encodedurl`

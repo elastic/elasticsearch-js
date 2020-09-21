@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['allow_no_match', 'allow_no_jobs', 'force', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'requests_per_second', 'allow_no_forecasts', 'wait_for_completion', 'lines_to_sample', 'line_merge_size_limit', 'charset', 'format', 'has_header_row', 'column_names', 'delimiter', 'quote', 'should_trim_fields', 'grok_pattern', 'timestamp_field', 'timestamp_format', 'explain', 'calc_interim', 'start', 'end', 'advance_time', 'skip_time', 'duration', 'expires_in', 'max_model_memory', 'expand', 'exclude_interim', 'from', 'size', 'anomaly_score', 'sort', 'desc', 'job_id', 'partition_field_value', 'verbose', 'allow_no_datafeeds', 'influencer_score', 'top_n', 'bucket_span', 'overall_score', 'record_score', 'include', 'decompress_definition', 'tags', 'for_export', 'reset_start', 'reset_end', 'ignore_unavailable', 'allow_no_indices', 'ignore_throttled', 'expand_wildcards', 'delete_intervening_results', 'enabled']
 const snakeCase = { allowNoMatch: 'allow_no_match', allowNoJobs: 'allow_no_jobs', errorTrace: 'error_trace', filterPath: 'filter_path', requestsPerSecond: 'requests_per_second', allowNoForecasts: 'allow_no_forecasts', waitForCompletion: 'wait_for_completion', linesToSample: 'lines_to_sample', lineMergeSizeLimit: 'line_merge_size_limit', hasHeaderRow: 'has_header_row', columnNames: 'column_names', shouldTrimFields: 'should_trim_fields', grokPattern: 'grok_pattern', timestampField: 'timestamp_field', timestampFormat: 'timestamp_format', calcInterim: 'calc_interim', advanceTime: 'advance_time', skipTime: 'skip_time', expiresIn: 'expires_in', maxModelMemory: 'max_model_memory', excludeInterim: 'exclude_interim', anomalyScore: 'anomaly_score', jobId: 'job_id', partitionFieldValue: 'partition_field_value', allowNoDatafeeds: 'allow_no_datafeeds', influencerScore: 'influencer_score', topN: 'top_n', bucketSpan: 'bucket_span', overallScore: 'overall_score', recordScore: 'record_score', decompressDefinition: 'decompress_definition', forExport: 'for_export', resetStart: 'reset_start', resetEnd: 'reset_end', ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', ignoreThrottled: 'ignore_throttled', expandWildcards: 'expand_wildcards', deleteInterveningResults: 'delete_intervening_results' }
 
-function MlApi (transport) {
+function MlApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 MlApi.prototype.closeJob = function mlCloseJobApi (params, options, callback) {
@@ -35,7 +36,7 @@ MlApi.prototype.closeJob = function mlCloseJobApi (params, options, callback) {
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
@@ -62,7 +63,7 @@ MlApi.prototype.deleteCalendar = function mlDeleteCalendarApi (params, options, 
 
   // check required parameters
   if (params['calendar_id'] == null && params['calendarId'] == null) {
-    const err = new Error('Missing required parameter: calendar_id or calendarId')
+    const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
 
@@ -89,17 +90,17 @@ MlApi.prototype.deleteCalendarEvent = function mlDeleteCalendarEventApi (params,
 
   // check required parameters
   if (params['calendar_id'] == null && params['calendarId'] == null) {
-    const err = new Error('Missing required parameter: calendar_id or calendarId')
+    const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
   if (params['event_id'] == null && params['eventId'] == null) {
-    const err = new Error('Missing required parameter: event_id or eventId')
+    const err = new this[kConfigurationError]('Missing required parameter: event_id or eventId')
     return handleError(err, callback)
   }
 
   // check required url components
   if ((params['event_id'] != null || params['eventId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
-    const err = new Error('Missing required parameter of the url: calendar_id')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: calendar_id')
     return handleError(err, callback)
   }
 
@@ -126,17 +127,17 @@ MlApi.prototype.deleteCalendarJob = function mlDeleteCalendarJobApi (params, opt
 
   // check required parameters
   if (params['calendar_id'] == null && params['calendarId'] == null) {
-    const err = new Error('Missing required parameter: calendar_id or calendarId')
+    const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
   if ((params['job_id'] != null || params['jobId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
-    const err = new Error('Missing required parameter of the url: calendar_id')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: calendar_id')
     return handleError(err, callback)
   }
 
@@ -163,7 +164,7 @@ MlApi.prototype.deleteDataFrameAnalytics = function mlDeleteDataFrameAnalyticsAp
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
@@ -190,7 +191,7 @@ MlApi.prototype.deleteDatafeed = function mlDeleteDatafeedApi (params, options, 
 
   // check required parameters
   if (params['datafeed_id'] == null && params['datafeedId'] == null) {
-    const err = new Error('Missing required parameter: datafeed_id or datafeedId')
+    const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
 
@@ -243,7 +244,7 @@ MlApi.prototype.deleteFilter = function mlDeleteFilterApi (params, options, call
 
   // check required parameters
   if (params['filter_id'] == null && params['filterId'] == null) {
-    const err = new Error('Missing required parameter: filter_id or filterId')
+    const err = new this[kConfigurationError]('Missing required parameter: filter_id or filterId')
     return handleError(err, callback)
   }
 
@@ -270,13 +271,13 @@ MlApi.prototype.deleteForecast = function mlDeleteForecastApi (params, options, 
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
   if ((params['forecast_id'] != null || params['forecastId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
-    const err = new Error('Missing required parameter of the url: job_id')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
@@ -308,7 +309,7 @@ MlApi.prototype.deleteJob = function mlDeleteJobApi (params, options, callback) 
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
@@ -335,17 +336,17 @@ MlApi.prototype.deleteModelSnapshot = function mlDeleteModelSnapshotApi (params,
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
   if (params['snapshot_id'] == null && params['snapshotId'] == null) {
-    const err = new Error('Missing required parameter: snapshot_id or snapshotId')
+    const err = new this[kConfigurationError]('Missing required parameter: snapshot_id or snapshotId')
     return handleError(err, callback)
   }
 
   // check required url components
   if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
-    const err = new Error('Missing required parameter of the url: job_id')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
@@ -372,7 +373,7 @@ MlApi.prototype.deleteTrainedModel = function mlDeleteTrainedModelApi (params, o
 
   // check required parameters
   if (params['model_id'] == null && params['modelId'] == null) {
-    const err = new Error('Missing required parameter: model_id or modelId')
+    const err = new this[kConfigurationError]('Missing required parameter: model_id or modelId')
     return handleError(err, callback)
   }
 
@@ -399,7 +400,7 @@ MlApi.prototype.estimateModelMemory = function mlEstimateModelMemoryApi (params,
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -426,7 +427,7 @@ MlApi.prototype.evaluateDataFrame = function mlEvaluateDataFrameApi (params, opt
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -479,7 +480,7 @@ MlApi.prototype.findFileStructure = function mlFindFileStructureApi (params, opt
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -506,7 +507,7 @@ MlApi.prototype.flushJob = function mlFlushJobApi (params, options, callback) {
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
@@ -533,7 +534,7 @@ MlApi.prototype.forecast = function mlForecastApi (params, options, callback) {
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
@@ -560,13 +561,13 @@ MlApi.prototype.getBuckets = function mlGetBucketsApi (params, options, callback
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['timestamp'] != null && ((params['job_id'] == null && params['jobId'] == null))) {
-    const err = new Error('Missing required parameter of the url: job_id')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
@@ -598,7 +599,7 @@ MlApi.prototype.getCalendarEvents = function mlGetCalendarEventsApi (params, opt
 
   // check required parameters
   if (params['calendar_id'] == null && params['calendarId'] == null) {
-    const err = new Error('Missing required parameter: calendar_id or calendarId')
+    const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
 
@@ -651,13 +652,13 @@ MlApi.prototype.getCategories = function mlGetCategoriesApi (params, options, ca
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
   if ((params['category_id'] != null || params['categoryId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
-    const err = new Error('Missing required parameter of the url: job_id')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
@@ -819,7 +820,7 @@ MlApi.prototype.getInfluencers = function mlGetInfluencersApi (params, options, 
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
@@ -898,13 +899,13 @@ MlApi.prototype.getModelSnapshots = function mlGetModelSnapshotsApi (params, opt
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
   if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
-    const err = new Error('Missing required parameter of the url: job_id')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
@@ -936,7 +937,7 @@ MlApi.prototype.getOverallBuckets = function mlGetOverallBucketsApi (params, opt
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
@@ -963,7 +964,7 @@ MlApi.prototype.getRecords = function mlGetRecordsApi (params, options, callback
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
@@ -1063,7 +1064,7 @@ MlApi.prototype.openJob = function mlOpenJobApi (params, options, callback) {
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
@@ -1090,11 +1091,11 @@ MlApi.prototype.postCalendarEvents = function mlPostCalendarEventsApi (params, o
 
   // check required parameters
   if (params['calendar_id'] == null && params['calendarId'] == null) {
-    const err = new Error('Missing required parameter: calendar_id or calendarId')
+    const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1121,11 +1122,11 @@ MlApi.prototype.postData = function mlPostDataApi (params, options, callback) {
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1152,7 +1153,7 @@ MlApi.prototype.previewDatafeed = function mlPreviewDatafeedApi (params, options
 
   // check required parameters
   if (params['datafeed_id'] == null && params['datafeedId'] == null) {
-    const err = new Error('Missing required parameter: datafeed_id or datafeedId')
+    const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
 
@@ -1179,7 +1180,7 @@ MlApi.prototype.putCalendar = function mlPutCalendarApi (params, options, callba
 
   // check required parameters
   if (params['calendar_id'] == null && params['calendarId'] == null) {
-    const err = new Error('Missing required parameter: calendar_id or calendarId')
+    const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
 
@@ -1206,17 +1207,17 @@ MlApi.prototype.putCalendarJob = function mlPutCalendarJobApi (params, options, 
 
   // check required parameters
   if (params['calendar_id'] == null && params['calendarId'] == null) {
-    const err = new Error('Missing required parameter: calendar_id or calendarId')
+    const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
   if ((params['job_id'] != null || params['jobId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
-    const err = new Error('Missing required parameter of the url: calendar_id')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: calendar_id')
     return handleError(err, callback)
   }
 
@@ -1243,11 +1244,11 @@ MlApi.prototype.putDataFrameAnalytics = function mlPutDataFrameAnalyticsApi (par
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1274,11 +1275,11 @@ MlApi.prototype.putDatafeed = function mlPutDatafeedApi (params, options, callba
 
   // check required parameters
   if (params['datafeed_id'] == null && params['datafeedId'] == null) {
-    const err = new Error('Missing required parameter: datafeed_id or datafeedId')
+    const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1305,11 +1306,11 @@ MlApi.prototype.putFilter = function mlPutFilterApi (params, options, callback) 
 
   // check required parameters
   if (params['filter_id'] == null && params['filterId'] == null) {
-    const err = new Error('Missing required parameter: filter_id or filterId')
+    const err = new this[kConfigurationError]('Missing required parameter: filter_id or filterId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1336,11 +1337,11 @@ MlApi.prototype.putJob = function mlPutJobApi (params, options, callback) {
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1367,11 +1368,11 @@ MlApi.prototype.putTrainedModel = function mlPutTrainedModelApi (params, options
 
   // check required parameters
   if (params['model_id'] == null && params['modelId'] == null) {
-    const err = new Error('Missing required parameter: model_id or modelId')
+    const err = new this[kConfigurationError]('Missing required parameter: model_id or modelId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1398,17 +1399,17 @@ MlApi.prototype.revertModelSnapshot = function mlRevertModelSnapshotApi (params,
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
   if (params['snapshot_id'] == null && params['snapshotId'] == null) {
-    const err = new Error('Missing required parameter: snapshot_id or snapshotId')
+    const err = new this[kConfigurationError]('Missing required parameter: snapshot_id or snapshotId')
     return handleError(err, callback)
   }
 
   // check required url components
   if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
-    const err = new Error('Missing required parameter of the url: job_id')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
@@ -1456,7 +1457,7 @@ MlApi.prototype.startDataFrameAnalytics = function mlStartDataFrameAnalyticsApi 
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
@@ -1483,7 +1484,7 @@ MlApi.prototype.startDatafeed = function mlStartDatafeedApi (params, options, ca
 
   // check required parameters
   if (params['datafeed_id'] == null && params['datafeedId'] == null) {
-    const err = new Error('Missing required parameter: datafeed_id or datafeedId')
+    const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
 
@@ -1510,7 +1511,7 @@ MlApi.prototype.stopDataFrameAnalytics = function mlStopDataFrameAnalyticsApi (p
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
@@ -1537,7 +1538,7 @@ MlApi.prototype.stopDatafeed = function mlStopDatafeedApi (params, options, call
 
   // check required parameters
   if (params['datafeed_id'] == null && params['datafeedId'] == null) {
-    const err = new Error('Missing required parameter: datafeed_id or datafeedId')
+    const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
 
@@ -1564,11 +1565,11 @@ MlApi.prototype.updateDataFrameAnalytics = function mlUpdateDataFrameAnalyticsAp
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1595,11 +1596,11 @@ MlApi.prototype.updateDatafeed = function mlUpdateDatafeedApi (params, options, 
 
   // check required parameters
   if (params['datafeed_id'] == null && params['datafeedId'] == null) {
-    const err = new Error('Missing required parameter: datafeed_id or datafeedId')
+    const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1626,11 +1627,11 @@ MlApi.prototype.updateFilter = function mlUpdateFilterApi (params, options, call
 
   // check required parameters
   if (params['filter_id'] == null && params['filterId'] == null) {
-    const err = new Error('Missing required parameter: filter_id or filterId')
+    const err = new this[kConfigurationError]('Missing required parameter: filter_id or filterId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1657,11 +1658,11 @@ MlApi.prototype.updateJob = function mlUpdateJobApi (params, options, callback) 
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1688,21 +1689,21 @@ MlApi.prototype.updateModelSnapshot = function mlUpdateModelSnapshotApi (params,
 
   // check required parameters
   if (params['job_id'] == null && params['jobId'] == null) {
-    const err = new Error('Missing required parameter: job_id or jobId')
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
   if (params['snapshot_id'] == null && params['snapshotId'] == null) {
-    const err = new Error('Missing required parameter: snapshot_id or snapshotId')
+    const err = new this[kConfigurationError]('Missing required parameter: snapshot_id or snapshotId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
   // check required url components
   if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
-    const err = new Error('Missing required parameter of the url: job_id')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
@@ -1729,7 +1730,7 @@ MlApi.prototype.validate = function mlValidateApi (params, options, callback) {
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1756,7 +1757,7 @@ MlApi.prototype.validateDetector = function mlValidateDetectorApi (params, optio
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 

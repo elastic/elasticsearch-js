@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'debug', 'active', 'version', 'if_seq_no', 'if_primary_term', 'metric', 'emit_stacktraces']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', ifSeqNo: 'if_seq_no', ifPrimaryTerm: 'if_primary_term', emitStacktraces: 'emit_stacktraces' }
 
-function WatcherApi (transport) {
+function WatcherApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 WatcherApi.prototype.ackWatch = function watcherAckWatchApi (params, options, callback) {
@@ -35,13 +36,13 @@ WatcherApi.prototype.ackWatch = function watcherAckWatchApi (params, options, ca
 
   // check required parameters
   if (params['watch_id'] == null && params['watchId'] == null) {
-    const err = new Error('Missing required parameter: watch_id or watchId')
+    const err = new this[kConfigurationError]('Missing required parameter: watch_id or watchId')
     return handleError(err, callback)
   }
 
   // check required url components
   if ((params['action_id'] != null || params['actionId'] != null) && ((params['watch_id'] == null && params['watchId'] == null))) {
-    const err = new Error('Missing required parameter of the url: watch_id')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: watch_id')
     return handleError(err, callback)
   }
 
@@ -73,7 +74,7 @@ WatcherApi.prototype.activateWatch = function watcherActivateWatchApi (params, o
 
   // check required parameters
   if (params['watch_id'] == null && params['watchId'] == null) {
-    const err = new Error('Missing required parameter: watch_id or watchId')
+    const err = new this[kConfigurationError]('Missing required parameter: watch_id or watchId')
     return handleError(err, callback)
   }
 
@@ -100,7 +101,7 @@ WatcherApi.prototype.deactivateWatch = function watcherDeactivateWatchApi (param
 
   // check required parameters
   if (params['watch_id'] == null && params['watchId'] == null) {
-    const err = new Error('Missing required parameter: watch_id or watchId')
+    const err = new this[kConfigurationError]('Missing required parameter: watch_id or watchId')
     return handleError(err, callback)
   }
 
@@ -127,7 +128,7 @@ WatcherApi.prototype.deleteWatch = function watcherDeleteWatchApi (params, optio
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
@@ -180,7 +181,7 @@ WatcherApi.prototype.getWatch = function watcherGetWatchApi (params, options, ca
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
@@ -207,7 +208,7 @@ WatcherApi.prototype.putWatch = function watcherPutWatchApi (params, options, ca
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 

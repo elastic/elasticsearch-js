@@ -22,7 +22,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['ignore_unavailable', 'ignore_throttled', 'allow_no_indices', 'expand_wildcards', 'min_score', 'preference', 'routing', 'q', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'terminate_after', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
 const snakeCase = { ignoreUnavailable: 'ignore_unavailable', ignoreThrottled: 'ignore_throttled', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', minScore: 'min_score', analyzeWildcard: 'analyze_wildcard', defaultOperator: 'default_operator', terminateAfter: 'terminate_after', errorTrace: 'error_trace', filterPath: 'filter_path' }
 

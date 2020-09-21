@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['categories', 'accept_enterprise', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'master_timeout']
 const snakeCase = { acceptEnterprise: 'accept_enterprise', errorTrace: 'error_trace', filterPath: 'filter_path', masterTimeout: 'master_timeout' }
 
-function XpackApi (transport) {
+function XpackApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 XpackApi.prototype.info = function xpackInfoApi (params, options, callback) {

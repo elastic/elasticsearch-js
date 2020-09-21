@@ -20,6 +20,7 @@
 'use strict'
 
 const result = { body: null, statusCode: null, headers: null, warnings: null }
+const kConfigurationError = Symbol('configuration error')
 
 function handleError (err, callback) {
   if (callback) {
@@ -54,4 +55,4 @@ function normalizeArguments (params, options, callback) {
 
 function noop () {}
 
-module.exports = { handleError, snakeCaseKeys, normalizeArguments, noop }
+module.exports = { handleError, snakeCaseKeys, normalizeArguments, noop, kConfigurationError }

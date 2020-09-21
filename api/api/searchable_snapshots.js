@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'index', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'master_timeout', 'wait_for_completion']
 const snakeCase = { ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', masterTimeout: 'master_timeout', waitForCompletion: 'wait_for_completion' }
 
-function SearchableSnapshotsApi (transport) {
+function SearchableSnapshotsApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 SearchableSnapshotsApi.prototype.clearCache = function searchableSnapshotsClearCacheApi (params, options, callback) {
@@ -61,21 +62,21 @@ SearchableSnapshotsApi.prototype.mount = function searchableSnapshotsMountApi (p
 
   // check required parameters
   if (params['repository'] == null) {
-    const err = new Error('Missing required parameter: repository')
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
   if (params['snapshot'] == null) {
-    const err = new Error('Missing required parameter: snapshot')
+    const err = new this[kConfigurationError]('Missing required parameter: snapshot')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['snapshot'] != null && (params['repository'] == null)) {
-    const err = new Error('Missing required parameter of the url: repository')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
@@ -102,7 +103,7 @@ SearchableSnapshotsApi.prototype.repositoryStats = function searchableSnapshotsR
 
   // check required parameters
   if (params['repository'] == null) {
-    const err = new Error('Missing required parameter: repository')
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
 

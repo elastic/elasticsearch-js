@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['force', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'from', 'size', 'allow_no_match', 'defer_validation', 'timeout', 'wait_for_completion', 'wait_for_checkpoint']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', allowNoMatch: 'allow_no_match', deferValidation: 'defer_validation', waitForCompletion: 'wait_for_completion', waitForCheckpoint: 'wait_for_checkpoint' }
 
-function TransformApi (transport) {
+function TransformApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 TransformApi.prototype.deleteTransform = function transformDeleteTransformApi (params, options, callback) {
@@ -35,7 +36,7 @@ TransformApi.prototype.deleteTransform = function transformDeleteTransformApi (p
 
   // check required parameters
   if (params['transform_id'] == null && params['transformId'] == null) {
-    const err = new Error('Missing required parameter: transform_id or transformId')
+    const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
 
@@ -88,7 +89,7 @@ TransformApi.prototype.getTransformStats = function transformGetTransformStatsAp
 
   // check required parameters
   if (params['transform_id'] == null && params['transformId'] == null) {
-    const err = new Error('Missing required parameter: transform_id or transformId')
+    const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
 
@@ -115,7 +116,7 @@ TransformApi.prototype.previewTransform = function transformPreviewTransformApi 
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -142,11 +143,11 @@ TransformApi.prototype.putTransform = function transformPutTransformApi (params,
 
   // check required parameters
   if (params['transform_id'] == null && params['transformId'] == null) {
-    const err = new Error('Missing required parameter: transform_id or transformId')
+    const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -173,7 +174,7 @@ TransformApi.prototype.startTransform = function transformStartTransformApi (par
 
   // check required parameters
   if (params['transform_id'] == null && params['transformId'] == null) {
-    const err = new Error('Missing required parameter: transform_id or transformId')
+    const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
 
@@ -200,7 +201,7 @@ TransformApi.prototype.stopTransform = function transformStopTransformApi (param
 
   // check required parameters
   if (params['transform_id'] == null && params['transformId'] == null) {
-    const err = new Error('Missing required parameter: transform_id or transformId')
+    const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
 
@@ -227,11 +228,11 @@ TransformApi.prototype.updateTransform = function transformUpdateTransformApi (p
 
   // check required parameters
   if (params['transform_id'] == null && params['transformId'] == null) {
-    const err = new Error('Missing required parameter: transform_id or transformId')
+    const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 

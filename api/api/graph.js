@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['routing', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-function GraphApi (transport) {
+function GraphApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 GraphApi.prototype.explore = function graphExploreApi (params, options, callback) {
@@ -35,7 +36,7 @@ GraphApi.prototype.explore = function graphExploreApi (params, options, callback
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 

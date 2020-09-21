@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['interval', 'snapshots', 'threads', 'ignore_idle_threads', 'type', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'flat_settings', 'completion_fields', 'fielddata_fields', 'fields', 'groups', 'level', 'types', 'include_segment_file_sizes']
 const snakeCase = { ignoreIdleThreads: 'ignore_idle_threads', errorTrace: 'error_trace', filterPath: 'filter_path', flatSettings: 'flat_settings', completionFields: 'completion_fields', fielddataFields: 'fielddata_fields', includeSegmentFileSizes: 'include_segment_file_sizes' }
 
-function NodesApi (transport) {
+function NodesApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 NodesApi.prototype.hotThreads = function nodesHotThreadsApi (params, options, callback) {

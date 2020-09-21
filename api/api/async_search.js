@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'wait_for_completion_timeout', 'keep_alive', 'typed_keys', 'keep_on_completion', 'batched_reduce_size', 'request_cache', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'explain', 'stored_fields', 'docvalue_fields', 'from', 'ignore_unavailable', 'ignore_throttled', 'allow_no_indices', 'expand_wildcards', 'lenient', 'preference', 'q', 'routing', 'search_type', 'size', 'sort', '_source', '_source_excludes', '_source_exclude', '_source_includes', '_source_include', 'terminate_after', 'stats', 'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text', 'timeout', 'track_scores', 'track_total_hits', 'allow_partial_search_results', 'version', 'seq_no_primary_term', 'max_concurrent_shard_requests']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', waitForCompletionTimeout: 'wait_for_completion_timeout', keepAlive: 'keep_alive', typedKeys: 'typed_keys', keepOnCompletion: 'keep_on_completion', batchedReduceSize: 'batched_reduce_size', requestCache: 'request_cache', analyzeWildcard: 'analyze_wildcard', defaultOperator: 'default_operator', storedFields: 'stored_fields', docvalueFields: 'docvalue_fields', ignoreUnavailable: 'ignore_unavailable', ignoreThrottled: 'ignore_throttled', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', searchType: 'search_type', _sourceExcludes: '_source_excludes', _sourceExclude: '_source_exclude', _sourceIncludes: '_source_includes', _sourceInclude: '_source_include', terminateAfter: 'terminate_after', suggestField: 'suggest_field', suggestMode: 'suggest_mode', suggestSize: 'suggest_size', suggestText: 'suggest_text', trackScores: 'track_scores', trackTotalHits: 'track_total_hits', allowPartialSearchResults: 'allow_partial_search_results', seqNoPrimaryTerm: 'seq_no_primary_term', maxConcurrentShardRequests: 'max_concurrent_shard_requests' }
 
-function AsyncSearchApi (transport) {
+function AsyncSearchApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 AsyncSearchApi.prototype.delete = function asyncSearchDeleteApi (params, options, callback) {
@@ -35,7 +36,7 @@ AsyncSearchApi.prototype.delete = function asyncSearchDeleteApi (params, options
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
@@ -62,7 +63,7 @@ AsyncSearchApi.prototype.get = function asyncSearchGetApi (params, options, call
 
   // check required parameters
   if (params['id'] == null) {
-    const err = new Error('Missing required parameter: id')
+    const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 

@@ -137,7 +137,7 @@ function genFactory (folder, paths, namespaces) {
       getters.push(`${camelify(namespace)}: {
         get () {
           if (this[k${toPascalCase(camelify(namespace))}] === null) {
-            this[k${toPascalCase(camelify(namespace))}] = new ${toPascalCase(camelify(namespace))}Api(this.transport)
+            this[k${toPascalCase(camelify(namespace))}] = new ${toPascalCase(camelify(namespace))}Api(this.transport, this[kConfigurationError])
           }
           return this[k${toPascalCase(camelify(namespace))}]
         }
@@ -196,9 +196,11 @@ function genFactory (folder, paths, namespaces) {
 
   ${modules}
 
+  const { kConfigurationError } = require('./utils')
   ${symbols}
 
-  function ESAPI () {
+  function ESAPI (opts) {
+    this[kConfigurationError] = opts.ConfigurationError
     ${symbolsInstance}
   }
 

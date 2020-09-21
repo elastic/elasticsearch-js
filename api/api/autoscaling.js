@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-function AutoscalingApi (transport) {
+function AutoscalingApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 AutoscalingApi.prototype.deleteAutoscalingPolicy = function autoscalingDeleteAutoscalingPolicyApi (params, options, callback) {
@@ -35,7 +36,7 @@ AutoscalingApi.prototype.deleteAutoscalingPolicy = function autoscalingDeleteAut
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -83,7 +84,7 @@ AutoscalingApi.prototype.getAutoscalingPolicy = function autoscalingGetAutoscali
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -110,11 +111,11 @@ AutoscalingApi.prototype.putAutoscalingPolicy = function autoscalingPutAutoscali
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 

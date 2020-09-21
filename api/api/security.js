@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'refresh', 'usernames', 'id', 'name', 'username', 'realm_name', 'owner']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', realmName: 'realm_name' }
 
-function SecurityApi (transport) {
+function SecurityApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 SecurityApi.prototype.authenticate = function securityAuthenticateApi (params, options, callback) {
@@ -56,7 +57,7 @@ SecurityApi.prototype.changePassword = function securityChangePasswordApi (param
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -88,7 +89,7 @@ SecurityApi.prototype.clearCachedPrivileges = function securityClearCachedPrivil
 
   // check required parameters
   if (params['application'] == null) {
-    const err = new Error('Missing required parameter: application')
+    const err = new this[kConfigurationError]('Missing required parameter: application')
     return handleError(err, callback)
   }
 
@@ -115,7 +116,7 @@ SecurityApi.prototype.clearCachedRealms = function securityClearCachedRealmsApi 
 
   // check required parameters
   if (params['realms'] == null) {
-    const err = new Error('Missing required parameter: realms')
+    const err = new this[kConfigurationError]('Missing required parameter: realms')
     return handleError(err, callback)
   }
 
@@ -142,7 +143,7 @@ SecurityApi.prototype.clearCachedRoles = function securityClearCachedRolesApi (p
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -169,7 +170,7 @@ SecurityApi.prototype.createApiKey = function securityCreateApiKeyApi (params, o
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -196,17 +197,17 @@ SecurityApi.prototype.deletePrivileges = function securityDeletePrivilegesApi (p
 
   // check required parameters
   if (params['application'] == null) {
-    const err = new Error('Missing required parameter: application')
+    const err = new this[kConfigurationError]('Missing required parameter: application')
     return handleError(err, callback)
   }
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['name'] != null && (params['application'] == null)) {
-    const err = new Error('Missing required parameter of the url: application')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: application')
     return handleError(err, callback)
   }
 
@@ -233,7 +234,7 @@ SecurityApi.prototype.deleteRole = function securityDeleteRoleApi (params, optio
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -260,7 +261,7 @@ SecurityApi.prototype.deleteRoleMapping = function securityDeleteRoleMappingApi 
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -287,7 +288,7 @@ SecurityApi.prototype.deleteUser = function securityDeleteUserApi (params, optio
 
   // check required parameters
   if (params['username'] == null) {
-    const err = new Error('Missing required parameter: username')
+    const err = new this[kConfigurationError]('Missing required parameter: username')
     return handleError(err, callback)
   }
 
@@ -314,7 +315,7 @@ SecurityApi.prototype.disableUser = function securityDisableUserApi (params, opt
 
   // check required parameters
   if (params['username'] == null) {
-    const err = new Error('Missing required parameter: username')
+    const err = new this[kConfigurationError]('Missing required parameter: username')
     return handleError(err, callback)
   }
 
@@ -341,7 +342,7 @@ SecurityApi.prototype.enableUser = function securityEnableUserApi (params, optio
 
   // check required parameters
   if (params['username'] == null) {
-    const err = new Error('Missing required parameter: username')
+    const err = new this[kConfigurationError]('Missing required parameter: username')
     return handleError(err, callback)
   }
 
@@ -410,7 +411,7 @@ SecurityApi.prototype.getPrivileges = function securityGetPrivilegesApi (params,
 
   // check required url components
   if (params['name'] != null && (params['application'] == null)) {
-    const err = new Error('Missing required parameter of the url: application')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: application')
     return handleError(err, callback)
   }
 
@@ -497,7 +498,7 @@ SecurityApi.prototype.getToken = function securityGetTokenApi (params, options, 
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -571,7 +572,7 @@ SecurityApi.prototype.hasPrivileges = function securityHasPrivilegesApi (params,
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -603,7 +604,7 @@ SecurityApi.prototype.invalidateApiKey = function securityInvalidateApiKeyApi (p
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -630,7 +631,7 @@ SecurityApi.prototype.invalidateToken = function securityInvalidateTokenApi (par
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -657,7 +658,7 @@ SecurityApi.prototype.putPrivileges = function securityPutPrivilegesApi (params,
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -684,11 +685,11 @@ SecurityApi.prototype.putRole = function securityPutRoleApi (params, options, ca
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -715,11 +716,11 @@ SecurityApi.prototype.putRoleMapping = function securityPutRoleMappingApi (param
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -746,11 +747,11 @@ SecurityApi.prototype.putUser = function securityPutUserApi (params, options, ca
 
   // check required parameters
   if (params['username'] == null) {
-    const err = new Error('Missing required parameter: username')
+    const err = new this[kConfigurationError]('Missing required parameter: username')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 

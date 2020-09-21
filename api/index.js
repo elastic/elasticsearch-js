@@ -88,6 +88,7 @@ const TransformApi = require('./api/transform')
 const WatcherApi = require('./api/watcher')
 const XpackApi = require('./api/xpack')
 
+const { kConfigurationError } = require('./utils')
 const kCat = Symbol('Cat')
 const kCluster = Symbol('Cluster')
 const kDanglingIndices = Symbol('DanglingIndices')
@@ -117,7 +118,8 @@ const kTransform = Symbol('Transform')
 const kWatcher = Symbol('Watcher')
 const kXpack = Symbol('Xpack')
 
-function ESAPI () {
+function ESAPI (opts) {
+  this[kConfigurationError] = opts.ConfigurationError
   this[kCat] = null
   this[kCluster] = null
   this[kDanglingIndices] = null
@@ -193,7 +195,7 @@ Object.defineProperties(ESAPI.prototype, {
   cat: {
     get () {
       if (this[kCat] === null) {
-        this[kCat] = new CatApi(this.transport)
+        this[kCat] = new CatApi(this.transport, this[kConfigurationError])
       }
       return this[kCat]
     }
@@ -202,7 +204,7 @@ Object.defineProperties(ESAPI.prototype, {
   cluster: {
     get () {
       if (this[kCluster] === null) {
-        this[kCluster] = new ClusterApi(this.transport)
+        this[kCluster] = new ClusterApi(this.transport, this[kConfigurationError])
       }
       return this[kCluster]
     }
@@ -210,7 +212,7 @@ Object.defineProperties(ESAPI.prototype, {
   danglingIndices: {
     get () {
       if (this[kDanglingIndices] === null) {
-        this[kDanglingIndices] = new DanglingIndicesApi(this.transport)
+        this[kDanglingIndices] = new DanglingIndicesApi(this.transport, this[kConfigurationError])
       }
       return this[kDanglingIndices]
     }
@@ -228,7 +230,7 @@ Object.defineProperties(ESAPI.prototype, {
   indices: {
     get () {
       if (this[kIndices] === null) {
-        this[kIndices] = new IndicesApi(this.transport)
+        this[kIndices] = new IndicesApi(this.transport, this[kConfigurationError])
       }
       return this[kIndices]
     }
@@ -236,7 +238,7 @@ Object.defineProperties(ESAPI.prototype, {
   ingest: {
     get () {
       if (this[kIngest] === null) {
-        this[kIngest] = new IngestApi(this.transport)
+        this[kIngest] = new IngestApi(this.transport, this[kConfigurationError])
       }
       return this[kIngest]
     }
@@ -245,7 +247,7 @@ Object.defineProperties(ESAPI.prototype, {
   nodes: {
     get () {
       if (this[kNodes] === null) {
-        this[kNodes] = new NodesApi(this.transport)
+        this[kNodes] = new NodesApi(this.transport, this[kConfigurationError])
       }
       return this[kNodes]
     }
@@ -260,7 +262,7 @@ Object.defineProperties(ESAPI.prototype, {
   snapshot: {
     get () {
       if (this[kSnapshot] === null) {
-        this[kSnapshot] = new SnapshotApi(this.transport)
+        this[kSnapshot] = new SnapshotApi(this.transport, this[kConfigurationError])
       }
       return this[kSnapshot]
     }
@@ -268,7 +270,7 @@ Object.defineProperties(ESAPI.prototype, {
   tasks: {
     get () {
       if (this[kTasks] === null) {
-        this[kTasks] = new TasksApi(this.transport)
+        this[kTasks] = new TasksApi(this.transport, this[kConfigurationError])
       }
       return this[kTasks]
     }
@@ -278,7 +280,7 @@ Object.defineProperties(ESAPI.prototype, {
   asyncSearch: {
     get () {
       if (this[kAsyncSearch] === null) {
-        this[kAsyncSearch] = new AsyncSearchApi(this.transport)
+        this[kAsyncSearch] = new AsyncSearchApi(this.transport, this[kConfigurationError])
       }
       return this[kAsyncSearch]
     }
@@ -287,7 +289,7 @@ Object.defineProperties(ESAPI.prototype, {
   autoscaling: {
     get () {
       if (this[kAutoscaling] === null) {
-        this[kAutoscaling] = new AutoscalingApi(this.transport)
+        this[kAutoscaling] = new AutoscalingApi(this.transport, this[kConfigurationError])
       }
       return this[kAutoscaling]
     }
@@ -295,7 +297,7 @@ Object.defineProperties(ESAPI.prototype, {
   ccr: {
     get () {
       if (this[kCcr] === null) {
-        this[kCcr] = new CcrApi(this.transport)
+        this[kCcr] = new CcrApi(this.transport, this[kConfigurationError])
       }
       return this[kCcr]
     }
@@ -304,7 +306,7 @@ Object.defineProperties(ESAPI.prototype, {
   enrich: {
     get () {
       if (this[kEnrich] === null) {
-        this[kEnrich] = new EnrichApi(this.transport)
+        this[kEnrich] = new EnrichApi(this.transport, this[kConfigurationError])
       }
       return this[kEnrich]
     }
@@ -312,7 +314,7 @@ Object.defineProperties(ESAPI.prototype, {
   eql: {
     get () {
       if (this[kEql] === null) {
-        this[kEql] = new EqlApi(this.transport)
+        this[kEql] = new EqlApi(this.transport, this[kConfigurationError])
       }
       return this[kEql]
     }
@@ -320,7 +322,7 @@ Object.defineProperties(ESAPI.prototype, {
   graph: {
     get () {
       if (this[kGraph] === null) {
-        this[kGraph] = new GraphApi(this.transport)
+        this[kGraph] = new GraphApi(this.transport, this[kConfigurationError])
       }
       return this[kGraph]
     }
@@ -328,7 +330,7 @@ Object.defineProperties(ESAPI.prototype, {
   ilm: {
     get () {
       if (this[kIlm] === null) {
-        this[kIlm] = new IlmApi(this.transport)
+        this[kIlm] = new IlmApi(this.transport, this[kConfigurationError])
       }
       return this[kIlm]
     }
@@ -336,7 +338,7 @@ Object.defineProperties(ESAPI.prototype, {
   license: {
     get () {
       if (this[kLicense] === null) {
-        this[kLicense] = new LicenseApi(this.transport)
+        this[kLicense] = new LicenseApi(this.transport, this[kConfigurationError])
       }
       return this[kLicense]
     }
@@ -344,7 +346,7 @@ Object.defineProperties(ESAPI.prototype, {
   migration: {
     get () {
       if (this[kMigration] === null) {
-        this[kMigration] = new MigrationApi(this.transport)
+        this[kMigration] = new MigrationApi(this.transport, this[kConfigurationError])
       }
       return this[kMigration]
     }
@@ -352,7 +354,7 @@ Object.defineProperties(ESAPI.prototype, {
   ml: {
     get () {
       if (this[kMl] === null) {
-        this[kMl] = new MlApi(this.transport)
+        this[kMl] = new MlApi(this.transport, this[kConfigurationError])
       }
       return this[kMl]
     }
@@ -360,7 +362,7 @@ Object.defineProperties(ESAPI.prototype, {
   monitoring: {
     get () {
       if (this[kMonitoring] === null) {
-        this[kMonitoring] = new MonitoringApi(this.transport)
+        this[kMonitoring] = new MonitoringApi(this.transport, this[kConfigurationError])
       }
       return this[kMonitoring]
     }
@@ -369,7 +371,7 @@ Object.defineProperties(ESAPI.prototype, {
   rollup: {
     get () {
       if (this[kRollup] === null) {
-        this[kRollup] = new RollupApi(this.transport)
+        this[kRollup] = new RollupApi(this.transport, this[kConfigurationError])
       }
       return this[kRollup]
     }
@@ -377,7 +379,7 @@ Object.defineProperties(ESAPI.prototype, {
   searchableSnapshots: {
     get () {
       if (this[kSearchableSnapshots] === null) {
-        this[kSearchableSnapshots] = new SearchableSnapshotsApi(this.transport)
+        this[kSearchableSnapshots] = new SearchableSnapshotsApi(this.transport, this[kConfigurationError])
       }
       return this[kSearchableSnapshots]
     }
@@ -386,7 +388,7 @@ Object.defineProperties(ESAPI.prototype, {
   security: {
     get () {
       if (this[kSecurity] === null) {
-        this[kSecurity] = new SecurityApi(this.transport)
+        this[kSecurity] = new SecurityApi(this.transport, this[kConfigurationError])
       }
       return this[kSecurity]
     }
@@ -394,7 +396,7 @@ Object.defineProperties(ESAPI.prototype, {
   slm: {
     get () {
       if (this[kSlm] === null) {
-        this[kSlm] = new SlmApi(this.transport)
+        this[kSlm] = new SlmApi(this.transport, this[kConfigurationError])
       }
       return this[kSlm]
     }
@@ -402,7 +404,7 @@ Object.defineProperties(ESAPI.prototype, {
   sql: {
     get () {
       if (this[kSql] === null) {
-        this[kSql] = new SqlApi(this.transport)
+        this[kSql] = new SqlApi(this.transport, this[kConfigurationError])
       }
       return this[kSql]
     }
@@ -410,7 +412,7 @@ Object.defineProperties(ESAPI.prototype, {
   ssl: {
     get () {
       if (this[kSsl] === null) {
-        this[kSsl] = new SslApi(this.transport)
+        this[kSsl] = new SslApi(this.transport, this[kConfigurationError])
       }
       return this[kSsl]
     }
@@ -418,7 +420,7 @@ Object.defineProperties(ESAPI.prototype, {
   transform: {
     get () {
       if (this[kTransform] === null) {
-        this[kTransform] = new TransformApi(this.transport)
+        this[kTransform] = new TransformApi(this.transport, this[kConfigurationError])
       }
       return this[kTransform]
     }
@@ -426,7 +428,7 @@ Object.defineProperties(ESAPI.prototype, {
   watcher: {
     get () {
       if (this[kWatcher] === null) {
-        this[kWatcher] = new WatcherApi(this.transport)
+        this[kWatcher] = new WatcherApi(this.transport, this[kConfigurationError])
       }
       return this[kWatcher]
     }
@@ -434,7 +436,7 @@ Object.defineProperties(ESAPI.prototype, {
   xpack: {
     get () {
       if (this[kXpack] === null) {
-        this[kXpack] = new XpackApi(this.transport)
+        this[kXpack] = new XpackApi(this.transport, this[kConfigurationError])
       }
       return this[kXpack]
     }

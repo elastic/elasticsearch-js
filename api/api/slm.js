@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-function SlmApi (transport) {
+function SlmApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 SlmApi.prototype.deleteLifecycle = function slmDeleteLifecycleApi (params, options, callback) {
@@ -35,7 +36,7 @@ SlmApi.prototype.deleteLifecycle = function slmDeleteLifecycleApi (params, optio
 
   // check required parameters
   if (params['policy_id'] == null && params['policyId'] == null) {
-    const err = new Error('Missing required parameter: policy_id or policyId')
+    const err = new this[kConfigurationError]('Missing required parameter: policy_id or policyId')
     return handleError(err, callback)
   }
 
@@ -62,7 +63,7 @@ SlmApi.prototype.executeLifecycle = function slmExecuteLifecycleApi (params, opt
 
   // check required parameters
   if (params['policy_id'] == null && params['policyId'] == null) {
-    const err = new Error('Missing required parameter: policy_id or policyId')
+    const err = new this[kConfigurationError]('Missing required parameter: policy_id or policyId')
     return handleError(err, callback)
   }
 
@@ -178,7 +179,7 @@ SlmApi.prototype.putLifecycle = function slmPutLifecycleApi (params, options, ca
 
   // check required parameters
   if (params['policy_id'] == null && params['policyId'] == null) {
-    const err = new Error('Missing required parameter: policy_id or policyId')
+    const err = new this[kConfigurationError]('Missing required parameter: policy_id or policyId')
     return handleError(err, callback)
   }
 

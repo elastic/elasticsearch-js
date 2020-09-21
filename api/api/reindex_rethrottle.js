@@ -22,7 +22,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['requests_per_second', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
 const snakeCase = { requestsPerSecond: 'requests_per_second', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
@@ -31,11 +31,11 @@ function reindexRethrottleApi (params, options, callback) {
 
   // check required parameters
   if (params['task_id'] == null && params['taskId'] == null) {
-    const err = new Error('Missing required parameter: task_id or taskId')
+    const err = new this[kConfigurationError]('Missing required parameter: task_id or taskId')
     return handleError(err, callback)
   }
   if (params['requests_per_second'] == null && params['requestsPerSecond'] == null) {
-    const err = new Error('Missing required parameter: requests_per_second or requestsPerSecond')
+    const err = new this[kConfigurationError]('Missing required parameter: requests_per_second or requestsPerSecond')
     return handleError(err, callback)
   }
 

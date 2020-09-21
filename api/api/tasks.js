@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['nodes', 'actions', 'parent_task_id', 'wait_for_completion', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'timeout', 'detailed', 'group_by']
 const snakeCase = { parentTaskId: 'parent_task_id', waitForCompletion: 'wait_for_completion', errorTrace: 'error_trace', filterPath: 'filter_path', groupBy: 'group_by' }
 
-function TasksApi (transport) {
+function TasksApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 TasksApi.prototype.cancel = function tasksCancelApi (params, options, callback) {
@@ -61,7 +62,7 @@ TasksApi.prototype.get = function tasksGetApi (params, options, callback) {
 
   // check required parameters
   if (params['task_id'] == null && params['taskId'] == null) {
-    const err = new Error('Missing required parameter: task_id or taskId')
+    const err = new this[kConfigurationError]('Missing required parameter: task_id or taskId')
     return handleError(err, callback)
   }
 

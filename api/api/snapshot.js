@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['master_timeout', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'wait_for_completion', 'verify', 'ignore_unavailable', 'verbose', 'local']
 const snakeCase = { masterTimeout: 'master_timeout', errorTrace: 'error_trace', filterPath: 'filter_path', waitForCompletion: 'wait_for_completion', ignoreUnavailable: 'ignore_unavailable' }
 
-function SnapshotApi (transport) {
+function SnapshotApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 SnapshotApi.prototype.cleanupRepository = function snapshotCleanupRepositoryApi (params, options, callback) {
@@ -35,7 +36,7 @@ SnapshotApi.prototype.cleanupRepository = function snapshotCleanupRepositoryApi 
 
   // check required parameters
   if (params['repository'] == null) {
-    const err = new Error('Missing required parameter: repository')
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
 
@@ -62,17 +63,17 @@ SnapshotApi.prototype.create = function snapshotCreateApi (params, options, call
 
   // check required parameters
   if (params['repository'] == null) {
-    const err = new Error('Missing required parameter: repository')
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
   if (params['snapshot'] == null) {
-    const err = new Error('Missing required parameter: snapshot')
+    const err = new this[kConfigurationError]('Missing required parameter: snapshot')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['snapshot'] != null && (params['repository'] == null)) {
-    const err = new Error('Missing required parameter of the url: repository')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
@@ -99,11 +100,11 @@ SnapshotApi.prototype.createRepository = function snapshotCreateRepositoryApi (p
 
   // check required parameters
   if (params['repository'] == null) {
-    const err = new Error('Missing required parameter: repository')
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -130,17 +131,17 @@ SnapshotApi.prototype.delete = function snapshotDeleteApi (params, options, call
 
   // check required parameters
   if (params['repository'] == null) {
-    const err = new Error('Missing required parameter: repository')
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
   if (params['snapshot'] == null) {
-    const err = new Error('Missing required parameter: snapshot')
+    const err = new this[kConfigurationError]('Missing required parameter: snapshot')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['snapshot'] != null && (params['repository'] == null)) {
-    const err = new Error('Missing required parameter of the url: repository')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
@@ -167,7 +168,7 @@ SnapshotApi.prototype.deleteRepository = function snapshotDeleteRepositoryApi (p
 
   // check required parameters
   if (params['repository'] == null) {
-    const err = new Error('Missing required parameter: repository')
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
 
@@ -194,17 +195,17 @@ SnapshotApi.prototype.get = function snapshotGetApi (params, options, callback) 
 
   // check required parameters
   if (params['repository'] == null) {
-    const err = new Error('Missing required parameter: repository')
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
   if (params['snapshot'] == null) {
-    const err = new Error('Missing required parameter: snapshot')
+    const err = new this[kConfigurationError]('Missing required parameter: snapshot')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['snapshot'] != null && (params['repository'] == null)) {
-    const err = new Error('Missing required parameter of the url: repository')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
@@ -257,17 +258,17 @@ SnapshotApi.prototype.restore = function snapshotRestoreApi (params, options, ca
 
   // check required parameters
   if (params['repository'] == null) {
-    const err = new Error('Missing required parameter: repository')
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
   if (params['snapshot'] == null) {
-    const err = new Error('Missing required parameter: snapshot')
+    const err = new this[kConfigurationError]('Missing required parameter: snapshot')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['snapshot'] != null && (params['repository'] == null)) {
-    const err = new Error('Missing required parameter of the url: repository')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
@@ -294,7 +295,7 @@ SnapshotApi.prototype.status = function snapshotStatusApi (params, options, call
 
   // check required url components
   if (params['snapshot'] != null && (params['repository'] == null)) {
-    const err = new Error('Missing required parameter of the url: repository')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
@@ -329,7 +330,7 @@ SnapshotApi.prototype.verifyRepository = function snapshotVerifyRepositoryApi (p
 
   // check required parameters
   if (params['repository'] == null) {
-    const err = new Error('Missing required parameter: repository')
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
 

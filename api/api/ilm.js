@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'only_managed', 'only_errors']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', onlyManaged: 'only_managed', onlyErrors: 'only_errors' }
 
-function IlmApi (transport) {
+function IlmApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 IlmApi.prototype.deleteLifecycle = function ilmDeleteLifecycleApi (params, options, callback) {
@@ -35,7 +36,7 @@ IlmApi.prototype.deleteLifecycle = function ilmDeleteLifecycleApi (params, optio
 
   // check required parameters
   if (params['policy'] == null) {
-    const err = new Error('Missing required parameter: policy')
+    const err = new this[kConfigurationError]('Missing required parameter: policy')
     return handleError(err, callback)
   }
 
@@ -62,7 +63,7 @@ IlmApi.prototype.explainLifecycle = function ilmExplainLifecycleApi (params, opt
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -136,7 +137,7 @@ IlmApi.prototype.moveToStep = function ilmMoveToStepApi (params, options, callba
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -163,7 +164,7 @@ IlmApi.prototype.putLifecycle = function ilmPutLifecycleApi (params, options, ca
 
   // check required parameters
   if (params['policy'] == null) {
-    const err = new Error('Missing required parameter: policy')
+    const err = new this[kConfigurationError]('Missing required parameter: policy')
     return handleError(err, callback)
   }
 
@@ -190,7 +191,7 @@ IlmApi.prototype.removePolicy = function ilmRemovePolicyApi (params, options, ca
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -217,7 +218,7 @@ IlmApi.prototype.retry = function ilmRetryApi (params, options, callback) {
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 

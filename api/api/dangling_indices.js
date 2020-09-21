@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['accept_data_loss', 'timeout', 'master_timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
 const snakeCase = { acceptDataLoss: 'accept_data_loss', masterTimeout: 'master_timeout', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-function DanglingIndicesApi (transport) {
+function DanglingIndicesApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 DanglingIndicesApi.prototype.deleteDanglingIndex = function danglingIndicesDeleteDanglingIndexApi (params, options, callback) {
@@ -35,7 +36,7 @@ DanglingIndicesApi.prototype.deleteDanglingIndex = function danglingIndicesDelet
 
   // check required parameters
   if (params['index_uuid'] == null && params['indexUuid'] == null) {
-    const err = new Error('Missing required parameter: index_uuid or indexUuid')
+    const err = new this[kConfigurationError]('Missing required parameter: index_uuid or indexUuid')
     return handleError(err, callback)
   }
 
@@ -62,7 +63,7 @@ DanglingIndicesApi.prototype.importDanglingIndex = function danglingIndicesImpor
 
   // check required parameters
   if (params['index_uuid'] == null && params['indexUuid'] == null) {
-    const err = new Error('Missing required parameter: index_uuid or indexUuid')
+    const err = new this[kConfigurationError]('Missing required parameter: index_uuid or indexUuid')
     return handleError(err, callback)
   }
 

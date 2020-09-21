@@ -22,12 +22,13 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-const { handleError, snakeCaseKeys, normalizeArguments } = require('../utils')
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
 const acceptedQuerystring = ['timeout', 'master_timeout', 'ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'index', 'fielddata', 'fields', 'query', 'request', 'wait_for_active_shards', 'local', 'flat_settings', 'include_defaults', 'force', 'wait_if_ongoing', 'flush', 'max_num_segments', 'only_expunge_deletes', 'create', 'cause', 'write_index_only', 'preserve_existing', 'order', 'detailed', 'active_only', 'dry_run', 'verbose', 'status', 'completion_fields', 'fielddata_fields', 'groups', 'level', 'types', 'include_segment_file_sizes', 'include_unloaded_segments', 'forbid_closed_indices', 'wait_for_completion', 'only_ancient_segments', 'explain', 'q', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'rewrite', 'all_shards']
 const snakeCase = { masterTimeout: 'master_timeout', ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', waitForActiveShards: 'wait_for_active_shards', flatSettings: 'flat_settings', includeDefaults: 'include_defaults', waitIfOngoing: 'wait_if_ongoing', maxNumSegments: 'max_num_segments', onlyExpungeDeletes: 'only_expunge_deletes', writeIndexOnly: 'write_index_only', preserveExisting: 'preserve_existing', activeOnly: 'active_only', dryRun: 'dry_run', completionFields: 'completion_fields', fielddataFields: 'fielddata_fields', includeSegmentFileSizes: 'include_segment_file_sizes', includeUnloadedSegments: 'include_unloaded_segments', forbidClosedIndices: 'forbid_closed_indices', waitForCompletion: 'wait_for_completion', onlyAncientSegments: 'only_ancient_segments', analyzeWildcard: 'analyze_wildcard', defaultOperator: 'default_operator', allShards: 'all_shards' }
 
-function IndicesApi (transport) {
+function IndicesApi (transport, ConfigurationError) {
   this.transport = transport
+  this[kConfigurationError] = ConfigurationError
 }
 
 IndicesApi.prototype.addBlock = function indicesAddBlockApi (params, options, callback) {
@@ -35,17 +36,17 @@ IndicesApi.prototype.addBlock = function indicesAddBlockApi (params, options, ca
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['block'] == null) {
-    const err = new Error('Missing required parameter: block')
+    const err = new this[kConfigurationError]('Missing required parameter: block')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['block'] != null && (params['index'] == null)) {
-    const err = new Error('Missing required parameter of the url: index')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
@@ -124,17 +125,17 @@ IndicesApi.prototype.clone = function indicesCloneApi (params, options, callback
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['target'] == null) {
-    const err = new Error('Missing required parameter: target')
+    const err = new this[kConfigurationError]('Missing required parameter: target')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['target'] != null && (params['index'] == null)) {
-    const err = new Error('Missing required parameter of the url: index')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
@@ -161,7 +162,7 @@ IndicesApi.prototype.close = function indicesCloseApi (params, options, callback
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -188,7 +189,7 @@ IndicesApi.prototype.create = function indicesCreateApi (params, options, callba
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -215,7 +216,7 @@ IndicesApi.prototype.delete = function indicesDeleteApi (params, options, callba
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -242,17 +243,17 @@ IndicesApi.prototype.deleteAlias = function indicesDeleteAliasApi (params, optio
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['name'] != null && (params['index'] == null)) {
-    const err = new Error('Missing required parameter of the url: index')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
@@ -284,7 +285,7 @@ IndicesApi.prototype.deleteIndexTemplate = function indicesDeleteIndexTemplateAp
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -311,7 +312,7 @@ IndicesApi.prototype.deleteTemplate = function indicesDeleteTemplateApi (params,
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -338,7 +339,7 @@ IndicesApi.prototype.exists = function indicesExistsApi (params, options, callba
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -365,7 +366,7 @@ IndicesApi.prototype.existsAlias = function indicesExistsAliasApi (params, optio
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -397,7 +398,7 @@ IndicesApi.prototype.existsIndexTemplate = function indicesExistsIndexTemplateAp
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -424,7 +425,7 @@ IndicesApi.prototype.existsTemplate = function indicesExistsTemplateApi (params,
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -451,17 +452,17 @@ IndicesApi.prototype.existsType = function indicesExistsTypeApi (params, options
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['type'] == null) {
-    const err = new Error('Missing required parameter: type')
+    const err = new this[kConfigurationError]('Missing required parameter: type')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['type'] != null && (params['index'] == null)) {
-    const err = new Error('Missing required parameter of the url: index')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
@@ -540,7 +541,7 @@ IndicesApi.prototype.get = function indicesGetApi (params, options, callback) {
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -599,7 +600,7 @@ IndicesApi.prototype.getFieldMapping = function indicesGetFieldMappingApi (param
 
   // check required parameters
   if (params['fields'] == null) {
-    const err = new Error('Missing required parameter: fields')
+    const err = new this[kConfigurationError]('Missing required parameter: fields')
     return handleError(err, callback)
   }
 
@@ -762,7 +763,7 @@ IndicesApi.prototype.open = function indicesOpenApi (params, options, callback) 
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -789,17 +790,17 @@ IndicesApi.prototype.putAlias = function indicesPutAliasApi (params, options, ca
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['name'] != null && (params['index'] == null)) {
-    const err = new Error('Missing required parameter of the url: index')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
@@ -831,11 +832,11 @@ IndicesApi.prototype.putIndexTemplate = function indicesPutIndexTemplateApi (par
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -862,11 +863,11 @@ IndicesApi.prototype.putMapping = function indicesPutMappingApi (params, options
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -893,7 +894,7 @@ IndicesApi.prototype.putSettings = function indicesPutSettingsApi (params, optio
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -925,11 +926,11 @@ IndicesApi.prototype.putTemplate = function indicesPutTemplateApi (params, optio
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1008,7 +1009,7 @@ IndicesApi.prototype.resolveIndex = function indicesResolveIndexApi (params, opt
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -1035,13 +1036,13 @@ IndicesApi.prototype.rollover = function indicesRolloverApi (params, options, ca
 
   // check required parameters
   if (params['alias'] == null) {
-    const err = new Error('Missing required parameter: alias')
+    const err = new this[kConfigurationError]('Missing required parameter: alias')
     return handleError(err, callback)
   }
 
   // check required url components
   if ((params['new_index'] != null || params['newIndex'] != null) && (params['alias'] == null)) {
-    const err = new Error('Missing required parameter of the url: alias')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: alias')
     return handleError(err, callback)
   }
 
@@ -1125,17 +1126,17 @@ IndicesApi.prototype.shrink = function indicesShrinkApi (params, options, callba
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['target'] == null) {
-    const err = new Error('Missing required parameter: target')
+    const err = new this[kConfigurationError]('Missing required parameter: target')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['target'] != null && (params['index'] == null)) {
-    const err = new Error('Missing required parameter of the url: index')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
@@ -1162,7 +1163,7 @@ IndicesApi.prototype.simulateIndexTemplate = function indicesSimulateIndexTempla
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -1215,17 +1216,17 @@ IndicesApi.prototype.split = function indicesSplitApi (params, options, callback
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
   if (params['target'] == null) {
-    const err = new Error('Missing required parameter: target')
+    const err = new this[kConfigurationError]('Missing required parameter: target')
     return handleError(err, callback)
   }
 
   // check required url components
   if (params['target'] != null && (params['index'] == null)) {
-    const err = new Error('Missing required parameter of the url: index')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
@@ -1284,7 +1285,7 @@ IndicesApi.prototype.updateAliases = function indicesUpdateAliasesApi (params, o
 
   // check required parameters
   if (params['body'] == null) {
-    const err = new Error('Missing required parameter: body')
+    const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
@@ -1332,7 +1333,7 @@ IndicesApi.prototype.validateQuery = function indicesValidateQueryApi (params, o
 
   // check required url components
   if (params['type'] != null && (params['index'] == null)) {
-    const err = new Error('Missing required parameter of the url: index')
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
@@ -1367,7 +1368,7 @@ IndicesApi.prototype.createDataStream = function indicesCreateDataStreamApi (par
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -1420,7 +1421,7 @@ IndicesApi.prototype.deleteDataStream = function indicesDeleteDataStreamApi (par
 
   // check required parameters
   if (params['name'] == null) {
-    const err = new Error('Missing required parameter: name')
+    const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
@@ -1447,7 +1448,7 @@ IndicesApi.prototype.freeze = function indicesFreezeApi (params, options, callba
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -1500,7 +1501,7 @@ IndicesApi.prototype.reloadSearchAnalyzers = function indicesReloadSearchAnalyze
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
@@ -1527,7 +1528,7 @@ IndicesApi.prototype.unfreeze = function indicesUnfreezeApi (params, options, ca
 
   // check required parameters
   if (params['index'] == null) {
-    const err = new Error('Missing required parameter: index')
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
