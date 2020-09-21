@@ -38,12 +38,12 @@ const kChild = Symbol('elasticsearchjs-child')
 const kExtensions = Symbol('elasticsearchjs-extensions')
 const kEventEmitter = Symbol('elasticsearchjs-event-emitter')
 
-const ESAPI = require('./new-api')
+const ESAPI = require('./api')
 
 class Client extends ESAPI {
   constructor (opts = {}) {
     super()
-    if (opts.cloud) {
+    if (opts.cloud && opts[kChild] === undefined) {
       const { id, username, password } = opts.cloud
       // the cloud id is `cluster-name:base64encodedurl`
       // the url is a string divided by two '$', the first is the cloud url
