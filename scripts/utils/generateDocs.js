@@ -111,6 +111,7 @@ function generateDocs (common, spec) {
 
 function commonParameters (spec) {
   var doc = dedent`
+  [discrete]
   === Common parameters
   Parameters that are accepted by all API endpoints.
 
@@ -210,6 +211,7 @@ function generateApiDoc (spec) {
     : `*Stability:* ${spec[name].stability}`
 
   var doc = dedent`
+  [discrete]
   === ${camelify(name)}
   ${stability}
   [source,ts]
