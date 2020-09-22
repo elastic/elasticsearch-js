@@ -81,6 +81,7 @@ client.search({
 ----
 
 
+[discrete]
 === Aborting a request
 
 If needed, you can abort a running request by calling the `request.abort()` method returned by the API.
@@ -134,6 +135,7 @@ request.abort()
 ----
 
 
+[discrete]
 === Request specific options
 If needed you can pass request specific options in a second object:
 
@@ -210,6 +212,8 @@ _Default:_ `null`
 _Default:_ `null`
 |===
 
+
+[discrete]
 === Connecting through a proxy
 
 ~Added~ ~in~ ~`v7.10.0`~
@@ -250,6 +254,8 @@ const client = new Client({
 })
 ----
 
+
+[discrete]
 === Error handling
 
 The client exposes a variety of error objects that you can use to enhance your

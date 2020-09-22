@@ -1,9 +1,11 @@
 [[introduction]]
 == Introduction
 
-The official Node.js client for {es}.
+This is the official Node.js client for {es}. This page gives a quick overview 
+about the features of the client.
 
 
+[discrete]
 === Features
 
 * One-to-one mapping with REST API.
@@ -15,15 +17,9 @@ The official Node.js client for {es}.
 * TypeScript support out of the box.
 
 
-=== Install
-
-[source,sh]
-----
-npm install @elastic/elasticsearch
-----
-
-
-=== Compatibility
+[discrete]
+[[js-compatibility-matrix]]
+=== Compatibility matrix
 
 The minimum supported version of Node.js is `v8`.
 
@@ -50,13 +46,8 @@ using.
 |`5.x`
 |===
 
-To install a specific major version of the client, run the following command:
 
-----
-npm install @elastic/elasticsearch@<major>
-----
-
-
+[discrete]
 ==== Browser
 
 WARNING: There is no official support for the browser environment. It exposes
@@ -64,6 +55,7 @@ your {es} instance to everyone, which could lead to security issues. We
 recommend you to write a lightweight proxy that uses this client instead.
 
 
+[discrete]
 === Quick start
 
 First of all, require, then initialize the client:
@@ -176,7 +168,7 @@ async function run () {
 run().catch(console.log)
 ----
 
-
+[discrete]
 ==== Install multiple versions
 
 If you are using multiple versions of {es}, you need to use multiple versions of

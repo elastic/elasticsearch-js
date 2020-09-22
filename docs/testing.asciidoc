@@ -33,6 +33,8 @@ the `Connection` component since it has very few responsibilities and
 it does not interact with other internal components other than getting
 requests and returning responses.
 
+
+[discrete]
 === `@elastic/elasticsearch-mock`
 
 Writing each time a mock for your test can be annoying and error-prone,
