@@ -23,6 +23,7 @@
 
 'use strict'
 
+const { join } = require('path')
 const dedent = require('dedent')
 const semver = require('semver')
 const allowedMethods = {
@@ -70,7 +71,115 @@ const ndjsonApi = [
   'xpack.monitoring.bulk'
 ]
 
-function generate (version, spec, common) {
+function generateNamespace (namespace, nested, folders, version) {
+  const common = require(join(folders.apiFolder, '_common.json'))
+  let code = dedent`
+  /*
+   * Licensed to Elasticsearch B.V. under one or more contributor
+   * license agreements. See the NOTICE file distributed with
+   * this work for additional information regarding copyright
+   * ownership. Elasticsearch B.V. licenses this file to you under
+   * the Apache License, Version 2.0 (the "License"); you may
+   * not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *    http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing,
+   * software distributed under the License is distributed on an
+   * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   * KIND, either express or implied.  See the License for the
+   * specific language governing permissions and limitations
+   * under the License.
+   */
+
+  'use strict'
+
+  /* eslint camelcase: 0 */
+  /* eslint no-unused-vars: 0 */
+
+  const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+`
+  if (nested.length > 0) {
+    let getters = ''
+    for (const n of nested) {
+      if (n.includes('_')) {
+        const nameSnaked = n
+          .replace(/\.([a-z])/g, k => k[1].toUpperCase())
+          .replace(/_([a-z])/g, k => k[1].toUpperCase())
+        getters += `${n}: { get () { return this.${nameSnaked} } },\n`
+      }
+    }
+    const api = generateMultiApi(version, namespace, nested, common, folders)
+    if (getters.length > 0) {
+      getters = `Object.defineProperties(${api.namespace}Api.prototype, {\n${getters}})`
+    }
+
+    code += `
+  const acceptedQuerystring = ${JSON.stringify(api.acceptedQuerystring)}
+  const snakeCase = ${JSON.stringify(api.snakeCase)}
+
+  function ${api.namespace}Api (transport, ConfigurationError) {
+    this.transport = transport
+    this[kConfigurationError] = ConfigurationError
+  }
+
+  ${api.code}
+
+  ${getters}
+
+  module.exports = ${api.namespace}Api
+    `
+  } else {
+    let spec = null
+    try {
+      spec = require(join(folders.apiFolder, `${namespace}.json`))
+    } catch (err) {
+      spec = require(join(folders.xPackFolder, `${namespace}.json`))
+    }
+    const api = generateSingleApi(version, spec, common)
+    code += `
+  const acceptedQuerystring = ${JSON.stringify(api.acceptedQuerystring)}
+  const snakeCase = ${JSON.stringify(api.snakeCase)}
+
+  ${api.code}
+
+  module.exports = ${api.name}Api
+    `
+  }
+  return code
+}
+
+function generateMultiApi (version, namespace, nested, common, folders) {
+  const namespaceSnaked = namespace
+    .replace(/\.([a-z])/g, k => k[1].toUpperCase())
+    .replace(/_([a-z])/g, k => k[1].toUpperCase())
+  let code = ''
+  const snakeCase = {}
+  const acceptedQuerystring = []
+  for (const n of nested) {
+    let spec = null
+    const nameSnaked = n
+      .replace(/\.([a-z])/g, k => k[1].toUpperCase())
+      .replace(/_([a-z])/g, k => k[1].toUpperCase())
+    try {
+      spec = require(join(folders.apiFolder, `${namespace}.${n}.json`))
+    } catch (err) {
+      spec = require(join(folders.xPackFolder, `${namespace}.${n}.json`))
+    }
+    const api = generateSingleApi(version, spec, common)
+    code += `${Uppercase(namespaceSnaked)}Api.prototype.${nameSnaked} = ${api.code}\n\n`
+    Object.assign(snakeCase, api.snakeCase)
+    for (const q of api.acceptedQuerystring) {
+      if (!acceptedQuerystring.includes(q)) {
+        acceptedQuerystring.push(q)
+      }
+    }
+  }
+  return { code, snakeCase, acceptedQuerystring, namespace: Uppercase(namespaceSnaked) }
+}
+
+function generateSingleApi (version, spec, common) {
   const release = semver.valid(version) ? semver.major(version) : version
   const api = Object.keys(spec)[0]
   const name = api
@@ -136,37 +245,15 @@ function generate (version, spec, common) {
   }
 
   const code = `
-  function ${safeWords(name)} (params, options, callback) {
-    options = options || {}
-    if (typeof options === 'function') {
-      callback = options
-      options = {}
-    }
-    if (typeof params === 'function' || params == null) {
-      callback = params
-      params = {}
-      options = {}
-    }
+  function ${name}Api (params, options, callback) {
+    ;[params, options, callback] = normalizeArguments(params, options, callback)
 
     ${genRequiredChecks()}
 
     ${genUrlValidation(paths, api)}
 
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(\`Headers should be an object, instead got: \${typeof options.headers}\`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
     var { ${genQueryBlacklist(false)}, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
+    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
     var path = ''
     ${buildPath(api)}
@@ -179,57 +266,17 @@ function generate (version, spec, common) {
       querystring
     }
 
-    options.warnings = warnings.length === 0 ? null : warnings
-    return makeRequest(request, options, callback)
+    return this.transport.request(request, options, callback)
   }
   `.trim() // always call trim to avoid newlines
 
-  const fn = dedent`
-  /*
-   * Licensed to Elasticsearch B.V. under one or more contributor
-   * license agreements. See the NOTICE file distributed with
-   * this work for additional information regarding copyright
-   * ownership. Elasticsearch B.V. licenses this file to you under
-   * the Apache License, Version 2.0 (the "License"); you may
-   * not use this file except in compliance with the License.
-   * You may obtain a copy of the License at
-   *
-   *    http://www.apache.org/licenses/LICENSE-2.0
-   *
-   * Unless required by applicable law or agreed to in writing,
-   * software distributed under the License is distributed on an
-   * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-   * KIND, either express or implied.  See the License for the
-   * specific language governing permissions and limitations
-   * under the License.
-   */
-
-  'use strict'
-
-  /* eslint camelcase: 0 */
-  /* eslint no-unused-vars: 0 */
-
-  function build${name[0].toUpperCase() + name.slice(1)} (opts) {
-    // eslint-disable-next-line no-unused-vars
-    const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
-
-    const acceptedQuerystring = [
-      ${acceptedQuerystring.map(q => `'${q}'`).join(',\n')}
-    ]
-
-    const snakeCase = {
-      ${genSnakeCaseMap()}
-    }
-
-    ${generateDocumentation(spec[api], api)}
-    return ${code}
+  return {
+    name,
+    code,
+    acceptedQuerystring: acceptedQuerystring,
+    snakeCase: genSnakeCaseMap(),
+    documentation: generateDocumentation(spec[api], api)
   }
-
-  module.exports = build${name[0].toUpperCase() + name.slice(1)}
-`
-
-  // new line at the end of file
-  return fn + '\n'
 
   function genRequiredChecks (param) {
     const code = required
@@ -251,7 +298,7 @@ function generate (version, spec, common) {
       if (param === camelCased) {
         const check = `
           if (params['${param}'] == null) {
-            const err = new ConfigurationError('Missing required parameter: ${param}')
+            const err = new this[kConfigurationError]('Missing required parameter: ${param}')
             return handleError(err, callback)
           }
         `
@@ -259,7 +306,7 @@ function generate (version, spec, common) {
       } else {
         const check = `
           if (params['${param}'] == null && params['${camelCased}'] == null) {
-            const err = new ConfigurationError('Missing required parameter: ${param} or ${camelCased}')
+            const err = new this[kConfigurationError]('Missing required parameter: ${param} or ${camelCased}')
             return handleError(err, callback)
           }
         `
@@ -270,7 +317,7 @@ function generate (version, spec, common) {
     function _noBody () {
       const check = `
         if (params.body != null) {
-          const err = new ConfigurationError('This API does not require a body')
+          const err = new this[kConfigurationError]('This API does not require a body')
           return handleError(err, callback)
         }
       `
@@ -287,13 +334,10 @@ function generate (version, spec, common) {
 
     return acceptedQuerystring.reduce((acc, val, index) => {
       if (toCamelCase(val) !== val) {
-        acc += `${toCamelCase(val)}: '${val}'`
-        if (index !== acceptedQuerystring.length - 1) {
-          acc += ',\n'
-        }
+        acc[toCamelCase(val)] = val
       }
       return acc
-    }, '')
+    }, {})
   }
 
   function genQueryBlacklist (addQuotes = true) {
@@ -363,13 +407,11 @@ function generate (version, spec, common) {
     for (var i = 0; i < sortedPaths.length; i++) {
       const { path, methods } = sortedPaths[i]
       if (sortedPaths.length === 1) {
-        code += `
-          if (method == null) method = ${generatePickMethod(methods)}
+        code += `if (method == null) method = ${generatePickMethod(methods)}
           path = ${genPath(path)}
         `
       } else if (i === 0) {
-        code += `
-          if (${genCheck(path)}) {
+        code += `if (${genCheck(path)}) {
             if (method == null) method = ${generatePickMethod(methods)}
             path = ${genPath(path)}
           }
@@ -389,57 +431,7 @@ function generate (version, spec, common) {
       }
     }
 
-    // var hasStaticPath = false
-    // var singlePathComponent = false
-    // paths
-    //   .filter(path => {
-    //     if (path.indexOf('{') > -1) return true
-    //     if (hasStaticPath === false) {
-    //       hasStaticPath = true
-    //       return true
-    //     }
-    //     return false
-    //   })
-    //   .sort((a, b) => (b.split('{').length + b.split('/').length) - (a.split('{').length + a.split('/').length))
-    //   .forEach((path, index, arr) => {
-    //     if (arr.length === 1) {
-    //       singlePathComponent = true
-    //       code += `
-    //         path = ${genPath(path)}
-    //       `
-    //     } else if (index === 0) {
-    //       code += `
-    //         if (${genCheck(path)}) {
-    //           path = ${genPath(path)}
-    //       `
-    //     } else if (index === arr.length - 1) {
-    //       code += `
-    //         } else {
-    //           path = ${genPath(path)}
-    //       `
-    //     } else {
-    //       code += `
-    //         } else if (${genCheck(path)}) {
-    //           path = ${genPath(path)}
-    //       `
-    //     }
-    //   })
-
-    // code += singlePathComponent ? '' : '}'
     return code
-  }
-}
-
-function safeWords (str) {
-  switch (str) {
-    // delete is a reserved word
-    case 'delete':
-      return '_delete'
-    // index is also a parameter
-    case 'index':
-      return '_index'
-    default:
-      return str
   }
 }
 
@@ -529,7 +521,7 @@ function genUrlValidation (paths, api) {
       }
     }
     code += `)) {
-      const err = new ConfigurationError('Missing required parameter of the url: ${params.join(', ')}')
+      const err = new this[kConfigurationError]('Missing required parameter of the url: ${params.join(', ')}')
       return handleError(err, callback)
     `
   })
@@ -574,5 +566,9 @@ function intersect (first, ...rest) {
   }, first)
 }
 
-module.exports = generate
+function Uppercase (str) {
+  return str[0].toUpperCase() + str.slice(1)
+}
+
+module.exports = generateNamespace
 module.exports.ndjsonApi = ndjsonApi

@@ -56,3 +56,7 @@ elasticsearch*
 test/benchmarks/macro/fixtures/*
 
 *-junit.xml
+
+.cache
+
+test/bundlers/**/bundle.js

@@ -22,45 +22,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildCount (opts) {
-  // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+const acceptedQuerystring = ['ignore_unavailable', 'ignore_throttled', 'allow_no_indices', 'expand_wildcards', 'min_score', 'preference', 'routing', 'q', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'terminate_after', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { ignoreUnavailable: 'ignore_unavailable', ignoreThrottled: 'ignore_throttled', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', minScore: 'min_score', analyzeWildcard: 'analyze_wildcard', defaultOperator: 'default_operator', terminateAfter: 'terminate_after', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-  const acceptedQuerystring = [
-    'ignore_unavailable',
-    'ignore_throttled',
-    'allow_no_indices',
-    'expand_wildcards',
-    'min_score',
-    'preference',
-    'routing',
-    'q',
-    'analyzer',
-    'analyze_wildcard',
-    'default_operator',
-    'df',
-    'lenient',
-    'terminate_after',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
-  ]
+function countApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  const snakeCase = {
-    ignoreUnavailable: 'ignore_unavailable',
-    ignoreThrottled: 'ignore_throttled',
-    allowNoIndices: 'allow_no_indices',
-    expandWildcards: 'expand_wildcards',
-    minScore: 'min_score',
-    analyzeWildcard: 'analyze_wildcard',
-    defaultOperator: 'default_operator',
-    terminateAfter: 'terminate_after',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+  var { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if ((index) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_count'
+  } else {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + '_count'
   }
 
+<<<<<<< HEAD
   /**
    * Perform a count request
    * Returns number of documents matching a query.
@@ -122,7 +103,17 @@ function buildCount (opts) {
 
     options.warnings = warnings.length === 0 ? null : warnings
     return makeRequest(request, options, callback)
+=======
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+>>>>>>> a064f0f3... Improve child performances (#1314)
   }
+
+  return this.transport.request(request, options, callback)
 }
 
-module.exports = buildCount
+module.exports = countApi

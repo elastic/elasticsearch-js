@@ -57,13 +57,19 @@ function build (opts = {}) {
     stash.clear()
 
     try {
-      await client.indices.deleteAlias({ index: '_all', name: '_all' }, { ignore: 404 })
+      await client.indices.deleteAlias({
+        index: '_all',
+        name: '_all'
+      }, { ignore: [404] })
     } catch (err) {
       assert.ifError(err, 'should not error: indices.deleteAlias')
     }
 
     try {
-      await client.indices.delete({ index: '_all', expandWildcards: 'all' }, { ignore: 404 })
+      await client.indices.delete({
+        index: '_all',
+        expand_wildcards: 'open,closed,hidden'
+      }, { ignore: [404] })
     } catch (err) {
       assert.ifError(err, 'should not error: indices.delete')
     }
@@ -386,6 +392,7 @@ function build (opts = {}) {
     }
 
     const options = { ignore: cmd.params.ignore, headers: action.headers }
+    if (!Array.isArray(options.ignore)) options.ignore = [options.ignore]
     if (cmd.params.ignore) delete cmd.params.ignore
 
     const [err, result] = await to(api(cmd.params, options))

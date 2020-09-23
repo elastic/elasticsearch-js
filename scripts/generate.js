@@ -51,7 +51,6 @@ function start (opts) {
   const kibanaTypeDefFile = join(packageFolder, 'kibana.d.ts')
   const docOutputFile = join(__dirname, '..', 'docs', 'reference.asciidoc')
   const requestParamsOutputFile = join(packageFolder, 'requestParams.d.ts')
-  const allSpec = []
 
   log.text = 'Cleaning API folder...'
   rimraf.sync(join(apiOutputFolder, '*.js'))
@@ -66,8 +65,25 @@ function start (opts) {
     const xPackFolderContents = readdirSync(xPackFolder)
       .filter(file => !file.startsWith('data_frame_transform_deprecated'))
 
-    apiFolderContents.forEach(generateApiFile(apiFolder, log))
-    xPackFolderContents.forEach(generateApiFile(xPackFolder, log))
+    const allSpec = apiFolderContents.concat(xPackFolderContents)
+      .filter(file => file !== '_common.json')
+      .filter(file => !file.includes('deprecated'))
+      .sort()
+      .map(file => {
+        try {
+          return JSON.parse(readFileSync(join(apiFolder, file), 'utf8'))
+        } catch (err) {
+          return JSON.parse(readFileSync(join(xPackFolder, file), 'utf8'))
+        }
+      })
+
+    const namespaces = namespacify(apiFolderContents.concat(xPackFolderContents))
+    for (const namespace in namespaces) {
+      if (namespace === '_common') continue
+      const code = generate(namespace, namespaces[namespace], { apiFolder, xPackFolder }, opts.branch || opts.tag)
+      const filePath = join(apiOutputFolder, `${namespace}.js`)
+      writeFileSync(filePath, code, { encoding: 'utf8' })
+    }
 
     writeFileSync(
       requestParamsOutputFile,
@@ -75,7 +91,7 @@ function start (opts) {
       { encoding: 'utf8' }
     )
 
-    const { fn: factory, types, kibanaTypes } = genFactory(apiOutputFolder, [apiFolder, xPackFolder])
+    const { fn: factory, types, kibanaTypes } = genFactory(apiOutputFolder, [apiFolder, xPackFolder], namespaces)
     writeFileSync(
       mainOutputFile,
       factory,
@@ -104,9 +120,6 @@ function start (opts) {
 
     lintFiles(log, () => {
       log.text = 'Generating documentation'
-      const allSpec = apiFolderContents.filter(f => f !== '_common.json')
-        .map(f => require(join(apiFolder, f)))
-        .concat(xPackFolderContents.map(f => require(join(xPackFolder, f))))
       writeFileSync(
         docOutputFile,
         generateDocs(require(join(apiFolder, '_common.json')), allSpec),
@@ -117,27 +130,6 @@ function start (opts) {
     })
   })
 
-  function generateApiFile (apiFolder, log) {
-    var common = null
-    try {
-      common = require(join(apiFolder, '_common.json'))
-    } catch (e) {}
-
-    return function _generateApiFile (file) {
-      if (file === '_common.json') return
-      log.text = `Processing ${file}`
-
-      const spec = require(join(apiFolder, file))
-      // const { stability } = spec[Object.keys(spec)[0]]
-      // if (stability !== 'stable') return
-      allSpec.push(spec)
-      const code = generate(opts.branch || opts.tag, spec, common)
-      const filePath = join(apiOutputFolder, `${file.slice(0, file.lastIndexOf('.'))}.js`)
-
-      writeFileSync(filePath, code, { encoding: 'utf8' })
-    }
-  }
-
   function lintFiles (log, cb) {
     log.text = 'Linting...'
     const files = [join(packageFolder, '*.js'), join(apiOutputFolder, '*.js')]
@@ -147,5 +139,22 @@ function start (opts) {
       }
       cb()
     })
+  }
+
+  function namespacify (apis) {
+    return apis
+      .map(api => api.slice(0, -5))
+      .filter(api => api !== '_common')
+      .filter(api => !api.includes('deprecated'))
+      .reduce((acc, val) => {
+        if (val.includes('.')) {
+          val = val.split('.')
+          acc[val[0]] = acc[val[0]] || []
+          acc[val[0]].push(val[1])
+        } else {
+          acc[val] = []
+        }
+        return acc
+      }, {})
   }
 }

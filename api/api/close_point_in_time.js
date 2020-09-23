@@ -22,18 +22,29 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildClosePointInTime (opts) {
-  // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-  const acceptedQuerystring = [
+function closePointInTimeApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  ]
+  var { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  const snakeCase = {
+  var path = ''
+  if (method == null) method = 'DELETE'
+  path = '/' + '_pit'
 
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
   }
 
+<<<<<<< HEAD
   /**
    * Perform a close_point_in_time request
    * Close a point in time
@@ -82,6 +93,9 @@ function buildClosePointInTime (opts) {
     options.warnings = warnings.length === 0 ? null : warnings
     return makeRequest(request, options, callback)
   }
+=======
+  return this.transport.request(request, options, callback)
+>>>>>>> a064f0f3... Improve child performances (#1314)
 }
 
-module.exports = buildClosePointInTime
+module.exports = closePointInTimeApi

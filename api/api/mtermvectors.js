@@ -22,38 +22,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMtermvectors (opts) {
-  // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+const acceptedQuerystring = ['ids', 'term_statistics', 'field_statistics', 'fields', 'offsets', 'positions', 'payloads', 'preference', 'routing', 'realtime', 'version', 'version_type', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { termStatistics: 'term_statistics', fieldStatistics: 'field_statistics', versionType: 'version_type', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-  const acceptedQuerystring = [
-    'ids',
-    'term_statistics',
-    'field_statistics',
-    'fields',
-    'offsets',
-    'positions',
-    'payloads',
-    'preference',
-    'routing',
-    'realtime',
-    'version',
-    'version_type',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
-  ]
+function mtermvectorsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  const snakeCase = {
-    termStatistics: 'term_statistics',
-    fieldStatistics: 'field_statistics',
-    versionType: 'version_type',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+  var { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if ((index) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_mtermvectors'
+  } else {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + '_mtermvectors'
   }
 
+<<<<<<< HEAD
   /**
    * Perform a mtermvectors request
    * Returns multiple termvectors in one request.
@@ -115,7 +103,17 @@ function buildMtermvectors (opts) {
 
     options.warnings = warnings.length === 0 ? null : warnings
     return makeRequest(request, options, callback)
+=======
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+>>>>>>> a064f0f3... Improve child performances (#1314)
   }
+
+  return this.transport.request(request, options, callback)
 }
 
-module.exports = buildMtermvectors
+module.exports = mtermvectorsApi

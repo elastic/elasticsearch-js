@@ -22,83 +22,39 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildReindexRethrottle (opts) {
-  // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+const acceptedQuerystring = ['requests_per_second', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { requestsPerSecond: 'requests_per_second', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-  const acceptedQuerystring = [
-    'requests_per_second',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
-  ]
+function reindexRethrottleApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  const snakeCase = {
-    requestsPerSecond: 'requests_per_second',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+  // check required parameters
+  if (params['task_id'] == null && params['taskId'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: task_id or taskId')
+    return handleError(err, callback)
+  }
+  if (params['requests_per_second'] == null && params['requestsPerSecond'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: requests_per_second or requestsPerSecond')
+    return handleError(err, callback)
   }
 
-  /**
-   * Perform a reindex_rethrottle request
-   * Changes the number of requests per second for a particular Reindex operation.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
-   */
-  return function reindexRethrottle (params, options, callback) {
-    options = options || {}
-    if (typeof options === 'function') {
-      callback = options
-      options = {}
-    }
-    if (typeof params === 'function' || params == null) {
-      callback = params
-      params = {}
-      options = {}
-    }
+  var { method, body, taskId, task_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-    // check required parameters
-    if (params['task_id'] == null && params['taskId'] == null) {
-      const err = new ConfigurationError('Missing required parameter: task_id or taskId')
-      return handleError(err, callback)
-    }
-    if (params['requests_per_second'] == null && params['requestsPerSecond'] == null) {
-      const err = new ConfigurationError('Missing required parameter: requests_per_second or requestsPerSecond')
-      return handleError(err, callback)
-    }
+  var path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_reindex' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle'
 
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
-    var { method, body, taskId, task_id, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
-    var path = ''
-
-    if (method == null) method = 'POST'
-    path = '/' + '_reindex' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle'
-
-    // build request object
-    const request = {
-      method,
-      path,
-      body: body || '',
-      querystring
-    }
-
-    options.warnings = warnings.length === 0 ? null : warnings
-    return makeRequest(request, options, callback)
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
   }
+
+  return this.transport.request(request, options, callback)
 }
 
-module.exports = buildReindexRethrottle
+module.exports = reindexRethrottleApi

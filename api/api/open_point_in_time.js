@@ -22,24 +22,26 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildOpenPointInTime (opts) {
-  // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+const acceptedQuerystring = ['preference', 'routing', 'ignore_unavailable', 'expand_wildcards', 'keep_alive', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { ignoreUnavailable: 'ignore_unavailable', expandWildcards: 'expand_wildcards', keepAlive: 'keep_alive', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-  const acceptedQuerystring = [
-    'preference',
-    'routing',
-    'ignore_unavailable',
-    'expand_wildcards',
-    'keep_alive'
-  ]
+function openPointInTimeApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  const snakeCase = {
-    ignoreUnavailable: 'ignore_unavailable',
-    expandWildcards: 'expand_wildcards',
-    keepAlive: 'keep_alive'
+  var { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if ((index) != null) {
+    if (method == null) method = 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_pit'
+  } else {
+    if (method == null) method = 'POST'
+    path = '/' + '_pit'
   }
 
+<<<<<<< HEAD
   /**
    * Perform a open_point_in_time request
    * Open a point in time that can be used in subsequent searches
@@ -92,7 +94,17 @@ function buildOpenPointInTime (opts) {
 
     options.warnings = warnings.length === 0 ? null : warnings
     return makeRequest(request, options, callback)
+=======
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+>>>>>>> a064f0f3... Improve child performances (#1314)
   }
+
+  return this.transport.request(request, options, callback)
 }
 
-module.exports = buildOpenPointInTime
+module.exports = openPointInTimeApi

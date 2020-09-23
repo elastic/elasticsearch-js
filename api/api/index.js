@@ -22,40 +22,24 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildIndex (opts) {
-  // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+const acceptedQuerystring = ['wait_for_active_shards', 'op_type', 'refresh', 'routing', 'timeout', 'version', 'version_type', 'if_seq_no', 'if_primary_term', 'pipeline', 'require_alias', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { waitForActiveShards: 'wait_for_active_shards', opType: 'op_type', versionType: 'version_type', ifSeqNo: 'if_seq_no', ifPrimaryTerm: 'if_primary_term', requireAlias: 'require_alias', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-  const acceptedQuerystring = [
-    'wait_for_active_shards',
-    'op_type',
-    'refresh',
-    'routing',
-    'timeout',
-    'version',
-    'version_type',
-    'if_seq_no',
-    'if_primary_term',
-    'pipeline',
-    'require_alias',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
-  ]
+function indexApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  const snakeCase = {
-    waitForActiveShards: 'wait_for_active_shards',
-    opType: 'op_type',
-    versionType: 'version_type',
-    ifSeqNo: 'if_seq_no',
-    ifPrimaryTerm: 'if_primary_term',
-    requireAlias: 'require_alias',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+  // check required parameters
+  if (params['index'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: index')
+    return handleError(err, callback)
+  }
+  if (params['body'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
   }
 
+<<<<<<< HEAD
   /**
    * Perform a index request
    * Creates or updates a document in an index.
@@ -113,18 +97,29 @@ function buildIndex (opts) {
       if (method == null) method = 'POST'
       path = '/' + encodeURIComponent(index) + '/' + '_doc'
     }
+=======
+  var { method, body, id, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+>>>>>>> a064f0f3... Improve child performances (#1314)
 
-    // build request object
-    const request = {
-      method,
-      path,
-      body: body || '',
-      querystring
-    }
-
-    options.warnings = warnings.length === 0 ? null : warnings
-    return makeRequest(request, options, callback)
+  var path = ''
+  if ((index) != null && (id) != null) {
+    if (method == null) method = 'PUT'
+    path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
+  } else {
+    if (method == null) method = 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_doc'
   }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
 }
 
-module.exports = buildIndex
+module.exports = indexApi
