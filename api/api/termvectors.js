@@ -35,64 +35,23 @@ function termvectorsApi (params, options, callback) {
     return handleError(err, callback)
   }
 
-  var { method, body, index, id, ...querystring } = params
+  var { method, body, index, id, type, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-<<<<<<< HEAD
-    // check required parameters
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
-      return handleError(err, callback)
-    }
-
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
-    var { method, body, index, id, type, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
-    var path = ''
-
-    if ((index) != null && (type) != null && (id) != null) {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_termvectors'
-    } else if ((index) != null && (id) != null) {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_termvectors' + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (type) != null) {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_termvectors'
-    } else {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_termvectors'
-    }
-
-    // build request object
-    const request = {
-      method,
-      path,
-      body: body || '',
-      querystring
-    }
-=======
   var path = ''
-  if ((index) != null && (id) != null) {
+  if ((index) != null && (type) != null && (id) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id) + '/' + '_termvectors'
+  } else if ((index) != null && (id) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_termvectors' + '/' + encodeURIComponent(id)
+  } else if ((index) != null && (type) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_termvectors'
   } else {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_termvectors'
   }
->>>>>>> a064f0f3... Improve child performances (#1314)
 
   // build request object
   const request = {

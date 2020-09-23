@@ -29,11 +29,20 @@ const snakeCase = { ignoreUnavailable: 'ignore_unavailable', ignoreThrottled: 'i
 function countApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  // check required url components
+  if (params['type'] != null && (params['index'] == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
+    return handleError(err, callback)
+  }
+
+  var { method, body, index, type, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-  if ((index) != null) {
+  if ((index) != null && (type) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_count'
+  } else if ((index) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_count'
   } else {
@@ -41,76 +50,12 @@ function countApi (params, options, callback) {
     path = '/' + '_count'
   }
 
-<<<<<<< HEAD
-  /**
-   * Perform a count request
-   * Returns number of documents matching a query.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
-   */
-  return function count (params, options, callback) {
-    options = options || {}
-    if (typeof options === 'function') {
-      callback = options
-      options = {}
-    }
-    if (typeof params === 'function' || params == null) {
-      callback = params
-      params = {}
-      options = {}
-    }
-
-    // check required url components
-    if (params['type'] != null && (params['index'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: index')
-      return handleError(err, callback)
-    }
-
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
-    var { method, body, index, type, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
-    var path = ''
-
-    if ((index) != null && (type) != null) {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_count'
-    } else if ((index) != null) {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_count'
-    } else {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_count'
-    }
-
-    // build request object
-    const request = {
-      method,
-      path,
-      body: body || '',
-      querystring
-    }
-
-    options.warnings = warnings.length === 0 ? null : warnings
-    return makeRequest(request, options, callback)
-=======
   // build request object
   const request = {
     method,
     path,
     body: body || '',
     querystring
->>>>>>> a064f0f3... Improve child performances (#1314)
   }
 
   return this.transport.request(request, options, callback)

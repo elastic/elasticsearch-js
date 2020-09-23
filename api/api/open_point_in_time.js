@@ -41,67 +41,12 @@ function openPointInTimeApi (params, options, callback) {
     path = '/' + '_pit'
   }
 
-<<<<<<< HEAD
-  /**
-   * Perform a open_point_in_time request
-   * Open a point in time that can be used in subsequent searches
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time.html
-   */
-  return function openPointInTime (params, options, callback) {
-    options = options || {}
-    if (typeof options === 'function') {
-      callback = options
-      options = {}
-    }
-    if (typeof params === 'function' || params == null) {
-      callback = params
-      params = {}
-      options = {}
-    }
-
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
-    var { method, body, index, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
-    var path = ''
-
-    if ((index) != null) {
-      if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_pit'
-    } else {
-      if (method == null) method = 'POST'
-      path = '/' + '_pit'
-    }
-
-    // build request object
-    const request = {
-      method,
-      path,
-      body: body || '',
-      querystring
-    }
-
-    options.warnings = warnings.length === 0 ? null : warnings
-    return makeRequest(request, options, callback)
-=======
   // build request object
   const request = {
     method,
     path,
     body: body || '',
     querystring
->>>>>>> a064f0f3... Improve child performances (#1314)
   }
 
   return this.transport.request(request, options, callback)

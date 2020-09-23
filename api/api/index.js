@@ -39,73 +39,19 @@ function indexApi (params, options, callback) {
     return handleError(err, callback)
   }
 
-<<<<<<< HEAD
-  /**
-   * Perform a index request
-   * Creates or updates a document in an index.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
-   */
-  return function _index (params, options, callback) {
-    options = options || {}
-    if (typeof options === 'function') {
-      callback = options
-      options = {}
-    }
-    if (typeof params === 'function' || params == null) {
-      callback = params
-      params = {}
-      options = {}
-    }
-
-    // check required parameters
-    if (params['index'] == null) {
-      const err = new ConfigurationError('Missing required parameter: index')
-      return handleError(err, callback)
-    }
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
-    var { method, body, id, index, type, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
-    var path = ''
-
-    if ((index) != null && (type) != null && (id) != null) {
-      if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (id) != null) {
-      if (method == null) method = 'PUT'
-      path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
-    } else if ((index) != null && (type) != null) {
-      if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type)
-    } else {
-      if (method == null) method = 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_doc'
-    }
-=======
-  var { method, body, id, index, ...querystring } = params
+  var { method, body, id, index, type, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
->>>>>>> a064f0f3... Improve child performances (#1314)
 
   var path = ''
-  if ((index) != null && (id) != null) {
+  if ((index) != null && (type) != null && (id) != null) {
+    if (method == null) method = 'PUT'
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + encodeURIComponent(id)
+  } else if ((index) != null && (id) != null) {
     if (method == null) method = 'PUT'
     path = '/' + encodeURIComponent(index) + '/' + '_doc' + '/' + encodeURIComponent(id)
+  } else if ((index) != null && (type) != null) {
+    if (method == null) method = 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type)
   } else {
     if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_doc'

@@ -44,58 +44,7 @@ function closePointInTimeApi (params, options, callback) {
     querystring
   }
 
-<<<<<<< HEAD
-  /**
-   * Perform a close_point_in_time request
-   * Close a point in time
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time.html
-   */
-  return function closePointInTime (params, options, callback) {
-    options = options || {}
-    if (typeof options === 'function') {
-      callback = options
-      options = {}
-    }
-    if (typeof params === 'function' || params == null) {
-      callback = params
-      params = {}
-      options = {}
-    }
-
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
-    var { method, body, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
-    var path = ''
-
-    if (method == null) method = 'DELETE'
-    path = '/' + '_pit'
-
-    // build request object
-    const request = {
-      method,
-      path,
-      body: body || '',
-      querystring
-    }
-
-    options.warnings = warnings.length === 0 ? null : warnings
-    return makeRequest(request, options, callback)
-  }
-=======
   return this.transport.request(request, options, callback)
->>>>>>> a064f0f3... Improve child performances (#1314)
 }
 
 module.exports = closePointInTimeApi

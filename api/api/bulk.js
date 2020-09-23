@@ -23,36 +23,9 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['wait_for_active_shards', 'refresh', 'routing', 'timeout', 'type', '_source', '_source_excludes', '_source_exclude', '_source_includes', '_source_include', 'pipeline', 'require_alias', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
-const snakeCase = { waitForActiveShards: 'wait_for_active_shards', _sourceExcludes: '_source_excludes', _sourceExclude: '_source_exclude', _sourceIncludes: '_source_includes', _sourceInclude: '_source_include', requireAlias: 'require_alias', errorTrace: 'error_trace', filterPath: 'filter_path' }
+const acceptedQuerystring = ['wait_for_active_shards', 'refresh', 'routing', 'timeout', 'type', '_source', '_source_excludes', '_source_includes', 'pipeline', 'require_alias', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { waitForActiveShards: 'wait_for_active_shards', _sourceExcludes: '_source_excludes', _sourceIncludes: '_source_includes', requireAlias: 'require_alias', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-<<<<<<< HEAD
-  const acceptedQuerystring = [
-    'wait_for_active_shards',
-    'refresh',
-    'routing',
-    'timeout',
-    'type',
-    '_source',
-    '_source_excludes',
-    '_source_includes',
-    'pipeline',
-    'require_alias',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
-  ]
-
-  const snakeCase = {
-    waitForActiveShards: 'wait_for_active_shards',
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
-    requireAlias: 'require_alias',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
-=======
 function bulkApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -60,7 +33,6 @@ function bulkApi (params, options, callback) {
   if (params['body'] == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
->>>>>>> a064f0f3... Improve child performances (#1314)
   }
 
   // check required url components

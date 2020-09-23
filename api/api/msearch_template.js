@@ -35,67 +35,26 @@ function msearchTemplateApi (params, options, callback) {
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  // check required url components
+  if (params['type'] != null && (params['index'] == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
+    return handleError(err, callback)
+  }
+
+  var { method, body, index, type, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-<<<<<<< HEAD
-    // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
-    // check required url components
-    if (params['type'] != null && (params['index'] == null)) {
-      const err = new ConfigurationError('Missing required parameter of the url: index')
-      return handleError(err, callback)
-    }
-
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
-    var { method, body, index, type, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
-    var path = ''
-
-    if ((index) != null && (type) != null) {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_msearch' + '/' + 'template'
-    } else if ((index) != null) {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_msearch' + '/' + 'template'
-    } else {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_msearch' + '/' + 'template'
-    }
-
-    // build request object
-    const request = {
-      method,
-      path,
-      bulkBody: body,
-      querystring
-    }
-=======
   var path = ''
-  if ((index) != null) {
+  if ((index) != null && (type) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_msearch' + '/' + 'template'
+  } else if ((index) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_msearch' + '/' + 'template'
   } else {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_msearch' + '/' + 'template'
   }
->>>>>>> a064f0f3... Improve child performances (#1314)
 
   // build request object
   const request = {

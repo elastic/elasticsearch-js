@@ -23,34 +23,9 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_exclude', '_source_includes', '_source_include', 'version', 'version_type', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
-const snakeCase = { _sourceExcludes: '_source_excludes', _sourceExclude: '_source_exclude', _sourceIncludes: '_source_includes', _sourceInclude: '_source_include', versionType: 'version_type', errorTrace: 'error_trace', filterPath: 'filter_path' }
+const acceptedQuerystring = ['preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'version', 'version_type', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { _sourceExcludes: '_source_excludes', _sourceIncludes: '_source_includes', versionType: 'version_type', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-<<<<<<< HEAD
-  const acceptedQuerystring = [
-    'preference',
-    'realtime',
-    'refresh',
-    'routing',
-    '_source',
-    '_source_excludes',
-    '_source_includes',
-    'version',
-    'version_type',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
-  ]
-
-  const snakeCase = {
-    _sourceExcludes: '_source_excludes',
-    _sourceIncludes: '_source_includes',
-    versionType: 'version_type',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
-=======
 function existsSourceApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -62,7 +37,6 @@ function existsSourceApi (params, options, callback) {
   if (params['index'] == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
->>>>>>> a064f0f3... Improve child performances (#1314)
   }
 
   // check required url components
