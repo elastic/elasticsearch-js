@@ -23,7 +23,7 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['format', 'local', 'h', 'help', 's', 'v', 'expand_wildcards', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'bytes', 'master_timeout', 'fields', 'time', 'ts', 'health', 'pri', 'include_unloaded_segments', 'full_id', 'active_only', 'detailed', 'index', 'ignore_unavailable', 'node_id', 'actions', 'parent_task', 'allow_no_match', 'allow_no_datafeeds', 'allow_no_jobs', 'from', 'size']
+const acceptedQuerystring = ['format', 'local', 'h', 'help', 's', 'v', 'expand_wildcards', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'bytes', 'master_timeout', 'fields', 'time', 'ts', 'health', 'pri', 'include_unloaded_segments', 'full_id', 'active_only', 'detailed', 'index', 'ignore_unavailable', 'node_id', 'actions', 'parent_task', 'size', 'allow_no_match', 'allow_no_datafeeds', 'allow_no_jobs', 'from']
 const snakeCase = { expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', masterTimeout: 'master_timeout', includeUnloadedSegments: 'include_unloaded_segments', fullId: 'full_id', activeOnly: 'active_only', ignoreUnavailable: 'ignore_unavailable', nodeId: 'node_id', parentTask: 'parent_task', allowNoMatch: 'allow_no_match', allowNoDatafeeds: 'allow_no_datafeeds', allowNoJobs: 'allow_no_jobs' }
 
 function CatApi (transport, ConfigurationError) {
