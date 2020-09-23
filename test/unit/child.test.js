@@ -280,3 +280,41 @@ test('Should create a child client (name check)', t => {
     child.info(t.error)
   })
 })
+
+test('Should create a child client (auth check)', t => {
+  t.plan(4)
+
+  var count = 0
+  function handler (req, res) {
+    if (count++ === 0) {
+      t.match(req.headers, { authorization: 'Basic Zm9vOmJhcg==' })
+    } else {
+      t.match(req.headers, { authorization: 'ApiKey foobar' })
+    }
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://localhost:${port}`,
+      auth: {
+        username: 'foo',
+        password: 'bar'
+      }
+    })
+    const child = client.child({
+      auth: {
+        apiKey: 'foobar'
+      }
+    })
+
+    client.info((err, res) => {
+      t.error(err)
+      child.info((err, res) => {
+        t.error(err)
+        server.stop()
+      })
+    })
+  })
+})
