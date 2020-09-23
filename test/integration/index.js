@@ -19,6 +19,11 @@
 
 'use strict'
 
+process.on('unhandledRejection', function (err) {
+  console.error(err)
+  process.exit(1)
+})
+
 const { writeFileSync, readFileSync, accessSync, mkdirSync, readdirSync, statSync } = require('fs')
 const { join, sep } = require('path')
 const yaml = require('js-yaml')
@@ -197,8 +202,11 @@ async function start ({ client, isXPack }) {
       const tests = data
         .split('\n---\n')
         .map(s => s.trim())
+        // empty strings
         .filter(Boolean)
         .map(parse)
+        // null values
+        .filter(Boolean)
 
       // get setup and teardown if present
       var setupTest = null
