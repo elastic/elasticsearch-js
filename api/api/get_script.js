@@ -7,79 +7,35 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildGetScript (opts) {
-  // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+const acceptedQuerystring = ['master_timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { masterTimeout: 'master_timeout', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-  const acceptedQuerystring = [
-    'master_timeout',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
-  ]
+function getScriptApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  const snakeCase = {
-    masterTimeout: 'master_timeout',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+  // check required parameters
+  if (params['id'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: id')
+    return handleError(err, callback)
   }
 
-  /**
-   * Perform a get_script request
-   * Returns a script.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
-   */
-  return function getScript (params, options, callback) {
-    options = options || {}
-    if (typeof options === 'function') {
-      callback = options
-      options = {}
-    }
-    if (typeof params === 'function' || params == null) {
-      callback = params
-      params = {}
-      options = {}
-    }
+  var { method, body, id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-    // check required parameters
-    if (params['id'] == null) {
-      const err = new ConfigurationError('Missing required parameter: id')
-      return handleError(err, callback)
-    }
+  var path = ''
+  if (method == null) method = 'GET'
+  path = '/' + '_scripts' + '/' + encodeURIComponent(id)
 
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
-    var { method, body, id, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
-    var path = ''
-
-    if (method == null) method = 'GET'
-    path = '/' + '_scripts' + '/' + encodeURIComponent(id)
-
-    // build request object
-    const request = {
-      method,
-      path,
-      body: null,
-      querystring
-    }
-
-    options.warnings = warnings.length === 0 ? null : warnings
-    return makeRequest(request, options, callback)
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
   }
+
+  return this.transport.request(request, options, callback)
 }
 
-module.exports = buildGetScript
+module.exports = getScriptApi

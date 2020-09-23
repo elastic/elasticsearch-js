@@ -1,0 +1,16 @@
+{
+  "name": "parcel-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bundle.js",
+    "build": "parcel build index.js --target node --bundle-node-modules --out-file bundle.js --no-source-maps --out-dir ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
+}

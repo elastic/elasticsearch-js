@@ -7,61 +7,23 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildSearchTemplate (opts) {
-  // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+const acceptedQuerystring = ['ignore_unavailable', 'ignore_throttled', 'allow_no_indices', 'expand_wildcards', 'preference', 'routing', 'scroll', 'search_type', 'explain', 'profile', 'typed_keys', 'rest_total_hits_as_int', 'ccs_minimize_roundtrips', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { ignoreUnavailable: 'ignore_unavailable', ignoreThrottled: 'ignore_throttled', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', searchType: 'search_type', typedKeys: 'typed_keys', restTotalHitsAsInt: 'rest_total_hits_as_int', ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-  const acceptedQuerystring = [
-    'ignore_unavailable',
-    'ignore_throttled',
-    'allow_no_indices',
-    'expand_wildcards',
-    'preference',
-    'routing',
-    'scroll',
-    'search_type',
-    'explain',
-    'profile',
-    'typed_keys',
-    'rest_total_hits_as_int',
-    'ccs_minimize_roundtrips',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
-  ]
+function searchTemplateApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  const snakeCase = {
-    ignoreUnavailable: 'ignore_unavailable',
-    ignoreThrottled: 'ignore_throttled',
-    allowNoIndices: 'allow_no_indices',
-    expandWildcards: 'expand_wildcards',
-    searchType: 'search_type',
-    typedKeys: 'typed_keys',
-    restTotalHitsAsInt: 'rest_total_hits_as_int',
-    ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+  // check required parameters
+  if (params['body'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
   }
 
-  /**
-   * Perform a search_template request
-   * Allows to use the Mustache language to pre-render a search definition.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html
-   */
-  return function searchTemplate (params, options, callback) {
-    options = options || {}
-    if (typeof options === 'function') {
-      callback = options
-      options = {}
-    }
-    if (typeof params === 'function' || params == null) {
-      callback = params
-      params = {}
-      options = {}
-    }
+  var { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
+<<<<<<< HEAD
     // check required parameters
     if (params['body'] == null) {
       const err = new ConfigurationError('Missing required parameter: body')
@@ -109,10 +71,26 @@ function buildSearchTemplate (opts) {
       body: body || '',
       querystring
     }
-
-    options.warnings = warnings.length === 0 ? null : warnings
-    return makeRequest(request, options, callback)
+=======
+  var path = ''
+  if ((index) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_search' + '/' + 'template'
+  } else {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + '_search' + '/' + 'template'
   }
+>>>>>>> a064f0f3... Improve child performances (#1314)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
 }
 
-module.exports = buildSearchTemplate
+module.exports = searchTemplateApi

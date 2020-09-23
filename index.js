@@ -17,17 +17,19 @@ const Helpers = nodeMajor < 10 ? /* istanbul ignore next */ null : require('./li
 const Serializer = require('./lib/Serializer')
 const errors = require('./lib/errors')
 const { ConfigurationError } = errors
+const { prepareHeaders } = Connection.internals
 
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
 const kChild = Symbol('elasticsearchjs-child')
 const kExtensions = Symbol('elasticsearchjs-extensions')
 const kEventEmitter = Symbol('elasticsearchjs-event-emitter')
 
-const buildApi = require('./api')
+const ESAPI = require('./api')
 
-class Client {
+class Client extends ESAPI {
   constructor (opts = {}) {
-    if (opts.cloud) {
+    super({ ConfigurationError })
+    if (opts.cloud && opts[kChild] === undefined) {
       const { id, username, password } = opts.cloud
       // the cloud id is `cluster-name:base64encodedurl`
       // the url is a string divided by two '$', the first is the cloud url
@@ -56,37 +58,41 @@ class Client {
       throw new ConfigurationError('Missing node(s) option')
     }
 
-    const checkAuth = getAuth(opts.node || opts.nodes)
-    if (checkAuth && checkAuth.username && checkAuth.password) {
-      opts.auth = Object.assign({}, opts.auth, { username: checkAuth.username, password: checkAuth.password })
+    if (opts[kChild] === undefined) {
+      const checkAuth = getAuth(opts.node || opts.nodes)
+      if (checkAuth && checkAuth.username && checkAuth.password) {
+        opts.auth = Object.assign({}, opts.auth, { username: checkAuth.username, password: checkAuth.password })
+      }
     }
 
-    const options = Object.assign({}, {
-      Connection,
-      Transport,
-      Serializer,
-      ConnectionPool: opts.cloud ? CloudConnectionPool : ConnectionPool,
-      maxRetries: 3,
-      requestTimeout: 30000,
-      pingTimeout: 3000,
-      sniffInterval: false,
-      sniffOnStart: false,
-      sniffEndpoint: '_nodes/_all/http',
-      sniffOnConnectionFault: false,
-      resurrectStrategy: 'ping',
-      suggestCompression: false,
-      compression: false,
-      ssl: null,
-      agent: null,
-      headers: {},
-      nodeFilter: null,
-      nodeSelector: 'round-robin',
-      generateRequestId: null,
-      name: 'elasticsearch-js',
-      auth: null,
-      opaqueIdPrefix: null,
-      context: null
-    }, opts)
+    const options = opts[kChild] !== undefined
+      ? opts[kChild].initialOptions
+      : Object.assign({}, {
+        Connection,
+        Transport,
+        Serializer,
+        ConnectionPool: opts.cloud ? CloudConnectionPool : ConnectionPool,
+        maxRetries: 3,
+        requestTimeout: 30000,
+        pingTimeout: 3000,
+        sniffInterval: false,
+        sniffOnStart: false,
+        sniffEndpoint: '_nodes/_all/http',
+        sniffOnConnectionFault: false,
+        resurrectStrategy: 'ping',
+        suggestCompression: false,
+        compression: false,
+        ssl: null,
+        agent: null,
+        headers: {},
+        nodeFilter: null,
+        nodeSelector: 'round-robin',
+        generateRequestId: null,
+        name: 'elasticsearch-js',
+        auth: null,
+        opaqueIdPrefix: null,
+        context: null
+      }, opts)
 
     this[kInitialOptions] = options
     this[kExtensions] = []
@@ -140,17 +146,6 @@ class Client {
     if (Helpers !== null) {
       this.helpers = new Helpers({ client: this, maxRetries: options.maxRetries })
     }
-
-    const apis = buildApi({
-      makeRequest: this.transport.request.bind(this.transport),
-      result: { body: null, statusCode: null, headers: null, warnings: null },
-      ConfigurationError
-    })
-
-    const apiNames = Object.keys(apis)
-    for (var i = 0, len = apiNames.length; i < len; i++) {
-      this[apiNames[i]] = apis[apiNames[i]]
-    }
   }
 
   get emit () {
@@ -186,7 +181,7 @@ class Client {
         throw new Error(`The method "${method}" already exists on namespace "${namespace}"`)
       }
 
-      this[namespace] = this[namespace] || {}
+      if (this[namespace] == null) this[namespace] = {}
       this[namespace][method] = fn({
         makeRequest: this.transport.request.bind(this.transport),
         result: { body: null, statusCode: null, headers: null, warnings: null },
@@ -209,15 +204,21 @@ class Client {
 
   child (opts) {
     // Merge the new options with the initial ones
-    const initialOptions = Object.assign({}, this[kInitialOptions], opts)
+    const options = Object.assign({}, this[kInitialOptions], opts)
     // Pass to the child client the parent instances that cannot be overriden
-    initialOptions[kChild] = {
+    options[kChild] = {
       connectionPool: this.connectionPool,
       serializer: this.serializer,
-      eventEmitter: this[kEventEmitter]
+      eventEmitter: this[kEventEmitter],
+      initialOptions: options
     }
 
-    const client = new Client(initialOptions)
+    /* istanbul ignore else */
+    if (options.auth !== undefined) {
+      options.headers = prepareHeaders(options.headers, options.auth)
+    }
+
+    const client = new Client(options)
     // Add parent extensions
     if (this[kExtensions].length > 0) {
       this[kExtensions].forEach(({ name, opts, fn }) => {

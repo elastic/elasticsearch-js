@@ -20,24 +20,29 @@ const ndjsonApiKey = ndjsonApi
   })
   .map(toPascalCase)
 
-function genFactory (folder, paths) {
+function genFactory (folder, paths, namespaces) {
   // get all the API files
-  const apiFiles = readdirSync(folder)
+  // const apiFiles = readdirSync(folder)
+  const apiFiles = readdirSync(paths[0])
+    .concat(readdirSync(paths[1]))
+    .filter(file => file !== '_common.json')
+    .filter(file => !file.includes('deprecated'))
+    .sort()
   const types = apiFiles
     .map(file => {
       const name = file
-        .slice(0, -3)
+        .slice(0, -5)
         .replace(/\.([a-z])/g, k => k[1].toUpperCase())
         .replace(/_([a-z])/g, k => k[1].toUpperCase())
 
       return file
-        .slice(0, -3) // remove `.js` extension
+        .slice(0, -5) // remove `.json` extension
         .split('.')
         .reverse()
         .reduce((acc, val) => {
-          const spec = readSpec(paths, file.slice(0, -3))
-          const isHead = isHeadMethod(spec, file.slice(0, -3))
-          const body = hasBody(spec, file.slice(0, -3))
+          const spec = readSpec(paths, file.slice(0, -5))
+          const isHead = isHeadMethod(spec, file.slice(0, -5))
+          const body = hasBody(spec, file.slice(0, -5))
           const methods = acc === null ? buildMethodDefinition({ kibana: false }, val, name, body, isHead) : null
           const obj = {}
           if (methods) {
@@ -58,18 +63,18 @@ function genFactory (folder, paths) {
   const kibanaTypes = apiFiles
     .map(file => {
       const name = file
-        .slice(0, -3)
+        .slice(0, -5)
         .replace(/\.([a-z])/g, k => k[1].toUpperCase())
         .replace(/_([a-z])/g, k => k[1].toUpperCase())
 
       return file
-        .slice(0, -3) // remove `.js` extension
+        .slice(0, -5) // remove `.json` extension
         .split('.')
         .reverse()
         .reduce((acc, val) => {
-          const spec = readSpec(paths, file.slice(0, -3))
-          const isHead = isHeadMethod(spec, file.slice(0, -3))
-          const body = hasBody(spec, file.slice(0, -3))
+          const spec = readSpec(paths, file.slice(0, -5))
+          const isHead = isHeadMethod(spec, file.slice(0, -5))
+          const body = hasBody(spec, file.slice(0, -5))
           const methods = acc === null ? buildMethodDefinition({ kibana: true }, val, name, body, isHead) : null
           const obj = {}
           if (methods) {
@@ -83,37 +88,6 @@ function genFactory (folder, paths) {
         }, null)
     })
     .reduce((acc, val) => deepmerge(acc, val), {})
-
-  const apis = apiFiles
-    .map(file => {
-      // const name = format(file.slice(0, -3))
-      return file
-        .slice(0, -3) // remove `.js` extension
-        .split('.')
-        .reverse()
-        .reduce((acc, val) => {
-          const obj = {
-            [val]: acc === null
-              ? `lazyLoad('${file.slice(0, -3)}', opts)` // `${name}(opts)`
-              : acc
-          }
-          if (isSnakeCased(val)) {
-            obj[camelify(val)] = acc === null
-              ? `lazyLoad('${file.slice(0, -3)}', opts)` // `${name}(opts)`
-              : acc
-          }
-          return obj
-        }, null)
-    })
-    .reduce((acc, val) => deepmerge(acc, val), {})
-
-  // serialize the API object
-  const apisStr = JSON.stringify(apis, null, 2)
-    // split & join to fix the indentation
-    .split('\n')
-    .join('\n    ')
-    // remove useless quotes
-    .replace(/"/g, '')
 
   // serialize the type object
   const typesStr = Object.keys(types)
@@ -141,6 +115,48 @@ function genFactory (folder, paths) {
     .replace(/"/g, '')
     .replace(/,$/gm, '')
 
+  let apisStr = ''
+  const getters = []
+  for (const namespace in namespaces) {
+    if (namespaces[namespace].length > 0) {
+      getters.push(`${camelify(namespace)}: {
+        get () {
+          if (this[k${toPascalCase(camelify(namespace))}] === null) {
+            this[k${toPascalCase(camelify(namespace))}] = new ${toPascalCase(camelify(namespace))}Api(this.transport, this[kConfigurationError])
+          }
+          return this[k${toPascalCase(camelify(namespace))}]
+        }
+      },\n`)
+      if (namespace.includes('_')) {
+        getters.push(`${namespace}: { get () { return this.${camelify(namespace)} } },\n`)
+      }
+    } else {
+      apisStr += `ESAPI.prototype.${camelify(namespace)} = ${camelify(namespace)}Api\n`
+      if (namespace.includes('_')) {
+        getters.push(`${namespace}: { get () { return this.${camelify(namespace)} } },\n`)
+      }
+    }
+  }
+
+  apisStr += '\nObject.defineProperties(ESAPI.prototype, {\n'
+  for (const getter of getters) {
+    apisStr += getter
+  }
+  apisStr += '})'
+
+  let modules = ''
+  let symbols = ''
+  let symbolsInstance = ''
+  for (const namespace in namespaces) {
+    if (namespaces[namespace].length > 0) {
+      modules += `const ${toPascalCase(camelify(namespace))}Api = require('./api/${namespace}')\n`
+      symbols += `const k${toPascalCase(camelify(namespace))} = Symbol('${toPascalCase(camelify(namespace))}')\n`
+      symbolsInstance += `this[k${toPascalCase(camelify(namespace))}] = null\n`
+    } else {
+      modules += `const ${camelify(namespace)}Api = require('./api/${namespace}')\n`
+    }
+  }
+
   const fn = dedent`
   // Licensed to Elasticsearch B.V under one or more agreements.
   // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
@@ -148,62 +164,17 @@ function genFactory (folder, paths) {
 
   'use strict'
 
-  const assert = require('assert')
+  ${modules}
+
+  const { kConfigurationError } = require('./utils')
+  ${symbols}
 
   function ESAPI (opts) {
-    assert(opts.makeRequest, 'Missing makeRequest function')
-    assert(opts.ConfigurationError, 'Missing ConfigurationError class')
-    assert(opts.result, 'Missing default result object')
-
-    const { result } = opts
-    opts.handleError = handleError
-    opts.snakeCaseKeys = snakeCaseKeys
-
-    const apis = ${apisStr}
-
-
-    return apis
-
-    function handleError (err, callback) {
-      if (callback) {
-        process.nextTick(callback, err, result)
-        return { then: noop, catch: noop, abort: noop }
-      }
-      return Promise.reject(err)
-    }
-
-    function snakeCaseKeys (acceptedQuerystring, snakeCase, querystring, warnings) {
-      var target = {}
-      var keys = Object.keys(querystring)
-      for (var i = 0, len = keys.length; i < len; i++) {
-        var key = keys[i]
-        target[snakeCase[key] || key] = querystring[key]
-        if (acceptedQuerystring.indexOf(snakeCase[key] || key) === -1) {
-          warnings.push('Client - Unknown parameter: "' + key + '", sending it as query parameter')
-        }
-      }
-      return target
-    }
+    this[kConfigurationError] = opts.ConfigurationError
+    ${symbolsInstance}
   }
 
-  // It's unlikely that a user needs all of our APIs,
-  // and since require is a sync operation that takes time
-  // (given the amount of APIs we have), let's lazy load them,
-  // so a given API file will be required only
-  // if the user actually needs that API.
-  // The following implementation takes advantage
-  // of js closures to have a simple cache with the least overhead.
-  function lazyLoad (file, opts) {
-    var fn = null
-    return function _lazyLoad (params, options, callback) {
-      if (fn === null) {
-        fn = require(${'`./api/${file}.js`'})(opts)
-      }
-      return fn(params, options, callback)
-    }
-  }
-
-  function noop () {}
+  ${apisStr}
 
   module.exports = ESAPI
   `
