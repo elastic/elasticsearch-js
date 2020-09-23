@@ -1,6 +1,39 @@
 [[changelog-client]]
 == Changelog
 
+=== 7.9.1
+
+==== Fixes
+
+===== Improve child performances https://github.com/elastic/elasticsearch-js/pull/1314[#1314]
+
+The client code has been refactored to speed up the performances of the child method.
+Before this pr, creating many children per second would have caused a high memory consumption and a spike in CPU usage.
+This pr changes the way the client is created by refactoring the code generation, now the clients methods are no longer added to the instance with a for loop but via prototypal inheritance. Thus, the overall performances are way better, now creating a child is ~5 times faster, and it consumes ~70% less memory.
+
+This change should not cause any breaking change unless you were mocking the client methods. In such case you should refactor it, or use https://github.com/elastic/elasticsearch-js-mock[elasticsearch-js-mock].
+
+Finally, this change should also fix once and of all the bundlers support.
+
+===== Throw all errors asynchronously https://github.com/elastic/elasticsearch-js/pull/1295[#1295]
+
+Some validation errors were thrown synchronously, causing the callback to be called in th same tick.
+This issue is known as _"The release fo Zalgo"_ (see https://blog.izs.me/2013/08/designing-apis-for-asynchrony[here]).
+
+===== Fix `maxRetries` request option handling https://github.com/elastic/elasticsearch-js/pull/1296[#1296]
+
+The `maxRetries` parameter can be configured on a per requets basis, if set to zero it was defaulting to the client default. Now the client is honoring the request specific configuration.
+
+
+===== Fix RequestOptions.body type to include null https://github.com/elastic/elasticsearch-js/pull/1300[#1300]
+
+The Connection requets option types were not accepting `null` as valid value.
+
+===== Fixed `size` and `maxRetries` parameters in helpers https://github.com/elastic/elasticsearch-js/pull/1284[#1284]
+
+The `size` parameter was being passed too the scroll request, which was causing an error.
+`maxRetries` setted to 0 was resulting in no request at all.
+
 === 7.9.0
 
 ==== Features
