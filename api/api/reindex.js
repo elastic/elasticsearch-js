@@ -22,91 +22,35 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildReindex (opts) {
-  // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+const acceptedQuerystring = ['refresh', 'timeout', 'wait_for_active_shards', 'wait_for_completion', 'requests_per_second', 'scroll', 'slices', 'max_docs', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { waitForActiveShards: 'wait_for_active_shards', waitForCompletion: 'wait_for_completion', requestsPerSecond: 'requests_per_second', maxDocs: 'max_docs', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-  const acceptedQuerystring = [
-    'refresh',
-    'timeout',
-    'wait_for_active_shards',
-    'wait_for_completion',
-    'requests_per_second',
-    'scroll',
-    'slices',
-    'max_docs',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
-  ]
+function reindexApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  const snakeCase = {
-    waitForActiveShards: 'wait_for_active_shards',
-    waitForCompletion: 'wait_for_completion',
-    requestsPerSecond: 'requests_per_second',
-    maxDocs: 'max_docs',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+  // check required parameters
+  if (params['body'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
   }
 
-  /**
-   * Perform a reindex request
-   * Allows to copy documents from one index to another, optionally filtering the source
-documents by a query, changing the destination index settings, or fetching the
-documents from a remote cluster.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
-   */
-  return function reindex (params, options, callback) {
-    options = options || {}
-    if (typeof options === 'function') {
-      callback = options
-      options = {}
-    }
-    if (typeof params === 'function' || params == null) {
-      callback = params
-      params = {}
-      options = {}
-    }
+  var { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-    // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
+  var path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_reindex'
 
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
-    var { method, body, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
-    var path = ''
-
-    if (method == null) method = 'POST'
-    path = '/' + '_reindex'
-
-    // build request object
-    const request = {
-      method,
-      path,
-      body: body || '',
-      querystring
-    }
-
-    options.warnings = warnings.length === 0 ? null : warnings
-    return makeRequest(request, options, callback)
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
   }
+
+  return this.transport.request(request, options, callback)
 }
 
-module.exports = buildReindex
+module.exports = reindexApi

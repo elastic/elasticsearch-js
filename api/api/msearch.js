@@ -22,96 +22,40 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildMsearch (opts) {
-  // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+const acceptedQuerystring = ['search_type', 'max_concurrent_searches', 'typed_keys', 'pre_filter_shard_size', 'max_concurrent_shard_requests', 'rest_total_hits_as_int', 'ccs_minimize_roundtrips', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { searchType: 'search_type', maxConcurrentSearches: 'max_concurrent_searches', typedKeys: 'typed_keys', preFilterShardSize: 'pre_filter_shard_size', maxConcurrentShardRequests: 'max_concurrent_shard_requests', restTotalHitsAsInt: 'rest_total_hits_as_int', ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-  const acceptedQuerystring = [
-    'search_type',
-    'max_concurrent_searches',
-    'typed_keys',
-    'pre_filter_shard_size',
-    'max_concurrent_shard_requests',
-    'rest_total_hits_as_int',
-    'ccs_minimize_roundtrips',
-    'pretty',
-    'human',
-    'error_trace',
-    'source',
-    'filter_path'
-  ]
+function msearchApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  const snakeCase = {
-    searchType: 'search_type',
-    maxConcurrentSearches: 'max_concurrent_searches',
-    typedKeys: 'typed_keys',
-    preFilterShardSize: 'pre_filter_shard_size',
-    maxConcurrentShardRequests: 'max_concurrent_shard_requests',
-    restTotalHitsAsInt: 'rest_total_hits_as_int',
-    ccsMinimizeRoundtrips: 'ccs_minimize_roundtrips',
-    errorTrace: 'error_trace',
-    filterPath: 'filter_path'
+  // check required parameters
+  if (params['body'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
   }
 
-  /**
-   * Perform a msearch request
-   * Allows to execute several search operations in one request.
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html
-   */
-  return function msearch (params, options, callback) {
-    options = options || {}
-    if (typeof options === 'function') {
-      callback = options
-      options = {}
-    }
-    if (typeof params === 'function' || params == null) {
-      callback = params
-      params = {}
-      options = {}
-    }
+  var { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-    // check required parameters
-    if (params['body'] == null) {
-      const err = new ConfigurationError('Missing required parameter: body')
-      return handleError(err, callback)
-    }
-
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
-    var { method, body, index, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
-    var path = ''
-
-    if ((index) != null) {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + encodeURIComponent(index) + '/' + '_msearch'
-    } else {
-      if (method == null) method = body == null ? 'GET' : 'POST'
-      path = '/' + '_msearch'
-    }
-
-    // build request object
-    const request = {
-      method,
-      path,
-      bulkBody: body,
-      querystring
-    }
-
-    options.warnings = warnings.length === 0 ? null : warnings
-    return makeRequest(request, options, callback)
+  var path = ''
+  if ((index) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_msearch'
+  } else {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + '_msearch'
   }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    bulkBody: body,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
 }
 
-module.exports = buildMsearch
+module.exports = msearchApi

@@ -22,66 +22,29 @@
 /* eslint camelcase: 0 */
 /* eslint no-unused-vars: 0 */
 
-function buildClosePointInTime (opts) {
-  // eslint-disable-next-line no-unused-vars
-  const { makeRequest, ConfigurationError, handleError, snakeCaseKeys } = opts
+const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
+const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-  const acceptedQuerystring = [
+function closePointInTimeApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  ]
+  var { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  const snakeCase = {
+  var path = ''
+  if (method == null) method = 'DELETE'
+  path = '/' + '_pit'
 
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
   }
 
-  /**
-   * Perform a close_point_in_time request
-   * Close a point in time
-   * https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api.html
-   */
-  return function closePointInTime (params, options, callback) {
-    options = options || {}
-    if (typeof options === 'function') {
-      callback = options
-      options = {}
-    }
-    if (typeof params === 'function' || params == null) {
-      callback = params
-      params = {}
-      options = {}
-    }
-
-    // validate headers object
-    if (options.headers != null && typeof options.headers !== 'object') {
-      const err = new ConfigurationError(`Headers should be an object, instead got: ${typeof options.headers}`)
-      return handleError(err, callback)
-    }
-
-    var warnings = []
-    var { method, body, ...querystring } = params
-    querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring, warnings)
-
-    var ignore = options.ignore
-    if (typeof ignore === 'number') {
-      options.ignore = [ignore]
-    }
-
-    var path = ''
-
-    if (method == null) method = 'DELETE'
-    path = '/' + '_pit'
-
-    // build request object
-    const request = {
-      method,
-      path,
-      body: body || '',
-      querystring
-    }
-
-    options.warnings = warnings.length === 0 ? null : warnings
-    return makeRequest(request, options, callback)
-  }
+  return this.transport.request(request, options, callback)
 }
 
-module.exports = buildClosePointInTime
+module.exports = closePointInTimeApi
