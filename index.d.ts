@@ -1944,14 +1944,6 @@ declare class Client {
     mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsMount<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsMount<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repository_stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsRepositoryStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    repository_stats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repository_stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsRepositoryStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repository_stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsRepositoryStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repositoryStats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsRepositoryStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    repositoryStats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repositoryStats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsRepositoryStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repositoryStats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsRepositoryStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     stats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1970,14 +1962,6 @@ declare class Client {
     mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsMount<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     mount<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsMount<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repository_stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsRepositoryStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    repository_stats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repository_stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsRepositoryStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repository_stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsRepositoryStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repositoryStats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsRepositoryStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    repositoryStats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repositoryStats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsRepositoryStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    repositoryStats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsRepositoryStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     stats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

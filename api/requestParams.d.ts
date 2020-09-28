@@ -1676,6 +1676,7 @@ export interface MlGetTrainedModels extends Generic {
   model_id?: string;
   allow_no_match?: boolean;
   include?: string;
+  include_model_definition?: boolean;
   decompress_definition?: boolean;
   from?: number;
   size?: number;
@@ -2114,10 +2115,6 @@ export interface SearchableSnapshotsMount<T = RequestBody> extends Generic {
   master_timeout?: string;
   wait_for_completion?: boolean;
   body: T;
-}
-
-export interface SearchableSnapshotsRepositoryStats extends Generic {
-  repository: string;
 }
 
 export interface SearchableSnapshotsStats extends Generic {

@@ -72,6 +72,7 @@ In this document, you will find the reference of every parameter accepted by the
 
 
 
+[discrete]
 === Common parameters
 Parameters that are accepted by all API endpoints.
 
@@ -95,6 +96,7 @@ link:{ref}/common-options.html[Documentation]
 |`list` - A comma-separated list of filters used to reduce the response.
 
 |===
+[discrete]
 === asyncSearch.delete
 
 [source,ts]
@@ -111,6 +113,7 @@ link:{ref}/async-search.html[Documentation] +
 
 |===
 
+[discrete]
 === asyncSearch.get
 
 [source,ts]
@@ -139,6 +142,7 @@ link:{ref}/async-search.html[Documentation] +
 
 |===
 
+[discrete]
 === asyncSearch.submit
 
 [source,ts]
@@ -331,6 +335,7 @@ _Default:_ `5`
 
 |===
 
+[discrete]
 === autoscaling.deleteAutoscalingPolicy
 *Stability:* experimental
 [source,ts]
@@ -347,6 +352,7 @@ link:{ref}/autoscaling-delete-autoscaling-policy.html[Documentation] +
 
 |===
 
+[discrete]
 === autoscaling.getAutoscalingDecision
 *Stability:* experimental
 [source,ts]
@@ -356,6 +362,7 @@ client.autoscaling.getAutoscalingDecision()
 link:{ref}/autoscaling-get-autoscaling-decision.html[Documentation] +
 
 
+[discrete]
 === autoscaling.getAutoscalingPolicy
 *Stability:* experimental
 [source,ts]
@@ -372,6 +379,7 @@ link:{ref}/autoscaling-get-autoscaling-policy.html[Documentation] +
 
 |===
 
+[discrete]
 === autoscaling.putAutoscalingPolicy
 *Stability:* experimental
 [source,ts]
@@ -392,6 +400,7 @@ link:{ref}/autoscaling-put-autoscaling-policy.html[Documentation] +
 
 |===
 
+[discrete]
 === bulk
 
 [source,ts]
@@ -453,6 +462,7 @@ link:{ref}/docs-bulk.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.aliases
 
 [source,ts]
@@ -498,6 +508,7 @@ _Default:_ `all`
 
 |===
 
+[discrete]
 === cat.allocation
 
 [source,ts]
@@ -546,6 +557,7 @@ link:{ref}/cat-allocation.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.count
 
 [source,ts]
@@ -582,6 +594,7 @@ link:{ref}/cat-count.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.fielddata
 
 [source,ts]
@@ -622,6 +635,7 @@ link:{ref}/cat-fielddata.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.health
 
 [source,ts]
@@ -663,6 +677,7 @@ _Default:_ `true`
 
 |===
 
+[discrete]
 === cat.help
 
 [source,ts]
@@ -683,6 +698,7 @@ link:{ref}/cat.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.indices
 
 [source,ts]
@@ -752,6 +768,7 @@ _Default:_ `all`
 
 |===
 
+[discrete]
 === cat.master
 
 [source,ts]
@@ -792,6 +809,7 @@ link:{ref}/cat-master.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.mlDataFrameAnalytics
 
 [source,ts]
@@ -840,6 +858,7 @@ link:{ref}/cat-dfanalytics.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.mlDatafeeds
 
 [source,ts]
@@ -890,6 +909,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === cat.mlJobs
 
 [source,ts]
@@ -944,6 +964,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === cat.mlTrainedModels
 
 [source,ts]
@@ -1002,6 +1023,7 @@ _Default:_ `100`
 
 |===
 
+[discrete]
 === cat.nodeattrs
 
 [source,ts]
@@ -1042,6 +1064,7 @@ link:{ref}/cat-nodeattrs.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.nodes
 
 [source,ts]
@@ -1090,6 +1113,7 @@ link:{ref}/cat-nodes.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.pendingTasks
 
 [source,ts]
@@ -1134,6 +1158,7 @@ link:{ref}/cat-pending-tasks.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.plugins
 
 [source,ts]
@@ -1174,6 +1199,7 @@ link:{ref}/cat-plugins.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.recovery
 
 [source,ts]
@@ -1226,6 +1252,7 @@ link:{ref}/cat-recovery.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.repositories
 
 [source,ts]
@@ -1266,6 +1293,7 @@ link:{ref}/cat-repositories.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.segments
 
 [source,ts]
@@ -1306,6 +1334,7 @@ link:{ref}/cat-segments.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.shards
 
 [source,ts]
@@ -1358,6 +1387,7 @@ link:{ref}/cat-shards.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.snapshots
 
 [source,ts]
@@ -1406,6 +1436,7 @@ link:{ref}/cat-snapshots.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.tasks
 
 [source,ts]
@@ -1458,6 +1489,7 @@ link:{ref}/tasks.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.templates
 
 [source,ts]
@@ -1502,6 +1534,7 @@ link:{ref}/cat-templates.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.threadPool
 
 [source,ts]
@@ -1550,6 +1583,7 @@ link:{ref}/cat-thread-pool.html[Documentation] +
 
 |===
 
+[discrete]
 === cat.transforms
 
 [source,ts]
@@ -1602,6 +1636,7 @@ link:{ref}/cat-transforms.html[Documentation] +
 
 |===
 
+[discrete]
 === ccr.deleteAutoFollowPattern
 
 [source,ts]
@@ -1618,6 +1653,7 @@ link:{ref}/ccr-delete-auto-follow-pattern.html[Documentation] +
 
 |===
 
+[discrete]
 === ccr.follow
 
 [source,ts]
@@ -1643,6 +1679,7 @@ _Default:_ `0`
 
 |===
 
+[discrete]
 === ccr.followInfo
 
 [source,ts]
@@ -1659,6 +1696,7 @@ link:{ref}/ccr-get-follow-info.html[Documentation] +
 
 |===
 
+[discrete]
 === ccr.followStats
 
 [source,ts]
@@ -1675,6 +1713,7 @@ link:{ref}/ccr-get-follow-stats.html[Documentation] +
 
 |===
 
+[discrete]
 === ccr.forgetFollower
 
 [source,ts]
@@ -1695,6 +1734,7 @@ link:{ref}/ccr-post-forget-follower.html[Documentation] +
 
 |===
 
+[discrete]
 === ccr.getAutoFollowPattern
 
 [source,ts]
@@ -1711,6 +1751,7 @@ link:{ref}/ccr-get-auto-follow-pattern.html[Documentation] +
 
 |===
 
+[discrete]
 === ccr.pauseAutoFollowPattern
 
 [source,ts]
@@ -1727,6 +1768,7 @@ link:{ref}/ccr-pause-auto-follow-pattern.html[Documentation] +
 
 |===
 
+[discrete]
 === ccr.pauseFollow
 
 [source,ts]
@@ -1743,6 +1785,7 @@ link:{ref}/ccr-post-pause-follow.html[Documentation] +
 
 |===
 
+[discrete]
 === ccr.putAutoFollowPattern
 
 [source,ts]
@@ -1763,6 +1806,7 @@ link:{ref}/ccr-put-auto-follow-pattern.html[Documentation] +
 
 |===
 
+[discrete]
 === ccr.resumeAutoFollowPattern
 
 [source,ts]
@@ -1779,6 +1823,7 @@ link:{ref}/ccr-resume-auto-follow-pattern.html[Documentation] +
 
 |===
 
+[discrete]
 === ccr.resumeFollow
 
 [source,ts]
@@ -1799,6 +1844,7 @@ link:{ref}/ccr-post-resume-follow.html[Documentation] +
 
 |===
 
+[discrete]
 === ccr.stats
 
 [source,ts]
@@ -1808,6 +1854,7 @@ client.ccr.stats()
 link:{ref}/ccr-get-stats.html[Documentation] +
 
 
+[discrete]
 === ccr.unfollow
 
 [source,ts]
@@ -1824,6 +1871,7 @@ link:{ref}/ccr-post-unfollow.html[Documentation] +
 
 |===
 
+[discrete]
 === clearScroll
 
 [source,ts]
@@ -1846,6 +1894,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === closePointInTime
 
 [source,ts]
@@ -1862,6 +1911,7 @@ link:{ref}/point-in-time-api.html[Documentation] +
 
 |===
 
+[discrete]
 === cluster.allocationExplain
 
 [source,ts]
@@ -1886,6 +1936,7 @@ link:{ref}/cluster-allocation-explain.html[Documentation] +
 
 |===
 
+[discrete]
 === cluster.deleteComponentTemplate
 *Stability:* experimental
 [source,ts]
@@ -1910,6 +1961,7 @@ link:{ref}/indices-component-template.html[Documentation] +
 
 |===
 
+[discrete]
 === cluster.deleteVotingConfigExclusions
 
 [source,ts]
@@ -1927,6 +1979,7 @@ _Default:_ `true`
 
 |===
 
+[discrete]
 === cluster.existsComponentTemplate
 *Stability:* experimental
 [source,ts]
@@ -1951,6 +2004,7 @@ link:{ref}/indices-component-template.html[Documentation] +
 
 |===
 
+[discrete]
 === cluster.getComponentTemplate
 *Stability:* experimental
 [source,ts]
@@ -1975,6 +2029,7 @@ link:{ref}/indices-component-template.html[Documentation] +
 
 |===
 
+[discrete]
 === cluster.getSettings
 
 [source,ts]
@@ -2003,6 +2058,7 @@ link:{ref}/cluster-update-settings.html[Documentation] +
 
 |===
 
+[discrete]
 === cluster.health
 
 [source,ts]
@@ -2065,6 +2121,7 @@ _Default:_ `cluster`
 
 |===
 
+[discrete]
 === cluster.pendingTasks
 
 [source,ts]
@@ -2085,6 +2142,7 @@ link:{ref}/cluster-pending.html[Documentation] +
 
 |===
 
+[discrete]
 === cluster.postVotingConfigExclusions
 
 [source,ts]
@@ -2110,6 +2168,7 @@ _Default:_ `30s`
 
 |===
 
+[discrete]
 === cluster.putComponentTemplate
 *Stability:* experimental
 [source,ts]
@@ -2142,6 +2201,7 @@ link:{ref}/indices-component-template.html[Documentation] +
 
 |===
 
+[discrete]
 === cluster.putSettings
 
 [source,ts]
@@ -2170,6 +2230,7 @@ link:{ref}/cluster-update-settings.html[Documentation] +
 
 |===
 
+[discrete]
 === cluster.remoteInfo
 
 [source,ts]
@@ -2179,6 +2240,7 @@ client.cluster.remoteInfo()
 link:{ref}/cluster-remote-info.html[Documentation] +
 
 
+[discrete]
 === cluster.reroute
 
 [source,ts]
@@ -2219,6 +2281,7 @@ link:{ref}/cluster-reroute.html[Documentation] +
 
 |===
 
+[discrete]
 === cluster.state
 
 [source,ts]
@@ -2272,6 +2335,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === cluster.stats
 
 [source,ts]
@@ -2296,6 +2360,7 @@ link:{ref}/cluster-stats.html[Documentation] +
 
 |===
 
+[discrete]
 === count
 
 [source,ts]
@@ -2374,6 +2439,7 @@ _Default:_ `OR`
 
 |===
 
+[discrete]
 === create
 
 [source,ts]
@@ -2432,6 +2498,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === danglingIndices.deleteDanglingIndex
 
 [source,ts]
@@ -2460,6 +2527,7 @@ link:{ref}/modules-gateway-dangling-indices.html[Documentation] +
 
 |===
 
+[discrete]
 === danglingIndices.importDanglingIndex
 
 [source,ts]
@@ -2488,6 +2556,7 @@ link:{ref}/modules-gateway-dangling-indices.html[Documentation] +
 
 |===
 
+[discrete]
 === danglingIndices.listDanglingIndices
 
 [source,ts]
@@ -2497,6 +2566,7 @@ client.danglingIndices.listDanglingIndices()
 link:{ref}/modules-gateway-dangling-indices.html[Documentation] +
 
 
+[discrete]
 === delete
 
 [source,ts]
@@ -2555,6 +2625,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === deleteByQuery
 
 [source,ts]
@@ -2710,6 +2781,7 @@ _Default:_ `1`
 
 |===
 
+[discrete]
 === deleteByQueryRethrottle
 
 [source,ts]
@@ -2730,6 +2802,7 @@ link:{ref}/docs-delete-by-query.html[Documentation] +
 
 |===
 
+[discrete]
 === deleteScript
 
 [source,ts]
@@ -2754,6 +2827,7 @@ link:{ref}/modules-scripting.html[Documentation] +
 
 |===
 
+[discrete]
 === enrich.deletePolicy
 
 [source,ts]
@@ -2770,6 +2844,7 @@ link:{ref}/delete-enrich-policy-api.html[Documentation] +
 
 |===
 
+[discrete]
 === enrich.executePolicy
 
 [source,ts]
@@ -2791,6 +2866,7 @@ _Default:_ `true`
 
 |===
 
+[discrete]
 === enrich.getPolicy
 
 [source,ts]
@@ -2807,6 +2883,7 @@ link:{ref}/get-enrich-policy-api.html[Documentation] +
 
 |===
 
+[discrete]
 === enrich.putPolicy
 
 [source,ts]
@@ -2827,6 +2904,7 @@ link:{ref}/put-enrich-policy-api.html[Documentation] +
 
 |===
 
+[discrete]
 === enrich.stats
 
 [source,ts]
@@ -2836,6 +2914,7 @@ client.enrich.stats()
 link:{ref}/enrich-stats-api.html[Documentation] +
 
 
+[discrete]
 === eql.delete
 *Stability:* beta
 [source,ts]
@@ -2852,6 +2931,7 @@ link:{ref}/eql-search-api.html[Documentation] +
 
 |===
 
+[discrete]
 === eql.get
 *Stability:* beta
 [source,ts]
@@ -2877,6 +2957,7 @@ _Default:_ `5d`
 
 |===
 
+[discrete]
 === eql.search
 *Stability:* beta
 [source,ts]
@@ -2910,6 +2991,7 @@ _Default:_ `5d`
 
 |===
 
+[discrete]
 === exists
 
 [source,ts]
@@ -2971,6 +3053,7 @@ link:{ref}/docs-get.html[Documentation] +
 
 |===
 
+[discrete]
 === existsSource
 
 [source,ts]
@@ -3033,6 +3116,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === explain
 
 [source,ts]
@@ -3106,6 +3190,7 @@ _Default:_ `OR`
 
 |===
 
+[discrete]
 === fieldCaps
 
 [source,ts]
@@ -3147,6 +3232,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === get
 
 [source,ts]
@@ -3208,6 +3294,7 @@ link:{ref}/docs-get.html[Documentation] +
 
 |===
 
+[discrete]
 === getScript
 
 [source,ts]
@@ -3228,6 +3315,7 @@ link:{ref}/modules-scripting.html[Documentation] +
 
 |===
 
+[discrete]
 === getScriptContext
 *Stability:* experimental
 [source,ts]
@@ -3237,6 +3325,7 @@ client.getScriptContext()
 link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html[Documentation] +
 
 
+[discrete]
 === getScriptLanguages
 *Stability:* experimental
 [source,ts]
@@ -3246,6 +3335,7 @@ client.getScriptLanguages()
 link:{ref}/modules-scripting.html[Documentation] +
 
 
+[discrete]
 === getSource
 
 [source,ts]
@@ -3302,6 +3392,7 @@ link:{ref}/docs-get.html[Documentation] +
 
 |===
 
+[discrete]
 === graph.explore
 
 [source,ts]
@@ -3330,6 +3421,7 @@ link:{ref}/graph-explore-api.html[Documentation] +
 
 |===
 
+[discrete]
 === ilm.deleteLifecycle
 
 [source,ts]
@@ -3346,6 +3438,7 @@ link:{ref}/ilm-delete-lifecycle.html[Documentation] +
 
 |===
 
+[discrete]
 === ilm.explainLifecycle
 
 [source,ts]
@@ -3370,6 +3463,7 @@ link:{ref}/ilm-explain-lifecycle.html[Documentation] +
 
 |===
 
+[discrete]
 === ilm.getLifecycle
 
 [source,ts]
@@ -3386,6 +3480,7 @@ link:{ref}/ilm-get-lifecycle.html[Documentation] +
 
 |===
 
+[discrete]
 === ilm.getStatus
 
 [source,ts]
@@ -3395,6 +3490,7 @@ client.ilm.getStatus()
 link:{ref}/ilm-get-status.html[Documentation] +
 
 
+[discrete]
 === ilm.moveToStep
 
 [source,ts]
@@ -3415,6 +3511,7 @@ link:{ref}/ilm-move-to-step.html[Documentation] +
 
 |===
 
+[discrete]
 === ilm.putLifecycle
 
 [source,ts]
@@ -3435,6 +3532,7 @@ link:{ref}/ilm-put-lifecycle.html[Documentation] +
 
 |===
 
+[discrete]
 === ilm.removePolicy
 
 [source,ts]
@@ -3451,6 +3549,7 @@ link:{ref}/ilm-remove-policy.html[Documentation] +
 
 |===
 
+[discrete]
 === ilm.retry
 
 [source,ts]
@@ -3467,6 +3566,7 @@ link:{ref}/ilm-retry-policy.html[Documentation] +
 
 |===
 
+[discrete]
 === ilm.start
 
 [source,ts]
@@ -3476,6 +3576,7 @@ client.ilm.start()
 link:{ref}/ilm-start.html[Documentation] +
 
 
+[discrete]
 === ilm.stop
 
 [source,ts]
@@ -3485,6 +3586,7 @@ client.ilm.stop()
 link:{ref}/ilm-stop.html[Documentation] +
 
 
+[discrete]
 === index
 
 [source,ts]
@@ -3553,6 +3655,7 @@ link:{ref}/docs-index_.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.addBlock
 
 [source,ts]
@@ -3594,6 +3697,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.analyze
 
 [source,ts]
@@ -3614,6 +3718,7 @@ link:{ref}/indices-analyze.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.clearCache
 
 [source,ts]
@@ -3659,6 +3764,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.clone
 
 [source,ts]
@@ -3695,6 +3801,7 @@ link:{ref}/indices-clone-index.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.close
 
 [source,ts]
@@ -3736,6 +3843,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.create
 
 [source,ts]
@@ -3768,6 +3876,7 @@ link:{ref}/indices-create-index.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.createDataStream
 
 [source,ts]
@@ -3784,6 +3893,7 @@ link:{ref}/data-streams.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.dataStreamsStats
 
 [source,ts]
@@ -3800,6 +3910,7 @@ link:{ref}/data-streams.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.delete
 
 [source,ts]
@@ -3837,6 +3948,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.deleteAlias
 
 [source,ts]
@@ -3865,6 +3977,7 @@ link:{ref}/indices-aliases.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.deleteDataStream
 
 [source,ts]
@@ -3881,6 +3994,7 @@ link:{ref}/data-streams.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.deleteIndexTemplate
 *Stability:* experimental
 [source,ts]
@@ -3905,6 +4019,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.deleteTemplate
 
 [source,ts]
@@ -3929,6 +4044,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.exists
 
 [source,ts]
@@ -3970,6 +4086,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.existsAlias
 
 [source,ts]
@@ -4007,6 +4124,7 @@ _Default:_ `all`
 
 |===
 
+[discrete]
 === indices.existsIndexTemplate
 *Stability:* experimental
 [source,ts]
@@ -4035,6 +4153,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.existsTemplate
 
 [source,ts]
@@ -4063,6 +4182,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.existsType
 
 [source,ts]
@@ -4100,6 +4220,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.flush
 
 [source,ts]
@@ -4137,6 +4258,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.forcemerge
 
 [source,ts]
@@ -4178,6 +4300,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.freeze
 
 [source,ts]
@@ -4219,6 +4342,7 @@ _Default:_ `closed`
 
 |===
 
+[discrete]
 === indices.get
 
 [source,ts]
@@ -4264,6 +4388,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.getAlias
 
 [source,ts]
@@ -4301,6 +4426,7 @@ _Default:_ `all`
 
 |===
 
+[discrete]
 === indices.getDataStream
 
 [source,ts]
@@ -4317,6 +4443,7 @@ link:{ref}/data-streams.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.getFieldMapping
 
 [source,ts]
@@ -4358,6 +4485,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.getIndexTemplate
 *Stability:* experimental
 [source,ts]
@@ -4386,6 +4514,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.getMapping
 
 [source,ts]
@@ -4425,6 +4554,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === indices.getSettings
 
 [source,ts]
@@ -4474,6 +4604,7 @@ _Default:_ `all`
 
 |===
 
+[discrete]
 === indices.getTemplate
 
 [source,ts]
@@ -4502,6 +4633,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.getUpgrade
 
 [source,ts]
@@ -4531,6 +4663,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.open
 
 [source,ts]
@@ -4572,6 +4705,7 @@ _Default:_ `closed`
 
 |===
 
+[discrete]
 === indices.putAlias
 
 [source,ts]
@@ -4604,6 +4738,7 @@ link:{ref}/indices-aliases.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.putIndexTemplate
 *Stability:* experimental
 [source,ts]
@@ -4636,6 +4771,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.putMapping
 
 [source,ts]
@@ -4681,6 +4817,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.putSettings
 
 [source,ts]
@@ -4730,6 +4867,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.putTemplate
 
 [source,ts]
@@ -4762,6 +4900,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.recovery
 
 [source,ts]
@@ -4786,6 +4925,7 @@ link:{ref}/indices-recovery.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.refresh
 
 [source,ts]
@@ -4815,6 +4955,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.reloadSearchAnalyzers
 
 [source,ts]
@@ -4844,6 +4985,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.resolveIndex
 *Stability:* experimental
 [source,ts]
@@ -4865,6 +5007,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.rollover
 
 [source,ts]
@@ -4905,6 +5048,7 @@ link:{ref}/indices-rollover-index.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.segments
 
 [source,ts]
@@ -4938,6 +5082,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.shardStores
 
 [source,ts]
@@ -4971,6 +5116,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.shrink
 
 [source,ts]
@@ -5007,6 +5153,7 @@ link:{ref}/indices-shrink-index.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.simulateIndexTemplate
 *Stability:* experimental
 [source,ts]
@@ -5039,6 +5186,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.simulateTemplate
 *Stability:* experimental
 [source,ts]
@@ -5071,6 +5219,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.split
 
 [source,ts]
@@ -5107,6 +5256,7 @@ link:{ref}/indices-split-index.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.stats
 
 [source,ts]
@@ -5170,6 +5320,7 @@ _Default:_ `true`
 
 |===
 
+[discrete]
 === indices.unfreeze
 
 [source,ts]
@@ -5211,6 +5362,7 @@ _Default:_ `closed`
 
 |===
 
+[discrete]
 === indices.updateAliases
 
 [source,ts]
@@ -5235,6 +5387,7 @@ link:{ref}/indices-aliases.html[Documentation] +
 
 |===
 
+[discrete]
 === indices.upgrade
 
 [source,ts]
@@ -5272,6 +5425,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === indices.validateQuery
 
 [source,ts]
@@ -5348,6 +5502,7 @@ _Default:_ `OR`
 
 |===
 
+[discrete]
 === info
 
 [source,ts]
@@ -5357,6 +5512,7 @@ client.info()
 link:{ref}/index.html[Documentation] +
 
 
+[discrete]
 === ingest.deletePipeline
 
 [source,ts]
@@ -5381,6 +5537,7 @@ link:{ref}/delete-pipeline-api.html[Documentation] +
 
 |===
 
+[discrete]
 === ingest.getPipeline
 
 [source,ts]
@@ -5401,6 +5558,7 @@ link:{ref}/get-pipeline-api.html[Documentation] +
 
 |===
 
+[discrete]
 === ingest.processorGrok
 
 [source,ts]
@@ -5410,6 +5568,7 @@ client.ingest.processorGrok()
 link:{ref}/grok-processor.html#grok-processor-rest-get[Documentation] +
 
 
+[discrete]
 === ingest.putPipeline
 
 [source,ts]
@@ -5438,6 +5597,7 @@ link:{ref}/put-pipeline-api.html[Documentation] +
 
 |===
 
+[discrete]
 === ingest.simulate
 
 [source,ts]
@@ -5462,6 +5622,7 @@ link:{ref}/simulate-pipeline-api.html[Documentation] +
 
 |===
 
+[discrete]
 === license.delete
 
 [source,ts]
@@ -5471,6 +5632,7 @@ client.license.delete()
 link:{ref}/delete-license.html[Documentation] +
 
 
+[discrete]
 === license.get
 
 [source,ts]
@@ -5493,6 +5655,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === license.getBasicStatus
 
 [source,ts]
@@ -5502,6 +5665,7 @@ client.license.getBasicStatus()
 link:{ref}/get-basic-status.html[Documentation] +
 
 
+[discrete]
 === license.getTrialStatus
 
 [source,ts]
@@ -5511,6 +5675,7 @@ client.license.getTrialStatus()
 link:{ref}/get-trial-status.html[Documentation] +
 
 
+[discrete]
 === license.post
 
 [source,ts]
@@ -5531,6 +5696,7 @@ link:{ref}/update-license.html[Documentation] +
 
 |===
 
+[discrete]
 === license.postStartBasic
 
 [source,ts]
@@ -5547,6 +5713,7 @@ link:{ref}/start-basic.html[Documentation] +
 
 |===
 
+[discrete]
 === license.postStartTrial
 
 [source,ts]
@@ -5567,6 +5734,7 @@ link:{ref}/start-trial.html[Documentation] +
 
 |===
 
+[discrete]
 === mget
 
 [source,ts]
@@ -5619,6 +5787,7 @@ link:{ref}/docs-multi-get.html[Documentation] +
 
 |===
 
+[discrete]
 === migration.deprecations
 
 [source,ts]
@@ -5635,6 +5804,7 @@ link:{ref}/migration-api-deprecation.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.closeJob
 
 [source,ts]
@@ -5673,6 +5843,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === ml.deleteCalendar
 
 [source,ts]
@@ -5689,6 +5860,7 @@ link:{ref}/ml-delete-calendar.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.deleteCalendarEvent
 
 [source,ts]
@@ -5709,6 +5881,7 @@ link:{ref}/ml-delete-calendar-event.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.deleteCalendarJob
 
 [source,ts]
@@ -5729,6 +5902,7 @@ link:{ref}/ml-delete-calendar-job.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.deleteDataFrameAnalytics
 *Stability:* experimental
 [source,ts]
@@ -5753,6 +5927,7 @@ link:{ref}/delete-dfanalytics.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.deleteDatafeed
 
 [source,ts]
@@ -5773,6 +5948,7 @@ link:{ref}/ml-delete-datafeed.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.deleteExpiredData
 
 [source,ts]
@@ -5801,6 +5977,7 @@ link:{ref}/ml-delete-expired-data.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.deleteFilter
 
 [source,ts]
@@ -5817,6 +5994,7 @@ link:{ref}/ml-delete-filter.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.deleteForecast
 
 [source,ts]
@@ -5845,6 +6023,7 @@ link:{ref}/ml-delete-forecast.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.deleteJob
 
 [source,ts]
@@ -5870,6 +6049,7 @@ _Default:_ `true`
 
 |===
 
+[discrete]
 === ml.deleteModelSnapshot
 
 [source,ts]
@@ -5890,6 +6070,7 @@ link:{ref}/ml-delete-snapshot.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.deleteTrainedModel
 *Stability:* experimental
 [source,ts]
@@ -5906,6 +6087,7 @@ link:{ref}/delete-inference.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.estimateModelMemory
 
 [source,ts]
@@ -5922,6 +6104,7 @@ link:{ref}/ml-apis.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.evaluateDataFrame
 *Stability:* experimental
 [source,ts]
@@ -5938,6 +6121,7 @@ link:{ref}/evaluate-dfanalytics.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.explainDataFrameAnalytics
 *Stability:* experimental
 [source,ts]
@@ -5958,6 +6142,7 @@ link:{ref}/explain-dfanalytics.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.findFileStructure
 *Stability:* experimental
 [source,ts]
@@ -6033,6 +6218,7 @@ _Default:_ `25s`
 
 |===
 
+[discrete]
 === ml.flushJob
 
 [source,ts]
@@ -6073,6 +6259,7 @@ link:{ref}/ml-flush-job.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.forecast
 
 [source,ts]
@@ -6101,6 +6288,7 @@ link:{ref}/ml-forecast.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.getBuckets
 
 [source,ts]
@@ -6161,6 +6349,7 @@ link:{ref}/ml-get-bucket.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.getCalendarEvents
 
 [source,ts]
@@ -6197,6 +6386,7 @@ link:{ref}/ml-get-calendar-event.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.getCalendars
 
 [source,ts]
@@ -6225,6 +6415,7 @@ link:{ref}/ml-get-calendar.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.getCategories
 
 [source,ts]
@@ -6261,6 +6452,7 @@ link:{ref}/ml-get-category.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.getDataFrameAnalytics
 *Stability:* experimental
 [source,ts]
@@ -6291,6 +6483,7 @@ _Default:_ `100`
 
 |===
 
+[discrete]
 === ml.getDataFrameAnalyticsStats
 *Stability:* experimental
 [source,ts]
@@ -6325,6 +6518,7 @@ _Default:_ `100`
 
 |===
 
+[discrete]
 === ml.getDatafeedStats
 
 [source,ts]
@@ -6351,6 +6545,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === ml.getDatafeeds
 
 [source,ts]
@@ -6377,6 +6572,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === ml.getFilters
 
 [source,ts]
@@ -6401,6 +6597,7 @@ link:{ref}/ml-get-filter.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.getInfluencers
 
 [source,ts]
@@ -6453,6 +6650,7 @@ link:{ref}/ml-get-influencer.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.getJobStats
 
 [source,ts]
@@ -6479,6 +6677,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === ml.getJobs
 
 [source,ts]
@@ -6505,6 +6704,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === ml.getModelSnapshots
 
 [source,ts]
@@ -6553,6 +6753,7 @@ link:{ref}/ml-get-snapshot.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.getOverallBuckets
 
 [source,ts]
@@ -6607,6 +6808,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === ml.getRecords
 
 [source,ts]
@@ -6659,6 +6861,7 @@ link:{ref}/ml-get-record.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.getTrainedModels
 *Stability:* experimental
 [source,ts]
@@ -6667,6 +6870,7 @@ client.ml.getTrainedModels({
   model_id: string,
   allow_no_match: boolean,
   include: string,
+  include_model_definition: boolean,
   decompress_definition: boolean,
   from: number,
   size: number,
@@ -6687,6 +6891,11 @@ _Default:_ `true`
 |`include`
 |`string` - A comma-separate list of fields to optionally include. Valid options are 'definition' and 'total_feature_importance'. Default is none.
 
+|`include_model_definition` or `includeModelDefinition`
+|`boolean` - Should the full model definition be included in the results. These definitions can be large. So be cautious when including them. Defaults to false. +
+
+WARNING: This parameter has been deprecated.
+
 |`decompress_definition` or `decompressDefinition`
 |`boolean` - Should the model definition be decompressed into valid JSON or returned in a custom compressed format. Defaults to true. +
 _Default:_ `true`
@@ -6706,6 +6915,7 @@ _Default:_ `100`
 
 |===
 
+[discrete]
 === ml.getTrainedModelsStats
 *Stability:* experimental
 [source,ts]
@@ -6736,6 +6946,7 @@ _Default:_ `100`
 
 |===
 
+[discrete]
 === ml.info
 
 [source,ts]
@@ -6745,6 +6956,7 @@ client.ml.info()
 link:{ref}/get-ml-info.html[Documentation] +
 
 
+[discrete]
 === ml.openJob
 
 [source,ts]
@@ -6761,6 +6973,7 @@ link:{ref}/ml-open-job.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.postCalendarEvents
 
 [source,ts]
@@ -6781,6 +6994,7 @@ link:{ref}/ml-post-calendar-event.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.postData
 
 [source,ts]
@@ -6809,6 +7023,7 @@ link:{ref}/ml-post-data.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.previewDatafeed
 
 [source,ts]
@@ -6825,6 +7040,7 @@ link:{ref}/ml-preview-datafeed.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.putCalendar
 
 [source,ts]
@@ -6845,6 +7061,7 @@ link:{ref}/ml-put-calendar.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.putCalendarJob
 
 [source,ts]
@@ -6865,6 +7082,7 @@ link:{ref}/ml-put-calendar-job.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.putDataFrameAnalytics
 *Stability:* experimental
 [source,ts]
@@ -6885,6 +7103,7 @@ link:{ref}/put-dfanalytics.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.putDatafeed
 
 [source,ts]
@@ -6921,6 +7140,7 @@ link:{ref}/ml-put-datafeed.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.putFilter
 
 [source,ts]
@@ -6941,6 +7161,7 @@ link:{ref}/ml-put-filter.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.putJob
 
 [source,ts]
@@ -6961,6 +7182,7 @@ link:{ref}/ml-put-job.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.putTrainedModel
 *Stability:* experimental
 [source,ts]
@@ -6981,6 +7203,7 @@ link:{ref}/put-inference.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.revertModelSnapshot
 
 [source,ts]
@@ -7009,6 +7232,7 @@ link:{ref}/ml-revert-snapshot.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.setUpgradeMode
 
 [source,ts]
@@ -7029,6 +7253,7 @@ link:{ref}/ml-set-upgrade-mode.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.startDataFrameAnalytics
 *Stability:* experimental
 [source,ts]
@@ -7053,6 +7278,7 @@ link:{ref}/start-dfanalytics.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.startDatafeed
 
 [source,ts]
@@ -7085,6 +7311,7 @@ link:{ref}/ml-start-datafeed.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.stopDataFrameAnalytics
 *Stability:* experimental
 [source,ts]
@@ -7117,6 +7344,7 @@ link:{ref}/stop-dfanalytics.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.stopDatafeed
 
 [source,ts]
@@ -7155,6 +7383,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === ml.updateDataFrameAnalytics
 *Stability:* experimental
 [source,ts]
@@ -7175,6 +7404,7 @@ link:{ref}/update-dfanalytics.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.updateDatafeed
 
 [source,ts]
@@ -7211,6 +7441,7 @@ link:{ref}/ml-update-datafeed.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.updateFilter
 
 [source,ts]
@@ -7231,6 +7462,7 @@ link:{ref}/ml-update-filter.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.updateJob
 
 [source,ts]
@@ -7251,6 +7483,7 @@ link:{ref}/ml-update-job.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.updateModelSnapshot
 
 [source,ts]
@@ -7275,6 +7508,7 @@ link:{ref}/ml-update-snapshot.html[Documentation] +
 
 |===
 
+[discrete]
 === ml.validate
 
 [source,ts]
@@ -7291,6 +7525,7 @@ link:https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html[Docum
 
 |===
 
+[discrete]
 === ml.validateDetector
 
 [source,ts]
@@ -7307,6 +7542,7 @@ link:https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html[Docum
 
 |===
 
+[discrete]
 === monitoring.bulk
 *Stability:* experimental
 [source,ts]
@@ -7341,6 +7577,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === msearch
 
 [source,ts]
@@ -7392,6 +7629,7 @@ _Default:_ `true`
 
 |===
 
+[discrete]
 === msearchTemplate
 
 [source,ts]
@@ -7433,6 +7671,7 @@ _Default:_ `true`
 
 |===
 
+[discrete]
 === mtermvectors
 
 [source,ts]
@@ -7505,6 +7744,7 @@ _Default:_ `true`
 
 |===
 
+[discrete]
 === nodes.hotThreads
 
 [source,ts]
@@ -7545,6 +7785,7 @@ link:{ref}/cluster-nodes-hot-threads.html[Documentation] +
 
 |===
 
+[discrete]
 === nodes.info
 
 [source,ts]
@@ -7573,6 +7814,7 @@ link:{ref}/cluster-nodes-info.html[Documentation] +
 
 |===
 
+[discrete]
 === nodes.reloadSecureSettings
 
 [source,ts]
@@ -7597,6 +7839,7 @@ link:{ref}/secure-settings.html#reloadable-secure-settings[Documentation] +
 
 |===
 
+[discrete]
 === nodes.stats
 
 [source,ts]
@@ -7654,6 +7897,7 @@ _Default:_ `node`
 
 |===
 
+[discrete]
 === nodes.usage
 
 [source,ts]
@@ -7678,6 +7922,7 @@ link:{ref}/cluster-nodes-usage.html[Documentation] +
 
 |===
 
+[discrete]
 === openPointInTime
 
 [source,ts]
@@ -7715,6 +7960,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === ping
 
 [source,ts]
@@ -7724,6 +7970,7 @@ client.ping()
 link:{ref}/index.html[Documentation] +
 
 
+[discrete]
 === putScript
 
 [source,ts]
@@ -7756,6 +8003,7 @@ link:{ref}/modules-scripting.html[Documentation] +
 
 |===
 
+[discrete]
 === rankEval
 *Stability:* experimental
 [source,ts]
@@ -7793,6 +8041,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === reindex
 
 [source,ts]
@@ -7846,6 +8095,7 @@ _Default:_ `1`
 
 |===
 
+[discrete]
 === reindexRethrottle
 
 [source,ts]
@@ -7866,6 +8116,7 @@ link:{ref}/docs-reindex.html[Documentation] +
 
 |===
 
+[discrete]
 === renderSearchTemplate
 
 [source,ts]
@@ -7886,6 +8137,7 @@ link:{ref}/search-template.html#_validating_templates[Documentation] +
 
 |===
 
+[discrete]
 === rollup.deleteJob
 *Stability:* experimental
 [source,ts]
@@ -7902,6 +8154,7 @@ link:{ref}/rollup-delete-job.html[Documentation] +
 
 |===
 
+[discrete]
 === rollup.getJobs
 *Stability:* experimental
 [source,ts]
@@ -7918,6 +8171,7 @@ link:{ref}/rollup-get-job.html[Documentation] +
 
 |===
 
+[discrete]
 === rollup.getRollupCaps
 *Stability:* experimental
 [source,ts]
@@ -7934,6 +8188,7 @@ link:{ref}/rollup-get-rollup-caps.html[Documentation] +
 
 |===
 
+[discrete]
 === rollup.getRollupIndexCaps
 *Stability:* experimental
 [source,ts]
@@ -7950,6 +8205,7 @@ link:{ref}/rollup-get-rollup-index-caps.html[Documentation] +
 
 |===
 
+[discrete]
 === rollup.putJob
 *Stability:* experimental
 [source,ts]
@@ -7970,6 +8226,7 @@ link:{ref}/rollup-put-job.html[Documentation] +
 
 |===
 
+[discrete]
 === rollup.rollupSearch
 *Stability:* experimental
 [source,ts]
@@ -8004,6 +8261,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === rollup.startJob
 *Stability:* experimental
 [source,ts]
@@ -8020,6 +8278,7 @@ link:{ref}/rollup-start-job.html[Documentation] +
 
 |===
 
+[discrete]
 === rollup.stopJob
 *Stability:* experimental
 [source,ts]
@@ -8044,6 +8303,7 @@ link:{ref}/rollup-stop-job.html[Documentation] +
 
 |===
 
+[discrete]
 === scriptsPainlessExecute
 *Stability:* experimental
 [source,ts]
@@ -8060,6 +8320,7 @@ link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-exec
 
 |===
 
+[discrete]
 === scroll
 
 [source,ts]
@@ -8091,6 +8352,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === search
 
 [source,ts]
@@ -8287,6 +8549,7 @@ _Default:_ `5`
 
 |===
 
+[discrete]
 === searchShards
 
 [source,ts]
@@ -8328,6 +8591,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === searchTemplate
 
 [source,ts]
@@ -8402,6 +8666,7 @@ _Default:_ `true`
 
 |===
 
+[discrete]
 === searchableSnapshots.clearCache
 *Stability:* experimental
 [source,ts]
@@ -8431,6 +8696,7 @@ _Default:_ `open`
 
 |===
 
+[discrete]
 === searchableSnapshots.mount
 *Stability:* experimental
 [source,ts]
@@ -8463,22 +8729,7 @@ link:{ref}/searchable-snapshots-api-mount-snapshot.html[Documentation] +
 
 |===
 
-=== searchableSnapshots.repositoryStats
-*Stability:* experimental
-[source,ts]
-----
-client.searchableSnapshots.repositoryStats({
-  repository: string
-})
-----
-link:{ref}/searchable-snapshots-apis.html[Documentation] +
-[cols=2*]
-|===
-|`repository`
-|`string` - The repository for which to get the stats for
-
-|===
-
+[discrete]
 === searchableSnapshots.stats
 *Stability:* experimental
 [source,ts]
@@ -8495,6 +8746,7 @@ link:{ref}/searchable-snapshots-apis.html[Documentation] +
 
 |===
 
+[discrete]
 === security.authenticate
 
 [source,ts]
@@ -8504,6 +8756,7 @@ client.security.authenticate()
 link:{ref}/security-api-authenticate.html[Documentation] +
 
 
+[discrete]
 === security.changePassword
 
 [source,ts]
@@ -8528,6 +8781,7 @@ link:{ref}/security-api-change-password.html[Documentation] +
 
 |===
 
+[discrete]
 === security.clearCachedPrivileges
 
 [source,ts]
@@ -8544,6 +8798,7 @@ link:{ref}/security-api-clear-privilege-cache.html[Documentation] +
 
 |===
 
+[discrete]
 === security.clearCachedRealms
 
 [source,ts]
@@ -8564,6 +8819,7 @@ link:{ref}/security-api-clear-cache.html[Documentation] +
 
 |===
 
+[discrete]
 === security.clearCachedRoles
 
 [source,ts]
@@ -8580,6 +8836,7 @@ link:{ref}/security-api-clear-role-cache.html[Documentation] +
 
 |===
 
+[discrete]
 === security.createApiKey
 
 [source,ts]
@@ -8600,6 +8857,7 @@ link:{ref}/security-api-create-api-key.html[Documentation] +
 
 |===
 
+[discrete]
 === security.deletePrivileges
 
 [source,ts]
@@ -8624,6 +8882,7 @@ link:{ref}/security-api-delete-privilege.html[Documentation] +
 
 |===
 
+[discrete]
 === security.deleteRole
 
 [source,ts]
@@ -8644,6 +8903,7 @@ link:{ref}/security-api-delete-role.html[Documentation] +
 
 |===
 
+[discrete]
 === security.deleteRoleMapping
 
 [source,ts]
@@ -8664,6 +8924,7 @@ link:{ref}/security-api-delete-role-mapping.html[Documentation] +
 
 |===
 
+[discrete]
 === security.deleteUser
 
 [source,ts]
@@ -8684,6 +8945,7 @@ link:{ref}/security-api-delete-user.html[Documentation] +
 
 |===
 
+[discrete]
 === security.disableUser
 
 [source,ts]
@@ -8704,6 +8966,7 @@ link:{ref}/security-api-disable-user.html[Documentation] +
 
 |===
 
+[discrete]
 === security.enableUser
 
 [source,ts]
@@ -8724,6 +8987,7 @@ link:{ref}/security-api-enable-user.html[Documentation] +
 
 |===
 
+[discrete]
 === security.getApiKey
 
 [source,ts]
@@ -8756,6 +9020,7 @@ link:{ref}/security-api-get-api-key.html[Documentation] +
 
 |===
 
+[discrete]
 === security.getBuiltinPrivileges
 
 [source,ts]
@@ -8765,6 +9030,7 @@ client.security.getBuiltinPrivileges()
 link:{ref}/security-api-get-builtin-privileges.html[Documentation] +
 
 
+[discrete]
 === security.getPrivileges
 
 [source,ts]
@@ -8785,6 +9051,7 @@ link:{ref}/security-api-get-privileges.html[Documentation] +
 
 |===
 
+[discrete]
 === security.getRole
 
 [source,ts]
@@ -8801,6 +9068,7 @@ link:{ref}/security-api-get-role.html[Documentation] +
 
 |===
 
+[discrete]
 === security.getRoleMapping
 
 [source,ts]
@@ -8817,6 +9085,7 @@ link:{ref}/security-api-get-role-mapping.html[Documentation] +
 
 |===
 
+[discrete]
 === security.getToken
 
 [source,ts]
@@ -8833,6 +9102,7 @@ link:{ref}/security-api-get-token.html[Documentation] +
 
 |===
 
+[discrete]
 === security.getUser
 
 [source,ts]
@@ -8849,6 +9119,7 @@ link:{ref}/security-api-get-user.html[Documentation] +
 
 |===
 
+[discrete]
 === security.getUserPrivileges
 
 [source,ts]
@@ -8858,6 +9129,7 @@ client.security.getUserPrivileges()
 link:{ref}/security-api-get-privileges.html[Documentation] +
 
 
+[discrete]
 === security.hasPrivileges
 
 [source,ts]
@@ -8878,6 +9150,7 @@ link:{ref}/security-api-has-privileges.html[Documentation] +
 
 |===
 
+[discrete]
 === security.invalidateApiKey
 
 [source,ts]
@@ -8894,6 +9167,7 @@ link:{ref}/security-api-invalidate-api-key.html[Documentation] +
 
 |===
 
+[discrete]
 === security.invalidateToken
 
 [source,ts]
@@ -8910,6 +9184,7 @@ link:{ref}/security-api-invalidate-token.html[Documentation] +
 
 |===
 
+[discrete]
 === security.putPrivileges
 
 [source,ts]
@@ -8930,6 +9205,7 @@ link:{ref}/security-api-put-privileges.html[Documentation] +
 
 |===
 
+[discrete]
 === security.putRole
 
 [source,ts]
@@ -8954,6 +9230,7 @@ link:{ref}/security-api-put-role.html[Documentation] +
 
 |===
 
+[discrete]
 === security.putRoleMapping
 
 [source,ts]
@@ -8978,6 +9255,7 @@ link:{ref}/security-api-put-role-mapping.html[Documentation] +
 
 |===
 
+[discrete]
 === security.putUser
 
 [source,ts]
@@ -9002,6 +9280,7 @@ link:{ref}/security-api-put-user.html[Documentation] +
 
 |===
 
+[discrete]
 === slm.deleteLifecycle
 
 [source,ts]
@@ -9018,6 +9297,7 @@ link:{ref}/slm-api-delete-policy.html[Documentation] +
 
 |===
 
+[discrete]
 === slm.executeLifecycle
 
 [source,ts]
@@ -9034,6 +9314,7 @@ link:{ref}/slm-api-execute-lifecycle.html[Documentation] +
 
 |===
 
+[discrete]
 === slm.executeRetention
 
 [source,ts]
@@ -9043,6 +9324,7 @@ client.slm.executeRetention()
 link:{ref}/slm-api-execute-retention.html[Documentation] +
 
 
+[discrete]
 === slm.getLifecycle
 
 [source,ts]
@@ -9059,6 +9341,7 @@ link:{ref}/slm-api-get-policy.html[Documentation] +
 
 |===
 
+[discrete]
 === slm.getStats
 
 [source,ts]
@@ -9068,6 +9351,7 @@ client.slm.getStats()
 link:{ref}/slm-api-get-stats.html[Documentation] +
 
 
+[discrete]
 === slm.getStatus
 
 [source,ts]
@@ -9077,6 +9361,7 @@ client.slm.getStatus()
 link:{ref}/slm-api-get-status.html[Documentation] +
 
 
+[discrete]
 === slm.putLifecycle
 
 [source,ts]
@@ -9097,6 +9382,7 @@ link:{ref}/slm-api-put-policy.html[Documentation] +
 
 |===
 
+[discrete]
 === slm.start
 
 [source,ts]
@@ -9106,6 +9392,7 @@ client.slm.start()
 link:{ref}/slm-api-start.html[Documentation] +
 
 
+[discrete]
 === slm.stop
 
 [source,ts]
@@ -9115,6 +9402,7 @@ client.slm.stop()
 link:{ref}/slm-api-stop.html[Documentation] +
 
 
+[discrete]
 === snapshot.cleanupRepository
 
 [source,ts]
@@ -9139,6 +9427,7 @@ link:{ref}/clean-up-snapshot-repo-api.html[Documentation] +
 
 |===
 
+[discrete]
 === snapshot.create
 
 [source,ts]
@@ -9171,6 +9460,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |===
 
+[discrete]
 === snapshot.createRepository
 
 [source,ts]
@@ -9203,6 +9493,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |===
 
+[discrete]
 === snapshot.delete
 
 [source,ts]
@@ -9227,6 +9518,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |===
 
+[discrete]
 === snapshot.deleteRepository
 
 [source,ts]
@@ -9251,6 +9543,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |===
 
+[discrete]
 === snapshot.get
 
 [source,ts]
@@ -9283,6 +9576,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |===
 
+[discrete]
 === snapshot.getRepository
 
 [source,ts]
@@ -9307,6 +9601,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |===
 
+[discrete]
 === snapshot.restore
 
 [source,ts]
@@ -9339,6 +9634,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |===
 
+[discrete]
 === snapshot.status
 
 [source,ts]
@@ -9367,6 +9663,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |===
 
+[discrete]
 === snapshot.verifyRepository
 
 [source,ts]
@@ -9391,6 +9688,7 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |===
 
+[discrete]
 === sql.clearCursor
 
 [source,ts]
@@ -9407,6 +9705,7 @@ link:{ref}/sql-pagination.html[Documentation] +
 
 |===
 
+[discrete]
 === sql.query
 
 [source,ts]
@@ -9428,6 +9727,7 @@ link:{ref}/sql-rest-overview.html[Documentation] +
 
 |===
 
+[discrete]
 === sql.translate
 
 [source,ts]
@@ -9444,6 +9744,7 @@ link:{ref}/sql-translate.html[Documentation] +
 
 |===
 
+[discrete]
 === ssl.certificates
 
 [source,ts]
@@ -9453,6 +9754,7 @@ client.ssl.certificates()
 link:{ref}/security-api-ssl.html[Documentation] +
 
 
+[discrete]
 === tasks.cancel
 
 [source,ts]
@@ -9485,6 +9787,7 @@ link:{ref}/tasks.html[Documentation] +
 
 |===
 
+[discrete]
 === tasks.get
 
 [source,ts]
@@ -9509,6 +9812,7 @@ link:{ref}/tasks.html[Documentation] +
 
 |===
 
+[discrete]
 === tasks.list
 
 [source,ts]
@@ -9550,6 +9854,7 @@ _Default:_ `nodes`
 
 |===
 
+[discrete]
 === termvectors
 
 [source,ts]
@@ -9622,6 +9927,7 @@ _Default:_ `true`
 
 |===
 
+[discrete]
 === transform.deleteTransform
 
 [source,ts]
@@ -9642,6 +9948,7 @@ link:{ref}/delete-transform.html[Documentation] +
 
 |===
 
+[discrete]
 === transform.getTransform
 
 [source,ts]
@@ -9670,6 +9977,7 @@ link:{ref}/get-transform.html[Documentation] +
 
 |===
 
+[discrete]
 === transform.getTransformStats
 
 [source,ts]
@@ -9698,6 +10006,7 @@ link:{ref}/get-transform-stats.html[Documentation] +
 
 |===
 
+[discrete]
 === transform.previewTransform
 
 [source,ts]
@@ -9714,6 +10023,7 @@ link:{ref}/preview-transform.html[Documentation] +
 
 |===
 
+[discrete]
 === transform.putTransform
 
 [source,ts]
@@ -9738,6 +10048,7 @@ link:{ref}/put-transform.html[Documentation] +
 
 |===
 
+[discrete]
 === transform.startTransform
 
 [source,ts]
@@ -9758,6 +10069,7 @@ link:{ref}/start-transform.html[Documentation] +
 
 |===
 
+[discrete]
 === transform.stopTransform
 
 [source,ts]
@@ -9794,6 +10106,7 @@ link:{ref}/stop-transform.html[Documentation] +
 
 |===
 
+[discrete]
 === transform.updateTransform
 
 [source,ts]
@@ -9818,6 +10131,7 @@ link:{ref}/update-transform.html[Documentation] +
 
 |===
 
+[discrete]
 === update
 
 [source,ts]
@@ -9897,6 +10211,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === updateByQuery
 
 [source,ts]
@@ -10061,6 +10376,7 @@ _Default:_ `1`
 
 |===
 
+[discrete]
 === updateByQueryRethrottle
 
 [source,ts]
@@ -10081,6 +10397,7 @@ link:{ref}/docs-update-by-query.html[Documentation] +
 
 |===
 
+[discrete]
 === watcher.ackWatch
 
 [source,ts]
@@ -10101,6 +10418,7 @@ link:{ref}/watcher-api-ack-watch.html[Documentation] +
 
 |===
 
+[discrete]
 === watcher.activateWatch
 
 [source,ts]
@@ -10117,6 +10435,7 @@ link:{ref}/watcher-api-activate-watch.html[Documentation] +
 
 |===
 
+[discrete]
 === watcher.deactivateWatch
 
 [source,ts]
@@ -10133,6 +10452,7 @@ link:{ref}/watcher-api-deactivate-watch.html[Documentation] +
 
 |===
 
+[discrete]
 === watcher.deleteWatch
 
 [source,ts]
@@ -10149,6 +10469,7 @@ link:{ref}/watcher-api-delete-watch.html[Documentation] +
 
 |===
 
+[discrete]
 === watcher.executeWatch
 
 [source,ts]
@@ -10173,6 +10494,7 @@ link:{ref}/watcher-api-execute-watch.html[Documentation] +
 
 |===
 
+[discrete]
 === watcher.getWatch
 
 [source,ts]
@@ -10189,6 +10511,7 @@ link:{ref}/watcher-api-get-watch.html[Documentation] +
 
 |===
 
+[discrete]
 === watcher.putWatch
 
 [source,ts]
@@ -10225,6 +10548,7 @@ link:{ref}/watcher-api-put-watch.html[Documentation] +
 
 |===
 
+[discrete]
 === watcher.start
 
 [source,ts]
@@ -10234,6 +10558,7 @@ client.watcher.start()
 link:{ref}/watcher-api-start.html[Documentation] +
 
 
+[discrete]
 === watcher.stats
 
 [source,ts]
@@ -10254,6 +10579,7 @@ link:{ref}/watcher-api-stats.html[Documentation] +
 
 |===
 
+[discrete]
 === watcher.stop
 
 [source,ts]
@@ -10263,6 +10589,7 @@ client.watcher.stop()
 link:{ref}/watcher-api-stop.html[Documentation] +
 
 
+[discrete]
 === xpack.info
 
 [source,ts]
@@ -10285,6 +10612,7 @@ WARNING: This parameter has been deprecated.
 
 |===
 
+[discrete]
 === xpack.usage
 
 [source,ts]
