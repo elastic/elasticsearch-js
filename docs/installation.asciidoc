@@ -1,0 +1,21 @@
+[[installation]]
+== Installation
+
+This page guides you through the installation process of the client.
+
+To install the latest version of the client, run the following command:
+
+[source,sh]
+----
+npm install @elastic/elasticsearch
+----
+
+To install a specific major version of the client, run the following command:
+
+[source,sh]
+----
+npm install @elastic/elasticsearch@<major>
+----
+
+To learn more about the supported major versions, please refer to the 
+<<js-compatibility-matrix>>.

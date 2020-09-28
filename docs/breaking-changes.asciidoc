@@ -6,6 +6,7 @@ to install with `npm install elasticsearch` – you will encounter some breaking
 changes.
 
 
+[discrete]
 === Don’t panic!
 
 Every breaking change was carefully weighed, and each is justified. Furthermore, 
@@ -13,6 +14,7 @@ the new codebase has been rewritten with modern JavaScript and has been
 carefully designed to be easy to maintain.
 
 
+[discrete]
 === Breaking changes
 
 *  Minimum supported version of Node.js is `v8`.
@@ -209,6 +211,7 @@ client.transport.request({
 })
 ----
 
+[discrete]
 === Talk is cheap. Show me the code.
 
 You can find a code snippet with the old client below followed by the same code 

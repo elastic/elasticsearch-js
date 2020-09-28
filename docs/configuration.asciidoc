@@ -17,7 +17,7 @@ const client = new Client({
 })
 ----
 
-
+[discrete]
 === Basic options
 
 [cols=2*]
@@ -242,6 +242,7 @@ const client = new Client({
 |===
 
 
+[discrete]
 === Advanced configuration
 
 If you need to customize the client behavior heavily, you are in the right 
@@ -253,6 +254,7 @@ place! The client allows you to customize the following internals:
 * `Serializer` class
 
 
+[discrete]
 === `Transport`
 
 This class is responsible for performing the request to {es} and handling 
@@ -287,6 +289,7 @@ class MyTransport extends Transport {
 ----
 
 
+[discrete]
 === `ConnectionPool`
 
 This class is responsible for keeping in memory all the {es} Connection that we 
@@ -310,6 +313,7 @@ const client = new Client({
 ----
 
 
+[discrete]
 === `Connection`
 
 This class represents a single node, it holds every information we have on the 
@@ -333,6 +337,7 @@ const client = new Client({
 ----
 
 
+[discrete]
 === `Serializer`
 
 This class is responsible for the serialization of every request, it offers the 
