@@ -861,6 +861,41 @@ test('Elastic cloud config', t => {
     t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
   })
 
+  t.test('Without kibana component', t => {
+    t.plan(5)
+    const client = new Client({
+      cloud: {
+        // 'localhost$abcd$'
+        id: 'name:bG9jYWxob3N0JGFiY2Qk',
+        username: 'elastic',
+        password: 'changeme'
+      }
+    })
+
+    const pool = client.connectionPool
+    t.ok(pool instanceof CloudConnectionPool)
+    t.match(pool.connections.find(c => c.id === 'https://abcd.localhost/'), {
+      url: new URL('https://elastic:changeme@abcd.localhost'),
+      id: 'https://abcd.localhost/',
+      headers: {
+        authorization: 'Basic ' + Buffer.from('elastic:changeme').toString('base64')
+      },
+      ssl: { secureProtocol: 'TLSv1_2_method' },
+      deadCount: 0,
+      resurrectTimeout: 0,
+      roles: {
+        master: true,
+        data: true,
+        ingest: true,
+        ml: false
+      }
+    })
+
+    t.strictEqual(client.transport.compression, 'gzip')
+    t.strictEqual(client.transport.suggestCompression, true)
+    t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
+  })
+
   t.test('Auth as separate option', t => {
     t.plan(5)
     const client = new Client({
