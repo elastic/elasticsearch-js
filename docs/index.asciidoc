@@ -4,6 +4,7 @@
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 
 include::introduction.asciidoc[]
+include::installation.asciidoc[]
 include::changelog.asciidoc[]
 include::usage.asciidoc[]
 include::configuration.asciidoc[]

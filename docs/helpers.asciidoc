@@ -6,12 +6,16 @@ The client comes with an handy collection of helpers to give you a more comforta
 CAUTION: The client helpers are experimental, and the API may change in the next minor releases.
 The helpers will not work in any Node.js version lower than 10.
 
+
+[discrete]
 === Bulk Helper
 
 ~Added~ ~in~ ~`v7.7.0`~
 
 Running Bulk requests can be complex due to the shape of the API, this helper aims to provide a nicer developer experience around the Bulk API.
 
+
+[discrete]
 ==== Usage
 [source,js]
 ----
@@ -150,8 +154,12 @@ const b = client.helpers.bulk({
 
 |===
 
+
+[discrete]
 ==== Supported operations
 
+
+[discrete]
 ===== Index
 [source,js]
 ----
@@ -165,6 +173,8 @@ client.helpers.bulk({
 })
 ----
 
+
+[discrete]
 ===== Create
 [source,js]
 ----
@@ -178,7 +188,10 @@ client.helpers.bulk({
 })
 ----
 
+
+[discrete]
 ===== Update
+
 [source,js]
 ----
 client.helpers.bulk({
@@ -195,7 +208,10 @@ client.helpers.bulk({
 })
 ----
 
+
+[discrete]
 ===== Delete
+
 [source,js]
 ----
 client.helpers.bulk({
@@ -208,7 +224,10 @@ client.helpers.bulk({
 })
 ----
 
+
+[discrete]
 ==== Abort a bulk operation
+
 If needed, you can abort a bulk operation at any time. The bulk helper returns a https://promisesaplus.com/[thenable], which has an `abort` method.
 
 NOTE: The abort method will stop the execution of the bulk operation, but if you are using a concurrency higher than one, the operations that are already running will not be stopped.
@@ -235,7 +254,10 @@ const b = client.helpers.bulk({
 console.log(await b)
 ----
 
+
+[discrete]
 ==== Passing custom options to the Bulk API
+
 You can pass any option supported by the link:{ref}/docs-bulk.html#docs-bulk-api-query-params[Bulk API] to the helper, and the helper will use those options in conjuction with the Bulk 
 API call.
 
@@ -252,6 +274,8 @@ const result = await client.helpers.bulk({
 })
 ----
 
+
+[discrete]
 ==== Usage with an async generator
 
 [source,js]
@@ -282,6 +306,8 @@ const result = await client.helpers.bulk({
 console.log(result)
 ----
 
+
+[discrete]
 === Multi Search Helper
 
 ~Added~ ~in~ ~`v7.8.0`~
@@ -290,7 +316,10 @@ If you are sending search request at a high rate, this helper might be useful fo
 It will use the mutli search API under the hood to batch the requests and improve the overall performances of your application. +
 The `result` exposes a `documents` property as well, which allows you to access directly the hits sources.
 
+
+[discrete]
 ==== Usage
+
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
@@ -372,7 +401,10 @@ const m = client.helpers.msearch({
 
 |===
 
+
+[discrete]
 ==== Stopping the Msearch Helper
+
 If needed, you can stop a msearch processor at any time. The msearch helper returns a https://promisesaplus.com/[thenable], which has an `stop` method.
 
 If you are creating multiple msearch helpers instances and using them for a limitied period of time, remember to always use the  `stop` method once you have finished using them, otherwise your application will start leaking memory.
@@ -405,6 +437,8 @@ m.search(
 setImmediate(() => m.stop())
 ----
 
+
+[discrete]
 === Search Helper
 
 ~Added~ ~in~ ~`v7.7.0`~
@@ -430,6 +464,8 @@ for (const doc of documents) {
 }
 ----
 
+
+[discrete]
 === Scroll Search Helper
 
 ~Added~ ~in~ ~`v7.7.0`~
@@ -455,6 +491,8 @@ for await (const result of scrollSearch) {
 }
 ----
 
+
+[discrete]
 ==== Clear a scroll search
 
 If needed, you can clear a scroll search by calling `result.clear()`:
@@ -468,6 +506,8 @@ for await (const result of scrollSearch) {
 }
 ----
 
+
+[discrete]
 ==== Quickly getting the documents
 
 If you only need the documents from the result of a scroll search, you can access them via `result.documents`:
@@ -479,6 +519,8 @@ for await (const result of scrollSearch) {
 }
 ----
 
+
+[discrete]
 === Scroll Documents Helper
 
 ~Added~ ~in~ ~`v7.7.0`~

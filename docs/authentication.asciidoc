@@ -5,6 +5,7 @@ This document contains code snippets to show you how to connect to various {es}
 providers.
 
 
+[discrete]
 === Elastic Cloud
 
 If you are using https://www.elastic.co/cloud[Elastic Cloud], the client offers 
@@ -38,6 +39,7 @@ const client = new Client({
 ----
 
 
+[discrete]
 === Basic authentication
 
 You can provide your credentials by passing the `username` and `password` 
@@ -69,6 +71,7 @@ const client = new Client({
 ----
 
 
+[discrete]
 === ApiKey authentication
 
 You can use the 
@@ -106,6 +109,7 @@ const client = new Client({
 ----
 
 
+[discrete]
 === SSL configuration
 
 Without any additional configuration you can specify `https://` node urls, and 

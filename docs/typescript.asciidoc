@@ -1,5 +1,4 @@
 [[typescript]]
-
 == TypeScript support
 
 The client offers a first-class support for TypeScript, since it ships the type 
@@ -39,6 +38,7 @@ console.log(response.body)
 You don't have to specify all the generics, but the order must be respected.
 
 
+[discrete]
 === A complete example
 
 [source,ts]

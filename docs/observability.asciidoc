@@ -11,6 +11,8 @@ a large codebase with many events happening at the same time.
 To help you with this, the client offers you a correlation id system and other 
 features. Let's see them in action.
 
+
+[discrete]
 === Events
 
 The client is an event emitter, this means that you can listen for its event and 
@@ -126,6 +128,7 @@ request: {
 ----
 
 
+[discrete]
 === Correlation id
 
 Correlating events can be quite hard, especially if there are many events at the 
@@ -193,6 +196,7 @@ client.search({
 ----
 
 
+[discrete]
 === Context object
 
 Sometimes, you might need to make some custom data available in your events, you 
@@ -268,6 +272,7 @@ client.search({
 ----
 
 
+[discrete]
 === Client name
 
 If you are using multiple instances of the client or if you are using multiple 
@@ -321,6 +326,7 @@ child.search({
 ----
 
 
+[discrete]
 === X-Opaque-Id support
 
 To improve the overall observability, the client offers an easy way to configure 
