@@ -198,7 +198,7 @@ client.helpers.bulk({
   datasource: myDatasource,
   onDocument (doc) {
     // Note that the update operation requires you to return
-    // an array, where the first element is the actio, while
+    // an array, where the first element is the action, while
     // the second are the document option
     return [
       { update: { _index: 'my-index', _id: doc.id } },
