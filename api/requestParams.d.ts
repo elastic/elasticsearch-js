@@ -1689,6 +1689,7 @@ export interface MlGetTrainedModels extends Generic {
   model_id?: string;
   allow_no_match?: boolean;
   include?: string;
+  include_model_definition?: boolean;
   decompress_definition?: boolean;
   from?: number;
   size?: number;
