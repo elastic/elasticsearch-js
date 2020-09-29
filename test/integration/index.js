@@ -103,6 +103,12 @@ const xPackBlackList = {
   'transforms_stats.yml': ['*'],
   'transforms_stats_continuous.yml': ['*'],
   'transforms_update.yml': ['*'],
+  // js does not support ulongs
+  'unsigned_long/10_basic.yml': ['*'],
+  'unsigned_long/20_null_value.yml': ['*'],
+  'unsigned_long/30_multi_fields.yml': ['*'],
+  'unsigned_long/40_different_numeric.yml': ['*'],
+  'unsigned_long/50_script_values.yml': ['*'],
   // docker issue?
   'watcher/execute_watch/60_http_input.yml': ['*'],
   // the checks are correct, but for some reason the test is failing on js side
