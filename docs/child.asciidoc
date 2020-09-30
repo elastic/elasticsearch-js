@@ -28,6 +28,6 @@ const child = client.child({
   requestTimeout: 1000
 })
 
-client.info(console.log)
-child.info(console.log)
+console.log(client.info);
+console.log(child.info);
 ----
