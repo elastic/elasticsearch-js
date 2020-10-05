@@ -7,7 +7,7 @@ definitions for every exposed API.
 NOTE: If you are using TypeScript you will be required to use _snake_case_ style 
 to define the API parameters instead of _camelCase_. 
 
-By default event API uses https://www.typescriptlang.org/docs/handbook/generics.html[generics] to specify the requets and response bodies and the `meta.context`. Currently we can't provide those definitions, but we are working to improve this situation.
+By default event API uses https://www.typescriptlang.org/docs/handbook/generics.html[generics] to specify the requests and response bodies and the `meta.context`. Currently we can't provide those definitions, but we are working to improve this situation.
 
 You can find a partial definition of the request types by importing `RequestParams`, which is used by default in the client and accepts a body (when needed) as a generic to provide a better specification.
 
@@ -108,7 +108,7 @@ interface Source {
 async function run () {
   // All of the examples below are valid code, by default,
   // the request body will be `RequestBody` and response will be `Record<string, any>`.
-  const response = await client.search({
+  let response = await client.search({
     index: 'test',
     body: {
       query: {
@@ -120,7 +120,7 @@ async function run () {
   console.log(response.body)
 
   // The first generic is the response body
-  const response = await client.search<SearchResponse<Source>>({
+  response = await client.search<SearchResponse<Source>>({
     index: 'test',
     // Here the body must follow the `RequestBody` interface
     body: {
@@ -132,7 +132,7 @@ async function run () {
   // body here is `SearchResponse<Source>`
   console.log(response.body)
 
-  const response = await client.search<SearchResponse<Source>, SearchBody>({
+  response = await client.search<SearchResponse<Source>, SearchBody>({
     index: 'test',
     // Here the body must follow the `SearchBody` interface
     body: {
