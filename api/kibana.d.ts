@@ -376,6 +376,7 @@ interface KibanaClient {
   security: {
     authenticate<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityAuthenticate, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     changePassword<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityChangePassword<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clearApiKeyCache<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityClearApiKeyCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     clearCachedPrivileges<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityClearCachedPrivileges, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     clearCachedRealms<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityClearCachedRealms, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     clearCachedRoles<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityClearCachedRoles, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>

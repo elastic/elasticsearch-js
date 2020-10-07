@@ -6079,7 +6079,7 @@ client.ml.deleteTrainedModel({
   model_id: string
 })
 ----
-link:{ref}/delete-inference.html[Documentation] +
+link:{ref}/delete-trained-models.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -6461,7 +6461,8 @@ client.ml.getDataFrameAnalytics({
   id: string,
   allow_no_match: boolean,
   from: number,
-  size: number
+  size: number,
+  for_export: boolean
 })
 ----
 link:{ref}/get-dfanalytics.html[Documentation] +
@@ -6480,6 +6481,9 @@ _Default:_ `true`
 |`size`
 |`number` - specifies a max number of analytics to get +
 _Default:_ `100`
+
+|`for_export` or `forExport`
+|`boolean` - Omits fields that are illegal to set on data frame analytics PUT
 
 |===
 
@@ -6553,7 +6557,8 @@ WARNING: This parameter has been deprecated.
 client.ml.getDatafeeds({
   datafeed_id: string,
   allow_no_match: boolean,
-  allow_no_datafeeds: boolean
+  allow_no_datafeeds: boolean,
+  for_export: boolean
 })
 ----
 link:{ref}/ml-get-datafeed.html[Documentation] +
@@ -6569,6 +6574,9 @@ link:{ref}/ml-get-datafeed.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified) +
 
 WARNING: This parameter has been deprecated.
+
+|`for_export` or `forExport`
+|`boolean` - Omits fields that are illegal to set on datafeed PUT
 
 |===
 
@@ -6685,7 +6693,8 @@ WARNING: This parameter has been deprecated.
 client.ml.getJobs({
   job_id: string,
   allow_no_match: boolean,
-  allow_no_jobs: boolean
+  allow_no_jobs: boolean,
+  for_export: boolean
 })
 ----
 link:{ref}/ml-get-job.html[Documentation] +
@@ -6701,6 +6710,9 @@ link:{ref}/ml-get-job.html[Documentation] +
 |`boolean` - Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) +
 
 WARNING: This parameter has been deprecated.
+
+|`for_export` or `forExport`
+|`boolean` - Omits fields that are illegal to set on job PUT
 
 |===
 
@@ -6878,7 +6890,7 @@ client.ml.getTrainedModels({
   for_export: boolean
 })
 ----
-link:{ref}/get-inference.html[Documentation] +
+link:{ref}/get-trained-models.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -6927,7 +6939,7 @@ client.ml.getTrainedModelsStats({
   size: number
 })
 ----
-link:{ref}/get-inference-stats.html[Documentation] +
+link:{ref}/get-trained-models-stats.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7192,7 +7204,7 @@ client.ml.putTrainedModel({
   body: object
 })
 ----
-link:{ref}/put-inference.html[Documentation] +
+link:{ref}/put-trained-models.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -8778,6 +8790,23 @@ link:{ref}/security-api-change-password.html[Documentation] +
 
 |`body`
 |`object` - the new password for the user
+
+|===
+
+[discrete]
+=== security.clearApiKeyCache
+
+[source,ts]
+----
+client.security.clearApiKeyCache({
+  ids: string | string[]
+})
+----
+link:{ref}/security-api-clear-api-key-cache.html[Documentation] +
+[cols=2*]
+|===
+|`ids`
+|`string \| string[]` - A comma-separated list of IDs of API keys to clear from the cache
 
 |===
 

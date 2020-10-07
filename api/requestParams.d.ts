@@ -1581,6 +1581,7 @@ export interface MlGetDataFrameAnalytics extends Generic {
   allow_no_match?: boolean;
   from?: number;
   size?: number;
+  for_export?: boolean;
 }
 
 export interface MlGetDataFrameAnalyticsStats extends Generic {
@@ -1601,6 +1602,7 @@ export interface MlGetDatafeeds extends Generic {
   datafeed_id?: string;
   allow_no_match?: boolean;
   allow_no_datafeeds?: boolean;
+  for_export?: boolean;
 }
 
 export interface MlGetFilters extends Generic {
@@ -1632,6 +1634,7 @@ export interface MlGetJobs extends Generic {
   job_id?: string;
   allow_no_match?: boolean;
   allow_no_jobs?: boolean;
+  for_export?: boolean;
 }
 
 export interface MlGetModelSnapshots<T = RequestBody> extends Generic {
@@ -2128,6 +2131,10 @@ export interface SecurityChangePassword<T = RequestBody> extends Generic {
   username?: string;
   refresh?: 'wait_for' | boolean;
   body: T;
+}
+
+export interface SecurityClearApiKeyCache extends Generic {
+  ids: string | string[];
 }
 
 export interface SecurityClearCachedPrivileges extends Generic {

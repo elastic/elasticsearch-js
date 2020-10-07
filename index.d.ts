@@ -1980,6 +1980,14 @@ declare class Client {
     changePassword<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     changePassword<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SecurityChangePassword<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     changePassword<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SecurityChangePassword<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_api_key_cache<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityClearApiKeyCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clear_api_key_cache<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_api_key_cache<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityClearApiKeyCache, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_api_key_cache<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityClearApiKeyCache, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearApiKeyCache<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityClearApiKeyCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clearApiKeyCache<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearApiKeyCache<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityClearApiKeyCache, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearApiKeyCache<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityClearApiKeyCache, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     clear_cached_privileges<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityClearCachedPrivileges, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     clear_cached_privileges<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     clear_cached_privileges<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityClearCachedPrivileges, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

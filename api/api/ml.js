@@ -23,8 +23,8 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['allow_no_match', 'allow_no_jobs', 'force', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'requests_per_second', 'allow_no_forecasts', 'wait_for_completion', 'lines_to_sample', 'line_merge_size_limit', 'charset', 'format', 'has_header_row', 'column_names', 'delimiter', 'quote', 'should_trim_fields', 'grok_pattern', 'timestamp_field', 'timestamp_format', 'explain', 'calc_interim', 'start', 'end', 'advance_time', 'skip_time', 'duration', 'expires_in', 'max_model_memory', 'expand', 'exclude_interim', 'from', 'size', 'anomaly_score', 'sort', 'desc', 'job_id', 'partition_field_value', 'verbose', 'allow_no_datafeeds', 'influencer_score', 'top_n', 'bucket_span', 'overall_score', 'record_score', 'include', 'include_model_definition', 'decompress_definition', 'tags', 'for_export', 'reset_start', 'reset_end', 'ignore_unavailable', 'allow_no_indices', 'ignore_throttled', 'expand_wildcards', 'delete_intervening_results', 'enabled']
-const snakeCase = { allowNoMatch: 'allow_no_match', allowNoJobs: 'allow_no_jobs', errorTrace: 'error_trace', filterPath: 'filter_path', requestsPerSecond: 'requests_per_second', allowNoForecasts: 'allow_no_forecasts', waitForCompletion: 'wait_for_completion', linesToSample: 'lines_to_sample', lineMergeSizeLimit: 'line_merge_size_limit', hasHeaderRow: 'has_header_row', columnNames: 'column_names', shouldTrimFields: 'should_trim_fields', grokPattern: 'grok_pattern', timestampField: 'timestamp_field', timestampFormat: 'timestamp_format', calcInterim: 'calc_interim', advanceTime: 'advance_time', skipTime: 'skip_time', expiresIn: 'expires_in', maxModelMemory: 'max_model_memory', excludeInterim: 'exclude_interim', anomalyScore: 'anomaly_score', jobId: 'job_id', partitionFieldValue: 'partition_field_value', allowNoDatafeeds: 'allow_no_datafeeds', influencerScore: 'influencer_score', topN: 'top_n', bucketSpan: 'bucket_span', overallScore: 'overall_score', recordScore: 'record_score', includeModelDefinition: 'include_model_definition', decompressDefinition: 'decompress_definition', forExport: 'for_export', resetStart: 'reset_start', resetEnd: 'reset_end', ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', ignoreThrottled: 'ignore_throttled', expandWildcards: 'expand_wildcards', deleteInterveningResults: 'delete_intervening_results' }
+const acceptedQuerystring = ['allow_no_match', 'allow_no_jobs', 'force', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'requests_per_second', 'allow_no_forecasts', 'wait_for_completion', 'lines_to_sample', 'line_merge_size_limit', 'charset', 'format', 'has_header_row', 'column_names', 'delimiter', 'quote', 'should_trim_fields', 'grok_pattern', 'timestamp_field', 'timestamp_format', 'explain', 'calc_interim', 'start', 'end', 'advance_time', 'skip_time', 'duration', 'expires_in', 'max_model_memory', 'expand', 'exclude_interim', 'from', 'size', 'anomaly_score', 'sort', 'desc', 'job_id', 'partition_field_value', 'for_export', 'verbose', 'allow_no_datafeeds', 'influencer_score', 'top_n', 'bucket_span', 'overall_score', 'record_score', 'include', 'include_model_definition', 'decompress_definition', 'tags', 'reset_start', 'reset_end', 'ignore_unavailable', 'allow_no_indices', 'ignore_throttled', 'expand_wildcards', 'delete_intervening_results', 'enabled']
+const snakeCase = { allowNoMatch: 'allow_no_match', allowNoJobs: 'allow_no_jobs', errorTrace: 'error_trace', filterPath: 'filter_path', requestsPerSecond: 'requests_per_second', allowNoForecasts: 'allow_no_forecasts', waitForCompletion: 'wait_for_completion', linesToSample: 'lines_to_sample', lineMergeSizeLimit: 'line_merge_size_limit', hasHeaderRow: 'has_header_row', columnNames: 'column_names', shouldTrimFields: 'should_trim_fields', grokPattern: 'grok_pattern', timestampField: 'timestamp_field', timestampFormat: 'timestamp_format', calcInterim: 'calc_interim', advanceTime: 'advance_time', skipTime: 'skip_time', expiresIn: 'expires_in', maxModelMemory: 'max_model_memory', excludeInterim: 'exclude_interim', anomalyScore: 'anomaly_score', jobId: 'job_id', partitionFieldValue: 'partition_field_value', forExport: 'for_export', allowNoDatafeeds: 'allow_no_datafeeds', influencerScore: 'influencer_score', topN: 'top_n', bucketSpan: 'bucket_span', overallScore: 'overall_score', recordScore: 'record_score', includeModelDefinition: 'include_model_definition', decompressDefinition: 'decompress_definition', resetStart: 'reset_start', resetEnd: 'reset_end', ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', ignoreThrottled: 'ignore_throttled', expandWildcards: 'expand_wildcards', deleteInterveningResults: 'delete_intervening_results' }
 
 function MlApi (transport, ConfigurationError) {
   this.transport = transport
@@ -382,7 +382,7 @@ MlApi.prototype.deleteTrainedModel = function mlDeleteTrainedModelApi (params, o
 
   var path = ''
   if (method == null) method = 'DELETE'
-  path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
+  path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
 
   // build request object
   const request = {
@@ -995,10 +995,10 @@ MlApi.prototype.getTrainedModels = function mlGetTrainedModelsApi (params, optio
   var path = ''
   if ((model_id || modelId) != null) {
     if (method == null) method = 'GET'
-    path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
+    path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
   } else {
     if (method == null) method = 'GET'
-    path = '/' + '_ml' + '/' + 'inference'
+    path = '/' + '_ml' + '/' + 'trained_models'
   }
 
   // build request object
@@ -1021,10 +1021,10 @@ MlApi.prototype.getTrainedModelsStats = function mlGetTrainedModelsStatsApi (par
   var path = ''
   if ((model_id || modelId) != null) {
     if (method == null) method = 'GET'
-    path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId) + '/' + '_stats'
+    path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId) + '/' + '_stats'
   } else {
     if (method == null) method = 'GET'
-    path = '/' + '_ml' + '/' + 'inference' + '/' + '_stats'
+    path = '/' + '_ml' + '/' + 'trained_models' + '/' + '_stats'
   }
 
   // build request object
@@ -1381,7 +1381,7 @@ MlApi.prototype.putTrainedModel = function mlPutTrainedModelApi (params, options
 
   var path = ''
   if (method == null) method = 'PUT'
-  path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
+  path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
 
   // build request object
   const request = {
