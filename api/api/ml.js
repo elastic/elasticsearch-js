@@ -382,7 +382,7 @@ MlApi.prototype.deleteTrainedModel = function mlDeleteTrainedModelApi (params, o
 
   var path = ''
   if (method == null) method = 'DELETE'
-  path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
+  path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
 
   // build request object
   const request = {
@@ -995,10 +995,10 @@ MlApi.prototype.getTrainedModels = function mlGetTrainedModelsApi (params, optio
   var path = ''
   if ((model_id || modelId) != null) {
     if (method == null) method = 'GET'
-    path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
+    path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
   } else {
     if (method == null) method = 'GET'
-    path = '/' + '_ml' + '/' + 'inference'
+    path = '/' + '_ml' + '/' + 'trained_models'
   }
 
   // build request object
@@ -1021,10 +1021,10 @@ MlApi.prototype.getTrainedModelsStats = function mlGetTrainedModelsStatsApi (par
   var path = ''
   if ((model_id || modelId) != null) {
     if (method == null) method = 'GET'
-    path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId) + '/' + '_stats'
+    path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId) + '/' + '_stats'
   } else {
     if (method == null) method = 'GET'
-    path = '/' + '_ml' + '/' + 'inference' + '/' + '_stats'
+    path = '/' + '_ml' + '/' + 'trained_models' + '/' + '_stats'
   }
 
   // build request object
@@ -1381,7 +1381,7 @@ MlApi.prototype.putTrainedModel = function mlPutTrainedModelApi (params, options
 
   var path = ''
   if (method == null) method = 'PUT'
-  path = '/' + '_ml' + '/' + 'inference' + '/' + encodeURIComponent(model_id || modelId)
+  path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
 
   // build request object
   const request = {

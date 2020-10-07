@@ -84,6 +84,33 @@ SecurityApi.prototype.changePassword = function securityChangePasswordApi (param
   return this.transport.request(request, options, callback)
 }
 
+SecurityApi.prototype.clearApiKeyCache = function securityClearApiKeyCacheApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params['ids'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: ids')
+    return handleError(err, callback)
+  }
+
+  var { method, body, ids, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_security' + '/' + 'api_key' + '/' + encodeURIComponent(ids) + '/' + '_clear_cache'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 SecurityApi.prototype.clearCachedPrivileges = function securityClearCachedPrivilegesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -775,6 +802,7 @@ SecurityApi.prototype.putUser = function securityPutUserApi (params, options, ca
 
 Object.defineProperties(SecurityApi.prototype, {
   change_password: { get () { return this.changePassword } },
+  clear_api_key_cache: { get () { return this.clearApiKeyCache } },
   clear_cached_privileges: { get () { return this.clearCachedPrivileges } },
   clear_cached_realms: { get () { return this.clearCachedRealms } },
   clear_cached_roles: { get () { return this.clearCachedRoles } },

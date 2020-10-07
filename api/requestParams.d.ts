@@ -2150,6 +2150,10 @@ export interface SecurityChangePassword<T = RequestBody> extends Generic {
   body: T;
 }
 
+export interface SecurityClearApiKeyCache extends Generic {
+  ids: string | string[];
+}
+
 export interface SecurityClearCachedPrivileges extends Generic {
   application: string | string[];
 }

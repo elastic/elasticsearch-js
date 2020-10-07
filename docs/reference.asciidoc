@@ -6227,7 +6227,7 @@ client.ml.deleteTrainedModel({
   model_id: string
 })
 ----
-link:{ref}/delete-inference.html[Documentation] +
+link:{ref}/delete-trained-models.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7026,7 +7026,7 @@ client.ml.getTrainedModels({
   for_export: boolean
 })
 ----
-link:{ref}/get-inference.html[Documentation] +
+link:{ref}/get-trained-models.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7075,7 +7075,7 @@ client.ml.getTrainedModelsStats({
   size: number
 })
 ----
-link:{ref}/get-inference-stats.html[Documentation] +
+link:{ref}/get-trained-models-stats.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7340,7 +7340,7 @@ client.ml.putTrainedModel({
   body: object
 })
 ----
-link:{ref}/put-inference.html[Documentation] +
+link:{ref}/put-trained-models.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -8963,6 +8963,23 @@ link:{ref}/security-api-change-password.html[Documentation] +
 
 |`body`
 |`object` - the new password for the user
+
+|===
+
+[discrete]
+=== security.clearApiKeyCache
+
+[source,ts]
+----
+client.security.clearApiKeyCache({
+  ids: string | string[]
+})
+----
+link:{ref}/security-api-clear-api-key-cache.html[Documentation] +
+[cols=2*]
+|===
+|`ids`
+|`string \| string[]` - A comma-separated list of IDs of API keys to clear from the cache
 
 |===
 
