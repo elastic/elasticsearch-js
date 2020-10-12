@@ -149,7 +149,9 @@ const client = new Client({
 
 const client = new Client({
   node: 'http://localhost:9200',
-  agent: () => new CustomAgent()
+  // the function takes as parameter the option
+  // object passed to the Connection constructor
+  agent: (opts) => new CustomAgent()
 })
 
 const client = new Client({
