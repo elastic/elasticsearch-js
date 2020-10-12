@@ -28,9 +28,9 @@ import * as https from 'https'
 import * as hpagent from 'hpagent'
 import { ConnectionOptions as TlsConnectionOptions } from 'tls'
 
-export declare type agentFn = () => any;
+export declare type agentFn = (opts: ConnectionOptions) => any;
 
-interface ConnectionOptions {
+export interface ConnectionOptions {
   url: URL;
   ssl?: TlsConnectionOptions;
   id?: string;
