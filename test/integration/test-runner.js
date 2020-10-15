@@ -279,20 +279,26 @@ function build (opts = {}) {
       // eg: 'Basic ${auth}' we search the stahed value 'auth'
       // and the resulting value will be 'Basic valueOfAuth'
       if (typeof val === 'string' && val.includes('${')) {
-        const start = val.indexOf('${')
-        const end = val.indexOf('}', val.indexOf('${'))
-        const stashedKey = val.slice(start + 2, end)
-        const stashed = stash.get(stashedKey)
-        obj[key] = val.slice(0, start) + stashed + val.slice(end + 1)
+        while (obj[key].includes('${')) {
+          const val = obj[key]
+          const start = val.indexOf('${')
+          const end = val.indexOf('}', val.indexOf('${'))
+          const stashedKey = val.slice(start + 2, end)
+          const stashed = stash.get(stashedKey)
+          obj[key] = val.slice(0, start) + stashed + val.slice(end + 1)
+        }
         continue
       }
       // handle json strings, eg: '{"hello":"$world"}'
       if (typeof val === 'string' && val.includes('"$')) {
-        const start = val.indexOf('"$')
-        const end = val.indexOf('"', start + 1)
-        const stashedKey = val.slice(start + 2, end)
-        const stashed = '"' + stash.get(stashedKey) + '"'
-        obj[key] = val.slice(0, start) + stashed + val.slice(end + 1)
+        while (obj[key].includes('"$')) {
+          const val = obj[key]
+          const start = val.indexOf('"$')
+          const end = val.indexOf('"', start + 1)
+          const stashedKey = val.slice(start + 2, end)
+          const stashed = '"' + stash.get(stashedKey) + '"'
+          obj[key] = val.slice(0, start) + stashed + val.slice(end + 1)
+        }
         continue
       }
       // if the key value is a string, and the string includes '$'
