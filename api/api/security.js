@@ -594,6 +594,33 @@ SecurityApi.prototype.getUserPrivileges = function securityGetUserPrivilegesApi 
   return this.transport.request(request, options, callback)
 }
 
+SecurityApi.prototype.grantApiKey = function securityGrantApiKeyApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params['body'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
+  }
+
+  var { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_security' + '/' + 'api_key' + '/' + 'grant'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 SecurityApi.prototype.hasPrivileges = function securityHasPrivilegesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -821,6 +848,7 @@ Object.defineProperties(SecurityApi.prototype, {
   get_token: { get () { return this.getToken } },
   get_user: { get () { return this.getUser } },
   get_user_privileges: { get () { return this.getUserPrivileges } },
+  grant_api_key: { get () { return this.grantApiKey } },
   has_privileges: { get () { return this.hasPrivileges } },
   invalidate_api_key: { get () { return this.invalidateApiKey } },
   invalidate_token: { get () { return this.invalidateToken } },

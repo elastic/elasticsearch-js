@@ -1594,6 +1594,7 @@ export interface MlGetDataFrameAnalytics extends Generic {
   allow_no_match?: boolean;
   from?: number;
   size?: number;
+  exclude_generated?: boolean;
 }
 
 export interface MlGetDataFrameAnalyticsStats extends Generic {
@@ -1614,6 +1615,7 @@ export interface MlGetDatafeeds extends Generic {
   datafeed_id?: string;
   allow_no_match?: boolean;
   allow_no_datafeeds?: boolean;
+  exclude_generated?: boolean;
 }
 
 export interface MlGetFilters extends Generic {
@@ -1645,6 +1647,7 @@ export interface MlGetJobs extends Generic {
   job_id?: string;
   allow_no_match?: boolean;
   allow_no_jobs?: boolean;
+  exclude_generated?: boolean;
 }
 
 export interface MlGetModelSnapshots<T = RequestBody> extends Generic {
@@ -1694,7 +1697,7 @@ export interface MlGetTrainedModels extends Generic {
   from?: number;
   size?: number;
   tags?: string | string[];
-  for_export?: boolean;
+  exclude_generated?: boolean;
 }
 
 export interface MlGetTrainedModelsStats extends Generic {
@@ -2220,11 +2223,11 @@ export interface SecurityGetPrivileges extends Generic {
 }
 
 export interface SecurityGetRole extends Generic {
-  name?: string;
+  name?: string | string[];
 }
 
 export interface SecurityGetRoleMapping extends Generic {
-  name?: string;
+  name?: string | string[];
 }
 
 export interface SecurityGetToken<T = RequestBody> extends Generic {
@@ -2236,6 +2239,11 @@ export interface SecurityGetUser extends Generic {
 }
 
 export interface SecurityGetUserPrivileges extends Generic {
+}
+
+export interface SecurityGrantApiKey<T = RequestBody> extends Generic {
+  refresh?: 'wait_for' | boolean;
+  body: T;
 }
 
 export interface SecurityHasPrivileges<T = RequestBody> extends Generic {
@@ -2310,6 +2318,14 @@ export interface SnapshotCleanupRepository extends Generic {
   repository: string;
   master_timeout?: string;
   timeout?: string;
+}
+
+export interface SnapshotClone<T = RequestBody> extends Generic {
+  repository: string;
+  snapshot: string;
+  target_snapshot: string;
+  master_timeout?: string;
+  body: T;
 }
 
 export interface SnapshotCreate<T = RequestBody> extends Generic {
@@ -2443,6 +2459,7 @@ export interface TransformGetTransform extends Generic {
   from?: number;
   size?: number;
   allow_no_match?: boolean;
+  exclude_generated?: boolean;
 }
 
 export interface TransformGetTransformStats extends Generic {
