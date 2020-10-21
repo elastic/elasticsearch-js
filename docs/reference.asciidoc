@@ -9259,14 +9259,14 @@ link:{ref}/security-api-get-privileges.html[Documentation] +
 [source,ts]
 ----
 client.security.getRole({
-  name: string
+  name: string | string[]
 })
 ----
 link:{ref}/security-api-get-role.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string` - Role name
+|`string \| string[]` - A comma-separated list of role names
 
 |===
 
@@ -9276,14 +9276,14 @@ link:{ref}/security-api-get-role.html[Documentation] +
 [source,ts]
 ----
 client.security.getRoleMapping({
-  name: string
+  name: string | string[]
 })
 ----
 link:{ref}/security-api-get-role-mapping.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string` - Role-Mapping name
+|`string \| string[]` - A comma-separated list of role-mapping names
 
 |===
 
@@ -9330,6 +9330,27 @@ client.security.getUserPrivileges()
 ----
 link:{ref}/security-api-get-privileges.html[Documentation] +
 
+
+[discrete]
+=== security.grantApiKey
+
+[source,ts]
+----
+client.security.grantApiKey({
+  refresh: 'true' | 'false' | 'wait_for',
+  body: object
+})
+----
+link:{ref}/security-api-grant-api-key.html[Documentation] +
+[cols=2*]
+|===
+|`refresh`
+|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|`body`
+|`object` - The api key request to create an API key
+
+|===
 
 [discrete]
 === security.hasPrivileges
@@ -9626,6 +9647,39 @@ link:{ref}/clean-up-snapshot-repo-api.html[Documentation] +
 
 |`timeout`
 |`string` - Explicit operation timeout
+
+|===
+
+[discrete]
+=== snapshot.clone
+
+[source,ts]
+----
+client.snapshot.clone({
+  repository: string,
+  snapshot: string,
+  target_snapshot: string,
+  master_timeout: string,
+  body: object
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`snapshot`
+|`string` - The name of the snapshot to clone from
+
+|`target_snapshot` or `targetSnapshot`
+|`string` - The name of the cloned snapshot to create
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`body`
+|`object` - The snapshot clone definition
 
 |===
 

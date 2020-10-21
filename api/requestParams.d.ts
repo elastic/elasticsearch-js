@@ -2220,11 +2220,11 @@ export interface SecurityGetPrivileges extends Generic {
 }
 
 export interface SecurityGetRole extends Generic {
-  name?: string;
+  name?: string | string[];
 }
 
 export interface SecurityGetRoleMapping extends Generic {
-  name?: string;
+  name?: string | string[];
 }
 
 export interface SecurityGetToken<T = RequestBody> extends Generic {
@@ -2236,6 +2236,11 @@ export interface SecurityGetUser extends Generic {
 }
 
 export interface SecurityGetUserPrivileges extends Generic {
+}
+
+export interface SecurityGrantApiKey<T = RequestBody> extends Generic {
+  refresh?: 'wait_for' | boolean;
+  body: T;
 }
 
 export interface SecurityHasPrivileges<T = RequestBody> extends Generic {
@@ -2310,6 +2315,14 @@ export interface SnapshotCleanupRepository extends Generic {
   repository: string;
   master_timeout?: string;
   timeout?: string;
+}
+
+export interface SnapshotClone<T = RequestBody> extends Generic {
+  repository: string;
+  snapshot: string;
+  target_snapshot: string;
+  master_timeout?: string;
+  body: T;
 }
 
 export interface SnapshotCreate<T = RequestBody> extends Generic {
