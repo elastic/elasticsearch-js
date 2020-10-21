@@ -152,7 +152,7 @@ test('Basic (https with ssl agent)', t => {
 })
 
 test('Custom http agent', t => {
-  t.plan(5)
+  t.plan(6)
 
   function handler (req, res) {
     t.match(req.headers, {
@@ -172,7 +172,12 @@ test('Custom http agent', t => {
     agent.custom = true
     const connection = new Connection({
       url: new URL(`http://localhost:${port}`),
-      agent: () => agent
+      agent: opts => {
+        t.match(opts, {
+          url: new URL(`http://localhost:${port}`)
+        })
+        return agent
+      }
     })
     t.true(connection.agent.custom)
     connection.request({
