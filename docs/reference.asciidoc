@@ -6462,7 +6462,7 @@ client.ml.getDataFrameAnalytics({
   allow_no_match: boolean,
   from: number,
   size: number,
-  for_export: boolean
+  exclude_generated: boolean
 })
 ----
 link:{ref}/get-dfanalytics.html[Documentation] +
@@ -6482,7 +6482,7 @@ _Default:_ `true`
 |`number` - specifies a max number of analytics to get +
 _Default:_ `100`
 
-|`for_export` or `forExport`
+|`exclude_generated` or `excludeGenerated`
 |`boolean` - Omits fields that are illegal to set on data frame analytics PUT
 
 |===
@@ -6558,7 +6558,7 @@ client.ml.getDatafeeds({
   datafeed_id: string,
   allow_no_match: boolean,
   allow_no_datafeeds: boolean,
-  for_export: boolean
+  exclude_generated: boolean
 })
 ----
 link:{ref}/ml-get-datafeed.html[Documentation] +
@@ -6575,7 +6575,7 @@ link:{ref}/ml-get-datafeed.html[Documentation] +
 
 WARNING: This parameter has been deprecated.
 
-|`for_export` or `forExport`
+|`exclude_generated` or `excludeGenerated`
 |`boolean` - Omits fields that are illegal to set on datafeed PUT
 
 |===
@@ -6694,7 +6694,7 @@ client.ml.getJobs({
   job_id: string,
   allow_no_match: boolean,
   allow_no_jobs: boolean,
-  for_export: boolean
+  exclude_generated: boolean
 })
 ----
 link:{ref}/ml-get-job.html[Documentation] +
@@ -6711,7 +6711,7 @@ link:{ref}/ml-get-job.html[Documentation] +
 
 WARNING: This parameter has been deprecated.
 
-|`for_export` or `forExport`
+|`exclude_generated` or `excludeGenerated`
 |`boolean` - Omits fields that are illegal to set on job PUT
 
 |===
@@ -6887,7 +6887,7 @@ client.ml.getTrainedModels({
   from: number,
   size: number,
   tags: string | string[],
-  for_export: boolean
+  exclude_generated: boolean
 })
 ----
 link:{ref}/get-trained-models.html[Documentation] +
@@ -6922,7 +6922,7 @@ _Default:_ `100`
 |`tags`
 |`string \| string[]` - A comma-separated list of tags that the model must have.
 
-|`for_export` or `forExport`
+|`exclude_generated` or `excludeGenerated`
 |`boolean` - Omits fields that are illegal to set on model PUT
 
 |===
@@ -9159,6 +9159,27 @@ link:{ref}/security-api-get-privileges.html[Documentation] +
 
 
 [discrete]
+=== security.grantApiKey
+
+[source,ts]
+----
+client.security.grantApiKey({
+  refresh: 'true' | 'false' | 'wait_for',
+  body: object
+})
+----
+link:{ref}/security-api-grant-api-key.html[Documentation] +
+[cols=2*]
+|===
+|`refresh`
+|`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|`body`
+|`object` - The api key request to create an API key
+
+|===
+
+[discrete]
 === security.hasPrivileges
 
 [source,ts]
@@ -9453,6 +9474,39 @@ link:{ref}/clean-up-snapshot-repo-api.html[Documentation] +
 
 |`timeout`
 |`string` - Explicit operation timeout
+
+|===
+
+[discrete]
+=== snapshot.clone
+
+[source,ts]
+----
+client.snapshot.clone({
+  repository: string,
+  snapshot: string,
+  target_snapshot: string,
+  master_timeout: string,
+  body: object
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`snapshot`
+|`string` - The name of the snapshot to clone from
+
+|`target_snapshot` or `targetSnapshot`
+|`string` - The name of the cloned snapshot to create
+
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|`body`
+|`object` - The snapshot clone definition
 
 |===
 
@@ -9986,7 +10040,8 @@ client.transform.getTransform({
   transform_id: string,
   from: number,
   size: number,
-  allow_no_match: boolean
+  allow_no_match: boolean,
+  exclude_generated: boolean
 })
 ----
 link:{ref}/get-transform.html[Documentation] +
@@ -10003,6 +10058,9 @@ link:{ref}/get-transform.html[Documentation] +
 
 |`allow_no_match` or `allowNoMatch`
 |`boolean` - Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+
+|`exclude_generated` or `excludeGenerated`
+|`boolean` - Omits fields that are illegal to set on transform PUT
 
 |===
 

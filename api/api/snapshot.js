@@ -58,6 +58,54 @@ SnapshotApi.prototype.cleanupRepository = function snapshotCleanupRepositoryApi 
   return this.transport.request(request, options, callback)
 }
 
+SnapshotApi.prototype.clone = function snapshotCloneApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params['repository'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
+    return handleError(err, callback)
+  }
+  if (params['snapshot'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: snapshot')
+    return handleError(err, callback)
+  }
+  if (params['target_snapshot'] == null && params['targetSnapshot'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: target_snapshot or targetSnapshot')
+    return handleError(err, callback)
+  }
+  if (params['body'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
+  }
+
+  // check required url components
+  if ((params['target_snapshot'] != null || params['targetSnapshot'] != null) && (params['snapshot'] == null || params['repository'] == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: snapshot, repository')
+    return handleError(err, callback)
+  } else if (params['snapshot'] != null && (params['repository'] == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
+    return handleError(err, callback)
+  }
+
+  var { method, body, repository, snapshot, targetSnapshot, target_snapshot, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if (method == null) method = 'PUT'
+  path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_clone' + '/' + encodeURIComponent(target_snapshot || targetSnapshot)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 SnapshotApi.prototype.create = function snapshotCreateApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
