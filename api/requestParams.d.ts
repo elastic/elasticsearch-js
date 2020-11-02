@@ -91,7 +91,7 @@ export interface AutoscalingDeleteAutoscalingPolicy extends Generic {
   name: string;
 }
 
-export interface AutoscalingGetAutoscalingDecision extends Generic {
+export interface AutoscalingGetAutoscalingCapacity extends Generic {
 }
 
 export interface AutoscalingGetAutoscalingPolicy extends Generic {
@@ -983,6 +983,7 @@ export interface IndicesDeleteAlias extends Generic {
 
 export interface IndicesDeleteDataStream extends Generic {
   name: string | string[];
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesDeleteIndexTemplate extends Generic {
@@ -1090,6 +1091,7 @@ export interface IndicesGetAlias extends Generic {
 
 export interface IndicesGetDataStream extends Generic {
   name?: string | string[];
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesGetFieldMapping extends Generic {

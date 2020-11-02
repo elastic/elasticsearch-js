@@ -353,13 +353,13 @@ link:{ref}/autoscaling-delete-autoscaling-policy.html[Documentation] +
 |===
 
 [discrete]
-=== autoscaling.getAutoscalingDecision
+=== autoscaling.getAutoscalingCapacity
 *Stability:* experimental
 [source,ts]
 ----
-client.autoscaling.getAutoscalingDecision()
+client.autoscaling.getAutoscalingCapacity()
 ----
-link:{ref}/autoscaling-get-autoscaling-decision.html[Documentation] +
+link:{ref}/autoscaling-get-autoscaling-capacity.html[Documentation] +
 
 
 [discrete]
@@ -733,7 +733,9 @@ link:{ref}/cat-indices.html[Documentation] +
 |`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
 
 |`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
+|`boolean` - Return local information, do not retrieve the state from master node (default: false) +
+
+WARNING: This parameter has been deprecated.
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -1365,7 +1367,9 @@ link:{ref}/cat-shards.html[Documentation] +
 |`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
 
 |`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
+|`boolean` - Return local information, do not retrieve the state from master node (default: false) +
+
+WARNING: This parameter has been deprecated.
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -3983,7 +3987,8 @@ link:{ref}/indices-aliases.html[Documentation] +
 [source,ts]
 ----
 client.indices.deleteDataStream({
-  name: string | string[]
+  name: string | string[],
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
@@ -3991,6 +3996,10 @@ link:{ref}/data-streams.html[Documentation] +
 |===
 |`name`
 |`string \| string[]` - A comma-separated list of data streams to delete; use `*` to delete all data streams
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+_Default:_ `open`
 
 |===
 
@@ -4432,7 +4441,8 @@ _Default:_ `all`
 [source,ts]
 ----
 client.indices.getDataStream({
-  name: string | string[]
+  name: string | string[],
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
@@ -4440,6 +4450,10 @@ link:{ref}/data-streams.html[Documentation] +
 |===
 |`name`
 |`string \| string[]` - A comma-separated list of data streams to get; use `*` to get all data streams
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+_Default:_ `open`
 
 |===
 
@@ -5904,7 +5918,7 @@ link:{ref}/ml-delete-calendar-job.html[Documentation] +
 
 [discrete]
 === ml.deleteDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.deleteDataFrameAnalytics({
@@ -6072,7 +6086,7 @@ link:{ref}/ml-delete-snapshot.html[Documentation] +
 
 [discrete]
 === ml.deleteTrainedModel
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.deleteTrainedModel({
@@ -6106,7 +6120,7 @@ link:{ref}/ml-apis.html[Documentation] +
 
 [discrete]
 === ml.evaluateDataFrame
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.evaluateDataFrame({
@@ -6123,7 +6137,7 @@ link:{ref}/evaluate-dfanalytics.html[Documentation] +
 
 [discrete]
 === ml.explainDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.explainDataFrameAnalytics({
@@ -6454,7 +6468,7 @@ link:{ref}/ml-get-category.html[Documentation] +
 
 [discrete]
 === ml.getDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.getDataFrameAnalytics({
@@ -6489,7 +6503,7 @@ _Default:_ `100`
 
 [discrete]
 === ml.getDataFrameAnalyticsStats
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.getDataFrameAnalyticsStats({
@@ -6875,7 +6889,7 @@ link:{ref}/ml-get-record.html[Documentation] +
 
 [discrete]
 === ml.getTrainedModels
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.getTrainedModels({
@@ -6929,7 +6943,7 @@ _Default:_ `100`
 
 [discrete]
 === ml.getTrainedModelsStats
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.getTrainedModelsStats({
@@ -7096,7 +7110,7 @@ link:{ref}/ml-put-calendar-job.html[Documentation] +
 
 [discrete]
 === ml.putDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.putDataFrameAnalytics({
@@ -7196,7 +7210,7 @@ link:{ref}/ml-put-job.html[Documentation] +
 
 [discrete]
 === ml.putTrainedModel
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.putTrainedModel({
@@ -7267,7 +7281,7 @@ link:{ref}/ml-set-upgrade-mode.html[Documentation] +
 
 [discrete]
 === ml.startDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.startDataFrameAnalytics({
@@ -7325,7 +7339,7 @@ link:{ref}/ml-start-datafeed.html[Documentation] +
 
 [discrete]
 === ml.stopDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.stopDataFrameAnalytics({
@@ -7397,7 +7411,7 @@ WARNING: This parameter has been deprecated.
 
 [discrete]
 === ml.updateDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.updateDataFrameAnalytics({
