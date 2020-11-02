@@ -89,7 +89,7 @@ export interface AutoscalingDeleteAutoscalingPolicy extends Generic {
   name: string;
 }
 
-export interface AutoscalingGetAutoscalingDecision extends Generic {
+export interface AutoscalingGetAutoscalingCapacity extends Generic {
 }
 
 export interface AutoscalingGetAutoscalingPolicy extends Generic {

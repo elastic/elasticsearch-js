@@ -58,7 +58,7 @@ AutoscalingApi.prototype.deleteAutoscalingPolicy = function autoscalingDeleteAut
   return this.transport.request(request, options, callback)
 }
 
-AutoscalingApi.prototype.getAutoscalingDecision = function autoscalingGetAutoscalingDecisionApi (params, options, callback) {
+AutoscalingApi.prototype.getAutoscalingCapacity = function autoscalingGetAutoscalingCapacityApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   var { method, body, ...querystring } = params
@@ -66,7 +66,7 @@ AutoscalingApi.prototype.getAutoscalingDecision = function autoscalingGetAutosca
 
   var path = ''
   if (method == null) method = 'GET'
-  path = '/' + '_autoscaling' + '/' + 'decision'
+  path = '/' + '_autoscaling' + '/' + 'capacity'
 
   // build request object
   const request = {
@@ -139,7 +139,7 @@ AutoscalingApi.prototype.putAutoscalingPolicy = function autoscalingPutAutoscali
 
 Object.defineProperties(AutoscalingApi.prototype, {
   delete_autoscaling_policy: { get () { return this.deleteAutoscalingPolicy } },
-  get_autoscaling_decision: { get () { return this.getAutoscalingDecision } },
+  get_autoscaling_capacity: { get () { return this.getAutoscalingCapacity } },
   get_autoscaling_policy: { get () { return this.getAutoscalingPolicy } },
   put_autoscaling_policy: { get () { return this.putAutoscalingPolicy } }
 })
