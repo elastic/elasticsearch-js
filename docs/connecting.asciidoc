@@ -1,5 +1,163 @@
+[[client-connecting]]
+== Connecting 
+
+This page contains the information you need to connect and use the Client with 
+{es}.
+
+**On this page**
+
+* <<auth-reference, Authentication options>>
+* <<client-usage, Using the client>>
+* <<client-connect-proxy, Connecting through a proxy>>
+* <<client-error-handling, Handling errors>>
+
+[[auth-reference]]
+[discrete]
+=== Authentication
+
+This document contains code snippets to show you how to connect to various {es} 
+providers.
+
+
+[discrete]
+[[auth-ec]]
+==== Elastic Cloud
+
+If you are using https://www.elastic.co/cloud[Elastic Cloud], the client offers 
+an easy way to connect to it via the `cloud` option. You must pass the Cloud ID 
+that you can find in the cloud console, then your username and password inside 
+the `auth` option.
+
+NOTE: When connecting to Elastic Cloud, the client will automatically enable 
+both request and response compression by default, since it yields significant 
+throughput improvements. Moreover, the client will also set the ssl option 
+`secureProtocol` to `TLSv1_2_method` unless specified otherwise. You can still 
+override this option by configuring them.
+
+IMPORTANT: Do not enable sniffing when using Elastic Cloud, since the nodes are 
+behind a load balancer, Elastic Cloud will take care of everything for you.
+Take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here]
+to know more.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  cloud: {
+    id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==',
+  },
+  auth: {
+    username: 'elastic',
+    password: 'changeme'
+  }
+})
+----
+
+
+[discrete]
+[[auth-basic]]
+==== Basic authentication
+
+You can provide your credentials by passing the `username` and `password` 
+parameters via the `auth` option.
+
+NOTE: If you provide both basic authentication credentials and the Api Key 
+configuration, the Api Key will take precedence.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://localhost:9200',
+  auth: {
+    username: 'elastic',
+    password: 'changeme'
+  }
+})
+----
+
+
+Otherwise, you can provide your credentials in the node(s) URL.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://username:password@localhost:9200'
+})
+----
+
+
+[discrete]
+[[auth-apikey]]
+==== ApiKey authentication
+
+You can use the 
+https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[ApiKey] 
+authentication by passing the `apiKey` parameter via the `auth` option. The 
+`apiKey` parameter can be either a base64 encoded string or an object with the 
+values that you can obtain from the 
+https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[create api key endpoint].
+
+NOTE: If you provide both basic authentication credentials and the ApiKey 
+configuration, the ApiKey takes precedence.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://localhost:9200',
+  auth: {
+    apiKey: 'base64EncodedKey'
+  }
+})
+----
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://localhost:9200',
+  auth: {
+    apiKey: {
+      id: 'foo',
+      api_key: 'bar'
+    }
+  }
+})
+----
+
+
+[discrete]
+[[auth-ssl]]
+==== SSL configuration
+
+Without any additional configuration you can specify `https://` node urls, and 
+the certificates used to sign these requests will be verified. To turn off 
+certificate verification, you must specify an `ssl` object in the top level 
+config and set `rejectUnauthorized: false`. The default `ssl` values are the 
+same that Node.js's https://nodejs.org/api/tls.html#tls_tls_connect_options_callback[`tls.connect()`] 
+uses.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://localhost:9200',
+  auth: {
+    username: 'elastic',
+    password: 'changeme'
+  },
+  ssl: {
+    ca: fs.readFileSync('./cacert.pem'),
+    rejectUnauthorized: false
+  }
+})
+----
+
+
 [[client-usage]]
-== Usage
+=== Usage
 
 Using the client is straightforward, it supports all the public APIs of {es},
 and every method exposes the same signature.
@@ -33,7 +191,7 @@ client.search({
 })
 ----
 
-The returned value of every API call is formed as follows:
+The returned value of every API call is designed as follows:
 
 [source,ts]
 ----
@@ -82,11 +240,13 @@ client.search({
 
 
 [discrete]
-=== Aborting a request
+==== Aborting a request
 
-If needed, you can abort a running request by calling the `request.abort()` method returned by the API.
+If needed, you can abort a running request by calling the `request.abort()` 
+method returned by the API.
 
-CAUTION: If you abort a request, the request will fail with a `RequestAbortedError`.
+CAUTION: If you abort a request, the request will fail with a 
+`RequestAbortedError`.
 
 
 [source,js]
@@ -113,6 +273,7 @@ request.abort()
 ----
 
 The same behavior is valid for the promise style API as well.
+
 [source,js]
 ----
 const request = client.search({
@@ -136,7 +297,8 @@ request.abort()
 
 
 [discrete]
-=== Request specific options
+==== Request specific options
+
 If needed you can pass request specific options in a second object:
 
 [source,js]
@@ -214,13 +376,14 @@ _Default:_ `null`
 
 
 [discrete]
+[[client-connect-proxy]]
 === Connecting through a proxy
 
 ~Added~ ~in~ ~`v7.10.0`~
 
-If you need to pass through an http(s) proxy for connecting to Elasticsearch, the client offers
-out of the box a handy configuration for helping you with it. Under the hood it
-uses the https://github.com/delvedor/hpagent[`hpagent`] module.
+If you need to pass through an http(s) proxy for connecting to {es}, the client 
+out of the box offers a handy configuration for helping you with it. Under the 
+hood, it uses the https://github.com/delvedor/hpagent[`hpagent`] module.
 
 [source,js]
 ----
@@ -256,6 +419,7 @@ const client = new Client({
 
 
 [discrete]
+[[client-error-handling]]
 === Error handling
 
 The client exposes a variety of error objects that you can use to enhance your

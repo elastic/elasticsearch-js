@@ -18,44 +18,6 @@ about the features of the client.
 
 
 [discrete]
-[[js-compatibility-matrix]]
-=== Compatibility matrix
-
-The minimum supported version of Node.js is `v8`.
-
-The library is compatible with all {es} versions since 5.x. We recommend you to
-use the same major version of the client as the {es} instance that you are
-using.
-
-
-[%header,cols=2*]
-|===
-|{es} Version
-|Client Version
-
-|`master`
-|`master`
-
-|`7.x`
-|`7.x`
-
-|`6.x`
-|`6.x`
-
-|`5.x`
-|`5.x`
-|===
-
-
-[discrete]
-==== Browser
-
-WARNING: There is no official support for the browser environment. It exposes
-your {es} instance to everyone, which could lead to security issues. We
-recommend you to write a lightweight proxy that uses this client instead.
-
-
-[discrete]
 === Quick start
 
 First of all, require, then initialize the client:
