@@ -23,7 +23,7 @@ const { test } = require('tap')
 const { URL } = require('url')
 const { Client, ConnectionPool, Transport } = require('../../index')
 const { CloudConnectionPool } = require('../../lib/pool')
-const { buildServer } = require('../utils')
+const { buildServer, connection } = require('../utils')
 
 test('Configure host', t => {
   t.test('Single string', t => {
@@ -1190,4 +1190,29 @@ test('name property as symbol', t => {
   })
 
   t.strictEqual(client.name, symbol)
+})
+
+// The nodejs http agent will try to wait for the whole
+// body to arrive before closing the request, so this
+// test might take some time.
+test('Bad content length', t => {
+  t.plan(2)
+
+  let count = 0
+  function handler (req, res) {
+    count += 1
+    const body = JSON.stringify({ hello: 'world' })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.setHeader('Content-Length', body.length + '')
+    res.end(body.slice(0, -5))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
+    client.info((err, { body }) => {
+      t.is(err.message, 'Invalid content length, got 17 but body is 12')
+      t.strictEqual(count, 2)
+      server.stop()
+    })
+  })
 })

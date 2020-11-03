@@ -22,7 +22,7 @@
 const { test } = require('tap')
 const { URL } = require('url')
 const FakeTimers = require('@sinonjs/fake-timers')
-const { createGunzip } = require('zlib')
+const { createGunzip, gzipSync } = require('zlib')
 const os = require('os')
 const intoStream = require('into-stream')
 const {
@@ -1665,13 +1665,17 @@ test('Should cast to boolean HEAD request', t => {
 })
 
 test('Suggest compression', t => {
-  t.plan(2)
+  t.plan(3)
   function handler (req, res) {
     t.match(req.headers, {
       'accept-encoding': 'gzip,deflate'
     })
+
+    const body = gzipSync(JSON.stringify({ hello: 'world' }))
     res.setHeader('Content-Type', 'application/json;utf=8')
-    res.end(JSON.stringify({ hello: 'world' }))
+    res.setHeader('Content-Encoding', 'gzip')
+    res.setHeader('Content-Length', Buffer.byteLength(body))
+    res.end(body)
   }
 
   buildServer(handler, ({ port }, server) => {
@@ -1694,6 +1698,46 @@ test('Suggest compression', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.error(err)
+      t.deepEqual(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
+
+test('Broken compression', t => {
+  t.plan(2)
+  function handler (req, res) {
+    t.match(req.headers, {
+      'accept-encoding': 'gzip,deflate'
+    })
+
+    const body = gzipSync(JSON.stringify({ hello: 'world' }))
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.setHeader('Content-Encoding', 'gzip')
+    // we are not setting the content length on purpose
+    res.end(body.slice(0, -5))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false,
+      suggestCompression: true
+    })
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, { body }) => {
+      t.ok(err)
       server.stop()
     })
   })
