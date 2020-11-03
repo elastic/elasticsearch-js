@@ -23,7 +23,7 @@ const { test } = require('tap')
 const { URL } = require('url')
 const { Client, ConnectionPool, Transport } = require('../../index')
 const { CloudConnectionPool } = require('../../lib/pool')
-const { buildServer, connection } = require('../utils')
+const { buildServer } = require('../utils')
 
 test('Configure host', t => {
   t.test('Single string', t => {
