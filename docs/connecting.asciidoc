@@ -55,40 +55,6 @@ const client = new Client({
 
 
 [discrete]
-[[auth-basic]]
-==== Basic authentication
-
-You can provide your credentials by passing the `username` and `password` 
-parameters via the `auth` option.
-
-NOTE: If you provide both basic authentication credentials and the Api Key 
-configuration, the Api Key will take precedence.
-
-[source,js]
-----
-const { Client } = require('@elastic/elasticsearch')
-const client = new Client({
-  node: 'https://localhost:9200',
-  auth: {
-    username: 'elastic',
-    password: 'changeme'
-  }
-})
-----
-
-
-Otherwise, you can provide your credentials in the node(s) URL.
-
-[source,js]
-----
-const { Client } = require('@elastic/elasticsearch')
-const client = new Client({
-  node: 'https://username:password@localhost:9200'
-})
-----
-
-
-[discrete]
 [[auth-apikey]]
 ==== ApiKey authentication
 
@@ -124,6 +90,40 @@ const client = new Client({
       api_key: 'bar'
     }
   }
+})
+----
+
+
+[discrete]
+[[auth-basic]]
+==== Basic authentication
+
+You can provide your credentials by passing the `username` and `password` 
+parameters via the `auth` option.
+
+NOTE: If you provide both basic authentication credentials and the Api Key 
+configuration, the Api Key will take precedence.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://localhost:9200',
+  auth: {
+    username: 'elastic',
+    password: 'changeme'
+  }
+})
+----
+
+
+Otherwise, you can provide your credentials in the node(s) URL.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://username:password@localhost:9200'
 })
 ----
 
