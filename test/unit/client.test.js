@@ -21,10 +21,9 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const { Client, ConnectionPool, Transport } = require('../../index')
+const { Client, ConnectionPool, Transport, errors } = require('../../index')
 const { CloudConnectionPool } = require('../../lib/pool')
 const { buildServer } = require('../utils')
-const {ConnectionError} = require('../../lib/errors')
 
 test('Configure host', t => {
   t.test('Single string', t => {
@@ -1213,10 +1212,10 @@ test('Bad content length', { skip: nodeMajor === 14 }, t => {
     const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
     client.info((err, { body }) => {
       if (nodeMajor < 14) {
-        t.ok(err instanceof ConnectionError)
+        t.ok(err instanceof errors.ConnectionError)
         t.is(err.message, 'Invalid content length, got 17 but body is 12')
       } else {
-        t.ok(err instanceof ConnectionError)
+        t.ok(err instanceof errors.ConnectionError)
         t.is(err.message, 'aborted') // message from node.js core
       }
       t.strictEqual(count, 2)
