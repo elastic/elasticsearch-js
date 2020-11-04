@@ -1195,6 +1195,7 @@ test('name property as symbol', t => {
 // The nodejs http agent will try to wait for the whole
 // body to arrive before closing the request, so this
 // test might take some time.
+// We are skipping node.js v14, see https://github.com/nodejs/node/issues/35958
 const nodeMajor = Number(process.versions.node.split('.')[0])
 test('Bad content length', { skip: nodeMajor === 14 }, t => {
   t.plan(3)
