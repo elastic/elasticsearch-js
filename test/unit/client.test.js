@@ -24,6 +24,7 @@ const { URL } = require('url')
 const { Client, ConnectionPool, Transport } = require('../../index')
 const { CloudConnectionPool } = require('../../lib/pool')
 const { buildServer } = require('../utils')
+const {ConnectionError} = require('../../lib/errors')
 
 test('Configure host', t => {
   t.test('Single string', t => {
@@ -1195,8 +1196,9 @@ test('name property as symbol', t => {
 // The nodejs http agent will try to wait for the whole
 // body to arrive before closing the request, so this
 // test might take some time.
-test('Bad content length', t => {
-  t.plan(2)
+const nodeMajor = Number(process.versions.node.split('.')[0])
+test('Bad content length', { skip: nodeMajor === 14 }, t => {
+  t.plan(3)
 
   let count = 0
   function handler (req, res) {
@@ -1210,7 +1212,13 @@ test('Bad content length', t => {
   buildServer(handler, ({ port }, server) => {
     const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
     client.info((err, { body }) => {
-      t.is(err.message, 'Invalid content length, got 17 but body is 12')
+      if (nodeMajor < 14) {
+        t.ok(err instanceof ConnectionError)
+        t.is(err.message, 'Invalid content length, got 17 but body is 12')
+      } else {
+        t.ok(err instanceof ConnectionError)
+        t.is(err.message, 'aborted') // message from node.js core
+      }
       t.strictEqual(count, 2)
       server.stop()
     })
