@@ -11,7 +11,8 @@ This page contains the information you need to connect and use the Client with
 * <<client-connect-proxy, Connecting through a proxy>>
 * <<client-error-handling, Handling errors>>
 
-[[auth-reference]]
+[discrete]
+[[authentication]]
 === Authentication
 
 This document contains code snippets to show you how to connect to various {es} 
