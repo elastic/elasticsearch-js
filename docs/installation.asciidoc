@@ -26,7 +26,7 @@ To learn more about the supported major versions, please refer to the
 
 NOTE: The minimum supported version of Node.js is `v8`.
 
-The client versioning follows the Elastic Stack versioning, this means that
+The client versioning follows the {stack} versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
 often does not coincide with the https://nodejs.org/en/about/releases/[Node.js release] times.
 
