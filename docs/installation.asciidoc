@@ -40,7 +40,7 @@ in your logs (the client will start logging the warning with two minors in advan
 Because of the reasons defined above, unless you are *always* using a supported
 version of Node.js, we recommend defining the client dependency in your
 `package.json` with the `~` instead of `^`. In this way, you will lock the
-dependency on the minor release and not the major. (eg: `~7.10.0` instead
+dependency on the minor release and not the major. (for example, `~7.10.0` instead
 of `^7.10.0`).
 
 [%header,cols=3*]
