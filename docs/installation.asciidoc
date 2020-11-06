@@ -30,7 +30,7 @@ The client versioning follows the {stack} versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
 often does not coincide with the https://nodejs.org/en/about/releases/[Node.js release] times.
 
-For avoiding supporting insecure and unsupported versions of Node.js, the
+To avoid support insecure and unsupported versions of Node.js, the
 client *will drop the support of EOL versions of Node.js between minor releases*.
 Typically, as soon as a Node.js version goes into EOL, the client will continue
 to support that version for at least another minor release. If you are using the client
