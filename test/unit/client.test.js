@@ -1195,9 +1195,7 @@ test('name property as symbol', t => {
 // The nodejs http agent will try to wait for the whole
 // body to arrive before closing the request, so this
 // test might take some time.
-// We are skipping node.js v14, see https://github.com/nodejs/node/issues/35958
-const nodeMajor = Number(process.versions.node.split('.')[0])
-test('Bad content length', { skip: nodeMajor === 14 }, t => {
+test('Bad content length', t => {
   t.plan(3)
 
   let count = 0
@@ -1212,13 +1210,34 @@ test('Bad content length', { skip: nodeMajor === 14 }, t => {
   buildServer(handler, ({ port }, server) => {
     const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
     client.info((err, { body }) => {
-      if (nodeMajor < 14) {
-        t.ok(err instanceof errors.ConnectionError)
-        t.is(err.message, 'Invalid content length, got 17 but body is 12')
-      } else {
-        t.ok(err instanceof errors.ConnectionError)
-        t.is(err.message, 'aborted') // message from node.js core
-      }
+      t.ok(err instanceof errors.ConnectionError)
+      t.is(err.message, 'Response aborted while reading the body')
+      t.strictEqual(count, 2)
+      server.stop()
+    })
+  })
+})
+
+test('Socket destryed while reading the body', t => {
+  t.plan(3)
+
+  let count = 0
+  function handler (req, res) {
+    count += 1
+    const body = JSON.stringify({ hello: 'world' })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.setHeader('Content-Length', body.length + '')
+    res.write(body.slice(0, -5))
+    setTimeout(() => {
+      res.socket.destroy()
+    }, 500)
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
+    client.info((err, { body }) => {
+      t.ok(err instanceof errors.ConnectionError)
+      t.is(err.message, 'Response aborted while reading the body')
       t.strictEqual(count, 2)
       server.stop()
     })
