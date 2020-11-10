@@ -21,7 +21,6 @@
 
 const { test } = require('tap')
 const { inspect } = require('util')
-const { createGzip, createDeflate } = require('zlib')
 const { URL } = require('url')
 const { Agent } = require('http')
 const hpagent = require('hpagent')
@@ -398,90 +397,6 @@ test('Send body as stream', t => {
       server.stop()
     })
   })
-})
-
-test('Should handle compression', t => {
-  t.test('gzip', t => {
-    t.plan(3)
-
-    function handler (req, res) {
-      res.writeHead(200, {
-        'Content-Type': 'application/json;utf=8',
-        'Content-Encoding': 'gzip'
-      })
-      intoStream(JSON.stringify({ hello: 'world' }))
-        .pipe(createGzip())
-        .pipe(res)
-    }
-
-    buildServer(handler, ({ port }, server) => {
-      const connection = new Connection({
-        url: new URL(`http://localhost:${port}`)
-      })
-      connection.request({
-        path: '/hello',
-        method: 'GET'
-      }, (err, res) => {
-        t.error(err)
-
-        t.match(res.headers, {
-          'content-type': 'application/json;utf=8',
-          'content-encoding': 'gzip'
-        })
-
-        var payload = ''
-        res.setEncoding('utf8')
-        res.on('data', chunk => { payload += chunk })
-        res.on('error', err => t.fail(err))
-        res.on('end', () => {
-          t.deepEqual(JSON.parse(payload), { hello: 'world' })
-          server.stop()
-        })
-      })
-    })
-  })
-
-  t.test('deflate', t => {
-    t.plan(3)
-
-    function handler (req, res) {
-      res.writeHead(200, {
-        'Content-Type': 'application/json;utf=8',
-        'Content-Encoding': 'deflate'
-      })
-      intoStream(JSON.stringify({ hello: 'world' }))
-        .pipe(createDeflate())
-        .pipe(res)
-    }
-
-    buildServer(handler, ({ port }, server) => {
-      const connection = new Connection({
-        url: new URL(`http://localhost:${port}`)
-      })
-      connection.request({
-        path: '/hello',
-        method: 'GET'
-      }, (err, res) => {
-        t.error(err)
-
-        t.match(res.headers, {
-          'content-type': 'application/json;utf=8',
-          'content-encoding': 'deflate'
-        })
-
-        var payload = ''
-        res.setEncoding('utf8')
-        res.on('data', chunk => { payload += chunk })
-        res.on('error', err => t.fail(err))
-        res.on('end', () => {
-          t.deepEqual(JSON.parse(payload), { hello: 'world' })
-          server.stop()
-        })
-      })
-    })
-  })
-
-  t.end()
 })
 
 test('Should not close a connection if there are open requests', t => {
