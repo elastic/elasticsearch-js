@@ -1,6 +1,45 @@
 [[changelog-client]]
 == Changelog
 
+=== 7.10.0
+
+==== Features
+
+===== Support for Elasticsearch `v7.10`.
+
+You can find all the API changes https://www.elastic.co/guide/en/elasticsearch/reference/7.10/release-notes-7.10.0.html[here].
+
+=====  Added proxy support https://github.com/elastic/elasticsearch-js/pull/1260[#1260]
+
+If you need to pass through an http(s) proxy for connecting to Elasticsearch, the client offers
+out of the box a handy configuration for helping you with it. Under the hood it
+uses the https://github.com/delvedor/hpagent[`hpagent`] module.
+
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200',
+  proxy: 'http://localhost:8080'
+})
+----
+
+Basic authentication is supported as well:
+
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200',
+  proxy: 'http://user:pwd@localhost:8080'
+})
+----
+
+==== Fixes
+
+===== Scroll search should clear the scroll at the end https://github.com/elastic/elasticsearch-js/pull/1331[#1331]
+
+From now on the scroll search helper will automatically close the scroll on Elasticsearch,
+by doing so, Elasticsearch will free resources faster.
+
 === 7.9.1
 
 ==== Fixes
