@@ -21,7 +21,7 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const { Client, ConnectionPool, Transport } = require('../../index')
+const { Client, ConnectionPool, Transport, errors } = require('../../index')
 const { CloudConnectionPool } = require('../../lib/pool')
 const { buildServer } = require('../utils')
 
@@ -1190,4 +1190,56 @@ test('name property as symbol', t => {
   })
 
   t.strictEqual(client.name, symbol)
+})
+
+// The nodejs http agent will try to wait for the whole
+// body to arrive before closing the request, so this
+// test might take some time.
+test('Bad content length', t => {
+  t.plan(3)
+
+  let count = 0
+  function handler (req, res) {
+    count += 1
+    const body = JSON.stringify({ hello: 'world' })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.setHeader('Content-Length', body.length + '')
+    res.end(body.slice(0, -5))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
+    client.info((err, { body }) => {
+      t.ok(err instanceof errors.ConnectionError)
+      t.is(err.message, 'Response aborted while reading the body')
+      t.strictEqual(count, 2)
+      server.stop()
+    })
+  })
+})
+
+test('Socket destryed while reading the body', t => {
+  t.plan(3)
+
+  let count = 0
+  function handler (req, res) {
+    count += 1
+    const body = JSON.stringify({ hello: 'world' })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.setHeader('Content-Length', body.length + '')
+    res.write(body.slice(0, -5))
+    setTimeout(() => {
+      res.socket.destroy()
+    }, 500)
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
+    client.info((err, { body }) => {
+      t.ok(err instanceof errors.ConnectionError)
+      t.is(err.message, 'Response aborted while reading the body')
+      t.strictEqual(count, 2)
+      server.stop()
+    })
+  })
 })
