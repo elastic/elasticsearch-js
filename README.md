@@ -26,9 +26,33 @@ The official Node.js client for Elasticsearch.
 npm install @elastic/elasticsearch
 ```
 
-### Compatibility
+### Node.js support
 
-The minimum supported version of Node.js is `v8`.
+NOTE: The minimum supported version of Node.js is `v8`.
+
+The client versioning follows the Elastc Stack versioning, this means that
+major, minor, and patch releases are done following a precise schedule that
+often does not coincide with the [Node.js release](https://nodejs.org/en/about/releases/) times.
+
+To avoid support insecure and unsupported versions of Node.js, the
+client **will drop the support of EOL versions of Node.js between minor releases**.
+Typically, as soon as a Node.js version goes into EOL, the client will continue
+to support that version for at least another minor release. If you are using the client
+with a version of Node.js that will be unsupported soon, you will see a warning
+in your logs (the client will start logging the warning with two minors in advance).
+
+Unless you are **always** using a supported version of Node.js, 
+we recommend defining the client dependency in your
+`package.json` with the `~` instead of `^`. In this way, you will lock the
+dependency on the minor release and not the major. (for example, `~7.10.0` instead
+of `^7.10.0`).
+
+| Node.js Version | Node.js EOL date | End of support         |
+| --------------- |------------------| ---------------------- |
+| `8.x`           | `December 2019`  | `7.11` (early 2021)    |       
+| `10.x`          | `Apri 2021`      | `7.12` (mid 2021)      |        
+
+### Compatibility
 
 The library is compatible with all Elasticsearch versions since 5.x, and you should use the same major version of the Elasticsearch instance that you are using.
 
