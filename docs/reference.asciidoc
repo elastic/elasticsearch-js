@@ -143,6 +143,23 @@ link:{ref}/async-search.html[Documentation] +
 |===
 
 [discrete]
+=== asyncSearch.status
+
+[source,ts]
+----
+client.asyncSearch.status({
+  id: string
+})
+----
+link:{ref}/async-search.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|===
+
+[discrete]
 === asyncSearch.submit
 
 [source,ts]
@@ -4674,6 +4691,23 @@ link:{ref}/indices-upgrade.html[Documentation] +
 |`expand_wildcards` or `expandWildcards`
 |`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
 _Default:_ `open`
+
+|===
+
+[discrete]
+=== indices.migrateToDataStream
+
+[source,ts]
+----
+client.indices.migrateToDataStream({
+  name: string
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the alias to migrate
 
 |===
 

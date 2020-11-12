@@ -39,6 +39,10 @@ export interface AsyncSearchGet extends Generic {
   typed_keys?: boolean;
 }
 
+export interface AsyncSearchStatus extends Generic {
+  id: string;
+}
+
 export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   index?: string | string[];
   _source_exclude?: string | string[];
@@ -1144,6 +1148,10 @@ export interface IndicesGetUpgrade extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+}
+
+export interface IndicesMigrateToDataStream extends Generic {
+  name: string;
 }
 
 export interface IndicesOpen extends Generic {

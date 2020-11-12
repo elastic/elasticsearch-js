@@ -148,6 +148,10 @@ declare class Client {
     get<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.AsyncSearchGet, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.AsyncSearchGet, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    status<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AsyncSearchStatus, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    status<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    status<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.AsyncSearchStatus, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    status<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.AsyncSearchStatus, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     submit<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.AsyncSearchSubmit<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     submit<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     submit<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.AsyncSearchSubmit<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -162,6 +166,10 @@ declare class Client {
     get<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.AsyncSearchGet, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.AsyncSearchGet, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    status<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.AsyncSearchStatus, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    status<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    status<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.AsyncSearchStatus, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    status<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.AsyncSearchStatus, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     submit<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.AsyncSearchSubmit<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     submit<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     submit<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.AsyncSearchSubmit<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1028,6 +1036,14 @@ declare class Client {
     getUpgrade<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getUpgrade<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesGetUpgrade, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getUpgrade<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesGetUpgrade, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    migrate_to_data_stream<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesMigrateToDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    migrate_to_data_stream<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    migrate_to_data_stream<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesMigrateToDataStream, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    migrate_to_data_stream<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesMigrateToDataStream, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    migrateToDataStream<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesMigrateToDataStream, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    migrateToDataStream<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    migrateToDataStream<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesMigrateToDataStream, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    migrateToDataStream<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesMigrateToDataStream, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     open<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesOpen, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     open<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     open<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesOpen, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

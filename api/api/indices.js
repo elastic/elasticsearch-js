@@ -1496,6 +1496,33 @@ IndicesApi.prototype.getDataStream = function indicesGetDataStreamApi (params, o
   return this.transport.request(request, options, callback)
 }
 
+IndicesApi.prototype.migrateToDataStream = function indicesMigrateToDataStreamApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params['name'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: name')
+    return handleError(err, callback)
+  }
+
+  var { method, body, name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_data_stream' + '/' + '_migrate' + '/' + encodeURIComponent(name)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 IndicesApi.prototype.reloadSearchAnalyzers = function indicesReloadSearchAnalyzersApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1582,6 +1609,7 @@ Object.defineProperties(IndicesApi.prototype, {
   data_streams_stats: { get () { return this.dataStreamsStats } },
   delete_data_stream: { get () { return this.deleteDataStream } },
   get_data_stream: { get () { return this.getDataStream } },
+  migrate_to_data_stream: { get () { return this.migrateToDataStream } },
   reload_search_analyzers: { get () { return this.reloadSearchAnalyzers } }
 })
 
