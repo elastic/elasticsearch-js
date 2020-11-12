@@ -777,13 +777,8 @@ IndicesApi.prototype.getUpgrade = function indicesGetUpgradeApi (params, options
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-  if ((index) != null) {
-    if (method == null) method = 'GET'
-    path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
-  } else {
-    if (method == null) method = 'GET'
-    path = '/' + '_upgrade'
-  }
+  if (method == null) method = 'GET'
+  path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
 
   // build request object
   const request = {
@@ -1371,13 +1366,8 @@ IndicesApi.prototype.upgrade = function indicesUpgradeApi (params, options, call
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
-  if ((index) != null) {
-    if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
-  } else {
-    if (method == null) method = 'POST'
-    path = '/' + '_upgrade'
-  }
+  if (method == null) method = 'POST'
+  path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
 
   // build request object
   const request = {

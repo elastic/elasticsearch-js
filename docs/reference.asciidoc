@@ -143,6 +143,23 @@ link:{ref}/async-search.html[Documentation] +
 |===
 
 [discrete]
+=== asyncSearch.status
+
+[source,ts]
+----
+client.asyncSearch.status({
+  id: string
+})
+----
+link:{ref}/async-search.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|===
+
+[discrete]
 === asyncSearch.submit
 
 [source,ts]
@@ -4047,7 +4064,8 @@ link:{ref}/indices-aliases.html[Documentation] +
 [source,ts]
 ----
 client.indices.deleteDataStream({
-  name: string | string[]
+  name: string | string[],
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
@@ -4055,6 +4073,10 @@ link:{ref}/data-streams.html[Documentation] +
 |===
 |`name`
 |`string \| string[]` - A comma-separated list of data streams to delete; use `*` to delete all data streams
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+_Default:_ `open`
 
 |===
 
@@ -4530,7 +4552,8 @@ _Default:_ `all`
 [source,ts]
 ----
 client.indices.getDataStream({
-  name: string | string[]
+  name: string | string[],
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
@@ -4538,6 +4561,10 @@ link:{ref}/data-streams.html[Documentation] +
 |===
 |`name`
 |`string \| string[]` - A comma-separated list of data streams to get; use `*` to get all data streams
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+_Default:_ `open`
 
 |===
 

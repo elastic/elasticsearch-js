@@ -39,6 +39,10 @@ export interface AsyncSearchGet extends Generic {
   typed_keys?: boolean;
 }
 
+export interface AsyncSearchStatus extends Generic {
+  id: string;
+}
+
 export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   index?: string | string[];
   wait_for_completion_timeout?: string;
@@ -978,6 +982,7 @@ export interface IndicesDeleteAlias extends Generic {
 
 export interface IndicesDeleteDataStream extends Generic {
   name: string | string[];
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesDeleteIndexTemplate extends Generic {
@@ -1093,6 +1098,7 @@ export interface IndicesGetAlias extends Generic {
 
 export interface IndicesGetDataStream extends Generic {
   name?: string | string[];
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesGetFieldMapping extends Generic {

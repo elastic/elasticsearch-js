@@ -85,6 +85,33 @@ AsyncSearchApi.prototype.get = function asyncSearchGetApi (params, options, call
   return this.transport.request(request, options, callback)
 }
 
+AsyncSearchApi.prototype.status = function asyncSearchStatusApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params['id'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: id')
+    return handleError(err, callback)
+  }
+
+  var { method, body, id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if (method == null) method = 'GET'
+  path = '/' + '_async_search' + '/' + 'status' + '/' + encodeURIComponent(id)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 AsyncSearchApi.prototype.submit = function asyncSearchSubmitApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
