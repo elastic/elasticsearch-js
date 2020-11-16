@@ -50,7 +50,7 @@ This could lead to an unwanted `DeserialzationError`. From now, this will be han
 ===== Add warning log about nodejs version support https://github.com/elastic/elasticsearch-js/pull/1349[#1349]
 
 `7.11` will be the last version of the client that will support Node.js v8, while `7.12` will be
-the last one that supports Node.js v12. If you are eusing this versions you will see a 
+the last one that supports Node.js v10. If you are eusing this versions you will see a 
 `DeprecationWaring` in your logs. We strongly recommend to upgrade to newer versions of Node.js
 as usng an EOL version will expose you to securty risks.
 
