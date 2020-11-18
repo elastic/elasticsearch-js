@@ -26,9 +26,8 @@ const semver = require('semver')
 const helper = require('./helper')
 const deepEqual = require('fast-deep-equal')
 const { ConfigurationError } = require('../../lib/errors')
-const {sleep} = require('./helper')
 
-const { delve, to, isXPackTemplate } = helper
+const { delve, to, isXPackTemplate, sleep } = helper
 
 const supportedFeatures = [
   'gtelte',
