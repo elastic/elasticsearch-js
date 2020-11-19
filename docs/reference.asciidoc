@@ -7496,7 +7496,7 @@ link:{ref}/ml-update-snapshot.html[Documentation] +
 client.ml.upgradeJobSnapshot({
   job_id: string,
   snapshot_id: string,
-  timeout: timevalue,
+  timeout: string,
   wait_for_completion: boolean
 })
 ----
@@ -7510,7 +7510,7 @@ link:{ref}/ml-upgrade-job-model-snapshot.html[Documentation] +
 |`string` - The ID of the snapshot
 
 |`timeout`
-|`timevalue` - How long should the API wait for the job to be opened and the old snapshot to be loaded.
+|`string` - How long should the API wait for the job to be opened and the old snapshot to be loaded.
 
 |`wait_for_completion` or `waitForCompletion`
 |`boolean` - Should the request wait until the task is complete before responding to the caller. Default is false.
