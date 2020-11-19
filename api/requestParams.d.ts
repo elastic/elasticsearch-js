@@ -185,7 +185,6 @@ export interface CatIndices extends Generic {
   index?: string | string[];
   format?: string;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
-  local?: boolean;
   master_timeout?: string;
   h?: string | string[];
   health?: 'green' | 'yellow' | 'red';
@@ -339,7 +338,6 @@ export interface CatShards extends Generic {
   index?: string | string[];
   format?: string;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
-  local?: boolean;
   master_timeout?: string;
   h?: string | string[];
   help?: boolean;
@@ -1143,13 +1141,6 @@ export interface IndicesGetTemplate extends Generic {
   local?: boolean;
 }
 
-export interface IndicesGetUpgrade extends Generic {
-  index?: string | string[];
-  ignore_unavailable?: boolean;
-  allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
-}
-
 export interface IndicesMigrateToDataStream extends Generic {
   name: string;
 }
@@ -1325,15 +1316,6 @@ export interface IndicesUpdateAliases<T = RequestBody> extends Generic {
   timeout?: string;
   master_timeout?: string;
   body: T;
-}
-
-export interface IndicesUpgrade extends Generic {
-  index?: string | string[];
-  allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
-  ignore_unavailable?: boolean;
-  wait_for_completion?: boolean;
-  only_ancient_segments?: boolean;
 }
 
 export interface IndicesValidateQuery<T = RequestBody> extends Generic {
@@ -1837,6 +1819,13 @@ export interface MlUpdateModelSnapshot<T = RequestBody> extends Generic {
   job_id: string;
   snapshot_id: string;
   body: T;
+}
+
+export interface MlUpgradeJobSnapshot extends Generic {
+  job_id: string;
+  snapshot_id: string;
+  timeout?: string;
+  wait_for_completion?: boolean;
 }
 
 export interface MlValidate<T = RequestBody> extends Generic {
