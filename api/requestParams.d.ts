@@ -1824,7 +1824,7 @@ export interface MlUpdateModelSnapshot<T = RequestBody> extends Generic {
 export interface MlUpgradeJobSnapshot extends Generic {
   job_id: string;
   snapshot_id: string;
-  timeout?: timevalue;
+  timeout?: string;
   wait_for_completion?: boolean;
 }
 
