@@ -49,4 +49,45 @@ function to (promise) {
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-module.exports = { runInParallel, delve, to, sleep }
+function isXPackTemplate (name) {
+  if (name.startsWith('.monitoring-')) {
+    return true
+  }
+  if (name.startsWith('.watch') || name.startsWith('.triggered_watches')) {
+    return true
+  }
+  if (name.startsWith('.data-frame-')) {
+    return true
+  }
+  if (name.startsWith('.ml-')) {
+    return true
+  }
+  if (name.startsWith('.transform-')) {
+    return true
+  }
+  switch (name) {
+    case '.watches':
+    case 'logstash-index-template':
+    case '.logstash-management':
+    case 'security_audit_log':
+    case '.slm-history':
+    case '.async-search':
+    case 'saml-service-provider':
+    case 'ilm-history':
+    case 'logs':
+    case 'logs-settings':
+    case 'logs-mappings':
+    case 'metrics':
+    case 'metrics-settings':
+    case 'metrics-mappings':
+    case 'synthetics':
+    case 'synthetics-settings':
+    case 'synthetics-mappings':
+    case '.snapshot-blob-cache':
+    case '.deprecation-indexing-template':
+      return true
+  }
+  return false
+}
+
+module.exports = { runInParallel, delve, to, sleep, isXPackTemplate }
