@@ -27,7 +27,7 @@ const helper = require('./helper')
 const deepEqual = require('fast-deep-equal')
 const { ConfigurationError } = require('../../lib/errors')
 
-const { delve, to } = helper
+const { delve, to, isXPackTemplate, sleep } = helper
 
 const supportedFeatures = [
   'gtelte',
@@ -52,135 +52,115 @@ function build (opts = {}) {
    * Runs a cleanup, removes all indices, aliases, templates, and snapshots
    * @returns {Promise}
    */
-  async function cleanup () {
+  async function cleanup (isXPack) {
     response = null
     stash.clear()
 
-    try {
-      await client.indices.deleteAlias({
-        index: '_all',
-        name: '_all'
-      }, { ignore: [404] })
-    } catch (err) {
-      assert.ifError(err, 'should not error: indices.deleteAlias')
-    }
-
-    try {
-      await client.indices.delete({
-        index: '_all',
-        expand_wildcards: 'open,closed,hidden'
-      }, { ignore: [404] })
-    } catch (err) {
-      assert.ifError(err, 'should not error: indices.delete')
-    }
-
-    try {
-      await client.indices.deleteTemplate({ name: '*' })
-    } catch (err) {
-      assert.ifError(err, 'should not error: indices.deleteTemplate')
-    }
-
-    try {
-      const { body: repositories } = await client.snapshot.getRepository()
-      for (const repository of Object.keys(repositories)) {
-        await client.snapshot.delete({ repository, snapshot: '*' }, { ignore: [404] })
-        await client.snapshot.deleteRepository({ repository }, { ignore: [404] })
-      }
-    } catch (err) {
-      assert.ifError(err, 'should not error: snapshot.delete / snapshot.deleteRepository')
-    }
-  }
-
-  /**
-   * Runs some additional API calls to prepare ES for the xpack test,
-   * This set of calls should be executed before the final clenup.
-   * @returns {Promise}
-   */
-  async function cleanupXPack () {
-    // tap.comment('XPack Cleanup')
-
-    try {
-      const { body } = await client.security.getRole()
-      const roles = Object.keys(body).filter(n => !body[n].metadata._reserved)
-      await helper.runInParallel(
-        client, 'security.deleteRole',
-        roles.map(r => ({ name: r }))
-      )
-    } catch (err) {
-      assert.ifError(err, 'should not error: security role cleanup')
-    }
-
-    try {
-      const { body } = await client.security.getUser()
-      const users = Object.keys(body).filter(n => !body[n].metadata._reserved)
-      await helper.runInParallel(
-        client, 'security.deleteUser',
-        users.map(r => ({ username: r }))
-      )
-    } catch (err) {
-      assert.ifError(err, 'should not error: security user cleanup')
-    }
-
-    try {
-      const { body } = await client.security.getPrivileges()
-      const privileges = []
-      Object.keys(body).forEach(app => {
-        Object.keys(body[app]).forEach(priv => {
-          privileges.push({
-            name: body[app][priv].name,
-            application: body[app][priv].application
-          })
-        })
-      })
-      await helper.runInParallel(client, 'security.deletePrivileges', privileges)
-    } catch (err) {
-      assert.ifError(err, 'should not error: security privileges cleanup')
-    }
-
-    try {
-      await client.ml.stopDatafeed({ datafeedId: '*', force: true })
-      const { body } = await client.ml.getDatafeeds({ datafeedId: '*' })
-      const feeds = body.datafeeds.map(f => f.datafeed_id)
-      await helper.runInParallel(
-        client, 'ml.deleteDatafeed',
-        feeds.map(f => ({ datafeedId: f }))
-      )
-    } catch (err) {
-      assert.ifError(err, 'should error: not ml datafeed cleanup')
-    }
-
-    try {
-      await client.ml.closeJob({ jobId: '*', force: true })
-      const { body } = await client.ml.getJobs({ jobId: '*' })
-      const jobs = body.jobs.map(j => j.job_id)
-      await helper.runInParallel(
-        client, 'ml.deleteJob',
-        jobs.map(j => ({ jobId: j, waitForCompletion: true, force: true }))
-      )
-    } catch (err) {
-      assert.ifError(err, 'should not error: ml job cleanup')
-    }
-
-    try {
-      const { body } = await client.rollup.getJobs({ id: '_all' })
-      const jobs = body.jobs.map(j => j.config.id)
+    if (isXPack) {
+      // wipe rollup jobs
+      const { body: jobsList } = await client.rollup.getJobs({ id: '_all' })
+      const jobsIds = jobsList.jobs.map(j => j.config.id)
       await helper.runInParallel(
         client, 'rollup.stopJob',
-        jobs.map(j => ({ id: j, waitForCompletion: true }))
+        jobsIds.map(j => ({ id: j, waitForCompletion: true }))
       )
       await helper.runInParallel(
         client, 'rollup.deleteJob',
-        jobs.map(j => ({ id: j }))
+        jobsIds.map(j => ({ id: j }))
       )
-    } catch (err) {
-      assert.ifError(err, 'should not error: rollup jobs cleanup')
+
+      // delete slm policies
+      const { body: policies } = await client.slm.getLifecycle()
+      await helper.runInParallel(
+        client, 'slm.deleteLifecycle',
+        Object.keys(policies).map(p => ({ policy_id: p }))
+      )
+
+      // remove 'x_pack_rest_user', used in some xpack test
+      await client.security.deleteUser({ username: 'x_pack_rest_user' }, { ignore: [404] })
     }
 
-    try {
-      const { body } = await client.tasks.list()
-      const tasks = Object.keys(body.nodes)
+    // clean snapshots
+    const { body: repositories } = await client.snapshot.getRepository()
+    for (const repository of Object.keys(repositories)) {
+      await client.snapshot.delete({ repository, snapshot: '*' }, { ignore: [404] })
+      await client.snapshot.deleteRepository({ repository }, { ignore: [404] })
+    }
+
+    if (isXPack) {
+      // clean data streams
+      await client.indices.deleteDataStream({ name: '*' })
+    }
+
+    // clean all indices
+    await client.indices.delete({ index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden' }, { ignore: [404] })
+
+    if (isXPack) {
+      // delete templates
+      const { body: templates } = await client.cat.templates({ h: 'name' })
+      for (const template of templates.split('\n').filter(Boolean)) {
+        if (isXPackTemplate(template)) continue
+        const { body } = await client.indices.deleteTemplate({ name: template }, { ignore: [404] })
+        if (JSON.stringify(body).includes(`index_template [${template}] missing`)) {
+          await client.indices.deleteIndexTemplate({ name: template }, { ignore: [404] })
+        }
+      }
+
+      // delete component template
+      const { body } = await client.cluster.getComponentTemplate()
+      const components = body.component_templates.filter(c => !isXPackTemplate(c.name)).map(c => c.name)
+      if (components.length > 0) {
+        await client.cluster.deleteComponentTemplate({ name: components.join(',') }, { ignore: [404] })
+      }
+    } else {
+      // clean all templates
+      await client.indices.deleteTemplate({ name: '*' })
+
+      // clean all templates
+      await client.indices.deleteIndexTemplate({ name: '*' })
+
+      // clean all templates
+      await client.cluster.deleteComponentTemplate({ name: '*' })
+    }
+
+    // Remove any cluster setting
+    const { body: settings } = await client.cluster.getSettings()
+    const newSettings = {}
+    for (const setting in settings) {
+      if (Object.keys(settings[setting]).length === 0) continue
+      newSettings[setting] = {}
+      for (const key in settings[setting]) {
+        newSettings[setting][`${key}.*`] = null
+      }
+    }
+    if (Object.keys(newSettings).length > 0) {
+      await client.cluster.putSettings({ body: newSettings })
+    }
+
+    if (isXPack) {
+      // delete ilm policies
+      const preserveIlmPolicies = [
+        'ilm-history-ilm-policy', 'slm-history-ilm-policy',
+        'watch-history-ilm-policy', 'ml-size-based-ilm-policy',
+        'logs', 'metrics'
+      ]
+      const { body: policies } = await client.ilm.getLifecycle()
+      for (const policy in policies) {
+        if (preserveIlmPolicies.includes(policy)) continue
+        await client.ilm.deleteLifecycle({ policy })
+      }
+
+      // delete autofollow patterns
+      const { body: patterns } = await client.ccr.getAutoFollowPattern()
+      for (const { name } of patterns.patterns) {
+        await client.ccr.deleteAutoFollowPattern({ name })
+      }
+
+      // delete all tasks
+      const { body: nodesTask } = await client.tasks.list()
+      const tasks = Object.keys(nodesTask.nodes)
         .reduce((acc, node) => {
-          const { tasks } = body.nodes[node]
+          const { tasks } = nodesTask.nodes[node]
           Object.keys(tasks).forEach(id => {
             if (tasks[id].cancellable) acc.push(id)
           })
@@ -191,21 +171,14 @@ function build (opts = {}) {
         client, 'tasks.cancel',
         tasks.map(id => ({ taskId: id }))
       )
-    } catch (err) {
-      assert.ifError(err, 'should not error: tasks cleanup')
     }
 
-    try {
-      await client.ilm.removePolicy({ index: '_all' })
-    } catch (err) {
-      assert.ifError(err, 'should not error: ilm.removePolicy')
-    }
-
-    // refresh the all indexes
-    try {
-      await client.indices.refresh({ index: '_all' })
-    } catch (err) {
-      assert.ifError(err, 'should not error: indices.refresh')
+    // wait for pending task before resolving the promise
+    await sleep(100)
+    while (true) {
+      const { body } = await client.cluster.pendingTasks()
+      if (body.tasks.length === 0) break
+      await sleep(500)
     }
   }
 
@@ -253,9 +226,7 @@ function build (opts = {}) {
 
     if (teardown) await exec('Teardown', teardown, stats, junit)
 
-    if (isXPack) await cleanupXPack()
-
-    await cleanup()
+    await cleanup(isXPack)
   }
 
   /**
