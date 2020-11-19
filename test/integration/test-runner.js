@@ -113,9 +113,6 @@ function build (opts = {}) {
         await client.cluster.deleteComponentTemplate({ name: components.join(',') }, { ignore: [404] })
       }
     } else {
-      // clean all aliases
-      await client.indices.deleteAlias({ index: '_all', name: '_all' }, { ignore: [404] })
-
       // clean all templates
       await client.indices.deleteTemplate({ name: '*' })
 
