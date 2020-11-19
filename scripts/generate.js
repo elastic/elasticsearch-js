@@ -30,7 +30,6 @@ const {
   generate,
   cloneAndCheckout,
   genFactory,
-  generateRequestTypes,
   generateDocs
 } = require('./utils')
 
@@ -84,36 +83,10 @@ function start (opts) {
       writeFileSync(filePath, code, { encoding: 'utf8' })
     }
 
-    writeFileSync(
-      requestParamsOutputFile,
-      generateRequestTypes(opts.branch || opts.tag, allSpec),
-      { encoding: 'utf8' }
-    )
-
-    const { fn: factory, types, kibanaTypes } = genFactory(apiOutputFolder, [apiFolder, xPackFolder], namespaces)
+    const { fn: factory } = genFactory(apiOutputFolder, [apiFolder, xPackFolder], namespaces)
     writeFileSync(
       mainOutputFile,
       factory,
-      { encoding: 'utf8' }
-    )
-
-    let oldTypeDefString = readFileSync(typeDefFile, 'utf8')
-    let start = oldTypeDefString.indexOf('/* GENERATED */')
-    let end = oldTypeDefString.indexOf('/* /GENERATED */')
-    let newTypeDefString = oldTypeDefString.slice(0, start + 15) + '\n' + types + '\n  ' + oldTypeDefString.slice(end)
-    writeFileSync(
-      typeDefFile,
-      newTypeDefString,
-      { encoding: 'utf8' }
-    )
-
-    oldTypeDefString = readFileSync(kibanaTypeDefFile, 'utf8')
-    start = oldTypeDefString.indexOf('/* GENERATED */')
-    end = oldTypeDefString.indexOf('/* /GENERATED */')
-    newTypeDefString = oldTypeDefString.slice(0, start + 15) + '\n' + kibanaTypes + '\n  ' + oldTypeDefString.slice(end)
-    writeFileSync(
-      kibanaTypeDefFile,
-      newTypeDefString,
       { encoding: 'utf8' }
     )
 
