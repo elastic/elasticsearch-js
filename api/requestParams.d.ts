@@ -1998,6 +1998,11 @@ export interface RollupPutJob<T = RequestBody> extends Generic {
   body: T;
 }
 
+export interface RollupRollup<T = RequestBody> extends Generic {
+  index: string;
+  body: T;
+}
+
 export interface RollupRollupSearch<T = RequestBody> extends Generic {
   index: string | string[];
   type?: string;

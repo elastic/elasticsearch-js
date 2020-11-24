@@ -8236,6 +8236,27 @@ link:{ref}/rollup-put-job.html[Documentation] +
 |===
 
 [discrete]
+=== rollup.rollup
+
+[source,ts]
+----
+client.rollup.rollup({
+  index: string,
+  body: object
+})
+----
+link:{ref}/rollup.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The index to roll up
+
+|`body`
+|`object` - The rollup configuration
+
+|===
+
+[discrete]
 === rollup.rollupSearch
 *Stability:* experimental
 [source,ts]
