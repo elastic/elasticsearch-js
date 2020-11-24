@@ -685,14 +685,6 @@ expectType<Client>(
   })
 )
 
-expectError<errors.ConfigurationError>(
-  // @ts-expect-error
-  new Client({
-    node: 'http://localhost:9200',
-    context: 'hello world'
-  })
-)
-
 /**
  * `proxy` option
  */

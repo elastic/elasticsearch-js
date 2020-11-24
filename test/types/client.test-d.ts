@@ -18,8 +18,8 @@
  */
 
 import { expectType } from 'tsd'
-import { Client, ApiError, ApiResponse, RequestEvent, ResurrectEvent } from '../../'
-import { TransportRequestCallback, TransportRequestPromise } from '../../lib/Transport'
+import { Client, ApiError, ApiResponse, RequestEvent, ResurrectEvent, types } from '../../'
+import { TransportRequestCallback, TransportRequestPromise, Context } from '../../lib/Transport'
 
 const client = new Client({
   node: 'http://localhost:9200'
@@ -51,7 +51,7 @@ client.on('resurrect', (err, meta) => {
 {
   const result = client.info((err, result) => {
     expectType<ApiError>(err)
-    expectType<ApiResponse>(result)
+    expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(result)
   })
   expectType<TransportRequestCallback>(result)
   expectType<void>(result.abort())
@@ -60,7 +60,7 @@ client.on('resurrect', (err, meta) => {
 {
   const result = client.info({ pretty: true }, (err, result) => {
     expectType<ApiError>(err)
-    expectType<ApiResponse>(result)
+    expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(result)
   })
   expectType<TransportRequestCallback>(result)
   expectType<void>(result.abort())
@@ -69,7 +69,7 @@ client.on('resurrect', (err, meta) => {
 {
   const result = client.info({ pretty: true }, { ignore: [404] }, (err, result) => {
     expectType<ApiError>(err)
-    expectType<ApiResponse>(result)
+    expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(result)
   })
   expectType<TransportRequestCallback>(result)
   expectType<void>(result.abort())
@@ -78,27 +78,27 @@ client.on('resurrect', (err, meta) => {
 // Promise style
 {
   const promise = client.info()
-  expectType<TransportRequestPromise<ApiResponse>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<types.RootNodeInfoResponse, Context>>>(promise)
   promise
-    .then(result => expectType<ApiResponse>(result))
+    .then(result => expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(result))
     .catch((err: ApiError) => expectType<ApiError>(err))
   expectType<void>(promise.abort())
 }
 
 {
   const promise = client.info({ pretty: true })
-  expectType<TransportRequestPromise<ApiResponse>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<types.RootNodeInfoResponse, Context>>>(promise)
   promise
-    .then(result => expectType<ApiResponse>(result))
+    .then(result => expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(result))
     .catch((err: ApiError) => expectType<ApiError>(err))
   expectType<void>(promise.abort())
 }
 
 {
   const promise = client.info({ pretty: true }, { ignore: [404] })
-  expectType<TransportRequestPromise<ApiResponse>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<types.RootNodeInfoResponse, Context>>>(promise)
   promise
-    .then(result => expectType<ApiResponse>(result))
+    .then(result => expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(result))
     .catch((err: ApiError) => expectType<ApiError>(err))
   expectType<void>(promise.abort())
 }
@@ -106,10 +106,10 @@ client.on('resurrect', (err, meta) => {
 // Promise style with async await
 {
   const promise = client.info()
-  expectType<TransportRequestPromise<ApiResponse>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<types.RootNodeInfoResponse, Context>>>(promise)
   expectType<void>(promise.abort())
   try {
-    expectType<ApiResponse>(await promise)
+    expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(await promise)
   } catch (err) {
     expectType<any>(err)
   }
@@ -117,10 +117,10 @@ client.on('resurrect', (err, meta) => {
 
 {
   const promise = client.info({ pretty: true })
-  expectType<TransportRequestPromise<ApiResponse>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<types.RootNodeInfoResponse, Context>>>(promise)
   expectType<void>(promise.abort())
   try {
-    expectType<ApiResponse>(await promise)
+    expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(await promise)
   } catch (err) {
     expectType<any>(err)
   }
@@ -128,10 +128,10 @@ client.on('resurrect', (err, meta) => {
 
 {
   const promise = client.info({ pretty: true }, { ignore: [404] })
-  expectType<TransportRequestPromise<ApiResponse>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<types.RootNodeInfoResponse, Context>>>(promise)
   expectType<void>(promise.abort())
   try {
-    expectType<ApiResponse>(await promise)
+    expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(await promise)
   } catch (err) {
     expectType<any>(err)
   }
