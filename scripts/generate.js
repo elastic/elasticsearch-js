@@ -46,10 +46,7 @@ function start (opts) {
   const packageFolder = join(__dirname, '..', 'api')
   const apiOutputFolder = join(packageFolder, 'api')
   const mainOutputFile = join(packageFolder, 'index.js')
-  const typeDefFile = join(__dirname, '..', 'index.d.ts')
-  const kibanaTypeDefFile = join(packageFolder, 'kibana.d.ts')
   const docOutputFile = join(__dirname, '..', 'docs', 'reference.asciidoc')
-  const requestParamsOutputFile = join(packageFolder, 'requestParams.d.ts')
 
   log.text = 'Cleaning API folder...'
   rimraf.sync(join(apiOutputFolder, '*.js'))
