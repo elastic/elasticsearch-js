@@ -1967,7 +1967,7 @@ link:{ref}/cluster-allocation-explain.html[Documentation] +
 
 [discrete]
 === cluster.deleteComponentTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.cluster.deleteComponentTemplate({
@@ -2010,7 +2010,7 @@ _Default:_ `true`
 
 [discrete]
 === cluster.existsComponentTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.cluster.existsComponentTemplate({
@@ -2035,7 +2035,7 @@ link:{ref}/indices-component-template.html[Documentation] +
 
 [discrete]
 === cluster.getComponentTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.cluster.getComponentTemplate({
@@ -2199,7 +2199,7 @@ _Default:_ `30s`
 
 [discrete]
 === cluster.putComponentTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.cluster.putComponentTemplate({
@@ -4082,7 +4082,7 @@ _Default:_ `open`
 
 [discrete]
 === indices.deleteIndexTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.deleteIndexTemplate({
@@ -4212,7 +4212,7 @@ _Default:_ `all`
 
 [discrete]
 === indices.existsIndexTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.existsIndexTemplate({
@@ -4622,7 +4622,7 @@ _Default:_ `open`
 
 [discrete]
 === indices.getIndexTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.getIndexTemplate({
@@ -4889,7 +4889,7 @@ link:{ref}/indices-aliases.html[Documentation] +
 
 [discrete]
 === indices.putIndexTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.putIndexTemplate({
@@ -5326,7 +5326,7 @@ link:{ref}/indices-shrink-index.html[Documentation] +
 
 [discrete]
 === indices.simulateIndexTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.simulateIndexTemplate({
@@ -5359,7 +5359,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 [discrete]
 === indices.simulateTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.simulateTemplate({
@@ -7700,6 +7700,35 @@ link:{ref}/ml-update-snapshot.html[Documentation] +
 |===
 
 [discrete]
+=== ml.upgradeJobSnapshot
+
+[source,ts]
+----
+client.ml.upgradeJobSnapshot({
+  job_id: string,
+  snapshot_id: string,
+  timeout: string,
+  wait_for_completion: boolean
+})
+----
+link:{ref}/ml-upgrade-job-model-snapshot.html[Documentation] +
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job
+
+|`snapshot_id` or `snapshotId`
+|`string` - The ID of the snapshot
+
+|`timeout`
+|`string` - How long should the API wait for the job to be opened and the old snapshot to be loaded.
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should the request wait until the task is complete before responding to the caller. Default is false.
+
+|===
+
+[discrete]
 === ml.validate
 
 [source,ts]
@@ -8426,6 +8455,27 @@ link:{ref}/rollup-put-job.html[Documentation] +
 
 |`body`
 |`object` - The job configuration
+
+|===
+
+[discrete]
+=== rollup.rollup
+
+[source,ts]
+----
+client.rollup.rollup({
+  index: string,
+  body: object
+})
+----
+link:{ref}/rollup.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The index to roll up
+
+|`body`
+|`object` - The rollup configuration
 
 |===
 

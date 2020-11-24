@@ -1725,6 +1725,43 @@ MlApi.prototype.updateModelSnapshot = function mlUpdateModelSnapshotApi (params,
   return this.transport.request(request, options, callback)
 }
 
+MlApi.prototype.upgradeJobSnapshot = function mlUpgradeJobSnapshotApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params['job_id'] == null && params['jobId'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
+    return handleError(err, callback)
+  }
+  if (params['snapshot_id'] == null && params['snapshotId'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: snapshot_id or snapshotId')
+    return handleError(err, callback)
+  }
+
+  // check required url components
+  if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
+    return handleError(err, callback)
+  }
+
+  var { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId) + '/' + '_upgrade'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 MlApi.prototype.validate = function mlValidateApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1836,6 +1873,7 @@ Object.defineProperties(MlApi.prototype, {
   update_filter: { get () { return this.updateFilter } },
   update_job: { get () { return this.updateJob } },
   update_model_snapshot: { get () { return this.updateModelSnapshot } },
+  upgrade_job_snapshot: { get () { return this.upgradeJobSnapshot } },
   validate_detector: { get () { return this.validateDetector } }
 })
 

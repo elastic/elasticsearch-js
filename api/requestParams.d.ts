@@ -1848,6 +1848,13 @@ export interface MlUpdateModelSnapshot<T = RequestBody> extends Generic {
   body: T;
 }
 
+export interface MlUpgradeJobSnapshot extends Generic {
+  job_id: string;
+  snapshot_id: string;
+  timeout?: string;
+  wait_for_completion?: boolean;
+}
+
 export interface MlValidate<T = RequestBody> extends Generic {
   body: T;
 }
@@ -2018,6 +2025,11 @@ export interface RollupGetRollupIndexCaps extends Generic {
 
 export interface RollupPutJob<T = RequestBody> extends Generic {
   id: string;
+  body: T;
+}
+
+export interface RollupRollup<T = RequestBody> extends Generic {
+  index: string;
   body: T;
 }
 
