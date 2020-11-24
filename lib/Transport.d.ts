@@ -28,7 +28,7 @@ export type ApiError = errors.ConfigurationError | errors.ConnectionError |
                        errors.NoLivingConnectionsError | errors.ResponseError |
                        errors.TimeoutError | errors.RequestAbortedError
 
-export type Context = Record<string, unknown> | null
+export type Context = unknown
 
 export interface nodeSelectorFn {
   (connections: Connection[]): Connection;

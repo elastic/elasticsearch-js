@@ -17,6 +17,7 @@
  * under the License.
  */
 
+import { Readable as ReadableStream } from 'stream'
 declare namespace T {
   export type Uri = string
 
@@ -1207,12 +1208,12 @@ declare namespace T {
   }
 
   export interface CatAllocationRecord extends ICatRecord {
-    "disk.avail"?: string
-    "disk.indices"?: string
-    "disk.percent"?: string
+    'disk.avail'?: string
+    'disk.indices'?: string
+    'disk.percent'?: string
     disk_ratio?: string
-    "disk.total"?: string
-    "disk.used"?: string
+    'disk.total'?: string
+    'disk.used'?: string
     host?: string
     ip?: string
     node?: string
@@ -1276,10 +1277,10 @@ declare namespace T {
     failure_reason?: string
     id?: string
     model_memory_limit?: string
-    "node.address"?: string
-    "node.ephemeral_id"?: string
-    "node.id"?: string
-    "node.name"?: string
+    'node.address'?: string
+    'node.ephemeral_id'?: string
+    'node.id'?: string
+    'node.name'?: string
     progress?: string
     source_index?: string
     state?: string
@@ -1310,16 +1311,16 @@ declare namespace T {
 
   export interface CatDatafeedsRecord extends ICatRecord {
     assignment_explanation?: string
-    "buckets.count"?: string
+    'buckets.count'?: string
     id?: string
-    "node.address"?: string
-    "node.ephemeral_id"?: string
-    "node.id"?: string
-    "node.name"?: string
-    "search.bucket_avg"?: string
-    "search.count"?: string
-    "search.exp_avg_hour"?: string
-    "search.time"?: string
+    'node.address'?: string
+    'node.ephemeral_id'?: string
+    'node.id'?: string
+    'node.name'?: string
+    'search.bucket_avg'?: string
+    'search.count'?: string
+    'search.exp_avg_hour'?: string
+    'search.time'?: string
     state?: DatafeedState
   }
 
@@ -1378,8 +1379,8 @@ declare namespace T {
     cluster?: string
     epoch?: string
     init?: string
-    "node.data"?: string
-    "node.total"?: string
+    'node.data'?: string
+    'node.total'?: string
     pending_tasks?: string
     pri?: string
     relo?: string
@@ -1430,15 +1431,15 @@ declare namespace T {
   }
 
   export interface CatIndicesRecord extends ICatRecord {
-    "docs.count"?: string
-    "docs.deleted"?: string
+    'docs.count'?: string
+    'docs.deleted'?: string
     health?: string
     index?: string
     pri?: string
-    "pri.store.size"?: string
+    'pri.store.size'?: string
     rep?: string
     status?: string
-    "store.size"?: string
+    'store.size'?: string
     tm?: string
     uuid?: string
   }
@@ -1471,58 +1472,58 @@ declare namespace T {
 
   export interface CatJobsRecord extends ICatRecord {
     assignment_explanation?: string
-    "buckets.count"?: string
-    "buckets.time.exp_avg"?: string
-    "buckets.time.exp_avg_hour"?: string
-    "buckets.time.max"?: string
-    "buckets.time.min"?: string
-    "buckets.time.total"?: string
-    "data.buckets"?: string
-    "data.earliest_record"?: string
-    "data.empty_buckets"?: string
-    "data.input_bytes"?: string
-    "data.input_fields"?: string
-    "data.input_records"?: string
-    "data.invalid_dates"?: string
-    "data.last"?: string
-    "data.last_empty_bucket"?: string
-    "data.last_sparse_bucket"?: string
-    "data.latest_record"?: string
-    "data.missing_fields"?: string
-    "data.out_of_order_timestamps"?: string
-    "data.processed_fields"?: string
-    "data.processed_records"?: string
-    "data.sparse_buckets"?: string
-    "forecasts.memory.avg"?: string
-    "forecasts.memory.min"?: string
-    "forecasts.memory.total"?: string
-    "forecasts.records.avg"?: string
-    "forecasts.records.max"?: string
-    "forecasts.records.min"?: string
-    "forecasts.records.total"?: string
-    "forecasts.time.avg"?: string
-    "forecasts.time.max"?: string
-    "forecasts.time.min"?: string
-    "forecasts.total"?: string
+    'buckets.count'?: string
+    'buckets.time.exp_avg'?: string
+    'buckets.time.exp_avg_hour'?: string
+    'buckets.time.max'?: string
+    'buckets.time.min'?: string
+    'buckets.time.total'?: string
+    'data.buckets'?: string
+    'data.earliest_record'?: string
+    'data.empty_buckets'?: string
+    'data.input_bytes'?: string
+    'data.input_fields'?: string
+    'data.input_records'?: string
+    'data.invalid_dates'?: string
+    'data.last'?: string
+    'data.last_empty_bucket'?: string
+    'data.last_sparse_bucket'?: string
+    'data.latest_record'?: string
+    'data.missing_fields'?: string
+    'data.out_of_order_timestamps'?: string
+    'data.processed_fields'?: string
+    'data.processed_records'?: string
+    'data.sparse_buckets'?: string
+    'forecasts.memory.avg'?: string
+    'forecasts.memory.min'?: string
+    'forecasts.memory.total'?: string
+    'forecasts.records.avg'?: string
+    'forecasts.records.max'?: string
+    'forecasts.records.min'?: string
+    'forecasts.records.total'?: string
+    'forecasts.time.avg'?: string
+    'forecasts.time.max'?: string
+    'forecasts.time.min'?: string
+    'forecasts.total'?: string
     id?: string
-    "model.bucket_allocation_failures"?: string
-    "model.by_fields"?: string
-    "model.bytes"?: string
-    "model.categorization_status"?: ModelCategorizationStatus
-    "model.categorized_doc_count"?: string
-    "model.dead_category_count"?: string
-    "model.frequent_category_count"?: string
-    "model.log_time"?: string
-    "model.memory_limit"?: string
-    "model.memory_status"?: ModelMemoryStatus
-    "model.over_fields"?: string
-    "model.partition_fields"?: string
-    "model.rare_category_count"?: string
-    "model.timestamp"?: string
-    "node.address"?: string
-    "node.ephemeral_id"?: string
-    "node.id"?: string
-    "node.name"?: string
+    'model.bucket_allocation_failures'?: string
+    'model.by_fields'?: string
+    'model.bytes'?: string
+    'model.categorization_status'?: ModelCategorizationStatus
+    'model.categorized_doc_count'?: string
+    'model.dead_category_count'?: string
+    'model.frequent_category_count'?: string
+    'model.log_time'?: string
+    'model.memory_limit'?: string
+    'model.memory_status'?: ModelMemoryStatus
+    'model.over_fields'?: string
+    'model.partition_fields'?: string
+    'model.rare_category_count'?: string
+    'model.timestamp'?: string
+    'node.address'?: string
+    'node.ephemeral_id'?: string
+    'node.id'?: string
+    'node.name'?: string
     opened_time?: string
     state?: JobState
   }
@@ -1835,8 +1836,8 @@ declare namespace T {
   export interface CatSegmentsRecord extends ICatRecord {
     committed?: string
     compound?: string
-    "docs.count"?: string
-    "docs.deleted"?: string
+    'docs.count'?: string
+    'docs.deleted'?: string
     generation?: string
     id?: string
     index?: string
@@ -1846,7 +1847,7 @@ declare namespace T {
     segment?: string
     shard?: string
     size?: string
-    "size.memory"?: string
+    'size.memory'?: string
     version?: string
   }
 
@@ -1871,64 +1872,64 @@ declare namespace T {
   }
 
   export interface CatShardsRecord extends ICatRecord {
-    "completion.size"?: string
+    'completion.size'?: string
     docs?: string
-    "fielddata.evictions"?: string
-    "fielddata.memory_size"?: string
-    "filter_cache.memory_size"?: string
-    "flush.total"?: string
-    "flush.total_time"?: string
-    "get.current"?: string
-    "get.exists_time"?: string
-    "get.exists_total"?: string
-    "get.missing_time"?: string
-    "get.missing_total"?: string
-    "get.time"?: string
-    "get.total"?: string
+    'fielddata.evictions'?: string
+    'fielddata.memory_size'?: string
+    'filter_cache.memory_size'?: string
+    'flush.total'?: string
+    'flush.total_time'?: string
+    'get.current'?: string
+    'get.exists_time'?: string
+    'get.exists_total'?: string
+    'get.missing_time'?: string
+    'get.missing_total'?: string
+    'get.time'?: string
+    'get.total'?: string
     id?: string
-    "id_cache.memory_size"?: string
+    'id_cache.memory_size'?: string
     index?: string
-    "indexing.delete_current"?: string
-    "indexing.delete_time"?: string
-    "indexing.delete_total"?: string
-    "indexing.index_current"?: string
-    "indexing.index_time"?: string
-    "indexing.index_total"?: string
+    'indexing.delete_current'?: string
+    'indexing.delete_time'?: string
+    'indexing.delete_total'?: string
+    'indexing.index_current'?: string
+    'indexing.index_time'?: string
+    'indexing.index_total'?: string
     ip?: string
-    "merges.current"?: string
-    "merges.current_docs"?: string
-    "merges.current_size"?: string
-    "merges.total_docs"?: string
-    "merges.total_size"?: string
-    "merges.total_time"?: string
+    'merges.current'?: string
+    'merges.current_docs'?: string
+    'merges.current_size'?: string
+    'merges.total_docs'?: string
+    'merges.total_size'?: string
+    'merges.total_time'?: string
     node?: string
-    "percolate.current"?: string
-    "percolate.memory_size"?: string
-    "percolate.queries"?: string
-    "percolate.time"?: string
-    "percolate.total"?: string
+    'percolate.current'?: string
+    'percolate.memory_size'?: string
+    'percolate.queries'?: string
+    'percolate.time'?: string
+    'percolate.total'?: string
     prirep?: string
-    "refresh.time"?: string
-    "refresh.total"?: string
-    "search.fetch_current"?: string
-    "search.fetch_time"?: string
-    "search.fetch_total"?: string
-    "search.open_contexts"?: string
-    "search.query_current"?: string
-    "search.query_time"?: string
-    "search.query_total"?: string
-    "segments.count"?: string
-    "segments.fixed_bitset_memory"?: string
-    "segments.index_writer_max_memory"?: string
-    "segments.index_writer_memory"?: string
-    "segments.memory"?: string
-    "segments.version_map_memory"?: string
+    'refresh.time'?: string
+    'refresh.total'?: string
+    'search.fetch_current'?: string
+    'search.fetch_time'?: string
+    'search.fetch_total'?: string
+    'search.open_contexts'?: string
+    'search.query_current'?: string
+    'search.query_time'?: string
+    'search.query_total'?: string
+    'segments.count'?: string
+    'segments.fixed_bitset_memory'?: string
+    'segments.index_writer_max_memory'?: string
+    'segments.index_writer_memory'?: string
+    'segments.memory'?: string
+    'segments.version_map_memory'?: string
     shard?: string
     state?: string
     store?: string
-    "warmer.current"?: string
-    "warmer.total"?: string
-    "warmer.total_time"?: string
+    'warmer.current'?: string
+    'warmer.total'?: string
+    'warmer.total_time'?: string
   }
 
   /**
@@ -2102,11 +2103,11 @@ declare namespace T {
     description?: string
     heap_size?: string
     id?: string
-    "ingest.count"?: long
-    "ingest.current"?: long
-    "ingest.failed"?: long
-    "ingest.pipelines"?: string
-    "ingest.time"?: long
+    'ingest.count'?: long
+    'ingest.current'?: long
+    'ingest.failed'?: long
+    'ingest.pipelines'?: string
+    'ingest.time'?: long
     license?: string
     operations?: string
     version?: string
@@ -2223,7 +2224,7 @@ declare namespace T {
       index?: IndexName
       primary?: boolean
       shard?: integer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -2397,7 +2398,7 @@ declare namespace T {
     timeout?: Time
     body?: {
       commands?: ClusterRerouteCommand[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -2440,7 +2441,7 @@ declare namespace T {
     body?: {
       persistent?: Record<string, object>
       transient?: Record<string, object>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -2897,9 +2898,9 @@ declare namespace T {
   }
 
   export interface LoadAverageStats {
-    "15m"?: float
-    "5m"?: float
-    "1m"?: float
+    '15m'?: float
+    '5m'?: float
+    '1m'?: float
   }
 
   export interface MemoryStats {
@@ -3578,7 +3579,7 @@ declare namespace T {
     timeout?: Time
     type_query_string?: string
     wait_for_active_shards?: string
-    body?: Array<BulkOperationContainer | TSource>
+    body?: Array<BulkOperationContainer | TSource> | string | Buffer | ReadableStream
   }
 
   /**
@@ -3694,7 +3695,7 @@ declare namespace T {
       max_docs?: long
       query?: QueryContainer
       slice?: SlicedScroll
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -3758,7 +3759,7 @@ declare namespace T {
     stored_fields?: Field[]
     body?: {
       docs?: MultiGetOperation[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   export interface MultiGetHit<TDocument> {
@@ -3817,7 +3818,7 @@ declare namespace T {
     body?: {
       docs?: MultiTermVectorOperation[]
       ids?: Id[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -3853,7 +3854,7 @@ declare namespace T {
       script?: Script
       size?: long
       source?: ReindexSource
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -3991,7 +3992,7 @@ declare namespace T {
       query?: QueryContainer
       script?: Script
       slice?: SlicedScroll
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4032,7 +4033,7 @@ declare namespace T {
   }
 
   /**
-   * @type_stability STABLE 
+   * @type_stability STABLE
    */
   export interface CreateRequest<TDocument> extends RequestBase {
     id: Id
@@ -4045,17 +4046,17 @@ declare namespace T {
     version?: long
     version_type?: VersionType
     wait_for_active_shards?: string
-    body?: TDocument
+    body?: TDocument | string | Buffer | ReadableStream
   }
 
   /**
-   * @type_stability STABLE 
+   * @type_stability STABLE
    */
   export interface CreateResponse extends WriteResponseBase {
   }
 
   /**
-   * @type_stability STABLE 
+   * @type_stability STABLE
    */
   export interface DeleteRequest extends RequestBase {
     id: Id
@@ -4072,7 +4073,7 @@ declare namespace T {
   }
 
   /**
-   * @type_stability STABLE 
+   * @type_stability STABLE
    */
   export interface DeleteResponse extends WriteResponseBase {
   }
@@ -4097,7 +4098,7 @@ declare namespace T {
   }
 
   /**
-   * @type_stability STABLE 
+   * @type_stability STABLE
    */
   export interface GetRequest extends RequestBase {
     id: Id
@@ -4117,7 +4118,7 @@ declare namespace T {
   }
 
   /**
-   * @type_stability STABLE 
+   * @type_stability STABLE
    */
   export interface GetResponse<TDocument> {
     fields?: Record<string, LazyDocument>
@@ -4133,7 +4134,7 @@ declare namespace T {
   }
 
   /**
-   * @type_stability STABLE 
+   * @type_stability STABLE
    */
   export interface IndexRequest<TDocument> extends RequestBase {
     id?: Id
@@ -4149,11 +4150,12 @@ declare namespace T {
     version?: long
     version_type?: VersionType
     wait_for_active_shards?: string
-    body?: TDocument
+    require_alias?: boolean
+    body?: TDocument | string | Buffer | ReadableStream
   }
 
   /**
-   * @type_stability STABLE 
+   * @type_stability STABLE
    */
   export interface IndexResponse extends WriteResponseBase {
   }
@@ -4252,7 +4254,7 @@ declare namespace T {
       doc?: TDocument
       filter?: TermVectorFilter
       per_field_analyzer?: Record<Field, string>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4285,7 +4287,7 @@ declare namespace T {
   }
 
   /**
-   * @type_stability STABLE 
+   * @type_stability STABLE
    */
   export interface UpdateRequest<TDocument, TPartialDocument> extends RequestBase {
     id: Id
@@ -4309,11 +4311,11 @@ declare namespace T {
       scripted_upsert?: boolean
       _source?: boolean | SourceFilter
       upsert?: TDocument
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
-   * @type_stability STABLE 
+   * @type_stability STABLE
    */
   export interface UpdateResponse<TDocument> extends WriteResponseBase {
     get?: InlineGet<TDocument>
@@ -4350,7 +4352,7 @@ declare namespace T {
     timeout?: Time
     body?: {
       actions?: AliasAction[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4426,7 +4428,7 @@ declare namespace T {
       is_write_index?: boolean
       routing?: Routing
       search_routing?: Routing
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4457,7 +4459,7 @@ declare namespace T {
       normalizer?: string
       text?: string[]
       tokenizer?: string | ITokenizer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4511,7 +4513,7 @@ declare namespace T {
     body?: {
       aliases?: Record<IndexName, Alias>
       settings?: Record<string, object>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4535,7 +4537,7 @@ declare namespace T {
       aliases?: Record<IndexName, Alias>
       mappings?: TypeMapping
       settings?: Record<string, object>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4696,7 +4698,7 @@ declare namespace T {
       conditions?: RolloverConditions
       mappings?: TypeMapping
       settings?: Record<string, object>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4723,7 +4725,7 @@ declare namespace T {
     body?: {
       aliases?: Record<IndexName, Alias>
       settings?: Record<string, object>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4745,7 +4747,7 @@ declare namespace T {
     body?: {
       aliases?: Record<IndexName, Alias>
       settings?: Record<string, object>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4876,7 +4878,7 @@ declare namespace T {
       order?: integer
       settings?: Record<string, object>
       version?: integer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4899,7 +4901,7 @@ declare namespace T {
     timeout?: Time
     body?: {
       index_settings?: Record<string, object>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -4984,7 +4986,7 @@ declare namespace T {
       routing_field?: RoutingField
       size_field?: SizeField
       source_field?: SourceField
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -5857,7 +5859,7 @@ declare namespace T {
       description?: string
       on_failure?: ProcessorContainer[]
       processors?: ProcessorContainer[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -5901,7 +5903,7 @@ declare namespace T {
     body?: {
       docs?: SimulatePipelineDocument[]
       pipeline?: Pipeline
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -6317,7 +6319,7 @@ declare namespace T {
       context?: string
       context_setup?: PainlessContextSetup
       script?: InlineScript
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -6358,7 +6360,7 @@ declare namespace T {
     timeout?: Time
     body?: {
       script?: StoredScript
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -6402,7 +6404,7 @@ declare namespace T {
     verify?: boolean
     body?: {
       repository?: SnapshotRepository
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -6480,7 +6482,7 @@ declare namespace T {
       partial?: boolean
       rename_pattern?: string
       rename_replacement?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -6565,7 +6567,7 @@ declare namespace T {
       indices?: Indices
       metadata?: Record<string, object>
       partial?: boolean
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -7252,7 +7254,7 @@ declare namespace T {
     terminate_after?: long
     body?: {
       query?: QueryContainer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -7284,7 +7286,7 @@ declare namespace T {
     stored_fields?: Field[]
     body?: {
       query?: QueryContainer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -7359,7 +7361,7 @@ declare namespace T {
     typed_keys?: boolean
     body?: {
       operations?: Record<string, SearchRequest>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -7382,7 +7384,7 @@ declare namespace T {
     typed_keys?: boolean
     body?: {
       operations?: Record<string, SearchTemplateRequest>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -7392,7 +7394,7 @@ declare namespace T {
     scroll_id?: ScrollIds
     body?: {
       scroll_id?: string[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -7410,7 +7412,7 @@ declare namespace T {
     body?: {
       scroll?: Time
       scroll_id?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   export interface SlicedScroll {
@@ -7420,7 +7422,7 @@ declare namespace T {
   }
 
   /**
-   * @type_stability STABLE 
+   * @type_stability STABLE
    */
   export interface SearchRequest extends RequestBase {
     index?: Indices
@@ -7490,7 +7492,7 @@ declare namespace T {
       version?: boolean
       seq_no_primary_term?: boolean
       stored_fields?: Field | Field[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -7783,7 +7785,7 @@ declare namespace T {
       id?: string
       params?: Record<string, object>
       source?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -7795,7 +7797,7 @@ declare namespace T {
       file?: string
       params?: Record<string, object>
       source?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -7977,7 +7979,7 @@ declare namespace T {
     rewrite?: boolean
     body?: {
       query?: QueryContainer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -8046,7 +8048,7 @@ declare namespace T {
       keep_alive?: Time
       typed_keys?: boolean
       wait_for_completion_timeout?: Time
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -8112,7 +8114,7 @@ declare namespace T {
       typed_keys?: boolean
       version?: boolean
       wait_for_completion_timeout?: Time
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -8140,7 +8142,7 @@ declare namespace T {
       max_write_request_operation_count?: integer
       max_write_request_size?: string
       remote_cluster?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -8237,7 +8239,7 @@ declare namespace T {
       max_write_request_size?: string
       read_poll_timeout?: Time
       remote_cluster?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -8351,7 +8353,7 @@ declare namespace T {
       follower_index?: IndexName
       follower_index_uuid?: string
       leader_remote_cluster?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -8390,7 +8392,7 @@ declare namespace T {
       max_write_request_operation_count?: long
       max_write_request_size?: string
       read_poll_timeout?: Time
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -8519,7 +8521,7 @@ declare namespace T {
     body?: {
       geo_match?: EnrichPolicy
       match?: EnrichPolicy
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -8568,7 +8570,7 @@ declare namespace T {
       controls?: GraphExploreControls
       query?: QueryContainer
       vertices?: GraphVertexDefinition[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -8734,7 +8736,7 @@ declare namespace T {
     body?: {
       current_step?: StepKey
       next_step?: StepKey
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -8756,7 +8758,7 @@ declare namespace T {
     policy: Id
     body?: {
       policy?: Policy
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9184,7 +9186,7 @@ declare namespace T {
     acknowledge?: boolean
     body?: {
       license?: License
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9425,7 +9427,7 @@ declare namespace T {
       analysis_config?: AnalysisConfig
       max_bucket_cardinality?: Record<Field, long>
       overall_cardinality?: Record<Field, long>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9446,7 +9448,7 @@ declare namespace T {
       calc_interim?: boolean
       end?: Date
       start?: Date
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9464,7 +9466,7 @@ declare namespace T {
     body?: {
       duration?: Time
       expires_in?: Time
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9487,7 +9489,7 @@ declare namespace T {
       record_score?: double
       sort?: Field
       start?: Date
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9513,7 +9515,7 @@ declare namespace T {
       page?: Page
       sort?: Field
       start?: Date
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9535,7 +9537,7 @@ declare namespace T {
     body?: {
       from?: integer
       size?: integer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9559,7 +9561,7 @@ declare namespace T {
     calendar_id?: Id
     body?: {
       page?: Page
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9578,7 +9580,7 @@ declare namespace T {
     category_id?: CategoryId
     body?: {
       page?: Page
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9657,7 +9659,7 @@ declare namespace T {
       page?: Page
       sort?: Field
       start?: Date
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9712,7 +9714,7 @@ declare namespace T {
       page?: Page
       sort?: Field
       start?: Date
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -9736,7 +9738,7 @@ declare namespace T {
       overall_score?: double
       start?: Date
       top_n?: integer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10039,7 +10041,7 @@ declare namespace T {
     job_id: Id
     body?: {
       timeout?: Time
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10056,7 +10058,7 @@ declare namespace T {
     calendar_id: Id
     body?: {
       events?: ScheduledEvent[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10083,7 +10085,7 @@ declare namespace T {
     reset_start?: Date
     body?: {
       data?: object[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10128,7 +10130,7 @@ declare namespace T {
     calendar_id: Id
     body?: {
       description?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10177,7 +10179,7 @@ declare namespace T {
       query_delay?: Time
       script_fields?: Record<string, ScriptField>
       scroll_size?: integer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10205,7 +10207,7 @@ declare namespace T {
     body?: {
       description?: string
       items?: string[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10231,7 +10233,7 @@ declare namespace T {
       model_plot?: ModelPlotConfig
       model_snapshot_retention_days?: long
       results_index_name?: IndexName
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10263,7 +10265,7 @@ declare namespace T {
     snapshot_id: Id
     body?: {
       delete_intervening_results?: boolean
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10296,7 +10298,7 @@ declare namespace T {
       end?: Date
       start?: Date
       timeout?: Time
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10315,7 +10317,7 @@ declare namespace T {
     body?: {
       force?: boolean
       timeout?: Time
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10345,7 +10347,7 @@ declare namespace T {
       query_delay?: Time
       script_fields?: Record<string, ScriptField>
       scroll_size?: integer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10374,7 +10376,7 @@ declare namespace T {
       add_items?: string[]
       description?: string
       remove_items?: string[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10401,7 +10403,7 @@ declare namespace T {
       model_snapshot_retention_days?: long
       renormalization_window_days?: long
       results_retention_days?: long
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10419,7 +10421,7 @@ declare namespace T {
     body?: {
       description?: string
       retain?: boolean
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10435,7 +10437,7 @@ declare namespace T {
   export interface ValidateDetectorRequest extends RequestBase {
     body?: {
       detector?: Detector
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10456,7 +10458,7 @@ declare namespace T {
       model_plot?: ModelPlotConfig
       model_snapshot_retention_days?: long
       results_index_name?: IndexName
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10500,7 +10502,7 @@ declare namespace T {
       metrics?: RollupFieldMetric[]
       page_size?: long
       rollup_index?: IndexName
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10660,7 +10662,7 @@ declare namespace T {
       aggs?: Record<string, AggregationContainer>
       query?: QueryContainer
       size?: integer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10722,7 +10724,7 @@ declare namespace T {
       expiration?: Time
       name?: string
       role_descriptors?: Record<string, ApiKeyRole>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10773,7 +10775,7 @@ declare namespace T {
       owner?: boolean
       realm_name?: string
       username?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10943,7 +10945,7 @@ declare namespace T {
       application?: ApplicationPrivilegesCheck[]
       cluster?: string[]
       index?: IndexPrivilegesCheck[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -10979,7 +10981,7 @@ declare namespace T {
     refresh?: Refresh
     body?: {
       applications?: Record<string, Record<string, PrivilegesActions>>
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11073,7 +11075,7 @@ declare namespace T {
       indices?: IndicesPrivileges[]
       metadata?: Record<string, object>
       run_as?: string[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11134,7 +11136,7 @@ declare namespace T {
       roles?: string[]
       rules?: RoleMappingRuleBase
       run_as?: string[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11160,7 +11162,7 @@ declare namespace T {
     refresh?: Refresh
     body?: {
       password?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11240,7 +11242,7 @@ declare namespace T {
     body?: {
       grant_type?: AccessTokenGrantType
       scope?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11282,7 +11284,7 @@ declare namespace T {
       password?: string
       password_hash?: string
       roles?: string[]
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11431,7 +11433,7 @@ declare namespace T {
       repository?: string
       retention?: SnapshotRetentionConfiguration
       schedule?: CronExpression
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11480,7 +11482,7 @@ declare namespace T {
   export interface ClearSqlCursorRequest extends RequestBase {
     body?: {
       cursor?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11502,7 +11504,7 @@ declare namespace T {
       filter?: QueryContainer
       query?: string
       time_zone?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11532,7 +11534,7 @@ declare namespace T {
       filter?: QueryContainer
       query?: string
       time_zone?: string
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11719,7 +11721,7 @@ declare namespace T {
       pivot?: TransformPivot
       source?: TransformSource
       sync?: TransformSyncContainer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11743,7 +11745,7 @@ declare namespace T {
       pivot?: TransformPivot
       source?: TransformSource
       sync?: TransformSyncContainer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -11796,7 +11798,7 @@ declare namespace T {
       frequency?: Time
       source?: TransformSource
       sync?: TransformSyncContainer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -12045,7 +12047,7 @@ declare namespace T {
       simulated_actions?: SimulatedActions
       trigger_data?: ScheduleTriggerEvent
       watch?: Watch
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -12306,7 +12308,7 @@ declare namespace T {
       throttle_period?: string
       transform?: TransformContainer
       trigger?: TriggerContainer
-    }
+    } | string | Buffer | ReadableStream
   }
 
   /**
@@ -12483,373 +12485,373 @@ declare namespace T {
     stats?: WatcherNodeStats[]
   }
 
-  export type MinimumInterval = "second" | "minute" | "hour" | "day" | "month" | "year"
+  export type MinimumInterval = 'second' | 'minute' | 'hour' | 'day' | 'month' | 'year'
 
-  export type DateInterval = "second" | "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year"
+  export type DateInterval = 'second' | 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year'
 
-  export type SamplerAggregationExecutionHint = "map" | "global_ordinals" | "bytes_hash"
+  export type SamplerAggregationExecutionHint = 'map' | 'global_ordinals' | 'bytes_hash'
 
-  export type TermsAggregationCollectMode = "depth_first" | "breadth_first"
+  export type TermsAggregationCollectMode = 'depth_first' | 'breadth_first'
 
-  export type TermsAggregationExecutionHint = "map" | "global_ordinals" | "global_ordinals_hash" | "global_ordinals_low_cardinality"
+  export type TermsAggregationExecutionHint = 'map' | 'global_ordinals' | 'global_ordinals_hash' | 'global_ordinals_low_cardinality'
 
-  export type MatrixStatsMode = "avg" | "min" | "max" | "sum" | "median"
+  export type MatrixStatsMode = 'avg' | 'min' | 'max' | 'sum' | 'median'
 
-  export type ValueType = "string" | "long" | "double" | "number" | "date" | "date_nanos" | "ip" | "numeric" | "geo_point" | "boolean"
+  export type ValueType = 'string' | 'long' | 'double' | 'number' | 'date' | 'date_nanos' | 'ip' | 'numeric' | 'geo_point' | 'boolean'
 
-  export type GapPolicy = "skip" | "insert_zeros"
+  export type GapPolicy = 'skip' | 'insert_zeros'
 
-  export type HoltWintersType = "add" | "mult"
+  export type HoltWintersType = 'add' | 'mult'
 
-  export type AggregationVisitorScope = "Unknown" | "Aggregation" | "Bucket"
+  export type AggregationVisitorScope = 'Unknown' | 'Aggregation' | 'Bucket'
 
-  export type Language = "Arabic" | "Armenian" | "Basque" | "Brazilian" | "Bulgarian" | "Catalan" | "Chinese" | "Cjk" | "Czech" | "Danish" | "Dutch" | "English" | "Estonian" | "Finnish" | "French" | "Galician" | "German" | "Greek" | "Hindi" | "Hungarian" | "Indonesian" | "Irish" | "Italian" | "Latvian" | "Norwegian" | "Persian" | "Portuguese" | "Romanian" | "Russian" | "Sorani" | "Spanish" | "Swedish" | "Turkish" | "Thai"
+  export type Language = 'Arabic' | 'Armenian' | 'Basque' | 'Brazilian' | 'Bulgarian' | 'Catalan' | 'Chinese' | 'Cjk' | 'Czech' | 'Danish' | 'Dutch' | 'English' | 'Estonian' | 'Finnish' | 'French' | 'Galician' | 'German' | 'Greek' | 'Hindi' | 'Hungarian' | 'Indonesian' | 'Irish' | 'Italian' | 'Latvian' | 'Norwegian' | 'Persian' | 'Portuguese' | 'Romanian' | 'Russian' | 'Sorani' | 'Spanish' | 'Swedish' | 'Turkish' | 'Thai'
 
-  export type SnowballLanguage = "Armenian" | "Basque" | "Catalan" | "Danish" | "Dutch" | "English" | "Finnish" | "French" | "German" | "German2" | "Hungarian" | "Italian" | "Kp" | "Lovins" | "Norwegian" | "Porter" | "Portuguese" | "Romanian" | "Russian" | "Spanish" | "Swedish" | "Turkish"
+  export type SnowballLanguage = 'Armenian' | 'Basque' | 'Catalan' | 'Danish' | 'Dutch' | 'English' | 'Finnish' | 'French' | 'German' | 'German2' | 'Hungarian' | 'Italian' | 'Kp' | 'Lovins' | 'Norwegian' | 'Porter' | 'Portuguese' | 'Romanian' | 'Russian' | 'Spanish' | 'Swedish' | 'Turkish'
 
-  export type IcuCollationAlternate = "shifted" | "non-ignorable"
+  export type IcuCollationAlternate = 'shifted' | 'non-ignorable'
 
-  export type IcuCollationCaseFirst = "lower" | "upper"
+  export type IcuCollationCaseFirst = 'lower' | 'upper'
 
-  export type IcuCollationDecomposition = "no" | "identical"
+  export type IcuCollationDecomposition = 'no' | 'identical'
 
-  export type IcuCollationStrength = "primary" | "secondary" | "tertiary" | "quaternary" | "identical"
+  export type IcuCollationStrength = 'primary' | 'secondary' | 'tertiary' | 'quaternary' | 'identical'
 
-  export type IcuNormalizationMode = "decompose" | "compose"
+  export type IcuNormalizationMode = 'decompose' | 'compose'
 
-  export type IcuNormalizationType = "nfc" | "nfkc" | "nfkc_cf"
+  export type IcuNormalizationType = 'nfc' | 'nfkc' | 'nfkc_cf'
 
-  export type IcuTransformDirection = "forward" | "reverse"
+  export type IcuTransformDirection = 'forward' | 'reverse'
 
-  export type KuromojiTokenizationMode = "normal" | "search" | "extended"
+  export type KuromojiTokenizationMode = 'normal' | 'search' | 'extended'
 
-  export type PhoneticEncoder = "metaphone" | "double_metaphone" | "soundex" | "refined_soundex" | "caverphone1" | "caverphone2" | "cologne" | "nysiis" | "koelnerphonetik" | "haasephonetik" | "beider_morse" | "daitch_mokotoff"
+  export type PhoneticEncoder = 'metaphone' | 'double_metaphone' | 'soundex' | 'refined_soundex' | 'caverphone1' | 'caverphone2' | 'cologne' | 'nysiis' | 'koelnerphonetik' | 'haasephonetik' | 'beider_morse' | 'daitch_mokotoff'
 
-  export type PhoneticLanguage = "any" | "comomon" | "cyrillic" | "english" | "french" | "german" | "hebrew" | "hungarian" | "polish" | "romanian" | "russian" | "spanish"
+  export type PhoneticLanguage = 'any' | 'comomon' | 'cyrillic' | 'english' | 'french' | 'german' | 'hebrew' | 'hungarian' | 'polish' | 'romanian' | 'russian' | 'spanish'
 
-  export type PhoneticNameType = "generic" | "ashkenazi" | "sephardic"
+  export type PhoneticNameType = 'generic' | 'ashkenazi' | 'sephardic'
 
-  export type PhoneticRuleType = "approx" | "exact"
+  export type PhoneticRuleType = 'approx' | 'exact'
 
-  export type KeepTypesMode = "include" | "exclude"
+  export type KeepTypesMode = 'include' | 'exclude'
 
-  export type DelimitedPayloadEncoding = "int" | "float" | "identity"
+  export type DelimitedPayloadEncoding = 'int' | 'float' | 'identity'
 
-  export type EdgeNGramSide = "front" | "back"
+  export type EdgeNGramSide = 'front' | 'back'
 
-  export type SynonymFormat = "solr" | "wordnet"
+  export type SynonymFormat = 'solr' | 'wordnet'
 
-  export type NoriDecompoundMode = "discard" | "none" | "mixed"
+  export type NoriDecompoundMode = 'discard' | 'none' | 'mixed'
 
-  export type TokenChar = "letter" | "digit" | "whitespace" | "punctuation" | "symbol" | "custom"
+  export type TokenChar = 'letter' | 'digit' | 'whitespace' | 'punctuation' | 'symbol' | 'custom'
 
-  export type ModelCategorizationStatus = "ok" | "warn"
+  export type ModelCategorizationStatus = 'ok' | 'warn'
 
-  export type ModelMemoryStatus = "ok" | "soft_limit" | "hard_limit"
+  export type ModelMemoryStatus = 'ok' | 'soft_limit' | 'hard_limit'
 
-  export type TransformState = "STARTED" | "INDEXING" | "ABORTING" | "STOPPING" | "STOPPED" | "FAILED"
+  export type TransformState = 'STARTED' | 'INDEXING' | 'ABORTING' | 'STOPPING' | 'STOPPED' | 'FAILED'
 
-  export type TransformType = "batch" | "continuous"
+  export type TransformType = 'batch' | 'continuous'
 
-  export type ClusterStatus = "green" | "yellow" | "red"
+  export type ClusterStatus = 'green' | 'yellow' | 'red'
 
-  export type AllocationExplainDecision = "NO" | "YES" | "THROTTLE" | "ALWAYS"
+  export type AllocationExplainDecision = 'NO' | 'YES' | 'THROTTLE' | 'ALWAYS'
 
-  export type Decision = "yes" | "no" | "worse_balance" | "throttled" | "awaiting_info" | "allocation_delayed" | "no_valid_shard_copy" | "no_attempt"
+  export type Decision = 'yes' | 'no' | 'worse_balance' | 'throttled' | 'awaiting_info' | 'allocation_delayed' | 'no_valid_shard_copy' | 'no_attempt'
 
-  export type StoreCopy = "NONE" | "AVAILABLE" | "CORRUPT" | "IO_ERROR" | "STALE" | "UNKNOWN"
+  export type StoreCopy = 'NONE' | 'AVAILABLE' | 'CORRUPT' | 'IO_ERROR' | 'STALE' | 'UNKNOWN'
 
-  export type UnassignedInformationReason = "INDEX_CREATED" | "CLUSTER_RECOVERED" | "INDEX_REOPENED" | "DANGLING_INDEX_IMPORTED" | "NEW_INDEX_RESTORED" | "EXISTING_INDEX_RESTORED" | "REPLICA_ADDED" | "ALLOCATION_FAILED" | "NODE_LEFT" | "REROUTE_CANCELLED" | "REINITIALIZED" | "REALLOCATED_REPLICA" | "PRIMARY_FAILED" | "FORCED_EMPTY_PRIMARY" | "MANUAL_ALLOCATION"
+  export type UnassignedInformationReason = 'INDEX_CREATED' | 'CLUSTER_RECOVERED' | 'INDEX_REOPENED' | 'DANGLING_INDEX_IMPORTED' | 'NEW_INDEX_RESTORED' | 'EXISTING_INDEX_RESTORED' | 'REPLICA_ADDED' | 'ALLOCATION_FAILED' | 'NODE_LEFT' | 'REROUTE_CANCELLED' | 'REINITIALIZED' | 'REALLOCATED_REPLICA' | 'PRIMARY_FAILED' | 'FORCED_EMPTY_PRIMARY' | 'MANUAL_ALLOCATION'
 
-  export type NodeRole = "master" | "data" | "client" | "ingest" | "ml" | "voting_only" | "transform" | "remote_cluster_client" | "coordinating_only"
+  export type NodeRole = 'master' | 'data' | 'client' | 'ingest' | 'ml' | 'voting_only' | 'transform' | 'remote_cluster_client' | 'coordinating_only'
 
-  export type Bytes = "b" | "k" | "kb" | "m" | "mb" | "g" | "gb" | "t" | "tb" | "p" | "pb"
+  export type Bytes = 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb'
 
-  export type Conflicts = "abort" | "proceed"
+  export type Conflicts = 'abort' | 'proceed'
 
-  export type DefaultOperator = "AND" | "OR"
+  export type DefaultOperator = 'AND' | 'OR'
 
-  export type ExpandWildcards = "open" | "closed" | "hidden" | "none" | "all"
+  export type ExpandWildcards = 'open' | 'closed' | 'hidden' | 'none' | 'all'
 
-  export type GroupBy = "nodes" | "parents" | "none"
+  export type GroupBy = 'nodes' | 'parents' | 'none'
 
-  export type Health = "green" | "yellow" | "red"
+  export type Health = 'green' | 'yellow' | 'red'
 
-  export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "HEAD"
+  export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD'
 
-  export type Level = "cluster" | "indices" | "shards"
+  export type Level = 'cluster' | 'indices' | 'shards'
 
-  export type OpType = "index" | "create"
+  export type OpType = 'index' | 'create'
 
-  export type PipelineFailure = "BadAuthentication" | "BadResponse" | "PingFailure" | "SniffFailure" | "CouldNotStartSniffOnStartup" | "MaxTimeoutReached" | "MaxRetriesReached" | "Unexpected" | "BadRequest" | "NoNodesAttempted"
+  export type PipelineFailure = 'BadAuthentication' | 'BadResponse' | 'PingFailure' | 'SniffFailure' | 'CouldNotStartSniffOnStartup' | 'MaxTimeoutReached' | 'MaxRetriesReached' | 'Unexpected' | 'BadRequest' | 'NoNodesAttempted'
 
-  export type Refresh = true | false | "wait_for"
+  export type Refresh = true | false | 'wait_for'
 
-  export type SearchType = "query_then_fetch" | "dfs_query_then_fetch"
+  export type SearchType = 'query_then_fetch' | 'dfs_query_then_fetch'
 
-  export type Size = "Raw" | "k" | "m" | "g" | "t" | "p"
+  export type Size = 'Raw' | 'k' | 'm' | 'g' | 't' | 'p'
 
-  export type SuggestMode = "missing" | "popular" | "always"
+  export type SuggestMode = 'missing' | 'popular' | 'always'
 
-  export type ThreadType = "cpu" | "wait" | "block"
+  export type ThreadType = 'cpu' | 'wait' | 'block'
 
-  export type VersionType = "internal" | "external" | "external_gte" | "force"
+  export type VersionType = 'internal' | 'external' | 'external_gte' | 'force'
 
-  export type WaitForEvents = "immediate" | "urgent" | "high" | "normal" | "low" | "languid"
+  export type WaitForEvents = 'immediate' | 'urgent' | 'high' | 'normal' | 'low' | 'languid'
 
-  export type WaitForStatus = "green" | "yellow" | "red"
+  export type WaitForStatus = 'green' | 'yellow' | 'red'
 
-  export type DateMathOperation = "+" | "-"
+  export type DateMathOperation = '+' | '-'
 
-  export type DateMathTimeUnit = "s" | "m" | "h" | "d" | "w" | "M" | "y"
+  export type DateMathTimeUnit = 's' | 'm' | 'h' | 'd' | 'w' | 'M' | 'y'
 
-  export type DistanceUnit = "in" | "ft" | "yd" | "mi" | "nmi" | "km" | "m" | "cm" | "mm"
+  export type DistanceUnit = 'in' | 'ft' | 'yd' | 'mi' | 'nmi' | 'km' | 'm' | 'cm' | 'mm'
 
-  export type GeoDistanceType = "arc" | "plane"
+  export type GeoDistanceType = 'arc' | 'plane'
 
-  export type GeoShapeRelation = "intersects" | "disjoint" | "within" | "contains"
+  export type GeoShapeRelation = 'intersects' | 'disjoint' | 'within' | 'contains'
 
-  export type ShapeRelation = "intersects" | "disjoint" | "within"
+  export type ShapeRelation = 'intersects' | 'disjoint' | 'within'
 
-  export type TimeUnit = "nanos" | "micros" | "ms" | "s" | "m" | "h" | "d"
+  export type TimeUnit = 'nanos' | 'micros' | 'ms' | 's' | 'm' | 'h' | 'd'
 
-  export type Result = "Error" | "created" | "updated" | "deleted" | "not_found" | "noop"
+  export type Result = 'Error' | 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
 
-  export type RecoveryInitialShards = "quorem" | "quorem-1" | "full" | "full-1"
+  export type RecoveryInitialShards = 'quorem' | 'quorem-1' | 'full' | 'full-1'
 
-  export type LogLevel = "error" | "warn" | "info" | "debug" | "trace"
+  export type LogLevel = 'error' | 'warn' | 'info' | 'debug' | 'trace'
 
-  export type IndexSortMissing = "_first" | "_last"
+  export type IndexSortMissing = '_first' | '_last'
 
-  export type IndexSortMode = "min" | "max"
+  export type IndexSortMode = 'min' | 'max'
 
-  export type IndexSortOrder = "asc" | "desc"
+  export type IndexSortOrder = 'asc' | 'desc'
 
-  export type FileSystemStorageImplementation = "simplefs" | "niofs" | "mmapfs" | "default_fs"
+  export type FileSystemStorageImplementation = 'simplefs' | 'niofs' | 'mmapfs' | 'default_fs'
 
-  export type TranslogDurability = "request" | "async"
+  export type TranslogDurability = 'request' | 'async'
 
-  export type Normalization = "no" | "h1" | "h2" | "h3" | "z"
+  export type Normalization = 'no' | 'h1' | 'h2' | 'h3' | 'z'
 
-  export type DFIIndependenceMeasure = "standardized" | "saturated" | "chisquared"
+  export type DFIIndependenceMeasure = 'standardized' | 'saturated' | 'chisquared'
 
-  export type DFRAfterEffect = "no" | "b" | "l"
+  export type DFRAfterEffect = 'no' | 'b' | 'l'
 
-  export type DFRBasicModel = "be" | "d" | "g" | "if" | "in" | "ine" | "p"
+  export type DFRBasicModel = 'be' | 'd' | 'g' | 'if' | 'in' | 'ine' | 'p'
 
-  export type IBDistribution = "ll" | "spl"
+  export type IBDistribution = 'll' | 'spl'
 
-  export type IBLambda = "df" | "ttf"
+  export type IBLambda = 'df' | 'ttf'
 
-  export type ShardStoreAllocation = "primary" | "replica" | "unused"
+  export type ShardStoreAllocation = 'primary' | 'replica' | 'unused'
 
-  export type ShardRoutingState = "UNASSIGNED" | "INITIALIZING" | "STARTED" | "RELOCATING"
+  export type ShardRoutingState = 'UNASSIGNED' | 'INITIALIZING' | 'STARTED' | 'RELOCATING'
 
-  export type ConvertProcessorType = "integer" | "long" | "float" | "double" | "string" | "boolean" | "auto"
+  export type ConvertProcessorType = 'integer' | 'long' | 'float' | 'double' | 'string' | 'boolean' | 'auto'
 
-  export type DateRounding = "s" | "m" | "h" | "d" | "w" | "M" | "y"
+  export type DateRounding = 's' | 'm' | 'h' | 'd' | 'w' | 'M' | 'y'
 
-  export type ShapeType = "geo_shape" | "shape"
+  export type ShapeType = 'geo_shape' | 'shape'
 
-  export type UserAgentProperty = "NAME" | "MAJOR" | "MINOR" | "PATCH" | "OS" | "OS_NAME" | "OS_MAJOR" | "OS_MINOR" | "DEVICE" | "BUILD"
+  export type UserAgentProperty = 'NAME' | 'MAJOR' | 'MINOR' | 'PATCH' | 'OS' | 'OS_NAME' | 'OS_MAJOR' | 'OS_MINOR' | 'DEVICE' | 'BUILD'
 
-  export type DynamicMapping = "strict"
+  export type DynamicMapping = 'strict'
 
-  export type TermVectorOption = "no" | "yes" | "with_offsets" | "with_positions" | "with_positions_offsets" | "with_positions_offsets_payloads"
+  export type TermVectorOption = 'no' | 'yes' | 'with_offsets' | 'with_positions' | 'with_positions_offsets' | 'with_positions_offsets_payloads'
 
-  export type MatchType = "simple" | "regex"
+  export type MatchType = 'simple' | 'regex'
 
-  export type FieldType = "none" | "geo_point" | "geo_shape" | "ip" | "binary" | "keyword" | "text" | "search_as_you_type" | "date" | "date_nanos" | "boolean" | "completion" | "nested" | "object" | "murmur3" | "token_count" | "percolator" | "integer" | "long" | "short" | "byte" | "float" | "half_float" | "scaled_float" | "double" | "integer_range" | "float_range" | "long_range" | "double_range" | "date_range" | "ip_range" | "alias" | "join" | "rank_feature" | "rank_features" | "flattened" | "shape" | "histogram" | "constant_keyword"
+  export type FieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword'
 
-  export type NumberType = "float" | "half_float" | "scaled_float" | "double" | "integer" | "long" | "short" | "byte"
+  export type NumberType = 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer' | 'long' | 'short' | 'byte'
 
-  export type RangeType = "integer_range" | "float_range" | "long_range" | "double_range" | "date_range" | "ip_range"
+  export type RangeType = 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range'
 
-  export type IndexOptions = "docs" | "freqs" | "positions" | "offsets"
+  export type IndexOptions = 'docs' | 'freqs' | 'positions' | 'offsets'
 
-  export type GeoOrientation = "ClockWise" | "CounterClockWise"
+  export type GeoOrientation = 'ClockWise' | 'CounterClockWise'
 
-  export type GeoStrategy = "recursive" | "term"
+  export type GeoStrategy = 'recursive' | 'term'
 
-  export type GeoTree = "geohash" | "quadtree"
+  export type GeoTree = 'geohash' | 'quadtree'
 
-  export type ShapeOrientation = "ClockWise" | "CounterClockWise"
+  export type ShapeOrientation = 'ClockWise' | 'CounterClockWise'
 
-  export type AllocationEnable = "all" | "primaries" | "new_primaries" | "none"
+  export type AllocationEnable = 'all' | 'primaries' | 'new_primaries' | 'none'
 
-  export type AllowRebalance = "always" | "indices_primaries_active" | "indices_all_active"
+  export type AllowRebalance = 'always' | 'indices_primaries_active' | 'indices_all_active'
 
-  export type RebalanceEnable = "all" | "primaries" | "replicas" | "none"
+  export type RebalanceEnable = 'all' | 'primaries' | 'replicas' | 'none'
 
-  export type FielddataLoading = "eager" | "eager_global_ordinals"
+  export type FielddataLoading = 'eager' | 'eager_global_ordinals'
 
-  export type GeoPointFielddataFormat = "array" | "doc_values" | "compressed" | "disabled"
+  export type GeoPointFielddataFormat = 'array' | 'doc_values' | 'compressed' | 'disabled'
 
-  export type NumericFielddataFormat = "array" | "disabled"
+  export type NumericFielddataFormat = 'array' | 'disabled'
 
-  export type StringFielddataFormat = "paged_bytes" | "disabled"
+  export type StringFielddataFormat = 'paged_bytes' | 'disabled'
 
-  export type ScriptLang = "painless" | "expression" | "mustache"
+  export type ScriptLang = 'painless' | 'expression' | 'mustache'
 
-  export type Operator = "and" | "or" | "AND" | "OR"
+  export type Operator = 'and' | 'or' | 'AND' | 'OR'
 
-  export type FunctionBoostMode = "multiply" | "replace" | "sum" | "avg" | "max" | "min"
+  export type FunctionBoostMode = 'multiply' | 'replace' | 'sum' | 'avg' | 'max' | 'min'
 
-  export type FunctionScoreMode = "multiply" | "sum" | "avg" | "first" | "max" | "min"
+  export type FunctionScoreMode = 'multiply' | 'sum' | 'avg' | 'first' | 'max' | 'min'
 
-  export type MultiValueMode = "min" | "max" | "avg" | "sum"
+  export type MultiValueMode = 'min' | 'max' | 'avg' | 'sum'
 
-  export type FieldValueFactorModifier = "none" | "log" | "log1p" | "log2p" | "ln" | "ln1p" | "ln2p" | "square" | "sqrt" | "reciprocal"
+  export type FieldValueFactorModifier = 'none' | 'log' | 'log1p' | 'log2p' | 'ln' | 'ln1p' | 'ln2p' | 'square' | 'sqrt' | 'reciprocal'
 
-  export type TextQueryType = "best_fields" | "most_fields" | "cross_fields" | "phrase" | "phrase_prefix" | "bool_prefix"
+  export type TextQueryType = 'best_fields' | 'most_fields' | 'cross_fields' | 'phrase' | 'phrase_prefix' | 'bool_prefix'
 
-  export type ZeroTermsQuery = "all" | "none"
+  export type ZeroTermsQuery = 'all' | 'none'
 
-  export type SimpleQueryStringFlags = "NONE" | "AND" | "OR" | "NOT" | "PREFIX" | "PHRASE" | "PRECEDENCE" | "ESCAPE" | "WHITESPACE" | "FUZZY" | "NEAR" | "SLOP" | "ALL"
+  export type SimpleQueryStringFlags = 'NONE' | 'AND' | 'OR' | 'NOT' | 'PREFIX' | 'PHRASE' | 'PRECEDENCE' | 'ESCAPE' | 'WHITESPACE' | 'FUZZY' | 'NEAR' | 'SLOP' | 'ALL'
 
-  export type GeoValidationMethod = "coerce" | "ignore_malformed" | "strict"
+  export type GeoValidationMethod = 'coerce' | 'ignore_malformed' | 'strict'
 
-  export type GeoExecution = "memory" | "indexed"
+  export type GeoExecution = 'memory' | 'indexed'
 
-  export type GeoFormat = "GeoJson" | "WellKnownText"
+  export type GeoFormat = 'GeoJson' | 'WellKnownText'
 
-  export type CharacterType = "Whitespace" | "Alpha" | "Comment"
+  export type CharacterType = 'Whitespace' | 'Alpha' | 'Comment'
 
-  export type TokenType = "None" | "Word" | "LParen" | "RParen" | "Comma"
+  export type TokenType = 'None' | 'Word' | 'LParen' | 'RParen' | 'Comma'
 
-  export type ChildScoreMode = "none" | "avg" | "sum" | "max" | "min"
+  export type ChildScoreMode = 'none' | 'avg' | 'sum' | 'max' | 'min'
 
-  export type NestedScoreMode = "avg" | "sum" | "min" | "max" | "none"
+  export type NestedScoreMode = 'avg' | 'sum' | 'min' | 'max' | 'none'
 
-  export type RewriteMultiTerm = "constant_score" | "scoring_boolean" | "constant_score_boolean" | "top_terms_N" | "top_terms_boost_N" | "top_terms_blended_freqs_N"
+  export type RewriteMultiTerm = 'constant_score' | 'scoring_boolean' | 'constant_score_boolean' | 'top_terms_N' | 'top_terms_boost_N' | 'top_terms_blended_freqs_N'
 
-  export type RangeRelation = "within" | "contains" | "intersects"
+  export type RangeRelation = 'within' | 'contains' | 'intersects'
 
-  export type VisitorScope = "Unknown" | "Query" | "Filter" | "Must" | "MustNot" | "Should" | "PositiveQuery" | "NegativeQuery" | "Span"
+  export type VisitorScope = 'Unknown' | 'Query' | 'Filter' | 'Must' | 'MustNot' | 'Should' | 'PositiveQuery' | 'NegativeQuery' | 'Span'
 
-  export type BoundaryScanner = "chars" | "sentence" | "word"
+  export type BoundaryScanner = 'chars' | 'sentence' | 'word'
 
-  export type HighlighterEncoder = "default" | "html"
+  export type HighlighterEncoder = 'default' | 'html'
 
-  export type HighlighterFragmenter = "simple" | "span"
+  export type HighlighterFragmenter = 'simple' | 'span'
 
-  export type HighlighterOrder = "score"
+  export type HighlighterOrder = 'score'
 
-  export type HighlighterTagsSchema = "styled"
+  export type HighlighterTagsSchema = 'styled'
 
-  export type HighlighterType = "plain" | "fvh" | "unified"
+  export type HighlighterType = 'plain' | 'fvh' | 'unified'
 
-  export type TotalHitsRelation = "eq" | "gte"
+  export type TotalHitsRelation = 'eq' | 'gte'
 
-  export type ScoreMode = "avg" | "max" | "min" | "multiply" | "total"
+  export type ScoreMode = 'avg' | 'max' | 'min' | 'multiply' | 'total'
 
-  export type NumericType = "long" | "double" | "date" | "date_nanos"
+  export type NumericType = 'long' | 'double' | 'date' | 'date_nanos'
 
-  export type SortMode = "min" | "max" | "sum" | "avg" | "median"
+  export type SortMode = 'min' | 'max' | 'sum' | 'avg' | 'median'
 
-  export type SortOrder = "asc" | "desc"
+  export type SortOrder = 'asc' | 'desc'
 
-  export type SortSpecialField = "_score" | "_doc"
+  export type SortSpecialField = '_score' | '_doc'
 
-  export type StringDistance = "internal" | "damerau_levenshtein" | "levenshtein" | "jaro_winkler" | "ngram"
+  export type StringDistance = 'internal' | 'damerau_levenshtein' | 'levenshtein' | 'jaro_winkler' | 'ngram'
 
-  export type SuggestSort = "score" | "frequency"
+  export type SuggestSort = 'score' | 'frequency'
 
-  export type FollowerIndexStatus = "active" | "paused"
+  export type FollowerIndexStatus = 'active' | 'paused'
 
-  export type EnrichPolicyPhase = "SCHEDULED" | "RUNNING" | "COMPLETE" | "FAILED"
+  export type EnrichPolicyPhase = 'SCHEDULED' | 'RUNNING' | 'COMPLETE' | 'FAILED'
 
-  export type LifecycleOperationMode = "RUNNING" | "STOPPING" | "STOPPED"
+  export type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 
-  export type LicenseStatus = "active" | "valid" | "invalid" | "expired"
+  export type LicenseStatus = 'active' | 'valid' | 'invalid' | 'expired'
 
-  export type LicenseType = "missing" | "trial" | "basic" | "standard" | "dev" | "silver" | "gold" | "platinum" | "enterprise"
+  export type LicenseType = 'missing' | 'trial' | 'basic' | 'standard' | 'dev' | 'silver' | 'gold' | 'platinum' | 'enterprise'
 
-  export type ChunkingMode = "auto" | "manual" | "off"
+  export type ChunkingMode = 'auto' | 'manual' | 'off'
 
-  export type DatafeedState = "started" | "stopped" | "starting" | "stopping"
+  export type DatafeedState = 'started' | 'stopped' | 'starting' | 'stopping'
 
-  export type JobState = "closing" | "closed" | "opened" | "failed" | "opening"
+  export type JobState = 'closing' | 'closed' | 'opened' | 'failed' | 'opening'
 
-  export type MemoryStatus = "ok" | "soft_limit" | "hard_limit"
+  export type MemoryStatus = 'ok' | 'soft_limit' | 'hard_limit'
 
-  export type AppliesTo = "actual" | "typical" | "diff_from_typical" | "time"
+  export type AppliesTo = 'actual' | 'typical' | 'diff_from_typical' | 'time'
 
-  export type ConditionOperator = "gt" | "gte" | "lt" | "lte"
+  export type ConditionOperator = 'gt' | 'gte' | 'lt' | 'lte'
 
-  export type CountFunction = "Count" | "HighCount" | "LowCount"
+  export type CountFunction = 'Count' | 'HighCount' | 'LowCount'
 
-  export type DistinctCountFunction = "DistinctCount" | "LowDistinctCount" | "HighDistinctCount"
+  export type DistinctCountFunction = 'DistinctCount' | 'LowDistinctCount' | 'HighDistinctCount'
 
-  export type GeographicFunction = "LatLong"
+  export type GeographicFunction = 'LatLong'
 
-  export type InfoContentFunction = "InfoContent" | "HighInfoContent" | "LowInfoContent"
+  export type InfoContentFunction = 'InfoContent' | 'HighInfoContent' | 'LowInfoContent'
 
-  export type MetricFunction = "Min" | "Max" | "Median" | "HighMedian" | "LowMedian" | "Mean" | "HighMean" | "LowMean" | "Metric" | "Varp" | "HighVarp" | "LowVarp"
+  export type MetricFunction = 'Min' | 'Max' | 'Median' | 'HighMedian' | 'LowMedian' | 'Mean' | 'HighMean' | 'LowMean' | 'Metric' | 'Varp' | 'HighVarp' | 'LowVarp'
 
-  export type NonNullSumFunction = "NonNullSum" | "HighNonNullSum" | "LowNonNullSum"
+  export type NonNullSumFunction = 'NonNullSum' | 'HighNonNullSum' | 'LowNonNullSum'
 
-  export type NonZeroCountFunction = "NonZeroCount" | "LowNonZeroCount" | "HighNonZeroCount"
+  export type NonZeroCountFunction = 'NonZeroCount' | 'LowNonZeroCount' | 'HighNonZeroCount'
 
-  export type RareFunction = "Rare" | "FreqRare"
+  export type RareFunction = 'Rare' | 'FreqRare'
 
-  export type RuleAction = "skip_result" | "skip_model_update"
+  export type RuleAction = 'skip_result' | 'skip_model_update'
 
-  export type RuleFilterType = "include" | "exclude"
+  export type RuleFilterType = 'include' | 'exclude'
 
-  export type SumFunction = "Sum" | "HighSum" | "LowSum"
+  export type SumFunction = 'Sum' | 'HighSum' | 'LowSum'
 
-  export type TimeFunction = "TimeOfDay" | "TimeOfWeek"
+  export type TimeFunction = 'TimeOfDay' | 'TimeOfWeek'
 
-  export type ExcludeFrequent = "all" | "none" | "by" | "over"
+  export type ExcludeFrequent = 'all' | 'none' | 'by' | 'over'
 
-  export type DeprecationWarningLevel = "none" | "info" | "warning" | "critical"
+  export type DeprecationWarningLevel = 'none' | 'info' | 'warning' | 'critical'
 
-  export type IndexingJobState = "started" | "indexing" | "stopping" | "stopped" | "aborting"
+  export type IndexingJobState = 'started' | 'indexing' | 'stopping' | 'stopped' | 'aborting'
 
-  export type RollupMetric = "min" | "max" | "sum" | "avg" | "value_count"
+  export type RollupMetric = 'min' | 'max' | 'sum' | 'avg' | 'value_count'
 
-  export type AccessTokenGrantType = "password"
+  export type AccessTokenGrantType = 'password'
 
-  export type AcknowledgementState = "awaits_successful_execution" | "ackable" | "acked"
+  export type AcknowledgementState = 'awaits_successful_execution' | 'ackable' | 'acked'
 
-  export type ActionType = "email" | "webhook" | "index" | "logging" | "slack" | "pagerduty"
+  export type ActionType = 'email' | 'webhook' | 'index' | 'logging' | 'slack' | 'pagerduty'
 
-  export type DataAttachmentFormat = "json" | "yaml"
+  export type DataAttachmentFormat = 'json' | 'yaml'
 
-  export type EmailPriority = "lowest" | "low" | "normal" | "high" | "highest"
+  export type EmailPriority = 'lowest' | 'low' | 'normal' | 'high' | 'highest'
 
-  export type PagerDutyContextType = "link" | "image"
+  export type PagerDutyContextType = 'link' | 'image'
 
-  export type PagerDutyEventType = "trigger" | "resolve" | "acknowledge"
+  export type PagerDutyEventType = 'trigger' | 'resolve' | 'acknowledge'
 
-  export type ConditionType = "always" | "never" | "script" | "compare" | "array_compare"
+  export type ConditionType = 'always' | 'never' | 'script' | 'compare' | 'array_compare'
 
-  export type Quantifier = "some" | "all"
+  export type Quantifier = 'some' | 'all'
 
-  export type ActionExecutionState = "awaits_execution" | "checking" | "execution_not_needed" | "throttled" | "executed" | "failed" | "deleted_while_queued" | "not_executed_already_queued"
+  export type ActionExecutionState = 'awaits_execution' | 'checking' | 'execution_not_needed' | 'throttled' | 'executed' | 'failed' | 'deleted_while_queued' | 'not_executed_already_queued'
 
-  export type ActionExecutionMode = "simulate" | "force_simulate" | "execute" | "force_execute" | "skip"
+  export type ActionExecutionMode = 'simulate' | 'force_simulate' | 'execute' | 'force_execute' | 'skip'
 
-  export type Status = "success" | "failure" | "simulated" | "throttled"
+  export type Status = 'success' | 'failure' | 'simulated' | 'throttled'
 
-  export type ConnectionScheme = "http" | "https"
+  export type ConnectionScheme = 'http' | 'https'
 
-  export type HttpInputMethod = "head" | "get" | "post" | "put" | "delete"
+  export type HttpInputMethod = 'head' | 'get' | 'post' | 'put' | 'delete'
 
-  export type InputType = "http" | "search" | "simple"
+  export type InputType = 'http' | 'search' | 'simple'
 
-  export type ResponseContentType = "json" | "yaml" | "text"
+  export type ResponseContentType = 'json' | 'yaml' | 'text'
 
-  export type Day = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday"
+  export type Day = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
 
-  export type IntervalUnit = "s" | "m" | "h" | "d" | "w"
+  export type IntervalUnit = 's' | 'm' | 'h' | 'd' | 'w'
 
-  export type Month = "january" | "february" | "march" | "april" | "may" | "june" | "july" | "august" | "september" | "october" | "november" | "december"
+  export type Month = 'january' | 'february' | 'march' | 'april' | 'may' | 'june' | 'july' | 'august' | 'september' | 'october' | 'november' | 'december'
 
-  export type ExecutionPhase = "awaits_execution" | "started" | "input" | "condition" | "actions" | "watch_transform" | "aborted" | "finished"
+  export type ExecutionPhase = 'awaits_execution' | 'started' | 'input' | 'condition' | 'actions' | 'watch_transform' | 'aborted' | 'finished'
 
-  export type WatcherState = "stopped" | "starting" | "started" | "stopping"
+  export type WatcherState = 'stopped' | 'starting' | 'started' | 'stopping'
 }
 
 export default T
