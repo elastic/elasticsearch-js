@@ -8468,7 +8468,7 @@ client.rollup.rollup({
   body: object
 })
 ----
-link:{ref}/rollup.html[Documentation] +
+link:{ref}/xpack-rollup.html[Documentation] +
 [cols=2*]
 |===
 |`index`
