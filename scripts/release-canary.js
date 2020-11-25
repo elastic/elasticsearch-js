@@ -30,6 +30,7 @@ async function release (opts) {
   const originalName = packageJson.name
   const originalVersion = packageJson.version
   const currentCanaryVersion = packageJson.versionCanary
+  const originalNpmIgnore = await readFile(join(__dirname, '..', '.npmignore'), 'utf8')
 
   const newCanaryInteger = opts.reset ? 1 : (Number(currentCanaryVersion.split('-')[1].split('.')[1]) + 1)
   const newCanaryVersion = `${originalVersion.split('-')[0]}-canary.${newCanaryInteger}`
@@ -47,8 +48,17 @@ async function release (opts) {
     'utf8'
   )
 
+  // update the npmignore to publish the kibana types as well
+  const newNpmIgnore = originalNpmIgnore.slice(0, originalNpmIgnore.indexOf('# CANARY-PACKAGE')) +
+                       originalNpmIgnore.slice(originalNpmIgnore.indexOf('# /CANARY-PACKAGE') + 17)
+  await writeFile(
+    join(__dirname, '..', '.npmignore'),
+    newNpmIgnore,
+    'utf8'
+  )
+
   // confirm the package.json changes with the user
-  const diff = execSync('git diff package.json').toString().split('\n').map(colorDiff).join('\n')
+  const diff = execSync('git diff').toString().split('\n').map(colorDiff).join('\n')
   console.log(diff)
   const answer = await confirm()
   // release on npm with provided otp
@@ -67,6 +77,12 @@ async function release (opts) {
   await writeFile(
     join(__dirname, '..', 'package.json'),
     JSON.stringify(packageJson, null, 2),
+    'utf8'
+  )
+
+  await writeFile(
+    join(__dirname, '..', '.npmignore'),
+    originalNpmIgnore,
     'utf8'
   )
 }
