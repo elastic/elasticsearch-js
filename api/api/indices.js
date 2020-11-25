@@ -23,8 +23,8 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['timeout', 'master_timeout', 'ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'index', 'fielddata', 'fields', 'query', 'request', 'wait_for_active_shards', 'local', 'flat_settings', 'include_defaults', 'force', 'wait_if_ongoing', 'flush', 'max_num_segments', 'only_expunge_deletes', 'create', 'cause', 'write_index_only', 'preserve_existing', 'order', 'detailed', 'active_only', 'dry_run', 'verbose', 'status', 'completion_fields', 'fielddata_fields', 'groups', 'level', 'types', 'include_segment_file_sizes', 'include_unloaded_segments', 'forbid_closed_indices', 'wait_for_completion', 'only_ancient_segments', 'explain', 'q', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'rewrite', 'all_shards']
-const snakeCase = { masterTimeout: 'master_timeout', ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', waitForActiveShards: 'wait_for_active_shards', flatSettings: 'flat_settings', includeDefaults: 'include_defaults', waitIfOngoing: 'wait_if_ongoing', maxNumSegments: 'max_num_segments', onlyExpungeDeletes: 'only_expunge_deletes', writeIndexOnly: 'write_index_only', preserveExisting: 'preserve_existing', activeOnly: 'active_only', dryRun: 'dry_run', completionFields: 'completion_fields', fielddataFields: 'fielddata_fields', includeSegmentFileSizes: 'include_segment_file_sizes', includeUnloadedSegments: 'include_unloaded_segments', forbidClosedIndices: 'forbid_closed_indices', waitForCompletion: 'wait_for_completion', onlyAncientSegments: 'only_ancient_segments', analyzeWildcard: 'analyze_wildcard', defaultOperator: 'default_operator', allShards: 'all_shards' }
+const acceptedQuerystring = ['timeout', 'master_timeout', 'ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'index', 'fielddata', 'fields', 'query', 'request', 'wait_for_active_shards', 'local', 'flat_settings', 'include_defaults', 'force', 'wait_if_ongoing', 'flush', 'max_num_segments', 'only_expunge_deletes', 'create', 'cause', 'write_index_only', 'preserve_existing', 'order', 'detailed', 'active_only', 'dry_run', 'verbose', 'status', 'completion_fields', 'fielddata_fields', 'groups', 'level', 'types', 'include_segment_file_sizes', 'include_unloaded_segments', 'forbid_closed_indices', 'explain', 'q', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'rewrite', 'all_shards']
+const snakeCase = { masterTimeout: 'master_timeout', ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', waitForActiveShards: 'wait_for_active_shards', flatSettings: 'flat_settings', includeDefaults: 'include_defaults', waitIfOngoing: 'wait_if_ongoing', maxNumSegments: 'max_num_segments', onlyExpungeDeletes: 'only_expunge_deletes', writeIndexOnly: 'write_index_only', preserveExisting: 'preserve_existing', activeOnly: 'active_only', dryRun: 'dry_run', completionFields: 'completion_fields', fielddataFields: 'fielddata_fields', includeSegmentFileSizes: 'include_segment_file_sizes', includeUnloadedSegments: 'include_unloaded_segments', forbidClosedIndices: 'forbid_closed_indices', analyzeWildcard: 'analyze_wildcard', defaultOperator: 'default_operator', allShards: 'all_shards' }
 
 function IndicesApi (transport, ConfigurationError) {
   this.transport = transport
@@ -737,27 +737,6 @@ IndicesApi.prototype.getTemplate = function indicesGetTemplateApi (params, optio
   return this.transport.request(request, options, callback)
 }
 
-IndicesApi.prototype.getUpgrade = function indicesGetUpgradeApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  var { method, body, index, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  var path = ''
-  if (method == null) method = 'GET'
-  path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: null,
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
 IndicesApi.prototype.open = function indicesOpenApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1307,27 +1286,6 @@ IndicesApi.prototype.updateAliases = function indicesUpdateAliasesApi (params, o
   return this.transport.request(request, options, callback)
 }
 
-IndicesApi.prototype.upgrade = function indicesUpgradeApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  var { method, body, index, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  var path = ''
-  if (method == null) method = 'POST'
-  path = '/' + encodeURIComponent(index) + '/' + '_upgrade'
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: body || '',
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
 IndicesApi.prototype.validateQuery = function indicesValidateQueryApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1496,6 +1454,33 @@ IndicesApi.prototype.getDataStream = function indicesGetDataStreamApi (params, o
   return this.transport.request(request, options, callback)
 }
 
+IndicesApi.prototype.migrateToDataStream = function indicesMigrateToDataStreamApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params['name'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: name')
+    return handleError(err, callback)
+  }
+
+  var { method, body, name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_data_stream' + '/' + '_migrate' + '/' + encodeURIComponent(name)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 IndicesApi.prototype.reloadSearchAnalyzers = function indicesReloadSearchAnalyzersApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1566,7 +1551,6 @@ Object.defineProperties(IndicesApi.prototype, {
   get_mapping: { get () { return this.getMapping } },
   get_settings: { get () { return this.getSettings } },
   get_template: { get () { return this.getTemplate } },
-  get_upgrade: { get () { return this.getUpgrade } },
   put_alias: { get () { return this.putAlias } },
   put_index_template: { get () { return this.putIndexTemplate } },
   put_mapping: { get () { return this.putMapping } },
@@ -1582,6 +1566,7 @@ Object.defineProperties(IndicesApi.prototype, {
   data_streams_stats: { get () { return this.dataStreamsStats } },
   delete_data_stream: { get () { return this.deleteDataStream } },
   get_data_stream: { get () { return this.getDataStream } },
+  migrate_to_data_stream: { get () { return this.migrateToDataStream } },
   reload_search_analyzers: { get () { return this.reloadSearchAnalyzers } }
 })
 

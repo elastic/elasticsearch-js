@@ -143,6 +143,23 @@ link:{ref}/async-search.html[Documentation] +
 |===
 
 [discrete]
+=== asyncSearch.status
+
+[source,ts]
+----
+client.asyncSearch.status({
+  id: string
+})
+----
+link:{ref}/async-search.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|===
+
+[discrete]
 === asyncSearch.submit
 
 [source,ts]
@@ -353,13 +370,13 @@ link:{ref}/autoscaling-delete-autoscaling-policy.html[Documentation] +
 |===
 
 [discrete]
-=== autoscaling.getAutoscalingDecision
+=== autoscaling.getAutoscalingCapacity
 *Stability:* experimental
 [source,ts]
 ----
-client.autoscaling.getAutoscalingDecision()
+client.autoscaling.getAutoscalingCapacity()
 ----
-link:{ref}/autoscaling-get-autoscaling-decision.html[Documentation] +
+link:{ref}/autoscaling-get-autoscaling-capacity.html[Documentation] +
 
 
 [discrete]
@@ -707,7 +724,6 @@ client.cat.indices({
   index: string | string[],
   format: string,
   bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
-  local: boolean,
   master_timeout: string,
   h: string | string[],
   health: 'green' | 'yellow' | 'red',
@@ -731,9 +747,6 @@ link:{ref}/cat-indices.html[Documentation] +
 
 |`bytes`
 |`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
-
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -1343,7 +1356,6 @@ client.cat.shards({
   index: string | string[],
   format: string,
   bytes: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb',
-  local: boolean,
   master_timeout: string,
   h: string | string[],
   help: boolean,
@@ -1363,9 +1375,6 @@ link:{ref}/cat-shards.html[Documentation] +
 
 |`bytes`
 |`'b' \| 'k' \| 'kb' \| 'm' \| 'mb' \| 'g' \| 'gb' \| 't' \| 'tb' \| 'p' \| 'pb'` - The unit in which to display byte values
-
-|`local`
-|`boolean` - Return local information, do not retrieve the state from master node (default: false)
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -1938,7 +1947,7 @@ link:{ref}/cluster-allocation-explain.html[Documentation] +
 
 [discrete]
 === cluster.deleteComponentTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.cluster.deleteComponentTemplate({
@@ -1981,7 +1990,7 @@ _Default:_ `true`
 
 [discrete]
 === cluster.existsComponentTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.cluster.existsComponentTemplate({
@@ -2006,7 +2015,7 @@ link:{ref}/indices-component-template.html[Documentation] +
 
 [discrete]
 === cluster.getComponentTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.cluster.getComponentTemplate({
@@ -2170,7 +2179,7 @@ _Default:_ `30s`
 
 [discrete]
 === cluster.putComponentTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.cluster.putComponentTemplate({
@@ -3983,7 +3992,8 @@ link:{ref}/indices-aliases.html[Documentation] +
 [source,ts]
 ----
 client.indices.deleteDataStream({
-  name: string | string[]
+  name: string | string[],
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
@@ -3992,11 +4002,15 @@ link:{ref}/data-streams.html[Documentation] +
 |`name`
 |`string \| string[]` - A comma-separated list of data streams to delete; use `*` to delete all data streams
 
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+_Default:_ `open`
+
 |===
 
 [discrete]
 === indices.deleteIndexTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.deleteIndexTemplate({
@@ -4126,7 +4140,7 @@ _Default:_ `all`
 
 [discrete]
 === indices.existsIndexTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.existsIndexTemplate({
@@ -4432,7 +4446,8 @@ _Default:_ `all`
 [source,ts]
 ----
 client.indices.getDataStream({
-  name: string | string[]
+  name: string | string[],
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
 link:{ref}/data-streams.html[Documentation] +
@@ -4440,6 +4455,10 @@ link:{ref}/data-streams.html[Documentation] +
 |===
 |`name`
 |`string \| string[]` - A comma-separated list of data streams to get; use `*` to get all data streams
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
+_Default:_ `open`
 
 |===
 
@@ -4487,7 +4506,7 @@ _Default:_ `open`
 
 [discrete]
 === indices.getIndexTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.getIndexTemplate({
@@ -4634,32 +4653,19 @@ link:{ref}/indices-templates.html[Documentation] +
 |===
 
 [discrete]
-=== indices.getUpgrade
+=== indices.migrateToDataStream
 
 [source,ts]
 ----
-client.indices.getUpgrade({
-  index: string | string[],
-  ignore_unavailable: boolean,
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
+client.indices.migrateToDataStream({
+  name: string
 })
 ----
-link:{ref}/indices-upgrade.html[Documentation] +
+link:{ref}/data-streams.html[Documentation] +
 [cols=2*]
 |===
-|`index`
-|`string \| string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
+|`name`
+|`string` - The name of the alias to migrate
 
 |===
 
@@ -4740,7 +4746,7 @@ link:{ref}/indices-aliases.html[Documentation] +
 
 [discrete]
 === indices.putIndexTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.putIndexTemplate({
@@ -5155,7 +5161,7 @@ link:{ref}/indices-shrink-index.html[Documentation] +
 
 [discrete]
 === indices.simulateIndexTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.simulateIndexTemplate({
@@ -5188,7 +5194,7 @@ link:{ref}/indices-templates.html[Documentation] +
 
 [discrete]
 === indices.simulateTemplate
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.simulateTemplate({
@@ -5384,44 +5390,6 @@ link:{ref}/indices-aliases.html[Documentation] +
 
 |`body`
 |`object` - The definition of `actions` to perform
-
-|===
-
-[discrete]
-=== indices.upgrade
-
-[source,ts]
-----
-client.indices.upgrade({
-  index: string | string[],
-  allow_no_indices: boolean,
-  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
-  ignore_unavailable: boolean,
-  wait_for_completion: boolean,
-  only_ancient_segments: boolean
-})
-----
-link:{ref}/indices-upgrade.html[Documentation] +
-[cols=2*]
-|===
-|`index`
-|`string \| string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-
-|`allow_no_indices` or `allowNoIndices`
-|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-
-|`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
-_Default:_ `open`
-
-|`ignore_unavailable` or `ignoreUnavailable`
-|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
-
-|`wait_for_completion` or `waitForCompletion`
-|`boolean` - Specify whether the request should block until the all segments are upgraded (default: false)
-
-|`only_ancient_segments` or `onlyAncientSegments`
-|`boolean` - If true, only ancient (an older Lucene major release) segments will be upgraded
 
 |===
 
@@ -5904,7 +5872,7 @@ link:{ref}/ml-delete-calendar-job.html[Documentation] +
 
 [discrete]
 === ml.deleteDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.deleteDataFrameAnalytics({
@@ -6072,7 +6040,7 @@ link:{ref}/ml-delete-snapshot.html[Documentation] +
 
 [discrete]
 === ml.deleteTrainedModel
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.deleteTrainedModel({
@@ -6106,7 +6074,7 @@ link:{ref}/ml-apis.html[Documentation] +
 
 [discrete]
 === ml.evaluateDataFrame
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.evaluateDataFrame({
@@ -6123,7 +6091,7 @@ link:{ref}/evaluate-dfanalytics.html[Documentation] +
 
 [discrete]
 === ml.explainDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.explainDataFrameAnalytics({
@@ -6454,7 +6422,7 @@ link:{ref}/ml-get-category.html[Documentation] +
 
 [discrete]
 === ml.getDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.getDataFrameAnalytics({
@@ -6489,7 +6457,7 @@ _Default:_ `100`
 
 [discrete]
 === ml.getDataFrameAnalyticsStats
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.getDataFrameAnalyticsStats({
@@ -6875,7 +6843,7 @@ link:{ref}/ml-get-record.html[Documentation] +
 
 [discrete]
 === ml.getTrainedModels
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.getTrainedModels({
@@ -6929,7 +6897,7 @@ _Default:_ `100`
 
 [discrete]
 === ml.getTrainedModelsStats
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.getTrainedModelsStats({
@@ -7096,7 +7064,7 @@ link:{ref}/ml-put-calendar-job.html[Documentation] +
 
 [discrete]
 === ml.putDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.putDataFrameAnalytics({
@@ -7196,7 +7164,7 @@ link:{ref}/ml-put-job.html[Documentation] +
 
 [discrete]
 === ml.putTrainedModel
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.putTrainedModel({
@@ -7267,7 +7235,7 @@ link:{ref}/ml-set-upgrade-mode.html[Documentation] +
 
 [discrete]
 === ml.startDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.startDataFrameAnalytics({
@@ -7325,7 +7293,7 @@ link:{ref}/ml-start-datafeed.html[Documentation] +
 
 [discrete]
 === ml.stopDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.stopDataFrameAnalytics({
@@ -7397,7 +7365,7 @@ WARNING: This parameter has been deprecated.
 
 [discrete]
 === ml.updateDataFrameAnalytics
-*Stability:* experimental
+*Stability:* beta
 [source,ts]
 ----
 client.ml.updateDataFrameAnalytics({
@@ -7517,6 +7485,35 @@ link:{ref}/ml-update-snapshot.html[Documentation] +
 
 |`body`
 |`object` - The model snapshot properties to update
+
+|===
+
+[discrete]
+=== ml.upgradeJobSnapshot
+
+[source,ts]
+----
+client.ml.upgradeJobSnapshot({
+  job_id: string,
+  snapshot_id: string,
+  timeout: string,
+  wait_for_completion: boolean
+})
+----
+link:{ref}/ml-upgrade-job-model-snapshot.html[Documentation] +
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job
+
+|`snapshot_id` or `snapshotId`
+|`string` - The ID of the snapshot
+
+|`timeout`
+|`string` - How long should the API wait for the job to be opened and the old snapshot to be loaded.
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should the request wait until the task is complete before responding to the caller. Default is false.
 
 |===
 
@@ -8235,6 +8232,27 @@ link:{ref}/rollup-put-job.html[Documentation] +
 
 |`body`
 |`object` - The job configuration
+
+|===
+
+[discrete]
+=== rollup.rollup
+
+[source,ts]
+----
+client.rollup.rollup({
+  index: string,
+  body: object
+})
+----
+link:{ref}/xpack-rollup.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - The index to roll up
+
+|`body`
+|`object` - The rollup configuration
 
 |===
 

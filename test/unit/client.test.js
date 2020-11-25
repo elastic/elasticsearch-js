@@ -21,7 +21,9 @@
 
 const { test } = require('tap')
 const { URL } = require('url')
-const { Client, ConnectionPool, Transport } = require('../../index')
+const buffer = require('buffer')
+const intoStream = require('into-stream')
+const { Client, ConnectionPool, Transport, Connection, errors } = require('../../index')
 const { CloudConnectionPool } = require('../../lib/pool')
 const { buildServer } = require('../utils')
 
@@ -1190,4 +1192,111 @@ test('name property as symbol', t => {
   })
 
   t.strictEqual(client.name, symbol)
+})
+
+// The nodejs http agent will try to wait for the whole
+// body to arrive before closing the request, so this
+// test might take some time.
+test('Bad content length', t => {
+  t.plan(3)
+
+  let count = 0
+  function handler (req, res) {
+    count += 1
+    const body = JSON.stringify({ hello: 'world' })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.setHeader('Content-Length', body.length + '')
+    res.end(body.slice(0, -5))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
+    client.info((err, { body }) => {
+      t.ok(err instanceof errors.ConnectionError)
+      t.is(err.message, 'Response aborted while reading the body')
+      t.strictEqual(count, 2)
+      server.stop()
+    })
+  })
+})
+
+test('Socket destryed while reading the body', t => {
+  t.plan(3)
+
+  let count = 0
+  function handler (req, res) {
+    count += 1
+    const body = JSON.stringify({ hello: 'world' })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.setHeader('Content-Length', body.length + '')
+    res.write(body.slice(0, -5))
+    setTimeout(() => {
+      res.socket.destroy()
+    }, 500)
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
+    client.info((err, { body }) => {
+      t.ok(err instanceof errors.ConnectionError)
+      t.is(err.message, 'Response aborted while reading the body')
+      t.strictEqual(count, 2)
+      server.stop()
+    })
+  })
+})
+
+test('Content length too big (buffer)', t => {
+  t.plan(4)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      const stream = intoStream(JSON.stringify({ hello: 'world' }))
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-encoding': 'gzip',
+        'content-length': buffer.constants.MAX_LENGTH + 10,
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      stream.on('close', () => t.pass('Stream destroyed'))
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({ node: 'http://localhost:9200', Connection: MockConnection })
+  client.info((err, result) => {
+    t.ok(err instanceof errors.RequestAbortedError)
+    t.is(err.message, `The content length (${buffer.constants.MAX_LENGTH + 10}) is bigger than the maximum allowed buffer (${buffer.constants.MAX_LENGTH})`)
+    t.strictEqual(result.meta.attempts, 0)
+  })
+})
+
+test('Content length too big (string)', t => {
+  t.plan(4)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      const stream = intoStream(JSON.stringify({ hello: 'world' }))
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-length': buffer.constants.MAX_STRING_LENGTH + 10,
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      stream.on('close', () => t.pass('Stream destroyed'))
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({ node: 'http://localhost:9200', Connection: MockConnection })
+  client.info((err, result) => {
+    t.ok(err instanceof errors.RequestAbortedError)
+    t.is(err.message, `The content length (${buffer.constants.MAX_STRING_LENGTH + 10}) is bigger than the maximum allowed string (${buffer.constants.MAX_STRING_LENGTH})`)
+    t.strictEqual(result.meta.attempts, 0)
+  })
 })

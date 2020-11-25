@@ -39,6 +39,10 @@ export interface AsyncSearchGet extends Generic {
   typed_keys?: boolean;
 }
 
+export interface AsyncSearchStatus extends Generic {
+  id: string;
+}
+
 export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   index?: string | string[];
   _source_exclude?: string | string[];
@@ -91,7 +95,7 @@ export interface AutoscalingDeleteAutoscalingPolicy extends Generic {
   name: string;
 }
 
-export interface AutoscalingGetAutoscalingDecision extends Generic {
+export interface AutoscalingGetAutoscalingCapacity extends Generic {
 }
 
 export interface AutoscalingGetAutoscalingPolicy extends Generic {
@@ -181,7 +185,6 @@ export interface CatIndices extends Generic {
   index?: string | string[];
   format?: string;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
-  local?: boolean;
   master_timeout?: string;
   h?: string | string[];
   health?: 'green' | 'yellow' | 'red';
@@ -335,7 +338,6 @@ export interface CatShards extends Generic {
   index?: string | string[];
   format?: string;
   bytes?: 'b' | 'k' | 'kb' | 'm' | 'mb' | 'g' | 'gb' | 't' | 'tb' | 'p' | 'pb';
-  local?: boolean;
   master_timeout?: string;
   h?: string | string[];
   help?: boolean;
@@ -983,6 +985,7 @@ export interface IndicesDeleteAlias extends Generic {
 
 export interface IndicesDeleteDataStream extends Generic {
   name: string | string[];
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesDeleteIndexTemplate extends Generic {
@@ -1090,6 +1093,7 @@ export interface IndicesGetAlias extends Generic {
 
 export interface IndicesGetDataStream extends Generic {
   name?: string | string[];
+  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
 }
 
 export interface IndicesGetFieldMapping extends Generic {
@@ -1137,11 +1141,8 @@ export interface IndicesGetTemplate extends Generic {
   local?: boolean;
 }
 
-export interface IndicesGetUpgrade extends Generic {
-  index?: string | string[];
-  ignore_unavailable?: boolean;
-  allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+export interface IndicesMigrateToDataStream extends Generic {
+  name: string;
 }
 
 export interface IndicesOpen extends Generic {
@@ -1315,15 +1316,6 @@ export interface IndicesUpdateAliases<T = RequestBody> extends Generic {
   timeout?: string;
   master_timeout?: string;
   body: T;
-}
-
-export interface IndicesUpgrade extends Generic {
-  index?: string | string[];
-  allow_no_indices?: boolean;
-  expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
-  ignore_unavailable?: boolean;
-  wait_for_completion?: boolean;
-  only_ancient_segments?: boolean;
 }
 
 export interface IndicesValidateQuery<T = RequestBody> extends Generic {
@@ -1829,6 +1821,13 @@ export interface MlUpdateModelSnapshot<T = RequestBody> extends Generic {
   body: T;
 }
 
+export interface MlUpgradeJobSnapshot extends Generic {
+  job_id: string;
+  snapshot_id: string;
+  timeout?: string;
+  wait_for_completion?: boolean;
+}
+
 export interface MlValidate<T = RequestBody> extends Generic {
   body: T;
 }
@@ -1996,6 +1995,11 @@ export interface RollupGetRollupIndexCaps extends Generic {
 
 export interface RollupPutJob<T = RequestBody> extends Generic {
   id: string;
+  body: T;
+}
+
+export interface RollupRollup<T = RequestBody> extends Generic {
+  index: string;
   body: T;
 }
 

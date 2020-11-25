@@ -109,7 +109,7 @@ class MockConnectionSniff extends Connection {
       'content-type': 'application/json;utf=8',
       date: new Date().toISOString(),
       connection: 'keep-alive',
-      'content-length': '205'
+      'content-length': '191'
     }
     process.nextTick(() => {
       if (!aborted) {
