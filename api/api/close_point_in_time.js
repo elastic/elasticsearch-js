@@ -44,6 +44,7 @@ function closePointInTimeApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.close_point_in_time'
   return this.transport.request(request, options, callback)
 }
 

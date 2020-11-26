@@ -54,6 +54,7 @@ SearchableSnapshotsApi.prototype.clearCache = function searchableSnapshotsClearC
     querystring
   }
 
+  options.api = 'elasticsearch.searchable_snapshots.clear_cache'
   return this.transport.request(request, options, callback)
 }
 
@@ -95,6 +96,7 @@ SearchableSnapshotsApi.prototype.mount = function searchableSnapshotsMountApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.searchable_snapshots.mount'
   return this.transport.request(request, options, callback)
 }
 
@@ -121,6 +123,7 @@ SearchableSnapshotsApi.prototype.stats = function searchableSnapshotsStatsApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.searchable_snapshots.stats'
   return this.transport.request(request, options, callback)
 }
 

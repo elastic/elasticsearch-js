@@ -54,6 +54,7 @@ function explainApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.explain'
   return this.transport.request(request, options, callback)
 }
 

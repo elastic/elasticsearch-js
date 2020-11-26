@@ -44,6 +44,7 @@ function getScriptLanguagesApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.get_script_languages'
   return this.transport.request(request, options, callback)
 }
 

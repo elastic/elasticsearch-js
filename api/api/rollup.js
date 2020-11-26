@@ -55,6 +55,7 @@ RollupApi.prototype.deleteJob = function rollupDeleteJobApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.rollup.delete_job'
   return this.transport.request(request, options, callback)
 }
 
@@ -81,6 +82,7 @@ RollupApi.prototype.getJobs = function rollupGetJobsApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.rollup.get_jobs'
   return this.transport.request(request, options, callback)
 }
 
@@ -107,6 +109,7 @@ RollupApi.prototype.getRollupCaps = function rollupGetRollupCapsApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.rollup.get_rollup_caps'
   return this.transport.request(request, options, callback)
 }
 
@@ -134,6 +137,7 @@ RollupApi.prototype.getRollupIndexCaps = function rollupGetRollupIndexCapsApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.rollup.get_rollup_index_caps'
   return this.transport.request(request, options, callback)
 }
 
@@ -165,6 +169,7 @@ RollupApi.prototype.putJob = function rollupPutJobApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.rollup.put_job'
   return this.transport.request(request, options, callback)
 }
 
@@ -196,6 +201,7 @@ RollupApi.prototype.rollup = function rollupRollupApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.rollup.rollup'
   return this.transport.request(request, options, callback)
 }
 
@@ -238,6 +244,7 @@ RollupApi.prototype.rollupSearch = function rollupRollupSearchApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.rollup.rollup_search'
   return this.transport.request(request, options, callback)
 }
 
@@ -265,6 +272,7 @@ RollupApi.prototype.startJob = function rollupStartJobApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.rollup.start_job'
   return this.transport.request(request, options, callback)
 }
 
@@ -292,6 +300,7 @@ RollupApi.prototype.stopJob = function rollupStopJobApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.rollup.stop_job'
   return this.transport.request(request, options, callback)
 }
 

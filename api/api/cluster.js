@@ -49,6 +49,7 @@ ClusterApi.prototype.allocationExplain = function clusterAllocationExplainApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.allocation_explain'
   return this.transport.request(request, options, callback)
 }
 
@@ -76,6 +77,7 @@ ClusterApi.prototype.deleteComponentTemplate = function clusterDeleteComponentTe
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.delete_component_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -97,6 +99,7 @@ ClusterApi.prototype.deleteVotingConfigExclusions = function clusterDeleteVoting
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.delete_voting_config_exclusions'
   return this.transport.request(request, options, callback)
 }
 
@@ -124,6 +127,7 @@ ClusterApi.prototype.existsComponentTemplate = function clusterExistsComponentTe
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.exists_component_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -150,6 +154,7 @@ ClusterApi.prototype.getComponentTemplate = function clusterGetComponentTemplate
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.get_component_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -171,6 +176,7 @@ ClusterApi.prototype.getSettings = function clusterGetSettingsApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.get_settings'
   return this.transport.request(request, options, callback)
 }
 
@@ -197,6 +203,7 @@ ClusterApi.prototype.health = function clusterHealthApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.health'
   return this.transport.request(request, options, callback)
 }
 
@@ -218,6 +225,7 @@ ClusterApi.prototype.pendingTasks = function clusterPendingTasksApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.pending_tasks'
   return this.transport.request(request, options, callback)
 }
 
@@ -239,6 +247,7 @@ ClusterApi.prototype.postVotingConfigExclusions = function clusterPostVotingConf
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.post_voting_config_exclusions'
   return this.transport.request(request, options, callback)
 }
 
@@ -270,6 +279,7 @@ ClusterApi.prototype.putComponentTemplate = function clusterPutComponentTemplate
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.put_component_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -297,6 +307,7 @@ ClusterApi.prototype.putSettings = function clusterPutSettingsApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.put_settings'
   return this.transport.request(request, options, callback)
 }
 
@@ -318,6 +329,7 @@ ClusterApi.prototype.remoteInfo = function clusterRemoteInfoApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.remote_info'
   return this.transport.request(request, options, callback)
 }
 
@@ -339,6 +351,7 @@ ClusterApi.prototype.reroute = function clusterRerouteApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.reroute'
   return this.transport.request(request, options, callback)
 }
 
@@ -374,6 +387,7 @@ ClusterApi.prototype.state = function clusterStateApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.state'
   return this.transport.request(request, options, callback)
 }
 
@@ -400,6 +414,7 @@ ClusterApi.prototype.stats = function clusterStatsApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.cluster.stats'
   return this.transport.request(request, options, callback)
 }
 

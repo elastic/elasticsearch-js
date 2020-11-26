@@ -55,6 +55,7 @@ EqlApi.prototype.delete = function eqlDeleteApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.eql.delete'
   return this.transport.request(request, options, callback)
 }
 
@@ -82,6 +83,7 @@ EqlApi.prototype.get = function eqlGetApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.eql.get'
   return this.transport.request(request, options, callback)
 }
 
@@ -113,6 +115,7 @@ EqlApi.prototype.search = function eqlSearchApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.eql.search'
   return this.transport.request(request, options, callback)
 }
 

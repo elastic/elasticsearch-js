@@ -55,6 +55,7 @@ DanglingIndicesApi.prototype.deleteDanglingIndex = function danglingIndicesDelet
     querystring
   }
 
+  options.api = 'elasticsearch.dangling_indices.delete_dangling_index'
   return this.transport.request(request, options, callback)
 }
 
@@ -82,6 +83,7 @@ DanglingIndicesApi.prototype.importDanglingIndex = function danglingIndicesImpor
     querystring
   }
 
+  options.api = 'elasticsearch.dangling_indices.import_dangling_index'
   return this.transport.request(request, options, callback)
 }
 
@@ -103,6 +105,7 @@ DanglingIndicesApi.prototype.listDanglingIndices = function danglingIndicesListD
     querystring
   }
 
+  options.api = 'elasticsearch.dangling_indices.list_dangling_indices'
   return this.transport.request(request, options, callback)
 }
 

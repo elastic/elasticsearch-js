@@ -55,6 +55,7 @@ function mgetApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.mget'
   return this.transport.request(request, options, callback)
 }
 

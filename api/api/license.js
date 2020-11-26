@@ -49,6 +49,7 @@ LicenseApi.prototype.delete = function licenseDeleteApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.license.delete'
   return this.transport.request(request, options, callback)
 }
 
@@ -70,6 +71,7 @@ LicenseApi.prototype.get = function licenseGetApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.license.get'
   return this.transport.request(request, options, callback)
 }
 
@@ -91,6 +93,7 @@ LicenseApi.prototype.getBasicStatus = function licenseGetBasicStatusApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.license.get_basic_status'
   return this.transport.request(request, options, callback)
 }
 
@@ -112,6 +115,7 @@ LicenseApi.prototype.getTrialStatus = function licenseGetTrialStatusApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.license.get_trial_status'
   return this.transport.request(request, options, callback)
 }
 
@@ -133,6 +137,7 @@ LicenseApi.prototype.post = function licensePostApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.license.post'
   return this.transport.request(request, options, callback)
 }
 
@@ -154,6 +159,7 @@ LicenseApi.prototype.postStartBasic = function licensePostStartBasicApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.license.post_start_basic'
   return this.transport.request(request, options, callback)
 }
 
@@ -175,6 +181,7 @@ LicenseApi.prototype.postStartTrial = function licensePostStartTrialApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.license.post_start_trial'
   return this.transport.request(request, options, callback)
 }
 

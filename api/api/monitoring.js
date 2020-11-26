@@ -60,6 +60,7 @@ MonitoringApi.prototype.bulk = function monitoringBulkApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.monitoring.bulk'
   return this.transport.request(request, options, callback)
 }
 

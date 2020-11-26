@@ -49,6 +49,7 @@ function fieldCapsApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.field_caps'
   return this.transport.request(request, options, callback)
 }
 

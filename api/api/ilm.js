@@ -55,6 +55,7 @@ IlmApi.prototype.deleteLifecycle = function ilmDeleteLifecycleApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.ilm.delete_lifecycle'
   return this.transport.request(request, options, callback)
 }
 
@@ -82,6 +83,7 @@ IlmApi.prototype.explainLifecycle = function ilmExplainLifecycleApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.ilm.explain_lifecycle'
   return this.transport.request(request, options, callback)
 }
 
@@ -108,6 +110,7 @@ IlmApi.prototype.getLifecycle = function ilmGetLifecycleApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.ilm.get_lifecycle'
   return this.transport.request(request, options, callback)
 }
 
@@ -129,6 +132,7 @@ IlmApi.prototype.getStatus = function ilmGetStatusApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.ilm.get_status'
   return this.transport.request(request, options, callback)
 }
 
@@ -156,6 +160,7 @@ IlmApi.prototype.moveToStep = function ilmMoveToStepApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.ilm.move_to_step'
   return this.transport.request(request, options, callback)
 }
 
@@ -183,6 +188,7 @@ IlmApi.prototype.putLifecycle = function ilmPutLifecycleApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.ilm.put_lifecycle'
   return this.transport.request(request, options, callback)
 }
 
@@ -210,6 +216,7 @@ IlmApi.prototype.removePolicy = function ilmRemovePolicyApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.ilm.remove_policy'
   return this.transport.request(request, options, callback)
 }
 
@@ -237,6 +244,7 @@ IlmApi.prototype.retry = function ilmRetryApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ilm.retry'
   return this.transport.request(request, options, callback)
 }
 
@@ -258,6 +266,7 @@ IlmApi.prototype.start = function ilmStartApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ilm.start'
   return this.transport.request(request, options, callback)
 }
 
@@ -279,6 +288,7 @@ IlmApi.prototype.stop = function ilmStopApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ilm.stop'
   return this.transport.request(request, options, callback)
 }
 

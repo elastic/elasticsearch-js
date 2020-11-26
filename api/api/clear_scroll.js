@@ -49,6 +49,7 @@ function clearScrollApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.clear_scroll'
   return this.transport.request(request, options, callback)
 }
 

@@ -49,6 +49,7 @@ SslApi.prototype.certificates = function sslCertificatesApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.ssl.certificates'
   return this.transport.request(request, options, callback)
 }
 

@@ -65,6 +65,7 @@ function putScriptApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.put_script'
   return this.transport.request(request, options, callback)
 }
 

@@ -55,6 +55,7 @@ SlmApi.prototype.deleteLifecycle = function slmDeleteLifecycleApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.slm.delete_lifecycle'
   return this.transport.request(request, options, callback)
 }
 
@@ -82,6 +83,7 @@ SlmApi.prototype.executeLifecycle = function slmExecuteLifecycleApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.slm.execute_lifecycle'
   return this.transport.request(request, options, callback)
 }
 
@@ -103,6 +105,7 @@ SlmApi.prototype.executeRetention = function slmExecuteRetentionApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.slm.execute_retention'
   return this.transport.request(request, options, callback)
 }
 
@@ -129,6 +132,7 @@ SlmApi.prototype.getLifecycle = function slmGetLifecycleApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.slm.get_lifecycle'
   return this.transport.request(request, options, callback)
 }
 
@@ -150,6 +154,7 @@ SlmApi.prototype.getStats = function slmGetStatsApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.slm.get_stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -171,6 +176,7 @@ SlmApi.prototype.getStatus = function slmGetStatusApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.slm.get_status'
   return this.transport.request(request, options, callback)
 }
 
@@ -198,6 +204,7 @@ SlmApi.prototype.putLifecycle = function slmPutLifecycleApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.slm.put_lifecycle'
   return this.transport.request(request, options, callback)
 }
 
@@ -219,6 +226,7 @@ SlmApi.prototype.start = function slmStartApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.slm.start'
   return this.transport.request(request, options, callback)
 }
 
@@ -240,6 +248,7 @@ SlmApi.prototype.stop = function slmStopApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.slm.stop'
   return this.transport.request(request, options, callback)
 }
 

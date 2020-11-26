@@ -59,6 +59,7 @@ function indexApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.index'
   return this.transport.request(request, options, callback)
 }
 

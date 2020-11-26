@@ -54,6 +54,7 @@ CatApi.prototype.aliases = function catAliasesApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.cat.aliases'
   return this.transport.request(request, options, callback)
 }
 
@@ -80,6 +81,7 @@ CatApi.prototype.allocation = function catAllocationApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.cat.allocation'
   return this.transport.request(request, options, callback)
 }
 
@@ -106,6 +108,7 @@ CatApi.prototype.count = function catCountApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.cat.count'
   return this.transport.request(request, options, callback)
 }
 
@@ -132,6 +135,7 @@ CatApi.prototype.fielddata = function catFielddataApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.cat.fielddata'
   return this.transport.request(request, options, callback)
 }
 
@@ -153,6 +157,7 @@ CatApi.prototype.health = function catHealthApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.cat.health'
   return this.transport.request(request, options, callback)
 }
 
@@ -174,6 +179,7 @@ CatApi.prototype.help = function catHelpApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.cat.help'
   return this.transport.request(request, options, callback)
 }
 
@@ -200,6 +206,7 @@ CatApi.prototype.indices = function catIndicesApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.cat.indices'
   return this.transport.request(request, options, callback)
 }
 
@@ -221,6 +228,7 @@ CatApi.prototype.master = function catMasterApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.cat.master'
   return this.transport.request(request, options, callback)
 }
 
@@ -242,6 +250,7 @@ CatApi.prototype.nodeattrs = function catNodeattrsApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.cat.nodeattrs'
   return this.transport.request(request, options, callback)
 }
 
@@ -263,6 +272,7 @@ CatApi.prototype.nodes = function catNodesApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.cat.nodes'
   return this.transport.request(request, options, callback)
 }
 
@@ -284,6 +294,7 @@ CatApi.prototype.pendingTasks = function catPendingTasksApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.cat.pending_tasks'
   return this.transport.request(request, options, callback)
 }
 
@@ -305,6 +316,7 @@ CatApi.prototype.plugins = function catPluginsApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.cat.plugins'
   return this.transport.request(request, options, callback)
 }
 
@@ -331,6 +343,7 @@ CatApi.prototype.recovery = function catRecoveryApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.cat.recovery'
   return this.transport.request(request, options, callback)
 }
 
@@ -352,6 +365,7 @@ CatApi.prototype.repositories = function catRepositoriesApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.cat.repositories'
   return this.transport.request(request, options, callback)
 }
 
@@ -378,6 +392,7 @@ CatApi.prototype.segments = function catSegmentsApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.cat.segments'
   return this.transport.request(request, options, callback)
 }
 
@@ -404,6 +419,7 @@ CatApi.prototype.shards = function catShardsApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.cat.shards'
   return this.transport.request(request, options, callback)
 }
 
@@ -430,6 +446,7 @@ CatApi.prototype.snapshots = function catSnapshotsApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.cat.snapshots'
   return this.transport.request(request, options, callback)
 }
 
@@ -451,6 +468,7 @@ CatApi.prototype.tasks = function catTasksApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.cat.tasks'
   return this.transport.request(request, options, callback)
 }
 
@@ -477,6 +495,7 @@ CatApi.prototype.templates = function catTemplatesApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.cat.templates'
   return this.transport.request(request, options, callback)
 }
 
@@ -503,6 +522,7 @@ CatApi.prototype.threadPool = function catThreadPoolApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.cat.thread_pool'
   return this.transport.request(request, options, callback)
 }
 
@@ -529,6 +549,7 @@ CatApi.prototype.mlDataFrameAnalytics = function catMlDataFrameAnalyticsApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.cat.ml_data_frame_analytics'
   return this.transport.request(request, options, callback)
 }
 
@@ -555,6 +576,7 @@ CatApi.prototype.mlDatafeeds = function catMlDatafeedsApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.cat.ml_datafeeds'
   return this.transport.request(request, options, callback)
 }
 
@@ -581,6 +603,7 @@ CatApi.prototype.mlJobs = function catMlJobsApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.cat.ml_jobs'
   return this.transport.request(request, options, callback)
 }
 
@@ -607,6 +630,7 @@ CatApi.prototype.mlTrainedModels = function catMlTrainedModelsApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.cat.ml_trained_models'
   return this.transport.request(request, options, callback)
 }
 
@@ -633,6 +657,7 @@ CatApi.prototype.transforms = function catTransformsApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.cat.transforms'
   return this.transport.request(request, options, callback)
 }
 

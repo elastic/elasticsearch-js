@@ -54,6 +54,7 @@ TasksApi.prototype.cancel = function tasksCancelApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.tasks.cancel'
   return this.transport.request(request, options, callback)
 }
 
@@ -81,6 +82,7 @@ TasksApi.prototype.get = function tasksGetApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.tasks.get'
   return this.transport.request(request, options, callback)
 }
 
@@ -102,6 +104,7 @@ TasksApi.prototype.list = function tasksListApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.tasks.list'
   return this.transport.request(request, options, callback)
 }
 

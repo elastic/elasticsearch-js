@@ -59,6 +59,7 @@ function deleteApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.delete'
   return this.transport.request(request, options, callback)
 }
 

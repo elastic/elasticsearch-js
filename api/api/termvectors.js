@@ -55,6 +55,7 @@ function termvectorsApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.termvectors'
   return this.transport.request(request, options, callback)
 }
 

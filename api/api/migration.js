@@ -54,6 +54,7 @@ MigrationApi.prototype.deprecations = function migrationDeprecationsApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.migration.deprecations'
   return this.transport.request(request, options, callback)
 }
 

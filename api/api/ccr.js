@@ -55,6 +55,7 @@ CcrApi.prototype.deleteAutoFollowPattern = function ccrDeleteAutoFollowPatternAp
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.delete_auto_follow_pattern'
   return this.transport.request(request, options, callback)
 }
 
@@ -86,6 +87,7 @@ CcrApi.prototype.follow = function ccrFollowApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.follow'
   return this.transport.request(request, options, callback)
 }
 
@@ -113,6 +115,7 @@ CcrApi.prototype.followInfo = function ccrFollowInfoApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.follow_info'
   return this.transport.request(request, options, callback)
 }
 
@@ -140,6 +143,7 @@ CcrApi.prototype.followStats = function ccrFollowStatsApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.follow_stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -171,6 +175,7 @@ CcrApi.prototype.forgetFollower = function ccrForgetFollowerApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.forget_follower'
   return this.transport.request(request, options, callback)
 }
 
@@ -197,6 +202,7 @@ CcrApi.prototype.getAutoFollowPattern = function ccrGetAutoFollowPatternApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.get_auto_follow_pattern'
   return this.transport.request(request, options, callback)
 }
 
@@ -224,6 +230,7 @@ CcrApi.prototype.pauseAutoFollowPattern = function ccrPauseAutoFollowPatternApi 
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.pause_auto_follow_pattern'
   return this.transport.request(request, options, callback)
 }
 
@@ -251,6 +258,7 @@ CcrApi.prototype.pauseFollow = function ccrPauseFollowApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.pause_follow'
   return this.transport.request(request, options, callback)
 }
 
@@ -282,6 +290,7 @@ CcrApi.prototype.putAutoFollowPattern = function ccrPutAutoFollowPatternApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.put_auto_follow_pattern'
   return this.transport.request(request, options, callback)
 }
 
@@ -309,6 +318,7 @@ CcrApi.prototype.resumeAutoFollowPattern = function ccrResumeAutoFollowPatternAp
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.resume_auto_follow_pattern'
   return this.transport.request(request, options, callback)
 }
 
@@ -336,6 +346,7 @@ CcrApi.prototype.resumeFollow = function ccrResumeFollowApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.resume_follow'
   return this.transport.request(request, options, callback)
 }
 
@@ -357,6 +368,7 @@ CcrApi.prototype.stats = function ccrStatsApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -384,6 +396,7 @@ CcrApi.prototype.unfollow = function ccrUnfollowApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.ccr.unfollow'
   return this.transport.request(request, options, callback)
 }
 

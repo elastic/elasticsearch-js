@@ -55,6 +55,7 @@ AsyncSearchApi.prototype.delete = function asyncSearchDeleteApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.async_search.delete'
   return this.transport.request(request, options, callback)
 }
 
@@ -82,6 +83,7 @@ AsyncSearchApi.prototype.get = function asyncSearchGetApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.async_search.get'
   return this.transport.request(request, options, callback)
 }
 
@@ -109,6 +111,7 @@ AsyncSearchApi.prototype.status = function asyncSearchStatusApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.async_search.status'
   return this.transport.request(request, options, callback)
 }
 
@@ -135,6 +138,7 @@ AsyncSearchApi.prototype.submit = function asyncSearchSubmitApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.async_search.submit'
   return this.transport.request(request, options, callback)
 }
 

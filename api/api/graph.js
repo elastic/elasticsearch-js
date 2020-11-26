@@ -55,6 +55,7 @@ GraphApi.prototype.explore = function graphExploreApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.graph.explore'
   return this.transport.request(request, options, callback)
 }
 

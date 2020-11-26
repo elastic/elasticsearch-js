@@ -55,6 +55,7 @@ SnapshotApi.prototype.cleanupRepository = function snapshotCleanupRepositoryApi 
     querystring
   }
 
+  options.api = 'elasticsearch.snapshot.cleanup_repository'
   return this.transport.request(request, options, callback)
 }
 
@@ -103,6 +104,7 @@ SnapshotApi.prototype.clone = function snapshotCloneApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.snapshot.clone'
   return this.transport.request(request, options, callback)
 }
 
@@ -140,6 +142,7 @@ SnapshotApi.prototype.create = function snapshotCreateApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.snapshot.create'
   return this.transport.request(request, options, callback)
 }
 
@@ -171,6 +174,7 @@ SnapshotApi.prototype.createRepository = function snapshotCreateRepositoryApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.snapshot.create_repository'
   return this.transport.request(request, options, callback)
 }
 
@@ -208,6 +212,7 @@ SnapshotApi.prototype.delete = function snapshotDeleteApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.snapshot.delete'
   return this.transport.request(request, options, callback)
 }
 
@@ -235,6 +240,7 @@ SnapshotApi.prototype.deleteRepository = function snapshotDeleteRepositoryApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.snapshot.delete_repository'
   return this.transport.request(request, options, callback)
 }
 
@@ -272,6 +278,7 @@ SnapshotApi.prototype.get = function snapshotGetApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.snapshot.get'
   return this.transport.request(request, options, callback)
 }
 
@@ -298,6 +305,7 @@ SnapshotApi.prototype.getRepository = function snapshotGetRepositoryApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.snapshot.get_repository'
   return this.transport.request(request, options, callback)
 }
 
@@ -335,6 +343,7 @@ SnapshotApi.prototype.restore = function snapshotRestoreApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.snapshot.restore'
   return this.transport.request(request, options, callback)
 }
 
@@ -370,6 +379,7 @@ SnapshotApi.prototype.status = function snapshotStatusApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.snapshot.status'
   return this.transport.request(request, options, callback)
 }
 
@@ -397,6 +407,7 @@ SnapshotApi.prototype.verifyRepository = function snapshotVerifyRepositoryApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.snapshot.verify_repository'
   return this.transport.request(request, options, callback)
 }
 

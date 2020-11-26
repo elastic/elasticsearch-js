@@ -54,6 +54,7 @@ function reindexRethrottleApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.reindex_rethrottle'
   return this.transport.request(request, options, callback)
 }
 

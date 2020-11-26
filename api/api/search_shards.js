@@ -49,6 +49,7 @@ function searchShardsApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.search_shards'
   return this.transport.request(request, options, callback)
 }
 

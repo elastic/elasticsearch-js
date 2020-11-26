@@ -50,6 +50,7 @@ function deleteScriptApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.delete_script'
   return this.transport.request(request, options, callback)
 }
 

@@ -49,6 +49,7 @@ function mtermvectorsApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.mtermvectors'
   return this.transport.request(request, options, callback)
 }
 

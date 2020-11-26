@@ -54,6 +54,7 @@ NodesApi.prototype.hotThreads = function nodesHotThreadsApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.nodes.hot_threads'
   return this.transport.request(request, options, callback)
 }
 
@@ -86,6 +87,7 @@ NodesApi.prototype.info = function nodesInfoApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.nodes.info'
   return this.transport.request(request, options, callback)
 }
 
@@ -112,6 +114,7 @@ NodesApi.prototype.reloadSecureSettings = function nodesReloadSecureSettingsApi 
     querystring
   }
 
+  options.api = 'elasticsearch.nodes.reload_secure_settings'
   return this.transport.request(request, options, callback)
 }
 
@@ -150,6 +153,7 @@ NodesApi.prototype.stats = function nodesStatsApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.nodes.stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -182,6 +186,7 @@ NodesApi.prototype.usage = function nodesUsageApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.nodes.usage'
   return this.transport.request(request, options, callback)
 }
 

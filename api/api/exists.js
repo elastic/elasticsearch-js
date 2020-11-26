@@ -54,6 +54,7 @@ function existsApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.exists'
   return this.transport.request(request, options, callback)
 }
 

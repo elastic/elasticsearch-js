@@ -50,6 +50,7 @@ function updateByQueryApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.update_by_query'
   return this.transport.request(request, options, callback)
 }
 

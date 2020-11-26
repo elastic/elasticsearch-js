@@ -66,6 +66,7 @@ WatcherApi.prototype.ackWatch = function watcherAckWatchApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.watcher.ack_watch'
   return this.transport.request(request, options, callback)
 }
 
@@ -93,6 +94,7 @@ WatcherApi.prototype.activateWatch = function watcherActivateWatchApi (params, o
     querystring
   }
 
+  options.api = 'elasticsearch.watcher.activate_watch'
   return this.transport.request(request, options, callback)
 }
 
@@ -120,6 +122,7 @@ WatcherApi.prototype.deactivateWatch = function watcherDeactivateWatchApi (param
     querystring
   }
 
+  options.api = 'elasticsearch.watcher.deactivate_watch'
   return this.transport.request(request, options, callback)
 }
 
@@ -147,6 +150,7 @@ WatcherApi.prototype.deleteWatch = function watcherDeleteWatchApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.watcher.delete_watch'
   return this.transport.request(request, options, callback)
 }
 
@@ -173,6 +177,7 @@ WatcherApi.prototype.executeWatch = function watcherExecuteWatchApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.watcher.execute_watch'
   return this.transport.request(request, options, callback)
 }
 
@@ -200,6 +205,7 @@ WatcherApi.prototype.getWatch = function watcherGetWatchApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.watcher.get_watch'
   return this.transport.request(request, options, callback)
 }
 
@@ -227,6 +233,7 @@ WatcherApi.prototype.putWatch = function watcherPutWatchApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.watcher.put_watch'
   return this.transport.request(request, options, callback)
 }
 
@@ -248,6 +255,7 @@ WatcherApi.prototype.start = function watcherStartApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.watcher.start'
   return this.transport.request(request, options, callback)
 }
 
@@ -274,6 +282,7 @@ WatcherApi.prototype.stats = function watcherStatsApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.watcher.stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -295,6 +304,7 @@ WatcherApi.prototype.stop = function watcherStopApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.watcher.stop'
   return this.transport.request(request, options, callback)
 }
 

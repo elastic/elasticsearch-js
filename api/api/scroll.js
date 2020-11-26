@@ -49,6 +49,7 @@ function scrollApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.scroll'
   return this.transport.request(request, options, callback)
 }
 

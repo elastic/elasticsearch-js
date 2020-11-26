@@ -55,6 +55,7 @@ TransformApi.prototype.deleteTransform = function transformDeleteTransformApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.transform.delete_transform'
   return this.transport.request(request, options, callback)
 }
 
@@ -81,6 +82,7 @@ TransformApi.prototype.getTransform = function transformGetTransformApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.transform.get_transform'
   return this.transport.request(request, options, callback)
 }
 
@@ -108,6 +110,7 @@ TransformApi.prototype.getTransformStats = function transformGetTransformStatsAp
     querystring
   }
 
+  options.api = 'elasticsearch.transform.get_transform_stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -135,6 +138,7 @@ TransformApi.prototype.previewTransform = function transformPreviewTransformApi 
     querystring
   }
 
+  options.api = 'elasticsearch.transform.preview_transform'
   return this.transport.request(request, options, callback)
 }
 
@@ -166,6 +170,7 @@ TransformApi.prototype.putTransform = function transformPutTransformApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.transform.put_transform'
   return this.transport.request(request, options, callback)
 }
 
@@ -193,6 +198,7 @@ TransformApi.prototype.startTransform = function transformStartTransformApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.transform.start_transform'
   return this.transport.request(request, options, callback)
 }
 
@@ -220,6 +226,7 @@ TransformApi.prototype.stopTransform = function transformStopTransformApi (param
     querystring
   }
 
+  options.api = 'elasticsearch.transform.stop_transform'
   return this.transport.request(request, options, callback)
 }
 
@@ -251,6 +258,7 @@ TransformApi.prototype.updateTransform = function transformUpdateTransformApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.transform.update_transform'
   return this.transport.request(request, options, callback)
 }
 

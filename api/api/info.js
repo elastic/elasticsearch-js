@@ -44,6 +44,7 @@ function infoApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.info'
   return this.transport.request(request, options, callback)
 }
 

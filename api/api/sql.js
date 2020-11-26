@@ -55,6 +55,7 @@ SqlApi.prototype.clearCursor = function sqlClearCursorApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.sql.clear_cursor'
   return this.transport.request(request, options, callback)
 }
 
@@ -82,6 +83,7 @@ SqlApi.prototype.query = function sqlQueryApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.sql.query'
   return this.transport.request(request, options, callback)
 }
 
@@ -109,6 +111,7 @@ SqlApi.prototype.translate = function sqlTranslateApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.sql.translate'
   return this.transport.request(request, options, callback)
 }
 

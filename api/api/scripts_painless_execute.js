@@ -44,6 +44,7 @@ function scriptsPainlessExecuteApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.scripts_painless_execute'
   return this.transport.request(request, options, callback)
 }
 

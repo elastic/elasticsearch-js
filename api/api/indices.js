@@ -65,6 +65,7 @@ IndicesApi.prototype.addBlock = function indicesAddBlockApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.indices.add_block'
   return this.transport.request(request, options, callback)
 }
 
@@ -91,6 +92,7 @@ IndicesApi.prototype.analyze = function indicesAnalyzeApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.indices.analyze'
   return this.transport.request(request, options, callback)
 }
 
@@ -117,6 +119,7 @@ IndicesApi.prototype.clearCache = function indicesClearCacheApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.indices.clear_cache'
   return this.transport.request(request, options, callback)
 }
 
@@ -154,6 +157,7 @@ IndicesApi.prototype.clone = function indicesCloneApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.indices.clone'
   return this.transport.request(request, options, callback)
 }
 
@@ -181,6 +185,7 @@ IndicesApi.prototype.close = function indicesCloseApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.indices.close'
   return this.transport.request(request, options, callback)
 }
 
@@ -208,6 +213,7 @@ IndicesApi.prototype.create = function indicesCreateApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.indices.create'
   return this.transport.request(request, options, callback)
 }
 
@@ -235,6 +241,7 @@ IndicesApi.prototype.delete = function indicesDeleteApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.indices.delete'
   return this.transport.request(request, options, callback)
 }
 
@@ -277,6 +284,7 @@ IndicesApi.prototype.deleteAlias = function indicesDeleteAliasApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.indices.delete_alias'
   return this.transport.request(request, options, callback)
 }
 
@@ -304,6 +312,7 @@ IndicesApi.prototype.deleteIndexTemplate = function indicesDeleteIndexTemplateAp
     querystring
   }
 
+  options.api = 'elasticsearch.indices.delete_index_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -331,6 +340,7 @@ IndicesApi.prototype.deleteTemplate = function indicesDeleteTemplateApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.indices.delete_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -358,6 +368,7 @@ IndicesApi.prototype.exists = function indicesExistsApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.indices.exists'
   return this.transport.request(request, options, callback)
 }
 
@@ -390,6 +401,7 @@ IndicesApi.prototype.existsAlias = function indicesExistsAliasApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.indices.exists_alias'
   return this.transport.request(request, options, callback)
 }
 
@@ -417,6 +429,7 @@ IndicesApi.prototype.existsIndexTemplate = function indicesExistsIndexTemplateAp
     querystring
   }
 
+  options.api = 'elasticsearch.indices.exists_index_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -444,6 +457,7 @@ IndicesApi.prototype.existsTemplate = function indicesExistsTemplateApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.indices.exists_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -481,6 +495,7 @@ IndicesApi.prototype.existsType = function indicesExistsTypeApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.indices.exists_type'
   return this.transport.request(request, options, callback)
 }
 
@@ -507,6 +522,7 @@ IndicesApi.prototype.flush = function indicesFlushApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.indices.flush'
   return this.transport.request(request, options, callback)
 }
 
@@ -533,6 +549,7 @@ IndicesApi.prototype.forcemerge = function indicesForcemergeApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.indices.forcemerge'
   return this.transport.request(request, options, callback)
 }
 
@@ -560,6 +577,7 @@ IndicesApi.prototype.get = function indicesGetApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.indices.get'
   return this.transport.request(request, options, callback)
 }
 
@@ -592,6 +610,7 @@ IndicesApi.prototype.getAlias = function indicesGetAliasApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.indices.get_alias'
   return this.transport.request(request, options, callback)
 }
 
@@ -624,6 +643,7 @@ IndicesApi.prototype.getFieldMapping = function indicesGetFieldMappingApi (param
     querystring
   }
 
+  options.api = 'elasticsearch.indices.get_field_mapping'
   return this.transport.request(request, options, callback)
 }
 
@@ -650,6 +670,7 @@ IndicesApi.prototype.getIndexTemplate = function indicesGetIndexTemplateApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.indices.get_index_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -676,6 +697,7 @@ IndicesApi.prototype.getMapping = function indicesGetMappingApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.indices.get_mapping'
   return this.transport.request(request, options, callback)
 }
 
@@ -708,6 +730,7 @@ IndicesApi.prototype.getSettings = function indicesGetSettingsApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.indices.get_settings'
   return this.transport.request(request, options, callback)
 }
 
@@ -734,6 +757,7 @@ IndicesApi.prototype.getTemplate = function indicesGetTemplateApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.indices.get_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -761,6 +785,7 @@ IndicesApi.prototype.open = function indicesOpenApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.indices.open'
   return this.transport.request(request, options, callback)
 }
 
@@ -803,6 +828,7 @@ IndicesApi.prototype.putAlias = function indicesPutAliasApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.indices.put_alias'
   return this.transport.request(request, options, callback)
 }
 
@@ -834,6 +860,7 @@ IndicesApi.prototype.putIndexTemplate = function indicesPutIndexTemplateApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.indices.put_index_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -865,6 +892,7 @@ IndicesApi.prototype.putMapping = function indicesPutMappingApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.indices.put_mapping'
   return this.transport.request(request, options, callback)
 }
 
@@ -897,6 +925,7 @@ IndicesApi.prototype.putSettings = function indicesPutSettingsApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.indices.put_settings'
   return this.transport.request(request, options, callback)
 }
 
@@ -928,6 +957,7 @@ IndicesApi.prototype.putTemplate = function indicesPutTemplateApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.indices.put_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -954,6 +984,7 @@ IndicesApi.prototype.recovery = function indicesRecoveryApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.indices.recovery'
   return this.transport.request(request, options, callback)
 }
 
@@ -980,6 +1011,7 @@ IndicesApi.prototype.refresh = function indicesRefreshApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.indices.refresh'
   return this.transport.request(request, options, callback)
 }
 
@@ -1007,6 +1039,7 @@ IndicesApi.prototype.resolveIndex = function indicesResolveIndexApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.indices.resolve_index'
   return this.transport.request(request, options, callback)
 }
 
@@ -1045,6 +1078,7 @@ IndicesApi.prototype.rollover = function indicesRolloverApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.indices.rollover'
   return this.transport.request(request, options, callback)
 }
 
@@ -1071,6 +1105,7 @@ IndicesApi.prototype.segments = function indicesSegmentsApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.indices.segments'
   return this.transport.request(request, options, callback)
 }
 
@@ -1097,6 +1132,7 @@ IndicesApi.prototype.shardStores = function indicesShardStoresApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.indices.shard_stores'
   return this.transport.request(request, options, callback)
 }
 
@@ -1134,6 +1170,7 @@ IndicesApi.prototype.shrink = function indicesShrinkApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.indices.shrink'
   return this.transport.request(request, options, callback)
 }
 
@@ -1161,6 +1198,7 @@ IndicesApi.prototype.simulateIndexTemplate = function indicesSimulateIndexTempla
     querystring
   }
 
+  options.api = 'elasticsearch.indices.simulate_index_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -1187,6 +1225,7 @@ IndicesApi.prototype.simulateTemplate = function indicesSimulateTemplateApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.indices.simulate_template'
   return this.transport.request(request, options, callback)
 }
 
@@ -1224,6 +1263,7 @@ IndicesApi.prototype.split = function indicesSplitApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.indices.split'
   return this.transport.request(request, options, callback)
 }
 
@@ -1256,6 +1296,7 @@ IndicesApi.prototype.stats = function indicesStatsApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.indices.stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -1283,6 +1324,7 @@ IndicesApi.prototype.updateAliases = function indicesUpdateAliasesApi (params, o
     querystring
   }
 
+  options.api = 'elasticsearch.indices.update_aliases'
   return this.transport.request(request, options, callback)
 }
 
@@ -1318,6 +1360,7 @@ IndicesApi.prototype.validateQuery = function indicesValidateQueryApi (params, o
     querystring
   }
 
+  options.api = 'elasticsearch.indices.validate_query'
   return this.transport.request(request, options, callback)
 }
 
@@ -1345,6 +1388,7 @@ IndicesApi.prototype.createDataStream = function indicesCreateDataStreamApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.indices.create_data_stream'
   return this.transport.request(request, options, callback)
 }
 
@@ -1371,6 +1415,7 @@ IndicesApi.prototype.dataStreamsStats = function indicesDataStreamsStatsApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.indices.data_streams_stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -1398,6 +1443,7 @@ IndicesApi.prototype.deleteDataStream = function indicesDeleteDataStreamApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.indices.delete_data_stream'
   return this.transport.request(request, options, callback)
 }
 
@@ -1425,6 +1471,7 @@ IndicesApi.prototype.freeze = function indicesFreezeApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.indices.freeze'
   return this.transport.request(request, options, callback)
 }
 
@@ -1451,6 +1498,7 @@ IndicesApi.prototype.getDataStream = function indicesGetDataStreamApi (params, o
     querystring
   }
 
+  options.api = 'elasticsearch.indices.get_data_stream'
   return this.transport.request(request, options, callback)
 }
 
@@ -1478,6 +1526,7 @@ IndicesApi.prototype.migrateToDataStream = function indicesMigrateToDataStreamAp
     querystring
   }
 
+  options.api = 'elasticsearch.indices.migrate_to_data_stream'
   return this.transport.request(request, options, callback)
 }
 
@@ -1505,6 +1554,7 @@ IndicesApi.prototype.reloadSearchAnalyzers = function indicesReloadSearchAnalyze
     querystring
   }
 
+  options.api = 'elasticsearch.indices.reload_search_analyzers'
   return this.transport.request(request, options, callback)
 }
 
@@ -1532,6 +1582,7 @@ IndicesApi.prototype.unfreeze = function indicesUnfreezeApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.indices.unfreeze'
   return this.transport.request(request, options, callback)
 }
 

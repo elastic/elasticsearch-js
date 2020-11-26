@@ -64,6 +64,7 @@ function bulkApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.bulk'
   return this.transport.request(request, options, callback)
 }
 

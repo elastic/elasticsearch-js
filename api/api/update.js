@@ -63,6 +63,7 @@ function updateApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.update'
   return this.transport.request(request, options, callback)
 }
 

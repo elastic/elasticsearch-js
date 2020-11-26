@@ -55,6 +55,7 @@ IngestApi.prototype.deletePipeline = function ingestDeletePipelineApi (params, o
     querystring
   }
 
+  options.api = 'elasticsearch.ingest.delete_pipeline'
   return this.transport.request(request, options, callback)
 }
 
@@ -81,6 +82,7 @@ IngestApi.prototype.getPipeline = function ingestGetPipelineApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.ingest.get_pipeline'
   return this.transport.request(request, options, callback)
 }
 
@@ -102,6 +104,7 @@ IngestApi.prototype.processorGrok = function ingestProcessorGrokApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.ingest.processor_grok'
   return this.transport.request(request, options, callback)
 }
 
@@ -133,6 +136,7 @@ IngestApi.prototype.putPipeline = function ingestPutPipelineApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.ingest.put_pipeline'
   return this.transport.request(request, options, callback)
 }
 
@@ -165,6 +169,7 @@ IngestApi.prototype.simulate = function ingestSimulateApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.ingest.simulate'
   return this.transport.request(request, options, callback)
 }
 

@@ -63,6 +63,7 @@ function createApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.create'
   return this.transport.request(request, options, callback)
 }
 

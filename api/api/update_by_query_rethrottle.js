@@ -54,6 +54,7 @@ function updateByQueryRethrottleApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.update_by_query_rethrottle'
   return this.transport.request(request, options, callback)
 }
 

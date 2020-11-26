@@ -44,6 +44,7 @@ function pingApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ping'
   return this.transport.request(request, options, callback)
 }
 

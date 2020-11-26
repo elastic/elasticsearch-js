@@ -49,6 +49,7 @@ XpackApi.prototype.info = function xpackInfoApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.xpack.info'
   return this.transport.request(request, options, callback)
 }
 
@@ -70,6 +71,7 @@ XpackApi.prototype.usage = function xpackUsageApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.xpack.usage'
   return this.transport.request(request, options, callback)
 }
 

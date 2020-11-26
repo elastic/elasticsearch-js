@@ -54,6 +54,7 @@ function deleteByQueryApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.delete_by_query'
   return this.transport.request(request, options, callback)
 }
 

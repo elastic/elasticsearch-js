@@ -55,6 +55,7 @@ function rankEvalApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.rank_eval'
   return this.transport.request(request, options, callback)
 }
 

@@ -44,6 +44,7 @@ function getScriptContextApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.get_script_context'
   return this.transport.request(request, options, callback)
 }
 

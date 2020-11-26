@@ -50,6 +50,7 @@ function reindexApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.reindex'
   return this.transport.request(request, options, callback)
 }
 

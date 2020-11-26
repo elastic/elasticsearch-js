@@ -55,6 +55,7 @@ MlApi.prototype.closeJob = function mlCloseJobApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ml.close_job'
   return this.transport.request(request, options, callback)
 }
 
@@ -82,6 +83,7 @@ MlApi.prototype.deleteCalendar = function mlDeleteCalendarApi (params, options, 
     querystring
   }
 
+  options.api = 'elasticsearch.ml.delete_calendar'
   return this.transport.request(request, options, callback)
 }
 
@@ -119,6 +121,7 @@ MlApi.prototype.deleteCalendarEvent = function mlDeleteCalendarEventApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.ml.delete_calendar_event'
   return this.transport.request(request, options, callback)
 }
 
@@ -156,6 +159,7 @@ MlApi.prototype.deleteCalendarJob = function mlDeleteCalendarJobApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.ml.delete_calendar_job'
   return this.transport.request(request, options, callback)
 }
 
@@ -183,6 +187,7 @@ MlApi.prototype.deleteDataFrameAnalytics = function mlDeleteDataFrameAnalyticsAp
     querystring
   }
 
+  options.api = 'elasticsearch.ml.delete_data_frame_analytics'
   return this.transport.request(request, options, callback)
 }
 
@@ -210,6 +215,7 @@ MlApi.prototype.deleteDatafeed = function mlDeleteDatafeedApi (params, options, 
     querystring
   }
 
+  options.api = 'elasticsearch.ml.delete_datafeed'
   return this.transport.request(request, options, callback)
 }
 
@@ -236,6 +242,7 @@ MlApi.prototype.deleteExpiredData = function mlDeleteExpiredDataApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.ml.delete_expired_data'
   return this.transport.request(request, options, callback)
 }
 
@@ -263,6 +270,7 @@ MlApi.prototype.deleteFilter = function mlDeleteFilterApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.ml.delete_filter'
   return this.transport.request(request, options, callback)
 }
 
@@ -301,6 +309,7 @@ MlApi.prototype.deleteForecast = function mlDeleteForecastApi (params, options, 
     querystring
   }
 
+  options.api = 'elasticsearch.ml.delete_forecast'
   return this.transport.request(request, options, callback)
 }
 
@@ -328,6 +337,7 @@ MlApi.prototype.deleteJob = function mlDeleteJobApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.ml.delete_job'
   return this.transport.request(request, options, callback)
 }
 
@@ -365,6 +375,7 @@ MlApi.prototype.deleteModelSnapshot = function mlDeleteModelSnapshotApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.ml.delete_model_snapshot'
   return this.transport.request(request, options, callback)
 }
 
@@ -392,6 +403,7 @@ MlApi.prototype.deleteTrainedModel = function mlDeleteTrainedModelApi (params, o
     querystring
   }
 
+  options.api = 'elasticsearch.ml.delete_trained_model'
   return this.transport.request(request, options, callback)
 }
 
@@ -419,6 +431,7 @@ MlApi.prototype.estimateModelMemory = function mlEstimateModelMemoryApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.ml.estimate_model_memory'
   return this.transport.request(request, options, callback)
 }
 
@@ -446,6 +459,7 @@ MlApi.prototype.evaluateDataFrame = function mlEvaluateDataFrameApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.ml.evaluate_data_frame'
   return this.transport.request(request, options, callback)
 }
 
@@ -472,6 +486,7 @@ MlApi.prototype.explainDataFrameAnalytics = function mlExplainDataFrameAnalytics
     querystring
   }
 
+  options.api = 'elasticsearch.ml.explain_data_frame_analytics'
   return this.transport.request(request, options, callback)
 }
 
@@ -499,6 +514,7 @@ MlApi.prototype.findFileStructure = function mlFindFileStructureApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.ml.find_file_structure'
   return this.transport.request(request, options, callback)
 }
 
@@ -526,6 +542,7 @@ MlApi.prototype.flushJob = function mlFlushJobApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ml.flush_job'
   return this.transport.request(request, options, callback)
 }
 
@@ -553,6 +570,7 @@ MlApi.prototype.forecast = function mlForecastApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ml.forecast'
   return this.transport.request(request, options, callback)
 }
 
@@ -591,6 +609,7 @@ MlApi.prototype.getBuckets = function mlGetBucketsApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_buckets'
   return this.transport.request(request, options, callback)
 }
 
@@ -618,6 +637,7 @@ MlApi.prototype.getCalendarEvents = function mlGetCalendarEventsApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_calendar_events'
   return this.transport.request(request, options, callback)
 }
 
@@ -644,6 +664,7 @@ MlApi.prototype.getCalendars = function mlGetCalendarsApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_calendars'
   return this.transport.request(request, options, callback)
 }
 
@@ -682,6 +703,7 @@ MlApi.prototype.getCategories = function mlGetCategoriesApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_categories'
   return this.transport.request(request, options, callback)
 }
 
@@ -708,6 +730,7 @@ MlApi.prototype.getDataFrameAnalytics = function mlGetDataFrameAnalyticsApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_data_frame_analytics'
   return this.transport.request(request, options, callback)
 }
 
@@ -734,6 +757,7 @@ MlApi.prototype.getDataFrameAnalyticsStats = function mlGetDataFrameAnalyticsSta
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_data_frame_analytics_stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -760,6 +784,7 @@ MlApi.prototype.getDatafeedStats = function mlGetDatafeedStatsApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_datafeed_stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -786,6 +811,7 @@ MlApi.prototype.getDatafeeds = function mlGetDatafeedsApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_datafeeds'
   return this.transport.request(request, options, callback)
 }
 
@@ -812,6 +838,7 @@ MlApi.prototype.getFilters = function mlGetFiltersApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_filters'
   return this.transport.request(request, options, callback)
 }
 
@@ -839,6 +866,7 @@ MlApi.prototype.getInfluencers = function mlGetInfluencersApi (params, options, 
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_influencers'
   return this.transport.request(request, options, callback)
 }
 
@@ -865,6 +893,7 @@ MlApi.prototype.getJobStats = function mlGetJobStatsApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_job_stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -891,6 +920,7 @@ MlApi.prototype.getJobs = function mlGetJobsApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_jobs'
   return this.transport.request(request, options, callback)
 }
 
@@ -929,6 +959,7 @@ MlApi.prototype.getModelSnapshots = function mlGetModelSnapshotsApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_model_snapshots'
   return this.transport.request(request, options, callback)
 }
 
@@ -956,6 +987,7 @@ MlApi.prototype.getOverallBuckets = function mlGetOverallBucketsApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_overall_buckets'
   return this.transport.request(request, options, callback)
 }
 
@@ -983,6 +1015,7 @@ MlApi.prototype.getRecords = function mlGetRecordsApi (params, options, callback
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_records'
   return this.transport.request(request, options, callback)
 }
 
@@ -1009,6 +1042,7 @@ MlApi.prototype.getTrainedModels = function mlGetTrainedModelsApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_trained_models'
   return this.transport.request(request, options, callback)
 }
 
@@ -1035,6 +1069,7 @@ MlApi.prototype.getTrainedModelsStats = function mlGetTrainedModelsStatsApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.ml.get_trained_models_stats'
   return this.transport.request(request, options, callback)
 }
 
@@ -1056,6 +1091,7 @@ MlApi.prototype.info = function mlInfoApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ml.info'
   return this.transport.request(request, options, callback)
 }
 
@@ -1083,6 +1119,7 @@ MlApi.prototype.openJob = function mlOpenJobApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ml.open_job'
   return this.transport.request(request, options, callback)
 }
 
@@ -1114,6 +1151,7 @@ MlApi.prototype.postCalendarEvents = function mlPostCalendarEventsApi (params, o
     querystring
   }
 
+  options.api = 'elasticsearch.ml.post_calendar_events'
   return this.transport.request(request, options, callback)
 }
 
@@ -1145,6 +1183,7 @@ MlApi.prototype.postData = function mlPostDataApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ml.post_data'
   return this.transport.request(request, options, callback)
 }
 
@@ -1172,6 +1211,7 @@ MlApi.prototype.previewDatafeed = function mlPreviewDatafeedApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.ml.preview_datafeed'
   return this.transport.request(request, options, callback)
 }
 
@@ -1199,6 +1239,7 @@ MlApi.prototype.putCalendar = function mlPutCalendarApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.ml.put_calendar'
   return this.transport.request(request, options, callback)
 }
 
@@ -1236,6 +1277,7 @@ MlApi.prototype.putCalendarJob = function mlPutCalendarJobApi (params, options, 
     querystring
   }
 
+  options.api = 'elasticsearch.ml.put_calendar_job'
   return this.transport.request(request, options, callback)
 }
 
@@ -1267,6 +1309,7 @@ MlApi.prototype.putDataFrameAnalytics = function mlPutDataFrameAnalyticsApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.ml.put_data_frame_analytics'
   return this.transport.request(request, options, callback)
 }
 
@@ -1298,6 +1341,7 @@ MlApi.prototype.putDatafeed = function mlPutDatafeedApi (params, options, callba
     querystring
   }
 
+  options.api = 'elasticsearch.ml.put_datafeed'
   return this.transport.request(request, options, callback)
 }
 
@@ -1329,6 +1373,7 @@ MlApi.prototype.putFilter = function mlPutFilterApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.ml.put_filter'
   return this.transport.request(request, options, callback)
 }
 
@@ -1360,6 +1405,7 @@ MlApi.prototype.putJob = function mlPutJobApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ml.put_job'
   return this.transport.request(request, options, callback)
 }
 
@@ -1391,6 +1437,7 @@ MlApi.prototype.putTrainedModel = function mlPutTrainedModelApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.ml.put_trained_model'
   return this.transport.request(request, options, callback)
 }
 
@@ -1428,6 +1475,7 @@ MlApi.prototype.revertModelSnapshot = function mlRevertModelSnapshotApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.ml.revert_model_snapshot'
   return this.transport.request(request, options, callback)
 }
 
@@ -1449,6 +1497,7 @@ MlApi.prototype.setUpgradeMode = function mlSetUpgradeModeApi (params, options, 
     querystring
   }
 
+  options.api = 'elasticsearch.ml.set_upgrade_mode'
   return this.transport.request(request, options, callback)
 }
 
@@ -1476,6 +1525,7 @@ MlApi.prototype.startDataFrameAnalytics = function mlStartDataFrameAnalyticsApi 
     querystring
   }
 
+  options.api = 'elasticsearch.ml.start_data_frame_analytics'
   return this.transport.request(request, options, callback)
 }
 
@@ -1503,6 +1553,7 @@ MlApi.prototype.startDatafeed = function mlStartDatafeedApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.ml.start_datafeed'
   return this.transport.request(request, options, callback)
 }
 
@@ -1530,6 +1581,7 @@ MlApi.prototype.stopDataFrameAnalytics = function mlStopDataFrameAnalyticsApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.ml.stop_data_frame_analytics'
   return this.transport.request(request, options, callback)
 }
 
@@ -1557,6 +1609,7 @@ MlApi.prototype.stopDatafeed = function mlStopDatafeedApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.ml.stop_datafeed'
   return this.transport.request(request, options, callback)
 }
 
@@ -1588,6 +1641,7 @@ MlApi.prototype.updateDataFrameAnalytics = function mlUpdateDataFrameAnalyticsAp
     querystring
   }
 
+  options.api = 'elasticsearch.ml.update_data_frame_analytics'
   return this.transport.request(request, options, callback)
 }
 
@@ -1619,6 +1673,7 @@ MlApi.prototype.updateDatafeed = function mlUpdateDatafeedApi (params, options, 
     querystring
   }
 
+  options.api = 'elasticsearch.ml.update_datafeed'
   return this.transport.request(request, options, callback)
 }
 
@@ -1650,6 +1705,7 @@ MlApi.prototype.updateFilter = function mlUpdateFilterApi (params, options, call
     querystring
   }
 
+  options.api = 'elasticsearch.ml.update_filter'
   return this.transport.request(request, options, callback)
 }
 
@@ -1681,6 +1737,7 @@ MlApi.prototype.updateJob = function mlUpdateJobApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.ml.update_job'
   return this.transport.request(request, options, callback)
 }
 
@@ -1722,6 +1779,7 @@ MlApi.prototype.updateModelSnapshot = function mlUpdateModelSnapshotApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.ml.update_model_snapshot'
   return this.transport.request(request, options, callback)
 }
 
@@ -1759,6 +1817,7 @@ MlApi.prototype.upgradeJobSnapshot = function mlUpgradeJobSnapshotApi (params, o
     querystring
   }
 
+  options.api = 'elasticsearch.ml.upgrade_job_snapshot'
   return this.transport.request(request, options, callback)
 }
 
@@ -1786,6 +1845,7 @@ MlApi.prototype.validate = function mlValidateApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.ml.validate'
   return this.transport.request(request, options, callback)
 }
 
@@ -1813,6 +1873,7 @@ MlApi.prototype.validateDetector = function mlValidateDetectorApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.ml.validate_detector'
   return this.transport.request(request, options, callback)
 }
 

@@ -49,6 +49,7 @@ function openPointInTimeApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.open_point_in_time'
   return this.transport.request(request, options, callback)
 }
 

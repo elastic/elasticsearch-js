@@ -49,6 +49,7 @@ function countApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.count'
   return this.transport.request(request, options, callback)
 }
 

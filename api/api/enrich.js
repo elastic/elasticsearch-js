@@ -55,6 +55,7 @@ EnrichApi.prototype.deletePolicy = function enrichDeletePolicyApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.enrich.delete_policy'
   return this.transport.request(request, options, callback)
 }
 
@@ -82,6 +83,7 @@ EnrichApi.prototype.executePolicy = function enrichExecutePolicyApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.enrich.execute_policy'
   return this.transport.request(request, options, callback)
 }
 
@@ -108,6 +110,7 @@ EnrichApi.prototype.getPolicy = function enrichGetPolicyApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.enrich.get_policy'
   return this.transport.request(request, options, callback)
 }
 
@@ -139,6 +142,7 @@ EnrichApi.prototype.putPolicy = function enrichPutPolicyApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.enrich.put_policy'
   return this.transport.request(request, options, callback)
 }
 
@@ -160,6 +164,7 @@ EnrichApi.prototype.stats = function enrichStatsApi (params, options, callback) 
     querystring
   }
 
+  options.api = 'elasticsearch.enrich.stats'
   return this.transport.request(request, options, callback)
 }
 

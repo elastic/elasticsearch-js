@@ -49,6 +49,7 @@ SecurityApi.prototype.authenticate = function securityAuthenticateApi (params, o
     querystring
   }
 
+  options.api = 'elasticsearch.security.authenticate'
   return this.transport.request(request, options, callback)
 }
 
@@ -81,6 +82,7 @@ SecurityApi.prototype.changePassword = function securityChangePasswordApi (param
     querystring
   }
 
+  options.api = 'elasticsearch.security.change_password'
   return this.transport.request(request, options, callback)
 }
 
@@ -108,6 +110,7 @@ SecurityApi.prototype.clearApiKeyCache = function securityClearApiKeyCacheApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.security.clear_api_key_cache'
   return this.transport.request(request, options, callback)
 }
 
@@ -135,6 +138,7 @@ SecurityApi.prototype.clearCachedPrivileges = function securityClearCachedPrivil
     querystring
   }
 
+  options.api = 'elasticsearch.security.clear_cached_privileges'
   return this.transport.request(request, options, callback)
 }
 
@@ -162,6 +166,7 @@ SecurityApi.prototype.clearCachedRealms = function securityClearCachedRealmsApi 
     querystring
   }
 
+  options.api = 'elasticsearch.security.clear_cached_realms'
   return this.transport.request(request, options, callback)
 }
 
@@ -189,6 +194,7 @@ SecurityApi.prototype.clearCachedRoles = function securityClearCachedRolesApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.security.clear_cached_roles'
   return this.transport.request(request, options, callback)
 }
 
@@ -216,6 +222,7 @@ SecurityApi.prototype.createApiKey = function securityCreateApiKeyApi (params, o
     querystring
   }
 
+  options.api = 'elasticsearch.security.create_api_key'
   return this.transport.request(request, options, callback)
 }
 
@@ -253,6 +260,7 @@ SecurityApi.prototype.deletePrivileges = function securityDeletePrivilegesApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.security.delete_privileges'
   return this.transport.request(request, options, callback)
 }
 
@@ -280,6 +288,7 @@ SecurityApi.prototype.deleteRole = function securityDeleteRoleApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.security.delete_role'
   return this.transport.request(request, options, callback)
 }
 
@@ -307,6 +316,7 @@ SecurityApi.prototype.deleteRoleMapping = function securityDeleteRoleMappingApi 
     querystring
   }
 
+  options.api = 'elasticsearch.security.delete_role_mapping'
   return this.transport.request(request, options, callback)
 }
 
@@ -334,6 +344,7 @@ SecurityApi.prototype.deleteUser = function securityDeleteUserApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.security.delete_user'
   return this.transport.request(request, options, callback)
 }
 
@@ -361,6 +372,7 @@ SecurityApi.prototype.disableUser = function securityDisableUserApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.security.disable_user'
   return this.transport.request(request, options, callback)
 }
 
@@ -388,6 +400,7 @@ SecurityApi.prototype.enableUser = function securityEnableUserApi (params, optio
     querystring
   }
 
+  options.api = 'elasticsearch.security.enable_user'
   return this.transport.request(request, options, callback)
 }
 
@@ -409,6 +422,7 @@ SecurityApi.prototype.getApiKey = function securityGetApiKeyApi (params, options
     querystring
   }
 
+  options.api = 'elasticsearch.security.get_api_key'
   return this.transport.request(request, options, callback)
 }
 
@@ -430,6 +444,7 @@ SecurityApi.prototype.getBuiltinPrivileges = function securityGetBuiltinPrivileg
     querystring
   }
 
+  options.api = 'elasticsearch.security.get_builtin_privileges'
   return this.transport.request(request, options, callback)
 }
 
@@ -465,6 +480,7 @@ SecurityApi.prototype.getPrivileges = function securityGetPrivilegesApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.security.get_privileges'
   return this.transport.request(request, options, callback)
 }
 
@@ -491,6 +507,7 @@ SecurityApi.prototype.getRole = function securityGetRoleApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.security.get_role'
   return this.transport.request(request, options, callback)
 }
 
@@ -517,6 +534,7 @@ SecurityApi.prototype.getRoleMapping = function securityGetRoleMappingApi (param
     querystring
   }
 
+  options.api = 'elasticsearch.security.get_role_mapping'
   return this.transport.request(request, options, callback)
 }
 
@@ -544,6 +562,7 @@ SecurityApi.prototype.getToken = function securityGetTokenApi (params, options, 
     querystring
   }
 
+  options.api = 'elasticsearch.security.get_token'
   return this.transport.request(request, options, callback)
 }
 
@@ -570,6 +589,7 @@ SecurityApi.prototype.getUser = function securityGetUserApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.security.get_user'
   return this.transport.request(request, options, callback)
 }
 
@@ -591,6 +611,7 @@ SecurityApi.prototype.getUserPrivileges = function securityGetUserPrivilegesApi 
     querystring
   }
 
+  options.api = 'elasticsearch.security.get_user_privileges'
   return this.transport.request(request, options, callback)
 }
 
@@ -618,6 +639,7 @@ SecurityApi.prototype.grantApiKey = function securityGrantApiKeyApi (params, opt
     querystring
   }
 
+  options.api = 'elasticsearch.security.grant_api_key'
   return this.transport.request(request, options, callback)
 }
 
@@ -650,6 +672,7 @@ SecurityApi.prototype.hasPrivileges = function securityHasPrivilegesApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.security.has_privileges'
   return this.transport.request(request, options, callback)
 }
 
@@ -677,6 +700,7 @@ SecurityApi.prototype.invalidateApiKey = function securityInvalidateApiKeyApi (p
     querystring
   }
 
+  options.api = 'elasticsearch.security.invalidate_api_key'
   return this.transport.request(request, options, callback)
 }
 
@@ -704,6 +728,7 @@ SecurityApi.prototype.invalidateToken = function securityInvalidateTokenApi (par
     querystring
   }
 
+  options.api = 'elasticsearch.security.invalidate_token'
   return this.transport.request(request, options, callback)
 }
 
@@ -731,6 +756,7 @@ SecurityApi.prototype.putPrivileges = function securityPutPrivilegesApi (params,
     querystring
   }
 
+  options.api = 'elasticsearch.security.put_privileges'
   return this.transport.request(request, options, callback)
 }
 
@@ -762,6 +788,7 @@ SecurityApi.prototype.putRole = function securityPutRoleApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.security.put_role'
   return this.transport.request(request, options, callback)
 }
 
@@ -793,6 +820,7 @@ SecurityApi.prototype.putRoleMapping = function securityPutRoleMappingApi (param
     querystring
   }
 
+  options.api = 'elasticsearch.security.put_role_mapping'
   return this.transport.request(request, options, callback)
 }
 
@@ -824,6 +852,7 @@ SecurityApi.prototype.putUser = function securityPutUserApi (params, options, ca
     querystring
   }
 
+  options.api = 'elasticsearch.security.put_user'
   return this.transport.request(request, options, callback)
 }
 

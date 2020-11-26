@@ -55,6 +55,7 @@ AutoscalingApi.prototype.deleteAutoscalingPolicy = function autoscalingDeleteAut
     querystring
   }
 
+  options.api = 'elasticsearch.autoscaling.delete_autoscaling_policy'
   return this.transport.request(request, options, callback)
 }
 
@@ -76,6 +77,7 @@ AutoscalingApi.prototype.getAutoscalingCapacity = function autoscalingGetAutosca
     querystring
   }
 
+  options.api = 'elasticsearch.autoscaling.get_autoscaling_capacity'
   return this.transport.request(request, options, callback)
 }
 
@@ -103,6 +105,7 @@ AutoscalingApi.prototype.getAutoscalingPolicy = function autoscalingGetAutoscali
     querystring
   }
 
+  options.api = 'elasticsearch.autoscaling.get_autoscaling_policy'
   return this.transport.request(request, options, callback)
 }
 
@@ -134,6 +137,7 @@ AutoscalingApi.prototype.putAutoscalingPolicy = function autoscalingPutAutoscali
     querystring
   }
 
+  options.api = 'elasticsearch.autoscaling.put_autoscaling_policy'
   return this.transport.request(request, options, callback)
 }
 

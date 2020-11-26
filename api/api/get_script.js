@@ -50,6 +50,7 @@ function getScriptApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.get_script'
   return this.transport.request(request, options, callback)
 }
 

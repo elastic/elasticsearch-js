@@ -49,6 +49,7 @@ function renderSearchTemplateApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.render_search_template'
   return this.transport.request(request, options, callback)
 }
 

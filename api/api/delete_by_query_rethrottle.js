@@ -54,6 +54,7 @@ function deleteByQueryRethrottleApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.delete_by_query_rethrottle'
   return this.transport.request(request, options, callback)
 }
 

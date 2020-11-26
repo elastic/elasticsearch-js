@@ -55,6 +55,7 @@ function searchTemplateApi (params, options, callback) {
     querystring
   }
 
+  options.api = 'elasticsearch.search_template'
   return this.transport.request(request, options, callback)
 }
 
