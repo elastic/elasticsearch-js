@@ -381,3 +381,27 @@ client.search({
 })
 ----
 
+[discrete]
+=== API name
+
+You can detect which API has been invoked via the `request.options.api` value.
+This value is configured by default by the client unless you are direclty using
+the `transport.request` method.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'http://localhost:9200'
+})
+
+client.on('response', (err, { meta }) => {
+  if (err) {
+    logger.error(err)
+  } else {
+    logger.info(`Api called: ${meta.request.options.api}`) // 'elasticsearch.info'
+  }
+})
+
+client.info(console.log)
+----
