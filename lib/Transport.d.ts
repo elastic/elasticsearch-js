@@ -112,6 +112,7 @@ export interface TransportRequestOptions {
   context?: Context;
   warnings?: string[];
   opaqueId?: string;
+  api?: string;
 }
 
 export interface TransportRequestCallback {
