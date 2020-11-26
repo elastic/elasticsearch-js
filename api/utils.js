@@ -50,7 +50,7 @@ function normalizeArguments (params, options, callback) {
     params = {}
     options = {}
   }
-  return [params, options, callback]
+  return [params, options || {}, callback]
 }
 
 function noop () {}
