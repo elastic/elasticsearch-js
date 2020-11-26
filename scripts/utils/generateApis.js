@@ -264,6 +264,7 @@ function generateSingleApi (version, spec, common) {
       querystring
     }
 
+    options.api = 'elasticsearch.${api}'
     return this.transport.request(request, options, callback)
   }
   `.trim() // always call trim to avoid newlines
