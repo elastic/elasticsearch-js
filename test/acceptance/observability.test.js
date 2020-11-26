@@ -401,3 +401,25 @@ test('Client name', t => {
 
   t.end()
 })
+
+test('api name', t => {
+  t.plan(5)
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.on('request', (err, { meta }) => {
+    t.error(err)
+    t.strictEqual(meta.request.options.api, 'elasticsearch.info')
+  })
+
+  client.on('response', (err, { meta }) => {
+    t.error(err)
+    t.strictEqual(meta.request.options.api, 'elasticsearch.info')
+  })
+
+  client.info((err, result) => {
+    t.error(err)
+  })
+})
