@@ -145,7 +145,28 @@ request: {
 };
 ----
 
-You can find how the events order might change based on the different situations https://github.com/elastic/elasticsearch-js/blob/master/test/acceptance/events-order.test.js[here].
+[discrete]
+==== Events order
+
+The event order is described in the following graph, in some edge cases, the order is not guaranteed.
+You can find in https://github.com/elastic/elasticsearch-js/blob/master/test/acceptance/events-order.test.js[`test/acceptance/events-order.test.js`] how the order changes based on the situation.
+
+[source]
+----
+serialization
+  │
+  │ (serialization and compression happens between those two events)
+  │
+  └─▶ request
+        │
+        │ (actual time spent over the wire)
+        │
+        └─▶ deserialization
+              │
+              │ (deserialization and decompression happens between those two events)
+              │
+              └─▶ response
+----
 
 
 [discrete]
