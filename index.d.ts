@@ -2557,8 +2557,10 @@ declare class Client {
 }
 
 declare const events: {
-  RESPONSE: string;
+  SERIALIZATION: string;
   REQUEST: string;
+  DESERIALIZATION: string;
+  RESPONSE: string;
   SNIFF: string;
   RESURRECT: string;
 };
