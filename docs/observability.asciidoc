@@ -71,7 +71,7 @@ client.on('request', (err, result) => {
 a|Emitted before starting deserialization and decompression. If you want to measure this phase duration, you should measure the time elapsed between this event and `response`. _(This event might not be emitted in certain situations)_.
 [source,js]
 ----
-client.on('serialization', (err, result) => {
+client.on('deserialization', (err, result) => {
   console.log(err, result)
 })
 ----
