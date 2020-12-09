@@ -314,7 +314,9 @@ const events = {
   RESPONSE: 'response',
   REQUEST: 'request',
   SNIFF: 'sniff',
-  RESURRECT: 'resurrect'
+  RESURRECT: 'resurrect',
+  SERIALIZATION: 'serialization',
+  DESERIALIZATION: 'deserialization'
 }
 
 module.exports = {
