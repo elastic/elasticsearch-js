@@ -23,7 +23,12 @@ const { test } = require('tap')
 const semver = require('semver')
 const { Client, events } = require('../../index')
 const { TimeoutError } = require('../../lib/errors')
-const { connection: { MockConnection, MockConnectionTimeout } } = require('../utils')
+const {
+  connection: {
+    MockConnection,
+    MockConnectionTimeout
+  }
+} = require('../utils')
 
 test('Should emit a request event when a request is performed', t => {
   t.plan(3)
