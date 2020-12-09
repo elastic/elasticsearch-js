@@ -1,14 +1,18 @@
 [[changelog-client]]
 == Changelog
 
+[discrete]
 === 7.10.0
 
+[discrete]
 ==== Features
 
+[discrete]
 ===== Support for Elasticsearch `v7.10`.
 
 You can find all the API changes https://www.elastic.co/guide/en/elasticsearch/reference/7.10/release-notes-7.10.0.html[here].
 
+[discrete]
 =====  Added proxy support https://github.com/elastic/elasticsearch-js/pull/1260[#1260]
 
 If you need to pass through an http(s) proxy for connecting to Elasticsearch, the client offers
@@ -33,20 +37,25 @@ const client = new Client({
 })
 ----
 
+[discrete]
 ==== Fixes
 
+[discrete]
 ===== Scroll search should clear the scroll at the end https://github.com/elastic/elasticsearch-js/pull/1331[#1331]
 
 From now on the scroll search helper will automatically close the scroll on Elasticsearch,
 by doing so, Elasticsearch will free resources faster.
 
+[discrete]
 ===== Handle connectivity issues while reading the body https://github.com/elastic/elasticsearch-js/pull/1343[#1343]
 
 It might happen that the underlying socket stops working due to an external cause while reading the body.
 This could lead to an unwanted `DeserialzationError`. From now, this will be handled as a generic `ConnectionError`.
 
+[discrete]
 ==== Warnings
 
+[discrete]
 ===== Add warning log about nodejs version support https://github.com/elastic/elasticsearch-js/pull/1349[#1349]
 
 `7.11` will be the last version of the client that will support Node.js v8, while `7.12` will be
@@ -56,11 +65,13 @@ as usng an EOL version will expose you to securty risks.
 
 Please refer to https://ela.st/nodejs-support[ela.st/nodejs-support] for additional information.
 
-
+[discrete]
 === 7.9.1
 
+[discrete]
 ==== Fixes
 
+[discrete]
 ===== Improve child performances https://github.com/elastic/elasticsearch-js/pull/1314[#1314]
 
 The client code has been refactored to speed up the performances of the child method.
@@ -71,29 +82,35 @@ This change should not cause any breaking change unless you were mocking the cli
 
 Finally, this change should also fix once and of all the bundlers support.
 
+[discrete]
 ===== Throw all errors asynchronously https://github.com/elastic/elasticsearch-js/pull/1295[#1295]
 
 Some validation errors were thrown synchronously, causing the callback to be called in th same tick.
 This issue is known as _"The release fo Zalgo"_ (see https://blog.izs.me/2013/08/designing-apis-for-asynchrony[here]).
 
+[discrete]
 ===== Fix `maxRetries` request option handling https://github.com/elastic/elasticsearch-js/pull/1296[#1296]
 
 The `maxRetries` parameter can be configured on a per requets basis, if set to zero it was defaulting to the client default. Now the client is honoring the request specific configuration.
 
-
+[discrete]
 ===== Fix RequestOptions.body type to include null https://github.com/elastic/elasticsearch-js/pull/1300[#1300]
 
 The Connection requets option types were not accepting `null` as valid value.
 
+[discrete]
 ===== Fixed `size` and `maxRetries` parameters in helpers https://github.com/elastic/elasticsearch-js/pull/1284[#1284]
 
 The `size` parameter was being passed too the scroll request, which was causing an error.
 `maxRetries` setted to 0 was resulting in no request at all.
 
+[discrete]
 === 7.9.0
 
+[discrete]
 ==== Features
 
+[discrete]
 ===== Add ability to disable the http agent https://github.com/elastic/elasticsearch-js/pull/1251[#1251]
 
 If needed, the http agent can be disabled by setting it to `false`
@@ -107,6 +124,7 @@ const client = new Client({
 })
 ----
 
+[discrete]
 ===== Add support for a global context option https://github.com/elastic/elasticsearch-js/pull/1256[#1256]
 
 Before this, you could set a `context` option in each request, but there was no way of setting it globally.
@@ -121,6 +139,7 @@ const client = new Client({
 })
 ----
 
+[discrete]
 ===== ESM support https://github.com/elastic/elasticsearch-js/pull/1235[#1235]
 
 If you are using ES Modules, now you can easily import the client!
@@ -130,8 +149,10 @@ If you are using ES Modules, now you can easily import the client!
 import { Client } from '@elastic/elasticsearch'
 ----
 
+[discrete]
 ==== Fixes
 
+[discrete]
 ===== Allow the client name to be a symbol https://github.com/elastic/elasticsearch-js/pull/1254[#1254]
 
 It was possible in plain JavaScript, but not in TypeScript, now you can do it in TypeScript as well.
@@ -145,15 +166,18 @@ const client = new Client({
 })
 ----
 
+[discrete]
 ===== Fixed transport.request querystring type https://github.com/elastic/elasticsearch-js/pull/1240[#1240]
 
 Only `Record<string, any>` was allowed. Now `string` is allowed as well.
 
+[discrete]
 ===== Fixed type definitions https://github.com/elastic/elasticsearch-js/pull/1263[#1263]
 
 * The `transport.request` defintion was incorrect, it was returning a `Promise<T>` instead of `TransportRequestPromise<T>`.
 * The `refresh` parameter of most APIs was declared as `'true' | 'false' | 'wait_for'`, which was clunky. Now is `'wait_for' | boolean`.
 
+[discrete]
 ===== Generate response type as boolean if the request is HEAD only https://github.com/elastic/elasticsearch-js/pull/1275[#1275]
 
 All HEAD request will have the body casted to a boolean value, `true` in case of a 200 response, `false` in case of
@@ -170,14 +194,17 @@ const { body } = await client.exist({ index: 'my-index', id: 'my-id' })
 console.log(body) // either `true` or `false`
 ----
 
+[discrete]
 ==== Internals
 
+[discrete]
 ===== Updated default http agent configuration https://github.com/elastic/elasticsearch-js/pull/1242[#1242]
 
 Added the scheduling: 'lifo' option to the default HTTP agent configuration to avoid maximizing the open sockets
 against Elasticsearch and lowering the risk of encountering socket timeouts.
 This feature is only available from Node v14.5+, but it should be backported to v10 and v12. (https://github.com/nodejs/node/pull/33278[nodejs/node#33278])
 
+[discrete]
 ===== Improve child API https://github.com/elastic/elasticsearch-js/pull/1245[#1245]
 
 This pr introduce two changes which should not impact the surface API:
@@ -187,14 +214,18 @@ and improves the child creation performances by ~12%.
 * The client no longer inherits from the EventEmitter class, but instead has an internal event emitter and exposes
 only the API useful for the users, namely `emit, `on`, `once`, and `off`. The type definitions have been updated accordingly.
 
+[discrete]
 === 7.8.0
 
+[discrete]
 ==== Features
 
+[discrete]
 ===== Support for Elasticsearch `v7.8`.
 
 You can find all the API changes https://www.elastic.co/guide/en/elasticsearch/reference/7.8/release-notes-7.8.0.html[here].
 
+[discrete]
 =====  Added multi search helper https://github.com/elastic/elasticsearch-js/pull/1186[#1186]
 
 If you are sending search request at a high rate, this helper might be useful for you.
@@ -227,6 +258,7 @@ m.search(
 )
 ----
 
+[discrete]
 =====  Added timeout support in bulk and msearch helpers https://github.com/elastic/elasticsearch-js/pull/1206[#1206]
 
 If there is a slow producer, the bulk helper might send data with a very large period of time, and if the process crashes for any reason, the data would be lost.
@@ -248,38 +280,48 @@ const m = client.helpers.msearch({
 })
 ----
 
+[discrete]
 ==== Internals
 
+[discrete]
 =====  Use filter_path for improving the search helpers performances https://github.com/elastic/elasticsearch-js/pull/1199[#1199]
 
 From now on, all he search helpers will use the `filter_path` option automatically when needed to retrieve only the hits source. This change will result in less netwprk traffic and improved deserialization performances.
 
+[discrete]
 =====  Search helpers documents getter https://github.com/elastic/elasticsearch-js/pull/1186[#1186]
 
 Before this, the `documents` key that you can access in any search helper was computed as soon as we got the search result from Elasticsearch. With this change the `documents` key is now a getter, which makes this procees lazy, resulting in better performances and lower memory impact.
 
-
+[discrete]
 === 7.7.1
 
+[discrete]
 ==== Fixes
 
+[discrete]
 ===== Disable client Helpers in Node.js < 10 - https://github.com/elastic/elasticsearch-js/pull/1194[#1194]
 
 The client helpers can't be used in Node.js < 10 because it needs a custom flag to be able to use them.
 Given that not every provider allows the user to specify cuatom Node.js flags, the Helpers has been disabled completely in Node.js < 10.
 
+[discrete]
 ===== Force lowercase in all headers - https://github.com/elastic/elasticsearch-js/pull/1187[#1187]
 
 Now all the user-provided headers names will be lowercased by default, so there will be no conflicts in case of the same header with different casing.
 
+[discrete]
 === 7.7.0
 
+[discrete]
 ==== Features
 
+[discrete]
 ===== Support for Elasticsearch `v7.7`.
 
 You can find all the API changes https://www.elastic.co/guide/en/elasticsearch/reference/7.7/release-notes-7.7.0.html[here].
 
+[discrete]
 ===== Introduced client helpers - https://github.com/elastic/elasticsearch-js/pull/1107[#1107]
 
 From now on, the client comes with an handy collection of helpers to give you a more comfortable experience with some APIs.
@@ -293,11 +335,13 @@ The following helpers has been introduced:
 - `client.helpers.scrollSearch`
 - `client.helpers.scrollDocuments`
 
+[discrete]
 ===== The `ConnectionPool.getConnection` now always returns a `Connection` - https://github.com/elastic/elasticsearch-js/pull/1127[#1127]
 
 What does this mean? It means that you will see less `NoLivingConnectionError`, which now can only be caused if you set a selector/filter too strict.
 For improving the debugging experience, the `NoLivingConnectionsError` error message has been updated.
 
+[discrete]
 ===== Abortable promises - https://github.com/elastic/elasticsearch-js/pull/1141[#1141]
 
 From now on, it will be possible to abort a request generated with the promise-styl API. If you abort a request generated from a promise, the promise will be rejected with a `RequestAbortedError`.
@@ -318,6 +362,7 @@ promise
 promise.abort()
 ----
 
+[discrete]
 ===== Major refactor of the Type Definitions - https://github.com/elastic/elasticsearch-js/pull/1119[#1119] https://github.com/elastic/elasticsearch-js/issues/1130[#1130] https://github.com/elastic/elasticsearch-js/pull/1132[#1132]
 
 Now every API makes better use of the generics and overloading, so you can (or not, by default request/response bodies are `Record<string, any>`) define the request/response bodies in the generics.
@@ -333,25 +378,31 @@ client.search<SearchResponse, SearchBody>(...)
 
 This *should* not be a breaking change, as every generics defaults to `any`. It might happen to some users that the code breaks, but our test didn't detect any of it, probably because they were not robust enough. However, given the gigantic improvement in the developer experience, we have decided to release this change in the 7.x line.
 
+[discrete]
 ==== Fixes
 
+[discrete]
 ===== The `ConnectionPool.update` method now cleans the `dead` list - https://github.com/elastic/elasticsearch-js/issues/1122[#1122] https://github.com/elastic/elasticsearch-js/pull/1127[#1127]
 
 It can happen in a situation where we are updating the connections list and running sniff, leaving the `dead` list in a dirty state. Now the `ConnectionPool.update` cleans up the `dead` list every time, which makes way more sense given that all the new connections are alive.
 
+[discrete]
 ===== `ConnectionPoolmarkDead` should ignore connections that no longer exists - https://github.com/elastic/elasticsearch-js/pull/1159[#1159]
 
 It might happen that markDead is called just after a pool update, and in such case, the clint was adding the dead list a node that no longer exists, causing unhandled exceptions later.
 
+[discrete]
 ===== Do not retry a request if the body is a stream - https://github.com/elastic/elasticsearch-js/pull/1143[#1143]
 
 The client should not retry if it's sending a stream body, because it should store in memory a copy of the stream to be able to send it again, but since it doesn't know in advance the size of the stream, it risks to take too much memory.
 Furthermore, copying everytime the stream is very an expensive operation.
 
+[discrete]
 ===== Return an error if the request has been aborted - https://github.com/elastic/elasticsearch-js/pull/1141[#1141]
 
 Until now, aborting a request was blocking the HTTP request, but never calling the callback or resolving the promise to notify the user. This is a bug because it could lead to dangerous memory leaks. From now on if the user calls the `request.abort()` method, the callback style API will be called with a `RequestAbortedError`, the promise will be rejected with `RequestAbortedError` as well.
 
+[discrete]
 === 7.6.1
 
 **Fixes:**
@@ -363,10 +414,12 @@ Until now, aborting a request was blocking the HTTP request, but never calling t
 
 - Fix typo in api reference - https://github.com/elastic/elasticsearch-js/pull/1109[#1109]
 
+[discrete]
 === 7.6.0
 
 Support for Elasticsearch `v7.6`.
 
+[discrete]
 === 7.5.1
 
 **Fixes:**
@@ -382,6 +435,7 @@ Support for Elasticsearch `v7.6`.
 - Add examples to reference - https://github.com/elastic/elasticsearch-js/pull/1076[#1076]
 - Added new examples - https://github.com/elastic/elasticsearch-js/pull/1031[#1031]
 
+[discrete]
 === 7.5.0
 
 Support for Elasticsearch `v7.5`.
@@ -390,6 +444,7 @@ Support for Elasticsearch `v7.5`.
 
 - X-Opaque-Id support https://github.com/elastic/elasticsearch-js/pull/997[#997]
 
+[discrete]
 === 7.4.0
 
 Support for Elasticsearch `v7.4`.
@@ -407,6 +462,7 @@ Support for Elasticsearch `v7.4`.
 
 - Update code generation https://github.com/elastic/elasticsearch-js/pull/969[#969]
 
+[discrete]
 === 7.3.0
 
 Support for Elasticsearch `v7.3`.
@@ -429,6 +485,7 @@ Support for Elasticsearch `v7.3`.
 - Better reference code examples - https://github.com/elastic/elasticsearch-js/pull/920[#920]
 - Improve README - https://github.com/elastic/elasticsearch-js/pull/909[#909]
 
+[discrete]
 === 7.2.0
 
 Support for Elasticsearch `v7.2`
@@ -437,6 +494,7 @@ Support for Elasticsearch `v7.2`
 
 - Remove auth data from inspect and toJSON in connection class - https://github.com/elastic/elasticsearch-js/pull/887[#887]
 
+[discrete]
 === 7.1.0
 
 Support for Elasticsearch `v7.1`
@@ -446,6 +504,7 @@ Support for Elasticsearch `v7.1`
 - Support for non-friendly chars in url username and password - https://github.com/elastic/elasticsearch-js/pull/858[#858]
 - Patch deprecated parameters - https://github.com/elastic/elasticsearch-js/pull/851[#851]
 
+[discrete]
 === 7.0.1
 
 **Fixes:**
@@ -455,6 +514,7 @@ Support for Elasticsearch `v7.1`
 - Fix TypeScript definiton *(issue https://github.com/elastic/elasticsearch-js/pull/803[#803])* - https://github.com/elastic/elasticsearch-js/pull/846[#846]
 - Added toJSON method to Connection class *(issue https://github.com/elastic/elasticsearch-js/pull/848[#848])* - https://github.com/elastic/elasticsearch-js/pull/849[#849]
 
+[discrete]
 === 7.0.0
 
 Support for Elasticsearch `v7.0`
