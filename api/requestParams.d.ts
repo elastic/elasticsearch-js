@@ -1168,6 +1168,10 @@ export interface IndicesOpen extends Generic {
   wait_for_active_shards?: string;
 }
 
+export interface IndicesPromoteDataStream extends Generic {
+  name: string;
+}
+
 export interface IndicesPutAlias<T = RequestBody> extends Generic {
   index: string | string[];
   name: string;
@@ -2615,6 +2619,10 @@ export interface WatcherPutWatch<T = RequestBody> extends Generic {
   version?: number;
   if_seq_no?: number;
   if_primary_term?: number;
+  body?: T;
+}
+
+export interface WatcherQueryWatches<T = RequestBody> extends Generic {
   body?: T;
 }
 

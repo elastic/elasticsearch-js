@@ -4855,6 +4855,23 @@ _Default:_ `closed`
 |===
 
 [discrete]
+=== indices.promoteDataStream
+
+[source,ts]
+----
+client.indices.promoteDataStream({
+  name: string
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`name`
+|`string` - The name of the data stream
+
+|===
+
+[discrete]
 === indices.putAlias
 
 [source,ts]
@@ -8468,7 +8485,7 @@ client.rollup.rollup({
   body: object
 })
 ----
-link:{ref}/xpack-rollup.html[Documentation] +
+link:{ref}/rollup-api.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -10105,7 +10122,7 @@ link:{ref}/security-api-ssl.html[Documentation] +
 
 [discrete]
 === tasks.cancel
-
+*Stability:* experimental
 [source,ts]
 ----
 client.tasks.cancel({
@@ -10138,7 +10155,7 @@ link:{ref}/tasks.html[Documentation] +
 
 [discrete]
 === tasks.get
-
+*Stability:* experimental
 [source,ts]
 ----
 client.tasks.get({
@@ -10163,7 +10180,7 @@ link:{ref}/tasks.html[Documentation] +
 
 [discrete]
 === tasks.list
-
+*Stability:* experimental
 [source,ts]
 ----
 client.tasks.list({
@@ -10910,6 +10927,23 @@ link:{ref}/watcher-api-put-watch.html[Documentation] +
 
 |`body`
 |`object` - The watch
+
+|===
+
+[discrete]
+=== watcher.queryWatches
+
+[source,ts]
+----
+client.watcher.queryWatches({
+  body: object
+})
+----
+link:{ref}/watcher-api-query-watches.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - From, size, query, sort and search_after
 
 |===
 
