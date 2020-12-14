@@ -33,6 +33,8 @@ const Serializer = require('./lib/Serializer')
 const errors = require('./lib/errors')
 const { ConfigurationError } = errors
 const { prepareHeaders } = Connection.internals
+const clientVersion = require('./package.json').version
+const nodeVersion = process.versions.node
 
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
 const kChild = Symbol('elasticsearchjs-child')
@@ -125,12 +127,17 @@ class Client extends ESAPI {
         auth: null,
         opaqueIdPrefix: null,
         context: null,
-        proxy: null
+        proxy: null,
+        enableMetaHeader: true
       }, opts)
 
     this[kInitialOptions] = options
     this[kExtensions] = []
     this.name = options.name
+
+    if (options.enableMetaHeader) {
+      options.headers['x-elastic-client-meta'] = `es=${clientVersion},js=${nodeVersion},hc=${nodeVersion},t=${clientVersion}`
+    }
 
     if (opts[kChild] !== undefined) {
       this.serializer = options[kChild].serializer
@@ -179,7 +186,11 @@ class Client extends ESAPI {
 
     /* istanbul ignore else */
     if (Helpers !== null) {
-      this.helpers = new Helpers({ client: this, maxRetries: options.maxRetries })
+      this.helpers = new Helpers({
+        client: this,
+        maxRetries: options.maxRetries,
+        enableMetaHeader: options.enableMetaHeader
+      })
     }
   }
 
