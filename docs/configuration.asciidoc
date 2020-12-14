@@ -218,9 +218,14 @@ _Default:_ `null`
 _Default:_ `{}`
 
 |`context`
-|`object` - A custom object that you can use for observability in yoru events.
+|`object` - A custom object that you can use for observability in your events.
 It will be merged with the API level context option. +
 _Default:_ `null`
+
+|`enableMetaHeader`
+|`boolean` - If true, adds an header named `'x-elastic-client-meta'`, containing some minimal telemetry data,
+such as the client and platform version. +
+_Default:_ `true`
 
 |`cloud`
 a|`object` - Custom configuration for connecting to 
