@@ -27,6 +27,8 @@ const semver = require('semver')
 const { test } = require('tap')
 const { Client, errors } = require('../../../')
 const { buildServer, connection } = require('../../utils')
+const clientVersion = require('../../../package.json').version
+const nodeVersion = process.versions.node
 
 const dataset = [
   { user: 'jon', age: 23 },
@@ -41,7 +43,10 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
-          t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+          t.match(params.headers, {
+            'content-type': 'application/x-ndjson',
+            'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},hc=${nodeVersion},h=bp,t=${clientVersion}`
+          })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -84,6 +89,9 @@ test('bulk index', t => {
         onRequest (params) {
           t.strictEqual(params.path, '/_bulk')
           t.match(params.headers, { 'content-type': 'application/x-ndjson' })
+          t.notMatch(params.headers, {
+            'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},hc=${nodeVersion},h=bp,t=${clientVersion}`
+          })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
           t.deepEqual(JSON.parse(payload), dataset[count++])
@@ -93,7 +101,8 @@ test('bulk index', t => {
 
       const client = new Client({
         node: 'http://localhost:9200',
-        Connection: MockConnection
+        Connection: MockConnection,
+        enableMetaHeader: false
       })
       const result = await client.helpers.bulk({
         datasource: dataset.slice(),
