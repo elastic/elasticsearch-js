@@ -45,7 +45,7 @@ test('bulk index', t => {
           t.strictEqual(params.path, '/_bulk')
           t.match(params.headers, {
             'content-type': 'application/x-ndjson',
-            'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},hc=${nodeVersion},h=bp,t=${clientVersion}`
+            'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion},h=bp`
           })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
@@ -90,7 +90,7 @@ test('bulk index', t => {
           t.strictEqual(params.path, '/_bulk')
           t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           t.notMatch(params.headers, {
-            'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},hc=${nodeVersion},h=bp,t=${clientVersion}`
+            'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion},h=bp`
           })
           const [action, payload] = params.body.split('\n')
           t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })

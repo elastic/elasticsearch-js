@@ -136,7 +136,7 @@ class Client extends ESAPI {
     this.name = options.name
 
     if (options.enableMetaHeader) {
-      options.headers['x-elastic-client-meta'] = `es=${clientVersion},js=${nodeVersion},hc=${nodeVersion},t=${clientVersion}`
+      options.headers['x-elastic-client-meta'] = `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion}`
     }
 
     if (opts[kChild] !== undefined) {
@@ -189,7 +189,9 @@ class Client extends ESAPI {
       this.helpers = new Helpers({
         client: this,
         maxRetries: options.maxRetries,
-        enableMetaHeader: options.enableMetaHeader
+        metaHeader: options.enableMetaHeader
+          ? `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion}`
+          : null
       })
     }
   }

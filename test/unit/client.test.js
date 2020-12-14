@@ -1308,7 +1308,7 @@ test('Meta header enabled', t => {
 
   class MockConnection extends Connection {
     request (params, callback) {
-      t.match(params.headers, { 'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},hc=${nodeVersion},t=${clientVersion}` })
+      t.match(params.headers, { 'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion}` })
       const stream = intoStream(JSON.stringify({ hello: 'world' }))
       stream.statusCode = 200
       stream.headers = {
@@ -1337,7 +1337,7 @@ test('Meta header disabled', t => {
 
   class MockConnection extends Connection {
     request (params, callback) {
-      t.notMatch(params.headers, { 'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},hc=${nodeVersion},t=${clientVersion}` })
+      t.notMatch(params.headers, { 'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion}` })
       const stream = intoStream(JSON.stringify({ hello: 'world' }))
       stream.statusCode = 200
       stream.headers = {

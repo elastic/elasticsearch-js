@@ -30,7 +30,7 @@ test('Scroll search', async t => {
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       t.match(params.headers, {
-        'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},hc=${nodeVersion},h=s,t=${clientVersion}`
+        'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion},h=s`
       })
 
       count += 1
@@ -80,7 +80,7 @@ test('Clear a scroll search', async t => {
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       t.notMatch(params.headers, {
-        'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},hc=${nodeVersion},h=s,t=${clientVersion}`
+        'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion},h=s`
       })
       if (params.method === 'DELETE') {
         const body = JSON.parse(params.body)
