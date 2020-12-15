@@ -38,7 +38,7 @@ async function run () {
     date: new Date()
   }, {
     id: 2,
-    text: 'Witer is coming',
+    text: 'Winter is coming',
     user: 'ned',
     date: new Date()
   }, {
