@@ -26,6 +26,8 @@ const intoStream = require('into-stream')
 const { Client, ConnectionPool, Transport, Connection, errors } = require('../../index')
 const { CloudConnectionPool } = require('../../lib/pool')
 const { buildServer } = require('../utils')
+const clientVersion = require('../../package.json').version
+const nodeVersion = process.versions.node
 
 test('Configure host', t => {
   t.test('Single string', t => {
@@ -1298,5 +1300,64 @@ test('Content length too big (string)', t => {
     t.ok(err instanceof errors.RequestAbortedError)
     t.is(err.message, `The content length (${buffer.constants.MAX_STRING_LENGTH + 10}) is bigger than the maximum allowed string (${buffer.constants.MAX_STRING_LENGTH})`)
     t.strictEqual(result.meta.attempts, 0)
+  })
+})
+
+test('Meta header enabled', t => {
+  t.plan(2)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      t.match(params.headers, { 'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion}` })
+      const stream = intoStream(JSON.stringify({ hello: 'world' }))
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-length': '17',
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.info((err, result) => {
+    t.error(err)
+  })
+})
+
+test('Meta header disabled', t => {
+  t.plan(2)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      t.notMatch(params.headers, { 'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion}` })
+      const stream = intoStream(JSON.stringify({ hello: 'world' }))
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-length': '17',
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection,
+    enableMetaHeader: false
+  })
+
+  client.info((err, result) => {
+    t.error(err)
   })
 })
