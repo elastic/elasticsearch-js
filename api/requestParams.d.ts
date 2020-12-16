@@ -359,10 +359,10 @@ export interface CatSnapshots extends Generic {
 
 export interface CatTasks extends Generic {
   format?: string;
-  node_id?: string | string[];
+  nodes?: string | string[];
   actions?: string | string[];
   detailed?: boolean;
-  parent_task?: number;
+  parent_task_id?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
@@ -1156,6 +1156,10 @@ export interface IndicesGetUpgrade extends Generic {
   ignore_unavailable?: boolean;
   allow_no_indices?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
+}
+
+export interface IndicesMigrateToDataStream extends Generic {
+  name: string;
 }
 
 export interface IndicesOpen extends Generic {
@@ -2034,6 +2038,7 @@ export interface RollupPutJob<T = RequestBody> extends Generic {
 
 export interface RollupRollup<T = RequestBody> extends Generic {
   index: string;
+  rollup_index: string;
   body: T;
 }
 
