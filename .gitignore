@@ -60,3 +60,6 @@ test/benchmarks/macro/fixtures/*
 .cache
 
 test/bundlers/**/bundle.js
+
+# clients make output
+.ci/output
