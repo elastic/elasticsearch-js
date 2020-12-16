@@ -23,6 +23,7 @@ const { test } = require('tap')
 const { inspect } = require('util')
 const { URL } = require('url')
 const { Agent } = require('http')
+const { Readable } = require('stream')
 const hpagent = require('hpagent')
 const intoStream = require('into-stream')
 const { buildServer } = require('../utils')
@@ -917,4 +918,32 @@ test('Proxy agent (https)', t => {
   })
 
   t.true(connection.agent instanceof hpagent.HttpsProxyAgent)
+})
+
+test('Abort with a slow body', t => {
+  t.plan(1)
+
+  const connection = new Connection({
+    url: new URL('https://localhost:9200'),
+    proxy: 'http://localhost:8080'
+  })
+
+  const slowBody = new Readable({
+    read (size) {
+      setTimeout(() => {
+        this.push('{"size":1, "query":{"match_all":{}}}')
+        this.push(null) // EOF
+      }, 1000).unref()
+    }
+  })
+
+  const request = connection.request({
+    method: 'GET',
+    path: '/',
+    body: slowBody
+  }, (err, response) => {
+    t.ok(err instanceof RequestAbortedError)
+  })
+
+  setImmediate(() => request.abort())
 })
