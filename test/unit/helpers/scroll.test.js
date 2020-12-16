@@ -22,11 +22,17 @@
 const { test } = require('tap')
 const { Client, errors } = require('../../../')
 const { connection } = require('../../utils')
+const clientVersion = require('../../../package.json').version
+const nodeVersion = process.versions.node
 
 test('Scroll search', async t => {
   var count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
+      t.match(params.headers, {
+        'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion},h=s`
+      })
+
       count += 1
       if (params.method === 'POST') {
         t.strictEqual(params.querystring, 'scroll=1m')
@@ -73,6 +79,9 @@ test('Clear a scroll search', async t => {
   var count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
+      t.notMatch(params.headers, {
+        'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion},h=s`
+      })
       if (params.method === 'DELETE') {
         const body = JSON.parse(params.body)
         t.strictEqual(body.scroll_id, 'id')
@@ -95,7 +104,8 @@ test('Clear a scroll search', async t => {
 
   const client = new Client({
     node: 'http://localhost:9200',
-    Connection: MockConnection
+    Connection: MockConnection,
+    enableMetaHeader: false
   })
 
   const scrollSearch = client.helpers.scrollSearch({
