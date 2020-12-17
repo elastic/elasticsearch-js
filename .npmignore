@@ -70,3 +70,7 @@ certs
 .github
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
+
+# CANARY-PACKAGE
+api/kibana.d.ts
+# /CANARY-PACKAGE
