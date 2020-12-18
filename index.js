@@ -33,7 +33,12 @@ const Serializer = require('./lib/Serializer')
 const errors = require('./lib/errors')
 const { ConfigurationError } = errors
 const { prepareHeaders } = Connection.internals
-const clientVersion = require('./package.json').version
+let clientVersion = require('./package.json').version
+/* istanbul ignore next */
+if (clientVersion.includes('-')) {
+  // clean prerelease
+  clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
+}
 const nodeVersion = process.versions.node
 
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
