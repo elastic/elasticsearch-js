@@ -27,7 +27,10 @@ const semver = require('semver')
 const { test } = require('tap')
 const { Client, errors } = require('../../../')
 const { buildServer, connection } = require('../../utils')
-const clientVersion = require('../../../package.json').version
+let clientVersion = require('../../../package.json').version
+if (clientVersion.includes('-')) {
+  clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
+}
 const nodeVersion = process.versions.node
 
 const dataset = [
