@@ -49,7 +49,7 @@ import Serializer from './lib/Serializer';
 import Helpers from './lib/Helpers';
 import * as errors from './lib/errors';
 import ESAPI from './api/esapi'
-import types from './api/types'
+import * as estypes from './api/types'
 
 // Extend API
 interface ClientExtendsCallbackOptions {
@@ -163,7 +163,7 @@ export {
   ApiResponse,
   RequestEvent,
   ResurrectEvent,
-  types,
+  estypes,
   ClientOptions,
   NodeOptions,
   ClientExtendsCallbackOptions
