@@ -230,6 +230,27 @@ WatcherApi.prototype.putWatch = function watcherPutWatchApi (params, options, ca
   return this.transport.request(request, options, callback)
 }
 
+WatcherApi.prototype.queryWatches = function watcherQueryWatchesApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  var { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if (method == null) method = body == null ? 'GET' : 'POST'
+  path = '/' + '_watcher' + '/' + '_query' + '/' + 'watches'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 WatcherApi.prototype.start = function watcherStartApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -305,7 +326,8 @@ Object.defineProperties(WatcherApi.prototype, {
   delete_watch: { get () { return this.deleteWatch } },
   execute_watch: { get () { return this.executeWatch } },
   get_watch: { get () { return this.getWatch } },
-  put_watch: { get () { return this.putWatch } }
+  put_watch: { get () { return this.putWatch } },
+  query_watches: { get () { return this.queryWatches } }
 })
 
 module.exports = WatcherApi

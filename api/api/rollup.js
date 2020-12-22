@@ -168,6 +168,37 @@ RollupApi.prototype.putJob = function rollupPutJobApi (params, options, callback
   return this.transport.request(request, options, callback)
 }
 
+RollupApi.prototype.rollup = function rollupRollupApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params['index'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: index')
+    return handleError(err, callback)
+  }
+  if (params['body'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
+  }
+
+  var { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if (method == null) method = 'POST'
+  path = '/' + encodeURIComponent(index) + '/' + '_rollup'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 RollupApi.prototype.rollupSearch = function rollupRollupSearchApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
