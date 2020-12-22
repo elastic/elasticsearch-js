@@ -18,7 +18,7 @@
  */
 
 import { expectType, expectNotType, expectError } from 'tsd'
-import { Client, RequestEvent, ResurrectEvent, ApiError, ApiResponse, types } from '../../'
+import { Client, RequestEvent, ResurrectEvent, ApiError, ApiResponse, estypes } from '../../'
 import { KibanaClient } from '../../api/kibana'
 import { TransportRequestPromise, Context } from '../../lib/Transport'
 
@@ -50,7 +50,7 @@ client.on('resurrect', (err, meta) => {
 {
   const response = await client.cat.count({ index: 'test' })
 
-  expectType<types.CatCountResponse>(response.body)
+  expectType<estypes.CatCountResponse>(response.body)
   expectType<Context>(response.meta.context)
 }
 
@@ -58,34 +58,34 @@ client.on('resurrect', (err, meta) => {
 {
   const response = await client.cat.count<string>({ index: 'test' })
 
-  expectType<types.CatCountResponse>(response.body)
+  expectType<estypes.CatCountResponse>(response.body)
   expectType<string>(response.meta.context)
 }
 
 // Check API returned type and optional parameters
 {
   const promise = client.info()
-  expectType<TransportRequestPromise<ApiResponse<types.RootNodeInfoResponse, Context>>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<estypes.RootNodeInfoResponse, Context>>>(promise)
   promise
-    .then(result => expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(result))
+    .then(result => expectType<ApiResponse<estypes.RootNodeInfoResponse, Context>>(result))
     .catch((err: ApiError) => expectType<ApiError>(err))
   expectType<void>(promise.abort())
 }
 
 {
   const promise = client.info({ pretty: true })
-  expectType<TransportRequestPromise<ApiResponse<types.RootNodeInfoResponse, Context>>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<estypes.RootNodeInfoResponse, Context>>>(promise)
   promise
-    .then(result => expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(result))
+    .then(result => expectType<ApiResponse<estypes.RootNodeInfoResponse, Context>>(result))
     .catch((err: ApiError) => expectType<ApiError>(err))
   expectType<void>(promise.abort())
 }
 
 {
   const promise = client.info({ pretty: true }, { ignore: [404] })
-  expectType<TransportRequestPromise<ApiResponse<types.RootNodeInfoResponse, Context>>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<estypes.RootNodeInfoResponse, Context>>>(promise)
   promise
-    .then(result => expectType<ApiResponse<types.RootNodeInfoResponse, Context>>(result))
+    .then(result => expectType<ApiResponse<estypes.RootNodeInfoResponse, Context>>(result))
     .catch((err: ApiError) => expectType<ApiError>(err))
   expectType<void>(promise.abort())
 }

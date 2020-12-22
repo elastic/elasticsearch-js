@@ -20,7 +20,7 @@
 import { expectType, expectError } from 'tsd'
 import { Readable as ReadableStream } from 'stream';
 import { TransportRequestCallback, Context } from '../../lib/Transport'
-import { Client, ApiError, types } from '../../'
+import { Client, ApiError, estypes } from '../../'
 
 const client = new Client({
   node: 'http://localhost:9200'
@@ -49,7 +49,7 @@ expectError(
     }
   })
 
-  expectType<types.SearchResponse<unknown>>(response.body)
+  expectType<estypes.SearchResponse<unknown>>(response.body)
   expectType<Context>(response.meta.context)
 }
 
@@ -64,7 +64,7 @@ expectError(
     }
   })
 
-  expectType<types.SearchResponse<Source>>(response.body)
+  expectType<estypes.SearchResponse<Source>>(response.body)
   expectType<Context>(response.meta.context)
 }
 
@@ -79,7 +79,7 @@ expectError(
     }
   })
 
-  expectType<types.SearchResponse<Source>>(response.body)
+  expectType<estypes.SearchResponse<Source>>(response.body)
   expectType<Context>(response.meta.context)
 }
 
@@ -90,7 +90,7 @@ expectError(
     body: 'hello world'
   })
 
-  expectType<types.SearchResponse<unknown>>(response.body)
+  expectType<estypes.SearchResponse<unknown>>(response.body)
   expectType<Context>(response.meta.context)
 }
 
@@ -101,7 +101,7 @@ expectError(
     body: Buffer.from('hello world')
   })
 
-  expectType<types.SearchResponse<unknown>>(response.body)
+  expectType<estypes.SearchResponse<unknown>>(response.body)
   expectType<Context>(response.meta.context)
 }
 
@@ -112,7 +112,7 @@ expectError(
     body: new ReadableStream()
   })
 
-  expectType<types.SearchResponse<unknown>>(response.body)
+  expectType<estypes.SearchResponse<unknown>>(response.body)
   expectType<Context>(response.meta.context)
 }
 
@@ -127,7 +127,7 @@ expectError(
     }
   }, (err, response) => {
     expectType<ApiError>(err)
-    expectType<types.SearchResponse<unknown>>(response.body)
+    expectType<estypes.SearchResponse<unknown>>(response.body)
     expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
@@ -144,7 +144,7 @@ expectError(
     }
   }, (err, response) => {
     expectType<ApiError>(err)
-    expectType<types.SearchResponse<Source>>(response.body)
+    expectType<estypes.SearchResponse<Source>>(response.body)
     expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
@@ -161,7 +161,7 @@ expectError(
     }
   }, (err, response) => {
     expectType<ApiError>(err)
-    expectType<types.SearchResponse<Source>>(response.body)
+    expectType<estypes.SearchResponse<Source>>(response.body)
     expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
@@ -174,7 +174,7 @@ expectError(
     body: 'hello world'
   }, (err, response) => {
     expectType<ApiError>(err)
-    expectType<types.SearchResponse<unknown>>(response.body)
+    expectType<estypes.SearchResponse<unknown>>(response.body)
     expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
@@ -187,7 +187,7 @@ expectError(
     body: Buffer.from('hello world')
   }, (err, response) => {
     expectType<ApiError>(err)
-    expectType<types.SearchResponse<unknown>>(response.body)
+    expectType<estypes.SearchResponse<unknown>>(response.body)
     expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
@@ -200,7 +200,7 @@ expectError(
     body: new ReadableStream()
   }, (err, response) => {
     expectType<ApiError>(err)
-    expectType<types.SearchResponse<unknown>>(response.body)
+    expectType<estypes.SearchResponse<unknown>>(response.body)
     expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)

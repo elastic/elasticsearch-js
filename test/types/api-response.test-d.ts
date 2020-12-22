@@ -19,7 +19,7 @@
 
 import { expectType } from 'tsd'
 import { TransportRequestCallback, Context } from '../../lib/Transport'
-import { Client, ApiError, types } from '../../'
+import { Client, ApiError, estypes } from '../../'
 
 const client = new Client({
   node: 'http://localhost:9200'
@@ -29,7 +29,7 @@ const client = new Client({
 {
   const response = await client.cat.count({ index: 'test' })
 
-  expectType<types.CatCountResponse>(response.body)
+  expectType<estypes.CatCountResponse>(response.body)
   expectType<Context>(response.meta.context)
 }
 
@@ -37,7 +37,7 @@ const client = new Client({
 {
   const response = await client.cat.count<string>({ index: 'test' })
 
-  expectType<types.CatCountResponse>(response.body)
+  expectType<estypes.CatCountResponse>(response.body)
   expectType<string>(response.meta.context)
 }
 
@@ -45,7 +45,7 @@ const client = new Client({
 {
   const result = client.cat.count({ index: 'test' }, (err, response) => {
     expectType<ApiError>(err)
-    expectType<types.CatCountResponse>(response.body)
+    expectType<estypes.CatCountResponse>(response.body)
     expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
@@ -55,7 +55,7 @@ const client = new Client({
 {
   const result = client.cat.count<string>({ index: 'test' }, (err, response) => {
     expectType<ApiError>(err)
-    expectType<types.CatCountResponse>(response.body)
+    expectType<estypes.CatCountResponse>(response.body)
     expectType<string>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
