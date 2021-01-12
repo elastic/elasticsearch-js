@@ -731,10 +731,10 @@ declare class ESAPI {
   putScript<TContext = unknown>(params: T.PutScriptRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutScriptResponse, TContext>>
   putScript<TContext = unknown>(params: T.PutScriptRequest, callback: callbackFn<T.PutScriptResponse, TContext>): TransportRequestCallback
   putScript<TContext = unknown>(params: T.PutScriptRequest, options: TransportRequestOptions, callback: callbackFn<T.PutScriptResponse, TContext>): TransportRequestCallback
-  reindex<TContext = unknown>(params?: T.ReindexOnServerRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ReindexOnServerResponse, TContext>>
-  reindex<TContext = unknown>(callback: callbackFn<T.ReindexOnServerResponse, TContext>): TransportRequestCallback
-  reindex<TContext = unknown>(params: T.ReindexOnServerRequest, callback: callbackFn<T.ReindexOnServerResponse, TContext>): TransportRequestCallback
-  reindex<TContext = unknown>(params: T.ReindexOnServerRequest, options: TransportRequestOptions, callback: callbackFn<T.ReindexOnServerResponse, TContext>): TransportRequestCallback
+  reindex<TContext = unknown>(params?: T.ReindexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ReindexResponse, TContext>>
+  reindex<TContext = unknown>(callback: callbackFn<T.ReindexResponse, TContext>): TransportRequestCallback
+  reindex<TContext = unknown>(params: T.ReindexRequest, callback: callbackFn<T.ReindexResponse, TContext>): TransportRequestCallback
+  reindex<TContext = unknown>(params: T.ReindexRequest, options: TransportRequestOptions, callback: callbackFn<T.ReindexResponse, TContext>): TransportRequestCallback
   reindexRethrottle<TContext = unknown>(params: T.ReindexRethrottleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ReindexRethrottleResponse, TContext>>
   reindexRethrottle<TContext = unknown>(params: T.ReindexRethrottleRequest, callback: callbackFn<T.ReindexRethrottleResponse, TContext>): TransportRequestCallback
   reindexRethrottle<TContext = unknown>(params: T.ReindexRethrottleRequest, options: TransportRequestOptions, callback: callbackFn<T.ReindexRethrottleResponse, TContext>): TransportRequestCallback
@@ -774,6 +774,10 @@ declare class ESAPI {
   scriptsPainlessExecute<TResult = unknown, TContext = unknown>(callback: callbackFn<T.ExecutePainlessScriptResponse<TResult>, TContext>): TransportRequestCallback
   scriptsPainlessExecute<TResult = unknown, TContext = unknown>(params: T.ExecutePainlessScriptRequest, callback: callbackFn<T.ExecutePainlessScriptResponse<TResult>, TContext>): TransportRequestCallback
   scriptsPainlessExecute<TResult = unknown, TContext = unknown>(params: T.ExecutePainlessScriptRequest, options: TransportRequestOptions, callback: callbackFn<T.ExecutePainlessScriptResponse<TResult>, TContext>): TransportRequestCallback
+  scroll<TDocument = unknown, TContext = unknown>(params?: T.ScrollRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ScrollResponse<TDocument>, TContext>>
+  scroll<TDocument = unknown, TContext = unknown>(callback: callbackFn<T.ScrollResponse<TDocument>, TContext>): TransportRequestCallback
+  scroll<TDocument = unknown, TContext = unknown>(params: T.ScrollRequest, callback: callbackFn<T.ScrollResponse<TDocument>, TContext>): TransportRequestCallback
+  scroll<TDocument = unknown, TContext = unknown>(params: T.ScrollRequest, options: TransportRequestOptions, callback: callbackFn<T.ScrollResponse<TDocument>, TContext>): TransportRequestCallback
   search<TDocument = unknown, TContext = unknown>(params?: T.SearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SearchResponse<TDocument>, TContext>>
   search<TDocument = unknown, TContext = unknown>(callback: callbackFn<T.SearchResponse<TDocument>, TContext>): TransportRequestCallback
   search<TDocument = unknown, TContext = unknown>(params: T.SearchRequest, callback: callbackFn<T.SearchResponse<TDocument>, TContext>): TransportRequestCallback
