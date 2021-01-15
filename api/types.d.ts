@@ -782,7 +782,7 @@ export interface CatAliasesRecord {
 }
 
 export interface CatAliasesRequest extends CatRequestBase {
-  name?: string | Array<string>
+  name?: Names
   expand_wildcards?: ExpandWildcards
 }
 
@@ -802,7 +802,7 @@ export interface CatAllocationRecord {
 }
 
 export interface CatAllocationRequest extends CatRequestBase {
-  node_id?: string | Array<string>
+  node_id?: NodeIds
   bytes?: Bytes
 }
 
@@ -815,7 +815,7 @@ export interface CatCountRecord {
 }
 
 export interface CatCountRequest extends CatRequestBase {
-  index?: string | Array<string>
+  index?: Indices
 }
 
 export type CatCountResponse = CatCountRecord[]
@@ -840,7 +840,7 @@ export interface CatDataFrameAnalyticsRecord {
 }
 
 export interface CatDataFrameAnalyticsRequest extends CatRequestBase {
-  id?: string
+  id?: Id
   allow_no_match?: boolean
   bytes?: Bytes
 }
@@ -863,7 +863,7 @@ export interface CatDatafeedsRecord {
 }
 
 export interface CatDatafeedsRequest extends CatRequestBase {
-  datafeed_id?: string
+  datafeed_id?: Id
   allow_no_datafeeds?: boolean
 }
 
@@ -879,7 +879,7 @@ export interface CatFielddataRecord {
 }
 
 export interface CatFielddataRequest extends CatRequestBase {
-  fields?: string | Array<string>
+  fields?: Fields
   bytes?: Bytes
 }
 
@@ -930,7 +930,7 @@ export interface CatIndicesRecord {
 }
 
 export interface CatIndicesRequest extends CatRequestBase {
-  index?: string | Array<string>
+  index?: Indices
   bytes?: Bytes
   expand_wildcards?: ExpandWildcards
   health?: Health
@@ -999,7 +999,7 @@ export interface CatJobsRecord {
 }
 
 export interface CatJobsRequest extends CatRequestBase {
-  job_id?: string
+  job_id?: Id
   allow_no_jobs?: boolean
   bytes?: Bytes
 }
@@ -1172,7 +1172,7 @@ export interface CatRecoveryRecord {
 }
 
 export interface CatRecoveryRequest extends CatRequestBase {
-  index?: string | Array<string>
+  index?: Indices
   active_only?: boolean
   bytes?: Bytes
   detailed?: boolean
@@ -1209,7 +1209,7 @@ export interface CatSegmentsRecord {
 }
 
 export interface CatSegmentsRequest extends CatRequestBase {
-  index?: string | Array<string>
+  index?: Indices
   bytes?: Bytes
 }
 
@@ -1277,7 +1277,7 @@ export interface CatShardsRecord {
 }
 
 export interface CatShardsRequest extends CatRequestBase {
-  index?: string | Array<string>
+  index?: Indices
   bytes?: Bytes
 }
 
@@ -1298,7 +1298,7 @@ export interface CatSnapshotsRecord {
 }
 
 export interface CatSnapshotsRequest extends CatRequestBase {
-  repository?: string | Array<string>
+  repository?: Names
   ignore_unavailable?: boolean
 }
 
@@ -1334,7 +1334,7 @@ export interface CatTemplatesRecord {
 }
 
 export interface CatTemplatesRequest extends CatRequestBase {
-  name?: string
+  name?: Name
 }
 
 export type CatTemplatesResponse = CatTemplatesRecord[]
@@ -1363,7 +1363,7 @@ export interface CatThreadPoolRecord {
 }
 
 export interface CatThreadPoolRequest extends CatRequestBase {
-  thread_pool_patterns?: string | Array<string>
+  thread_pool_patterns?: Names
   size?: Size
 }
 
@@ -1387,7 +1387,7 @@ export interface CatTrainedModelsRecord {
 }
 
 export interface CatTrainedModelsRequest extends CatRequestBase {
-  model_id?: string
+  model_id?: Id
   allow_no_match?: boolean
   bytes?: Bytes
   from?: integer
@@ -1427,7 +1427,7 @@ export interface CatTransformsRecord {
 }
 
 export interface CatTransformsRequest extends CatRequestBase {
-  transform_id?: string
+  transform_id?: Id
   allow_no_match?: boolean
   from?: integer
   size?: integer
@@ -1535,7 +1535,7 @@ export interface UnassignedInformation {
 export type UnassignedInformationReason = 'INDEX_CREATED' | 'CLUSTER_RECOVERED' | 'INDEX_REOPENED' | 'DANGLING_INDEX_IMPORTED' | 'NEW_INDEX_RESTORED' | 'EXISTING_INDEX_RESTORED' | 'REPLICA_ADDED' | 'ALLOCATION_FAILED' | 'NODE_LEFT' | 'REROUTE_CANCELLED' | 'REINITIALIZED' | 'REALLOCATED_REPLICA' | 'PRIMARY_FAILED' | 'FORCED_EMPTY_PRIMARY' | 'MANUAL_ALLOCATION'
 
 export interface ClusterHealthRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   expand_wildcards?: ExpandWildcards
   level?: Level
   local?: boolean
@@ -1677,8 +1677,8 @@ export interface ClusterPutSettingsResponse extends ResponseBase {
 }
 
 export interface ClusterStateRequest extends RequestBase {
-  metric?: string | Array<string>
-  index?: string | Array<string>
+  metric?: Metrics
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   flat_settings?: boolean
@@ -1825,7 +1825,7 @@ export interface ClusterShardMetrics {
 }
 
 export interface ClusterStatsRequest extends RequestBase {
-  node_id?: string | Array<string>
+  node_id?: NodeIds
   flat_settings?: boolean
   timeout?: Time
 }
@@ -1861,7 +1861,7 @@ export interface HotThreadInformation {
 }
 
 export interface NodesHotThreadsRequest extends RequestBase {
-  node_id?: string | Array<string>
+  node_id?: NodeIds
   ignore_idle_threads?: boolean
   interval?: Time
   snapshots?: long
@@ -1987,8 +1987,8 @@ export interface NodeProcessInfo {
 export type NodeRole = 'master' | 'data' | 'client' | 'ingest' | 'ml' | 'voting_only' | 'transform' | 'remote_cluster_client' | 'coordinating_only'
 
 export interface NodesInfoRequest extends RequestBase {
-  node_id?: string | Array<string>
-  metric?: string | Array<string>
+  node_id?: NodeIds
+  metric?: Metrics
   flat_settings?: boolean
   timeout?: Time
 }
@@ -2116,9 +2116,9 @@ export interface NodeJvmStats {
 }
 
 export interface NodesStatsRequest extends RequestBase {
-  node_id?: string | Array<string>
-  metric?: string | Array<string>
-  index_metric?: string | Array<string>
+  node_id?: NodeIds
+  metric?: Metrics
+  index_metric?: Metrics
   completion_fields?: Array<Field>
   fielddata_fields?: Array<Field>
   fields?: Array<Field>
@@ -2226,8 +2226,8 @@ export interface NodeIngestStats {
 }
 
 export interface NodesUsageRequest extends RequestBase {
-  node_id?: string | Array<string>
-  metric?: string | Array<string>
+  node_id?: NodeIds
+  metric?: Metrics
   timeout?: Time
 }
 
@@ -2250,7 +2250,7 @@ export interface PingResponse extends ResponseBase {
 }
 
 export interface ReloadSecureSettingsRequest extends RequestBase {
-  node_id?: string | Array<string>
+  node_id?: NodeIds
   timeout?: Time
 }
 
@@ -2286,7 +2286,7 @@ export interface RootNodeInfoResponse extends ResponseBase {
 }
 
 export interface CancelTasksRequest extends RequestBase {
-  task_id?: string
+  task_id?: TaskId
   actions?: Array<string>
   nodes?: Array<string>
   parent_task_id?: string
@@ -2298,7 +2298,7 @@ export interface CancelTasksResponse extends ResponseBase {
 }
 
 export interface GetTaskRequest extends RequestBase {
-  task_id: string
+  task_id: Id
   timeout?: Time
   wait_for_completion?: boolean
 }
@@ -2714,8 +2714,8 @@ export interface Retries {
 }
 
 export interface BulkRequest<TSource = unknown> extends RequestBase {
-  index?: string
-  type?: string
+  index?: IndexName
+  type?: TypeName
   pipeline?: string
   refresh?: Refresh
   routing?: Routing
@@ -2799,8 +2799,8 @@ export interface BulkUpdateResponseItem extends BulkResponseItemBase {
 }
 
 export interface DeleteByQueryRequest extends RequestBase {
-  index: string | Array<string>
-  type?: string | Array<string>
+  index: Indices
+  type?: TypeNames
   allow_no_indices?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
@@ -2858,7 +2858,7 @@ export interface DeleteByQueryResponse extends ResponseBase {
 }
 
 export interface DeleteByQueryRethrottleRequest extends RequestBase {
-  task_id: string
+  task_id: Id
   requests_per_second?: long
 }
 
@@ -2877,8 +2877,8 @@ export interface MultiGetOperation {
 }
 
 export interface MultiGetRequest extends RequestBase {
-  index?: string
-  type?: string
+  index?: IndexName
+  type?: TypeName
   preference?: string
   realtime?: boolean
   refresh?: boolean
@@ -2926,8 +2926,8 @@ export interface MultiTermVectorOperation {
 }
 
 export interface MultiTermVectorsRequest extends RequestBase {
-  index?: string
-  type?: string
+  index?: IndexName
+  type?: TypeName
   fields?: Array<Field>
   field_statistics?: boolean
   offsets?: boolean
@@ -3022,7 +3022,7 @@ export interface ReindexNode {
 }
 
 export interface ReindexRethrottleRequest extends RequestBase {
-  task_id: string
+  task_id: Id
   requests_per_second?: long
 }
 
@@ -3057,8 +3057,8 @@ export interface ReindexTask {
 }
 
 export interface UpdateByQueryRequest extends RequestBase {
-  index: string | Array<string>
-  type?: string | Array<string>
+  index: Indices
+  type?: TypeNames
   allow_no_indices?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
@@ -3128,9 +3128,9 @@ export interface WriteResponseBase extends ResponseBase {
 }
 
 export interface CreateRequest<TDocument = unknown> extends RequestBase {
-  id: string
-  index: string
-  type?: string
+  id: Id
+  index: IndexName
+  type?: TypeName
   pipeline?: string
   refresh?: Refresh
   routing?: Routing
@@ -3145,9 +3145,9 @@ export interface CreateResponse extends WriteResponseBase {
 }
 
 export interface DeleteRequest extends RequestBase {
-  id: string
-  index: string
-  type?: string
+  id: Id
+  index: IndexName
+  type?: TypeName
   if_primary_term?: long
   if_seq_no?: long
   refresh?: Refresh
@@ -3162,9 +3162,9 @@ export interface DeleteResponse extends WriteResponseBase {
 }
 
 export interface DocumentExistsRequest extends RequestBase {
-  id: string
-  index: string
-  type?: string
+  id: Id
+  index: IndexName
+  type?: TypeName
   preference?: string
   realtime?: boolean
   refresh?: boolean
@@ -3178,9 +3178,9 @@ export interface DocumentExistsRequest extends RequestBase {
 }
 
 export interface GetRequest extends RequestBase {
-  id: string
-  index: string
-  type?: string
+  id: Id
+  index: IndexName
+  type?: TypeName
   preference?: string
   realtime?: boolean
   refresh?: boolean
@@ -3208,9 +3208,9 @@ export interface GetResponse<TDocument = unknown> extends ResponseBase {
 }
 
 export interface IndexRequest<TDocument = unknown> extends RequestBase {
-  id?: string
-  index: string
-  type?: string
+  id?: Id
+  index: IndexName
+  type?: TypeName
   if_primary_term?: long
   if_seq_no?: long
   op_type?: OpType
@@ -3229,9 +3229,9 @@ export interface IndexResponse extends WriteResponseBase {
 }
 
 export interface SourceRequest extends RequestBase {
-  id: string
-  index: string
-  type?: string
+  id: Id
+  index: IndexName
+  type?: TypeName
   preference?: string
   realtime?: boolean
   refresh?: boolean
@@ -3248,9 +3248,9 @@ export interface SourceResponse<TDocument = unknown> extends ResponseBase {
 }
 
 export interface SourceExistsRequest extends RequestBase {
-  id: string
-  index: string
-  type?: string
+  id: Id
+  index: IndexName
+  type?: TypeName
   preference?: string
   realtime?: boolean
   refresh?: boolean
@@ -3284,9 +3284,9 @@ export interface TermVectorFilter {
 }
 
 export interface TermVectorsRequest<TDocument = unknown> extends RequestBase {
-  index: string
-  id?: string
-  type?: string
+  index: IndexName
+  id?: Id
+  type?: TypeName
   fields?: Array<Field>
   field_statistics?: boolean
   offsets?: boolean
@@ -3340,9 +3340,9 @@ export interface Token {
 }
 
 export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends RequestBase {
-  id: string
-  index: string
-  type?: string
+  id: Id
+  index: IndexName
+  type?: TypeName
   if_primary_term?: long
   if_seq_no?: long
   lang?: string
@@ -3406,8 +3406,8 @@ export interface BulkAliasResponse extends AcknowledgedResponseBase {
 }
 
 export interface AliasExistsRequest extends RequestBase {
-  name: string | Array<string>
-  index?: string | Array<string>
+  name: Names
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -3418,8 +3418,8 @@ export interface AliasAction {
 }
 
 export interface DeleteAliasRequest extends RequestBase {
-  index: string | Array<string>
-  name: string | Array<string>
+  index: Indices
+  name: Names
   master_timeout?: Time
   timeout?: Time
 }
@@ -3428,8 +3428,8 @@ export interface DeleteAliasResponse extends ResponseBase {
 }
 
 export interface GetAliasRequest extends RequestBase {
-  name?: string | Array<string>
-  index?: string | Array<string>
+  name?: Names
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -3444,8 +3444,8 @@ export interface IndexAliases {
 }
 
 export interface PutAliasRequest extends RequestBase {
-  index: string | Array<string>
-  name: string
+  index: Indices
+  name: Name
   master_timeout?: Time
   timeout?: Time
   body?: {
@@ -3468,7 +3468,7 @@ export interface AnalyzeDetail {
 }
 
 export interface AnalyzeRequest extends RequestBase {
-  index?: string
+  index?: IndexName
   body?: {
     analyzer?: string
     attributes?: Array<string>
@@ -3519,8 +3519,8 @@ export interface TokenDetail {
 }
 
 export interface CloneIndexRequest extends RequestBase {
-  index: string
-  target: string
+  index: IndexName
+  target: Name
   master_timeout?: Time
   timeout?: Time
   wait_for_active_shards?: string
@@ -3536,7 +3536,7 @@ export interface CloneIndexResponse extends AcknowledgedResponseBase {
 }
 
 export interface CreateIndexRequest extends RequestBase {
-  index: string
+  index: IndexName
   include_type_name?: boolean
   master_timeout?: Time
   timeout?: Time
@@ -3554,7 +3554,7 @@ export interface CreateIndexResponse extends AcknowledgedResponseBase {
 }
 
 export interface DeleteIndexRequest extends RequestBase {
-  index: string | Array<string>
+  index: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -3566,7 +3566,7 @@ export interface DeleteIndexResponse extends IndicesResponseBase {
 }
 
 export interface FreezeIndexRequest extends RequestBase {
-  index: string
+  index: IndexName
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -3580,7 +3580,7 @@ export interface FreezeIndexResponse extends AcknowledgedResponseBase {
 }
 
 export interface GetIndexRequest extends RequestBase {
-  index: string | Array<string>
+  index: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   flat_settings?: boolean
@@ -3599,7 +3599,7 @@ export interface ExistsResponse extends ResponseBase {
 }
 
 export interface IndexExistsRequest extends RequestBase {
-  index: string | Array<string>
+  index: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   flat_settings?: boolean
@@ -3609,7 +3609,7 @@ export interface IndexExistsRequest extends RequestBase {
 }
 
 export interface CloseIndexRequest extends RequestBase {
-  index: string | Array<string>
+  index: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -3633,7 +3633,7 @@ export interface CloseShardResult {
 }
 
 export interface OpenIndexRequest extends RequestBase {
-  index: string | Array<string>
+  index: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -3652,8 +3652,8 @@ export interface RolloverConditions {
 }
 
 export interface RolloverIndexRequest extends RequestBase {
-  alias: string
-  new_index?: string
+  alias: Alias
+  new_index?: IndexName
   dry_run?: boolean
   include_type_name?: boolean
   master_timeout?: Time
@@ -3677,8 +3677,8 @@ export interface RolloverIndexResponse extends AcknowledgedResponseBase {
 }
 
 export interface ShrinkIndexRequest extends RequestBase {
-  index: string
-  target: string
+  index: IndexName
+  target: IndexName
   master_timeout?: Time
   timeout?: Time
   wait_for_active_shards?: string
@@ -3693,8 +3693,8 @@ export interface ShrinkIndexResponse extends AcknowledgedResponseBase {
 }
 
 export interface SplitIndexRequest extends RequestBase {
-  index: string
-  target: string
+  index: IndexName
+  target: IndexName
   master_timeout?: Time
   timeout?: Time
   wait_for_active_shards?: string
@@ -3709,8 +3709,8 @@ export interface SplitIndexResponse extends AcknowledgedResponseBase {
 }
 
 export interface TypeExistsRequest extends RequestBase {
-  index: string | Array<string>
-  type: string | Array<string>
+  index: Indices
+  type: TypeNames
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -3718,7 +3718,7 @@ export interface TypeExistsRequest extends RequestBase {
 }
 
 export interface UnfreezeIndexRequest extends RequestBase {
-  index: string
+  index: IndexName
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -3732,8 +3732,8 @@ export interface UnfreezeIndexResponse extends AcknowledgedResponseBase {
 }
 
 export interface GetIndexSettingsRequest extends RequestBase {
-  index?: string | Array<string>
-  name?: string | Array<string>
+  index?: Indices
+  name?: Names
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   flat_settings?: boolean
@@ -3747,7 +3747,7 @@ export interface GetIndexSettingsResponse extends DictionaryResponseBase<IndexNa
 }
 
 export interface DeleteIndexTemplateRequest extends RequestBase {
-  name: string
+  name: Name
   master_timeout?: Time
   timeout?: Time
 }
@@ -3756,7 +3756,7 @@ export interface DeleteIndexTemplateResponse extends AcknowledgedResponseBase {
 }
 
 export interface GetIndexTemplateRequest extends RequestBase {
-  name?: string | Array<string>
+  name?: Names
   flat_settings?: boolean
   include_type_name?: boolean
   local?: boolean
@@ -3776,14 +3776,14 @@ export interface TemplateMapping {
 }
 
 export interface IndexTemplateExistsRequest extends RequestBase {
-  name: string | Array<string>
+  name: Names
   flat_settings?: boolean
   local?: boolean
   master_timeout?: Time
 }
 
 export interface PutIndexTemplateRequest extends RequestBase {
-  name: string
+  name: Name
   create?: boolean
   flat_settings?: boolean
   include_type_name?: boolean
@@ -3803,7 +3803,7 @@ export interface PutIndexTemplateResponse extends AcknowledgedResponseBase {
 }
 
 export interface UpdateIndexSettingsRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   flat_settings?: boolean
@@ -3820,9 +3820,9 @@ export interface UpdateIndexSettingsResponse extends AcknowledgedResponseBase {
 }
 
 export interface GetFieldMappingRequest extends RequestBase {
-  fields: string | Array<string>
-  index?: string | Array<string>
-  type?: string | Array<string>
+  fields: Fields
+  index?: Indices
+  type?: TypeNames
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -3839,8 +3839,8 @@ export interface TypeFieldMappings {
 }
 
 export interface GetMappingRequest extends RequestBase {
-  index?: string | Array<string>
-  type?: string | Array<string>
+  index?: Indices
+  type?: TypeNames
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -3858,8 +3858,8 @@ export interface IndexMappings {
 }
 
 export interface PutMappingRequest extends RequestBase {
-  index?: string | Array<string>
-  type?: string
+  index?: Indices
+  type?: TypeName
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -3933,7 +3933,7 @@ export interface RecoveryStatus {
 }
 
 export interface RecoveryStatusRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   active_only?: boolean
   detailed?: boolean
 }
@@ -3989,7 +3989,7 @@ export interface Segment {
 }
 
 export interface SegmentsRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -4019,7 +4019,7 @@ export interface IndicesShardStores {
 }
 
 export interface IndicesShardStoresRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -4079,8 +4079,8 @@ export interface IndicesStats {
 }
 
 export interface IndicesStatsRequest extends RequestBase {
-  metric?: string | Array<string>
-  index?: string | Array<string>
+  metric?: Metrics
+  index?: Indices
   completion_fields?: Array<Field>
   expand_wildcards?: ExpandWildcards
   fielddata_fields?: Array<Field>
@@ -4294,7 +4294,7 @@ export interface ReloadDetails {
 }
 
 export interface ReloadSearchAnalyzersRequest extends RequestBase {
-  index: string | Array<string>
+  index: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -4306,7 +4306,7 @@ export interface ReloadSearchAnalyzersResponse extends ResponseBase {
 }
 
 export interface ClearCacheRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   fielddata?: boolean
@@ -4320,7 +4320,7 @@ export interface ClearCacheResponse extends ShardsOperationResponseBase {
 }
 
 export interface FlushRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   force?: boolean
@@ -4332,7 +4332,7 @@ export interface FlushResponse extends ShardsOperationResponseBase {
 }
 
 export interface ForceMergeRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   flush?: boolean
@@ -4345,7 +4345,7 @@ export interface ForceMergeResponse extends ShardsOperationResponseBase {
 }
 
 export interface RefreshRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -4355,7 +4355,7 @@ export interface RefreshResponse extends ShardsOperationResponseBase {
 }
 
 export interface SyncedFlushRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -4414,7 +4414,7 @@ export interface ProcessorContainer {
 }
 
 export interface DeletePipelineRequest extends RequestBase {
-  id: string
+  id: Id
   master_timeout?: Time
   timeout?: Time
 }
@@ -4423,7 +4423,7 @@ export interface DeletePipelineResponse extends AcknowledgedResponseBase {
 }
 
 export interface GetPipelineRequest extends RequestBase {
-  id?: string
+  id?: Id
   master_timeout?: Time
 }
 
@@ -4674,7 +4674,7 @@ export interface UserAgentProcessor extends ProcessorBase {
 export type UserAgentProperty = 'NAME' | 'MAJOR' | 'MINOR' | 'PATCH' | 'OS' | 'OS_NAME' | 'OS_MAJOR' | 'OS_MINOR' | 'DEVICE' | 'BUILD'
 
 export interface PutPipelineRequest extends RequestBase {
-  id: string
+  id: Id
   master_timeout?: Time
   timeout?: Time
   body: {
@@ -4714,7 +4714,7 @@ export interface SimulatePipelineDocument {
 }
 
 export interface SimulatePipelineRequest extends RequestBase {
-  id?: string
+  id?: Id
   verbose?: boolean
   body: {
     docs?: Array<SimulatePipelineDocument>
@@ -4725,6 +4725,8 @@ export interface SimulatePipelineRequest extends RequestBase {
 export interface SimulatePipelineResponse extends ResponseBase {
   docs: Array<PipelineSimulation>
 }
+
+export type CategoryId = string
 
 export interface Date {
 }
@@ -4775,6 +4777,7 @@ export type GeoHashPrecision = number
 export type GeoTilePrecision = number
 
 export type Id = string | number
+export type Ids = string | number | Array<string>
 export type IndexName = string
 
 export type Indices = string | Array<string>
@@ -4792,7 +4795,14 @@ export interface MainError extends ErrorCause {
   root_cause: Array<ErrorCause>
 }
 
+export type Metrics = string | Array<string>
 export type MultiTermQueryRewrite = string
+
+export type Name = string
+
+export type Names = string
+
+export type NodeIds = string
 
 export type PropertyName = string
 
@@ -4801,6 +4811,9 @@ export type RelationName = string
 export type Routing = string | number
 export type TaskId = string
 
+export type TypeName = string
+
+export type TypeNames = string | Array<string>
 export type Uri = string
 
 export type DynamicMapping = 'strict'
@@ -4886,7 +4899,7 @@ export interface StoredScript {
 }
 
 export interface DeleteScriptRequest extends RequestBase {
-  id: string
+  id: Id
   master_timeout?: Time
   timeout?: Time
 }
@@ -4913,7 +4926,7 @@ export interface PainlessContextSetup {
 }
 
 export interface GetScriptRequest extends RequestBase {
-  id: string
+  id: Id
   master_timeout?: Time
 }
 
@@ -4922,8 +4935,8 @@ export interface GetScriptResponse extends ResponseBase {
 }
 
 export interface PutScriptRequest extends RequestBase {
-  id: string
-  context?: string
+  id: Id
+  context?: Name
   master_timeout?: Time
   timeout?: Time
   body: {
@@ -4939,7 +4952,7 @@ export interface SnapshotRepository {
 }
 
 export interface CleanupRepositoryRequest extends RequestBase {
-  repository: string
+  repository: Name
   master_timeout?: Time
   timeout?: Time
 }
@@ -4954,7 +4967,7 @@ export interface CleanupRepositoryResults {
 }
 
 export interface CreateRepositoryRequest extends RequestBase {
-  repository: string
+  repository: Name
   master_timeout?: Time
   timeout?: Time
   verify?: boolean
@@ -4967,7 +4980,7 @@ export interface CreateRepositoryResponse extends AcknowledgedResponseBase {
 }
 
 export interface DeleteRepositoryRequest extends RequestBase {
-  repository: string | Array<string>
+  repository: Names
   master_timeout?: Time
   timeout?: Time
 }
@@ -4976,7 +4989,7 @@ export interface DeleteRepositoryResponse extends AcknowledgedResponseBase {
 }
 
 export interface GetRepositoryRequest extends RequestBase {
-  repository?: string | Array<string>
+  repository?: Names
   local?: boolean
   master_timeout?: Time
 }
@@ -4990,7 +5003,7 @@ export interface CompactNodeInfo {
 }
 
 export interface VerifyRepositoryRequest extends RequestBase {
-  repository: string
+  repository: Name
   master_timeout?: Time
   timeout?: Time
 }
@@ -5000,8 +5013,8 @@ export interface VerifyRepositoryResponse extends ResponseBase {
 }
 
 export interface RestoreRequest extends RequestBase {
-  repository: string
-  snapshot: string
+  repository: Name
+  snapshot: Name
   master_timeout?: Time
   wait_for_completion?: boolean
   body?: {
@@ -5050,8 +5063,8 @@ export interface SnapshotShardFailure {
 }
 
 export interface DeleteSnapshotRequest extends RequestBase {
-  repository: string
-  snapshot: string
+  repository: Name
+  snapshot: Name
   master_timeout?: Time
 }
 
@@ -5059,8 +5072,8 @@ export interface DeleteSnapshotResponse extends AcknowledgedResponseBase {
 }
 
 export interface GetSnapshotRequest extends RequestBase {
-  repository: string
-  snapshot: string | Array<string>
+  repository: Name
+  snapshot: Names
   ignore_unavailable?: boolean
   master_timeout?: Time
   verbose?: boolean
@@ -5071,8 +5084,8 @@ export interface GetSnapshotResponse extends ResponseBase {
 }
 
 export interface SnapshotRequest extends RequestBase {
-  repository: string
-  snapshot: string
+  repository: Name
+  snapshot: Name
   master_timeout?: Time
   wait_for_completion?: boolean
   body?: {
@@ -5128,8 +5141,8 @@ export interface SnapshotStatus {
 }
 
 export interface SnapshotStatusRequest extends RequestBase {
-  repository?: string
-  snapshot?: string | Array<string>
+  repository?: Name
+  snapshot?: Names
   ignore_unavailable?: boolean
   master_timeout?: Time
 }
@@ -5750,8 +5763,8 @@ export interface WildcardQuery extends QueryBase {
 }
 
 export interface CountRequest extends RequestBase {
-  index?: string | Array<string>
-  type?: string | Array<string>
+  index?: Indices
+  type?: TypeNames
   allow_no_indices?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
@@ -5777,9 +5790,9 @@ export interface CountResponse extends ResponseBase {
 }
 
 export interface ExplainRequest extends RequestBase {
-  id: string
-  index: string
-  type?: string
+  id: Id
+  index: IndexName
+  type?: TypeName
   analyzer?: string
   analyze_wildcard?: boolean
   default_operator?: DefaultOperator
@@ -5833,7 +5846,7 @@ export interface FieldCapabilities {
 }
 
 export interface FieldCapabilitiesRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   fields?: Field | Array<Field>
@@ -5846,8 +5859,8 @@ export interface FieldCapabilitiesResponse extends ResponseBase {
 }
 
 export interface MultiSearchRequest extends RequestBase {
-  index?: string | Array<string>
-  type?: string | Array<string>
+  index?: Indices
+  type?: TypeNames
   ccs_minimize_roundtrips?: boolean
   max_concurrent_searches?: long
   max_concurrent_shard_requests?: long
@@ -5865,7 +5878,7 @@ export interface MultiSearchResponse extends ResponseBase {
 }
 
 export interface ClearScrollRequest extends RequestBase {
-  scroll_id?: string | Array<string>
+  scroll_id?: Ids
   body?: {
     scroll_id?: Array<string>
   } | string | Buffer | ReadableStream
@@ -5875,7 +5888,7 @@ export interface ClearScrollResponse extends ResponseBase {
 }
 
 export interface ScrollRequest extends RequestBase {
-  scroll_id?: string
+  scroll_id?: Id
   total_hits_as_integer?: boolean
   body?: {
     scroll?: Time
@@ -5893,8 +5906,8 @@ export interface SlicedScroll {
 }
 
 export interface SearchRequest extends RequestBase {
-  index?: string | Array<string>
-  type?: string | Array<string>
+  index?: Indices
+  type?: TypeNames
   allow_no_indices?: boolean
   allow_partial_search_results?: boolean
   analyzer?: string
@@ -6000,7 +6013,7 @@ export interface SearchShard {
 }
 
 export interface SearchShardsRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -6015,8 +6028,8 @@ export interface SearchShardsResponse extends ResponseBase {
 }
 
 export interface SearchTemplateRequest extends RequestBase {
-  index?: string | Array<string>
-  type?: string | Array<string>
+  index?: Indices
+  type?: TypeNames
   allow_no_indices?: boolean
   ccs_minimize_roundtrips?: boolean
   expand_wildcards?: ExpandWildcards
@@ -6458,8 +6471,8 @@ export interface TermSuggester {
 }
 
 export interface ValidateQueryRequest extends RequestBase {
-  index?: string | Array<string>
-  type?: string | Array<string>
+  index?: Indices
+  type?: TypeNames
   allow_no_indices?: boolean
   all_shards?: boolean
   analyzer?: string
@@ -6491,14 +6504,14 @@ export interface ValidationExplanation {
 }
 
 export interface AsyncSearchDeleteRequest extends RequestBase {
-  id: string
+  id: Id
 }
 
 export interface AsyncSearchDeleteResponse extends AcknowledgedResponseBase {
 }
 
 export interface AsyncSearchGetRequest extends RequestBase {
-  id: string
+  id: Id
   body?: {
     keep_alive?: Time
     typed_keys?: boolean
@@ -6510,7 +6523,7 @@ export interface AsyncSearchGetResponse<TDocument = unknown> extends ResponseBas
 }
 
 export interface AsyncSearchSubmitRequest extends RequestBase {
-  index?: string | Array<string>
+  index?: Indices
   body?: {
     aggs?: Record<string, AggregationContainer>
     allow_no_indices?: boolean
@@ -6570,7 +6583,7 @@ export interface AsyncSearchSubmitResponse<TDocument = unknown> extends Response
 }
 
 export interface CreateAutoFollowPatternRequest extends RequestBase {
-  name: string
+  name: Name
   body: {
     follow_index_pattern?: string
     leader_index_patterns?: Array<string>
@@ -6592,7 +6605,7 @@ export interface CreateAutoFollowPatternResponse extends AcknowledgedResponseBas
 }
 
 export interface DeleteAutoFollowPatternRequest extends RequestBase {
-  name: string
+  name: Name
 }
 
 export interface DeleteAutoFollowPatternResponse extends AcknowledgedResponseBase {
@@ -6615,7 +6628,7 @@ export interface AutoFollowPattern {
 }
 
 export interface GetAutoFollowPatternRequest extends RequestBase {
-  name?: string
+  name?: Name
 }
 
 export interface GetAutoFollowPatternResponse extends ResponseBase {
@@ -6623,21 +6636,21 @@ export interface GetAutoFollowPatternResponse extends ResponseBase {
 }
 
 export interface PauseAutoFollowPatternRequest extends RequestBase {
-  name: string
+  name: Name
 }
 
 export interface PauseAutoFollowPatternResponse extends AcknowledgedResponseBase {
 }
 
 export interface ResumeAutoFollowPatternRequest extends RequestBase {
-  name: string
+  name: Name
 }
 
 export interface ResumeAutoFollowPatternResponse extends AcknowledgedResponseBase {
 }
 
 export interface CreateFollowIndexRequest extends RequestBase {
-  index: string
+  index: IndexName
   wait_for_active_shards?: string
   body: {
     leader_index?: IndexName
@@ -6705,7 +6718,7 @@ export interface FollowIndexStats {
 }
 
 export interface FollowIndexStatsRequest extends RequestBase {
-  index: string | Array<string>
+  index: Indices
 }
 
 export interface FollowIndexStatsResponse extends ResponseBase {
@@ -6736,7 +6749,7 @@ export interface FollowerInfo {
 }
 
 export interface FollowInfoRequest extends RequestBase {
-  index: string | Array<string>
+  index: Indices
 }
 
 export interface FollowInfoResponse extends ResponseBase {
@@ -6744,7 +6757,7 @@ export interface FollowInfoResponse extends ResponseBase {
 }
 
 export interface ForgetFollowerIndexRequest extends RequestBase {
-  index: string
+  index: IndexName
   body: {
     follower_cluster?: string
     follower_index?: IndexName
@@ -6758,14 +6771,14 @@ export interface ForgetFollowerIndexResponse extends ResponseBase {
 }
 
 export interface PauseFollowIndexRequest extends RequestBase {
-  index: string
+  index: IndexName
 }
 
 export interface PauseFollowIndexResponse extends AcknowledgedResponseBase {
 }
 
 export interface ResumeFollowIndexRequest extends RequestBase {
-  index: string
+  index: IndexName
   body?: {
     max_outstanding_read_requests?: long
     max_outstanding_write_requests?: long
@@ -6784,7 +6797,7 @@ export interface ResumeFollowIndexResponse extends AcknowledgedResponseBase {
 }
 
 export interface UnfollowIndexRequest extends RequestBase {
-  index: string
+  index: IndexName
 }
 
 export interface UnfollowIndexResponse extends AcknowledgedResponseBase {
@@ -6837,7 +6850,7 @@ export interface NamedPolicyMetadata {
 }
 
 export interface DeleteEnrichPolicyRequest extends RequestBase {
-  name: string
+  name: Name
 }
 
 export interface DeleteEnrichPolicyResponse extends AcknowledgedResponseBase {
@@ -6846,7 +6859,7 @@ export interface DeleteEnrichPolicyResponse extends AcknowledgedResponseBase {
 export type EnrichPolicyPhase = 'SCHEDULED' | 'RUNNING' | 'COMPLETE' | 'FAILED'
 
 export interface ExecuteEnrichPolicyRequest extends RequestBase {
-  name: string
+  name: Name
   wait_for_completion?: boolean
 }
 
@@ -6860,7 +6873,7 @@ export interface ExecuteEnrichPolicyStatus {
 }
 
 export interface GetEnrichPolicyRequest extends RequestBase {
-  name?: string | Array<string>
+  name?: Names
 }
 
 export interface GetEnrichPolicyResponse extends ResponseBase {
@@ -6868,7 +6881,7 @@ export interface GetEnrichPolicyResponse extends ResponseBase {
 }
 
 export interface PutEnrichPolicyRequest extends RequestBase {
-  name: string
+  name: Name
   body: {
     geo_match?: EnrichPolicy
     match?: EnrichPolicy
@@ -6900,8 +6913,8 @@ export interface ExecutingPolicy {
 }
 
 export interface GraphExploreRequest extends RequestBase {
-  index: string | Array<string>
-  type?: string | Array<string>
+  index: Indices
+  type?: TypeNames
   routing?: Routing
   timeout?: Time
   body?: {
@@ -6986,14 +6999,14 @@ export interface LifecycleAction {
 }
 
 export interface DeleteLifecycleRequest extends RequestBase {
-  policy: string
+  policy: Name
 }
 
 export interface DeleteLifecycleResponse extends AcknowledgedResponseBase {
 }
 
 export interface ExplainLifecycleRequest extends RequestBase {
-  index: string
+  index: IndexName
   only_errors?: boolean
   only_managed?: boolean
 }
@@ -7021,7 +7034,7 @@ export interface LifecycleExplain {
 }
 
 export interface GetLifecycleRequest extends RequestBase {
-  policy?: string
+  policy?: Name
 }
 
 export interface GetLifecycleResponse extends DictionaryResponseBase<string, LifecyclePolicy> {
@@ -7043,7 +7056,7 @@ export interface GetIlmStatusResponse extends ResponseBase {
 export type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 
 export interface MoveToStepRequest extends RequestBase {
-  index: string
+  index: IndexName
   body?: {
     current_step?: StepKey
     next_step?: StepKey
@@ -7060,7 +7073,7 @@ export interface StepKey {
 }
 
 export interface PutLifecycleRequest extends RequestBase {
-  policy: string
+  policy: Name
   body?: {
     policy?: Policy
   } | string | Buffer | ReadableStream
@@ -7070,7 +7083,7 @@ export interface PutLifecycleResponse extends AcknowledgedResponseBase {
 }
 
 export interface RemovePolicyRequest extends RequestBase {
-  index: string
+  index: IndexName
 }
 
 export interface RemovePolicyResponse extends ResponseBase {
@@ -7079,7 +7092,7 @@ export interface RemovePolicyResponse extends ResponseBase {
 }
 
 export interface RetryIlmRequest extends RequestBase {
-  index: string
+  index: IndexName
 }
 
 export interface RetryIlmResponse extends AcknowledgedResponseBase {
@@ -7452,7 +7465,7 @@ export interface StartTrialLicenseResponse extends AcknowledgedResponseBase {
 }
 
 export interface CloseJobRequest extends RequestBase {
-  job_id: string
+  job_id: Id
   allow_no_jobs?: boolean
   force?: boolean
   timeout?: Time
@@ -7510,23 +7523,23 @@ export interface DiscoveryNode {
 }
 
 export interface DeleteCalendarRequest extends RequestBase {
-  calendar_id: string
+  calendar_id: Id
 }
 
 export interface DeleteCalendarResponse extends AcknowledgedResponseBase {
 }
 
 export interface DeleteCalendarEventRequest extends RequestBase {
-  calendar_id: string
-  event_id: string
+  calendar_id: Id
+  event_id: Id
 }
 
 export interface DeleteCalendarEventResponse extends AcknowledgedResponseBase {
 }
 
 export interface DeleteCalendarJobRequest extends RequestBase {
-  calendar_id: string
-  job_id: string
+  calendar_id: Id
+  job_id: Id
 }
 
 export interface DeleteCalendarJobResponse extends ResponseBase {
@@ -7536,7 +7549,7 @@ export interface DeleteCalendarJobResponse extends ResponseBase {
 }
 
 export interface DeleteDatafeedRequest extends RequestBase {
-  datafeed_id: string
+  datafeed_id: Id
   force?: boolean
 }
 
@@ -7551,15 +7564,15 @@ export interface DeleteExpiredDataResponse extends ResponseBase {
 }
 
 export interface DeleteFilterRequest extends RequestBase {
-  filter_id: string
+  filter_id: Id
 }
 
 export interface DeleteFilterResponse extends AcknowledgedResponseBase {
 }
 
 export interface DeleteForecastRequest extends RequestBase {
-  job_id: string
-  forecast_id?: string
+  job_id: Id
+  forecast_id?: Id
   allow_no_forecasts?: boolean
   timeout?: Time
 }
@@ -7568,7 +7581,7 @@ export interface DeleteForecastResponse extends AcknowledgedResponseBase {
 }
 
 export interface DeleteJobRequest extends RequestBase {
-  job_id: string
+  job_id: Id
   force?: boolean
   wait_for_completion?: boolean
 }
@@ -7577,8 +7590,8 @@ export interface DeleteJobResponse extends AcknowledgedResponseBase {
 }
 
 export interface DeleteModelSnapshotRequest extends RequestBase {
-  job_id: string
-  snapshot_id: string
+  job_id: Id
+  snapshot_id: Id
 }
 
 export interface DeleteModelSnapshotResponse extends AcknowledgedResponseBase {
@@ -7597,7 +7610,7 @@ export interface EstimateModelMemoryResponse extends ResponseBase {
 }
 
 export interface FlushJobRequest extends RequestBase {
-  job_id: string
+  job_id: Id
   skip_time?: string
   body?: {
     advance_time?: Date
@@ -7612,7 +7625,7 @@ export interface FlushJobResponse extends ResponseBase {
 }
 
 export interface ForecastJobRequest extends RequestBase {
-  job_id: string
+  job_id: Id
   body?: {
     duration?: Time
     expires_in?: Time
@@ -7624,7 +7637,7 @@ export interface ForecastJobResponse extends AcknowledgedResponseBase {
 }
 
 export interface GetAnomalyRecordsRequest extends RequestBase {
-  job_id: string
+  job_id: Id
   body?: {
     desc?: boolean
     end?: Date
@@ -7642,8 +7655,8 @@ export interface GetAnomalyRecordsResponse extends ResponseBase {
 }
 
 export interface GetBucketsRequest extends RequestBase {
-  job_id: string
-  timestamp?: string
+  job_id: Id
+  timestamp?: Id
   body?: {
     anomaly_score?: double
     desc?: boolean
@@ -7662,7 +7675,7 @@ export interface GetBucketsResponse extends ResponseBase {
 }
 
 export interface GetCalendarEventsRequest extends RequestBase {
-  calendar_id: string
+  calendar_id: Id
   end?: Date
   job_id?: string
   start?: string
@@ -7684,7 +7697,7 @@ export interface Calendar {
 }
 
 export interface GetCalendarsRequest extends RequestBase {
-  calendar_id?: string
+  calendar_id?: Id
   body?: {
     page?: Page
   } | string | Buffer | ReadableStream
@@ -7696,8 +7709,8 @@ export interface GetCalendarsResponse extends ResponseBase {
 }
 
 export interface GetCategoriesRequest extends RequestBase {
-  job_id: string
-  category_id?: long
+  job_id: Id
+  category_id?: CategoryId
   body?: {
     page?: Page
   } | string | Buffer | ReadableStream
@@ -7709,7 +7722,7 @@ export interface GetCategoriesResponse extends ResponseBase {
 }
 
 export interface GetDatafeedStatsRequest extends RequestBase {
-  datafeed_id?: string
+  datafeed_id?: Id
   allow_no_datafeeds?: boolean
 }
 
@@ -7719,7 +7732,7 @@ export interface GetDatafeedStatsResponse extends ResponseBase {
 }
 
 export interface GetDatafeedsRequest extends RequestBase {
-  datafeed_id?: string
+  datafeed_id?: Id
   allow_no_datafeeds?: boolean
 }
 
@@ -7735,7 +7748,7 @@ export interface Filter {
 }
 
 export interface GetFiltersRequest extends RequestBase {
-  filter_id?: string
+  filter_id?: Id
   from?: integer
   size?: integer
 }
@@ -7746,7 +7759,7 @@ export interface GetFiltersResponse extends ResponseBase {
 }
 
 export interface GetInfluencersRequest extends RequestBase {
-  job_id: string
+  job_id: Id
   body?: {
     descending?: boolean
     end?: Date
@@ -7764,7 +7777,7 @@ export interface GetInfluencersResponse extends ResponseBase {
 }
 
 export interface GetJobStatsRequest extends RequestBase {
-  job_id?: string
+  job_id?: Id
   allow_no_jobs?: boolean
 }
 
@@ -7774,7 +7787,7 @@ export interface GetJobStatsResponse extends ResponseBase {
 }
 
 export interface GetJobsRequest extends RequestBase {
-  job_id?: string
+  job_id?: Id
   allow_no_jobs?: boolean
 }
 
@@ -7784,8 +7797,8 @@ export interface GetJobsResponse extends ResponseBase {
 }
 
 export interface GetModelSnapshotsRequest extends RequestBase {
-  job_id: string
-  snapshot_id?: string
+  job_id: Id
+  snapshot_id?: Id
   body?: {
     desc?: boolean
     end?: Date
@@ -7801,7 +7814,7 @@ export interface GetModelSnapshotsResponse extends ResponseBase {
 }
 
 export interface GetOverallBucketsRequest extends RequestBase {
-  job_id: string
+  job_id: Id
   body?: {
     allow_no_jobs?: boolean
     bucket_span?: Time
@@ -8110,7 +8123,7 @@ export interface MachineLearningInfoResponse extends ResponseBase {
 }
 
 export interface OpenJobRequest extends RequestBase {
-  job_id: string
+  job_id: Id
   body?: {
     timeout?: Time
   } | string | Buffer | ReadableStream
@@ -8121,7 +8134,7 @@ export interface OpenJobResponse extends ResponseBase {
 }
 
 export interface PostCalendarEventsRequest extends RequestBase {
-  calendar_id: string
+  calendar_id: Id
   body: {
     events?: Array<ScheduledEvent>
   } | string | Buffer | ReadableStream
@@ -8140,7 +8153,7 @@ export interface ScheduledEvent {
 }
 
 export interface PostJobDataRequest extends RequestBase {
-  job_id: string
+  job_id: Id
   reset_end?: Date
   reset_start?: Date
   body: {
@@ -8167,7 +8180,7 @@ export interface PostJobDataResponse extends ResponseBase {
 }
 
 export interface PreviewDatafeedRequest extends RequestBase {
-  datafeed_id: string
+  datafeed_id: Id
 }
 
 export interface PreviewDatafeedResponse<TDocument = unknown> extends ResponseBase {
@@ -8175,7 +8188,7 @@ export interface PreviewDatafeedResponse<TDocument = unknown> extends ResponseBa
 }
 
 export interface PutCalendarRequest extends RequestBase {
-  calendar_id: string
+  calendar_id: Id
   body?: {
     description?: string
   } | string | Buffer | ReadableStream
@@ -8188,8 +8201,8 @@ export interface PutCalendarResponse extends ResponseBase {
 }
 
 export interface PutCalendarJobRequest extends RequestBase {
-  calendar_id: string
-  job_id: string
+  calendar_id: Id
+  job_id: Id
 }
 
 export interface PutCalendarJobResponse extends ResponseBase {
@@ -8199,7 +8212,7 @@ export interface PutCalendarJobResponse extends ResponseBase {
 }
 
 export interface PutDatafeedRequest extends RequestBase {
-  datafeed_id: string
+  datafeed_id: Id
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_throttled?: boolean
@@ -8233,7 +8246,7 @@ export interface PutDatafeedResponse extends ResponseBase {
 }
 
 export interface PutFilterRequest extends RequestBase {
-  filter_id: string
+  filter_id: Id
   body: {
     description?: string
     items?: Array<string>
@@ -8249,7 +8262,7 @@ export interface PutFilterResponse extends ResponseBase {
 export type ExcludeFrequent = 'all' | 'none' | 'by' | 'over'
 
 export interface PutJobRequest extends RequestBase {
-  job_id: string
+  job_id: Id
   body: {
     allow_lazy_open?: boolean
     analysis_config?: AnalysisConfig
@@ -8281,8 +8294,8 @@ export interface PutJobResponse extends ResponseBase {
 }
 
 export interface RevertModelSnapshotRequest extends RequestBase {
-  job_id: string
-  snapshot_id: string
+  job_id: Id
+  snapshot_id: Id
   body?: {
     delete_intervening_results?: boolean
   } | string | Buffer | ReadableStream
@@ -8301,7 +8314,7 @@ export interface SetUpgradeModeResponse extends AcknowledgedResponseBase {
 }
 
 export interface StartDatafeedRequest extends RequestBase {
-  datafeed_id: string
+  datafeed_id: Id
   body?: {
     end?: Date
     start?: Date
@@ -8314,7 +8327,7 @@ export interface StartDatafeedResponse extends ResponseBase {
 }
 
 export interface StopDatafeedRequest extends RequestBase {
-  datafeed_id: string
+  datafeed_id: Id
   allow_no_datafeeds?: boolean
   body?: {
     force?: boolean
@@ -8327,7 +8340,7 @@ export interface StopDatafeedResponse extends ResponseBase {
 }
 
 export interface UpdateDatafeedRequest extends RequestBase {
-  datafeed_id: string
+  datafeed_id: Id
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_throttled?: boolean
@@ -8361,7 +8374,7 @@ export interface UpdateDatafeedResponse extends ResponseBase {
 }
 
 export interface UpdateFilterRequest extends RequestBase {
-  filter_id: string
+  filter_id: Id
   body: {
     add_items?: Array<string>
     description?: string
@@ -8376,7 +8389,7 @@ export interface UpdateFilterResponse extends ResponseBase {
 }
 
 export interface UpdateJobRequest extends RequestBase {
-  job_id: string
+  job_id: Id
   body: {
     allow_lazy_open?: boolean
     analysis_limits?: AnalysisMemoryLimit
@@ -8394,8 +8407,8 @@ export interface UpdateJobResponse extends ResponseBase {
 }
 
 export interface UpdateModelSnapshotRequest extends RequestBase {
-  job_id: string
-  snapshot_id: string
+  job_id: Id
+  snapshot_id: Id
   body: {
     description?: string
     retain?: boolean
@@ -8438,7 +8451,7 @@ export interface DeprecationInfo {
 }
 
 export interface DeprecationInfoRequest extends RequestBase {
-  index?: string
+  index?: IndexName
 }
 
 export interface DeprecationInfoResponse extends ResponseBase {
@@ -8450,7 +8463,7 @@ export interface DeprecationInfoResponse extends ResponseBase {
 export type DeprecationWarningLevel = 'none' | 'info' | 'warning' | 'critical'
 
 export interface CreateRollupJobRequest extends RequestBase {
-  id: string
+  id: Id
   body: {
     cron?: string
     groups?: RollupGroupings
@@ -8465,14 +8478,14 @@ export interface CreateRollupJobResponse extends AcknowledgedResponseBase {
 }
 
 export interface DeleteRollupJobRequest extends RequestBase {
-  id: string
+  id: Id
 }
 
 export interface DeleteRollupJobResponse extends AcknowledgedResponseBase {
 }
 
 export interface GetRollupCapabilitiesRequest extends RequestBase {
-  id?: string
+  id?: Id
 }
 
 export interface GetRollupCapabilitiesResponse extends DictionaryResponseBase<IndexName, RollupCapabilities> {
@@ -8490,7 +8503,7 @@ export interface RollupCapabilitiesJob {
 }
 
 export interface GetRollupIndexCapabilitiesRequest extends RequestBase {
-  index: string
+  index: Id
 }
 
 export interface GetRollupIndexCapabilitiesResponse extends DictionaryResponseBase<IndexName, RollupIndexCapabilities> {
@@ -8508,7 +8521,7 @@ export interface RollupIndexCapabilitiesJob {
 }
 
 export interface GetRollupJobRequest extends RequestBase {
-  id?: string
+  id?: Id
 }
 
 export interface GetRollupJobResponse extends ResponseBase {
@@ -8584,8 +8597,8 @@ export interface TermsRollupGrouping {
 }
 
 export interface RollupSearchRequest extends RequestBase {
-  index: string | Array<string>
-  type?: string
+  index: Indices
+  type?: TypeName
   total_hits_as_integer?: boolean
   typed_keys?: boolean
   body: {
@@ -8599,7 +8612,7 @@ export interface RollupSearchResponse<TDocument = unknown> extends ResponseBase 
 }
 
 export interface StartRollupJobRequest extends RequestBase {
-  id: string
+  id: Id
 }
 
 export interface StartRollupJobResponse extends ResponseBase {
@@ -8607,7 +8620,7 @@ export interface StartRollupJobResponse extends ResponseBase {
 }
 
 export interface StopRollupJobRequest extends RequestBase {
-  id: string
+  id: Id
   timeout?: Time
   wait_for_completion?: boolean
 }
@@ -8704,7 +8717,7 @@ export interface RealmInfo {
 }
 
 export interface ClearCachedRealmsRequest extends RequestBase {
-  realms: string | Array<string>
+  realms: Names
   usernames?: Array<string>
 }
 
@@ -8714,8 +8727,8 @@ export interface ClearCachedRealmsResponse extends ResponseBase {
 }
 
 export interface DeletePrivilegesRequest extends RequestBase {
-  application: string
-  name: string
+  application: Name
+  name: Name
   refresh?: Refresh
 }
 
@@ -8735,8 +8748,8 @@ export interface GetBuiltinPrivilegesResponse extends ResponseBase {
 }
 
 export interface GetPrivilegesRequest extends RequestBase {
-  application?: string
-  name?: string
+  application?: Name
+  name?: Name
 }
 
 export interface GetPrivilegesResponse extends DictionaryResponseBase<string, Record<string, PrivilegesActions>> {
@@ -8798,7 +8811,7 @@ export interface ApplicationPrivilegesCheck {
 }
 
 export interface HasPrivilegesRequest extends RequestBase {
-  user?: string
+  user?: Name
   body: {
     application?: Array<ApplicationPrivilegesCheck>
     cluster?: Array<string>
@@ -8849,7 +8862,7 @@ export interface FieldSecurity {
 }
 
 export interface DeleteRoleMappingRequest extends RequestBase {
-  name: string
+  name: Name
   refresh?: Refresh
 }
 
@@ -8858,7 +8871,7 @@ export interface DeleteRoleMappingResponse extends ResponseBase {
 }
 
 export interface GetRoleMappingRequest extends RequestBase {
-  name?: string
+  name?: Name
 }
 
 export interface GetRoleMappingResponse extends DictionaryResponseBase<string, XPackRoleMapping> {
@@ -8872,7 +8885,7 @@ export interface XPackRoleMapping {
 }
 
 export interface PutRoleMappingRequest extends RequestBase {
-  name: string
+  name: Name
   refresh?: Refresh
   body: {
     enabled?: boolean
@@ -8896,7 +8909,7 @@ export interface RoleMappingRuleBase {
 }
 
 export interface ClearCachedRolesRequest extends RequestBase {
-  name: string | Array<string>
+  name: Names
 }
 
 export interface ClearCachedRolesResponse extends ResponseBase {
@@ -8905,7 +8918,7 @@ export interface ClearCachedRolesResponse extends ResponseBase {
 }
 
 export interface DeleteRoleRequest extends RequestBase {
-  name: string
+  name: Name
   refresh?: Refresh
 }
 
@@ -8914,7 +8927,7 @@ export interface DeleteRoleResponse extends ResponseBase {
 }
 
 export interface GetRoleRequest extends RequestBase {
-  name?: string
+  name?: Name
 }
 
 export interface GetRoleResponse extends DictionaryResponseBase<string, XPackRole> {
@@ -8941,7 +8954,7 @@ export interface IndicesPrivileges {
 }
 
 export interface PutRoleRequest extends RequestBase {
-  name: string
+  name: Name
   refresh?: Refresh
   body: {
     applications?: Array<ApplicationPrivileges>
@@ -8962,7 +8975,7 @@ export interface PutRoleStatus {
 }
 
 export interface ChangePasswordRequest extends RequestBase {
-  username?: string
+  username?: Name
   refresh?: Refresh
   body: {
     password?: string
@@ -8973,7 +8986,7 @@ export interface ChangePasswordResponse extends ResponseBase {
 }
 
 export interface DeleteUserRequest extends RequestBase {
-  username: string
+  username: Name
   refresh?: Refresh
 }
 
@@ -8982,7 +8995,7 @@ export interface DeleteUserResponse extends ResponseBase {
 }
 
 export interface DisableUserRequest extends RequestBase {
-  username: string
+  username: Name
   refresh?: Refresh
 }
 
@@ -8990,7 +9003,7 @@ export interface DisableUserResponse extends ResponseBase {
 }
 
 export interface EnableUserRequest extends RequestBase {
-  username: string
+  username: Name
   refresh?: Refresh
 }
 
@@ -8998,7 +9011,7 @@ export interface EnableUserResponse extends ResponseBase {
 }
 
 export interface GetUserRequest extends RequestBase {
-  username?: string | Array<string>
+  username?: Names
 }
 
 export interface GetUserResponse extends DictionaryResponseBase<string, XPackUser> {
@@ -9039,7 +9052,7 @@ export interface InvalidateUserAccessTokenResponse extends ResponseBase {
 }
 
 export interface PutUserRequest extends RequestBase {
-  username: string
+  username: Name
   refresh?: Refresh
   body: {
     email?: string
@@ -9098,14 +9111,14 @@ export interface SnapshotRetentionConfiguration {
 }
 
 export interface DeleteSnapshotLifecycleRequest extends RequestBase {
-  policy_id: string
+  policy_id: Name
 }
 
 export interface DeleteSnapshotLifecycleResponse extends AcknowledgedResponseBase {
 }
 
 export interface ExecuteSnapshotLifecycleRequest extends RequestBase {
-  policy_id: string
+  policy_id: Name
 }
 
 export interface ExecuteSnapshotLifecycleResponse extends ResponseBase {
@@ -9119,7 +9132,7 @@ export interface ExecuteRetentionResponse extends AcknowledgedResponseBase {
 }
 
 export interface GetSnapshotLifecycleRequest extends RequestBase {
-  policy_id?: string | Array<string>
+  policy_id?: Names
 }
 
 export interface GetSnapshotLifecycleResponse extends DictionaryResponseBase<string, SnapshotLifecyclePolicyMetadata> {
@@ -9148,7 +9161,7 @@ export interface GetSnapshotLifecycleManagementStatusResponse extends ResponseBa
 }
 
 export interface PutSnapshotLifecycleRequest extends RequestBase {
-  policy_id: string
+  policy_id: Name
   body?: {
     config?: SnapshotLifecycleConfig
     name?: string
@@ -9260,7 +9273,7 @@ export interface TransformTimeSync {
 }
 
 export interface DeleteTransformRequest extends RequestBase {
-  transform_id: string
+  transform_id: Name
   force?: boolean
 }
 
@@ -9268,7 +9281,7 @@ export interface DeleteTransformResponse extends AcknowledgedResponseBase {
 }
 
 export interface GetTransformRequest extends RequestBase {
-  transform_id?: string
+  transform_id?: Name
   allow_no_match?: boolean
   from?: integer
   size?: integer
@@ -9280,7 +9293,7 @@ export interface GetTransformResponse extends ResponseBase {
 }
 
 export interface GetTransformStatsRequest extends RequestBase {
-  transform_id: string
+  transform_id: Name
   allow_no_match?: boolean
   from?: long
   size?: long
@@ -9379,7 +9392,7 @@ export interface PreviewTransformResponse<TTransform = unknown> extends Response
 }
 
 export interface PutTransformRequest extends RequestBase {
-  transform_id: string
+  transform_id: Name
   defer_validation?: boolean
   body: {
     description?: string
@@ -9395,7 +9408,7 @@ export interface PutTransformResponse extends AcknowledgedResponseBase {
 }
 
 export interface StartTransformRequest extends RequestBase {
-  transform_id: string
+  transform_id: Name
   timeout?: Time
 }
 
@@ -9403,7 +9416,7 @@ export interface StartTransformResponse extends AcknowledgedResponseBase {
 }
 
 export interface StopTransformRequest extends RequestBase {
-  transform_id: string
+  transform_id: Name
   allow_no_match?: boolean
   force?: boolean
   timeout?: Time
@@ -9415,7 +9428,7 @@ export interface StopTransformResponse extends AcknowledgedResponseBase {
 }
 
 export interface UpdateTransformRequest extends RequestBase {
-  transform_id: string
+  transform_id: Name
   defer_validation?: boolean
   body: {
     description?: string
@@ -9458,8 +9471,8 @@ export interface AcknowledgeState {
 }
 
 export interface AcknowledgeWatchRequest extends RequestBase {
-  watch_id: string
-  action_id?: string | Array<string>
+  watch_id: Name
+  action_id?: Names
 }
 
 export interface AcknowledgeWatchResponse extends ResponseBase {
@@ -9575,7 +9588,7 @@ export interface SlackMessage {
 }
 
 export interface ActivateWatchRequest extends RequestBase {
-  watch_id: string
+  watch_id: Name
 }
 
 export interface ActivateWatchResponse extends ResponseBase {
@@ -9625,7 +9638,7 @@ export interface ScriptCondition {
 }
 
 export interface DeactivateWatchRequest extends RequestBase {
-  watch_id: string
+  watch_id: Name
 }
 
 export interface DeactivateWatchResponse extends ResponseBase {
@@ -9633,7 +9646,7 @@ export interface DeactivateWatchResponse extends ResponseBase {
 }
 
 export interface DeleteWatchRequest extends RequestBase {
-  id: string
+  id: Name
 }
 
 export interface DeleteWatchResponse extends ResponseBase {
@@ -9645,7 +9658,7 @@ export interface DeleteWatchResponse extends ResponseBase {
 export type ActionExecutionState = 'awaits_execution' | 'checking' | 'execution_not_needed' | 'throttled' | 'executed' | 'failed' | 'deleted_while_queued' | 'not_executed_already_queued'
 
 export interface ExecuteWatchRequest extends RequestBase {
-  id?: string
+  id?: Name
   debug?: boolean
   body?: {
     action_modes?: Record<string, ActionExecutionMode>
@@ -9801,7 +9814,7 @@ export interface WebhookActionResult {
 }
 
 export interface GetWatchRequest extends RequestBase {
-  id: string
+  id: Name
 }
 
 export interface GetWatchResponse extends ResponseBase {
@@ -9891,7 +9904,7 @@ export interface SimpleInput {
 }
 
 export interface PutWatchRequest extends RequestBase {
-  id: string
+  id: Name
   active?: boolean
   if_primary_term?: long
   if_sequence_number?: long
@@ -10037,7 +10050,7 @@ export interface WatcherNodeStats {
 export type WatcherState = 'stopped' | 'starting' | 'started' | 'stopping'
 
 export interface WatcherStatsRequest extends RequestBase {
-  metric?: string | Array<string>
+  metric?: Metrics
   emit_stacktraces?: boolean
 }
 
