@@ -354,7 +354,7 @@ _Default:_ `5`
 
 [discrete]
 === autoscaling.deleteAutoscalingPolicy
-*Stability:* experimental
+
 [source,ts]
 ----
 client.autoscaling.deleteAutoscalingPolicy({
@@ -371,7 +371,7 @@ link:{ref}/autoscaling-delete-autoscaling-policy.html[Documentation] +
 
 [discrete]
 === autoscaling.getAutoscalingCapacity
-*Stability:* experimental
+
 [source,ts]
 ----
 client.autoscaling.getAutoscalingCapacity()
@@ -381,7 +381,7 @@ link:{ref}/autoscaling-get-autoscaling-capacity.html[Documentation] +
 
 [discrete]
 === autoscaling.getAutoscalingPolicy
-*Stability:* experimental
+
 [source,ts]
 ----
 client.autoscaling.getAutoscalingPolicy({
@@ -398,7 +398,7 @@ link:{ref}/autoscaling-get-autoscaling-policy.html[Documentation] +
 
 [discrete]
 === autoscaling.putAutoscalingPolicy
-*Stability:* experimental
+
 [source,ts]
 ----
 client.autoscaling.putAutoscalingPolicy({
@@ -1182,6 +1182,7 @@ client.cat.plugins({
   master_timeout: string,
   h: string | string[],
   help: boolean,
+  include_bootstrap: boolean,
   s: string | string[],
   v: boolean
 })
@@ -1203,6 +1204,9 @@ link:{ref}/cat-plugins.html[Documentation] +
 
 |`help`
 |`boolean` - Return help information
+
+|`include_bootstrap` or `includeBootstrap`
+|`boolean` - Include bootstrap plugins in the response
 
 |`s`
 |`string \| string[]` - Comma-separated list of column names or column aliases to sort by
@@ -1447,15 +1451,15 @@ link:{ref}/cat-snapshots.html[Documentation] +
 
 [discrete]
 === cat.tasks
-
+*Stability:* experimental
 [source,ts]
 ----
 client.cat.tasks({
   format: string,
-  node_id: string | string[],
+  nodes: string | string[],
   actions: string | string[],
   detailed: boolean,
-  parent_task: number,
+  parent_task_id: string,
   h: string | string[],
   help: boolean,
   s: string | string[],
@@ -1469,7 +1473,7 @@ link:{ref}/tasks.html[Documentation] +
 |`format`
 |`string` - a short version of the Accept header, e.g. json, yaml
 
-|`node_id` or `nodeId`
+|`nodes`
 |`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
 |`actions`
@@ -1478,8 +1482,8 @@ link:{ref}/tasks.html[Documentation] +
 |`detailed`
 |`boolean` - Return detailed task information (default: false)
 
-|`parent_task` or `parentTask`
-|`number` - Return tasks with specified parent task id. Set to -1 to return all.
+|`parent_task_id` or `parentTaskId`
+|`string` - Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
 
 |`h`
 |`string \| string[]` - Comma-separated list of column names to display
@@ -2925,7 +2929,7 @@ link:{ref}/enrich-stats-api.html[Documentation] +
 
 [discrete]
 === eql.delete
-*Stability:* beta
+
 [source,ts]
 ----
 client.eql.delete({
@@ -2942,7 +2946,7 @@ link:{ref}/eql-search-api.html[Documentation] +
 
 [discrete]
 === eql.get
-*Stability:* beta
+
 [source,ts]
 ----
 client.eql.get({
@@ -2968,7 +2972,7 @@ _Default:_ `5d`
 
 [discrete]
 === eql.search
-*Stability:* beta
+
 [source,ts]
 ----
 client.eql.search({
@@ -5309,10 +5313,10 @@ link:{ref}/indices-stats.html[Documentation] +
 |`string \| string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
 |`completion_fields` or `completionFields`
-|`string \| string[]` - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
+|`string \| string[]` - A comma-separated list of fields for the `completion` index metric (supports wildcards)
 
 |`fielddata_fields` or `fielddataFields`
-|`string \| string[]` - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
+|`string \| string[]` - A comma-separated list of fields for the `fielddata` index metric (supports wildcards)
 
 |`fields`
 |`string \| string[]` - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
@@ -6124,82 +6128,6 @@ link:{ref}/explain-dfanalytics.html[Documentation] +
 
 |`body`
 |`object` - The data frame analytics config to explain
-
-|===
-
-[discrete]
-=== ml.findFileStructure
-*Stability:* experimental
-[source,ts]
-----
-client.ml.findFileStructure({
-  lines_to_sample: number,
-  line_merge_size_limit: number,
-  timeout: string,
-  charset: string,
-  format: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text',
-  has_header_row: boolean,
-  column_names: string | string[],
-  delimiter: string,
-  quote: string,
-  should_trim_fields: boolean,
-  grok_pattern: string,
-  timestamp_field: string,
-  timestamp_format: string,
-  explain: boolean,
-  body: object
-})
-----
-link:{ref}/ml-find-file-structure.html[Documentation] +
-[cols=2*]
-|===
-|`lines_to_sample` or `linesToSample`
-|`number` - How many lines of the file should be included in the analysis +
-_Default:_ `1000`
-
-|`line_merge_size_limit` or `lineMergeSizeLimit`
-|`number` - Maximum number of characters permitted in a single message when lines are merged to create messages. +
-_Default:_ `10000`
-
-|`timeout`
-|`string` - Timeout after which the analysis will be aborted +
-_Default:_ `25s`
-
-|`charset`
-|`string` - Optional parameter to specify the character set of the file
-
-|`format`
-|`'ndjson' \| 'xml' \| 'delimited' \| 'semi_structured_text'` - Optional parameter to specify the high level file format
-
-|`has_header_row` or `hasHeaderRow`
-|`boolean` - Optional parameter to specify whether a delimited file includes the column names in its first row
-
-|`column_names` or `columnNames`
-|`string \| string[]` - Optional parameter containing a comma separated list of the column names for a delimited file
-
-|`delimiter`
-|`string` - Optional parameter to specify the delimiter character for a delimited file - must be a single character
-
-|`quote`
-|`string` - Optional parameter to specify the quote character for a delimited file - must be a single character
-
-|`should_trim_fields` or `shouldTrimFields`
-|`boolean` - Optional parameter to specify whether the values between delimiters in a delimited file should have whitespace trimmed from them
-
-|`grok_pattern` or `grokPattern`
-|`string` - Optional parameter to specify the Grok pattern that should be used to extract fields from messages in a semi-structured text file
-
-|`timestamp_field` or `timestampField`
-|`string` - Optional parameter to specify the timestamp field in the file
-
-|`timestamp_format` or `timestampFormat`
-|`string` - Optional parameter to specify the timestamp format in the file - may be either a Joda or Java time format
-
-|`explain`
-|`boolean` - Whether to include a commentary on how the structure was derived
-
-|`body`
-|`object` - The contents of the file to be analyzed
 
 |===
 
@@ -7897,10 +7825,10 @@ link:{ref}/cluster-nodes-stats.html[Documentation] +
 |`string \| string[]` - Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified.
 
 |`completion_fields` or `completionFields`
-|`string \| string[]` - A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
+|`string \| string[]` - A comma-separated list of fields for the `completion` index metric (supports wildcards)
 
 |`fielddata_fields` or `fielddataFields`
-|`string \| string[]` - A comma-separated list of fields for `fielddata` index metric (supports wildcards)
+|`string \| string[]` - A comma-separated list of fields for the `fielddata` index metric (supports wildcards)
 
 |`fields`
 |`string \| string[]` - A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
@@ -8259,6 +8187,7 @@ link:{ref}/rollup-put-job.html[Documentation] +
 ----
 client.rollup.rollup({
   index: string,
+  rollup_index: string,
   body: object
 })
 ----
@@ -8267,6 +8196,9 @@ link:{ref}/rollup-api.html[Documentation] +
 |===
 |`index`
 |`string` - The index to roll up
+
+|`rollup_index` or `rollupIndex`
+|`string` - The name of the rollup index to create
 
 |`body`
 |`object` - The rollup configuration
@@ -8448,6 +8380,7 @@ client.search({
   max_concurrent_shard_requests: number,
   pre_filter_shard_size: number,
   rest_total_hits_as_int: boolean,
+  min_compatible_shard_node: string,
   body: object
 })
 ----
@@ -8590,6 +8523,9 @@ _Default:_ `5`
 
 |`rest_total_hits_as_int` or `restTotalHitsAsInt`
 |`boolean` - Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+
+|`min_compatible_shard_node` or `minCompatibleShardNode`
+|`string` - The minimum compatible version that all shards involved in search should have for this request to be successful
 
 |`body`
 |`object` - The search definition using the Query DSL
@@ -10042,6 +9978,82 @@ _Default:_ `true`
 
 |`body`
 |`object` - Define parameters and or supply a document to get termvectors for. See documentation.
+
+|===
+
+[discrete]
+=== textStructure.findStructure
+*Stability:* experimental
+[source,ts]
+----
+client.textStructure.findStructure({
+  lines_to_sample: number,
+  line_merge_size_limit: number,
+  timeout: string,
+  charset: string,
+  format: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text',
+  has_header_row: boolean,
+  column_names: string | string[],
+  delimiter: string,
+  quote: string,
+  should_trim_fields: boolean,
+  grok_pattern: string,
+  timestamp_field: string,
+  timestamp_format: string,
+  explain: boolean,
+  body: object
+})
+----
+link:{ref}/find-structure.html[Documentation] +
+[cols=2*]
+|===
+|`lines_to_sample` or `linesToSample`
+|`number` - How many lines of the file should be included in the analysis +
+_Default:_ `1000`
+
+|`line_merge_size_limit` or `lineMergeSizeLimit`
+|`number` - Maximum number of characters permitted in a single message when lines are merged to create messages. +
+_Default:_ `10000`
+
+|`timeout`
+|`string` - Timeout after which the analysis will be aborted +
+_Default:_ `25s`
+
+|`charset`
+|`string` - Optional parameter to specify the character set of the file
+
+|`format`
+|`'ndjson' \| 'xml' \| 'delimited' \| 'semi_structured_text'` - Optional parameter to specify the high level file format
+
+|`has_header_row` or `hasHeaderRow`
+|`boolean` - Optional parameter to specify whether a delimited file includes the column names in its first row
+
+|`column_names` or `columnNames`
+|`string \| string[]` - Optional parameter containing a comma separated list of the column names for a delimited file
+
+|`delimiter`
+|`string` - Optional parameter to specify the delimiter character for a delimited file - must be a single character
+
+|`quote`
+|`string` - Optional parameter to specify the quote character for a delimited file - must be a single character
+
+|`should_trim_fields` or `shouldTrimFields`
+|`boolean` - Optional parameter to specify whether the values between delimiters in a delimited file should have whitespace trimmed from them
+
+|`grok_pattern` or `grokPattern`
+|`string` - Optional parameter to specify the Grok pattern that should be used to extract fields from messages in a semi-structured text file
+
+|`timestamp_field` or `timestampField`
+|`string` - Optional parameter to specify the timestamp field in the file
+
+|`timestamp_format` or `timestampFormat`
+|`string` - Optional parameter to specify the timestamp format in the file - may be either a Joda or Java time format
+
+|`explain`
+|`boolean` - Whether to include a commentary on how the structure was derived
+
+|`body`
+|`object` - The contents of the file to be analyzed
 
 |===
 

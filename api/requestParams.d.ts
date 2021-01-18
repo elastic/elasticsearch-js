@@ -297,6 +297,7 @@ export interface CatPlugins extends Generic {
   master_timeout?: string;
   h?: string | string[];
   help?: boolean;
+  include_bootstrap?: boolean;
   s?: string | string[];
   v?: boolean;
 }
@@ -360,10 +361,10 @@ export interface CatSnapshots extends Generic {
 
 export interface CatTasks extends Generic {
   format?: string;
-  node_id?: string | string[];
+  nodes?: string | string[];
   actions?: string | string[];
   detailed?: boolean;
-  parent_task?: number;
+  parent_task_id?: string;
   h?: string | string[];
   help?: boolean;
   s?: string | string[];
@@ -1497,24 +1498,6 @@ export interface MlExplainDataFrameAnalytics<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface MlFindFileStructure<T = RequestNDBody> extends Generic {
-  lines_to_sample?: number;
-  line_merge_size_limit?: number;
-  timeout?: string;
-  charset?: string;
-  format?: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text';
-  has_header_row?: boolean;
-  column_names?: string | string[];
-  delimiter?: string;
-  quote?: string;
-  should_trim_fields?: boolean;
-  grok_pattern?: string;
-  timestamp_field?: string;
-  timestamp_format?: string;
-  explain?: boolean;
-  body: T;
-}
-
 export interface MlFlushJob<T = RequestBody> extends Generic {
   job_id: string;
   calc_interim?: boolean;
@@ -2004,6 +1987,7 @@ export interface RollupPutJob<T = RequestBody> extends Generic {
 
 export interface RollupRollup<T = RequestBody> extends Generic {
   index: string;
+  rollup_index: string;
   body: T;
 }
 
@@ -2082,6 +2066,7 @@ export interface Search<T = RequestBody> extends Generic {
   max_concurrent_shard_requests?: number;
   pre_filter_shard_size?: number;
   rest_total_hits_as_int?: boolean;
+  min_compatible_shard_node?: string;
   body?: T;
 }
 
@@ -2434,6 +2419,24 @@ export interface Termvectors<T = RequestBody> extends Generic {
   version?: number;
   version_type?: 'internal' | 'external' | 'external_gte';
   body?: T;
+}
+
+export interface TextStructureFindStructure<T = RequestBody> extends Generic {
+  lines_to_sample?: number;
+  line_merge_size_limit?: number;
+  timeout?: string;
+  charset?: string;
+  format?: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text';
+  has_header_row?: boolean;
+  column_names?: string | string[];
+  delimiter?: string;
+  quote?: string;
+  should_trim_fields?: boolean;
+  grok_pattern?: string;
+  timestamp_field?: string;
+  timestamp_format?: string;
+  explain?: boolean;
+  body: T;
 }
 
 export interface TransformDeleteTransform extends Generic {
