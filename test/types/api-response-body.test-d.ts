@@ -83,39 +83,6 @@ expectError(
   expectType<Context>(response.meta.context)
 }
 
-// Send request body as string (promise style)
-{
-  const response = await client.search({
-    index: 'test',
-    body: 'hello world'
-  })
-
-  expectType<estypes.SearchResponse<unknown>>(response.body)
-  expectType<Context>(response.meta.context)
-}
-
-// Send request body as buffer (promise style)
-{
-  const response = await client.search({
-    index: 'test',
-    body: Buffer.from('hello world')
-  })
-
-  expectType<estypes.SearchResponse<unknown>>(response.body)
-  expectType<Context>(response.meta.context)
-}
-
-// Send request body as readable stream (promise style)
-{
-  const response = await client.search({
-    index: 'test',
-    body: new ReadableStream()
-  })
-
-  expectType<estypes.SearchResponse<unknown>>(response.body)
-  expectType<Context>(response.meta.context)
-}
-
 // No generics (callback style)
 {
   const result = client.search({
@@ -162,45 +129,6 @@ expectError(
   }, (err, response) => {
     expectType<ApiError>(err)
     expectType<estypes.SearchResponse<Source>>(response.body)
-    expectType<Context>(response.meta.context)
-  })
-  expectType<TransportRequestCallback>(result)
-}
-
-// Send request body as string (callback style)
-{
-  const result = client.search({
-    index: 'test',
-    body: 'hello world'
-  }, (err, response) => {
-    expectType<ApiError>(err)
-    expectType<estypes.SearchResponse<unknown>>(response.body)
-    expectType<Context>(response.meta.context)
-  })
-  expectType<TransportRequestCallback>(result)
-}
-
-// Send request body as buffer (callback style)
-{
-  const result = client.search({
-    index: 'test',
-    body: Buffer.from('hello world')
-  }, (err, response) => {
-    expectType<ApiError>(err)
-    expectType<estypes.SearchResponse<unknown>>(response.body)
-    expectType<Context>(response.meta.context)
-  })
-  expectType<TransportRequestCallback>(result)
-}
-
-// Send request body as readable stream (callback style)
-{
-  const result = client.search({
-    index: 'test',
-    body: new ReadableStream()
-  }, (err, response) => {
-    expectType<ApiError>(err)
-    expectType<estypes.SearchResponse<unknown>>(response.body)
     expectType<Context>(response.meta.context)
   })
   expectType<TransportRequestCallback>(result)
