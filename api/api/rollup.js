@@ -176,17 +176,27 @@ RollupApi.prototype.rollup = function rollupRollupApi (params, options, callback
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
+  if (params['rollup_index'] == null && params['rollupIndex'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: rollup_index or rollupIndex')
+    return handleError(err, callback)
+  }
   if (params['body'] == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  // check required url components
+  if ((params['rollup_index'] != null || params['rollupIndex'] != null) && (params['index'] == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
+    return handleError(err, callback)
+  }
+
+  var { method, body, index, rollupIndex, rollup_index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   var path = ''
   if (method == null) method = 'POST'
-  path = '/' + encodeURIComponent(index) + '/' + '_rollup'
+  path = '/' + encodeURIComponent(index) + '/' + '_rollup' + '/' + encodeURIComponent(rollup_index || rollupIndex)
 
   // build request object
   const request = {

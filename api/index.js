@@ -84,6 +84,7 @@ const SecurityApi = require('./api/security')
 const SlmApi = require('./api/slm')
 const SqlApi = require('./api/sql')
 const SslApi = require('./api/ssl')
+const TextStructureApi = require('./api/text_structure')
 const TransformApi = require('./api/transform')
 const WatcherApi = require('./api/watcher')
 const XpackApi = require('./api/xpack')
@@ -114,6 +115,7 @@ const kSecurity = Symbol('Security')
 const kSlm = Symbol('Slm')
 const kSql = Symbol('Sql')
 const kSsl = Symbol('Ssl')
+const kTextStructure = Symbol('TextStructure')
 const kTransform = Symbol('Transform')
 const kWatcher = Symbol('Watcher')
 const kXpack = Symbol('Xpack')
@@ -145,6 +147,7 @@ function ESAPI (opts) {
   this[kSlm] = null
   this[kSql] = null
   this[kSsl] = null
+  this[kTextStructure] = null
   this[kTransform] = null
   this[kWatcher] = null
   this[kXpack] = null
@@ -417,6 +420,15 @@ Object.defineProperties(ESAPI.prototype, {
       return this[kSsl]
     }
   },
+  textStructure: {
+    get () {
+      if (this[kTextStructure] === null) {
+        this[kTextStructure] = new TextStructureApi(this.transport, this[kConfigurationError])
+      }
+      return this[kTextStructure]
+    }
+  },
+  text_structure: { get () { return this.textStructure } },
   transform: {
     get () {
       if (this[kTransform] === null) {
