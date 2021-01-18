@@ -232,7 +232,7 @@ interface KibanaClient {
     postStartBasic<TContext = unknown>(params?: T.StartBasicLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StartBasicLicenseResponse, TContext>>
     postStartTrial<TContext = unknown>(params?: T.StartTrialLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StartTrialLicenseResponse, TContext>>
   }
-  mget<TContext = unknown>(params?: T.MultiGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiGetResponse, TContext>>
+  mget<TDocument = unknown, TContext = unknown>(params?: T.MultiGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiGetResponse<TDocument>, TContext>>
   migration: {
     deprecations<TContext = unknown>(params?: T.DeprecationInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeprecationInfoResponse, TContext>>
   }

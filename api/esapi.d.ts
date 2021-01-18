@@ -532,10 +532,10 @@ declare class ESAPI {
     postStartTrial<TContext = unknown>(params: T.StartTrialLicenseRequest, callback: callbackFn<T.StartTrialLicenseResponse, TContext>): TransportRequestCallback
     postStartTrial<TContext = unknown>(params: T.StartTrialLicenseRequest, options: TransportRequestOptions, callback: callbackFn<T.StartTrialLicenseResponse, TContext>): TransportRequestCallback
   }
-  mget<TContext = unknown>(params?: T.MultiGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiGetResponse, TContext>>
-  mget<TContext = unknown>(callback: callbackFn<T.MultiGetResponse, TContext>): TransportRequestCallback
-  mget<TContext = unknown>(params: T.MultiGetRequest, callback: callbackFn<T.MultiGetResponse, TContext>): TransportRequestCallback
-  mget<TContext = unknown>(params: T.MultiGetRequest, options: TransportRequestOptions, callback: callbackFn<T.MultiGetResponse, TContext>): TransportRequestCallback
+  mget<TDocument = unknown, TContext = unknown>(params?: T.MultiGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiGetResponse<TDocument>, TContext>>
+  mget<TDocument = unknown, TContext = unknown>(callback: callbackFn<T.MultiGetResponse<TDocument>, TContext>): TransportRequestCallback
+  mget<TDocument = unknown, TContext = unknown>(params: T.MultiGetRequest, callback: callbackFn<T.MultiGetResponse<TDocument>, TContext>): TransportRequestCallback
+  mget<TDocument = unknown, TContext = unknown>(params: T.MultiGetRequest, options: TransportRequestOptions, callback: callbackFn<T.MultiGetResponse<TDocument>, TContext>): TransportRequestCallback
   migration: {
     deprecations<TContext = unknown>(params?: T.DeprecationInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeprecationInfoResponse, TContext>>
     deprecations<TContext = unknown>(callback: callbackFn<T.DeprecationInfoResponse, TContext>): TransportRequestCallback
