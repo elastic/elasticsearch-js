@@ -26,7 +26,10 @@ const intoStream = require('into-stream')
 const { Client, ConnectionPool, Transport, Connection, errors } = require('../../index')
 const { CloudConnectionPool } = require('../../lib/pool')
 const { buildServer } = require('../utils')
-const clientVersion = require('../../package.json').version
+let clientVersion = require('../../package.json').version
+if (clientVersion.includes('-')) {
+  clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
+}
 const nodeVersion = process.versions.node
 
 test('Configure host', t => {
