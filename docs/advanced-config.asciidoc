@@ -1,0 +1,120 @@
+[[advanced-config]]
+=== Advanced configuration
+
+If you need to customize the client behavior heavily, you are in the right 
+place! The client enables you to customize the following internals:
+
+* `Transport` class
+* `ConnectionPool` class
+* `Connection` class
+* `Serializer` class
+
+
+[discrete]
+==== `Transport`
+
+This class is responsible for performing the request to {es} and handling 
+errors, it also handles the sniffing.
+
+[source,js]
+----
+const { Client, Transport } = require('@elastic/elasticsearch')
+
+class MyTransport extends Transport {
+  request (params, options, callback) {
+    // your code
+  }
+}
+
+const client = new Client({
+    Transport: MyTransport
+})
+----
+
+Sometimes you need to inject a small snippet of your code and then continue to 
+use the usual client code. In such cases, call `super.method`:
+
+[source,js]
+----
+class MyTransport extends Transport {
+  request (params, options, callback) {
+    // your code
+    return super.request(params, options, callback)
+  }
+}
+----
+
+
+[discrete]
+==== `ConnectionPool`
+
+This class is responsible for keeping in memory all the {es} Connection that you 
+are using. There is a single Connection for every node. The connection pool 
+handles the resurrection strategies and the updates of the pool.
+
+[source,js]
+----
+const { Client, ConnectionPool } = require('@elastic/elasticsearch')
+
+class MyConnectionPool extends ConnectionPool {
+  markAlive (connection) {
+    // your code
+    super.markAlive(connection)
+  }
+}
+
+const client = new Client({
+    ConnectionPool: MyConnectionPool
+})
+----
+
+
+[discrete]
+==== `Connection`
+
+This class represents a single node, it holds every information we have on the 
+node, such as roles, id, URL, custom headers and so on. The actual HTTP request 
+is performed here, this means that if you want to swap the default HTTP client 
+(Node.js core), you should override the `request` method of this class.
+
+[source,js]
+----
+const { Client, Connection } = require('@elastic/elasticsearch')
+
+class MyConnection extends Connection {
+  request (params, callback) {
+    // your code
+  }
+}
+
+const client = new Client({
+  Connection: MyConnection
+})
+----
+
+
+[discrete]
+==== `Serializer`
+
+This class is responsible for the serialization of every request, it offers the 
+following methods:
+
+* `serialize(object: any): string;` serializes request objects.
+* `deserialize(json: string): any;` deserializes response strings.
+* `ndserialize(array: any[]): string;` serializes bulk request objects.
+* `qserialize(object: any): string;` serializes request query parameters.
+
+[source,js]
+----
+const { Client, Serializer } = require('@elastic/elasticsearch')
+
+class MySerializer extends Serializer {
+  serialize (object) {
+    // your code
+  }
+}
+
+const client = new Client({
+  Serializer: MySerializer
+})
+----
