@@ -50,6 +50,7 @@ import Helpers from './lib/Helpers';
 import * as errors from './lib/errors';
 import ESAPI from './api/esapi'
 import * as estypes from './api/types'
+import { SearchResponse } from './lib/Search';
 
 // Extend API
 interface ClientExtendsCallbackOptions {
@@ -166,5 +167,6 @@ export {
   estypes,
   ClientOptions,
   NodeOptions,
-  ClientExtendsCallbackOptions
+  ClientExtendsCallbackOptions,
+  SearchResponse
 };
