@@ -37,7 +37,7 @@ import {
   TransportRequestOptions
 } from '../lib/Transport'
 import {
-  SearchResponse
+  InferSearchResponseOf
 } from '../lib/Search'
 
 import * as T from './types'
@@ -82,7 +82,7 @@ interface KibanaClient {
   once(event: 'sniff', listener: (err: ApiError, meta: RequestEvent) => void): this;
   once(event: 'resurrect', listener: (err: null, meta: ResurrectEvent) => void): this;
   off(event: string | symbol, listener: (...args: any[]) => void): this;
-  search<TDocument = unknown, TSearchRequest extends T.SearchRequest = T.SearchRequest, TContext = unknown>( params:TSearchRequest ):TransportRequestPromise<ApiResponse<SearchResponse<TSearchRequest>>>
+  search<TDocument = unknown, TSearchRequest extends T.SearchRequest = T.SearchRequest, TContext = unknown>( params:TSearchRequest ):TransportRequestPromise<ApiResponse<InferSearchResponseOf<TSearchRequest>>>
   asyncSearch: {
     delete<TContext = unknown>(params: T.AsyncSearchDeleteRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AsyncSearchDeleteResponse, TContext>>
     get<TDocument = unknown, TContext = unknown>(params: T.AsyncSearchGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AsyncSearchGetResponse<TDocument>, TContext>>

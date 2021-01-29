@@ -18,7 +18,7 @@
  * under the License.
  */
 import { Unionize, UnionToIntersection, Mutable, OmitByValue, OmitByValueExact } from 'utility-types';
-import AggregationTypes from "../api/types";
+import T from "../api/types";
 
 type InvalidAggregationRequest = unknown;
 
@@ -89,7 +89,7 @@ type PipelineAggregationTypeName =
   | 'extended_stats_bucket'
   | 'inference';
 
-type AggregationTypeName = Exclude<keyof AggregationTypes.AggregationContainer, 'aggs' | 'aggregations'>;
+type AggregationTypeName = Exclude<keyof T.AggregationContainer, 'aggs' | 'aggregations'>;
 
 type NonBucketingAggregationTypeName = Exclude<AggregationTypeName, BucketingAggregationTypeName>;
 
@@ -97,10 +97,10 @@ type ErrorSubAggregationsNotSupported = 'This aggregation type does not support 
 
 type Aggregation = ExclusiveUnion<
   Unionize<{
-    [TBucketingAggregationName in BucketingAggregationTypeName]: AggregationTypes.AggregationContainer[TBucketingAggregationName]
+    [TBucketingAggregationName in BucketingAggregationTypeName]: T.AggregationContainer[TBucketingAggregationName]
   }> & Partial<UnionToIntersection<AggregationRequest>>,
   Unionize<{
-    [TBucketingAggregationName in NonBucketingAggregationTypeName]: AggregationTypes.AggregationContainer[TBucketingAggregationName]
+    [TBucketingAggregationName in NonBucketingAggregationTypeName]: T.AggregationContainer[TBucketingAggregationName]
   }>,
   ErrorSubAggregationsNotSupported
 >
@@ -497,8 +497,8 @@ type WrapAggregationResponse<T> = keyof T extends never ? { aggregations?: unkno
 
 type SearchResponseOf<TAggregationRequest extends AggregationRequest, TDocument = unknown> = AggregationResponseOf<TAggregationRequest, TDocument>;
 
-export type SearchResponse<TRequest extends AggregationTypes.SearchRequest, TDocument = unknown> =
-  TRequest['body'] extends AggregationRequest ? WrapAggregationResponse<SearchResponseOf<TRequest['body'], TDocument>> : { aggregations?: InvalidAggregationRequest }
+export type InferSearchResponseOf<TRequest extends T.SearchRequest, TDocument = unknown> =
+  Omit<T.SearchResponse<TDocument>, 'aggregations'> & (TRequest['body'] extends AggregationRequest ? WrapAggregationResponse<SearchResponseOf<TRequest['body'], TDocument>> : { aggregations?: InvalidAggregationRequest })
 
 // from EUI
 

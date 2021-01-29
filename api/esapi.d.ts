@@ -26,7 +26,7 @@ import {
   ApiResponse
 } from '../lib/Transport'
 import {
-  SearchResponse
+  InferSearchResponseOf
 } from '../lib/Search'
 
 /**
@@ -38,7 +38,7 @@ type TODO = Record<string, any>
 
 declare type callbackFn<TResponse, TContext> = (err: ApiError, result: ApiResponse<TResponse, TContext>) => void;
 declare class ESAPI {
-  search<TDocument = unknown, TSearchRequest extends T.SearchRequest = T.SearchRequest, TContext = unknown>( params:TSearchRequest ):TransportRequestPromise<ApiResponse<SearchResponse<TSearchRequest>>>
+  search<TDocument = unknown, TSearchRequest extends T.SearchRequest = T.SearchRequest, TContext = unknown>( params:TSearchRequest ):TransportRequestPromise<ApiResponse<InferSearchResponseOf<TSearchRequest>>>
   asyncSearch: {
     delete<TContext = unknown>(params: T.AsyncSearchDeleteRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AsyncSearchDeleteResponse, TContext>>
     delete<TContext = unknown>(params: T.AsyncSearchDeleteRequest, callback: callbackFn<T.AsyncSearchDeleteResponse, TContext>): TransportRequestCallback
