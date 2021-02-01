@@ -1,0 +1,247 @@
+[[basic-config]]
+=== Basic configuration
+
+This page shows you the possible basic configuration options that the clients 
+offers.
+
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+  node: 'http://localhost:9200',
+  maxRetries: 5,
+  requestTimeout: 60000,
+  sniffOnStart: true
+})
+----
+
+
+[cols=2*]
+|===
+|`node` or `nodes`
+a|The Elasticsearch endpoint to use. +
+It can be a single string or an array of strings:
+[source,js]
+----
+node: 'http://localhost:9200'
+----
+Or it can be an object (or an array of objects) that represents the node:
+[source,js]
+----
+node: {
+  url: new URL('http://localhost:9200'),
+  ssl: 'ssl options',
+  agent: 'http agent options',
+  id: 'custom node id',
+  headers: { 'custom': 'headers' }
+  roles: {
+    master: true,
+    data: true,
+    ingest: true,
+    ml: false
+  }
+}
+----
+
+|`auth`
+a|Your authentication data. You can use both basic authentication and 
+{ref}/security-api-create-api-key.html[ApiKey]. +
+See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] 
+for more details. +
+_Default:_ `null`
+
+Basic authentication:
+[source,js]
+----
+auth: {
+  username: 'elastic',
+  password: 'changeme'
+}
+----
+{ref}/security-api-create-api-key.html[ApiKey] authentication:
+[source,js]
+----
+auth: {
+  apiKey: 'base64EncodedKey'
+}
+----
+
+
+|`maxRetries`
+|`number` - Max number of retries for each request. +
+_Default:_ `3`
+
+|`requestTimeout`
+|`number` - Max request timeout in milliseconds for each request. +
+_Default:_ `30000`
+
+|`pingTimeout`
+|`number` - Max ping request timeout in milliseconds for each request. +
+_Default:_ `3000`
+
+|`sniffInterval`
+|`number, boolean` - Perform a sniff operation every `n` milliseconds. Sniffing might not be the best solution for you, take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here] to know more. +
+_Default:_ `false`
+
+|`sniffOnStart`
+|`boolean` - Perform a sniff once the client is started. Sniffing might not be the best solution for you, take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here] to know more. +
+_Default:_ `false`
+
+|`sniffEndpoint`
+|`string` - Endpoint to ping during a sniff. +
+_Default:_ `'_nodes/_all/http'`
+
+|`sniffOnConnectionFault`
+|`boolean` - Perform a sniff on connection fault. Sniffing might not be the best solution for you, take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here] to know more. +
+_Default:_ `false`
+
+|`resurrectStrategy`
+|`string` - Configure the node resurrection strategy. +
+_Options:_ `'ping'`, `'optimistic'`, `'none'` +
+_Default:_ `'ping'`
+
+|`suggestCompression`
+|`boolean` - Adds `accept-encoding` header to every request. +
+_Default:_ `false`
+
+|`compression`
+|`string, boolean` - Enables gzip request body compression. +
+_Options:_ `'gzip'`, `false` +
+_Default:_ `false`
+
+|`ssl`
+|`http.SecureContextOptions` - ssl https://nodejs.org/api/tls.html[configuraton]. +
+_Default:_ `null`
+
+|`proxy`
+a|`string, URL` - If you are using an http(s) proxy, you can put its url here.
+The client will automatically handle the connection to it. +
+_Default:_ `null`
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200',
+  proxy: 'http://localhost:8080'
+})
+
+// Proxy with basic authentication
+const client = new Client({
+  node: 'http://localhost:9200',
+  proxy: 'http://user:pwd@localhost:8080'
+})
+----
+
+|`agent`
+a|`http.AgentOptions, function` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options], 
+or a function that returns an actual http agent instance. If you want to disable the http agent use entirely
+(and disable the `keep-alive` feature), set the agent to `false`. +
+_Default:_ `null`
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200',
+  agent: { agent: 'options' }
+})
+
+const client = new Client({
+  node: 'http://localhost:9200',
+  // the function takes as parameter the option
+  // object passed to the Connection constructor
+  agent: (opts) => new CustomAgent()
+})
+
+const client = new Client({
+  node: 'http://localhost:9200',
+  // Disable agent and keep-alive
+  agent: false
+})
+----
+
+|`nodeFilter`
+a|`function` - Filters which node not to use for a request. +
+_Default:_
+[source,js]
+----
+function defaultNodeFilter (node) {
+  // avoid master only nodes
+  if (node.roles.master === true &&
+      node.roles.data === false &&
+      node.roles.ingest === false) {
+    return false
+  }
+  return true
+}
+----
+
+|`nodeSelector`
+a|`function` - custom selection strategy. +
+_Options:_ `'round-robin'`, `'random'`, custom function +
+_Default:_ `'round-robin'` +
+_Custom function example:_
+[source,js]
+----
+function nodeSelector (connections) {
+  const index = calculateIndex()
+  return connections[index]
+}
+----
+
+|`generateRequestId`
+a|`function` - function to generate the request id for every request, it takes 
+two parameters, the request parameters and options. +
+By default it generates an incremental integer for every request. +
+_Custom function example:_
+[source,js]
+----
+function generateRequestId (params, options) {
+  // your id generation logic
+  // must be syncronous
+  return 'id'
+}
+----
+
+|`name`
+|`string, symbol` - The name to identify the client instance in the events. +
+_Default:_ `elasticsearch-js`
+
+|`opaqueIdPrefix`
+|`string` - A string that will be use to prefix any `X-Opaque-Id` header. +
+See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/observability.html#_x-opaque-id_support[`X-Opaque-Id` support] for more details. +
+_Default:_ `null`
+
+|`headers`
+|`object` - A set of custom headers to send in every request. +
+_Default:_ `{}`
+
+|`context`
+|`object` - A custom object that you can use for observability in your events.
+It will be merged with the API level context option. +
+_Default:_ `null`
+
+|`enableMetaHeader`
+|`boolean` - If true, adds an header named `'x-elastic-client-meta'`, containing some minimal telemetry data,
+such as the client and platform version. +
+_Default:_ `true`
+
+|`cloud`
+a|`object` - Custom configuration for connecting to 
+https://cloud.elastic.co[Elastic Cloud]. See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] 
+for more details. +
+_Default:_ `null` + 
+_Cloud configuration example:_ 
+[source,js]
+----
+const client = new Client({
+  cloud: {
+    id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA=='
+  }, 
+  auth: {
+    username: 'elastic',
+    password: 'changeme'
+  }
+})
+----
+
+|===
