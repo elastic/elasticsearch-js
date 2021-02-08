@@ -4,7 +4,7 @@ This folder contains an example of how to build a lightweight proxy
 between your frontend code and Elasticsearch if you don't
 have a more sophisticated backend in place yet.
 
-> **IMPORTANT:** this is not a production ready code & purely for demonstration purposes,
+> **IMPORTANT:** This is not a production ready code and it is only for demonstration purposes,
 > we make no guarantees on it's security and stability
 
 This project is designed to be deployed on [Vercel](https://vercel.com/), a cloud platform
