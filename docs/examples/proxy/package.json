@@ -1,0 +1,19 @@
+{
+  "name": "proxy-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "keywords": [],
+  "author": "Tomas Della Vedova",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.10.0"
+  },
+  "devDependencies": {
+    "standard": "^16.0.3"
+  }
+}
