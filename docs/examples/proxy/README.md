@@ -1,7 +1,7 @@
 # Elasticsearch proxy example
 
-This folder contains an example of how you could build a lightweight proxy
-that you can put between your frontend code and Elasticsearch if you don't
+This folder contains an example of how to build a lightweight proxy
+between your frontend code and Elasticsearch if you don't
 have a more sophisticated backend in place yet.
 
 > **IMPORTANT:** this is not a production ready code & purely for demonstration purposes,
