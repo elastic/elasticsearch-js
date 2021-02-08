@@ -9,7 +9,7 @@ NODE_JS_VERSION:
   - 8
 
 TEST_SUITE:
-  - oss
-  - xpack
+  - free
+  - platinum
 
 exclude: ~

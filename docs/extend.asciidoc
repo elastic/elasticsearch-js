@@ -1,5 +1,5 @@
-[[extend-client]]
-== Extend the client
+[[extend]]
+=== Extend the client
 
 Sometimes you need to reuse the same logic, or you want to build a custom API to 
 allow you simplify your code. The easiest way to achieve that is by extending 
