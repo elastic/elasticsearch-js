@@ -42,6 +42,26 @@ module.exports = async (req, res) => {
     return
   }
 
+  if (typeof req.query.q !== 'string') {
+    res.status(400)
+    res.json({
+      error: 'Bad Request',
+      message: 'Missing parameter "query.q"',
+      statusCode: 400
+    })
+    return
+  }
+
+  if (req.query.q.length < 3) {
+    res.status(400)
+    res.json({
+      error: 'Bad Request',
+      message: 'The length of "query.q" should be at least 3',
+      statusCode: 400
+    })
+    return
+  }
+
   try {
     const response = await client.search({
       index: INDEX,

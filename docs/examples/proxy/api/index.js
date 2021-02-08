@@ -42,6 +42,16 @@ module.exports = async (req, res) => {
     return
   }
 
+  if (typeof req.body !== 'object') {
+    res.status(400)
+    res.json({
+      error: 'Bad Request',
+      message: 'The document should be an object',
+      statusCode: 400
+    })
+    return
+  }
+
   try {
     const response = await client.index({
       index: INDEX,

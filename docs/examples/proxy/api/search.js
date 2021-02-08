@@ -42,6 +42,16 @@ module.exports = async (req, res) => {
     return
   }
 
+  if (typeof req.body.text !== 'string') {
+    res.status(400)
+    res.json({
+      error: 'Bad Request',
+      message: 'Missing parameter "body.text"',
+      statusCode: 400
+    })
+    return
+  }
+
   try {
     const response = await client.search({
       index: INDEX,
