@@ -88,6 +88,7 @@ const platinumBlackList = {
   'monitoring/bulk/20_privileges.yml': ['*'],
   'license/20_put_license.yml': ['*'],
   'snapshot/10_basic.yml': ['*'],
+  'snapshot/20_operator_privileges_disabled.yml': ['*'],
   // the body is correct, but the regex is failing
   'sql/sql.yml': ['Getting textual representation'],
   // we are setting two certificates in the docker config
