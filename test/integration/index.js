@@ -68,6 +68,7 @@ const platinumBlackList = {
   'index/10_with_id.yml': ['Index with ID'],
   'indices.get_alias/10_basic.yml': ['Get alias against closed indices'],
   'indices.get_alias/20_empty.yml': ['Check empty aliases when getting all aliases via /_alias'],
+  'text_structure/find_structure.yml': ['*'],
   // https://github.com/elastic/elasticsearch/pull/39400
   'ml/jobs_crud.yml': ['Test put job with id that is already taken'],
   // object keys must me strings, and `0.0.toString()` is `0`
