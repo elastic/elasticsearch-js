@@ -62,4 +62,4 @@ permissions for authenticated users, that will not be stored in the frontend app
 
 ## License
 
-This software is licensed under the [Apache 2 license](../LICENSE).
+This software is licensed under the [Apache 2 license](../../LICENSE).
