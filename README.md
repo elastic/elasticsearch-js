@@ -71,7 +71,7 @@ npm install @elastic/elasticsearch@<major>
 #### Browser
 
 WARNING: There is no official support for the browser environment. It exposes your Elasticsearch instance to everyone, which could lead to security issues.
-We recommend that you write a lightweight proxy that uses this client instead.
+We recommend that you write a lightweight proxy that uses this client instead, you can see a proxy example [here](./docs/examples/proxy).
 
 ## Documentation
 
