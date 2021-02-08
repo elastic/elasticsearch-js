@@ -46,7 +46,7 @@ If you are using the CLI, bootstrap the project by running `vercel`. You can tes
 with `vercel dev`, and deploy it with `vercel deploy`.
 Configure the `ELASTIC_CLOUD_ID` [environment varible](https://vercel.com/docs/environment-variables) as well.
 The Api Key is passed from the frontend app via a `Authorization` header as `Bearer` token and is
-be used to authorize the API calls to the endpoints as well.
+used to authorize the API calls to the endpoints as well.
 Additional configuration, such as CORS, can be added to [`vercel.json`](https://vercel.com/docs/configuration).
 
 ## Authentication
