@@ -8,7 +8,7 @@ have a more sophisticated backend in place yet.
 > we make no guarantees on it's security and stability.
 
 This project is designed to be deployed on [Vercel](https://vercel.com/), a cloud platform
-for static sites and Serverless Functions. You can use also other functions providers,
+for static sites and Serverless Functions. You can use other functions providers,
 such as [Google Cloud functions](https://cloud.google.com/functions).
 
 ## Project structure
