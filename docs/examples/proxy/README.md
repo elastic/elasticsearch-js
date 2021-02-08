@@ -42,7 +42,7 @@ to perform different operation on the specified indices or index pattern.
 Install the [Vercel CLI](https://vercel.com/docs/cli) to bootstrap the project,
 or read the [quickstart](https://vercel.com/docs) documentation.
 
-If you are using the CLI, bootstrap the project by running `vercel`. You can test the project locally
+If you are using the CLI, bootstrap the project by running `vercel`. Test the project locally
 with `vercel dev`, and deploy it with `vercel deploy`.
 Configure the `ELASTIC_CLOUD_ID` [environment varible](https://vercel.com/docs/environment-variables) as well.
 The Api Key is passed from the frontend app via a `Authorization` header as `Bearer` token and is
