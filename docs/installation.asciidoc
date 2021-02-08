@@ -90,4 +90,5 @@ using.
 
 WARNING: There is no official support for the browser environment. It exposes
 your {es} instance to everyone, which could lead to security issues. We
-recommend you to write a lightweight proxy that uses this client instead.
+recommend you to write a lightweight proxy that uses this client instead,
+you can see a proxy example https://github.com/elastic/elasticsearch-js/tree/master/docs/examples/proxy[here].
