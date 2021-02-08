@@ -25,7 +25,7 @@ In each endpoint you should configure the `INDEX` variable.
 
 ## How to use
 
-First of all, create an account on Vercel and create a deployment on Elastic Cloud, if you
+Create an account on Vercel, then create a deployment on Elastic Cloud. If you
 don't have an account on Elastic Cloud, you can create one with a free 14-day trial
 of the [Elasticsearch Service](https://www.elastic.co/elasticsearch/service).
 
