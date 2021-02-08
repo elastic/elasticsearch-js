@@ -34,7 +34,7 @@ of the [Elasticsearch Service](https://www.elastic.co/elasticsearch/service).
 Once you have created a deployment on Elastic Cloud copy the generated Cloud Id and the credentials.
 Then open `utils/prepare-elasticsearch.js` and fill your credentials. The script generates
 an [Api Key](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html)
-that you will use for authenticating your request. Based on the configuration of the Api Key, you will be able
+that you can use for authenticating your request. Based on the configuration of the Api Key, you will be able
 to perform different operation on the specified indices or index pattern.
 
 ### Configure Vercel
