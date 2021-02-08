@@ -602,6 +602,23 @@ namespace Q {
     // @ts-expect-error
     return { size: s }
   }
+
+  export function script (source: string): T.ScriptQuery
+  export function script (source: string, lang: string): T.ScriptQuery
+  export function script (source: string, params: Record<string, any>, lang?: string): T.ScriptQuery
+  export function script (source: string, params?: any, lang?: any): T.ScriptQuery {
+    if (typeof params === 'string') {
+      return { script: { source, lang: params } }
+    } else if (typeof params === 'object') {
+      if (typeof lang === 'string') {
+        return { script: { source, lang, params } }
+      } else {
+        return { script: { source, params } }
+      }
+    } else {
+      return { script: source }
+    }
+  }
 }
 
 // Tries to flat a bool query based on the content

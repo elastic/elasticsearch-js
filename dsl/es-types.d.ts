@@ -123,6 +123,9 @@ declare namespace T {
 
   export type GeoHashPrecision = number
 
+  export interface UserDefinedValue {
+  }
+
   export interface Aggregate {
     meta?: Record<string, object>
   }
@@ -3356,14 +3359,20 @@ declare namespace T {
     to?: double
   }
 
-  export interface InlineScript {
+  export interface ScriptBase {
+    lang?: string
+    params?: Record<string, any>
+  }
+
+  export interface InlineScript extends ScriptBase {
     source?: string
   }
 
-  export interface Script {
-    lang?: string
-    params?: Record<string, object>
+  export interface IndexedScript extends ScriptBase {
+    id?: string
   }
+
+  export type Script = InlineScript | IndexedScript | string
 
   export interface ScriptField {
     script?: Script

@@ -306,6 +306,14 @@ class FluentQ {
     return this
   }
 
+  script (source: string): this
+  script (source: string, lang: string): this
+  script (source: string, params: Record<string, any>, lang?: string): this
+  script (source: string, params?: any, lang?: any): this {
+    this[kState].push(Q.script(source, params, lang))
+    return this
+  }
+
   size (s: number | Symbol): this {
     this[kState].push(Q.size(s))
     return this
@@ -328,7 +336,7 @@ class FluentQ {
   }
 
   toJSON () {
-    return this.build()
+    return this.buildQuery()
   }
 }
 

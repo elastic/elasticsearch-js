@@ -373,6 +373,30 @@ test('size', t => {
   t.end()
 })
 
+test('script', t => {
+  t.deepEqual(
+    F().script("doc['num1'].value > 1").build(),
+    Q(Q.script("doc['num1'].value > 1"))
+  )
+
+  t.deepEqual(
+    F().script("doc['num1'].value > 1", 'painless').build(),
+    Q(Q.script("doc['num1'].value > 1", 'painless'))
+  )
+
+  t.deepEqual(
+    F().script("doc['num1'].value > 1", { foo: 'bar' }).build(),
+    Q(Q.script("doc['num1'].value > 1", { foo: 'bar' }))
+  )
+
+  t.deepEqual(
+    F().script("doc['num1'].value > 1", { foo: 'bar' }, 'painless').build(),
+    Q(Q.script("doc['num1'].value > 1", { foo: 'bar' }, 'painless'))
+  )
+
+  t.end()
+})
+
 test('must', t => {
   const q1 = F().must(
     F().match('foo', 'bar'),
@@ -505,6 +529,27 @@ test('and', t => {
   t.deepEqual(
     q3.clone().and(q4).buildQuery(),
     Q.and(q3.buildQuery(), q4.buildQuery())
+  )
+
+  t.end()
+})
+
+test('toJSON', t => {
+  const q1 = F()
+    .match('foo', 'bar')
+
+  t.strictEqual(
+    JSON.stringify(q1),
+    '{"match":{"foo":"bar"}}'
+  )
+
+  const q2 = F()
+    .match('foo', 'bar')
+    .match('foo', 'baz')
+
+  t.strictEqual(
+    JSON.stringify(q2),
+    '{"bool":{"must":[{"match":{"foo":"bar"}},{"match":{"foo":"baz"}}]}}'
   )
 
   t.end()

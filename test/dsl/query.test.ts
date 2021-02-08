@@ -1018,6 +1018,32 @@ test('name', t => {
   t.end()
 })
 
+test('script', t => {
+  t.type(Q.script, 'function')
+
+  t.deepEqual(
+    Q.script("doc['num1'].value > 1"),
+    { script: "doc['num1'].value > 1" }
+  )
+
+  t.deepEqual(
+    Q.script("doc['num1'].value > 1", 'painless'),
+    { script: { source: "doc['num1'].value > 1", lang: 'painless' } }
+  )
+
+  t.deepEqual(
+    Q.script("doc['num1'].value > 1", { foo: 'bar' }),
+    { script: { source: "doc['num1'].value > 1", params: { foo: 'bar' } } }
+  )
+
+  t.deepEqual(
+    Q.script("doc['num1'].value > 1", { foo: 'bar' }, 'painless'),
+    { script: { source: "doc['num1'].value > 1", params: { foo: 'bar' }, lang: 'painless' } }
+  )
+
+  t.end()
+})
+
 // build a condition bloc
 function c (key: string): types.Condition {
   return { match: { [key]: key } }
