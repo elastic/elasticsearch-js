@@ -44,7 +44,7 @@ or read the [quickstart](https://vercel.com/docs) documentation.
 
 If you are using the CLI, bootstrap the project by running `vercel`. You can test the project locally
 with `vercel dev`, and deploy it with `vercel deploy`.
-You should configure the `ELASTIC_CLOUD_ID` [environment varible](https://vercel.com/docs/environment-variables) as well.
+Configure the `ELASTIC_CLOUD_ID` [environment varible](https://vercel.com/docs/environment-variables) as well.
 The Api Key will be passed from the frontend app via a `Authorization` header as `Bearer` token and will
 be used to authorize the API calls to the endpoints as well.
 Additional configuration, such as CORS, can be added to [`vercel.json`](https://vercel.com/docs/configuration).
