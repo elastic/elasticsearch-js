@@ -13,7 +13,7 @@ such as [Google Cloud functions](https://cloud.google.com/functions).
 
 ## Project structure
 
-The project already comes with three endpoints:
+The project comes with four endpoints:
 
 - `/api/search`: run a search, it requires the `'read'` permissions
 - `/api/autocomplete`: run a autocomplete suggestion, it requires the `'read'` permissions
