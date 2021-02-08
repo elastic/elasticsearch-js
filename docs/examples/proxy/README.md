@@ -56,7 +56,7 @@ an Api Key with `read` permissions and store it in your frontend app. Then you c
 via `Authorization` header to the proxy and run your searches.
 
 If you need to ingest data as well, it's more secure to have a strong authentication in your application.
-For such case, you could use an external authentication service, such as [Auth0](https://auth0.com/)
+For such cases, use an external authentication service, such as [Auth0](https://auth0.com/)
 or [Magic Link](https://magic.link/). Then you can create a different Api Key with `read` and `write`
 permissions for authenticated users, that will not be stored in the frontend app.
 
