@@ -17,7 +17,7 @@ The project comes with four endpoints:
 
 - `/api/search`: runs a search, requires `'read'` permission
 - `/api/autocomplete`: runs an autocomplete suggestion, requires `'read'` permission
-- `/api/index`:  index or updates a document, it requires the `'write'` permissions
+- `/api/index`:  indexes or updates a document, requires `'write'` permission
 - `/api/delete`  delete a document, it requires the `'write'` permissions
 
 Inside `utils/authorize.js` you can find the authorization logic for the endpoints.
