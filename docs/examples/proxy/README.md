@@ -16,6 +16,7 @@ such as [Google Cloud functions](https://cloud.google.com/functions).
 The project already comes with three endpoints:
 
 - `/api/search`: run a search, it requires the `'read'` permissions
+- `/api/search`: run a autocomplete suggestion, it requires the `'read'` permissions
 - `/api/index`:  index or updates a document, it requires the `'write'` permissions
 - `/api/delete`  delete a document, it requires the `'write'` permissions
 
