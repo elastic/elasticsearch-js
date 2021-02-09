@@ -43,7 +43,7 @@ const MAX_API_TIME = 1000 * 90
 const MAX_FILE_TIME = 1000 * 30
 const MAX_TEST_TIME = 1000 * 3
 
-const ossSkips = {
+const freeSkips = {
   // TODO: remove this once 'arbitrary_key' is implemented
   // https://github.com/elastic/elasticsearch/pull/41492
   'indices.split/30_copy_settings.yml': ['*'],
@@ -57,7 +57,7 @@ const ossSkips = {
   // while null is a valid json value, so the check will fail
   'search/320_disallow_queries.yml': ['Test disallow expensive queries']
 }
-const xPackBlackList = {
+const platinumBlackList = {
   // this two test cases are broken, we should
   // return on those in the future.
   'analytics/top_metrics.yml': [
@@ -68,6 +68,7 @@ const xPackBlackList = {
   'index/10_with_id.yml': ['Index with ID'],
   'indices.get_alias/10_basic.yml': ['Get alias against closed indices'],
   'indices.get_alias/20_empty.yml': ['Check empty aliases when getting all aliases via /_alias'],
+  'text_structure/find_structure.yml': ['*'],
   // https://github.com/elastic/elasticsearch/pull/39400
   'ml/jobs_crud.yml': ['Test put job with id that is already taken'],
   // object keys must me strings, and `0.0.toString()` is `0`
@@ -88,6 +89,7 @@ const xPackBlackList = {
   'monitoring/bulk/20_privileges.yml': ['*'],
   'license/20_put_license.yml': ['*'],
   'snapshot/10_basic.yml': ['*'],
+  'snapshot/20_operator_privileges_disabled.yml': ['*'],
   // the body is correct, but the regex is failing
   'sql/sql.yml': ['Getting textual representation'],
   // we are setting two certificates in the docker config
@@ -161,9 +163,9 @@ async function start ({ client, isXPack }) {
   log(`Checking out sha ${sha}...`)
   await withSHA(sha)
 
-  log(`Testing ${isXPack ? 'XPack' : 'oss'} api...`)
+  log(`Testing ${isXPack ? 'Platinum' : 'Free'} api...`)
   const junit = createJunitReporter()
-  const junitTestSuites = junit.testsuites(`Integration test for ${isXPack ? 'XPack' : 'oss'} api`)
+  const junitTestSuites = junit.testsuites(`Integration test for ${isXPack ? 'Platinum' : 'Free'} api`)
 
   const stats = {
     total: 0,
@@ -254,7 +256,7 @@ async function start ({ client, isXPack }) {
           junitTestCase.end()
           junitTestSuite.end()
           junitTestSuites.end()
-          generateJunitXmlReport(junit, isXPack ? 'xpack' : 'oss')
+          generateJunitXmlReport(junit, isXPack ? 'platinum' : 'free')
           console.error(err)
           process.exit(1)
         }
@@ -282,7 +284,7 @@ async function start ({ client, isXPack }) {
     }
   }
   junitTestSuites.end()
-  generateJunitXmlReport(junit, isXPack ? 'xpack' : 'oss')
+  generateJunitXmlReport(junit, isXPack ? 'platinum' : 'free')
   log(`Total testing time: ${ms(now() - totalTime)}`)
   log(`Test stats:
   - Total: ${stats.total}
@@ -425,26 +427,26 @@ if (require.main === module) {
 }
 
 const shouldSkip = (isXPack, file, name) => {
-  var list = Object.keys(ossSkips)
+  var list = Object.keys(freeSkips)
   for (var i = 0; i < list.length; i++) {
-    const ossTest = ossSkips[list[i]]
-    for (var j = 0; j < ossTest.length; j++) {
-      if (file.endsWith(list[i]) && (name === ossTest[j] || ossTest[j] === '*')) {
+    const freeTest = freeSkips[list[i]]
+    for (var j = 0; j < freeTest.length; j++) {
+      if (file.endsWith(list[i]) && (name === freeTest[j] || freeTest[j] === '*')) {
         const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-        log(`Skipping test ${testName} because is blacklisted in the oss test`)
+        log(`Skipping test ${testName} because is blacklisted in the free test`)
         return true
       }
     }
   }
 
   if (file.includes('x-pack') || isXPack) {
-    list = Object.keys(xPackBlackList)
+    list = Object.keys(platinumBlackList)
     for (i = 0; i < list.length; i++) {
-      const platTest = xPackBlackList[list[i]]
+      const platTest = platinumBlackList[list[i]]
       for (j = 0; j < platTest.length; j++) {
         if (file.endsWith(list[i]) && (name === platTest[j] || platTest[j] === '*')) {
           const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-          log(`Skipping test ${testName} because is blacklisted in the XPack test`)
+          log(`Skipping test ${testName} because is blacklisted in the platinum test`)
           return true
         }
       }

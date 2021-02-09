@@ -2,7 +2,7 @@
 # parameters are available to this script
 
 # STACK_VERSION -- version e.g Major.Minor.Patch(-Prelease)
-# TEST_SUITE -- which test suite to run: oss or xpack
+# TEST_SUITE -- which test suite to run: free or platinum
 # ELASTICSEARCH_URL -- The url at which elasticsearch is reachable, a default is composed based on STACK_VERSION and TEST_SUITE
 # NODE_JS_VERSION -- node js version (defined in test-matrix.yml, a default is hardcoded here)
 script_path=$(dirname $(realpath -s $0))
