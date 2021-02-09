@@ -74,6 +74,7 @@ const EqlApi = require('./api/eql')
 const GraphApi = require('./api/graph')
 const IlmApi = require('./api/ilm')
 const LicenseApi = require('./api/license')
+const LogstashApi = require('./api/logstash')
 const MigrationApi = require('./api/migration')
 const MlApi = require('./api/ml')
 const MonitoringApi = require('./api/monitoring')
@@ -106,6 +107,7 @@ const kEql = Symbol('Eql')
 const kGraph = Symbol('Graph')
 const kIlm = Symbol('Ilm')
 const kLicense = Symbol('License')
+const kLogstash = Symbol('Logstash')
 const kMigration = Symbol('Migration')
 const kMl = Symbol('Ml')
 const kMonitoring = Symbol('Monitoring')
@@ -138,6 +140,7 @@ function ESAPI (opts) {
   this[kGraph] = null
   this[kIlm] = null
   this[kLicense] = null
+  this[kLogstash] = null
   this[kMigration] = null
   this[kMl] = null
   this[kMonitoring] = null
@@ -344,6 +347,14 @@ Object.defineProperties(ESAPI.prototype, {
         this[kLicense] = new LicenseApi(this.transport, this[kConfigurationError])
       }
       return this[kLicense]
+    }
+  },
+  logstash: {
+    get () {
+      if (this[kLogstash] === null) {
+        this[kLogstash] = new LogstashApi(this.transport, this[kConfigurationError])
+      }
+      return this[kLogstash]
     }
   },
   migration: {
