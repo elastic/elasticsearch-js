@@ -1431,6 +1431,19 @@ export interface LicensePostStartTrial extends Generic {
   acknowledge?: boolean;
 }
 
+export interface LogstashDeletePipeline extends Generic {
+  id: string;
+}
+
+export interface LogstashGetPipeline extends Generic {
+  id: string;
+}
+
+export interface LogstashPutPipeline<T = RequestBody> extends Generic {
+  id: string;
+  body: T;
+}
+
 export interface Mget<T = RequestBody> extends Generic {
   index?: string;
   type?: string;
@@ -2144,6 +2157,7 @@ export interface SearchableSnapshotsMount<T = RequestBody> extends Generic {
   snapshot: string;
   master_timeout?: string;
   wait_for_completion?: boolean;
+  storage?: string;
   body: T;
 }
 

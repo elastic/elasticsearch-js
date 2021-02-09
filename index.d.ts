@@ -1286,6 +1286,32 @@ declare class Client {
     postStartTrial<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.LicensePostStartTrial, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     postStartTrial<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.LicensePostStartTrial, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
+  logstash: {
+    delete_pipeline<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.LogstashDeletePipeline, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    delete_pipeline<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_pipeline<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.LogstashDeletePipeline, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_pipeline<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.LogstashDeletePipeline, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deletePipeline<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.LogstashDeletePipeline, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    deletePipeline<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deletePipeline<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.LogstashDeletePipeline, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deletePipeline<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.LogstashDeletePipeline, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_pipeline<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.LogstashGetPipeline, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get_pipeline<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_pipeline<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.LogstashGetPipeline, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_pipeline<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.LogstashGetPipeline, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getPipeline<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.LogstashGetPipeline, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getPipeline<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getPipeline<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.LogstashGetPipeline, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getPipeline<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.LogstashGetPipeline, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_pipeline<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.LogstashPutPipeline<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    put_pipeline<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_pipeline<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.LogstashPutPipeline<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    put_pipeline<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.LogstashPutPipeline<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putPipeline<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.LogstashPutPipeline<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    putPipeline<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putPipeline<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.LogstashPutPipeline<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    putPipeline<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.LogstashPutPipeline<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  }
   mget<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Mget<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   mget<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   mget<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Mget<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

@@ -5946,6 +5946,61 @@ link:{ref}/start-trial.html[Documentation] +
 |===
 
 [discrete]
+=== logstash.deletePipeline
+
+[source,ts]
+----
+client.logstash.deletePipeline({
+  id: string
+})
+----
+link:{ref}/logstash-api-delete-pipeline.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the Pipeline
+
+|===
+
+[discrete]
+=== logstash.getPipeline
+
+[source,ts]
+----
+client.logstash.getPipeline({
+  id: string
+})
+----
+link:{ref}/logstash-api-get-pipeline.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - A comma-separated list of Pipeline IDs
+
+|===
+
+[discrete]
+=== logstash.putPipeline
+
+[source,ts]
+----
+client.logstash.putPipeline({
+  id: string,
+  body: object
+})
+----
+link:{ref}/logstash-api-put-pipeline.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the Pipeline
+
+|`body`
+|`object` - The Pipeline to add or update
+
+|===
+
+[discrete]
 === mget
 
 [source,ts]
@@ -8937,6 +8992,7 @@ client.searchableSnapshots.mount({
   snapshot: string,
   master_timeout: string,
   wait_for_completion: boolean,
+  storage: string,
   body: object
 })
 ----
@@ -8954,6 +9010,9 @@ link:{ref}/searchable-snapshots-api-mount-snapshot.html[Documentation] +
 
 |`wait_for_completion` or `waitForCompletion`
 |`boolean` - Should this request wait until the operation has completed before returning
+
+|`storage`
+|`string` - Selects the kind of local storage used to accelerate searches. Experimental, and defaults to `full_copy`
 
 |`body`
 |`object` - The restore configuration for mounting the snapshot as searchable
