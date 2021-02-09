@@ -1051,14 +1051,24 @@ test('bulk delete', t => {
 
 test('transport options', t => {
   t.test('Should pass transport options in request', async t => {
+    let count = 0
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
-        t.strictEqual(params.path, '/_bulk')
+        count++
+
+        if (params.path === '/_bulk') {
+          t.match(params.headers, {
+            'content-type': 'application/x-ndjson',
+            foo: 'bar'
+          })
+          return { body: { errors: false, items: [{}] } }
+        }
+
+        t.strictEqual(params.path, '/_all/_refresh')
         t.match(params.headers, {
-          'content-type': 'application/x-ndjson',
           foo: 'bar'
         })
-        return { body: { errors: false, items: [{}] } }
+        return { body: {} }
       }
     })
 
@@ -1076,13 +1086,15 @@ test('transport options', t => {
       },
       onDrop (doc) {
         t.fail('This should never be called')
-      }
+      },
+      refreshOnCompletion: true
     }, {
       headers: {
         foo: 'bar'
       }
     })
 
+    t.strictEqual(count, 4) // three bulk requests, one refresh
     t.type(result.time, 'number')
     t.type(result.bytes, 'number')
     t.match(result, {

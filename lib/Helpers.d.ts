@@ -25,7 +25,7 @@ export default class Helpers {
   search<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): Promise<TDocument[]>
   scrollSearch<TDocument = unknown, TResponse = Record<string, any>, TRequestBody extends  RequestBody = Record<string, any>, TContext = Context>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<ScrollSearchResponse<TDocument, TResponse, TContext>>
   scrollDocuments<TDocument = unknown, TRequestBody extends RequestBody = Record<string, any>>(params: Search<TRequestBody>, options?: TransportRequestOptions): AsyncIterable<TDocument>
-  msearch(options?: MsearchHelperOptions): MsearchHelper
+  msearch(options?: MsearchHelperOptions, reqOptions?: TransportRequestOptions): MsearchHelper
   bulk<TDocument = unknown>(options: BulkHelperOptions<TDocument>, reqOptions?: TransportRequestOptions): BulkHelper<BulkStats>
 }
 
