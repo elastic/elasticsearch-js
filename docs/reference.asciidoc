@@ -354,7 +354,7 @@ _Default:_ `5`
 
 [discrete]
 === autoscaling.deleteAutoscalingPolicy
-*Stability:* experimental
+
 [source,ts]
 ----
 client.autoscaling.deleteAutoscalingPolicy({
@@ -371,7 +371,7 @@ link:{ref}/autoscaling-delete-autoscaling-policy.html[Documentation] +
 
 [discrete]
 === autoscaling.getAutoscalingCapacity
-*Stability:* experimental
+
 [source,ts]
 ----
 client.autoscaling.getAutoscalingCapacity()
@@ -381,7 +381,7 @@ link:{ref}/autoscaling-get-autoscaling-capacity.html[Documentation] +
 
 [discrete]
 === autoscaling.getAutoscalingPolicy
-*Stability:* experimental
+
 [source,ts]
 ----
 client.autoscaling.getAutoscalingPolicy({
@@ -398,7 +398,7 @@ link:{ref}/autoscaling-get-autoscaling-policy.html[Documentation] +
 
 [discrete]
 === autoscaling.putAutoscalingPolicy
-*Stability:* experimental
+
 [source,ts]
 ----
 client.autoscaling.putAutoscalingPolicy({
