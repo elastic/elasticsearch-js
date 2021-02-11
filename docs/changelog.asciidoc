@@ -2,6 +2,57 @@
 == Changelog
 
 [discrete]
+=== 7.11.0
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v7.11`.
+
+You can find all the API changes https://www.elastic.co/guide/en/elasticsearch/reference/7.11/release-notes-7.11.0.html[here].
+
+[discrete]
+===== Added new observability events https://github.com/elastic/elasticsearch-js/pull/1365[#1365]
+
+Two new observability events has been introduced: `serialization` and `deserialization`.
+The event order is described in the following graph, in some edge cases, the order is not guaranteed.
+You can find in https://github.com/elastic/elasticsearch-js/blob/master/test/acceptance/events-order.test.js[`test/acceptance/events-order.test.js`]
+how the order changes based on the situation.
+
+----
+serialization
+  │
+  │ (serialization and compression happens between those two events)
+  │
+  └─▶ request
+        │
+        │ (actual time spent over the wire)
+        │
+        └─▶ deserialization
+              │
+              │ (deserialization and decompression happens between those two events)
+              │
+              └─▶ response
+----
+
+[discrete]
+===== Added x-elastic-client-meta header https://github.com/elastic/elasticsearch-js/pull/1373[#1373]
+
+Adds the `x-elastic-client-meta` HTTP header which is used by Elastic Cloud
+and can be disabled with the `enableMetaHeader` parameter set to `false`.
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Fixes req.abort() with a body that is a stream calls callback(err) twice https://github.com/elastic/elasticsearch-js/pull/1376[#1376]
+
+When using a body that is a stream to client.search(), and calling req.abort(), the callback is called twice.
+Once for the RequestAbortedError, as expected, and once for a "premature close" error from end-of-stream, used by pump, used by the client.
+This issue has now been fixed.
+
+[discrete]
 === 7.10.0
 
 [discrete]
