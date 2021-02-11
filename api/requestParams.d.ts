@@ -2167,6 +2167,7 @@ export interface SearchableSnapshotsRepositoryStats extends Generic {
 
 export interface SearchableSnapshotsStats extends Generic {
   index?: string | string[];
+  level?: 'cluster' | 'indices' | 'shards';
 }
 
 export interface SecurityAuthenticate extends Generic {

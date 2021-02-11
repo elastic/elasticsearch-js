@@ -9042,7 +9042,8 @@ link:{ref}/searchable-snapshots-apis.html[Documentation] +
 [source,ts]
 ----
 client.searchableSnapshots.stats({
-  index: string | string[]
+  index: string | string[],
+  level: 'cluster' | 'indices' | 'shards'
 })
 ----
 link:{ref}/searchable-snapshots-apis.html[Documentation] +
@@ -9050,6 +9051,10 @@ link:{ref}/searchable-snapshots-apis.html[Documentation] +
 |===
 |`index`
 |`string \| string[]` - A comma-separated list of index names
+
+|`level`
+|`'cluster' \| 'indices' \| 'shards'` - Return stats aggregated at cluster, index or shard level +
+_Default:_ `indices`
 
 |===
 
