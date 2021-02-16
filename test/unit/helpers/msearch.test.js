@@ -757,7 +757,6 @@ test('Stop should resolve the helper (error)', t => {
   m.then(() => t.fail('Should not fail'), err => t.is(err.message, 'kaboom'))
 })
 
-
 test('Should use req options', async t => {
   t.plan(1)
 
