@@ -23,7 +23,7 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'index', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'master_timeout', 'wait_for_completion', 'storage']
+const acceptedQuerystring = ['ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'index', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'master_timeout', 'wait_for_completion', 'storage', 'level']
 const snakeCase = { ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', masterTimeout: 'master_timeout', waitForCompletion: 'wait_for_completion' }
 
 function SearchableSnapshotsApi (transport, ConfigurationError) {
