@@ -85,6 +85,33 @@ EqlApi.prototype.get = function eqlGetApi (params, options, callback) {
   return this.transport.request(request, options, callback)
 }
 
+EqlApi.prototype.getStatus = function eqlGetStatusApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params['id'] == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: id')
+    return handleError(err, callback)
+  }
+
+  var { method, body, id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  var path = ''
+  if (method == null) method = 'GET'
+  path = '/' + '_eql' + '/' + 'search' + '/' + 'status' + '/' + encodeURIComponent(id)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 EqlApi.prototype.search = function eqlSearchApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -115,5 +142,9 @@ EqlApi.prototype.search = function eqlSearchApi (params, options, callback) {
 
   return this.transport.request(request, options, callback)
 }
+
+Object.defineProperties(EqlApi.prototype, {
+  get_status: { get () { return this.getStatus } }
+})
 
 module.exports = EqlApi

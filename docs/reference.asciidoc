@@ -3003,6 +3003,23 @@ _Default:_ `5d`
 |===
 
 [discrete]
+=== eql.getStatus
+
+[source,ts]
+----
+client.eql.getStatus({
+  id: string
+})
+----
+link:{ref}/eql-search-api.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|===
+
+[discrete]
 === eql.search
 
 [source,ts]
@@ -9956,6 +9973,23 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |`verbose`
 |`boolean` - Whether to show verbose snapshot info or only show the basic info found in the repository index blob
+
+|===
+
+[discrete]
+=== snapshot.getFeatures
+
+[source,ts]
+----
+client.snapshot.getFeatures({
+  master_timeout: string
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
 
 |===
 

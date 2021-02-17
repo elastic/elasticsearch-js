@@ -726,6 +726,10 @@ export interface EqlGet extends Generic {
   keep_alive?: string;
 }
 
+export interface EqlGetStatus extends Generic {
+  id: string;
+}
+
 export interface EqlSearch<T = RequestBody> extends Generic {
   index: string;
   wait_for_completion_timeout?: string;
@@ -2388,6 +2392,10 @@ export interface SnapshotGet extends Generic {
   master_timeout?: string;
   ignore_unavailable?: boolean;
   verbose?: boolean;
+}
+
+export interface SnapshotGetFeatures extends Generic {
+  master_timeout?: string;
 }
 
 export interface SnapshotGetRepository extends Generic {
