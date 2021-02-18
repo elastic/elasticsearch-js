@@ -756,3 +756,42 @@ test('Stop should resolve the helper (error)', t => {
 
   m.then(() => t.fail('Should not fail'), err => t.is(err.message, 'kaboom'))
 })
+
+test('Should use req options', async t => {
+  t.plan(1)
+
+  const MockConnection = connection.buildMockConnection({
+    onRequest (params) {
+      t.match(params.headers, {
+        foo: 'bar'
+      })
+
+      return {
+        body: {
+          responses: [{
+            status: 200,
+            hits: { hits: [] }
+          }]
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  const m = client.helpers.msearch({ operations: 1 }, {
+    headers: {
+      foo: 'bar'
+    }
+  })
+
+  await m.search(
+    { index: 'test' },
+    { query: { match: { foo: 'bar' } } }
+  )
+
+  t.teardown(() => m.stop())
+})

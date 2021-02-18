@@ -1049,6 +1049,66 @@ test('bulk delete', t => {
   t.end()
 })
 
+test('transport options', t => {
+  t.test('Should pass transport options in request', async t => {
+    let count = 0
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        count++
+
+        if (params.path === '/_bulk') {
+          t.match(params.headers, {
+            'content-type': 'application/x-ndjson',
+            foo: 'bar'
+          })
+          return { body: { errors: false, items: [{}] } }
+        }
+
+        t.strictEqual(params.path, '/_all/_refresh')
+        t.match(params.headers, {
+          foo: 'bar'
+        })
+        return { body: {} }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    const result = await client.helpers.bulk({
+      datasource: dataset.slice(),
+      flushBytes: 1,
+      concurrency: 1,
+      onDocument (doc) {
+        return { index: { _index: 'test' } }
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      },
+      refreshOnCompletion: true
+    }, {
+      headers: {
+        foo: 'bar'
+      }
+    })
+
+    t.strictEqual(count, 4) // three bulk requests, one refresh
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, {
+      total: 3,
+      successful: 3,
+      retry: 0,
+      failed: 0,
+      aborted: false
+    })
+  })
+
+  t.end()
+})
+
 test('errors', t => {
   t.test('datasource type', async t => {
     const client = new Client({
