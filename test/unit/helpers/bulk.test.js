@@ -654,7 +654,7 @@ test('bulk index', t => {
         })
         .catch(err => {
           t.true(err instanceof errors.ConfigurationError)
-          t.is(err.message, `Bulk helper invalid action: 'foo'`)
+          t.is(err.message, 'Bulk helper invalid action: \'foo\'')
         })
     })
 

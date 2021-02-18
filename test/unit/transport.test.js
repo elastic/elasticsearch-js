@@ -166,7 +166,7 @@ test('Send POST', t => {
       'content-type': 'application/json',
       'content-length': '17'
     })
-    var json = ''
+    let json = ''
     req.setEncoding('utf8')
     req.on('data', chunk => { json += chunk })
     req.on('error', err => t.fail(err))
@@ -217,7 +217,7 @@ test('Send POST (ndjson)', t => {
       'content-type': 'application/x-ndjson',
       'content-length': '67'
     })
-    var json = ''
+    let json = ''
     req.setEncoding('utf8')
     req.on('data', chunk => { json += chunk })
     req.on('error', err => t.fail(err))
@@ -265,7 +265,7 @@ test('Send stream', t => {
     t.match(req.headers, {
       'content-type': 'application/json'
     })
-    var json = ''
+    let json = ''
     req.setEncoding('utf8')
     req.on('data', chunk => { json += chunk })
     req.on('error', err => t.fail(err))
@@ -308,7 +308,7 @@ test('Send stream (bulkBody)', t => {
     t.match(req.headers, {
       'content-type': 'application/x-ndjson'
     })
-    var json = ''
+    let json = ''
     req.setEncoding('utf8')
     req.on('data', chunk => { json += chunk })
     req.on('error', err => t.fail(err))
@@ -587,7 +587,7 @@ test('ConnectionError (should call markDead on the failing connection)', t => {
 test('Retry mechanism', t => {
   t.plan(2)
 
-  var count = 0
+  let count = 0
   function handler (req, res) {
     res.setHeader('Content-Type', 'application/json;utf=8')
     if (count > 0) {
@@ -635,7 +635,7 @@ test('Retry mechanism', t => {
 test('Should not retry if the body is a stream', t => {
   t.plan(2)
 
-  var count = 0
+  let count = 0
   function handler (req, res) {
     count++
     res.setHeader('Content-Type', 'application/json;utf=8')
@@ -680,7 +680,7 @@ test('Should not retry if the body is a stream', t => {
 test('Should not retry if the bulkBody is a stream', t => {
   t.plan(2)
 
-  var count = 0
+  let count = 0
   function handler (req, res) {
     count++
     res.setHeader('Content-Type', 'application/json;utf=8')
@@ -725,7 +725,7 @@ test('Should not retry if the bulkBody is a stream', t => {
 test('No retry', t => {
   t.plan(2)
 
-  var count = 0
+  let count = 0
   function handler (req, res) {
     count++
     res.setHeader('Content-Type', 'application/json;utf=8')
@@ -772,7 +772,7 @@ test('No retry', t => {
 test('Custom retry mechanism', t => {
   t.plan(2)
 
-  var count = 0
+  let count = 0
   function handler (req, res) {
     res.setHeader('Content-Type', 'application/json;utf=8')
     if (count > 0) {
@@ -822,7 +822,7 @@ test('Custom retry mechanism', t => {
 test('Should not retry on 429', t => {
   t.plan(3)
 
-  var count = 0
+  let count = 0
   function handler (req, res) {
     t.strictEqual(count++, 0)
     res.statusCode = 429
@@ -988,7 +988,7 @@ test('Retry mechanism and abort', t => {
       id: 'node3'
     }])
 
-    var count = 0
+    let count = 0
     const transport = new Transport({
       emit: event => {
         if (event === 'request' && count++ > 0) {
@@ -1294,7 +1294,7 @@ test('Should retry the request if the statusCode is 502/3/4', t => {
     t.test(statusCode, t => {
       t.plan(3)
 
-      var first = true
+      let first = true
       function handler (req, res) {
         if (first) {
           first = false
@@ -1886,7 +1886,7 @@ test('asStream set to true', t => {
         'content-type': 'application/json;utf=8'
       })
 
-      var payload = ''
+      let payload = ''
       body.setEncoding('utf8')
       body.on('data', chunk => { payload += chunk })
       body.on('error', err => t.fail(err))
@@ -1906,7 +1906,7 @@ test('Compress request', t => {
         'content-type': 'application/json',
         'content-encoding': 'gzip'
       })
-      var json = ''
+      let json = ''
       req
         .pipe(createGunzip())
         .on('data', chunk => { json += chunk })
@@ -1953,7 +1953,7 @@ test('Compress request', t => {
         'content-type': 'application/json',
         'content-encoding': 'gzip'
       })
-      var json = ''
+      let json = ''
       req
         .pipe(createGunzip())
         .on('data', chunk => { json += chunk })
@@ -1999,7 +1999,7 @@ test('Compress request', t => {
         'content-type': 'application/json',
         'content-encoding': 'gzip'
       })
-      var json = ''
+      let json = ''
       req
         .pipe(createGunzip())
         .on('data', chunk => { json += chunk })
@@ -2112,13 +2112,13 @@ test('Compress request', t => {
   t.test('Retry a gzipped body', t => {
     t.plan(7)
 
-    var count = 0
+    let count = 0
     function handler (req, res) {
       t.match(req.headers, {
         'content-type': 'application/json',
         'content-encoding': 'gzip'
       })
-      var json = ''
+      let json = ''
       req
         .pipe(createGunzip())
         .on('data', chunk => { json += chunk })

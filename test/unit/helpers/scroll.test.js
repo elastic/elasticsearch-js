@@ -29,7 +29,7 @@ if (clientVersion.includes('-')) {
 const nodeVersion = process.versions.node
 
 test('Scroll search', async t => {
-  var count = 0
+  let count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       t.match(params.headers, {
@@ -52,10 +52,10 @@ test('Scroll search', async t => {
             hits: count === 3
               ? []
               : [
-                { _source: { one: 'one' } },
-                { _source: { two: 'two' } },
-                { _source: { three: 'three' } }
-              ]
+                  { _source: { one: 'one' } },
+                  { _source: { two: 'two' } },
+                  { _source: { three: 'three' } }
+                ]
           }
         }
       }
@@ -79,7 +79,7 @@ test('Scroll search', async t => {
 })
 
 test('Clear a scroll search', async t => {
-  var count = 0
+  let count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       t.notMatch(params.headers, {
@@ -129,7 +129,7 @@ test('Clear a scroll search', async t => {
 })
 
 test('Scroll search (retry)', async t => {
-  var count = 0
+  let count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       count += 1
@@ -149,10 +149,10 @@ test('Scroll search (retry)', async t => {
             hits: count === 4
               ? []
               : [
-                { _source: { one: 'one' } },
-                { _source: { two: 'two' } },
-                { _source: { three: 'three' } }
-              ]
+                  { _source: { one: 'one' } },
+                  { _source: { two: 'two' } },
+                  { _source: { three: 'three' } }
+                ]
           }
         }
       }
@@ -181,7 +181,7 @@ test('Scroll search (retry)', async t => {
 test('Scroll search (retry throws and maxRetries)', async t => {
   const maxRetries = 5
   const expectedAttempts = maxRetries + 1
-  var count = 0
+  let count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       count += 1
@@ -217,7 +217,7 @@ test('Scroll search (retry throws and maxRetries)', async t => {
 test('Scroll search (retry throws later)', async t => {
   const maxRetries = 5
   const expectedAttempts = maxRetries + 2
-  var count = 0
+  let count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       count += 1
@@ -268,7 +268,7 @@ test('Scroll search (retry throws later)', async t => {
 })
 
 test('Scroll search documents', async t => {
-  var count = 0
+  let count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       if (count === 0) {
@@ -287,10 +287,10 @@ test('Scroll search documents', async t => {
             hits: count === 3
               ? []
               : [
-                { _source: { val: 1 * count } },
-                { _source: { val: 2 * count } },
-                { _source: { val: 3 * count } }
-              ]
+                  { _source: { val: 1 * count } },
+                  { _source: { val: 2 * count } },
+                  { _source: { val: 3 * count } }
+                ]
           }
         }
       }
@@ -321,7 +321,7 @@ test('Scroll search documents', async t => {
 test('Should not retry if maxRetries = 0', async t => {
   const maxRetries = 0
   const expectedAttempts = 1
-  var count = 0
+  let count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       count += 1
@@ -355,7 +355,7 @@ test('Should not retry if maxRetries = 0', async t => {
 })
 
 test('Fix querystring for scroll search', async t => {
-  var count = 0
+  let count = 0
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       if (count === 0) {
@@ -372,8 +372,8 @@ test('Fix querystring for scroll search', async t => {
             hits: count === 3
               ? []
               : [
-                { _source: { val: count } }
-              ]
+                  { _source: { val: count } }
+                ]
           }
         }
       }

@@ -320,7 +320,7 @@ function build (opts = {}) {
    */
   function set (key, name) {
     if (key.includes('_arbitrary_key_')) {
-      var currentVisit = null
+      let currentVisit = null
       for (const path of key.split('.')) {
         if (path === '_arbitrary_key_') {
           const keys = Object.keys(currentVisit)
@@ -361,8 +361,9 @@ function build (opts = {}) {
    */
   async function doAction (action, stats) {
     const cmd = parseDo(action)
+    let api
     try {
-      var api = delve(client, cmd.method).bind(client)
+      api = delve(client, cmd.method).bind(client)
     } catch (err) {
       console.error(`\nError: Cannot find the method '${cmd.method}' in the client.\n`)
       process.exit(1)
@@ -373,8 +374,8 @@ function build (opts = {}) {
     if (cmd.params.ignore) delete cmd.params.ignore
 
     const [err, result] = await to(api(cmd.params, options))
-    var warnings = result ? result.warnings : null
-    var body = result ? result.body : null
+    let warnings = result ? result.warnings : null
+    const body = result ? result.body : null
 
     if (action.warnings && warnings === null) {
       assert.fail('We should get a warning header', action.warnings)
@@ -719,7 +720,7 @@ function parseDo (action) {
 
     for (const key in obj) {
       const val = obj[key]
-      var newKey = key
+      let newKey = key
       if (!~doNotCamelify.indexOf(key)) {
         // if the key starts with `_` we should not camelify the first occurence
         // eg: _source_include => _sourceInclude
@@ -776,7 +777,7 @@ function parseDoError (err, spec) {
 
 function getSkip (arr) {
   if (!Array.isArray(arr)) return null
-  for (var i = 0; i < arr.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     if (arr[i].skip) return arr[i].skip
   }
   return null
@@ -822,7 +823,7 @@ function logSkip (action) {
  * @returns {boolean}
  */
 function shouldSkip (esVersion, action) {
-  var shouldSkip = false
+  let shouldSkip = false
   // skip based on the version
   if (action.version) {
     if (action.version.trim() === 'all') return true

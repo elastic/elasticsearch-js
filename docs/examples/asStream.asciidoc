@@ -57,7 +57,7 @@ async function run () {
   })
 
   // stream async iteration, available in Node.js ≥ 10
-  var payload = ''
+  let payload = ''
   body.setEncoding('utf8')
   for await (const chunk of body) {
     payload += chunk
@@ -65,7 +65,7 @@ async function run () {
   console.log(JSON.parse(payload))
 
   // classic stream callback style
-  var payload = ''
+  let payload = ''
   body.setEncoding('utf8')
   body.on('data', chunk => { payload += chunk })
   body.on('error', console.log)

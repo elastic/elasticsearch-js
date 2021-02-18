@@ -31,10 +31,10 @@ function handleError (err, callback) {
 }
 
 function snakeCaseKeys (acceptedQuerystring, snakeCase, querystring) {
-  var target = {}
-  var keys = Object.keys(querystring)
-  for (var i = 0, len = keys.length; i < len; i++) {
-    var key = keys[i]
+  const target = {}
+  const keys = Object.keys(querystring)
+  for (let i = 0, len = keys.length; i < len; i++) {
+    const key = keys[i]
     target[snakeCase[key] || key] = querystring[key]
   }
   return target
