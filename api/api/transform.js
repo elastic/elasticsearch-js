@@ -35,15 +35,15 @@ TransformApi.prototype.deleteTransform = function transformDeleteTransformApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['transform_id'] == null && params['transformId'] == null) {
+  if (params.transform_id == null && params.transformId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
 
-  var { method, body, transformId, transform_id, ...querystring } = params
+  let { method, body, transformId, transform_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId)
 
@@ -61,10 +61,10 @@ TransformApi.prototype.deleteTransform = function transformDeleteTransformApi (p
 TransformApi.prototype.getTransform = function transformGetTransformApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, transformId, transform_id, ...querystring } = params
+  let { method, body, transformId, transform_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((transform_id || transformId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId)
@@ -88,15 +88,15 @@ TransformApi.prototype.getTransformStats = function transformGetTransformStatsAp
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['transform_id'] == null && params['transformId'] == null) {
+  if (params.transform_id == null && params.transformId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
 
-  var { method, body, transformId, transform_id, ...querystring } = params
+  let { method, body, transformId, transform_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stats'
 
@@ -115,15 +115,15 @@ TransformApi.prototype.previewTransform = function transformPreviewTransformApi 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_transform' + '/' + '_preview'
 
@@ -142,19 +142,19 @@ TransformApi.prototype.putTransform = function transformPutTransformApi (params,
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['transform_id'] == null && params['transformId'] == null) {
+  if (params.transform_id == null && params.transformId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, transformId, transform_id, ...querystring } = params
+  let { method, body, transformId, transform_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId)
 
@@ -173,15 +173,15 @@ TransformApi.prototype.startTransform = function transformStartTransformApi (par
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['transform_id'] == null && params['transformId'] == null) {
+  if (params.transform_id == null && params.transformId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
 
-  var { method, body, transformId, transform_id, ...querystring } = params
+  let { method, body, transformId, transform_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_start'
 
@@ -200,15 +200,15 @@ TransformApi.prototype.stopTransform = function transformStopTransformApi (param
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['transform_id'] == null && params['transformId'] == null) {
+  if (params.transform_id == null && params.transformId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
 
-  var { method, body, transformId, transform_id, ...querystring } = params
+  let { method, body, transformId, transform_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_stop'
 
@@ -227,19 +227,19 @@ TransformApi.prototype.updateTransform = function transformUpdateTransformApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['transform_id'] == null && params['transformId'] == null) {
+  if (params.transform_id == null && params.transformId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: transform_id or transformId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, transformId, transform_id, ...querystring } = params
+  let { method, body, transformId, transform_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_update'
 

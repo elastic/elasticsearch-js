@@ -29,10 +29,10 @@ const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
 function renderSearchTemplateApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((id) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_render' + '/' + 'template' + '/' + encodeURIComponent(id)

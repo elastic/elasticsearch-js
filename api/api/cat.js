@@ -34,10 +34,10 @@ function CatApi (transport, ConfigurationError) {
 CatApi.prototype.aliases = function catAliasesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'aliases' + '/' + encodeURIComponent(name)
@@ -60,10 +60,10 @@ CatApi.prototype.aliases = function catAliasesApi (params, options, callback) {
 CatApi.prototype.allocation = function catAllocationApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, nodeId, node_id, ...querystring } = params
+  let { method, body, nodeId, node_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((node_id || nodeId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'allocation' + '/' + encodeURIComponent(node_id || nodeId)
@@ -86,10 +86,10 @@ CatApi.prototype.allocation = function catAllocationApi (params, options, callba
 CatApi.prototype.count = function catCountApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'count' + '/' + encodeURIComponent(index)
@@ -112,10 +112,10 @@ CatApi.prototype.count = function catCountApi (params, options, callback) {
 CatApi.prototype.fielddata = function catFielddataApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, fields, ...querystring } = params
+  let { method, body, fields, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((fields) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'fielddata' + '/' + encodeURIComponent(fields)
@@ -138,10 +138,10 @@ CatApi.prototype.fielddata = function catFielddataApi (params, options, callback
 CatApi.prototype.health = function catHealthApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cat' + '/' + 'health'
 
@@ -159,10 +159,10 @@ CatApi.prototype.health = function catHealthApi (params, options, callback) {
 CatApi.prototype.help = function catHelpApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cat'
 
@@ -180,10 +180,10 @@ CatApi.prototype.help = function catHelpApi (params, options, callback) {
 CatApi.prototype.indices = function catIndicesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'indices' + '/' + encodeURIComponent(index)
@@ -206,10 +206,10 @@ CatApi.prototype.indices = function catIndicesApi (params, options, callback) {
 CatApi.prototype.master = function catMasterApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cat' + '/' + 'master'
 
@@ -227,10 +227,10 @@ CatApi.prototype.master = function catMasterApi (params, options, callback) {
 CatApi.prototype.nodeattrs = function catNodeattrsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cat' + '/' + 'nodeattrs'
 
@@ -248,10 +248,10 @@ CatApi.prototype.nodeattrs = function catNodeattrsApi (params, options, callback
 CatApi.prototype.nodes = function catNodesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cat' + '/' + 'nodes'
 
@@ -269,10 +269,10 @@ CatApi.prototype.nodes = function catNodesApi (params, options, callback) {
 CatApi.prototype.pendingTasks = function catPendingTasksApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cat' + '/' + 'pending_tasks'
 
@@ -290,10 +290,10 @@ CatApi.prototype.pendingTasks = function catPendingTasksApi (params, options, ca
 CatApi.prototype.plugins = function catPluginsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cat' + '/' + 'plugins'
 
@@ -311,10 +311,10 @@ CatApi.prototype.plugins = function catPluginsApi (params, options, callback) {
 CatApi.prototype.recovery = function catRecoveryApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'recovery' + '/' + encodeURIComponent(index)
@@ -337,10 +337,10 @@ CatApi.prototype.recovery = function catRecoveryApi (params, options, callback) 
 CatApi.prototype.repositories = function catRepositoriesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cat' + '/' + 'repositories'
 
@@ -358,10 +358,10 @@ CatApi.prototype.repositories = function catRepositoriesApi (params, options, ca
 CatApi.prototype.segments = function catSegmentsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'segments' + '/' + encodeURIComponent(index)
@@ -384,10 +384,10 @@ CatApi.prototype.segments = function catSegmentsApi (params, options, callback) 
 CatApi.prototype.shards = function catShardsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'shards' + '/' + encodeURIComponent(index)
@@ -410,10 +410,10 @@ CatApi.prototype.shards = function catShardsApi (params, options, callback) {
 CatApi.prototype.snapshots = function catSnapshotsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, repository, ...querystring } = params
+  let { method, body, repository, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((repository) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'snapshots' + '/' + encodeURIComponent(repository)
@@ -436,10 +436,10 @@ CatApi.prototype.snapshots = function catSnapshotsApi (params, options, callback
 CatApi.prototype.tasks = function catTasksApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cat' + '/' + 'tasks'
 
@@ -457,10 +457,10 @@ CatApi.prototype.tasks = function catTasksApi (params, options, callback) {
 CatApi.prototype.templates = function catTemplatesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'templates' + '/' + encodeURIComponent(name)
@@ -483,10 +483,10 @@ CatApi.prototype.templates = function catTemplatesApi (params, options, callback
 CatApi.prototype.threadPool = function catThreadPoolApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, threadPoolPatterns, thread_pool_patterns, ...querystring } = params
+  let { method, body, threadPoolPatterns, thread_pool_patterns, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((thread_pool_patterns || threadPoolPatterns) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'thread_pool' + '/' + encodeURIComponent(thread_pool_patterns || threadPoolPatterns)
@@ -509,10 +509,10 @@ CatApi.prototype.threadPool = function catThreadPoolApi (params, options, callba
 CatApi.prototype.mlDataFrameAnalytics = function catMlDataFrameAnalyticsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((id) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
@@ -535,10 +535,10 @@ CatApi.prototype.mlDataFrameAnalytics = function catMlDataFrameAnalyticsApi (par
 CatApi.prototype.mlDatafeeds = function catMlDatafeedsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, datafeedId, datafeed_id, ...querystring } = params
+  let { method, body, datafeedId, datafeed_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((datafeed_id || datafeedId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId)
@@ -561,10 +561,10 @@ CatApi.prototype.mlDatafeeds = function catMlDatafeedsApi (params, options, call
 CatApi.prototype.mlJobs = function catMlJobsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((job_id || jobId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
@@ -587,10 +587,10 @@ CatApi.prototype.mlJobs = function catMlJobsApi (params, options, callback) {
 CatApi.prototype.mlTrainedModels = function catMlTrainedModelsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, modelId, model_id, ...querystring } = params
+  let { method, body, modelId, model_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((model_id || modelId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
@@ -613,10 +613,10 @@ CatApi.prototype.mlTrainedModels = function catMlTrainedModelsApi (params, optio
 CatApi.prototype.transforms = function catTransformsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, transformId, transform_id, ...querystring } = params
+  let { method, body, transformId, transform_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((transform_id || transformId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cat' + '/' + 'transforms' + '/' + encodeURIComponent(transform_id || transformId)

@@ -35,15 +35,15 @@ IlmApi.prototype.deleteLifecycle = function ilmDeleteLifecycleApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['policy'] == null) {
+  if (params.policy == null) {
     const err = new this[kConfigurationError]('Missing required parameter: policy')
     return handleError(err, callback)
   }
 
-  var { method, body, policy, ...querystring } = params
+  let { method, body, policy, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy)
 
@@ -62,15 +62,15 @@ IlmApi.prototype.explainLifecycle = function ilmExplainLifecycleApi (params, opt
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'explain'
 
@@ -88,10 +88,10 @@ IlmApi.prototype.explainLifecycle = function ilmExplainLifecycleApi (params, opt
 IlmApi.prototype.getLifecycle = function ilmGetLifecycleApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, policy, ...querystring } = params
+  let { method, body, policy, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((policy) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy)
@@ -114,10 +114,10 @@ IlmApi.prototype.getLifecycle = function ilmGetLifecycleApi (params, options, ca
 IlmApi.prototype.getStatus = function ilmGetStatusApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_ilm' + '/' + 'status'
 
@@ -136,15 +136,15 @@ IlmApi.prototype.moveToStep = function ilmMoveToStepApi (params, options, callba
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ilm' + '/' + 'move' + '/' + encodeURIComponent(index)
 
@@ -163,15 +163,15 @@ IlmApi.prototype.putLifecycle = function ilmPutLifecycleApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['policy'] == null) {
+  if (params.policy == null) {
     const err = new this[kConfigurationError]('Missing required parameter: policy')
     return handleError(err, callback)
   }
 
-  var { method, body, policy, ...querystring } = params
+  let { method, body, policy, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_ilm' + '/' + 'policy' + '/' + encodeURIComponent(policy)
 
@@ -190,15 +190,15 @@ IlmApi.prototype.removePolicy = function ilmRemovePolicyApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'remove'
 
@@ -217,15 +217,15 @@ IlmApi.prototype.retry = function ilmRetryApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_ilm' + '/' + 'retry'
 
@@ -243,10 +243,10 @@ IlmApi.prototype.retry = function ilmRetryApi (params, options, callback) {
 IlmApi.prototype.start = function ilmStartApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ilm' + '/' + 'start'
 
@@ -264,10 +264,10 @@ IlmApi.prototype.start = function ilmStartApi (params, options, callback) {
 IlmApi.prototype.stop = function ilmStopApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ilm' + '/' + 'stop'
 

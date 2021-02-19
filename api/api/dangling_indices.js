@@ -35,15 +35,15 @@ DanglingIndicesApi.prototype.deleteDanglingIndex = function danglingIndicesDelet
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index_uuid'] == null && params['indexUuid'] == null) {
+  if (params.index_uuid == null && params.indexUuid == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index_uuid or indexUuid')
     return handleError(err, callback)
   }
 
-  var { method, body, indexUuid, index_uuid, ...querystring } = params
+  let { method, body, indexUuid, index_uuid, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_dangling' + '/' + encodeURIComponent(index_uuid || indexUuid)
 
@@ -62,15 +62,15 @@ DanglingIndicesApi.prototype.importDanglingIndex = function danglingIndicesImpor
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index_uuid'] == null && params['indexUuid'] == null) {
+  if (params.index_uuid == null && params.indexUuid == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index_uuid or indexUuid')
     return handleError(err, callback)
   }
 
-  var { method, body, indexUuid, index_uuid, ...querystring } = params
+  let { method, body, indexUuid, index_uuid, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_dangling' + '/' + encodeURIComponent(index_uuid || indexUuid)
 
@@ -88,10 +88,10 @@ DanglingIndicesApi.prototype.importDanglingIndex = function danglingIndicesImpor
 DanglingIndicesApi.prototype.listDanglingIndices = function danglingIndicesListDanglingIndicesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_dangling'
 

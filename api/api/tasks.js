@@ -34,10 +34,10 @@ function TasksApi (transport, ConfigurationError) {
 TasksApi.prototype.cancel = function tasksCancelApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, taskId, task_id, ...querystring } = params
+  let { method, body, taskId, task_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((task_id || taskId) != null) {
     if (method == null) method = 'POST'
     path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_cancel'
@@ -61,15 +61,15 @@ TasksApi.prototype.get = function tasksGetApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['task_id'] == null && params['taskId'] == null) {
+  if (params.task_id == null && params.taskId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: task_id or taskId')
     return handleError(err, callback)
   }
 
-  var { method, body, taskId, task_id, ...querystring } = params
+  let { method, body, taskId, task_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_tasks' + '/' + encodeURIComponent(task_id || taskId)
 
@@ -87,10 +87,10 @@ TasksApi.prototype.get = function tasksGetApi (params, options, callback) {
 TasksApi.prototype.list = function tasksListApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_tasks'
 

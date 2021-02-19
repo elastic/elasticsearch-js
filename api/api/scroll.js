@@ -29,10 +29,10 @@ const snakeCase = { scrollId: 'scroll_id', restTotalHitsAsInt: 'rest_total_hits_
 function scrollApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, scrollId, scroll_id, ...querystring } = params
+  let { method, body, scrollId, scroll_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((scroll_id || scrollId) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_search' + '/' + 'scroll' + '/' + encodeURIComponent(scroll_id || scrollId)

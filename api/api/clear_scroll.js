@@ -29,10 +29,10 @@ const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
 function clearScrollApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, scrollId, scroll_id, ...querystring } = params
+  let { method, body, scrollId, scroll_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((scroll_id || scrollId) != null) {
     if (method == null) method = 'DELETE'
     path = '/' + '_search' + '/' + 'scroll' + '/' + encodeURIComponent(scroll_id || scrollId)

@@ -35,15 +35,15 @@ SnapshotApi.prototype.cleanupRepository = function snapshotCleanupRepositoryApi 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['repository'] == null) {
+  if (params.repository == null) {
     const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
 
-  var { method, body, repository, ...querystring } = params
+  let { method, body, repository, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_cleanup'
 
@@ -62,36 +62,36 @@ SnapshotApi.prototype.clone = function snapshotCloneApi (params, options, callba
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['repository'] == null) {
+  if (params.repository == null) {
     const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
-  if (params['snapshot'] == null) {
+  if (params.snapshot == null) {
     const err = new this[kConfigurationError]('Missing required parameter: snapshot')
     return handleError(err, callback)
   }
-  if (params['target_snapshot'] == null && params['targetSnapshot'] == null) {
+  if (params.target_snapshot == null && params.targetSnapshot == null) {
     const err = new this[kConfigurationError]('Missing required parameter: target_snapshot or targetSnapshot')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['target_snapshot'] != null || params['targetSnapshot'] != null) && (params['snapshot'] == null || params['repository'] == null)) {
+  if ((params.target_snapshot != null || params.targetSnapshot != null) && (params.snapshot == null || params.repository == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: snapshot, repository')
     return handleError(err, callback)
-  } else if (params['snapshot'] != null && (params['repository'] == null)) {
+  } else if (params.snapshot != null && (params.repository == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
-  var { method, body, repository, snapshot, targetSnapshot, target_snapshot, ...querystring } = params
+  let { method, body, repository, snapshot, targetSnapshot, target_snapshot, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_clone' + '/' + encodeURIComponent(target_snapshot || targetSnapshot)
 
@@ -110,25 +110,25 @@ SnapshotApi.prototype.create = function snapshotCreateApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['repository'] == null) {
+  if (params.repository == null) {
     const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
-  if (params['snapshot'] == null) {
+  if (params.snapshot == null) {
     const err = new this[kConfigurationError]('Missing required parameter: snapshot')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['snapshot'] != null && (params['repository'] == null)) {
+  if (params.snapshot != null && (params.repository == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
-  var { method, body, repository, snapshot, ...querystring } = params
+  let { method, body, repository, snapshot, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
 
@@ -147,19 +147,19 @@ SnapshotApi.prototype.createRepository = function snapshotCreateRepositoryApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['repository'] == null) {
+  if (params.repository == null) {
     const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, repository, ...querystring } = params
+  let { method, body, repository, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository)
 
@@ -178,25 +178,25 @@ SnapshotApi.prototype.delete = function snapshotDeleteApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['repository'] == null) {
+  if (params.repository == null) {
     const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
-  if (params['snapshot'] == null) {
+  if (params.snapshot == null) {
     const err = new this[kConfigurationError]('Missing required parameter: snapshot')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['snapshot'] != null && (params['repository'] == null)) {
+  if (params.snapshot != null && (params.repository == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
-  var { method, body, repository, snapshot, ...querystring } = params
+  let { method, body, repository, snapshot, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
 
@@ -215,15 +215,15 @@ SnapshotApi.prototype.deleteRepository = function snapshotDeleteRepositoryApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['repository'] == null) {
+  if (params.repository == null) {
     const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
 
-  var { method, body, repository, ...querystring } = params
+  let { method, body, repository, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository)
 
@@ -242,25 +242,25 @@ SnapshotApi.prototype.get = function snapshotGetApi (params, options, callback) 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['repository'] == null) {
+  if (params.repository == null) {
     const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
-  if (params['snapshot'] == null) {
+  if (params.snapshot == null) {
     const err = new this[kConfigurationError]('Missing required parameter: snapshot')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['snapshot'] != null && (params['repository'] == null)) {
+  if (params.snapshot != null && (params.repository == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
-  var { method, body, repository, snapshot, ...querystring } = params
+  let { method, body, repository, snapshot, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot)
 
@@ -278,10 +278,10 @@ SnapshotApi.prototype.get = function snapshotGetApi (params, options, callback) 
 SnapshotApi.prototype.getFeatures = function snapshotGetFeaturesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_snapshottable_features'
 
@@ -299,10 +299,10 @@ SnapshotApi.prototype.getFeatures = function snapshotGetFeaturesApi (params, opt
 SnapshotApi.prototype.getRepository = function snapshotGetRepositoryApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, repository, ...querystring } = params
+  let { method, body, repository, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((repository) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_snapshot' + '/' + encodeURIComponent(repository)
@@ -326,25 +326,25 @@ SnapshotApi.prototype.restore = function snapshotRestoreApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['repository'] == null) {
+  if (params.repository == null) {
     const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
-  if (params['snapshot'] == null) {
+  if (params.snapshot == null) {
     const err = new this[kConfigurationError]('Missing required parameter: snapshot')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['snapshot'] != null && (params['repository'] == null)) {
+  if (params.snapshot != null && (params.repository == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
-  var { method, body, repository, snapshot, ...querystring } = params
+  let { method, body, repository, snapshot, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_restore'
 
@@ -363,15 +363,15 @@ SnapshotApi.prototype.status = function snapshotStatusApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required url components
-  if (params['snapshot'] != null && (params['repository'] == null)) {
+  if (params.snapshot != null && (params.repository == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
-  var { method, body, repository, snapshot, ...querystring } = params
+  let { method, body, repository, snapshot, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((repository) != null && (snapshot) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_status'
@@ -398,15 +398,15 @@ SnapshotApi.prototype.verifyRepository = function snapshotVerifyRepositoryApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['repository'] == null) {
+  if (params.repository == null) {
     const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
 
-  var { method, body, repository, ...querystring } = params
+  let { method, body, repository, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_verify'
 
