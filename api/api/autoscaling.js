@@ -35,15 +35,15 @@ AutoscalingApi.prototype.deleteAutoscalingPolicy = function autoscalingDeleteAut
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_autoscaling' + '/' + 'policy' + '/' + encodeURIComponent(name)
 
@@ -61,10 +61,10 @@ AutoscalingApi.prototype.deleteAutoscalingPolicy = function autoscalingDeleteAut
 AutoscalingApi.prototype.getAutoscalingCapacity = function autoscalingGetAutoscalingCapacityApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_autoscaling' + '/' + 'capacity'
 
@@ -83,15 +83,15 @@ AutoscalingApi.prototype.getAutoscalingPolicy = function autoscalingGetAutoscali
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_autoscaling' + '/' + 'policy' + '/' + encodeURIComponent(name)
 
@@ -110,19 +110,19 @@ AutoscalingApi.prototype.putAutoscalingPolicy = function autoscalingPutAutoscali
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_autoscaling' + '/' + 'policy' + '/' + encodeURIComponent(name)
 

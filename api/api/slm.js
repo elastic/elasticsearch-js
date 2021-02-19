@@ -35,15 +35,15 @@ SlmApi.prototype.deleteLifecycle = function slmDeleteLifecycleApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['policy_id'] == null && params['policyId'] == null) {
+  if (params.policy_id == null && params.policyId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: policy_id or policyId')
     return handleError(err, callback)
   }
 
-  var { method, body, policyId, policy_id, ...querystring } = params
+  let { method, body, policyId, policy_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
 
@@ -62,15 +62,15 @@ SlmApi.prototype.executeLifecycle = function slmExecuteLifecycleApi (params, opt
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['policy_id'] == null && params['policyId'] == null) {
+  if (params.policy_id == null && params.policyId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: policy_id or policyId')
     return handleError(err, callback)
   }
 
-  var { method, body, policyId, policy_id, ...querystring } = params
+  let { method, body, policyId, policy_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId) + '/' + '_execute'
 
@@ -88,10 +88,10 @@ SlmApi.prototype.executeLifecycle = function slmExecuteLifecycleApi (params, opt
 SlmApi.prototype.executeRetention = function slmExecuteRetentionApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_slm' + '/' + '_execute_retention'
 
@@ -109,10 +109,10 @@ SlmApi.prototype.executeRetention = function slmExecuteRetentionApi (params, opt
 SlmApi.prototype.getLifecycle = function slmGetLifecycleApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, policyId, policy_id, ...querystring } = params
+  let { method, body, policyId, policy_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((policy_id || policyId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
@@ -135,10 +135,10 @@ SlmApi.prototype.getLifecycle = function slmGetLifecycleApi (params, options, ca
 SlmApi.prototype.getStats = function slmGetStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_slm' + '/' + 'stats'
 
@@ -156,10 +156,10 @@ SlmApi.prototype.getStats = function slmGetStatsApi (params, options, callback) 
 SlmApi.prototype.getStatus = function slmGetStatusApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_slm' + '/' + 'status'
 
@@ -178,15 +178,15 @@ SlmApi.prototype.putLifecycle = function slmPutLifecycleApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['policy_id'] == null && params['policyId'] == null) {
+  if (params.policy_id == null && params.policyId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: policy_id or policyId')
     return handleError(err, callback)
   }
 
-  var { method, body, policyId, policy_id, ...querystring } = params
+  let { method, body, policyId, policy_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_slm' + '/' + 'policy' + '/' + encodeURIComponent(policy_id || policyId)
 
@@ -204,10 +204,10 @@ SlmApi.prototype.putLifecycle = function slmPutLifecycleApi (params, options, ca
 SlmApi.prototype.start = function slmStartApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_slm' + '/' + 'start'
 
@@ -225,10 +225,10 @@ SlmApi.prototype.start = function slmStartApi (params, options, callback) {
 SlmApi.prototype.stop = function slmStopApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_slm' + '/' + 'stop'
 

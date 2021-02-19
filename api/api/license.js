@@ -34,10 +34,10 @@ function LicenseApi (transport, ConfigurationError) {
 LicenseApi.prototype.delete = function licenseDeleteApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_license'
 
@@ -55,10 +55,10 @@ LicenseApi.prototype.delete = function licenseDeleteApi (params, options, callba
 LicenseApi.prototype.get = function licenseGetApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_license'
 
@@ -76,10 +76,10 @@ LicenseApi.prototype.get = function licenseGetApi (params, options, callback) {
 LicenseApi.prototype.getBasicStatus = function licenseGetBasicStatusApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_license' + '/' + 'basic_status'
 
@@ -97,10 +97,10 @@ LicenseApi.prototype.getBasicStatus = function licenseGetBasicStatusApi (params,
 LicenseApi.prototype.getTrialStatus = function licenseGetTrialStatusApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_license' + '/' + 'trial_status'
 
@@ -118,10 +118,10 @@ LicenseApi.prototype.getTrialStatus = function licenseGetTrialStatusApi (params,
 LicenseApi.prototype.post = function licensePostApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_license'
 
@@ -139,10 +139,10 @@ LicenseApi.prototype.post = function licensePostApi (params, options, callback) 
 LicenseApi.prototype.postStartBasic = function licensePostStartBasicApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_license' + '/' + 'start_basic'
 
@@ -160,10 +160,10 @@ LicenseApi.prototype.postStartBasic = function licensePostStartBasicApi (params,
 LicenseApi.prototype.postStartTrial = function licensePostStartTrialApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_license' + '/' + 'start_trial'
 

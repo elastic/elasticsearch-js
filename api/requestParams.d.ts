@@ -1502,6 +1502,11 @@ export interface MlDeleteTrainedModel extends Generic {
   model_id: string;
 }
 
+export interface MlDeleteTrainedModelAlias extends Generic {
+  model_alias: string;
+  model_id: string;
+}
+
 export interface MlEstimateModelMemory<T = RequestBody> extends Generic {
   body: T;
 }
@@ -1750,6 +1755,12 @@ export interface MlPutJob<T = RequestBody> extends Generic {
 export interface MlPutTrainedModel<T = RequestBody> extends Generic {
   model_id: string;
   body: T;
+}
+
+export interface MlPutTrainedModelAlias extends Generic {
+  model_alias: string;
+  model_id: string;
+  reassign?: boolean;
 }
 
 export interface MlRevertModelSnapshot<T = RequestBody> extends Generic {

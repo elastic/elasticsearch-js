@@ -35,25 +35,25 @@ IndicesApi.prototype.addBlock = function indicesAddBlockApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['block'] == null) {
+  if (params.block == null) {
     const err = new this[kConfigurationError]('Missing required parameter: block')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['block'] != null && (params['index'] == null)) {
+  if (params.block != null && (params.index == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, block, ...querystring } = params
+  let { method, body, index, block, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + encodeURIComponent(index) + '/' + '_block' + '/' + encodeURIComponent(block)
 
@@ -71,10 +71,10 @@ IndicesApi.prototype.addBlock = function indicesAddBlockApi (params, options, ca
 IndicesApi.prototype.analyze = function indicesAnalyzeApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_analyze'
@@ -97,10 +97,10 @@ IndicesApi.prototype.analyze = function indicesAnalyzeApi (params, options, call
 IndicesApi.prototype.clearCache = function indicesClearCacheApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_cache' + '/' + 'clear'
@@ -124,25 +124,25 @@ IndicesApi.prototype.clone = function indicesCloneApi (params, options, callback
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['target'] == null) {
+  if (params.target == null) {
     const err = new this[kConfigurationError]('Missing required parameter: target')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['target'] != null && (params['index'] == null)) {
+  if (params.target != null && (params.index == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, target, ...querystring } = params
+  let { method, body, index, target, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + encodeURIComponent(index) + '/' + '_clone' + '/' + encodeURIComponent(target)
 
@@ -161,15 +161,15 @@ IndicesApi.prototype.close = function indicesCloseApi (params, options, callback
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_close'
 
@@ -188,15 +188,15 @@ IndicesApi.prototype.create = function indicesCreateApi (params, options, callba
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + encodeURIComponent(index)
 
@@ -215,15 +215,15 @@ IndicesApi.prototype.delete = function indicesDeleteApi (params, options, callba
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + encodeURIComponent(index)
 
@@ -242,25 +242,25 @@ IndicesApi.prototype.deleteAlias = function indicesDeleteAliasApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['name'] != null && (params['index'] == null)) {
+  if (params.name != null && (params.index == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, name, ...querystring } = params
+  let { method, body, index, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null && (name) != null) {
     if (method == null) method = 'DELETE'
     path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
@@ -284,15 +284,15 @@ IndicesApi.prototype.deleteIndexTemplate = function indicesDeleteIndexTemplateAp
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_index_template' + '/' + encodeURIComponent(name)
 
@@ -311,15 +311,15 @@ IndicesApi.prototype.deleteTemplate = function indicesDeleteTemplateApi (params,
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_template' + '/' + encodeURIComponent(name)
 
@@ -338,15 +338,15 @@ IndicesApi.prototype.exists = function indicesExistsApi (params, options, callba
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'HEAD'
   path = '/' + encodeURIComponent(index)
 
@@ -365,15 +365,15 @@ IndicesApi.prototype.existsAlias = function indicesExistsAliasApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, index, ...querystring } = params
+  let { method, body, name, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null && (name) != null) {
     if (method == null) method = 'HEAD'
     path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
@@ -397,15 +397,15 @@ IndicesApi.prototype.existsIndexTemplate = function indicesExistsIndexTemplateAp
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'HEAD'
   path = '/' + '_index_template' + '/' + encodeURIComponent(name)
 
@@ -424,15 +424,15 @@ IndicesApi.prototype.existsTemplate = function indicesExistsTemplateApi (params,
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'HEAD'
   path = '/' + '_template' + '/' + encodeURIComponent(name)
 
@@ -451,25 +451,25 @@ IndicesApi.prototype.existsType = function indicesExistsTypeApi (params, options
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['type'] == null) {
+  if (params.type == null) {
     const err = new this[kConfigurationError]('Missing required parameter: type')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['type'] != null && (params['index'] == null)) {
+  if (params.type != null && (params.index == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, type, ...querystring } = params
+  let { method, body, index, type, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'HEAD'
   path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type)
 
@@ -487,10 +487,10 @@ IndicesApi.prototype.existsType = function indicesExistsTypeApi (params, options
 IndicesApi.prototype.flush = function indicesFlushApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_flush'
@@ -513,10 +513,10 @@ IndicesApi.prototype.flush = function indicesFlushApi (params, options, callback
 IndicesApi.prototype.forcemerge = function indicesForcemergeApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_forcemerge'
@@ -540,15 +540,15 @@ IndicesApi.prototype.get = function indicesGetApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + encodeURIComponent(index)
 
@@ -566,10 +566,10 @@ IndicesApi.prototype.get = function indicesGetApi (params, options, callback) {
 IndicesApi.prototype.getAlias = function indicesGetAliasApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, index, ...querystring } = params
+  let { method, body, name, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null && (name) != null) {
     if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
@@ -599,15 +599,15 @@ IndicesApi.prototype.getFieldMapping = function indicesGetFieldMappingApi (param
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['fields'] == null) {
+  if (params.fields == null) {
     const err = new this[kConfigurationError]('Missing required parameter: fields')
     return handleError(err, callback)
   }
 
-  var { method, body, fields, index, ...querystring } = params
+  let { method, body, fields, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null && (fields) != null) {
     if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + 'field' + '/' + encodeURIComponent(fields)
@@ -630,10 +630,10 @@ IndicesApi.prototype.getFieldMapping = function indicesGetFieldMappingApi (param
 IndicesApi.prototype.getIndexTemplate = function indicesGetIndexTemplateApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_index_template' + '/' + encodeURIComponent(name)
@@ -656,10 +656,10 @@ IndicesApi.prototype.getIndexTemplate = function indicesGetIndexTemplateApi (par
 IndicesApi.prototype.getMapping = function indicesGetMappingApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_mapping'
@@ -682,10 +682,10 @@ IndicesApi.prototype.getMapping = function indicesGetMappingApi (params, options
 IndicesApi.prototype.getSettings = function indicesGetSettingsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, name, ...querystring } = params
+  let { method, body, index, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null && (name) != null) {
     if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_settings' + '/' + encodeURIComponent(name)
@@ -714,10 +714,10 @@ IndicesApi.prototype.getSettings = function indicesGetSettingsApi (params, optio
 IndicesApi.prototype.getTemplate = function indicesGetTemplateApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_template' + '/' + encodeURIComponent(name)
@@ -741,15 +741,15 @@ IndicesApi.prototype.open = function indicesOpenApi (params, options, callback) 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_open'
 
@@ -768,25 +768,25 @@ IndicesApi.prototype.putAlias = function indicesPutAliasApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['name'] != null && (params['index'] == null)) {
+  if (params.name != null && (params.index == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, name, ...querystring } = params
+  let { method, body, index, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null && (name) != null) {
     if (method == null) method = 'PUT'
     path = '/' + encodeURIComponent(index) + '/' + '_alias' + '/' + encodeURIComponent(name)
@@ -810,19 +810,19 @@ IndicesApi.prototype.putIndexTemplate = function indicesPutIndexTemplateApi (par
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_index_template' + '/' + encodeURIComponent(name)
 
@@ -841,19 +841,19 @@ IndicesApi.prototype.putMapping = function indicesPutMappingApi (params, options
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + encodeURIComponent(index) + '/' + '_mapping'
 
@@ -872,15 +872,15 @@ IndicesApi.prototype.putSettings = function indicesPutSettingsApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'PUT'
     path = '/' + encodeURIComponent(index) + '/' + '_settings'
@@ -904,19 +904,19 @@ IndicesApi.prototype.putTemplate = function indicesPutTemplateApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_template' + '/' + encodeURIComponent(name)
 
@@ -934,10 +934,10 @@ IndicesApi.prototype.putTemplate = function indicesPutTemplateApi (params, optio
 IndicesApi.prototype.recovery = function indicesRecoveryApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_recovery'
@@ -960,10 +960,10 @@ IndicesApi.prototype.recovery = function indicesRecoveryApi (params, options, ca
 IndicesApi.prototype.refresh = function indicesRefreshApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_refresh'
@@ -987,15 +987,15 @@ IndicesApi.prototype.resolveIndex = function indicesResolveIndexApi (params, opt
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_resolve' + '/' + 'index' + '/' + encodeURIComponent(name)
 
@@ -1014,21 +1014,21 @@ IndicesApi.prototype.rollover = function indicesRolloverApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['alias'] == null) {
+  if (params.alias == null) {
     const err = new this[kConfigurationError]('Missing required parameter: alias')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['new_index'] != null || params['newIndex'] != null) && (params['alias'] == null)) {
+  if ((params.new_index != null || params.newIndex != null) && (params.alias == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: alias')
     return handleError(err, callback)
   }
 
-  var { method, body, alias, newIndex, new_index, ...querystring } = params
+  let { method, body, alias, newIndex, new_index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((alias) != null && (new_index || newIndex) != null) {
     if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(alias) + '/' + '_rollover' + '/' + encodeURIComponent(new_index || newIndex)
@@ -1051,10 +1051,10 @@ IndicesApi.prototype.rollover = function indicesRolloverApi (params, options, ca
 IndicesApi.prototype.segments = function indicesSegmentsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_segments'
@@ -1077,10 +1077,10 @@ IndicesApi.prototype.segments = function indicesSegmentsApi (params, options, ca
 IndicesApi.prototype.shardStores = function indicesShardStoresApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_shard_stores'
@@ -1104,25 +1104,25 @@ IndicesApi.prototype.shrink = function indicesShrinkApi (params, options, callba
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['target'] == null) {
+  if (params.target == null) {
     const err = new this[kConfigurationError]('Missing required parameter: target')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['target'] != null && (params['index'] == null)) {
+  if (params.target != null && (params.index == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, target, ...querystring } = params
+  let { method, body, index, target, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + encodeURIComponent(index) + '/' + '_shrink' + '/' + encodeURIComponent(target)
 
@@ -1141,15 +1141,15 @@ IndicesApi.prototype.simulateIndexTemplate = function indicesSimulateIndexTempla
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_index_template' + '/' + '_simulate_index' + '/' + encodeURIComponent(name)
 
@@ -1167,10 +1167,10 @@ IndicesApi.prototype.simulateIndexTemplate = function indicesSimulateIndexTempla
 IndicesApi.prototype.simulateTemplate = function indicesSimulateTemplateApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'POST'
     path = '/' + '_index_template' + '/' + '_simulate' + '/' + encodeURIComponent(name)
@@ -1194,25 +1194,25 @@ IndicesApi.prototype.split = function indicesSplitApi (params, options, callback
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['target'] == null) {
+  if (params.target == null) {
     const err = new this[kConfigurationError]('Missing required parameter: target')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['target'] != null && (params['index'] == null)) {
+  if (params.target != null && (params.index == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, target, ...querystring } = params
+  let { method, body, index, target, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + encodeURIComponent(index) + '/' + '_split' + '/' + encodeURIComponent(target)
 
@@ -1230,10 +1230,10 @@ IndicesApi.prototype.split = function indicesSplitApi (params, options, callback
 IndicesApi.prototype.stats = function indicesStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, metric, index, ...querystring } = params
+  let { method, body, metric, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null && (metric) != null) {
     if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_stats' + '/' + encodeURIComponent(metric)
@@ -1263,15 +1263,15 @@ IndicesApi.prototype.updateAliases = function indicesUpdateAliasesApi (params, o
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_aliases'
 
@@ -1290,15 +1290,15 @@ IndicesApi.prototype.validateQuery = function indicesValidateQueryApi (params, o
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required url components
-  if (params['type'] != null && (params['index'] == null)) {
+  if (params.type != null && (params.index == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, type, ...querystring } = params
+  let { method, body, index, type, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null && (type) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_validate' + '/' + 'query'
@@ -1325,15 +1325,15 @@ IndicesApi.prototype.createDataStream = function indicesCreateDataStreamApi (par
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
 
@@ -1351,10 +1351,10 @@ IndicesApi.prototype.createDataStream = function indicesCreateDataStreamApi (par
 IndicesApi.prototype.dataStreamsStats = function indicesDataStreamsStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_data_stream' + '/' + encodeURIComponent(name) + '/' + '_stats'
@@ -1378,15 +1378,15 @@ IndicesApi.prototype.deleteDataStream = function indicesDeleteDataStreamApi (par
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
 
@@ -1405,15 +1405,15 @@ IndicesApi.prototype.freeze = function indicesFreezeApi (params, options, callba
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_freeze'
 
@@ -1431,10 +1431,10 @@ IndicesApi.prototype.freeze = function indicesFreezeApi (params, options, callba
 IndicesApi.prototype.getDataStream = function indicesGetDataStreamApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
@@ -1458,15 +1458,15 @@ IndicesApi.prototype.migrateToDataStream = function indicesMigrateToDataStreamAp
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_data_stream' + '/' + '_migrate' + '/' + encodeURIComponent(name)
 
@@ -1485,15 +1485,15 @@ IndicesApi.prototype.promoteDataStream = function indicesPromoteDataStreamApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_data_stream' + '/' + '_promote' + '/' + encodeURIComponent(name)
 
@@ -1512,15 +1512,15 @@ IndicesApi.prototype.reloadSearchAnalyzers = function indicesReloadSearchAnalyze
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = body == null ? 'GET' : 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_reload_search_analyzers'
 
@@ -1539,15 +1539,15 @@ IndicesApi.prototype.unfreeze = function indicesUnfreezeApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_unfreeze'
 

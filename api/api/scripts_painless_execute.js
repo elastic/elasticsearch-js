@@ -29,10 +29,10 @@ const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
 function scriptsPainlessExecuteApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = body == null ? 'GET' : 'POST'
   path = '/' + '_scripts' + '/' + 'painless' + '/' + '_execute'
 
