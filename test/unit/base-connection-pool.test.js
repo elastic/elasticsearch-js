@@ -63,7 +63,7 @@ test('API', t => {
   t.test('markDead', t => {
     const pool = new BaseConnectionPool({ Connection, sniffEnabled: true })
     const href = 'http://localhost:9200/'
-    var connection = pool.addConnection(href)
+    let connection = pool.addConnection(href)
     t.same(pool.markDead(connection), pool)
     connection = pool.connections.find(c => c.id === href)
     t.strictEqual(connection.status, Connection.statuses.ALIVE)
@@ -73,7 +73,7 @@ test('API', t => {
   t.test('markAlive', t => {
     const pool = new BaseConnectionPool({ Connection, sniffEnabled: true })
     const href = 'http://localhost:9200/'
-    var connection = pool.addConnection(href)
+    let connection = pool.addConnection(href)
     t.same(pool.markAlive(connection), pool)
     connection = pool.connections.find(c => c.id === href)
     t.strictEqual(connection.status, Connection.statuses.ALIVE)
@@ -96,7 +96,7 @@ test('API', t => {
   t.test('removeConnection', t => {
     const pool = new BaseConnectionPool({ Connection })
     const href = 'http://localhost:9200/'
-    var connection = pool.addConnection(href)
+    const connection = pool.addConnection(href)
     pool.removeConnection(connection)
     t.strictEqual(pool.size, 0)
     t.end()

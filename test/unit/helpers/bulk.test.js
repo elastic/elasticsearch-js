@@ -23,7 +23,6 @@ const { createReadStream } = require('fs')
 const { join } = require('path')
 const split = require('split2')
 const FakeTimers = require('@sinonjs/fake-timers')
-const semver = require('semver')
 const { test } = require('tap')
 const { Client, errors } = require('../../../')
 const { buildServer, connection } = require('../../utils')
@@ -308,10 +307,6 @@ test('bulk index', t => {
     })
 
     t.test('Should perform a bulk request (retry)', async t => {
-      if (semver.lt(process.versions.node, '10.0.0')) {
-        t.skip('This test will not pass on Node v8')
-        return
-      }
       async function handler (req, res) {
         t.strictEqual(req.url, '/_bulk')
         t.match(req.headers, { 'content-type': 'application/x-ndjson' })
@@ -430,10 +425,6 @@ test('bulk index', t => {
     })
 
     t.test('Should perform a bulk request (failure)', async t => {
-      if (semver.lt(process.versions.node, '10.0.0')) {
-        t.skip('This test will not pass on Node v8')
-        return
-      }
       async function handler (req, res) {
         t.strictEqual(req.url, '/_bulk')
         t.match(req.headers, { 'content-type': 'application/x-ndjson' })
@@ -575,10 +566,6 @@ test('bulk index', t => {
     })
 
     t.test('Should abort a bulk request', async t => {
-      if (semver.lt(process.versions.node, '10.0.0')) {
-        t.skip('This test will not pass on Node v8')
-        return
-      }
       async function handler (req, res) {
         t.strictEqual(req.url, '/_bulk')
         t.match(req.headers, { 'content-type': 'application/x-ndjson' })
@@ -667,7 +654,7 @@ test('bulk index', t => {
         })
         .catch(err => {
           t.true(err instanceof errors.ConfigurationError)
-          t.is(err.message, `Bulk helper invalid action: 'foo'`)
+          t.is(err.message, 'Bulk helper invalid action: \'foo\'')
         })
     })
 

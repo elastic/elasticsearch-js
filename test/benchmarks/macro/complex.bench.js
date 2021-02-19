@@ -16,7 +16,7 @@ const { bench, beforeEach, afterEach } = require('../suite')({
   }
 })
 
-var stackoverflow = []
+let stackoverflow = []
 const stackoverflowPath = join(
   __dirname,
   'fixtures',
@@ -53,7 +53,7 @@ bench('Bulk index documents', {
   action: 'bulk'
 }, async b => {
   b.start()
-  for (var i = 0; i < stackoverflow.length; i++) {
+  for (let i = 0; i < stackoverflow.length; i++) {
     await b.client.bulk({ body: stackoverflow[i] })
   }
   b.end()
@@ -67,7 +67,7 @@ bench('Complex search request', {
   action: 'search'
 }, async b => {
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await b.client.search({
       index: INDEX,
       body: {
@@ -81,8 +81,8 @@ bench('Complex search request', {
 })
 
 function readSOfile () {
-  var i = 0
-  var stackoverflow = []
+  let i = 0
+  const stackoverflow = []
   return new Promise((resolve, reject) => {
     createReadStream(stackoverflowPath)
       .pipe(split(JSON.parse))

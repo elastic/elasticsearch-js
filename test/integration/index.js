@@ -179,8 +179,8 @@ async function start ({ client, isXPack }) {
     // to provide a better test log output
     .reduce((arr, file) => {
       const path = file.slice(file.indexOf('/rest-api-spec/test'), file.lastIndexOf('/'))
-      var inserted = false
-      for (var i = 0; i < arr.length; i++) {
+      let inserted = false
+      for (let i = 0; i < arr.length; i++) {
         if (arr[i][0].includes(path)) {
           inserted = true
           arr[i].push(file)
@@ -223,8 +223,8 @@ async function start ({ client, isXPack }) {
         .filter(Boolean)
 
       // get setup and teardown if present
-      var setupTest = null
-      var teardownTest = null
+      let setupTest = null
+      let teardownTest = null
       for (const test of tests) {
         if (test.setup) setupTest = test.setup
         if (test.teardown) teardownTest = test.teardown
@@ -299,14 +299,15 @@ function log (text) {
 }
 
 function now () {
-  var ts = process.hrtime()
+  const ts = process.hrtime()
   return (ts[0] * 1e3) + (ts[1] / 1e6)
 }
 
 function parse (data) {
   const schema = yaml.Schema.create(yaml.CORE_SCHEMA, [])
+  let doc
   try {
-    var doc = yaml.safeLoad(data, { schema })
+    doc = yaml.safeLoad(data, { schema })
   } catch (err) {
     console.error(err)
     return
@@ -329,8 +330,8 @@ function withSHA (sha) {
   })
 
   function _withSHA (callback) {
-    var fresh = false
-    var retry = 0
+    let fresh = false
+    let retry = 0
 
     if (!pathExist(esFolder)) {
       if (!createFolder(esFolder)) {
@@ -427,10 +428,10 @@ if (require.main === module) {
 }
 
 const shouldSkip = (isXPack, file, name) => {
-  var list = Object.keys(freeSkips)
-  for (var i = 0; i < list.length; i++) {
+  let list = Object.keys(freeSkips)
+  for (let i = 0; i < list.length; i++) {
     const freeTest = freeSkips[list[i]]
-    for (var j = 0; j < freeTest.length; j++) {
+    for (let j = 0; j < freeTest.length; j++) {
       if (file.endsWith(list[i]) && (name === freeTest[j] || freeTest[j] === '*')) {
         const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
         log(`Skipping test ${testName} because is blacklisted in the free test`)
@@ -441,9 +442,9 @@ const shouldSkip = (isXPack, file, name) => {
 
   if (file.includes('x-pack') || isXPack) {
     list = Object.keys(platinumBlackList)
-    for (i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
       const platTest = platinumBlackList[list[i]]
-      for (j = 0; j < platTest.length; j++) {
+      for (let j = 0; j < platTest.length; j++) {
         if (file.endsWith(list[i]) && (name === platTest[j] || platTest[j] === '*')) {
           const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
           log(`Skipping test ${testName} because is blacklisted in the platinum test`)

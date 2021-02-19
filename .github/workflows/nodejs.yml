@@ -40,31 +40,6 @@ jobs:
       run: |
         npm run test:types
 
-  test-node-v8:
-    name: Test
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        node-version: [8.x]
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Install
-      run: |
-        npm install
-
-    - name: Test
-      run: |
-        npm run test:node8
-
   helpers-integration-test:
     name: Helpers integration test
     runs-on: ubuntu-latest
