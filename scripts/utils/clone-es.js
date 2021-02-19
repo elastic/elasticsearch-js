@@ -42,8 +42,8 @@ function cloneAndCheckout (opts, callback) {
    * @param {function} callback
    */
   function withTag (tag, callback) {
-    var fresh = false
-    var retry = 0
+    let fresh = false
+    let retry = 0
 
     if (!pathExist(esFolder)) {
       if (!createFolder(esFolder)) {

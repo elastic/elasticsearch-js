@@ -28,7 +28,7 @@ const codeExamples = readdirSync(join(__dirname, '..', '..', 'docs', 'examples')
   .filter(api => api !== 'index')
 
 function generateDocs (common, spec) {
-  var doc = dedent`
+  let doc = dedent`
   [[api-reference]]
 
   ////////
@@ -110,7 +110,7 @@ function generateDocs (common, spec) {
 }
 
 function commonParameters (spec) {
-  var doc = dedent`
+  let doc = dedent`
   [discrete]
   === Common parameters
   Parameters that are accepted by all API endpoints.
@@ -196,7 +196,7 @@ function generateApiDoc (spec) {
 
   const codeParameters = params
     .reduce((acc, val) => {
-      var code = `${val.name}: ${val.type},`
+      const code = `${val.name}: ${val.type},`
       acc += acc === ''
         ? code
         : '\n    ' + code
@@ -210,7 +210,7 @@ function generateApiDoc (spec) {
     ? ''
     : `*Stability:* ${spec[name].stability}`
 
-  var doc = dedent`
+  let doc = dedent`
   [discrete]
   === ${camelify(name)}
   ${stability}

@@ -23,7 +23,7 @@ const debug = require('debug')('elasticsearch-test')
 const workq = require('workq')
 const buildServer = require('./buildServer')
 
-var id = 0
+let id = 0
 function buildCluster (options, callback) {
   const clusterId = id++
   debug(`Booting cluster '${clusterId}'`)
@@ -37,7 +37,7 @@ function buildCluster (options, callback) {
   const sniffResult = { nodes: {} }
 
   options.numberOfNodes = options.numberOfNodes || 4
-  for (var i = 0; i < options.numberOfNodes; i++) {
+  for (let i = 0; i < options.numberOfNodes; i++) {
     q.add(bootNode, { id: `node${i}` })
   }
 

@@ -208,7 +208,7 @@ function generateSingleApi (version, spec, common) {
   // get the required parts from the url
   // if the url has at least one static path,
   // then there are not required parts of the url
-  var allParts = []
+  let allParts = []
   for (const path of paths) {
     if (path.parts) {
       allParts.push(Object.keys(path.parts))
@@ -252,10 +252,10 @@ function generateSingleApi (version, spec, common) {
 
     ${genUrlValidation(paths, api)}
 
-    var { ${genQueryBlacklist(false)}, ...querystring } = params
+    let { ${genQueryBlacklist(false)}, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-    var path = ''
+    let path = ''
     ${buildPath(api)}
 
     // build request object
@@ -291,7 +291,7 @@ function generateSingleApi (version, spec, common) {
     return code.join('\n        ')
 
     function _genRequiredCheck (param) {
-      var camelCased = param[0] === '_'
+      const camelCased = param[0] === '_'
         ? '_' + param.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
         : param.replace(/_([a-z])/g, k => k[1].toUpperCase())
 
@@ -388,7 +388,7 @@ function generateSingleApi (version, spec, common) {
       return path.length > 0 ? ('\'/\' + ' + path) : '\'/\''
     }
 
-    var hasStaticPath = false
+    let hasStaticPath = false
     const sortedPaths = paths
       // some legacy API have mutliple statis paths
       // this filter removes them
@@ -403,8 +403,8 @@ function generateSingleApi (version, spec, common) {
       // sort by number of parameters (desc)
       .sort((a, b) => Object.keys(b.parts || {}).length - Object.keys(a.parts || {}).length)
 
-    var code = ''
-    for (var i = 0; i < sortedPaths.length; i++) {
+    let code = ''
+    for (let i = 0; i < sortedPaths.length; i++) {
       const { path, methods } = sortedPaths[i]
       if (sortedPaths.length === 1) {
         code += `if (method == null) method = ${generatePickMethod(methods)}
@@ -492,13 +492,13 @@ function genUrlValidation (paths, api) {
     .map(s => s.slice(1, -1))
     .reverse()
 
-  var code = ''
+  let code = ''
 
   const len = chunks.length
   chunks.forEach((chunk, index) => {
     if (index === len - 1) return
-    var params = []
-    var camelCased = chunk[0] === '_'
+    const params = []
+    let camelCased = chunk[0] === '_'
       ? '_' + chunk.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
       : chunk.replace(/_([a-z])/g, k => k[1].toUpperCase())
 
@@ -507,7 +507,7 @@ function genUrlValidation (paths, api) {
     } else {
       code += `${index ? '} else ' : ''}if ((params['${chunk}'] != null || params['${camelCased}'] != null) && (`
     }
-    for (var i = index + 1; i < len; i++) {
+    for (let i = index + 1; i < len; i++) {
       params.push(chunks[i])
       // url parts can be declared in camelCase fashion
       camelCased = chunks[i][0] === '_'
@@ -543,7 +543,7 @@ function generateDocumentation ({ documentation }, op) {
 
   if (documentation == null) return ''
 
-  var doc = '/**\n'
+  let doc = '/**\n'
   doc += `     * Perform a ${op} request\n`
   if (documentation.description) {
     doc += `     * ${documentation.description.replace(/\u00A0/g, ' ')}\n`

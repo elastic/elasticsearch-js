@@ -51,7 +51,7 @@ async function run () {
 
   const data = body.rows.map(row => {
     const obj = {}
-    for (var i = 0; i < row.length; i++) {
+    for (let i = 0; i < row.length; i++) {
       obj[body.columns[i].name] = row[i]
     }
     return obj

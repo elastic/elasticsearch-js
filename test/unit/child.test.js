@@ -29,7 +29,7 @@ const {
 test('Should create a child client (headers check)', t => {
   t.plan(4)
 
-  var count = 0
+  let count = 0
   function handler (req, res) {
     if (count++ === 0) {
       t.match(req.headers, { 'x-foo': 'bar' })
@@ -216,12 +216,12 @@ test('Should create a child client (generateRequestId check)', t => {
   t.plan(6)
 
   function generateRequestId1 () {
-    var id = 0
+    let id = 0
     return () => `trace-1-${id++}`
   }
 
   function generateRequestId2 () {
-    var id = 0
+    let id = 0
     return () => `trace-2-${id++}`
   }
 
@@ -235,7 +235,7 @@ test('Should create a child client (generateRequestId check)', t => {
     generateRequestId: generateRequestId2()
   })
 
-  var count = 0
+  let count = 0
   client.on('request', (err, { meta }) => {
     t.error(err)
     t.strictEqual(
@@ -266,7 +266,7 @@ test('Should create a child client (name check)', t => {
   t.strictEqual(client.name, 'parent')
   t.strictEqual(child.name, 'child')
 
-  var count = 0
+  let count = 0
   client.on('request', (err, { meta }) => {
     t.error(err)
     t.strictEqual(
@@ -284,7 +284,7 @@ test('Should create a child client (name check)', t => {
 test('Should create a child client (auth check)', t => {
   t.plan(4)
 
-  var count = 0
+  let count = 0
   function handler (req, res) {
     if (count++ === 0) {
       t.match(req.headers, { authorization: 'Basic Zm9vOmJhcg==' })

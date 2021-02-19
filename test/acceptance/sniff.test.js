@@ -59,7 +59,7 @@ test('Should update the connection pool', t => {
       t.strictEqual(hosts.length, 4)
 
       const ids = Object.keys(nodes)
-      for (var i = 0; i < hosts.length; i++) {
+      for (let i = 0; i < hosts.length; i++) {
         const id = ids[i]
         // the first node will be an update of the existing one
         if (id === 'node0') {
@@ -118,7 +118,7 @@ test('Should handle hostnames in publish_address', t => {
       t.error(err)
       t.strictEqual(hosts.length, 4)
 
-      for (var i = 0; i < hosts.length; i++) {
+      for (let i = 0; i < hosts.length; i++) {
         // the first node will be an update of the existing one
         t.strictEqual(hosts[i].url.hostname, 'localhost')
       }

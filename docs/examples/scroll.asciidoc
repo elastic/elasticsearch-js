@@ -124,7 +124,7 @@ const client = new Client({ node: 'http://localhost:9200' })
 
 // Scroll utility
 async function * scrollSearch (params) {
-  var response = await client.search(params)
+  let response = await client.search(params)
 
   while (true) {
     const sourceHits = response.body.hits.hits
