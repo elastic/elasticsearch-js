@@ -94,11 +94,6 @@
   "tsd": {
     "directory": "test/types"
   },
-  "standard": {
-    "ignore": [
-      "/api"
-    ]
-  },
   "tap": {
     "esm": false,
     "ts": false,
