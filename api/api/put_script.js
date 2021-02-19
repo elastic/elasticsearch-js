@@ -30,25 +30,25 @@ function putScriptApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['context'] != null && (params['id'] == null)) {
+  if (params.context != null && (params.id == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, context, ...querystring } = params
+  let { method, body, id, context, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((id) != null && (context) != null) {
     if (method == null) method = 'PUT'
     path = '/' + '_scripts' + '/' + encodeURIComponent(id) + '/' + encodeURIComponent(context)

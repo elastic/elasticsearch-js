@@ -23,7 +23,7 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['allow_no_match', 'allow_no_jobs', 'force', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'requests_per_second', 'allow_no_forecasts', 'wait_for_completion', 'calc_interim', 'start', 'end', 'advance_time', 'skip_time', 'duration', 'expires_in', 'max_model_memory', 'expand', 'exclude_interim', 'from', 'size', 'anomaly_score', 'sort', 'desc', 'job_id', 'partition_field_value', 'exclude_generated', 'verbose', 'allow_no_datafeeds', 'influencer_score', 'top_n', 'bucket_span', 'overall_score', 'record_score', 'include', 'include_model_definition', 'decompress_definition', 'tags', 'reset_start', 'reset_end', 'ignore_unavailable', 'allow_no_indices', 'ignore_throttled', 'expand_wildcards', 'delete_intervening_results', 'enabled']
+const acceptedQuerystring = ['allow_no_match', 'allow_no_jobs', 'force', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'requests_per_second', 'allow_no_forecasts', 'wait_for_completion', 'calc_interim', 'start', 'end', 'advance_time', 'skip_time', 'duration', 'expires_in', 'max_model_memory', 'expand', 'exclude_interim', 'from', 'size', 'anomaly_score', 'sort', 'desc', 'job_id', 'partition_field_value', 'exclude_generated', 'verbose', 'allow_no_datafeeds', 'influencer_score', 'top_n', 'bucket_span', 'overall_score', 'record_score', 'include', 'include_model_definition', 'decompress_definition', 'tags', 'reset_start', 'reset_end', 'ignore_unavailable', 'allow_no_indices', 'ignore_throttled', 'expand_wildcards', 'reassign', 'delete_intervening_results', 'enabled']
 const snakeCase = { allowNoMatch: 'allow_no_match', allowNoJobs: 'allow_no_jobs', errorTrace: 'error_trace', filterPath: 'filter_path', requestsPerSecond: 'requests_per_second', allowNoForecasts: 'allow_no_forecasts', waitForCompletion: 'wait_for_completion', calcInterim: 'calc_interim', advanceTime: 'advance_time', skipTime: 'skip_time', expiresIn: 'expires_in', maxModelMemory: 'max_model_memory', excludeInterim: 'exclude_interim', anomalyScore: 'anomaly_score', jobId: 'job_id', partitionFieldValue: 'partition_field_value', excludeGenerated: 'exclude_generated', allowNoDatafeeds: 'allow_no_datafeeds', influencerScore: 'influencer_score', topN: 'top_n', bucketSpan: 'bucket_span', overallScore: 'overall_score', recordScore: 'record_score', includeModelDefinition: 'include_model_definition', decompressDefinition: 'decompress_definition', resetStart: 'reset_start', resetEnd: 'reset_end', ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', ignoreThrottled: 'ignore_throttled', expandWildcards: 'expand_wildcards', deleteInterveningResults: 'delete_intervening_results' }
 
 function MlApi (transport, ConfigurationError) {
@@ -35,15 +35,15 @@ MlApi.prototype.closeJob = function mlCloseJobApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_close'
 
@@ -62,15 +62,15 @@ MlApi.prototype.deleteCalendar = function mlDeleteCalendarApi (params, options, 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['calendar_id'] == null && params['calendarId'] == null) {
+  if (params.calendar_id == null && params.calendarId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
 
-  var { method, body, calendarId, calendar_id, ...querystring } = params
+  let { method, body, calendarId, calendar_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId)
 
@@ -89,25 +89,25 @@ MlApi.prototype.deleteCalendarEvent = function mlDeleteCalendarEventApi (params,
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['calendar_id'] == null && params['calendarId'] == null) {
+  if (params.calendar_id == null && params.calendarId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
-  if (params['event_id'] == null && params['eventId'] == null) {
+  if (params.event_id == null && params.eventId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: event_id or eventId')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['event_id'] != null || params['eventId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
+  if ((params.event_id != null || params.eventId != null) && ((params.calendar_id == null && params.calendarId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: calendar_id')
     return handleError(err, callback)
   }
 
-  var { method, body, calendarId, calendar_id, eventId, event_id, ...querystring } = params
+  let { method, body, calendarId, calendar_id, eventId, event_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'events' + '/' + encodeURIComponent(event_id || eventId)
 
@@ -126,25 +126,25 @@ MlApi.prototype.deleteCalendarJob = function mlDeleteCalendarJobApi (params, opt
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['calendar_id'] == null && params['calendarId'] == null) {
+  if (params.calendar_id == null && params.calendarId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['job_id'] != null || params['jobId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
+  if ((params.job_id != null || params.jobId != null) && ((params.calendar_id == null && params.calendarId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: calendar_id')
     return handleError(err, callback)
   }
 
-  var { method, body, calendarId, calendar_id, jobId, job_id, ...querystring } = params
+  let { method, body, calendarId, calendar_id, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'jobs' + '/' + encodeURIComponent(job_id || jobId)
 
@@ -163,15 +163,15 @@ MlApi.prototype.deleteDataFrameAnalytics = function mlDeleteDataFrameAnalyticsAp
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
 
@@ -190,15 +190,15 @@ MlApi.prototype.deleteDatafeed = function mlDeleteDatafeedApi (params, options, 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['datafeed_id'] == null && params['datafeedId'] == null) {
+  if (params.datafeed_id == null && params.datafeedId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
 
-  var { method, body, datafeedId, datafeed_id, ...querystring } = params
+  let { method, body, datafeedId, datafeed_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId)
 
@@ -216,10 +216,10 @@ MlApi.prototype.deleteDatafeed = function mlDeleteDatafeedApi (params, options, 
 MlApi.prototype.deleteExpiredData = function mlDeleteExpiredDataApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((job_id || jobId) != null) {
     if (method == null) method = 'DELETE'
     path = '/' + '_ml' + '/' + '_delete_expired_data' + '/' + encodeURIComponent(job_id || jobId)
@@ -243,15 +243,15 @@ MlApi.prototype.deleteFilter = function mlDeleteFilterApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['filter_id'] == null && params['filterId'] == null) {
+  if (params.filter_id == null && params.filterId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: filter_id or filterId')
     return handleError(err, callback)
   }
 
-  var { method, body, filterId, filter_id, ...querystring } = params
+  let { method, body, filterId, filter_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId)
 
@@ -270,21 +270,21 @@ MlApi.prototype.deleteForecast = function mlDeleteForecastApi (params, options, 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['forecast_id'] != null || params['forecastId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
+  if ((params.forecast_id != null || params.forecastId != null) && ((params.job_id == null && params.jobId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, forecastId, forecast_id, ...querystring } = params
+  let { method, body, jobId, job_id, forecastId, forecast_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((job_id || jobId) != null && (forecast_id || forecastId) != null) {
     if (method == null) method = 'DELETE'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast' + '/' + encodeURIComponent(forecast_id || forecastId)
@@ -308,15 +308,15 @@ MlApi.prototype.deleteJob = function mlDeleteJobApi (params, options, callback) 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
 
@@ -335,25 +335,25 @@ MlApi.prototype.deleteModelSnapshot = function mlDeleteModelSnapshotApi (params,
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
-  if (params['snapshot_id'] == null && params['snapshotId'] == null) {
+  if (params.snapshot_id == null && params.snapshotId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: snapshot_id or snapshotId')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
+  if ((params.snapshot_id != null || params.snapshotId != null) && ((params.job_id == null && params.jobId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
+  let { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId)
 
@@ -372,15 +372,15 @@ MlApi.prototype.deleteTrainedModel = function mlDeleteTrainedModelApi (params, o
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['model_id'] == null && params['modelId'] == null) {
+  if (params.model_id == null && params.modelId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: model_id or modelId')
     return handleError(err, callback)
   }
 
-  var { method, body, modelId, model_id, ...querystring } = params
+  let { method, body, modelId, model_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
 
@@ -399,15 +399,15 @@ MlApi.prototype.estimateModelMemory = function mlEstimateModelMemoryApi (params,
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + '_estimate_model_memory'
 
@@ -426,15 +426,15 @@ MlApi.prototype.evaluateDataFrame = function mlEvaluateDataFrameApi (params, opt
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'data_frame' + '/' + '_evaluate'
 
@@ -452,10 +452,10 @@ MlApi.prototype.evaluateDataFrame = function mlEvaluateDataFrameApi (params, opt
 MlApi.prototype.explainDataFrameAnalytics = function mlExplainDataFrameAnalyticsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((id) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_explain'
@@ -479,15 +479,15 @@ MlApi.prototype.flushJob = function mlFlushJobApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_flush'
 
@@ -506,15 +506,15 @@ MlApi.prototype.forecast = function mlForecastApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_forecast'
 
@@ -533,21 +533,21 @@ MlApi.prototype.getBuckets = function mlGetBucketsApi (params, options, callback
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['timestamp'] != null && ((params['job_id'] == null && params['jobId'] == null))) {
+  if (params.timestamp != null && ((params.job_id == null && params.jobId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, timestamp, ...querystring } = params
+  let { method, body, jobId, job_id, timestamp, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((job_id || jobId) != null && (timestamp) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'buckets' + '/' + encodeURIComponent(timestamp)
@@ -571,15 +571,15 @@ MlApi.prototype.getCalendarEvents = function mlGetCalendarEventsApi (params, opt
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['calendar_id'] == null && params['calendarId'] == null) {
+  if (params.calendar_id == null && params.calendarId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
 
-  var { method, body, calendarId, calendar_id, ...querystring } = params
+  let { method, body, calendarId, calendar_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'events'
 
@@ -597,10 +597,10 @@ MlApi.prototype.getCalendarEvents = function mlGetCalendarEventsApi (params, opt
 MlApi.prototype.getCalendars = function mlGetCalendarsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, calendarId, calendar_id, ...querystring } = params
+  let { method, body, calendarId, calendar_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((calendar_id || calendarId) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId)
@@ -624,21 +624,21 @@ MlApi.prototype.getCategories = function mlGetCategoriesApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['category_id'] != null || params['categoryId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
+  if ((params.category_id != null || params.categoryId != null) && ((params.job_id == null && params.jobId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, categoryId, category_id, ...querystring } = params
+  let { method, body, jobId, job_id, categoryId, category_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((job_id || jobId) != null && (category_id || categoryId) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'categories' + '/' + encodeURIComponent(category_id || categoryId)
@@ -661,10 +661,10 @@ MlApi.prototype.getCategories = function mlGetCategoriesApi (params, options, ca
 MlApi.prototype.getDataFrameAnalytics = function mlGetDataFrameAnalyticsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((id) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
@@ -687,10 +687,10 @@ MlApi.prototype.getDataFrameAnalytics = function mlGetDataFrameAnalyticsApi (par
 MlApi.prototype.getDataFrameAnalyticsStats = function mlGetDataFrameAnalyticsStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((id) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_stats'
@@ -713,10 +713,10 @@ MlApi.prototype.getDataFrameAnalyticsStats = function mlGetDataFrameAnalyticsSta
 MlApi.prototype.getDatafeedStats = function mlGetDatafeedStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, datafeedId, datafeed_id, ...querystring } = params
+  let { method, body, datafeedId, datafeed_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((datafeed_id || datafeedId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_stats'
@@ -739,10 +739,10 @@ MlApi.prototype.getDatafeedStats = function mlGetDatafeedStatsApi (params, optio
 MlApi.prototype.getDatafeeds = function mlGetDatafeedsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, datafeedId, datafeed_id, ...querystring } = params
+  let { method, body, datafeedId, datafeed_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((datafeed_id || datafeedId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId)
@@ -765,10 +765,10 @@ MlApi.prototype.getDatafeeds = function mlGetDatafeedsApi (params, options, call
 MlApi.prototype.getFilters = function mlGetFiltersApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, filterId, filter_id, ...querystring } = params
+  let { method, body, filterId, filter_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((filter_id || filterId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId)
@@ -792,15 +792,15 @@ MlApi.prototype.getInfluencers = function mlGetInfluencersApi (params, options, 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = body == null ? 'GET' : 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'influencers'
 
@@ -818,10 +818,10 @@ MlApi.prototype.getInfluencers = function mlGetInfluencersApi (params, options, 
 MlApi.prototype.getJobStats = function mlGetJobStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((job_id || jobId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_stats'
@@ -844,10 +844,10 @@ MlApi.prototype.getJobStats = function mlGetJobStatsApi (params, options, callba
 MlApi.prototype.getJobs = function mlGetJobsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((job_id || jobId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
@@ -871,21 +871,21 @@ MlApi.prototype.getModelSnapshots = function mlGetModelSnapshotsApi (params, opt
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
+  if ((params.snapshot_id != null || params.snapshotId != null) && ((params.job_id == null && params.jobId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
+  let { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((job_id || jobId) != null && (snapshot_id || snapshotId) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId)
@@ -909,15 +909,15 @@ MlApi.prototype.getOverallBuckets = function mlGetOverallBucketsApi (params, opt
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = body == null ? 'GET' : 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'overall_buckets'
 
@@ -936,15 +936,15 @@ MlApi.prototype.getRecords = function mlGetRecordsApi (params, options, callback
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = body == null ? 'GET' : 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'results' + '/' + 'records'
 
@@ -962,10 +962,10 @@ MlApi.prototype.getRecords = function mlGetRecordsApi (params, options, callback
 MlApi.prototype.getTrainedModels = function mlGetTrainedModelsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, modelId, model_id, ...querystring } = params
+  let { method, body, modelId, model_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((model_id || modelId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
@@ -988,10 +988,10 @@ MlApi.prototype.getTrainedModels = function mlGetTrainedModelsApi (params, optio
 MlApi.prototype.getTrainedModelsStats = function mlGetTrainedModelsStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, modelId, model_id, ...querystring } = params
+  let { method, body, modelId, model_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((model_id || modelId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId) + '/' + '_stats'
@@ -1014,10 +1014,10 @@ MlApi.prototype.getTrainedModelsStats = function mlGetTrainedModelsStatsApi (par
 MlApi.prototype.info = function mlInfoApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_ml' + '/' + 'info'
 
@@ -1036,15 +1036,15 @@ MlApi.prototype.openJob = function mlOpenJobApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_open'
 
@@ -1063,19 +1063,19 @@ MlApi.prototype.postCalendarEvents = function mlPostCalendarEventsApi (params, o
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['calendar_id'] == null && params['calendarId'] == null) {
+  if (params.calendar_id == null && params.calendarId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, calendarId, calendar_id, ...querystring } = params
+  let { method, body, calendarId, calendar_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'events'
 
@@ -1094,19 +1094,19 @@ MlApi.prototype.postData = function mlPostDataApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_data'
 
@@ -1125,15 +1125,15 @@ MlApi.prototype.previewDatafeed = function mlPreviewDatafeedApi (params, options
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['datafeed_id'] == null && params['datafeedId'] == null) {
+  if (params.datafeed_id == null && params.datafeedId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
 
-  var { method, body, datafeedId, datafeed_id, ...querystring } = params
+  let { method, body, datafeedId, datafeed_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_preview'
 
@@ -1152,15 +1152,15 @@ MlApi.prototype.putCalendar = function mlPutCalendarApi (params, options, callba
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['calendar_id'] == null && params['calendarId'] == null) {
+  if (params.calendar_id == null && params.calendarId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
 
-  var { method, body, calendarId, calendar_id, ...querystring } = params
+  let { method, body, calendarId, calendar_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId)
 
@@ -1179,25 +1179,25 @@ MlApi.prototype.putCalendarJob = function mlPutCalendarJobApi (params, options, 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['calendar_id'] == null && params['calendarId'] == null) {
+  if (params.calendar_id == null && params.calendarId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: calendar_id or calendarId')
     return handleError(err, callback)
   }
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['job_id'] != null || params['jobId'] != null) && ((params['calendar_id'] == null && params['calendarId'] == null))) {
+  if ((params.job_id != null || params.jobId != null) && ((params.calendar_id == null && params.calendarId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: calendar_id')
     return handleError(err, callback)
   }
 
-  var { method, body, calendarId, calendar_id, jobId, job_id, ...querystring } = params
+  let { method, body, calendarId, calendar_id, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_ml' + '/' + 'calendars' + '/' + encodeURIComponent(calendar_id || calendarId) + '/' + 'jobs' + '/' + encodeURIComponent(job_id || jobId)
 
@@ -1216,19 +1216,19 @@ MlApi.prototype.putDataFrameAnalytics = function mlPutDataFrameAnalyticsApi (par
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
 
@@ -1247,19 +1247,19 @@ MlApi.prototype.putDatafeed = function mlPutDatafeedApi (params, options, callba
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['datafeed_id'] == null && params['datafeedId'] == null) {
+  if (params.datafeed_id == null && params.datafeedId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, datafeedId, datafeed_id, ...querystring } = params
+  let { method, body, datafeedId, datafeed_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId)
 
@@ -1278,19 +1278,19 @@ MlApi.prototype.putFilter = function mlPutFilterApi (params, options, callback) 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['filter_id'] == null && params['filterId'] == null) {
+  if (params.filter_id == null && params.filterId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: filter_id or filterId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, filterId, filter_id, ...querystring } = params
+  let { method, body, filterId, filter_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId)
 
@@ -1309,19 +1309,19 @@ MlApi.prototype.putJob = function mlPutJobApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
 
@@ -1340,21 +1340,58 @@ MlApi.prototype.putTrainedModel = function mlPutTrainedModelApi (params, options
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['model_id'] == null && params['modelId'] == null) {
+  if (params.model_id == null && params.modelId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: model_id or modelId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, modelId, model_id, ...querystring } = params
+  let { method, body, modelId, model_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+MlApi.prototype.putTrainedModelAlias = function mlPutTrainedModelAliasApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.model_alias == null && params.modelAlias == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: model_alias or modelAlias')
+    return handleError(err, callback)
+  }
+  if (params.model_id == null && params.modelId == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: model_id or modelId')
+    return handleError(err, callback)
+  }
+
+  // check required url components
+  if ((params.model_alias != null || params.modelAlias != null) && ((params.model_id == null && params.modelId == null))) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: model_id')
+    return handleError(err, callback)
+  }
+
+  let { method, body, modelAlias, model_alias, modelId, model_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'PUT'
+  path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId) + '/' + 'model_aliases' + '/' + encodeURIComponent(model_alias || modelAlias)
 
   // build request object
   const request = {
@@ -1371,25 +1408,25 @@ MlApi.prototype.revertModelSnapshot = function mlRevertModelSnapshotApi (params,
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
-  if (params['snapshot_id'] == null && params['snapshotId'] == null) {
+  if (params.snapshot_id == null && params.snapshotId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: snapshot_id or snapshotId')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
+  if ((params.snapshot_id != null || params.snapshotId != null) && ((params.job_id == null && params.jobId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
+  let { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId) + '/' + '_revert'
 
@@ -1407,10 +1444,10 @@ MlApi.prototype.revertModelSnapshot = function mlRevertModelSnapshotApi (params,
 MlApi.prototype.setUpgradeMode = function mlSetUpgradeModeApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'set_upgrade_mode'
 
@@ -1429,15 +1466,15 @@ MlApi.prototype.startDataFrameAnalytics = function mlStartDataFrameAnalyticsApi 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_start'
 
@@ -1456,15 +1493,15 @@ MlApi.prototype.startDatafeed = function mlStartDatafeedApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['datafeed_id'] == null && params['datafeedId'] == null) {
+  if (params.datafeed_id == null && params.datafeedId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
 
-  var { method, body, datafeedId, datafeed_id, ...querystring } = params
+  let { method, body, datafeedId, datafeed_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_start'
 
@@ -1483,15 +1520,15 @@ MlApi.prototype.stopDataFrameAnalytics = function mlStopDataFrameAnalyticsApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_stop'
 
@@ -1510,15 +1547,15 @@ MlApi.prototype.stopDatafeed = function mlStopDatafeedApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['datafeed_id'] == null && params['datafeedId'] == null) {
+  if (params.datafeed_id == null && params.datafeedId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
 
-  var { method, body, datafeedId, datafeed_id, ...querystring } = params
+  let { method, body, datafeedId, datafeed_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_stop'
 
@@ -1537,19 +1574,19 @@ MlApi.prototype.updateDataFrameAnalytics = function mlUpdateDataFrameAnalyticsAp
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_update'
 
@@ -1568,19 +1605,19 @@ MlApi.prototype.updateDatafeed = function mlUpdateDatafeedApi (params, options, 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['datafeed_id'] == null && params['datafeedId'] == null) {
+  if (params.datafeed_id == null && params.datafeedId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, datafeedId, datafeed_id, ...querystring } = params
+  let { method, body, datafeedId, datafeed_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_update'
 
@@ -1599,19 +1636,19 @@ MlApi.prototype.updateFilter = function mlUpdateFilterApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['filter_id'] == null && params['filterId'] == null) {
+  if (params.filter_id == null && params.filterId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: filter_id or filterId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, filterId, filter_id, ...querystring } = params
+  let { method, body, filterId, filter_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'filters' + '/' + encodeURIComponent(filter_id || filterId) + '/' + '_update'
 
@@ -1630,19 +1667,19 @@ MlApi.prototype.updateJob = function mlUpdateJobApi (params, options, callback) 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, ...querystring } = params
+  let { method, body, jobId, job_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_update'
 
@@ -1661,29 +1698,29 @@ MlApi.prototype.updateModelSnapshot = function mlUpdateModelSnapshotApi (params,
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
-  if (params['snapshot_id'] == null && params['snapshotId'] == null) {
+  if (params.snapshot_id == null && params.snapshotId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: snapshot_id or snapshotId')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
+  if ((params.snapshot_id != null || params.snapshotId != null) && ((params.job_id == null && params.jobId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
+  let { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId) + '/' + '_update'
 
@@ -1702,25 +1739,25 @@ MlApi.prototype.upgradeJobSnapshot = function mlUpgradeJobSnapshotApi (params, o
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['job_id'] == null && params['jobId'] == null) {
+  if (params.job_id == null && params.jobId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
     return handleError(err, callback)
   }
-  if (params['snapshot_id'] == null && params['snapshotId'] == null) {
+  if (params.snapshot_id == null && params.snapshotId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: snapshot_id or snapshotId')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['snapshot_id'] != null || params['snapshotId'] != null) && ((params['job_id'] == null && params['jobId'] == null))) {
+  if ((params.snapshot_id != null || params.snapshotId != null) && ((params.job_id == null && params.jobId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
     return handleError(err, callback)
   }
 
-  var { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
+  let { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId) + '/' + '_upgrade'
 
@@ -1739,15 +1776,15 @@ MlApi.prototype.validate = function mlValidateApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + '_validate'
 
@@ -1766,15 +1803,15 @@ MlApi.prototype.validateDetector = function mlValidateDetectorApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + '_validate' + '/' + 'detector'
 
@@ -1834,6 +1871,7 @@ Object.defineProperties(MlApi.prototype, {
   put_filter: { get () { return this.putFilter } },
   put_job: { get () { return this.putJob } },
   put_trained_model: { get () { return this.putTrainedModel } },
+  put_trained_model_alias: { get () { return this.putTrainedModelAlias } },
   revert_model_snapshot: { get () { return this.revertModelSnapshot } },
   set_upgrade_mode: { get () { return this.setUpgradeMode } },
   start_data_frame_analytics: { get () { return this.startDataFrameAnalytics } },

@@ -35,15 +35,15 @@ EnrichApi.prototype.deletePolicy = function enrichDeletePolicyApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name)
 
@@ -62,15 +62,15 @@ EnrichApi.prototype.executePolicy = function enrichExecutePolicyApi (params, opt
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name) + '/' + '_execute'
 
@@ -88,10 +88,10 @@ EnrichApi.prototype.executePolicy = function enrichExecutePolicyApi (params, opt
 EnrichApi.prototype.getPolicy = function enrichGetPolicyApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name)
@@ -115,19 +115,19 @@ EnrichApi.prototype.putPolicy = function enrichPutPolicyApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_enrich' + '/' + 'policy' + '/' + encodeURIComponent(name)
 
@@ -145,10 +145,10 @@ EnrichApi.prototype.putPolicy = function enrichPutPolicyApi (params, options, ca
 EnrichApi.prototype.stats = function enrichStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_enrich' + '/' + '_stats'
 

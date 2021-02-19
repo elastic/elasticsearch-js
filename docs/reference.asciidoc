@@ -7429,6 +7429,31 @@ link:{ref}/put-trained-models.html[Documentation] +
 |===
 
 [discrete]
+=== ml.putTrainedModelAlias
+*Stability:* beta
+[source,ts]
+----
+client.ml.putTrainedModelAlias({
+  model_alias: string,
+  model_id: string,
+  reassign: boolean
+})
+----
+link:{ref}/put-trained-models-aliases.html[Documentation] +
+[cols=2*]
+|===
+|`model_alias` or `modelAlias`
+|`string` - The trained model alias to update
+
+|`model_id` or `modelId`
+|`string` - The trained model where the model alias should be assigned
+
+|`reassign`
+|`boolean` - If the model_alias already exists and points to a separate model_id, this parameter must be true. Defaults to false.
+
+|===
+
+[discrete]
 === ml.revertModelSnapshot
 
 [source,ts]

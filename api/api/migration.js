@@ -34,10 +34,10 @@ function MigrationApi (transport, ConfigurationError) {
 MigrationApi.prototype.deprecations = function migrationDeprecationsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_migration' + '/' + 'deprecations'

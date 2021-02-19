@@ -35,21 +35,21 @@ GraphApi.prototype.explore = function graphExploreApi (params, options, callback
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['type'] != null && (params['index'] == null)) {
+  if (params.type != null && (params.index == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, type, ...querystring } = params
+  let { method, body, index, type, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null && (type) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_graph' + '/' + 'explore'

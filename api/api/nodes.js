@@ -34,10 +34,10 @@ function NodesApi (transport, ConfigurationError) {
 NodesApi.prototype.hotThreads = function nodesHotThreadsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, nodeId, node_id, ...querystring } = params
+  let { method, body, nodeId, node_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((node_id || nodeId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'hot_threads'
@@ -69,10 +69,10 @@ NodesApi.prototype.hotThreads = function nodesHotThreadsApi (params, options, ca
 NodesApi.prototype.info = function nodesInfoApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, nodeId, node_id, metric, ...querystring } = params
+  let { method, body, nodeId, node_id, metric, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((node_id || nodeId) != null && (metric) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + encodeURIComponent(metric)
@@ -101,10 +101,10 @@ NodesApi.prototype.info = function nodesInfoApi (params, options, callback) {
 NodesApi.prototype.reloadSecureSettings = function nodesReloadSecureSettingsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, nodeId, node_id, ...querystring } = params
+  let { method, body, nodeId, node_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((node_id || nodeId) != null) {
     if (method == null) method = 'POST'
     path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'reload_secure_settings'
@@ -127,10 +127,10 @@ NodesApi.prototype.reloadSecureSettings = function nodesReloadSecureSettingsApi 
 NodesApi.prototype.stats = function nodesStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, nodeId, node_id, metric, indexMetric, index_metric, ...querystring } = params
+  let { method, body, nodeId, node_id, metric, indexMetric, index_metric, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((node_id || nodeId) != null && (metric) != null && (index_metric || indexMetric) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'stats' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index_metric || indexMetric)
@@ -165,10 +165,10 @@ NodesApi.prototype.stats = function nodesStatsApi (params, options, callback) {
 NodesApi.prototype.usage = function nodesUsageApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, nodeId, node_id, metric, ...querystring } = params
+  let { method, body, nodeId, node_id, metric, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((node_id || nodeId) != null && (metric) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_nodes' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'usage' + '/' + encodeURIComponent(metric)

@@ -35,15 +35,15 @@ CcrApi.prototype.deleteAutoFollowPattern = function ccrDeleteAutoFollowPatternAp
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name)
 
@@ -62,19 +62,19 @@ CcrApi.prototype.follow = function ccrFollowApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'follow'
 
@@ -93,15 +93,15 @@ CcrApi.prototype.followInfo = function ccrFollowInfoApi (params, options, callba
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'info'
 
@@ -120,15 +120,15 @@ CcrApi.prototype.followStats = function ccrFollowStatsApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'stats'
 
@@ -147,19 +147,19 @@ CcrApi.prototype.forgetFollower = function ccrForgetFollowerApi (params, options
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'forget_follower'
 
@@ -177,10 +177,10 @@ CcrApi.prototype.forgetFollower = function ccrForgetFollowerApi (params, options
 CcrApi.prototype.getAutoFollowPattern = function ccrGetAutoFollowPatternApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name)
@@ -204,15 +204,15 @@ CcrApi.prototype.pauseAutoFollowPattern = function ccrPauseAutoFollowPatternApi 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name) + '/' + 'pause'
 
@@ -231,15 +231,15 @@ CcrApi.prototype.pauseFollow = function ccrPauseFollowApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'pause_follow'
 
@@ -258,19 +258,19 @@ CcrApi.prototype.putAutoFollowPattern = function ccrPutAutoFollowPatternApi (par
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name)
 
@@ -289,15 +289,15 @@ CcrApi.prototype.resumeAutoFollowPattern = function ccrResumeAutoFollowPatternAp
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ccr' + '/' + 'auto_follow' + '/' + encodeURIComponent(name) + '/' + 'resume'
 
@@ -316,15 +316,15 @@ CcrApi.prototype.resumeFollow = function ccrResumeFollowApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'resume_follow'
 
@@ -342,10 +342,10 @@ CcrApi.prototype.resumeFollow = function ccrResumeFollowApi (params, options, ca
 CcrApi.prototype.stats = function ccrStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_ccr' + '/' + 'stats'
 
@@ -364,15 +364,15 @@ CcrApi.prototype.unfollow = function ccrUnfollowApi (params, options, callback) 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_ccr' + '/' + 'unfollow'
 

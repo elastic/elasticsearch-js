@@ -35,21 +35,21 @@ WatcherApi.prototype.ackWatch = function watcherAckWatchApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['watch_id'] == null && params['watchId'] == null) {
+  if (params.watch_id == null && params.watchId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: watch_id or watchId')
     return handleError(err, callback)
   }
 
   // check required url components
-  if ((params['action_id'] != null || params['actionId'] != null) && ((params['watch_id'] == null && params['watchId'] == null))) {
+  if ((params.action_id != null || params.actionId != null) && ((params.watch_id == null && params.watchId == null))) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: watch_id')
     return handleError(err, callback)
   }
 
-  var { method, body, watchId, watch_id, actionId, action_id, ...querystring } = params
+  let { method, body, watchId, watch_id, actionId, action_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((watch_id || watchId) != null && (action_id || actionId) != null) {
     if (method == null) method = 'PUT'
     path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_ack' + '/' + encodeURIComponent(action_id || actionId)
@@ -73,15 +73,15 @@ WatcherApi.prototype.activateWatch = function watcherActivateWatchApi (params, o
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['watch_id'] == null && params['watchId'] == null) {
+  if (params.watch_id == null && params.watchId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: watch_id or watchId')
     return handleError(err, callback)
   }
 
-  var { method, body, watchId, watch_id, ...querystring } = params
+  let { method, body, watchId, watch_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_activate'
 
@@ -100,15 +100,15 @@ WatcherApi.prototype.deactivateWatch = function watcherDeactivateWatchApi (param
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['watch_id'] == null && params['watchId'] == null) {
+  if (params.watch_id == null && params.watchId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: watch_id or watchId')
     return handleError(err, callback)
   }
 
-  var { method, body, watchId, watch_id, ...querystring } = params
+  let { method, body, watchId, watch_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(watch_id || watchId) + '/' + '_deactivate'
 
@@ -127,15 +127,15 @@ WatcherApi.prototype.deleteWatch = function watcherDeleteWatchApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
@@ -153,10 +153,10 @@ WatcherApi.prototype.deleteWatch = function watcherDeleteWatchApi (params, optio
 WatcherApi.prototype.executeWatch = function watcherExecuteWatchApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((id) != null) {
     if (method == null) method = 'PUT'
     path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id) + '/' + '_execute'
@@ -180,15 +180,15 @@ WatcherApi.prototype.getWatch = function watcherGetWatchApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
@@ -207,15 +207,15 @@ WatcherApi.prototype.putWatch = function watcherPutWatchApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_watcher' + '/' + 'watch' + '/' + encodeURIComponent(id)
 
@@ -233,10 +233,10 @@ WatcherApi.prototype.putWatch = function watcherPutWatchApi (params, options, ca
 WatcherApi.prototype.queryWatches = function watcherQueryWatchesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = body == null ? 'GET' : 'POST'
   path = '/' + '_watcher' + '/' + '_query' + '/' + 'watches'
 
@@ -254,10 +254,10 @@ WatcherApi.prototype.queryWatches = function watcherQueryWatchesApi (params, opt
 WatcherApi.prototype.start = function watcherStartApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_watcher' + '/' + '_start'
 
@@ -275,10 +275,10 @@ WatcherApi.prototype.start = function watcherStartApi (params, options, callback
 WatcherApi.prototype.stats = function watcherStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, metric, ...querystring } = params
+  let { method, body, metric, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((metric) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_watcher' + '/' + 'stats' + '/' + encodeURIComponent(metric)
@@ -301,10 +301,10 @@ WatcherApi.prototype.stats = function watcherStatsApi (params, options, callback
 WatcherApi.prototype.stop = function watcherStopApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_watcher' + '/' + '_stop'
 

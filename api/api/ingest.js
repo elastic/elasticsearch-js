@@ -35,15 +35,15 @@ IngestApi.prototype.deletePipeline = function ingestDeletePipelineApi (params, o
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id)
 
@@ -61,10 +61,10 @@ IngestApi.prototype.deletePipeline = function ingestDeletePipelineApi (params, o
 IngestApi.prototype.getPipeline = function ingestGetPipelineApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((id) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id)
@@ -87,10 +87,10 @@ IngestApi.prototype.getPipeline = function ingestGetPipelineApi (params, options
 IngestApi.prototype.processorGrok = function ingestProcessorGrokApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_ingest' + '/' + 'processor' + '/' + 'grok'
 
@@ -109,19 +109,19 @@ IngestApi.prototype.putPipeline = function ingestPutPipelineApi (params, options
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id)
 
@@ -140,15 +140,15 @@ IngestApi.prototype.simulate = function ingestSimulateApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((id) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_ingest' + '/' + 'pipeline' + '/' + encodeURIComponent(id) + '/' + '_simulate'
