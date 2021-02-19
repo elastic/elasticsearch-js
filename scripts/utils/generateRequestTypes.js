@@ -33,7 +33,7 @@ const ndjsonApiKey = ndjsonApi
 
 function generate (version, api) {
   const release = semver.valid(version) ? semver.major(version) : version
-  var types = `/*
+  let types = `/*
  * Licensed to Elasticsearch B.V. under one or more contributor
  * license agreements. See the NOTICE file distributed with
  * this work for additional information regarding copyright
@@ -79,8 +79,8 @@ export interface Generic {
     // get the required parts from the url
     // if the url has at least one static path,
     // then there are not required parts of the url
-    var allParts = []
-    var requiredParts = []
+    let allParts = []
+    let requiredParts = []
     for (const path of paths) {
       if (path.parts) {
         allParts.push(Object.keys(path.parts))
@@ -146,7 +146,7 @@ export interface ${toPascalCase(name)}${body ? `<T = ${bodyGeneric}>` : ''} exte
       case 'time':
       case 'timeout':
         return 'string'
-      case 'enum':
+      case 'enum': {
         // the following code changes 'true' | 'false' to boolean
         let foundTrue = false
         let foundFalse = false
@@ -172,6 +172,7 @@ export interface ${toPascalCase(name)}${body ? `<T = ${bodyGeneric}>` : ''} exte
           options.push('boolean')
         }
         return options.join(' | ')
+      }
       case 'int':
       case 'double':
       case 'long':

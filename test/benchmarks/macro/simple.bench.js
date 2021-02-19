@@ -44,7 +44,7 @@ bench('Ping', {
   action: 'ping'
 }, async b => {
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await b.client.ping()
   }
   b.end()
@@ -57,7 +57,7 @@ bench('Create index', {
   action: 'indices.create'
 }, async b => {
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await b.client.indices.create({ index: `test-create-${i}` })
   }
   b.end()
@@ -75,7 +75,7 @@ bench('Index small document', {
   await b.client.indices.create({ index })
 
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await b.client.create({
       index,
       type: '_doc',
@@ -98,7 +98,7 @@ bench('Index large document', {
   await b.client.indices.create({ index })
 
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await b.client.create({
       index,
       type: '_doc',
@@ -128,7 +128,7 @@ bench('Get small document', {
   })
 
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await b.client.get({
       index,
       type: '_doc',
@@ -157,7 +157,7 @@ bench('Get large document', {
   })
 
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await b.client.get({
       index,
       type: '_doc',
@@ -187,7 +187,7 @@ bench('Search small document', {
   })
 
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await b.client.search({
       index,
       type: '_doc',
@@ -221,7 +221,7 @@ bench('Search large document', {
   })
 
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await b.client.search({
       index,
       type: '_doc',
@@ -255,7 +255,7 @@ bench('Update small document', {
   })
 
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await b.client.update({
       index,
       type: '_doc',

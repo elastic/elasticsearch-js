@@ -30,7 +30,7 @@ const intoStream = require('into-stream')
 
 class MockConnection extends Connection {
   request (params, callback) {
-    var aborted = false
+    let aborted = false
     const stream = intoStream(JSON.stringify({ hello: 'world' }))
     stream.statusCode = setStatusCode(params.path)
     stream.headers = {
@@ -54,7 +54,7 @@ class MockConnection extends Connection {
 
 class MockConnectionTimeout extends Connection {
   request (params, callback) {
-    var aborted = false
+    let aborted = false
     process.nextTick(() => {
       if (!aborted) {
         callback(new TimeoutError('Request timed out', params), null)
@@ -70,7 +70,7 @@ class MockConnectionTimeout extends Connection {
 
 class MockConnectionError extends Connection {
   request (params, callback) {
-    var aborted = false
+    let aborted = false
     process.nextTick(() => {
       if (!aborted) {
         callback(new ConnectionError('Kaboom'), null)
@@ -86,7 +86,7 @@ class MockConnectionError extends Connection {
 
 class MockConnectionSniff extends Connection {
   request (params, callback) {
-    var aborted = false
+    let aborted = false
     const sniffResult = {
       nodes: {
         'node-1': {
@@ -133,11 +133,11 @@ function buildMockConnection (opts) {
 
   class MockConnection extends Connection {
     request (params, callback) {
-      var { body, statusCode } = opts.onRequest(params)
+      let { body, statusCode } = opts.onRequest(params)
       if (typeof body !== 'string') {
         body = JSON.stringify(body)
       }
-      var aborted = false
+      let aborted = false
       const stream = intoStream(body)
       stream.statusCode = statusCode || 200
       stream.headers = {

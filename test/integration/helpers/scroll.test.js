@@ -65,7 +65,7 @@ test('search helper', async t => {
     }
   })
 
-  var count = 0
+  let count = 0
   for await (const search of scrollSearch) {
     count += 1
     for (const doc of search.documents) {
@@ -87,7 +87,7 @@ test('clear a scroll search', async t => {
     }
   })
 
-  var count = 0
+  let count = 0
   for await (const search of scrollSearch) {
     count += 1
     if (count === 2) {
@@ -109,7 +109,7 @@ test('scroll documents', async t => {
     }
   })
 
-  var count = 0
+  let count = 0
   for await (const doc of scrollSearch) {
     count += 1
     t.true(doc.title.toLowerCase().includes('javascript'))

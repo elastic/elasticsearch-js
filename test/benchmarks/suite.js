@@ -15,10 +15,10 @@ function buildBenchmark (options = {}) {
   const q = workq()
   const stats = {}
   const reports = []
-  var beforeEach = null
-  var afterEach = null
-  var setup = null
-  var teardown = null
+  let beforeEach = null
+  let afterEach = null
+  let setup = null
+  let teardown = null
 
   function setBeforeEach (fn) {
     beforeEach = fn
@@ -54,7 +54,7 @@ function buildBenchmark (options = {}) {
     }
 
     stats[title] = []
-    var { measure, warmup } = opts
+    let { measure, warmup } = opts
     const b = new B({ iterations: opts.iterations })
 
     q.add(runSetup)
@@ -225,7 +225,7 @@ function buildBenchmark (options = {}) {
       }
     })
 
-    for (var i = 0; i < results.length; i++) {
+    for (let i = 0; i < results.length; i++) {
       await client.index({
         index: 'benchmarking_results',
         type: '_doc',

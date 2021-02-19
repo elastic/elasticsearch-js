@@ -58,7 +58,7 @@ test('Basic (http)', t => {
         connection: 'keep-alive'
       })
 
-      var payload = ''
+      let payload = ''
       res.setEncoding('utf8')
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
@@ -98,7 +98,7 @@ test('Basic (https)', t => {
         connection: 'keep-alive'
       })
 
-      var payload = ''
+      let payload = ''
       res.setEncoding('utf8')
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
@@ -139,7 +139,7 @@ test('Basic (https with ssl agent)', t => {
         connection: 'keep-alive'
       })
 
-      var payload = ''
+      let payload = ''
       res.setEncoding('utf8')
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
@@ -193,7 +193,7 @@ test('Custom http agent', t => {
         connection: 'keep-alive'
       })
 
-      var payload = ''
+      let payload = ''
       res.setEncoding('utf8')
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
@@ -317,7 +317,7 @@ test('Body request', t => {
   t.plan(2)
 
   function handler (req, res) {
-    var payload = ''
+    let payload = ''
     req.setEncoding('utf8')
     req.on('data', chunk => { payload += chunk })
     req.on('error', err => t.fail(err))
@@ -346,7 +346,7 @@ test('Send body as buffer', t => {
   t.plan(2)
 
   function handler (req, res) {
-    var payload = ''
+    let payload = ''
     req.setEncoding('utf8')
     req.on('data', chunk => { payload += chunk })
     req.on('error', err => t.fail(err))
@@ -375,7 +375,7 @@ test('Send body as stream', t => {
   t.plan(2)
 
   function handler (req, res) {
-    var payload = ''
+    let payload = ''
     req.setEncoding('utf8')
     req.on('data', chunk => { payload += chunk })
     req.on('error', err => t.fail(err))
@@ -424,7 +424,7 @@ test('Should not close a connection if there are open requests', t => {
       t.error(err)
       t.strictEqual(connection._openRequests, 0)
 
-      var payload = ''
+      let payload = ''
       res.setEncoding('utf8')
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
@@ -461,7 +461,7 @@ test('Should not close a connection if there are open requests (with agent disab
       t.error(err)
       t.strictEqual(connection._openRequests, 0)
 
-      var payload = ''
+      let payload = ''
       res.setEncoding('utf8')
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
@@ -571,7 +571,7 @@ test('asStream set to true', t => {
     }, (err, res) => {
       t.error(err)
 
-      var payload = ''
+      let payload = ''
       res.setEncoding('utf8')
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
