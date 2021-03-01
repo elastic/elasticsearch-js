@@ -1427,6 +1427,14 @@ declare class Client {
     deleteTrainedModel<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteTrainedModel<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlDeleteTrainedModel, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteTrainedModel<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlDeleteTrainedModel, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_trained_model_alias<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MlDeleteTrainedModelAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    delete_trained_model_alias<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_trained_model_alias<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlDeleteTrainedModelAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_trained_model_alias<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlDeleteTrainedModelAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteTrainedModelAlias<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MlDeleteTrainedModelAlias, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    deleteTrainedModelAlias<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteTrainedModelAlias<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlDeleteTrainedModelAlias, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteTrainedModelAlias<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlDeleteTrainedModelAlias, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     estimate_model_memory<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MlEstimateModelMemory<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     estimate_model_memory<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     estimate_model_memory<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlEstimateModelMemory<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

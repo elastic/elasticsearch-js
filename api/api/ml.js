@@ -395,6 +395,43 @@ MlApi.prototype.deleteTrainedModel = function mlDeleteTrainedModelApi (params, o
   return this.transport.request(request, options, callback)
 }
 
+MlApi.prototype.deleteTrainedModelAlias = function mlDeleteTrainedModelAliasApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.model_alias == null && params.modelAlias == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: model_alias or modelAlias')
+    return handleError(err, callback)
+  }
+  if (params.model_id == null && params.modelId == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: model_id or modelId')
+    return handleError(err, callback)
+  }
+
+  // check required url components
+  if ((params.model_alias != null || params.modelAlias != null) && ((params.model_id == null && params.modelId == null))) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: model_id')
+    return handleError(err, callback)
+  }
+
+  let { method, body, modelAlias, model_alias, modelId, model_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'DELETE'
+  path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId) + '/' + 'model_aliases' + '/' + encodeURIComponent(model_alias || modelAlias)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 MlApi.prototype.estimateModelMemory = function mlEstimateModelMemoryApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1839,6 +1876,7 @@ Object.defineProperties(MlApi.prototype, {
   delete_job: { get () { return this.deleteJob } },
   delete_model_snapshot: { get () { return this.deleteModelSnapshot } },
   delete_trained_model: { get () { return this.deleteTrainedModel } },
+  delete_trained_model_alias: { get () { return this.deleteTrainedModelAlias } },
   estimate_model_memory: { get () { return this.estimateModelMemory } },
   evaluate_data_frame: { get () { return this.evaluateDataFrame } },
   explain_data_frame_analytics: { get () { return this.explainDataFrameAnalytics } },

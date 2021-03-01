@@ -1533,6 +1533,11 @@ export interface MlDeleteTrainedModel extends Generic {
   model_id: string;
 }
 
+export interface MlDeleteTrainedModelAlias extends Generic {
+  model_alias: string;
+  model_id: string;
+}
+
 export interface MlEstimateModelMemory<T = RequestBody> extends Generic {
   body: T;
 }
