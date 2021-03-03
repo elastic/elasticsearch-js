@@ -1,56 +1,58 @@
 [[client-testing]]
-== Testing
+=== Testing
 
 Testing is one of the most important parts of developing an application.
 The client is very flexible when it comes to testing and is compatible with
 most testing frameworks (such as https://www.npmjs.com/package/ava[`ava`],
 which is used in the examples below).
 
-If you are using this client, you are very likely working with Elasticsearch,
-and one of the first issues you will face is how to test your application.
-A perfectly valid solution is to use the real Elasticsearch instance for
-testing your application, but you would be doing an integration test,
-while you want a unit test.
-There are many ways to solve this problem, you could create the database
-with docker, or use an in-memory compatible one, but if you are writing
-unit tests that can be easily parallelized this will become quite uncomfortable.
-A different way of improving your testing experience while doing unit tests
-is to use a mock.
+If you are using this client, you are most likely working with {es}, and one of 
+the first issues you face is how to test your application. A perfectly valid 
+solution is to use the real {es} instance for testing your application, but you 
+would be doing an integration test, while you want a unit test. There are many 
+ways to solve this problem, you could create the database with Docker, or use an 
+in-memory compatible one, but if you are writing unit tests that can be easily 
+parallelized this becomes quite uncomfortable. A different way of improving your 
+testing experience while doing unit tests is to use a mock.
 
-The client is designed to be easy to extend and adapt to your needs.
-Thanks to its internal architecture it allows you to change some specific
-components while keeping the rest of it working as usual.
-Each Elasticsearch official client is composed of the following components:
+The client is designed to be easy to extend and adapt to your needs. Thanks to 
+its internal architecture it allows you to change some specific components while 
+keeping the rest of it working as usual. Each {es} official client is composed 
+of the following components:
 
-* `API layer`: every Elasticsearch API that you can call
-* `Transport`: a component that takes care of preparing a request before sending it and handling all the retry and sniffing strategies
-* `ConnectionPool`: Elasticsearch is a cluster and might have multiple nodes, the * `ConnectionPool` takes care of them
-* `Serializer`: A class with all the serialization strategies, from the basic JSON to the new line delimited JSON.
+* `API layer`: every {es} API that you can call.
+* `Transport`: a component that takes care of preparing a request before sending 
+  it and handling all the retry and sniffing strategies.
+* `ConnectionPool`: {es} is a cluster and might have multiple nodes, the 
+  `ConnectionPool` takes care of them.
+* `Serializer`: A class with all the serialization strategies, from the basic 
+  JSON to the new line delimited JSON.
 * `Connection`: The actual HTTP library.
 
-The best way to mock Elasticsearch with the official clients is to replace
-the `Connection` component since it has very few responsibilities and
-it does not interact with other internal components other than getting
-requests and returning responses.
+The best way to mock {es} with the official clients is to replace the 
+`Connection` component since it has very few responsibilities and it does not 
+interact with other internal components other than getting requests and 
+returning responses.
 
 
 [discrete]
-=== `@elastic/elasticsearch-mock`
+==== `@elastic/elasticsearch-mock`
 
-Writing each time a mock for your test can be annoying and error-prone,
-so we have built a simple yet powerful mocking library specifically designed
-for this client, and you can install it with the following command:
+Writing each time a mock for your test can be annoying and error-prone, so we 
+have built a simple yet powerful mocking library specifically designed for this 
+client, and you can install it with the following command:
 
 [source,sh]
 ----
 npm install @elastic/elasticsearch-mock --save-dev
 ----
 
-With this library you can easily create custom mocks for any request you can
-send to Elasticsearch. It offers a simple and intuitive API and it mocks only
-the HTTP layer, leaving the rest of the client working as usual.
+With this library you can create custom mocks for any request you can send to 
+{es}. It offers a simple and intuitive API and it mocks only the HTTP layer, 
+leaving the rest of the client working as usual.
 
-Before showing all of its features, and what you can do with it, let’s see an example:
+Before showing all of its features, and what you can do with it, let’s see an 
+example:
 
 [source,js]
 ----
@@ -73,16 +75,16 @@ mock.add({
 client.info(console.log)
 ----
 
-As you can see it works closely with the client itself, once you have created
-a new instance of the mock library you just need to call the mock.getConnection()
-method and pass its result to the Connection option of the client.
-From now on, every request will be handled by the mock library,  and the HTTP
-layer will never be touched. As a result, your test will be significantly faster
-and you will be able to easily parallelize them!
+As you can see it works closely with the client itself, once you have created a 
+new instance of the mock library you just need to call the mock.getConnection()
+method and pass its result to the Connection option of the client. From now on, 
+every request is handled by the mock library,  and the HTTP layer will never be 
+touched. As a result, your test is significantly faster and you are able to 
+easily parallelize them!
 
-The library allows you to write both “strict” and “loose” mocks, which means
-that you can write a mock that will handle a very specific request or be looser
-and handle a group of request, let’s see this in action:
+The library allows you to write both “strict” and “loose” mocks, which means 
+that you can write a mock that handles a very specific request or be looser and 
+handle a group of request, let’s see this in action:
 
 [source,js]
 ----
@@ -112,9 +114,9 @@ mock.add({
 })
 ----
 
-In the example above every search request will get the first response,
-while every search request that uses the query described in the second mock,
-will get the second response.
+In the example above, every search request gets the first response, while every 
+search request that uses the query described in the second mock gets the second 
+response.
 
 You can also specify dynamic paths:
 
@@ -150,5 +152,6 @@ mock.add({
 })
 ----
 
-We have seen how simple is mocking Elasticsearch and testing your application,
-you can find many more features and examples in the https://github.com/elastic/elasticsearch-js-mock[module documentation].
+We have seen how simple is mocking {es} and testing your application, you can 
+find many more features and examples in the 
+https://github.com/elastic/elasticsearch-js-mock[module documentation].

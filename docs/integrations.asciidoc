@@ -3,5 +3,6 @@
 
 The Client offers the following integration options for you:
 
-* <<transport>>
 * <<observability>>
+* <<transport>>
+* <<typescript>>

@@ -1,17 +1,23 @@
 [[typescript]]
-== TypeScript support
+=== TypeScript support
 
 The client offers a first-class support for TypeScript, since it ships the type 
 definitions for every exposed API.
 
-NOTE: If you are using TypeScript you will be required to use _snake_case_ style 
-to define the API parameters instead of _camelCase_. 
+NOTE: If you are using TypeScript you need to use _snake_case_ style to define 
+the API parameters instead of _camelCase_. 
 
-By default event API uses https://www.typescriptlang.org/docs/handbook/generics.html[generics] to specify the requests and response bodies and the `meta.context`. Currently we can't provide those definitions, but we are working to improve this situation.
+By default event API uses 
+https://www.typescriptlang.org/docs/handbook/generics.html[generics] to specify 
+the requests and response bodies and the `meta.context`. Currently, we can't 
+provide those definitions, but we are working to improve this situation.
 
-You can find a partial definition of the request types by importing `RequestParams`, which is used by default in the client and accepts a body (when needed) as a generic to provide a better specification.
+You can find a partial definition of the request types by importing 
+`RequestParams`, which is used by default in the client and accepts a body (when 
+needed) as a generic to provide a better specification.
 
-The body defaults to `RequestBody` and `RequestNDBody`, which are defined as follows:
+The body defaults to `RequestBody` and `RequestNDBody`, which are defined as 
+follows:
 
 [source,ts]
 ----
@@ -39,7 +45,7 @@ You don't have to specify all the generics, but the order must be respected.
 
 
 [discrete]
-=== A complete example
+==== A complete example
 
 [source,ts]
 ----
