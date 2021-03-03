@@ -1,0 +1,7 @@
+[[integrations]]
+== Integrations
+
+The Client offers the following integration options for you:
+
+* <<transport>>
+* <<observability>>

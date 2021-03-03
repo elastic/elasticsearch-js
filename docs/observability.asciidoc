@@ -1,19 +1,19 @@
 [[observability]]
-== Observability
+=== Observability
 
 The client does not provide a default logger, but instead it offers an event 
 emitter interfaces to hook into internal events, such as `request` and 
 `response`.
 
-Correlating those events can be quite hard, especially if your applications have 
-a large codebase with many events happening at the same time.
+Correlating those events can be hard, especially if your applications have a 
+large codebase with many events happening at the same time.
 
 To help you with this, the client offers you a correlation id system and other 
 features. Let's see them in action.
 
 
 [discrete]
-=== Events
+==== Events
 
 The client is an event emitter, this means that you can listen for its event and 
 add additional logic to your code, without need to change the client internals 
@@ -105,7 +105,8 @@ client.on('resurrect', (err, result) => {
 
 |===
 
-The values of `result` in `serialization`, `request`, `deserialization`, `response` and `sniff` will be:
+The values of `result` in `serialization`, `request`, `deserialization`, 
+`response` and `sniff` are:
 
 [source,ts]
 ----
@@ -132,7 +133,7 @@ meta: {
 ----
 
 
-While the `result` value in `resurrect` will be:
+While the `result` value in `resurrect` is:
 
 [source,ts]
 ----
@@ -146,10 +147,13 @@ request: {
 ----
 
 [discrete]
-==== Events order
+===== Events order
 
-The event order is described in the following graph, in some edge cases, the order is not guaranteed.
-You can find in https://github.com/elastic/elasticsearch-js/blob/master/test/acceptance/events-order.test.js[`test/acceptance/events-order.test.js`] how the order changes based on the situation.
+The event order is described in the following graph, in some edge cases, the 
+order is not guaranteed.
+You can find in 
+https://github.com/elastic/elasticsearch-js/blob/master/test/acceptance/events-order.test.js[`test/acceptance/events-order.test.js`] 
+how the order changes based on the situation.
 
 [source]
 ----
@@ -170,11 +174,11 @@ serialization
 
 
 [discrete]
-=== Correlation id
+==== Correlation id
 
-Correlating events can be quite hard, especially if there are many events at the 
-same time. The client offers you an automatic (and configurable) system to help 
-you handle this problem.
+Correlating events can be hard, especially if there are many events at the same 
+time. The client offers you an automatic (and configurable) system to help you 
+handle this problem.
 
 [source,js]
 ----
@@ -204,8 +208,8 @@ client.search({
 ----
 
 
-By default the id is an incremental integer, but you can easily configure that 
-with the `generateRequestId` option:
+By default the id is an incremental integer, but you can configure it with the 
+`generateRequestId` option:
 
 [source,js]
 ----
@@ -238,7 +242,7 @@ client.search({
 
 
 [discrete]
-=== Context object
+==== Context object
 
 Sometimes, you might need to make some custom data available in your events, you 
 can do that via the `context` option of a request: 
@@ -275,8 +279,8 @@ client.search({
 ----
 
 The context object can also be configured as a global option in the client
-configuration. If you provide both, the two context object will be shallow merged,
-and the API level object will take precedece.
+configuration. If you provide both, the two context objects will be shallow 
+merged, and the API level object will take precedence.
 
 [source,js]
 ----
@@ -314,12 +318,12 @@ client.search({
 
 
 [discrete]
-=== Client name
+==== Client name
 
 If you are using multiple instances of the client or if you are using multiple 
 child clients _(which is the recommended way to have multiple instances of the 
 client)_, you might need to recognize which client you are using. The `name` 
-options will help you in this regard.
+options help you in this regard.
 
 [source,js]
 ----
@@ -368,13 +372,13 @@ child.search({
 
 
 [discrete]
-=== X-Opaque-Id support
+==== X-Opaque-Id support
 
-To improve the overall observability, the client offers an easy way to configure 
-the `X-Opaque-Id` header. If you set the `X-Opaque-Id` in a specific request, 
-this will allow you to discover this identifier in the 
+To improve observability, the client offers an easy way to configure the 
+`X-Opaque-Id` header. If you set the `X-Opaque-Id` in a specific request, this 
+allows you to discover this identifier in the 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/logging.html#deprecation-logging[deprecation logs], 
-help you with https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-slowlog.html#_identifying_search_slow_log_origin[identifying search slow log origin] 
+helps you with https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-slowlog.html#_identifying_search_slow_log_origin[identifying search slow log origin] 
 as well as https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html#_identifying_running_tasks[identifying running tasks].
 
 The `X-Opaque-Id` should be configured in each request, for doing that you can 
