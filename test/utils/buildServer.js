@@ -35,7 +35,7 @@ const secureOpts = {
   cert: readFileSync(join(__dirname, '..', 'fixtures', 'https.cert'), 'utf8')
 }
 
-var id = 0
+let id = 0
 function buildServer (handler, opts, cb) {
   const serverId = id++
   debug(`Booting server '${serverId}'`)

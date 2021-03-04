@@ -34,10 +34,10 @@ function ClusterApi (transport, ConfigurationError) {
 ClusterApi.prototype.allocationExplain = function clusterAllocationExplainApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = body == null ? 'GET' : 'POST'
   path = '/' + '_cluster' + '/' + 'allocation' + '/' + 'explain'
 
@@ -56,15 +56,15 @@ ClusterApi.prototype.deleteComponentTemplate = function clusterDeleteComponentTe
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_component_template' + '/' + encodeURIComponent(name)
 
@@ -82,10 +82,10 @@ ClusterApi.prototype.deleteComponentTemplate = function clusterDeleteComponentTe
 ClusterApi.prototype.deleteVotingConfigExclusions = function clusterDeleteVotingConfigExclusionsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_cluster' + '/' + 'voting_config_exclusions'
 
@@ -104,15 +104,15 @@ ClusterApi.prototype.existsComponentTemplate = function clusterExistsComponentTe
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'HEAD'
   path = '/' + '_component_template' + '/' + encodeURIComponent(name)
 
@@ -130,10 +130,10 @@ ClusterApi.prototype.existsComponentTemplate = function clusterExistsComponentTe
 ClusterApi.prototype.getComponentTemplate = function clusterGetComponentTemplateApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_component_template' + '/' + encodeURIComponent(name)
@@ -156,10 +156,10 @@ ClusterApi.prototype.getComponentTemplate = function clusterGetComponentTemplate
 ClusterApi.prototype.getSettings = function clusterGetSettingsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cluster' + '/' + 'settings'
 
@@ -177,10 +177,10 @@ ClusterApi.prototype.getSettings = function clusterGetSettingsApi (params, optio
 ClusterApi.prototype.health = function clusterHealthApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cluster' + '/' + 'health' + '/' + encodeURIComponent(index)
@@ -203,10 +203,10 @@ ClusterApi.prototype.health = function clusterHealthApi (params, options, callba
 ClusterApi.prototype.pendingTasks = function clusterPendingTasksApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cluster' + '/' + 'pending_tasks'
 
@@ -224,10 +224,10 @@ ClusterApi.prototype.pendingTasks = function clusterPendingTasksApi (params, opt
 ClusterApi.prototype.postVotingConfigExclusions = function clusterPostVotingConfigExclusionsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_cluster' + '/' + 'voting_config_exclusions'
 
@@ -246,19 +246,19 @@ ClusterApi.prototype.putComponentTemplate = function clusterPutComponentTemplate
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_component_template' + '/' + encodeURIComponent(name)
 
@@ -277,15 +277,15 @@ ClusterApi.prototype.putSettings = function clusterPutSettingsApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_cluster' + '/' + 'settings'
 
@@ -303,10 +303,10 @@ ClusterApi.prototype.putSettings = function clusterPutSettingsApi (params, optio
 ClusterApi.prototype.remoteInfo = function clusterRemoteInfoApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_remote' + '/' + 'info'
 
@@ -324,10 +324,10 @@ ClusterApi.prototype.remoteInfo = function clusterRemoteInfoApi (params, options
 ClusterApi.prototype.reroute = function clusterRerouteApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_cluster' + '/' + 'reroute'
 
@@ -346,15 +346,15 @@ ClusterApi.prototype.state = function clusterStateApi (params, options, callback
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required url components
-  if (params['index'] != null && (params['metric'] == null)) {
+  if (params.index != null && (params.metric == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: metric')
     return handleError(err, callback)
   }
 
-  var { method, body, metric, index, ...querystring } = params
+  let { method, body, metric, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((metric) != null && (index) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cluster' + '/' + 'state' + '/' + encodeURIComponent(metric) + '/' + encodeURIComponent(index)
@@ -380,10 +380,10 @@ ClusterApi.prototype.state = function clusterStateApi (params, options, callback
 ClusterApi.prototype.stats = function clusterStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, nodeId, node_id, ...querystring } = params
+  let { method, body, nodeId, node_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((node_id || nodeId) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_cluster' + '/' + 'stats' + '/' + 'nodes' + '/' + encodeURIComponent(node_id || nodeId)

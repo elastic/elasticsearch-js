@@ -30,19 +30,19 @@ function reindexRethrottleApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['task_id'] == null && params['taskId'] == null) {
+  if (params.task_id == null && params.taskId == null) {
     const err = new this[kConfigurationError]('Missing required parameter: task_id or taskId')
     return handleError(err, callback)
   }
-  if (params['requests_per_second'] == null && params['requestsPerSecond'] == null) {
+  if (params.requests_per_second == null && params.requestsPerSecond == null) {
     const err = new this[kConfigurationError]('Missing required parameter: requests_per_second or requestsPerSecond')
     return handleError(err, callback)
   }
 
-  var { method, body, taskId, task_id, ...querystring } = params
+  let { method, body, taskId, task_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_reindex' + '/' + encodeURIComponent(task_id || taskId) + '/' + '_rethrottle'
 

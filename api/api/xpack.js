@@ -34,10 +34,10 @@ function XpackApi (transport, ConfigurationError) {
 XpackApi.prototype.info = function xpackInfoApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_xpack'
 
@@ -55,10 +55,10 @@ XpackApi.prototype.info = function xpackInfoApi (params, options, callback) {
 XpackApi.prototype.usage = function xpackUsageApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_xpack' + '/' + 'usage'
 

@@ -35,15 +35,15 @@ MonitoringApi.prototype.bulk = function monitoringBulkApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, type, ...querystring } = params
+  let { method, body, type, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((type) != null) {
     if (method == null) method = 'POST'
     path = '/' + '_monitoring' + '/' + encodeURIComponent(type) + '/' + 'bulk'

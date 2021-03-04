@@ -95,7 +95,7 @@ test('Resurrect a node and handle 502/3/4 status code', t => {
   const clock = FakeTimers.install({ toFake: ['Date'] })
   const q = workq()
 
-  var count = 0
+  let count = 0
   function handler (req, res) {
     res.statusCode = count++ < 2 ? 502 : 200
     res.setHeader('content-type', 'application/json')
@@ -114,7 +114,7 @@ test('Resurrect a node and handle 502/3/4 status code', t => {
       maxRetries: 0
     })
 
-    var idCount = 2
+    let idCount = 2
     client.on(events.RESURRECT, (err, meta) => {
       t.error(err)
       t.strictEqual(meta.strategy, 'ping')

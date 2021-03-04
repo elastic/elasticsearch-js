@@ -27,13 +27,17 @@ const debug = require('debug')('elasticsearch')
 const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
 const { ConnectionPool, CloudConnectionPool } = require('./lib/pool')
-// Helpers works only in Node.js >= 10
-const Helpers = nodeMajor < 10 ? /* istanbul ignore next */ null : require('./lib/Helpers')
+const Helpers = require('./lib/Helpers')
 const Serializer = require('./lib/Serializer')
 const errors = require('./lib/errors')
 const { ConfigurationError } = errors
 const { prepareHeaders } = Connection.internals
-const clientVersion = require('./package.json').version
+let clientVersion = require('./package.json').version
+/* istanbul ignore next */
+if (clientVersion.includes('-')) {
+  // clean prerelease
+  clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
+}
 const nodeVersion = process.versions.node
 
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
@@ -42,15 +46,6 @@ const kExtensions = Symbol('elasticsearchjs-extensions')
 const kEventEmitter = Symbol('elasticsearchjs-event-emitter')
 
 const ESAPI = require('./api')
-
-/* istanbul ignore next */
-if (nodeMajor < 10) {
-  process.emitWarning('You are using a version of Node.js that is currently in EOL. ' +
-                      'The support for this version will be dropped in 7.12. ' +
-                      'Please refer to https://ela.st/nodejs-support for additional information.',
-  'DeprecationWarning'
-  )
-}
 
 /* istanbul ignore next */
 if (nodeMajor >= 10 && nodeMajor < 12) {
@@ -184,16 +179,13 @@ class Client extends ESAPI {
       context: options.context
     })
 
-    /* istanbul ignore else */
-    if (Helpers !== null) {
-      this.helpers = new Helpers({
-        client: this,
-        maxRetries: options.maxRetries,
-        metaHeader: options.enableMetaHeader
-          ? `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion}`
-          : null
-      })
-    }
+    this.helpers = new Helpers({
+      client: this,
+      maxRetries: options.maxRetries,
+      metaHeader: options.enableMetaHeader
+        ? `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion}`
+        : null
+    })
   }
 
   get emit () {
@@ -218,7 +210,7 @@ class Client extends ESAPI {
       opts = {}
     }
 
-    var [namespace, method] = name.split('.')
+    let [namespace, method] = name.split('.')
     if (method == null) {
       method = namespace
       namespace = null

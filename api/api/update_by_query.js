@@ -30,15 +30,15 @@ function updateByQueryApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_update_by_query'
 

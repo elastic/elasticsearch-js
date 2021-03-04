@@ -12,7 +12,7 @@ const { connection } = require('../../utils')
 
 bench('Initialization', { warmup: 5, measure: 10, iterations: 1000 }, async b => {
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     const client = new Client({ // eslint-disable-line
       node: 'http://localhost:9200'
     })
@@ -56,7 +56,7 @@ bench('Basic get', { warmup: 5, measure: 10, iterations: 1000 }, async b => {
     q: 'foo:bar'
   })
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await client.search({
       index: 'test',
       type: 'doc',
@@ -83,7 +83,7 @@ bench('Basic post', { warmup: 5, measure: 10, iterations: 1000 }, async b => {
     }
   })
   b.start()
-  for (var i = 0; i < b.iterations; i++) {
+  for (let i = 0; i < b.iterations; i++) {
     await client.search({
       index: 'test',
       type: 'doc',

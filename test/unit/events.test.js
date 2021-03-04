@@ -20,7 +20,6 @@
 'use strict'
 
 const { test } = require('tap')
-const semver = require('semver')
 const { Client, events } = require('../../index')
 const { TimeoutError } = require('../../lib/errors')
 const {
@@ -127,7 +126,7 @@ test('Should emit a request event once when a request is performed', t => {
   })
 })
 
-test('Remove an event', { skip: semver.lt(process.versions.node, '10.0.0') }, t => {
+test('Remove an event', t => {
   t.plan(4)
 
   const client = new Client({

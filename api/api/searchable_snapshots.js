@@ -23,7 +23,7 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'index', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'master_timeout', 'wait_for_completion']
+const acceptedQuerystring = ['ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'index', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'master_timeout', 'wait_for_completion', 'storage', 'level']
 const snakeCase = { ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', masterTimeout: 'master_timeout', waitForCompletion: 'wait_for_completion' }
 
 function SearchableSnapshotsApi (transport, ConfigurationError) {
@@ -34,10 +34,10 @@ function SearchableSnapshotsApi (transport, ConfigurationError) {
 SearchableSnapshotsApi.prototype.clearCache = function searchableSnapshotsClearCacheApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_searchable_snapshots' + '/' + 'cache' + '/' + 'clear'
@@ -61,29 +61,29 @@ SearchableSnapshotsApi.prototype.mount = function searchableSnapshotsMountApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['repository'] == null) {
+  if (params.repository == null) {
     const err = new this[kConfigurationError]('Missing required parameter: repository')
     return handleError(err, callback)
   }
-  if (params['snapshot'] == null) {
+  if (params.snapshot == null) {
     const err = new this[kConfigurationError]('Missing required parameter: snapshot')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['snapshot'] != null && (params['repository'] == null)) {
+  if (params.snapshot != null && (params.repository == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: repository')
     return handleError(err, callback)
   }
 
-  var { method, body, repository, snapshot, ...querystring } = params
+  let { method, body, repository, snapshot, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + encodeURIComponent(snapshot) + '/' + '_mount'
 
@@ -101,10 +101,10 @@ SearchableSnapshotsApi.prototype.mount = function searchableSnapshotsMountApi (p
 SearchableSnapshotsApi.prototype.stats = function searchableSnapshotsStatsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'GET'
     path = '/' + encodeURIComponent(index) + '/' + '_searchable_snapshots' + '/' + 'stats'

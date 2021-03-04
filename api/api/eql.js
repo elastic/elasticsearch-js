@@ -35,15 +35,15 @@ EqlApi.prototype.delete = function eqlDeleteApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_eql' + '/' + 'search' + '/' + encodeURIComponent(id)
 
@@ -62,17 +62,44 @@ EqlApi.prototype.get = function eqlGetApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_eql' + '/' + 'search' + '/' + encodeURIComponent(id)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+EqlApi.prototype.getStatus = function eqlGetStatusApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.id == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: id')
+    return handleError(err, callback)
+  }
+
+  let { method, body, id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'GET'
+  path = '/' + '_eql' + '/' + 'search' + '/' + 'status' + '/' + encodeURIComponent(id)
 
   // build request object
   const request = {
@@ -89,19 +116,19 @@ EqlApi.prototype.search = function eqlSearchApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = body == null ? 'GET' : 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_eql' + '/' + 'search'
 
@@ -115,5 +142,9 @@ EqlApi.prototype.search = function eqlSearchApi (params, options, callback) {
 
   return this.transport.request(request, options, callback)
 }
+
+Object.defineProperties(EqlApi.prototype, {
+  get_status: { get () { return this.getStatus } }
+})
 
 module.exports = EqlApi

@@ -35,15 +35,15 @@ AsyncSearchApi.prototype.delete = function asyncSearchDeleteApi (params, options
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_async_search' + '/' + encodeURIComponent(id)
 
@@ -62,15 +62,15 @@ AsyncSearchApi.prototype.get = function asyncSearchGetApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_async_search' + '/' + encodeURIComponent(id)
 
@@ -89,15 +89,15 @@ AsyncSearchApi.prototype.status = function asyncSearchStatusApi (params, options
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_async_search' + '/' + 'status' + '/' + encodeURIComponent(id)
 
@@ -115,10 +115,10 @@ AsyncSearchApi.prototype.status = function asyncSearchStatusApi (params, options
 AsyncSearchApi.prototype.submit = function asyncSearchSubmitApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_async_search'

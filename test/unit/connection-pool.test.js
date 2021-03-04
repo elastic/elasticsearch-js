@@ -66,7 +66,7 @@ test('API', t => {
   t.test('markDead', t => {
     const pool = new ConnectionPool({ Connection, sniffEnabled: true })
     const href = 'http://localhost:9200/'
-    var connection = pool.addConnection(href)
+    let connection = pool.addConnection(href)
     pool.markDead(connection)
     connection = pool.connections.find(c => c.id === href)
     t.strictEqual(connection.deadCount, 1)
@@ -100,7 +100,7 @@ test('API', t => {
   t.test('markAlive', t => {
     const pool = new ConnectionPool({ Connection, sniffEnabled: true })
     const href = 'http://localhost:9200/'
-    var connection = pool.addConnection(href)
+    let connection = pool.addConnection(href)
     pool.markDead(connection)
     pool.markAlive(connection)
     connection = pool.connections.find(c => c.id === href)
@@ -121,7 +121,7 @@ test('API', t => {
           sniffEnabled: true
         })
         const href = 'http://localhost:9200/'
-        var connection = pool.addConnection(href)
+        const connection = pool.addConnection(href)
         pool.markDead(connection)
         const opts = {
           now: Date.now() + 1000 * 60 * 3,
@@ -147,7 +147,7 @@ test('API', t => {
           sniffEnabled: true
         })
         const href = 'http://localhost:9200/'
-        var connection = pool.addConnection(href)
+        const connection = pool.addConnection(href)
         pool.markDead(connection)
         const opts = {
           now: Date.now() + 1000 * 60 * 3,
@@ -175,7 +175,7 @@ test('API', t => {
         sniffEnabled: true
       })
       const href = 'http://localhost:9200/'
-      var connection = pool.addConnection(href)
+      const connection = pool.addConnection(href)
       pool.markDead(connection)
       const opts = {
         now: Date.now() + 1000 * 60 * 3,
@@ -200,7 +200,7 @@ test('API', t => {
         sniffEnabled: true
       })
       const href = 'http://localhost:9200/'
-      var connection = pool.addConnection(href)
+      const connection = pool.addConnection(href)
       pool.markDead(connection)
       const opts = {
         now: Date.now() + 1000 * 60 * 3,
@@ -292,7 +292,7 @@ test('API', t => {
   t.test('removeConnection', t => {
     const pool = new ConnectionPool({ Connection })
     const href = 'http://localhost:9200/'
-    var connection = pool.addConnection(href)
+    const connection = pool.addConnection(href)
     t.ok(pool.getConnection() instanceof Connection)
     pool.removeConnection(connection)
     t.strictEqual(pool.getConnection(), null)

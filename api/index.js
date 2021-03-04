@@ -74,6 +74,7 @@ const EqlApi = require('./api/eql')
 const GraphApi = require('./api/graph')
 const IlmApi = require('./api/ilm')
 const LicenseApi = require('./api/license')
+const LogstashApi = require('./api/logstash')
 const MigrationApi = require('./api/migration')
 const MlApi = require('./api/ml')
 const MonitoringApi = require('./api/monitoring')
@@ -84,6 +85,7 @@ const SecurityApi = require('./api/security')
 const SlmApi = require('./api/slm')
 const SqlApi = require('./api/sql')
 const SslApi = require('./api/ssl')
+const TextStructureApi = require('./api/text_structure')
 const TransformApi = require('./api/transform')
 const WatcherApi = require('./api/watcher')
 const XpackApi = require('./api/xpack')
@@ -105,6 +107,7 @@ const kEql = Symbol('Eql')
 const kGraph = Symbol('Graph')
 const kIlm = Symbol('Ilm')
 const kLicense = Symbol('License')
+const kLogstash = Symbol('Logstash')
 const kMigration = Symbol('Migration')
 const kMl = Symbol('Ml')
 const kMonitoring = Symbol('Monitoring')
@@ -114,6 +117,7 @@ const kSecurity = Symbol('Security')
 const kSlm = Symbol('Slm')
 const kSql = Symbol('Sql')
 const kSsl = Symbol('Ssl')
+const kTextStructure = Symbol('TextStructure')
 const kTransform = Symbol('Transform')
 const kWatcher = Symbol('Watcher')
 const kXpack = Symbol('Xpack')
@@ -136,6 +140,7 @@ function ESAPI (opts) {
   this[kGraph] = null
   this[kIlm] = null
   this[kLicense] = null
+  this[kLogstash] = null
   this[kMigration] = null
   this[kMl] = null
   this[kMonitoring] = null
@@ -145,6 +150,7 @@ function ESAPI (opts) {
   this[kSlm] = null
   this[kSql] = null
   this[kSsl] = null
+  this[kTextStructure] = null
   this[kTransform] = null
   this[kWatcher] = null
   this[kXpack] = null
@@ -343,6 +349,14 @@ Object.defineProperties(ESAPI.prototype, {
       return this[kLicense]
     }
   },
+  logstash: {
+    get () {
+      if (this[kLogstash] === null) {
+        this[kLogstash] = new LogstashApi(this.transport, this[kConfigurationError])
+      }
+      return this[kLogstash]
+    }
+  },
   migration: {
     get () {
       if (this[kMigration] === null) {
@@ -417,6 +431,15 @@ Object.defineProperties(ESAPI.prototype, {
       return this[kSsl]
     }
   },
+  textStructure: {
+    get () {
+      if (this[kTextStructure] === null) {
+        this[kTextStructure] = new TextStructureApi(this.transport, this[kConfigurationError])
+      }
+      return this[kTextStructure]
+    }
+  },
+  text_structure: { get () { return this.textStructure } },
   transform: {
     get () {
       if (this[kTransform] === null) {

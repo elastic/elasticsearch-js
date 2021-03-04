@@ -23,11 +23,13 @@ const { createReadStream } = require('fs')
 const { join } = require('path')
 const split = require('split2')
 const FakeTimers = require('@sinonjs/fake-timers')
-const semver = require('semver')
 const { test } = require('tap')
 const { Client, errors } = require('../../../')
 const { buildServer, connection } = require('../../utils')
-const clientVersion = require('../../../package.json').version
+let clientVersion = require('../../../package.json').version
+if (clientVersion.includes('-')) {
+  clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
+}
 const nodeVersion = process.versions.node
 
 const dataset = [
@@ -305,10 +307,6 @@ test('bulk index', t => {
     })
 
     t.test('Should perform a bulk request (retry)', async t => {
-      if (semver.lt(process.versions.node, '10.0.0')) {
-        t.skip('This test will not pass on Node v8')
-        return
-      }
       async function handler (req, res) {
         t.strictEqual(req.url, '/_bulk')
         t.match(req.headers, { 'content-type': 'application/x-ndjson' })
@@ -427,10 +425,6 @@ test('bulk index', t => {
     })
 
     t.test('Should perform a bulk request (failure)', async t => {
-      if (semver.lt(process.versions.node, '10.0.0')) {
-        t.skip('This test will not pass on Node v8')
-        return
-      }
       async function handler (req, res) {
         t.strictEqual(req.url, '/_bulk')
         t.match(req.headers, { 'content-type': 'application/x-ndjson' })
@@ -572,10 +566,6 @@ test('bulk index', t => {
     })
 
     t.test('Should abort a bulk request', async t => {
-      if (semver.lt(process.versions.node, '10.0.0')) {
-        t.skip('This test will not pass on Node v8')
-        return
-      }
       async function handler (req, res) {
         t.strictEqual(req.url, '/_bulk')
         t.match(req.headers, { 'content-type': 'application/x-ndjson' })
@@ -664,7 +654,7 @@ test('bulk index', t => {
         })
         .catch(err => {
           t.true(err instanceof errors.ConfigurationError)
-          t.is(err.message, `Bulk helper invalid action: 'foo'`)
+          t.is(err.message, 'Bulk helper invalid action: \'foo\'')
         })
     })
 
@@ -1041,6 +1031,66 @@ test('bulk delete', t => {
       aborted: false
     })
     server.stop()
+  })
+
+  t.end()
+})
+
+test('transport options', t => {
+  t.test('Should pass transport options in request', async t => {
+    let count = 0
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        count++
+
+        if (params.path === '/_bulk') {
+          t.match(params.headers, {
+            'content-type': 'application/x-ndjson',
+            foo: 'bar'
+          })
+          return { body: { errors: false, items: [{}] } }
+        }
+
+        t.strictEqual(params.path, '/_all/_refresh')
+        t.match(params.headers, {
+          foo: 'bar'
+        })
+        return { body: {} }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+
+    const result = await client.helpers.bulk({
+      datasource: dataset.slice(),
+      flushBytes: 1,
+      concurrency: 1,
+      onDocument (doc) {
+        return { index: { _index: 'test' } }
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      },
+      refreshOnCompletion: true
+    }, {
+      headers: {
+        foo: 'bar'
+      }
+    })
+
+    t.strictEqual(count, 4) // three bulk requests, one refresh
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, {
+      total: 3,
+      successful: 3,
+      retry: 0,
+      failed: 0,
+      aborted: false
+    })
   })
 
   t.end()

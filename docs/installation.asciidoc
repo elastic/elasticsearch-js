@@ -24,7 +24,7 @@ To learn more about the supported major versions, please refer to the
 [[nodejs-support]]
 === Node.js support
 
-NOTE: The minimum supported version of Node.js is `v8`.
+NOTE: The minimum supported version of Node.js is `v10`.
 
 The client versioning follows the {stack} versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
@@ -90,4 +90,5 @@ using.
 
 WARNING: There is no official support for the browser environment. It exposes
 your {es} instance to everyone, which could lead to security issues. We
-recommend you to write a lightweight proxy that uses this client instead.
+recommend you to write a lightweight proxy that uses this client instead,
+you can see a proxy example https://github.com/elastic/elasticsearch-js/tree/master/docs/examples/proxy[here].

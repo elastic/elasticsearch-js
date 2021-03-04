@@ -28,7 +28,7 @@ npm install @elastic/elasticsearch
 
 ### Node.js support
 
-NOTE: The minimum supported version of Node.js is `v8`.
+NOTE: The minimum supported version of Node.js is `v10`.
 
 The client versioning follows the Elastc Stack versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
@@ -71,7 +71,7 @@ npm install @elastic/elasticsearch@<major>
 #### Browser
 
 WARNING: There is no official support for the browser environment. It exposes your Elasticsearch instance to everyone, which could lead to security issues.
-We recommend that you write a lightweight proxy that uses this client instead.
+We recommend that you write a lightweight proxy that uses this client instead, you can see a proxy example [here](./docs/examples/proxy).
 
 ## Documentation
 

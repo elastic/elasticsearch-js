@@ -29,10 +29,10 @@ const snakeCase = { termStatistics: 'term_statistics', fieldStatistics: 'field_s
 function mtermvectorsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + '_mtermvectors'

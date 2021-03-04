@@ -35,15 +35,15 @@ RollupApi.prototype.deleteJob = function rollupDeleteJobApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
 
@@ -61,10 +61,10 @@ RollupApi.prototype.deleteJob = function rollupDeleteJobApi (params, options, ca
 RollupApi.prototype.getJobs = function rollupGetJobsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((id) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
@@ -87,10 +87,10 @@ RollupApi.prototype.getJobs = function rollupGetJobsApi (params, options, callba
 RollupApi.prototype.getRollupCaps = function rollupGetRollupCapsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((id) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_rollup' + '/' + 'data' + '/' + encodeURIComponent(id)
@@ -114,15 +114,15 @@ RollupApi.prototype.getRollupIndexCaps = function rollupGetRollupIndexCapsApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + encodeURIComponent(index) + '/' + '_rollup' + '/' + 'data'
 
@@ -141,19 +141,19 @@ RollupApi.prototype.putJob = function rollupPutJobApi (params, options, callback
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id)
 
@@ -172,21 +172,31 @@ RollupApi.prototype.rollup = function rollupRollupApi (params, options, callback
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.rollup_index == null && params.rollupIndex == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: rollup_index or rollupIndex')
+    return handleError(err, callback)
+  }
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, index, ...querystring } = params
+  // check required url components
+  if ((params.rollup_index != null || params.rollupIndex != null) && (params.index == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: index')
+    return handleError(err, callback)
+  }
+
+  let { method, body, index, rollupIndex, rollup_index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
-  path = '/' + encodeURIComponent(index) + '/' + '_rollup'
+  path = '/' + encodeURIComponent(index) + '/' + '_rollup' + '/' + encodeURIComponent(rollup_index || rollupIndex)
 
   // build request object
   const request = {
@@ -203,25 +213,25 @@ RollupApi.prototype.rollupSearch = function rollupRollupSearchApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['index'] == null) {
+  if (params.index == null) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['type'] != null && (params['index'] == null)) {
+  if (params.type != null && (params.index == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: index')
     return handleError(err, callback)
   }
 
-  var { method, body, index, type, ...querystring } = params
+  let { method, body, index, type, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((index) != null && (type) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + encodeURIComponent(index) + '/' + encodeURIComponent(type) + '/' + '_rollup_search'
@@ -245,15 +255,15 @@ RollupApi.prototype.startJob = function rollupStartJobApi (params, options, call
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/' + '_start'
 
@@ -272,15 +282,15 @@ RollupApi.prototype.stopJob = function rollupStopJobApi (params, options, callba
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['id'] == null) {
+  if (params.id == null) {
     const err = new this[kConfigurationError]('Missing required parameter: id')
     return handleError(err, callback)
   }
 
-  var { method, body, id, ...querystring } = params
+  let { method, body, id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_rollup' + '/' + 'job' + '/' + encodeURIComponent(id) + '/' + '_stop'
 

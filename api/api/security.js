@@ -34,10 +34,10 @@ function SecurityApi (transport, ConfigurationError) {
 SecurityApi.prototype.authenticate = function securityAuthenticateApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_security' + '/' + '_authenticate'
 
@@ -56,15 +56,15 @@ SecurityApi.prototype.changePassword = function securityChangePasswordApi (param
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, username, ...querystring } = params
+  let { method, body, username, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((username) != null) {
     if (method == null) method = 'PUT'
     path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_password'
@@ -88,15 +88,15 @@ SecurityApi.prototype.clearApiKeyCache = function securityClearApiKeyCacheApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['ids'] == null) {
+  if (params.ids == null) {
     const err = new this[kConfigurationError]('Missing required parameter: ids')
     return handleError(err, callback)
   }
 
-  var { method, body, ids, ...querystring } = params
+  let { method, body, ids, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_security' + '/' + 'api_key' + '/' + encodeURIComponent(ids) + '/' + '_clear_cache'
 
@@ -115,15 +115,15 @@ SecurityApi.prototype.clearCachedPrivileges = function securityClearCachedPrivil
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['application'] == null) {
+  if (params.application == null) {
     const err = new this[kConfigurationError]('Missing required parameter: application')
     return handleError(err, callback)
   }
 
-  var { method, body, application, ...querystring } = params
+  let { method, body, application, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + '_clear_cache'
 
@@ -142,15 +142,15 @@ SecurityApi.prototype.clearCachedRealms = function securityClearCachedRealmsApi 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['realms'] == null) {
+  if (params.realms == null) {
     const err = new this[kConfigurationError]('Missing required parameter: realms')
     return handleError(err, callback)
   }
 
-  var { method, body, realms, ...querystring } = params
+  let { method, body, realms, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_security' + '/' + 'realm' + '/' + encodeURIComponent(realms) + '/' + '_clear_cache'
 
@@ -169,15 +169,15 @@ SecurityApi.prototype.clearCachedRoles = function securityClearCachedRolesApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name) + '/' + '_clear_cache'
 
@@ -196,15 +196,15 @@ SecurityApi.prototype.createApiKey = function securityCreateApiKeyApi (params, o
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'api_key'
 
@@ -223,25 +223,25 @@ SecurityApi.prototype.deletePrivileges = function securityDeletePrivilegesApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['application'] == null) {
+  if (params.application == null) {
     const err = new this[kConfigurationError]('Missing required parameter: application')
     return handleError(err, callback)
   }
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
   // check required url components
-  if (params['name'] != null && (params['application'] == null)) {
+  if (params.name != null && (params.application == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: application')
     return handleError(err, callback)
   }
 
-  var { method, body, application, name, ...querystring } = params
+  let { method, body, application, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name)
 
@@ -260,15 +260,15 @@ SecurityApi.prototype.deleteRole = function securityDeleteRoleApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name)
 
@@ -287,15 +287,15 @@ SecurityApi.prototype.deleteRoleMapping = function securityDeleteRoleMappingApi 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
 
@@ -314,15 +314,15 @@ SecurityApi.prototype.deleteUser = function securityDeleteUserApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['username'] == null) {
+  if (params.username == null) {
     const err = new this[kConfigurationError]('Missing required parameter: username')
     return handleError(err, callback)
   }
 
-  var { method, body, username, ...querystring } = params
+  let { method, body, username, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username)
 
@@ -341,15 +341,15 @@ SecurityApi.prototype.disableUser = function securityDisableUserApi (params, opt
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['username'] == null) {
+  if (params.username == null) {
     const err = new this[kConfigurationError]('Missing required parameter: username')
     return handleError(err, callback)
   }
 
-  var { method, body, username, ...querystring } = params
+  let { method, body, username, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_disable'
 
@@ -368,15 +368,15 @@ SecurityApi.prototype.enableUser = function securityEnableUserApi (params, optio
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['username'] == null) {
+  if (params.username == null) {
     const err = new this[kConfigurationError]('Missing required parameter: username')
     return handleError(err, callback)
   }
 
-  var { method, body, username, ...querystring } = params
+  let { method, body, username, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username) + '/' + '_enable'
 
@@ -394,10 +394,10 @@ SecurityApi.prototype.enableUser = function securityEnableUserApi (params, optio
 SecurityApi.prototype.getApiKey = function securityGetApiKeyApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_security' + '/' + 'api_key'
 
@@ -415,10 +415,10 @@ SecurityApi.prototype.getApiKey = function securityGetApiKeyApi (params, options
 SecurityApi.prototype.getBuiltinPrivileges = function securityGetBuiltinPrivilegesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_security' + '/' + 'privilege' + '/' + '_builtin'
 
@@ -437,15 +437,15 @@ SecurityApi.prototype.getPrivileges = function securityGetPrivilegesApi (params,
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required url components
-  if (params['name'] != null && (params['application'] == null)) {
+  if (params.name != null && (params.application == null)) {
     const err = new this[kConfigurationError]('Missing required parameter of the url: application')
     return handleError(err, callback)
   }
 
-  var { method, body, application, name, ...querystring } = params
+  let { method, body, application, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((application) != null && (name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_security' + '/' + 'privilege' + '/' + encodeURIComponent(application) + '/' + encodeURIComponent(name)
@@ -471,10 +471,10 @@ SecurityApi.prototype.getPrivileges = function securityGetPrivilegesApi (params,
 SecurityApi.prototype.getRole = function securityGetRoleApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name)
@@ -497,10 +497,10 @@ SecurityApi.prototype.getRole = function securityGetRoleApi (params, options, ca
 SecurityApi.prototype.getRoleMapping = function securityGetRoleMappingApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((name) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
@@ -524,15 +524,15 @@ SecurityApi.prototype.getToken = function securityGetTokenApi (params, options, 
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_security' + '/' + 'oauth2' + '/' + 'token'
 
@@ -550,10 +550,10 @@ SecurityApi.prototype.getToken = function securityGetTokenApi (params, options, 
 SecurityApi.prototype.getUser = function securityGetUserApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, username, ...querystring } = params
+  let { method, body, username, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((username) != null) {
     if (method == null) method = 'GET'
     path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username)
@@ -576,10 +576,10 @@ SecurityApi.prototype.getUser = function securityGetUserApi (params, options, ca
 SecurityApi.prototype.getUserPrivileges = function securityGetUserPrivilegesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_security' + '/' + 'user' + '/' + '_privileges'
 
@@ -598,15 +598,15 @@ SecurityApi.prototype.grantApiKey = function securityGrantApiKeyApi (params, opt
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_security' + '/' + 'api_key' + '/' + 'grant'
 
@@ -625,15 +625,15 @@ SecurityApi.prototype.hasPrivileges = function securityHasPrivilegesApi (params,
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, user, ...querystring } = params
+  let { method, body, user, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if ((user) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(user) + '/' + '_has_privileges'
@@ -657,15 +657,15 @@ SecurityApi.prototype.invalidateApiKey = function securityInvalidateApiKeyApi (p
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'api_key'
 
@@ -684,15 +684,15 @@ SecurityApi.prototype.invalidateToken = function securityInvalidateTokenApi (par
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'oauth2' + '/' + 'token'
 
@@ -711,15 +711,15 @@ SecurityApi.prototype.putPrivileges = function securityPutPrivilegesApi (params,
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, ...querystring } = params
+  let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'privilege'
 
@@ -738,19 +738,19 @@ SecurityApi.prototype.putRole = function securityPutRoleApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'role' + '/' + encodeURIComponent(name)
 
@@ -769,19 +769,19 @@ SecurityApi.prototype.putRoleMapping = function securityPutRoleMappingApi (param
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['name'] == null) {
+  if (params.name == null) {
     const err = new this[kConfigurationError]('Missing required parameter: name')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, name, ...querystring } = params
+  let { method, body, name, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
 
@@ -800,19 +800,19 @@ SecurityApi.prototype.putUser = function securityPutUserApi (params, options, ca
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params['username'] == null) {
+  if (params.username == null) {
     const err = new this[kConfigurationError]('Missing required parameter: username')
     return handleError(err, callback)
   }
-  if (params['body'] == null) {
+  if (params.body == null) {
     const err = new this[kConfigurationError]('Missing required parameter: body')
     return handleError(err, callback)
   }
 
-  var { method, body, username, ...querystring } = params
+  let { method, body, username, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  var path = ''
+  let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'user' + '/' + encodeURIComponent(username)
 
