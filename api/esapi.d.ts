@@ -436,7 +436,8 @@ declare class ESAPI {
     moveToStep<TContext = unknown>(params: T.MoveToStepRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MoveToStepResponse, TContext>>
     moveToStep<TContext = unknown>(params: T.MoveToStepRequest, callback: callbackFn<T.MoveToStepResponse, TContext>): TransportRequestCallback
     moveToStep<TContext = unknown>(params: T.MoveToStepRequest, options: TransportRequestOptions, callback: callbackFn<T.MoveToStepResponse, TContext>): TransportRequestCallback
-    putLifecycle<TContext = unknown>(params: T.PutLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutLifecycleResponse, TContext>>
+    putLifecycle<TContext = unknown>(params?: T.PutLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutLifecycleResponse, TContext>>
+    putLifecycle<TContext = unknown>(callback: callbackFn<T.PutLifecycleResponse, TContext>): TransportRequestCallback
     putLifecycle<TContext = unknown>(params: T.PutLifecycleRequest, callback: callbackFn<T.PutLifecycleResponse, TContext>): TransportRequestCallback
     putLifecycle<TContext = unknown>(params: T.PutLifecycleRequest, options: TransportRequestOptions, callback: callbackFn<T.PutLifecycleResponse, TContext>): TransportRequestCallback
     removePolicy<TContext = unknown>(params: T.RemovePolicyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RemovePolicyResponse, TContext>>
