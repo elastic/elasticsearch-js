@@ -375,6 +375,41 @@ _Default:_ `null`
 _Default:_ `null`
 |===
 
+[discrete]
+[[response-parsing]]
+=== Response parsing
+
+By default, the response deserialization is done with https://github.com/fastify/secure-json-parse[`secure-json-parse`]
+instead of JSON.parse to protect you against https://web.archive.org/web/20200319091159/https://hueniverse.com/square-brackets-are-the-enemy-ff5b9fd8a3e8?gi=184a27ee2a08[prototype poisoning] attacks better.
+In most cases, you don’t need to care about this, but if the object stored in Elasticsearch
+contains either the `__proto__` or `constructor` keys, the deserialization phase will throw an exception.
+
+If you want to opt-out from this behavior, you should override the default serializer class as follows:
+
+[source,js]
+----
+// We still recommend to use the `secure-json-parse` library
+// and configure it to allow the keys you need to use.
+const sjson = require('secure-json-parse')
+const { Client, Serializer, errors } = require('@elastic/elasticsearch')
+
+class InsecureSerializer extends Serializer {
+  deserialize (json) {
+    let object
+    try {
+      object = sjson.parse(json, { constructorAction: 'ignore' })
+    } catch (err) {
+      throw new errors.DeserializationError(err.message, json)
+    }
+    return object
+  }
+}
+
+const client = new Client({
+  node: 'http://localhost:9200',
+  Serializer: InsecureSerializer
+})
+----
 
 [discrete]
 [[client-connect-proxy]]
