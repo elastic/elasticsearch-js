@@ -9,3 +9,4 @@ section, you can see the possible options that you can use to configure it.
 * <<advanced-config>>
 * <<child>>
 * <<extend>>
+* <<client-testing>>
