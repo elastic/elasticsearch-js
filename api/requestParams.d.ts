@@ -71,7 +71,7 @@ export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   size?: number;
   sort?: string | string[];
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   terminate_after?: number;
@@ -116,7 +116,7 @@ export interface Bulk<T = RequestNDBody> extends Generic {
   refresh?: 'wait_for' | boolean;
   routing?: string;
   timeout?: string;
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   pipeline?: string;
@@ -667,7 +667,7 @@ export interface DeleteByQuery<T = RequestBody> extends Generic {
   search_timeout?: string;
   max_docs?: number;
   sort?: string | string[];
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   terminate_after?: number;
@@ -748,7 +748,7 @@ export interface Exists extends Generic {
   realtime?: boolean;
   refresh?: boolean;
   routing?: string;
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
@@ -765,7 +765,7 @@ export interface ExistsSource extends Generic {
   realtime?: boolean;
   refresh?: boolean;
   routing?: string;
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
@@ -786,7 +786,7 @@ export interface Explain<T = RequestBody> extends Generic {
   preference?: string;
   q?: string;
   routing?: string;
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   body?: T;
@@ -812,7 +812,7 @@ export interface Get extends Generic {
   realtime?: boolean;
   refresh?: boolean;
   routing?: string;
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
@@ -839,7 +839,7 @@ export interface GetSource extends Generic {
   realtime?: boolean;
   refresh?: boolean;
   routing?: string;
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   version?: number;
@@ -1425,7 +1425,7 @@ export interface Mget<T = RequestBody> extends Generic {
   realtime?: boolean;
   refresh?: boolean;
   routing?: string;
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   body: T;
@@ -2073,7 +2073,7 @@ export interface Search<T = RequestBody> extends Generic {
   search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   size?: number;
   sort?: string | string[];
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   terminate_after?: number;
@@ -2530,7 +2530,7 @@ export interface Update<T = RequestBody> extends Generic {
   _source_exclude?: string | string[];
   _source_include?: string | string[];
   wait_for_active_shards?: string;
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   lang?: string;
@@ -2567,7 +2567,7 @@ export interface UpdateByQuery<T = RequestBody> extends Generic {
   search_timeout?: string;
   max_docs?: number;
   sort?: string | string[];
-  _source?: string | string[];
+  _source?: boolean | string | string[];
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   terminate_after?: number;
