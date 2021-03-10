@@ -10,6 +10,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "resolutions": {
+    "@babel/preset-env": "7.13.8"
+  },
   "devDependencies": {
     "parcel-bundler": "^1.12.4"
   }
