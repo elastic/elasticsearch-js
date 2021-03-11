@@ -120,7 +120,7 @@ export interface TransportRequestCallback {
 
 export interface TransportRequestPromise<T> extends Promise<T> {
   abort: () => void;
-  finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  finally(onFinally?: (() => void) | undefined | null): Promise<T>;
 }
 
 export interface TransportGetConnectionOptions {
