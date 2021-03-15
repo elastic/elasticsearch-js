@@ -157,3 +157,75 @@ test('DeserializationError', t => {
     t.ok(err instanceof DeserializationError)
   }
 })
+
+test('prototype poisoning protection', t => {
+  t.plan(2)
+  const s = new Serializer()
+  try {
+    s.deserialize('{"__proto__":{"foo":"bar"}}')
+    t.fail('Should fail')
+  } catch (err) {
+    t.ok(err instanceof DeserializationError)
+  }
+
+  try {
+    s.deserialize('{"constructor":{"prototype":{"foo":"bar"}}}')
+    t.fail('Should fail')
+  } catch (err) {
+    t.ok(err instanceof DeserializationError)
+  }
+})
+
+test('disable prototype poisoning protection', t => {
+  t.plan(2)
+  const s = new Serializer({ disablePrototypePoisoningProtection: true })
+  try {
+    s.deserialize('{"__proto__":{"foo":"bar"}}')
+    t.pass('Should not fail')
+  } catch (err) {
+    t.fail(err)
+  }
+
+  try {
+    s.deserialize('{"constructor":{"prototype":{"foo":"bar"}}}')
+    t.pass('Should not fail')
+  } catch (err) {
+    t.fail(err)
+  }
+})
+
+test('disable prototype poisoning protection only for proto', t => {
+  t.plan(2)
+  const s = new Serializer({ disablePrototypePoisoningProtection: 'proto' })
+  try {
+    s.deserialize('{"__proto__":{"foo":"bar"}}')
+    t.pass('Should not fail')
+  } catch (err) {
+    t.fail(err)
+  }
+
+  try {
+    s.deserialize('{"constructor":{"prototype":{"foo":"bar"}}}')
+    t.fail('Should fail')
+  } catch (err) {
+    t.ok(err instanceof DeserializationError)
+  }
+})
+
+test('disable prototype poisoning protection only for constructor', t => {
+  t.plan(2)
+  const s = new Serializer({ disablePrototypePoisoningProtection: 'constructor' })
+  try {
+    s.deserialize('{"__proto__":{"foo":"bar"}}')
+    t.fail('Should fail')
+  } catch (err) {
+    t.ok(err instanceof DeserializationError)
+  }
+
+  try {
+    s.deserialize('{"constructor":{"prototype":{"foo":"bar"}}}')
+    t.pass('Should not fail')
+  } catch (err) {
+    t.fail(err)
+  }
+})

@@ -123,7 +123,8 @@ class Client extends ESAPI {
         opaqueIdPrefix: null,
         context: null,
         proxy: null,
-        enableMetaHeader: true
+        enableMetaHeader: true,
+        disablePrototypePoisoningProtection: false
       }, opts)
 
     this[kInitialOptions] = options
@@ -140,7 +141,9 @@ class Client extends ESAPI {
       this[kEventEmitter] = options[kChild].eventEmitter
     } else {
       this[kEventEmitter] = new EventEmitter()
-      this.serializer = new options.Serializer()
+      this.serializer = new options.Serializer({
+        disablePrototypePoisoningProtection: options.disablePrototypePoisoningProtection
+      })
       this.connectionPool = new options.ConnectionPool({
         pingTimeout: options.pingTimeout,
         resurrectStrategy: options.resurrectStrategy,

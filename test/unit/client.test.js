@@ -1364,3 +1364,60 @@ test('Meta header disabled', t => {
     t.error(err)
   })
 })
+
+test('Prototype poisoning protection enabled by default', t => {
+  t.plan(1)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      const stream = intoStream('{"__proto__":{"foo":"bar"}}')
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-length': '27',
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.info((err, result) => {
+    t.true(err instanceof errors.DeserializationError)
+  })
+})
+
+test('Disable prototype poisoning protection', t => {
+  t.plan(1)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      const stream = intoStream('{"__proto__":{"foo":"bar"}}')
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-length': '27',
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection,
+    disablePrototypePoisoningProtection: true
+  })
+
+  client.info((err, result) => {
+    t.error(err)
+  })
+})

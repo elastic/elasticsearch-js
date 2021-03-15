@@ -17,7 +17,12 @@
  * under the License.
  */
 
+export interface SerializerOptions {
+  disablePrototypePoisoningProtection: boolean | 'proto' | 'constructor'
+}
+
 export default class Serializer {
+  constructor (opts?: SerializerOptions)
   serialize(object: any): string;
   deserialize(json: string): any;
   ndserialize(array: any[]): string;
