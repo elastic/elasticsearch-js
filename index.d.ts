@@ -113,7 +113,8 @@ interface ClientOptions {
     // TODO: remove username and password here in 8
     username?: string;
     password?: string;
-  }
+  };
+  disablePrototypePoisoningProtection?: boolean | 'proto' | 'constructor';
 }
 
 declare class Client extends ESAPI {

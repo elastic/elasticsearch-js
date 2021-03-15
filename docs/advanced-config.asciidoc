@@ -4,45 +4,11 @@
 If you need to customize the client behavior heavily, you are in the right 
 place! The client enables you to customize the following internals:
 
-* `Transport` class
 * `ConnectionPool` class
 * `Connection` class
 * `Serializer` class
 
-
-[discrete]
-==== `Transport`
-
-This class is responsible for performing the request to {es} and handling 
-errors, it also handles the sniffing.
-
-[source,js]
-----
-const { Client, Transport } = require('@elastic/elasticsearch')
-
-class MyTransport extends Transport {
-  request (params, options, callback) {
-    // your code
-  }
-}
-
-const client = new Client({
-    Transport: MyTransport
-})
-----
-
-Sometimes you need to inject a small snippet of your code and then continue to 
-use the usual client code. In such cases, call `super.method`:
-
-[source,js]
-----
-class MyTransport extends Transport {
-  request (params, options, callback) {
-    // your code
-    return super.request(params, options, callback)
-  }
-}
-----
+NOTE: For information about the `Transport` class, refer to <<transport>>.
 
 
 [discrete]
