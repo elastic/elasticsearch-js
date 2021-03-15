@@ -557,22 +557,6 @@ expectError<errors.ConfigurationError>(
   )
 }
 
-{
-  class CustomSerializer {
-    deserialize (str: string) {
-      return JSON.parse(str)
-    }
-  }
-
-  expectError<errors.ConfigurationError>(
-    // @ts-expect-error
-    new Client({
-      node: 'http://localhost:9200',
-      Serializer: CustomSerializer
-    })
-  )
-}
-
 /**
  * `Connection` option
  */
