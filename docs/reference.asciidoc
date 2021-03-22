@@ -3265,6 +3265,23 @@ _Default:_ `OR`
 |===
 
 [discrete]
+=== features.getFeatures
+
+[source,ts]
+----
+client.features.getFeatures({
+  master_timeout: string
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|===
+
+[discrete]
 === fieldCaps
 
 [source,ts]
@@ -9973,23 +9990,6 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |`verbose`
 |`boolean` - Whether to show verbose snapshot info or only show the basic info found in the repository index blob
-
-|===
-
-[discrete]
-=== snapshot.getFeatures
-
-[source,ts]
-----
-client.snapshot.getFeatures({
-  master_timeout: string
-})
-----
-link:{ref}/modules-snapshots.html[Documentation] +
-[cols=2*]
-|===
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
 
 |===
 

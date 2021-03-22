@@ -788,6 +788,10 @@ export interface Explain<T = RequestBody> extends Generic {
   body?: T;
 }
 
+export interface FeaturesGetFeatures extends Generic {
+  master_timeout?: string;
+}
+
 export interface FieldCaps<T = RequestBody> extends Generic {
   index?: string | string[];
   fields?: string | string[];
@@ -2392,10 +2396,6 @@ export interface SnapshotGet extends Generic {
   master_timeout?: string;
   ignore_unavailable?: boolean;
   verbose?: boolean;
-}
-
-export interface SnapshotGetFeatures extends Generic {
-  master_timeout?: string;
 }
 
 export interface SnapshotGetRepository extends Generic {

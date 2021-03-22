@@ -720,6 +720,16 @@ declare class Client {
   explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Explain<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   explain<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Explain<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  features: {
+    get_features<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.FeaturesGetFeatures, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get_features<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_features<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.FeaturesGetFeatures, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_features<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.FeaturesGetFeatures, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getFeatures<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.FeaturesGetFeatures, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getFeatures<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getFeatures<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.FeaturesGetFeatures, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getFeatures<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.FeaturesGetFeatures, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  }
   field_caps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.FieldCaps<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   field_caps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   field_caps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.FieldCaps<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2391,14 +2401,6 @@ declare class Client {
     get<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SnapshotGet, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SnapshotGet, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_features<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotGetFeatures, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    get_features<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_features<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SnapshotGetFeatures, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_features<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SnapshotGetFeatures, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getFeatures<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotGetFeatures, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getFeatures<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getFeatures<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SnapshotGetFeatures, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getFeatures<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SnapshotGetFeatures, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_repository<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SnapshotGetRepository, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     get_repository<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_repository<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SnapshotGetRepository, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
