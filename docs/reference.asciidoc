@@ -1091,7 +1091,8 @@ client.cat.nodes({
   help: boolean,
   s: string | string[],
   time: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos',
-  v: boolean
+  v: boolean,
+  include_unloaded_segments: boolean
 })
 ----
 link:{ref}/cat-nodes.html[Documentation] +
@@ -1123,6 +1124,9 @@ link:{ref}/cat-nodes.html[Documentation] +
 
 |`v`
 |`boolean` - Verbose mode. Display column headers
+
+|`include_unloaded_segments` or `includeUnloadedSegments`
+|`boolean` - If set to true segment stats will include stats for segments that are not currently loaded into memory
 
 |===
 
@@ -3219,6 +3223,33 @@ _Default:_ `OR`
 |`object` - The query definition using the Query DSL
 
 |===
+
+[discrete]
+=== features.getFeatures
+
+[source,ts]
+----
+client.features.getFeatures({
+  master_timeout: string
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`master_timeout` or `masterTimeout`
+|`string` - Explicit operation timeout for connection to master node
+
+|===
+
+[discrete]
+=== features.resetFeatures
+*Stability:* experimental
+[source,ts]
+----
+client.features.resetFeatures()
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+
 
 [discrete]
 === fieldCaps
@@ -5550,6 +5581,7 @@ link:{ref}/delete-pipeline-api.html[Documentation] +
 ----
 client.ingest.getPipeline({
   id: string,
+  summary: boolean,
   master_timeout: string
 })
 ----
@@ -5558,6 +5590,9 @@ link:{ref}/get-pipeline-api.html[Documentation] +
 |===
 |`id`
 |`string` - Comma separated list of pipeline ids. Wildcards supported
+
+|`summary`
+|`boolean` - Return pipelines without their definitions (default: false)
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -7042,6 +7077,27 @@ link:{ref}/ml-post-data.html[Documentation] +
 |===
 
 [discrete]
+=== ml.previewDataFrameAnalytics
+*Stability:* beta
+[source,ts]
+----
+client.ml.previewDataFrameAnalytics({
+  id: string,
+  body: object
+})
+----
+link:{ref}/preview-dfanalytics.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The ID of the data frame analytics to preview
+
+|`body`
+|`object` - The data frame analytics config to preview
+
+|===
+
+[discrete]
 === ml.previewDatafeed
 
 [source,ts]
@@ -7927,7 +7983,8 @@ client.nodes.stats({
   level: 'indices' | 'node' | 'shards',
   types: string | string[],
   timeout: string,
-  include_segment_file_sizes: boolean
+  include_segment_file_sizes: boolean,
+  include_unloaded_segments: boolean
 })
 ----
 link:{ref}/cluster-nodes-stats.html[Documentation] +
@@ -7966,6 +8023,9 @@ _Default:_ `node`
 
 |`include_segment_file_sizes` or `includeSegmentFileSizes`
 |`boolean` - Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
+
+|`include_unloaded_segments` or `includeUnloadedSegments`
+|`boolean` - If set to true segment stats will include stats for segments that are not currently loaded into memory
 
 |===
 
@@ -9754,23 +9814,6 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |`verbose`
 |`boolean` - Whether to show verbose snapshot info or only show the basic info found in the repository index blob
-
-|===
-
-[discrete]
-=== snapshot.getFeatures
-
-[source,ts]
-----
-client.snapshot.getFeatures({
-  master_timeout: string
-})
-----
-link:{ref}/modules-snapshots.html[Documentation] +
-[cols=2*]
-|===
-|`master_timeout` or `masterTimeout`
-|`string` - Explicit operation timeout for connection to master node
 
 |===
 

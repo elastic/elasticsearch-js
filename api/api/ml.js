@@ -1158,6 +1158,32 @@ MlApi.prototype.postData = function mlPostDataApi (params, options, callback) {
   return this.transport.request(request, options, callback)
 }
 
+MlApi.prototype.previewDataFrameAnalytics = function mlPreviewDataFrameAnalyticsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if ((id) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id) + '/' + '_preview'
+  } else {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + '_ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + '_preview'
+  }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 MlApi.prototype.previewDatafeed = function mlPreviewDatafeedApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1901,6 +1927,7 @@ Object.defineProperties(MlApi.prototype, {
   open_job: { get () { return this.openJob } },
   post_calendar_events: { get () { return this.postCalendarEvents } },
   post_data: { get () { return this.postData } },
+  preview_data_frame_analytics: { get () { return this.previewDataFrameAnalytics } },
   preview_datafeed: { get () { return this.previewDatafeed } },
   put_calendar: { get () { return this.putCalendar } },
   put_calendar_job: { get () { return this.putCalendarJob } },
