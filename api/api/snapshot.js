@@ -275,27 +275,6 @@ SnapshotApi.prototype.get = function snapshotGetApi (params, options, callback) 
   return this.transport.request(request, options, callback)
 }
 
-SnapshotApi.prototype.getFeatures = function snapshotGetFeaturesApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  let { method, body, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if (method == null) method = 'GET'
-  path = '/' + '_snapshottable_features'
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: null,
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
 SnapshotApi.prototype.getRepository = function snapshotGetRepositoryApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -425,7 +404,6 @@ Object.defineProperties(SnapshotApi.prototype, {
   cleanup_repository: { get () { return this.cleanupRepository } },
   create_repository: { get () { return this.createRepository } },
   delete_repository: { get () { return this.deleteRepository } },
-  get_features: { get () { return this.getFeatures } },
   get_repository: { get () { return this.getRepository } },
   verify_repository: { get () { return this.verifyRepository } }
 })

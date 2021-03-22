@@ -276,6 +276,7 @@ export interface CatNodes extends Generic {
   s?: string | string[];
   time?: 'd' | 'h' | 'm' | 's' | 'ms' | 'micros' | 'nanos';
   v?: boolean;
+  include_unloaded_segments?: boolean;
 }
 
 export interface CatPendingTasks extends Generic {
@@ -786,6 +787,13 @@ export interface Explain<T = RequestBody> extends Generic {
   _source_excludes?: string | string[];
   _source_includes?: string | string[];
   body?: T;
+}
+
+export interface FeaturesGetFeatures extends Generic {
+  master_timeout?: string;
+}
+
+export interface FeaturesResetFeatures extends Generic {
 }
 
 export interface FieldCaps<T = RequestBody> extends Generic {
@@ -1388,6 +1396,7 @@ export interface IngestDeletePipeline extends Generic {
 
 export interface IngestGetPipeline extends Generic {
   id?: string;
+  summary?: boolean;
   master_timeout?: string;
 }
 
@@ -1745,6 +1754,11 @@ export interface MlPostData<T = RequestBody> extends Generic {
   body: T;
 }
 
+export interface MlPreviewDataFrameAnalytics<T = RequestBody> extends Generic {
+  id?: string;
+  body?: T;
+}
+
 export interface MlPreviewDatafeed extends Generic {
   datafeed_id: string;
 }
@@ -1967,6 +1981,7 @@ export interface NodesStats extends Generic {
   types?: string | string[];
   timeout?: string;
   include_segment_file_sizes?: boolean;
+  include_unloaded_segments?: boolean;
 }
 
 export interface NodesUsage extends Generic {
@@ -2403,10 +2418,6 @@ export interface SnapshotGet extends Generic {
   master_timeout?: string;
   ignore_unavailable?: boolean;
   verbose?: boolean;
-}
-
-export interface SnapshotGetFeatures extends Generic {
-  master_timeout?: string;
 }
 
 export interface SnapshotGetRepository extends Generic {
