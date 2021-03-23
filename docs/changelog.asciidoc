@@ -2,6 +2,39 @@
 == Changelog
 
 [discrete]
+=== 7.12.0
+
+[discrete]
+==== Breaking changes
+
+[discrete]
+===== Remove Node.js v8 support https://github.com/elastic/elasticsearch-js/pull/1402[#1402]
+
+According to our https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/installation.html#nodejs-support[support matrix].
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v7.12`.
+
+You can find all the API changes https://www.elastic.co/guide/en/elasticsearch/reference/7.12/release-notes-7.12.0.html[here].
+
+[discrete]
+===== Add support for transport options to all helpers https://github.com/elastic/elasticsearch-js/pull/1400[#1400]
+
+You can now pass Transport specific options to the helpers as well.
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Add `.finally` method to the Promise API https://github.com/elastic/elasticsearch-js/pull/1415[#1415]
+
+The client returns a thenable object when you are not configuring a callback.
+Now the thenable offers a `.finally` method as well.
+
+[discrete]
 === 7.11.0
 
 [discrete]
