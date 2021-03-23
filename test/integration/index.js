@@ -137,7 +137,10 @@ function runner (opts = {}) {
   const client = new Client(options)
   log('Loading yaml suite')
   start({ client, isXPack: opts.isXPack })
-    .catch(console.log)
+    .catch(err => {
+      console.error(err)
+      process.exit(1)
+    })
 }
 
 async function waitCluster (client, times = 0) {
@@ -304,10 +307,9 @@ function now () {
 }
 
 function parse (data) {
-  const schema = yaml.Schema.create(yaml.CORE_SCHEMA, [])
   let doc
   try {
-    doc = yaml.safeLoad(data, { schema })
+    doc = yaml.load(data, { schema: yaml.CORE_SCHEMA })
   } catch (err) {
     console.error(err)
     return
