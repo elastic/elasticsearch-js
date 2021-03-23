@@ -138,7 +138,12 @@ function runner (opts = {}) {
   log('Loading yaml suite')
   start({ client, isXPack: opts.isXPack })
     .catch(err => {
-      console.error(err)
+      if (err.name === 'ResponseError') {
+        console.error(err)
+        console.log(JSON.stringify(err.meta, null, 2))
+      } else {
+        console.error(err)
+      }
       process.exit(1)
     })
 }
