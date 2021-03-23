@@ -94,6 +94,7 @@ const platinumBlackList = {
   'snapshot/20_operator_privileges_disabled.yml': ['*'],
   // the body is correct, but the regex is failing
   'sql/sql.yml': ['Getting textual representation'],
+  'searchable_snapshots/10_usage.yml': ['*'],
   // we are setting two certificates in the docker config
   'ssl/10_basic.yml': ['*'],
   // very likely, the index template has not been loaded yet.
