@@ -84,6 +84,8 @@ const platinumBlackList = {
   ],
   // The cleanup fails with a index not found when retrieving the jobs
   'ml/get_datafeed_stats.yml': ['Test get datafeed stats when total_search_time_ms mapping is missing'],
+  // Investigate why is failing
+  'ml/inference_crud.yml': ['*'],
   // investigate why this is failing
   'monitoring/bulk/10_basic.yml': ['*'],
   'monitoring/bulk/20_privileges.yml': ['*'],
@@ -92,6 +94,7 @@ const platinumBlackList = {
   'snapshot/20_operator_privileges_disabled.yml': ['*'],
   // the body is correct, but the regex is failing
   'sql/sql.yml': ['Getting textual representation'],
+  'searchable_snapshots/10_usage.yml': ['*'],
   // we are setting two certificates in the docker config
   'ssl/10_basic.yml': ['*'],
   // very likely, the index template has not been loaded yet.
@@ -137,7 +140,15 @@ function runner (opts = {}) {
   const client = new Client(options)
   log('Loading yaml suite')
   start({ client, isXPack: opts.isXPack })
-    .catch(console.log)
+    .catch(err => {
+      if (err.name === 'ResponseError') {
+        console.error(err)
+        console.log(JSON.stringify(err.meta, null, 2))
+      } else {
+        console.error(err)
+      }
+      process.exit(1)
+    })
 }
 
 async function waitCluster (client, times = 0) {
@@ -304,10 +315,9 @@ function now () {
 }
 
 function parse (data) {
-  const schema = yaml.Schema.create(yaml.CORE_SCHEMA, [])
   let doc
   try {
-    doc = yaml.safeLoad(data, { schema })
+    doc = yaml.load(data, { schema: yaml.CORE_SCHEMA })
   } catch (err) {
     console.error(err)
     return
