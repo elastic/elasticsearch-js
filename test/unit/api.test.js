@@ -124,6 +124,33 @@ test('Error (promises)', t => {
   })
 })
 
+test('Finally method (promises)', t => {
+  t.plan(1)
+
+  function handler (req, res) {
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://localhost:${port}`
+    })
+
+    const request = client.search({
+      index: 'test',
+      q: 'foo:bar'
+    })
+
+    t.type(request.finally, 'function')
+
+    request
+      .finally(() => {
+        server.stop()
+      })
+  })
+})
+
 test('Abort method (callback)', t => {
   t.plan(3)
 

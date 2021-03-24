@@ -33,6 +33,7 @@ const deleteScriptApi = require('./api/delete_script')
 const existsApi = require('./api/exists')
 const existsSourceApi = require('./api/exists_source')
 const explainApi = require('./api/explain')
+const FeaturesApi = require('./api/features')
 const fieldCapsApi = require('./api/field_caps')
 const getApi = require('./api/get')
 const getScriptApi = require('./api/get_script')
@@ -94,6 +95,7 @@ const { kConfigurationError } = require('./utils')
 const kCat = Symbol('Cat')
 const kCluster = Symbol('Cluster')
 const kDanglingIndices = Symbol('DanglingIndices')
+const kFeatures = Symbol('Features')
 const kIndices = Symbol('Indices')
 const kIngest = Symbol('Ingest')
 const kNodes = Symbol('Nodes')
@@ -127,6 +129,7 @@ function ESAPI (opts) {
   this[kCat] = null
   this[kCluster] = null
   this[kDanglingIndices] = null
+  this[kFeatures] = null
   this[kIndices] = null
   this[kIngest] = null
   this[kNodes] = null
@@ -228,6 +231,14 @@ Object.defineProperties(ESAPI.prototype, {
   delete_by_query_rethrottle: { get () { return this.deleteByQueryRethrottle } },
   delete_script: { get () { return this.deleteScript } },
   exists_source: { get () { return this.existsSource } },
+  features: {
+    get () {
+      if (this[kFeatures] === null) {
+        this[kFeatures] = new FeaturesApi(this.transport, this[kConfigurationError])
+      }
+      return this[kFeatures]
+    }
+  },
   field_caps: { get () { return this.fieldCaps } },
   get_script: { get () { return this.getScript } },
   get_script_context: { get () { return this.getScriptContext } },
