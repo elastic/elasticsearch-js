@@ -95,32 +95,21 @@ function build (opts = {}) {
     // clean all indices
     await client.indices.delete({ index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden' }, { ignore: [404] })
 
-    if (isXPack) {
-      // delete templates
-      const { body: templates } = await client.cat.templates({ h: 'name' })
-      for (const template of templates.split('\n').filter(Boolean)) {
-        if (isXPackTemplate(template)) continue
-        const { body } = await client.indices.deleteTemplate({ name: template }, { ignore: [404] })
-        if (JSON.stringify(body).includes(`index_template [${template}] missing`)) {
-          await client.indices.deleteIndexTemplate({ name: template }, { ignore: [404] })
-        }
+    // delete templates
+    const { body: templates } = await client.cat.templates({ h: 'name' })
+    for (const template of templates.split('\n').filter(Boolean)) {
+      if (isXPackTemplate(template)) continue
+      const { body } = await client.indices.deleteTemplate({ name: template }, { ignore: [404] })
+      if (JSON.stringify(body).includes(`index_template [${template}] missing`)) {
+        await client.indices.deleteIndexTemplate({ name: template }, { ignore: [404] })
       }
+    }
 
-      // delete component template
-      const { body } = await client.cluster.getComponentTemplate()
-      const components = body.component_templates.filter(c => !isXPackTemplate(c.name)).map(c => c.name)
-      if (components.length > 0) {
-        await client.cluster.deleteComponentTemplate({ name: components.join(',') }, { ignore: [404] })
-      }
-    } else {
-      // clean all templates
-      await client.indices.deleteTemplate({ name: '*' })
-
-      // clean all templates
-      await client.indices.deleteIndexTemplate({ name: '*' })
-
-      // clean all templates
-      await client.cluster.deleteComponentTemplate({ name: '*' })
+    // delete component template
+    const { body } = await client.cluster.getComponentTemplate()
+    const components = body.component_templates.filter(c => !isXPackTemplate(c.name)).map(c => c.name)
+    if (components.length > 0) {
+      await client.cluster.deleteComponentTemplate({ name: components.join(',') }, { ignore: [404] })
     }
 
     // Remove any cluster setting
