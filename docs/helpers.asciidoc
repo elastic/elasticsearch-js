@@ -1,3 +1,4 @@
+[discrete]
 [[client-helpers]]
 == Client Helpers
 

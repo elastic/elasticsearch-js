@@ -1,3 +1,4 @@
+[discrete]
 [[breaking-changes]]
 == Breaking changes coming from the old client
 
