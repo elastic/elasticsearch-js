@@ -85,6 +85,8 @@ function isXPackTemplate (name) {
     case 'synthetics-mappings':
     case '.snapshot-blob-cache':
     case '.deprecation-indexing-template':
+    case '.deprecation-indexing-mappings':
+    case '.deprecation-indexing-settings':
       return true
   }
   return false
