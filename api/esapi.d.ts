@@ -220,10 +220,10 @@ declare class ESAPI {
   clearScroll<TContext = unknown>(callback: callbackFn<T.ClearScrollResponse, TContext>): TransportRequestCallback
   clearScroll<TContext = unknown>(params: T.ClearScrollRequest, callback: callbackFn<T.ClearScrollResponse, TContext>): TransportRequestCallback
   clearScroll<TContext = unknown>(params: T.ClearScrollRequest, options: TransportRequestOptions, callback: callbackFn<T.ClearScrollResponse, TContext>): TransportRequestCallback
-  closePointInTime<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-  closePointInTime<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  closePointInTime<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  closePointInTime<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+  closePointInTime<TContext = unknown>(params?: T.ClosePointInTimeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClosePointInTimeResponse, TContext>>
+  closePointInTime<TContext = unknown>(callback: callbackFn<T.ClosePointInTimeResponse, TContext>): TransportRequestCallback
+  closePointInTime<TContext = unknown>(params: T.ClosePointInTimeRequest, callback: callbackFn<T.ClosePointInTimeResponse, TContext>): TransportRequestCallback
+  closePointInTime<TContext = unknown>(params: T.ClosePointInTimeRequest, options: TransportRequestOptions, callback: callbackFn<T.ClosePointInTimeResponse, TContext>): TransportRequestCallback
   cluster: {
     allocationExplain<TContext = unknown>(params?: T.ClusterAllocationExplainRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterAllocationExplainResponse, TContext>>
     allocationExplain<TContext = unknown>(callback: callbackFn<T.ClusterAllocationExplainResponse, TContext>): TransportRequestCallback
@@ -980,10 +980,10 @@ declare class ESAPI {
   msearch<TContext = unknown>(callback: callbackFn<T.MultiSearchResponse, TContext>): TransportRequestCallback
   msearch<TContext = unknown>(params: T.MultiSearchRequest, callback: callbackFn<T.MultiSearchResponse, TContext>): TransportRequestCallback
   msearch<TContext = unknown>(params: T.MultiSearchRequest, options: TransportRequestOptions, callback: callbackFn<T.MultiSearchResponse, TContext>): TransportRequestCallback
-  msearchTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-  msearchTemplate<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  msearchTemplate<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  msearchTemplate<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+  msearchTemplate<TContext = unknown>(params?: T.MultiSearchTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchTemplateResponse, TContext>>
+  msearchTemplate<TContext = unknown>(callback: callbackFn<T.MultiSearchTemplateResponse, TContext>): TransportRequestCallback
+  msearchTemplate<TContext = unknown>(params: T.MultiSearchTemplateRequest, callback: callbackFn<T.MultiSearchTemplateResponse, TContext>): TransportRequestCallback
+  msearchTemplate<TContext = unknown>(params: T.MultiSearchTemplateRequest, options: TransportRequestOptions, callback: callbackFn<T.MultiSearchTemplateResponse, TContext>): TransportRequestCallback
   mtermvectors<TContext = unknown>(params?: T.MultiTermVectorsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiTermVectorsResponse, TContext>>
   mtermvectors<TContext = unknown>(callback: callbackFn<T.MultiTermVectorsResponse, TContext>): TransportRequestCallback
   mtermvectors<TContext = unknown>(params: T.MultiTermVectorsRequest, callback: callbackFn<T.MultiTermVectorsResponse, TContext>): TransportRequestCallback
@@ -1010,10 +1010,9 @@ declare class ESAPI {
     usage<TContext = unknown>(params: T.NodesUsageRequest, callback: callbackFn<T.NodesUsageResponse, TContext>): TransportRequestCallback
     usage<TContext = unknown>(params: T.NodesUsageRequest, options: TransportRequestOptions, callback: callbackFn<T.NodesUsageResponse, TContext>): TransportRequestCallback
   }
-  openPointInTime<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-  openPointInTime<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  openPointInTime<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  openPointInTime<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+  openPointInTime<TContext = unknown>(params: T.OpenPointInTimeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.OpenPointInTimeResponse, TContext>>
+  openPointInTime<TContext = unknown>(params: T.OpenPointInTimeRequest, callback: callbackFn<T.OpenPointInTimeResponse, TContext>): TransportRequestCallback
+  openPointInTime<TContext = unknown>(params: T.OpenPointInTimeRequest, options: TransportRequestOptions, callback: callbackFn<T.OpenPointInTimeResponse, TContext>): TransportRequestCallback
   ping<TContext = unknown>(params?: T.PingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PingResponse, TContext>>
   ping<TContext = unknown>(callback: callbackFn<T.PingResponse, TContext>): TransportRequestCallback
   ping<TContext = unknown>(params: T.PingRequest, callback: callbackFn<T.PingResponse, TContext>): TransportRequestCallback
@@ -1115,10 +1114,10 @@ declare class ESAPI {
     changePassword<TContext = unknown>(callback: callbackFn<T.ChangePasswordResponse, TContext>): TransportRequestCallback
     changePassword<TContext = unknown>(params: T.ChangePasswordRequest, callback: callbackFn<T.ChangePasswordResponse, TContext>): TransportRequestCallback
     changePassword<TContext = unknown>(params: T.ChangePasswordRequest, options: TransportRequestOptions, callback: callbackFn<T.ChangePasswordResponse, TContext>): TransportRequestCallback
-    clearApiKeyCache<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    clearApiKeyCache<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    clearApiKeyCache<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    clearApiKeyCache<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    clearApiKeyCache<TContext = unknown>(params?: T.ClearApiKeyCacheRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClearApiKeyCacheResponse, TContext>>
+    clearApiKeyCache<TContext = unknown>(callback: callbackFn<T.ClearApiKeyCacheResponse, TContext>): TransportRequestCallback
+    clearApiKeyCache<TContext = unknown>(params: T.ClearApiKeyCacheRequest, callback: callbackFn<T.ClearApiKeyCacheResponse, TContext>): TransportRequestCallback
+    clearApiKeyCache<TContext = unknown>(params: T.ClearApiKeyCacheRequest, options: TransportRequestOptions, callback: callbackFn<T.ClearApiKeyCacheResponse, TContext>): TransportRequestCallback
     clearCachedPrivileges<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     clearCachedPrivileges<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
     clearCachedPrivileges<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
@@ -1183,10 +1182,10 @@ declare class ESAPI {
     getUserPrivileges<TContext = unknown>(callback: callbackFn<T.GetUserPrivilegesResponse, TContext>): TransportRequestCallback
     getUserPrivileges<TContext = unknown>(params: T.GetUserPrivilegesRequest, callback: callbackFn<T.GetUserPrivilegesResponse, TContext>): TransportRequestCallback
     getUserPrivileges<TContext = unknown>(params: T.GetUserPrivilegesRequest, options: TransportRequestOptions, callback: callbackFn<T.GetUserPrivilegesResponse, TContext>): TransportRequestCallback
-    grantApiKey<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    grantApiKey<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    grantApiKey<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    grantApiKey<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    grantApiKey<TContext = unknown>(params?: T.GrantApiKeyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GrantApiKeyResponse, TContext>>
+    grantApiKey<TContext = unknown>(callback: callbackFn<T.GrantApiKeyResponse, TContext>): TransportRequestCallback
+    grantApiKey<TContext = unknown>(params: T.GrantApiKeyRequest, callback: callbackFn<T.GrantApiKeyResponse, TContext>): TransportRequestCallback
+    grantApiKey<TContext = unknown>(params: T.GrantApiKeyRequest, options: TransportRequestOptions, callback: callbackFn<T.GrantApiKeyResponse, TContext>): TransportRequestCallback
     hasPrivileges<TContext = unknown>(params?: T.HasPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.HasPrivilegesResponse, TContext>>
     hasPrivileges<TContext = unknown>(callback: callbackFn<T.HasPrivilegesResponse, TContext>): TransportRequestCallback
     hasPrivileges<TContext = unknown>(params: T.HasPrivilegesRequest, callback: callbackFn<T.HasPrivilegesResponse, TContext>): TransportRequestCallback
@@ -1252,10 +1251,9 @@ declare class ESAPI {
     cleanupRepository<TContext = unknown>(params: T.CleanupRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CleanupRepositoryResponse, TContext>>
     cleanupRepository<TContext = unknown>(params: T.CleanupRepositoryRequest, callback: callbackFn<T.CleanupRepositoryResponse, TContext>): TransportRequestCallback
     cleanupRepository<TContext = unknown>(params: T.CleanupRepositoryRequest, options: TransportRequestOptions, callback: callbackFn<T.CleanupRepositoryResponse, TContext>): TransportRequestCallback
-    clone<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    clone<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    clone<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    clone<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    clone<TContext = unknown>(params: T.CloneSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CloneSnapshotResponse, TContext>>
+    clone<TContext = unknown>(params: T.CloneSnapshotRequest, callback: callbackFn<T.CloneSnapshotResponse, TContext>): TransportRequestCallback
+    clone<TContext = unknown>(params: T.CloneSnapshotRequest, options: TransportRequestOptions, callback: callbackFn<T.CloneSnapshotResponse, TContext>): TransportRequestCallback
     create<TContext = unknown>(params: T.SnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotResponse, TContext>>
     create<TContext = unknown>(params: T.SnapshotRequest, callback: callbackFn<T.SnapshotResponse, TContext>): TransportRequestCallback
     create<TContext = unknown>(params: T.SnapshotRequest, options: TransportRequestOptions, callback: callbackFn<T.SnapshotResponse, TContext>): TransportRequestCallback
