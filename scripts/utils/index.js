@@ -20,7 +20,6 @@
 'use strict'
 
 const generate = require('./generateApis')
-const generateRequestTypes = require('./generateRequestTypes')
 const cloneAndCheckout = require('./clone-es')
 const genFactory = require('./generateMain')
 const generateDocs = require('./generateDocs')
@@ -29,6 +28,5 @@ module.exports = {
   generate,
   cloneAndCheckout,
   genFactory,
-  generateRequestTypes,
   generateDocs
 }
