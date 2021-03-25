@@ -1,5 +1,5 @@
 [[scroll_examples]]
-== Scroll
+=== Scroll
 
 While a search request returns a single “page” of results, the scroll API can be 
 used to retrieve large numbers of results (or even all results) from a single 

@@ -1,5 +1,5 @@
 [[ignore_examples]]
-== Ignore
+=== Ignore
 
 HTTP status codes which should not be considered errors for this request.
 

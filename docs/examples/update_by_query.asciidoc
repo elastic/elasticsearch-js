@@ -1,5 +1,5 @@
 [[update_by_query_examples]]
-== Update By Query
+=== Update By Query
 
 The simplest usage of _update_by_query just performs an update on every document 
 in the index without changing the source. This is useful to pick up a new 
