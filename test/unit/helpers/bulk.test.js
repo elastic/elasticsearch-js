@@ -1312,5 +1312,52 @@ test('Flush interval', t => {
     })
   })
 
+  t.test('Operation stats', async t => {
+    let count = 0
+    const MockConnection = connection.buildMockConnection({
+      onRequest (params) {
+        t.strictEqual(params.path, '/_bulk')
+        t.match(params.headers, {
+          'content-type': 'application/x-ndjson',
+          'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion},h=bp`
+        })
+        const [action, payload] = params.body.split('\n')
+        t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
+        t.deepEqual(JSON.parse(payload), dataset[count++])
+        return { body: { errors: false, items: [{}] } }
+      }
+    })
+
+    const client = new Client({
+      node: 'http://localhost:9200',
+      Connection: MockConnection
+    })
+    const b = client.helpers.bulk({
+      datasource: dataset.slice(),
+      flushBytes: 1,
+      concurrency: 1,
+      onDocument (doc) {
+        return {
+          index: { _index: 'test' }
+        }
+      },
+      onDrop (doc) {
+        t.fail('This should never be called')
+      }
+    })
+    const result = await b
+
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, b.stats())
+    t.match(result, {
+      total: 3,
+      successful: 3,
+      retry: 0,
+      failed: 0,
+      aborted: false
+    })
+  })
+
   t.end()
 })
