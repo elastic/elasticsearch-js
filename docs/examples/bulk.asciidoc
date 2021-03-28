@@ -4,7 +4,7 @@
 The `bulk` API makes it possible to perform many index/delete operations in a 
 single API call. This can greatly increase the indexing speed.
 
-NOTE: Did you know that we provide an helper for sending bulk request? You can find it {jsclient}/client-helpers.html[here].
+NOTE: Did you know that we provide a helper for sending bulk request? You can find it {jsclient}/client-helpers.html[here].
 
 [source,js]
 ----
