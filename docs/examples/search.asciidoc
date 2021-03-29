@@ -1,5 +1,5 @@
 [[search_examples]]
-== Search
+=== Search
 
 The `search` API allows you to execute a search query and get back search hits 
 that match the query. The query can either be provided using a simple 

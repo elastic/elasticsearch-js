@@ -1,5 +1,5 @@
 [[examples]]
-= Examples
+== Examples
 
 Following you can find some examples on how to use the client.
 
