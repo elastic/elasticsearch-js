@@ -1,5 +1,5 @@
 [[transport_request_examples]]
-== transport.request
+=== transport.request
 
 It can happen that you need to communicate with {es} by using an API that is not 
 supported by the client, to mitigate this issue you can directly call 
