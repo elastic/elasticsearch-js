@@ -1,5 +1,5 @@
 [[sql_query_examples]]
-== SQL
+=== SQL
 
 {es} SQL is an X-Pack component that allows SQL-like queries to be executed in 
 real-time against {es}. Whether using the REST interface, command-line or JDBC, 
