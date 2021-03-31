@@ -20,67 +20,61 @@
 'use strict'
 
 const { join } = require('path')
-const { readdirSync, readFileSync, writeFileSync } = require('fs')
+const { readdirSync, writeFileSync } = require('fs')
 const minimist = require('minimist')
-const semver = require('semver')
 const ora = require('ora')
 const rimraf = require('rimraf')
 const standard = require('standard')
+const downloadArtifacts = require('./download-artifacts')
 const {
   generate,
-  cloneAndCheckout,
   genFactory,
   generateDocs
 } = require('./utils')
 
 start(minimist(process.argv.slice(2), {
-  string: ['tag', 'branch']
+  string: ['version']
 }))
 
 function start (opts) {
-  const log = ora('Loading Elasticsearch Repository').start()
-  if (opts.branch == null && semver.valid(opts.tag) === null) {
-    log.fail(`Missing or invalid tag: ${opts.tag}`)
-    return
+  if (opts.version == null) {
+    console.error('Missing version parameter')
+    process.exit(1)
   }
   const packageFolder = join(__dirname, '..', 'api')
   const apiOutputFolder = join(packageFolder, 'api')
   const mainOutputFile = join(packageFolder, 'index.js')
   const docOutputFile = join(__dirname, '..', 'docs', 'reference.asciidoc')
 
-  log.text = 'Cleaning API folder...'
-  rimraf.sync(join(apiOutputFolder, '*.js'))
+  let log
+  downloadArtifacts({ version: opts.version })
+    .then(onArtifactsDownloaded)
+    .catch(err => {
+      console.log(err)
+      process.exit(1)
+    })
 
-  cloneAndCheckout({ log, tag: opts.tag, branch: opts.branch }, (err, { apiFolder, xPackFolder }) => {
-    if (err) {
-      log.fail(err.message)
-      return
-    }
+  function onArtifactsDownloaded () {
+    log = ora('Generating APIs').start()
 
-    const apiFolderContents = readdirSync(apiFolder)
-    const xPackFolderContents = readdirSync(xPackFolder)
+    log.text = 'Cleaning API folder...'
+    rimraf.sync(join(apiOutputFolder, '*.js'))
 
-    const allSpec = apiFolderContents.concat(xPackFolderContents)
+    const allSpec = readdirSync(downloadArtifacts.locations.specFolder)
       .filter(file => file !== '_common.json')
       .filter(file => !file.includes('deprecated'))
       .sort()
-      .map(file => {
-        try {
-          return JSON.parse(readFileSync(join(apiFolder, file), 'utf8'))
-        } catch (err) {
-          return JSON.parse(readFileSync(join(xPackFolder, file), 'utf8'))
-        }
-      })
+      .map(file => require(join(downloadArtifacts.locations.specFolder, file)))
 
-    const namespaces = namespacify(apiFolderContents.concat(xPackFolderContents))
+    const namespaces = namespacify(readdirSync(downloadArtifacts.locations.specFolder))
     for (const namespace in namespaces) {
       if (namespace === '_common') continue
-      const code = generate(namespace, namespaces[namespace], { apiFolder, xPackFolder }, opts.branch || opts.tag)
+      const code = generate(namespace, namespaces[namespace], downloadArtifacts.locations.specFolder, opts.version)
       const filePath = join(apiOutputFolder, `${namespace}.js`)
       writeFileSync(filePath, code, { encoding: 'utf8' })
     }
 
-    const { fn: factory } = genFactory(apiOutputFolder, [apiFolder, xPackFolder], namespaces)
+    const { fn: factory } = genFactory(apiOutputFolder, downloadArtifacts.locations.specFolder, namespaces)
     writeFileSync(
       mainOutputFile,
       factory,
@@ -91,13 +85,13 @@ function start (opts) {
       log.text = 'Generating documentation'
       writeFileSync(
         docOutputFile,
-        generateDocs(require(join(apiFolder, '_common.json')), allSpec),
+        generateDocs(require(join(downloadArtifacts.locations.specFolder, '_common.json')), allSpec),
         { encoding: 'utf8' }
       )
 
       log.succeed('Done!')
     })
-  })
+  }
 
   function lintFiles (log, cb) {
     log.text = 'Linting...'
