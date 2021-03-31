@@ -62,6 +62,8 @@ const platinumBlackList = {
     'sort by keyword field fails',
     'sort by string script fails'
   ],
+  // auth errors
+  'analytics/boxplot.yml': ['*'],
   'cat.aliases/10_basic.yml': ['Empty cluster'],
   'index/10_with_id.yml': ['Index with ID'],
   'indices.get_alias/10_basic.yml': ['Get alias against closed indices'],
