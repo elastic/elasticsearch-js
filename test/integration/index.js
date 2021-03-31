@@ -82,6 +82,7 @@ const platinumBlackList = {
   ],
   // The cleanup fails with a index not found when retrieving the jobs
   'ml/get_datafeed_stats.yml': ['Test get datafeed stats when total_search_time_ms mapping is missing'],
+  'ml/preview_datafeed.yml': ['*'],
   // Investigate why is failing
   'ml/inference_crud.yml': ['*'],
   // investigate why this is failing
