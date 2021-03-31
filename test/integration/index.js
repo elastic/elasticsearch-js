@@ -62,8 +62,6 @@ const platinumBlackList = {
     'sort by keyword field fails',
     'sort by string script fails'
   ],
-  // auth errors
-  'analytics/boxplot.yml': ['*'],
   'cat.aliases/10_basic.yml': ['Empty cluster'],
   'index/10_with_id.yml': ['Index with ID'],
   'indices.get_alias/10_basic.yml': ['Get alias against closed indices'],
@@ -217,7 +215,7 @@ async function start ({ client, isXPack }) {
       const testRunner = build({
         client,
         version,
-        isXPack: file.includes('x-pack')
+        isXPack: file.includes('platinum')
       })
       const fileTime = now()
       const data = readFileSync(file, 'utf8')
