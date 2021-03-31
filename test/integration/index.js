@@ -24,20 +24,18 @@ process.on('unhandledRejection', function (err) {
   process.exit(1)
 })
 
-const { writeFileSync, readFileSync, accessSync, mkdirSync, readdirSync, statSync } = require('fs')
+const { writeFileSync, readFileSync, readdirSync, statSync } = require('fs')
 const { join, sep } = require('path')
 const yaml = require('js-yaml')
-const Git = require('simple-git')
 const ms = require('ms')
 const { Client } = require('../../index')
 const build = require('./test-runner')
 const { sleep } = require('./helper')
 const createJunitReporter = require('./reporter')
+const downloadArtifacts = require('../../scripts/download-artifacts')
 
-const esRepo = 'https://github.com/elastic/elasticsearch.git'
-const esFolder = join(__dirname, '..', '..', 'elasticsearch')
-const yamlFolder = join(esFolder, 'rest-api-spec', 'src', 'main', 'resources', 'rest-api-spec', 'test')
-const xPackYamlFolder = join(esFolder, 'x-pack', 'plugin', 'src', 'test', 'resources', 'rest-api-spec', 'test')
+const yamlFolder = downloadArtifacts.locations.freeTestFolder
+const xPackYamlFolder = downloadArtifacts.locations.xPackTestFolder
 
 const MAX_API_TIME = 1000 * 90
 const MAX_FILE_TIME = 1000 * 30
@@ -169,10 +167,10 @@ async function start ({ client, isXPack }) {
   await waitCluster(client)
 
   const { body } = await client.info()
-  const { number: version, build_hash: sha } = body.version
+  const { number: version, build_hash: hash } = body.version
 
-  log(`Checking out sha ${sha}...`)
-  await withSHA(sha)
+  log(`Downloading artifacts for hash ${hash}...`)
+  await downloadArtifacts({ hash, version })
 
   log(`Testing ${isXPack ? 'Platinum' : 'Free'} api...`)
   const junit = createJunitReporter()
@@ -323,102 +321,6 @@ function parse (data) {
     return
   }
   return doc
-}
-
-/**
- * Sets the elasticsearch repository to the given sha.
- * If the repository is not present in `esFolder` it will
- * clone the repository and the checkout the sha.
- * If the repository is already present but it cannot checkout to
- * the given sha, it will perform a pull and then try again.
- * @param {string} sha
- * @param {function} callback
- */
-function withSHA (sha) {
-  return new Promise((resolve, reject) => {
-    _withSHA(err => err ? reject(err) : resolve())
-  })
-
-  function _withSHA (callback) {
-    let fresh = false
-    let retry = 0
-
-    if (!pathExist(esFolder)) {
-      if (!createFolder(esFolder)) {
-        return callback(new Error('Failed folder creation'))
-      }
-      fresh = true
-    }
-
-    const git = Git(esFolder)
-
-    if (fresh) {
-      clone(checkout)
-    } else {
-      checkout()
-    }
-
-    function checkout () {
-      log(`Checking out sha '${sha}'`)
-      git.checkout(sha, err => {
-        if (err) {
-          if (retry++ > 0) {
-            return callback(err)
-          }
-          return pull(checkout)
-        }
-        callback()
-      })
-    }
-
-    function pull (cb) {
-      log('Pulling elasticsearch repository...')
-      git.pull(err => {
-        if (err) {
-          return callback(err)
-        }
-        cb()
-      })
-    }
-
-    function clone (cb) {
-      log('Cloning elasticsearch repository...')
-      git.clone(esRepo, esFolder, err => {
-        if (err) {
-          return callback(err)
-        }
-        cb()
-      })
-    }
-  }
-}
-
-/**
- * Checks if the given path exists
- * @param {string} path
- * @returns {boolean} true if exists, false if not
- */
-function pathExist (path) {
-  try {
-    accessSync(path)
-    return true
-  } catch (err) {
-    return false
-  }
-}
-
-/**
- * Creates the given folder
- * @param {string} name
- * @returns {boolean} true on success, false on failure
- */
-function createFolder (name) {
-  try {
-    mkdirSync(name)
-    return true
-  } catch (err) {
-    return false
-  }
 }
 
 function generateJunitXmlReport (junit, suite) {
