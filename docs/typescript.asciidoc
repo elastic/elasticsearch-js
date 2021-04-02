@@ -7,6 +7,96 @@ definitions for every exposed API.
 NOTE: If you are using TypeScript you need to use _snake_case_ style to define 
 the API parameters instead of _camelCase_. 
 
+Currently the client exposes two type definitions, the legacy one, which is the default
+and the new one, which will be the default in the next major.
+We storngly recommend to migrate to the new one as soon as possible.
+
+==== New type definitions
+
+The new type definition is more advanced compared to the legacy one. In the legacy
+type definitions you were expected to configure via generics both request and response
+bodies. The new type definitions comes with a complete type definition for every
+Elasticsearch endpint.
+
+For example:
+
+[source,ts]
+----
+// legacy definitions
+const response = await client.search<SearchResponse<Source>, SearchBody>({
+  index: 'test',
+  body: {
+  query: {
+      match: { foo: 'bar' }
+    }
+  }
+})
+
+// new definitions
+const response = await client.search<Source>({
+  index: 'test',
+  body: {
+  query: {
+      match: { foo: 'bar' }
+    }
+  }
+})
+----
+
+The types are not 100% complete yet. Some APIs are missing (the newest ones, e.g. EQL),
+and others may contain some errors, but we are continuously pushing fixes & improvements.
+
+Once you migrate to the new types, those are automatically integrated into the Elasticsearch client, you will get them out of the box.
+If everything works, meaning that you won’t get compiler errors, you are good to go!
+The types are already correct, and there is nothing more to do.
+
+If a type is incorrect, you should add a comment telling TypeScript that you know what you are doing
+and not to bother you, we strongly recommend using `// @ts-expect-error @elastic/elasticsearch`
+and continue to write your code as usual.
+In this way, your code will compile until the type is fixed, and when it happens, you’ll only need to remove the
+`// @ts-expect-error @elastic/elasticsearch` comment (TypeScript will let you know when it is time).
+Finally, if the type you need is missing, you’ll see that the client method returns (or defines as a parameter)
+a `TODO` type, which accepts any object.
+
+Open an issue in the client repository letting us know if you encounter any problem!
+
+===== How to migrate to the new type definitions
+
+Since the new type definitions can be considered a breaking change we couldn't add the directly to the client.
+Following you will find a snippet that shows you how to override the default types with the new ones.
+
+[source,ts]
+----
+import { Client } from '@elastic/elasticsearch'
+import type { NewClientTypes } from '@elastic/elasticsearch/api/new'
+
+// @ts-expect-error @elastic/elasticsearch
+const client = new Client({
+  node: 'http://localhost:9200'
+}) as NewClientTypes
+
+interface Source {
+  foo: string
+}
+
+// try the new code completion when building a query!
+const response = await client.search<Source>({
+  index: 'test',
+  body: {
+    query: {
+      match_all: {}
+    }
+  }
+})
+
+// try the new code completion when traversing a response!
+const results = response.body.hits.hits.map(hit => hit._source)
+// results type will be `Source[]`
+console.log(results)
+----
+
+==== Legacy type definitions
+
 By default event API uses 
 https://www.typescriptlang.org/docs/handbook/generics.html[generics] to specify 
 the requests and response bodies and the `meta.context`. Currently, we can't 
