@@ -1,22 +1,26 @@
 [[typescript]]
 === TypeScript support
 
-The client offers a first-class support for TypeScript, since it ships the type 
-definitions for every exposed API.
+The client offers a first-class support for TypeScript, shipping a complete set
+of type definitions of Elasticsearch's API surface.
+
 
 NOTE: If you are using TypeScript you need to use _snake_case_ style to define 
 the API parameters instead of _camelCase_. 
 
 Currently the client exposes two type definitions, the legacy one, which is the default
 and the new one, which will be the default in the next major.
-We storngly recommend to migrate to the new one as soon as possible.
+We strongly recommend to migrate to the new one as soon as possible, as the new types
+are offering a vastly improved developer experience and guarantee you that your code
+will always be in sync with the latest Elasticsearch features.
 
+[discrete]
 ==== New type definitions
 
 The new type definition is more advanced compared to the legacy one. In the legacy
 type definitions you were expected to configure via generics both request and response
 bodies. The new type definitions comes with a complete type definition for every
-Elasticsearch endpint.
+Elasticsearch endpoint.
 
 For example:
 
@@ -50,9 +54,8 @@ Once you migrate to the new types, those are automatically integrated into the E
 If everything works, meaning that you won’t get compiler errors, you are good to go!
 The types are already correct, and there is nothing more to do.
 
-If a type is incorrect, you should add a comment telling TypeScript that you know what you are doing
-and not to bother you, we strongly recommend using `// @ts-expect-error @elastic/elasticsearch`
-and continue to write your code as usual.
+If a type is incorrect, you should add a comment `// @ts-expect-error @elastic/elasticsearch`
+telling TypeScript that you are aware of the warning and you would like to temporarily suppress it.
 In this way, your code will compile until the type is fixed, and when it happens, you’ll only need to remove the
 `// @ts-expect-error @elastic/elasticsearch` comment (TypeScript will let you know when it is time).
 Finally, if the type you need is missing, you’ll see that the client method returns (or defines as a parameter)
@@ -60,6 +63,7 @@ a `TODO` type, which accepts any object.
 
 Open an issue in the client repository letting us know if you encounter any problem!
 
+[discrete]
 ===== How to migrate to the new type definitions
 
 Since the new type definitions can be considered a breaking change we couldn't add the directly to the client.
@@ -95,6 +99,7 @@ const results = response.body.hits.hits.map(hit => hit._source)
 console.log(results)
 ----
 
+[discrete]
 ==== Legacy type definitions
 
 By default event API uses 
@@ -135,7 +140,7 @@ You don't have to specify all the generics, but the order must be respected.
 
 
 [discrete]
-==== A complete example
+===== A complete example
 
 [source,ts]
 ----
