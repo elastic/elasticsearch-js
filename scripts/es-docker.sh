@@ -19,6 +19,7 @@ if [ "$1" == "--detach" ]; then
     -e "path.repo=/tmp" \
     -e "repositories.url.allowed_urls=http://snapshot.*" \
     -e "discovery.type=single-node" \
+    -e "action.destructive_requires_name=false" \
     -p 9200:9200 \
     --detach \
     --network=elastic \
@@ -31,6 +32,7 @@ else
     -e "path.repo=/tmp" \
     -e "repositories.url.allowed_urls=http://snapshot.*" \
     -e "discovery.type=single-node" \
+    -e "action.destructive_requires_name=false" \
     -p 9200:9200 \
     --network=elastic \
     --name=elasticsearch \

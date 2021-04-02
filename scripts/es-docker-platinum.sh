@@ -24,6 +24,7 @@ if [ "$1" == "--detach" ]; then
     -e "path.repo=/tmp" \
     -e "repositories.url.allowed_urls=http://snapshot.*" \
     -e "discovery.type=single-node" \
+    -e "action.destructive_requires_name=false" \
     -e "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
     -e "ELASTIC_PASSWORD=changeme" \
     -e "xpack.security.enabled=true" \
@@ -52,6 +53,7 @@ else
     -e "path.repo=/tmp" \
     -e "repositories.url.allowed_urls=http://snapshot.*" \
     -e "discovery.type=single-node" \
+    -e "action.destructive_requires_name=false" \
     -e "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
     -e "ELASTIC_PASSWORD=changeme" \
     -e "xpack.security.enabled=true" \
