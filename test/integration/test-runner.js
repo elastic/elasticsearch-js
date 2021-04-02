@@ -93,11 +93,11 @@ function build (opts = {}) {
     }
 
     // clean all indices
-    const { body: indices } = await client.cat.indices({ format: 'json' })
-    const indexToDelete = indices.map(entry => entry.index).filter(entry => !entry.startsWith('.ds-ilm-history-'))
+    const { body: indices } = await client.cat.indices({ format: 'json', expand_wildcards: 'open,closed,hidden' })
+    const indicesToDelete = indices.map(entry => entry.index).filter(entry => !entry.startsWith('.ds-ilm-history-'))
     await helper.runInParallel(
       client, 'indices.delete',
-      indexToDelete.map(index => ({ index, expand_wildcards: 'open,closed,hidden' }))
+      indicesToDelete.map(index => ({ index, expand_wildcards: 'open,closed,hidden' }))
     )
 
     // delete templates
