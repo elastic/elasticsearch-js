@@ -564,8 +564,8 @@ export interface ClusterReroute<T = RequestBody> extends Generic {
 }
 
 export interface ClusterState extends Generic {
-  metric?: string | string[];
   index?: string | string[];
+  metric?: string | string[];
   local?: boolean;
   master_timeout?: string;
   flat_settings?: boolean;
@@ -1362,6 +1362,9 @@ export interface IngestDeletePipeline extends Generic {
   timeout?: string;
 }
 
+export interface IngestGeoIpStats extends Generic {
+}
+
 export interface IngestGetPipeline extends Generic {
   id?: string;
   summary?: boolean;
@@ -1728,8 +1731,9 @@ export interface MlPreviewDataFrameAnalytics<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface MlPreviewDatafeed extends Generic {
-  datafeed_id: string;
+export interface MlPreviewDatafeed<T = RequestBody> extends Generic {
+  datafeed_id?: string;
+  body?: T;
 }
 
 export interface MlPutCalendar<T = RequestBody> extends Generic {
@@ -2297,6 +2301,19 @@ export interface SecurityPutRoleMapping<T = RequestBody> extends Generic {
 export interface SecurityPutUser<T = RequestBody> extends Generic {
   username: string;
   refresh?: 'wait_for' | boolean;
+  body: T;
+}
+
+export interface ShutdownDeleteNode extends Generic {
+  node_id: string;
+}
+
+export interface ShutdownGetNode extends Generic {
+  node_id?: string;
+}
+
+export interface ShutdownPutNode<T = RequestBody> extends Generic {
+  node_id: string;
   body: T;
 }
 
