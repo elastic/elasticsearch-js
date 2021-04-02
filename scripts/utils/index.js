@@ -23,10 +23,12 @@ const generate = require('./generateApis')
 const cloneAndCheckout = require('./clone-es')
 const genFactory = require('./generateMain')
 const generateDocs = require('./generateDocs')
+const generateRequestTypes = require('./generateRequestTypes')
 
 module.exports = {
   generate,
   cloneAndCheckout,
   genFactory,
-  generateDocs
+  generateDocs,
+  generateRequestTypes
 }

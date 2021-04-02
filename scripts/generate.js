@@ -20,7 +20,7 @@
 'use strict'
 
 const { join } = require('path')
-const { readdirSync, writeFileSync } = require('fs')
+const { readdirSync, writeFileSync, readFileSync } = require('fs')
 const minimist = require('minimist')
 const ora = require('ora')
 const rimraf = require('rimraf')
@@ -29,7 +29,8 @@ const downloadArtifacts = require('./download-artifacts')
 const {
   generate,
   genFactory,
-  generateDocs
+  generateDocs,
+  generateRequestTypes
 } = require('./utils')
 
 start(minimist(process.argv.slice(2), {
@@ -41,10 +42,13 @@ function start (opts) {
     console.error('Missing version parameter')
     process.exit(1)
   }
+
   const packageFolder = join(__dirname, '..', 'api')
   const apiOutputFolder = join(packageFolder, 'api')
   const mainOutputFile = join(packageFolder, 'index.js')
   const docOutputFile = join(__dirname, '..', 'docs', 'reference.asciidoc')
+  const typeDefFile = join(__dirname, '..', 'index.d.ts')
+  const requestParamsOutputFile = join(packageFolder, 'requestParams.d.ts')
 
   let log
   downloadArtifacts({ version: opts.version })
@@ -74,10 +78,26 @@ function start (opts) {
       writeFileSync(filePath, code, { encoding: 'utf8' })
     }
 
-    const { fn: factory } = genFactory(apiOutputFolder, downloadArtifacts.locations.specFolder, namespaces)
+    writeFileSync(
+      requestParamsOutputFile,
+      generateRequestTypes(opts.version, allSpec),
+      { encoding: 'utf8' }
+    )
+
+    const { fn: factory, types } = genFactory(apiOutputFolder, downloadArtifacts.locations.specFolder, namespaces)
     writeFileSync(
       mainOutputFile,
       factory,
+      { encoding: 'utf8' }
+    )
+
+    const oldTypeDefString = readFileSync(typeDefFile, 'utf8')
+    const start = oldTypeDefString.indexOf('/* GENERATED */')
+    const end = oldTypeDefString.indexOf('/* /GENERATED */')
+    const newTypeDefString = oldTypeDefString.slice(0, start + 15) + '\n' + types + '\n  ' + oldTypeDefString.slice(end)
+    writeFileSync(
+      typeDefFile,
+      newTypeDefString,
       { encoding: 'utf8' }
     )
 
