@@ -30,6 +30,7 @@ async function release (opts) {
   const originalName = packageJson.name
   const originalVersion = packageJson.version
   const currentCanaryVersion = packageJson.versionCanary
+  const originalTypes = packageJson.types
   const originalNpmIgnore = await readFile(join(__dirname, '..', '.npmignore'), 'utf8')
 
   const newCanaryInteger = opts.reset ? 1 : (Number(currentCanaryVersion.split('-')[1].split('.')[1]) + 1)
@@ -39,12 +40,13 @@ async function release (opts) {
   packageJson.name = '@elastic/elasticsearch-canary'
   packageJson.version = newCanaryVersion
   packageJson.versionCanary = newCanaryVersion
+  packageJson.types = './api/new.d.ts'
   packageJson.commitHash = execSync('git log -1 --pretty=format:%h').toString()
 
   // update the package.json
   await writeFile(
     join(__dirname, '..', 'package.json'),
-    JSON.stringify(packageJson, null, 2),
+    JSON.stringify(packageJson, null, 2) + '\n',
     'utf8'
   )
 
@@ -72,11 +74,12 @@ async function release (opts) {
   // restore the package.json to the original values
   packageJson.name = originalName
   packageJson.version = originalVersion
+  packageJson.types = originalTypes
   delete packageJson.commitHash
 
   await writeFile(
     join(__dirname, '..', 'package.json'),
-    JSON.stringify(packageJson, null, 2),
+    JSON.stringify(packageJson, null, 2) + '\n',
     'utf8'
   )
 
