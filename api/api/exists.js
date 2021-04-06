@@ -23,8 +23,8 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['stored_fields', 'preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_exclude', '_source_includes', '_source_include', 'version', 'version_type', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
-const snakeCase = { storedFields: 'stored_fields', _sourceExcludes: '_source_excludes', _sourceExclude: '_source_exclude', _sourceIncludes: '_source_includes', _sourceInclude: '_source_include', versionType: 'version_type', errorTrace: 'error_trace', filterPath: 'filter_path' }
+const acceptedQuerystring = ['stored_fields', 'preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'version', 'version_type', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { storedFields: 'stored_fields', _sourceExcludes: '_source_excludes', _sourceIncludes: '_source_includes', versionType: 'version_type', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
 function existsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)

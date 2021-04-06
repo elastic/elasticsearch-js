@@ -3273,7 +3273,7 @@ client.features.getFeatures({
   master_timeout: string
 })
 ----
-link:{ref}/modules-snapshots.html[Documentation] +
+link:{ref}/get-features-api.html[Documentation] +
 [cols=2*]
 |===
 |`master_timeout` or `masterTimeout`
@@ -6445,6 +6445,82 @@ link:{ref}/explain-dfanalytics.html[Documentation] +
 
 |`body`
 |`object` - The data frame analytics config to explain
+
+|===
+
+[discrete]
+=== ml.findFileStructure
+*Stability:* experimental
+[source,ts]
+----
+client.ml.findFileStructure({
+  lines_to_sample: number,
+  line_merge_size_limit: number,
+  timeout: string,
+  charset: string,
+  format: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text',
+  has_header_row: boolean,
+  column_names: string | string[],
+  delimiter: string,
+  quote: string,
+  should_trim_fields: boolean,
+  grok_pattern: string,
+  timestamp_field: string,
+  timestamp_format: string,
+  explain: boolean,
+  body: object
+})
+----
+link:{ref}/find-structure.html[Documentation] +
+[cols=2*]
+|===
+|`lines_to_sample` or `linesToSample`
+|`number` - How many lines of the file should be included in the analysis +
+_Default:_ `1000`
+
+|`line_merge_size_limit` or `lineMergeSizeLimit`
+|`number` - Maximum number of characters permitted in a single message when lines are merged to create messages. +
+_Default:_ `10000`
+
+|`timeout`
+|`string` - Timeout after which the analysis will be aborted +
+_Default:_ `25s`
+
+|`charset`
+|`string` - Optional parameter to specify the character set of the file
+
+|`format`
+|`'ndjson' \| 'xml' \| 'delimited' \| 'semi_structured_text'` - Optional parameter to specify the high level file format
+
+|`has_header_row` or `hasHeaderRow`
+|`boolean` - Optional parameter to specify whether a delimited file includes the column names in its first row
+
+|`column_names` or `columnNames`
+|`string \| string[]` - Optional parameter containing a comma separated list of the column names for a delimited file
+
+|`delimiter`
+|`string` - Optional parameter to specify the delimiter character for a delimited file - must be a single character
+
+|`quote`
+|`string` - Optional parameter to specify the quote character for a delimited file - must be a single character
+
+|`should_trim_fields` or `shouldTrimFields`
+|`boolean` - Optional parameter to specify whether the values between delimiters in a delimited file should have whitespace trimmed from them
+
+|`grok_pattern` or `grokPattern`
+|`string` - Optional parameter to specify the Grok pattern that should be used to extract fields from messages in a semi-structured text file
+
+|`timestamp_field` or `timestampField`
+|`string` - Optional parameter to specify the timestamp field in the file
+
+|`timestamp_format` or `timestampFormat`
+|`string` - Optional parameter to specify the timestamp format in the file - may be either a Joda or Java time format
+
+|`explain`
+|`boolean` - Whether to include a commentary on how the structure was derived
+
+|`body`
+|`object` - The contents of the file to be analyzed
 
 |===
 
@@ -10350,7 +10426,7 @@ _Default:_ `true`
 
 [discrete]
 === textStructure.findStructure
-*Stability:* experimental
+
 [source,ts]
 ----
 client.textStructure.findStructure({

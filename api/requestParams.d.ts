@@ -45,8 +45,6 @@ export interface AsyncSearchStatus extends Generic {
 
 export interface AsyncSearchSubmit<T = RequestBody> extends Generic {
   index?: string | string[];
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   wait_for_completion_timeout?: string;
   keep_on_completion?: boolean;
   keep_alive?: string;
@@ -110,8 +108,6 @@ export interface AutoscalingPutAutoscalingPolicy<T = RequestBody> extends Generi
 export interface Bulk<T = RequestNDBody> extends Generic {
   index?: string;
   type?: string;
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   wait_for_active_shards?: string;
   refresh?: 'wait_for' | boolean;
   routing?: string;
@@ -652,8 +648,6 @@ export interface Delete extends Generic {
 export interface DeleteByQuery<T = RequestBody> extends Generic {
   index: string | string[];
   type?: string | string[];
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
@@ -748,8 +742,6 @@ export interface Exists extends Generic {
   id: string;
   index: string;
   type?: string;
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   stored_fields?: string | string[];
   preference?: string;
   realtime?: boolean;
@@ -766,8 +758,6 @@ export interface ExistsSource extends Generic {
   id: string;
   index: string;
   type?: string;
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -783,8 +773,6 @@ export interface Explain<T = RequestBody> extends Generic {
   id: string;
   index: string;
   type?: string;
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   analyze_wildcard?: boolean;
   analyzer?: string;
   default_operator?: 'AND' | 'OR';
@@ -818,8 +806,6 @@ export interface Get extends Generic {
   id: string;
   index: string;
   type?: string;
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   stored_fields?: string | string[];
   preference?: string;
   realtime?: boolean;
@@ -847,8 +833,6 @@ export interface GetSource extends Generic {
   id: string;
   index: string;
   type?: string;
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   preference?: string;
   realtime?: boolean;
   refresh?: boolean;
@@ -1471,8 +1455,6 @@ export interface LogstashPutPipeline<T = RequestBody> extends Generic {
 export interface Mget<T = RequestBody> extends Generic {
   index?: string;
   type?: string;
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   stored_fields?: string | string[];
   preference?: string;
   realtime?: boolean;
@@ -1566,6 +1548,24 @@ export interface MlEvaluateDataFrame<T = RequestBody> extends Generic {
 export interface MlExplainDataFrameAnalytics<T = RequestBody> extends Generic {
   id?: string;
   body?: T;
+}
+
+export interface MlFindFileStructure<T = RequestNDBody> extends Generic {
+  lines_to_sample?: number;
+  line_merge_size_limit?: number;
+  timeout?: string;
+  charset?: string;
+  format?: 'ndjson' | 'xml' | 'delimited' | 'semi_structured_text';
+  has_header_row?: boolean;
+  column_names?: string | string[];
+  delimiter?: string;
+  quote?: string;
+  should_trim_fields?: boolean;
+  grok_pattern?: string;
+  timestamp_field?: string;
+  timestamp_format?: string;
+  explain?: boolean;
+  body: T;
 }
 
 export interface MlFlushJob<T = RequestBody> extends Generic {
@@ -2096,8 +2096,6 @@ export interface Scroll<T = RequestBody> extends Generic {
 export interface Search<T = RequestBody> extends Generic {
   index?: string | string[];
   type?: string | string[];
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   ccs_minimize_roundtrips?: boolean;
@@ -2575,8 +2573,6 @@ export interface Update<T = RequestBody> extends Generic {
   id: string;
   index: string;
   type?: string;
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   wait_for_active_shards?: string;
   _source?: string | string[];
   _source_excludes?: string | string[];
@@ -2595,8 +2591,6 @@ export interface Update<T = RequestBody> extends Generic {
 export interface UpdateByQuery<T = RequestBody> extends Generic {
   index: string | string[];
   type?: string | string[];
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
