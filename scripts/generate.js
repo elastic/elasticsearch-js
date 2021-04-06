@@ -34,7 +34,7 @@ const {
 } = require('./utils')
 
 start(minimist(process.argv.slice(2), {
-  string: ['version']
+  string: ['version', 'hash']
 }))
 
 function start (opts) {
@@ -51,7 +51,7 @@ function start (opts) {
   const requestParamsOutputFile = join(packageFolder, 'requestParams.d.ts')
 
   let log
-  downloadArtifacts({ version: opts.version })
+  downloadArtifacts({ version: opts.version, hash: opts.hash })
     .then(onArtifactsDownloaded)
     .catch(err => {
       console.log(err)
