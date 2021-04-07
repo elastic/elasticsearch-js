@@ -1755,7 +1755,7 @@ export interface MlPostCalendarEvents<T = RequestBody> extends Generic {
   body: T;
 }
 
-export interface MlPostData<T = RequestBody> extends Generic {
+export interface MlPostData<T = RequestNDBody> extends Generic {
   job_id: string;
   reset_start?: string;
   reset_end?: string;
@@ -1893,7 +1893,7 @@ export interface MlValidateDetector<T = RequestBody> extends Generic {
   body: T;
 }
 
-export interface MonitoringBulk<T = RequestNDBody> extends Generic {
+export interface MonitoringBulk<T = RequestBody> extends Generic {
   type?: string;
   system_id?: string;
   system_api_version?: string;
@@ -2501,7 +2501,7 @@ export interface Termvectors<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface TextStructureFindStructure<T = RequestBody> extends Generic {
+export interface TextStructureFindStructure<T = RequestNDBody> extends Generic {
   lines_to_sample?: number;
   line_merge_size_limit?: number;
   timeout?: string;
