@@ -51,7 +51,7 @@ TextStructureApi.prototype.findStructure = function textStructureFindStructureAp
   const request = {
     method,
     path,
-    body: body || '',
+    bulkBody: body,
     querystring
   }
 

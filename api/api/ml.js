@@ -1151,7 +1151,7 @@ MlApi.prototype.postData = function mlPostDataApi (params, options, callback) {
   const request = {
     method,
     path,
-    body: body || '',
+    bulkBody: body,
     querystring
   }
 
