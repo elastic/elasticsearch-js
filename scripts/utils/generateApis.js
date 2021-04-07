@@ -57,17 +57,6 @@ const noPathValidation = [
   'update'
 ]
 
-// apis that uses bulkBody property
-const ndjsonApi = [
-  'bulk',
-  'msearch',
-  'msearch_template',
-  'ml.find_file_structure',
-  'monitoring.bulk',
-  'xpack.ml.find_file_structure',
-  'xpack.monitoring.bulk'
-]
-
 function generateNamespace (namespace, nested, specFolder, version) {
   const common = require(join(specFolder, '_common.json'))
   let code = dedent`
@@ -249,7 +238,7 @@ function generateSingleApi (version, spec, common) {
     const request = {
       method,
       path,
-      ${genBody(api, methods, spec[api].body)}
+      ${genBody(api, methods, spec[api].body, spec)}
       querystring
     }
 
@@ -376,7 +365,7 @@ function generateSingleApi (version, spec, common) {
     }
 
     let hasStaticPath = false
-    const sortedPaths = paths
+    let sortedPaths = paths
       // some legacy API have mutliple statis paths
       // this filter removes them
       .filter(p => {
@@ -389,6 +378,9 @@ function generateSingleApi (version, spec, common) {
       })
       // sort by number of parameters (desc)
       .sort((a, b) => Object.keys(b.parts || {}).length - Object.keys(a.parts || {}).length)
+
+    const allDeprecated = paths.filter(path => path.deprecated != null)
+    if (allDeprecated.length === paths.length) sortedPaths = [paths[0]]
 
     let code = ''
     for (let i = 0; i < sortedPaths.length; i++) {
@@ -437,9 +429,10 @@ function generatePickMethod (methods) {
   }
 }
 
-function genBody (api, methods, body) {
+function genBody (api, methods, body, spec) {
   const bodyMethod = getBodyMethod(methods)
-  if (ndjsonApi.indexOf(api) > -1) {
+  const { content_type } = spec[api].headers
+  if (content_type && content_type.includes('application/x-ndjson')) {
     return 'bulkBody: body,'
   }
   if (body === null && bodyMethod) {
@@ -558,4 +551,3 @@ function Uppercase (str) {
 }
 
 module.exports = generateNamespace
-module.exports.ndjsonApi = ndjsonApi
