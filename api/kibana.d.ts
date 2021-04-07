@@ -191,6 +191,7 @@ interface KibanaClient {
   explain<TDocument = unknown, TContext = unknown>(params: T.ExplainRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ExplainResponse<TDocument>, TContext>>
   features: {
     getFeatures<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    resetFeatures<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
   }
   fieldCaps<TContext = unknown>(params?: T.FieldCapabilitiesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FieldCapabilitiesResponse, TContext>>
   get<TDocument = unknown, TContext = unknown>(params: T.GetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetResponse<TDocument>, TContext>>
@@ -221,7 +222,7 @@ interface KibanaClient {
     clone<TContext = unknown>(params: T.CloneIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CloneIndexResponse, TContext>>
     close<TContext = unknown>(params: T.CloseIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CloseIndexResponse, TContext>>
     create<TContext = unknown>(params: T.CreateIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CreateIndexResponse, TContext>>
-    createDataStream<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    createDataStream<TContext = unknown>(params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesCreateDataStreamResponse, TContext>>
     dataStreamsStats<TContext = unknown>(params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesDataStreamsStatsResponse, TContext>>
     delete<TContext = unknown>(params: T.DeleteIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteIndexResponse, TContext>>
     deleteAlias<TContext = unknown>(params: T.DeleteAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteAliasResponse, TContext>>
@@ -239,7 +240,7 @@ interface KibanaClient {
     freeze<TContext = unknown>(params: T.FreezeIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FreezeIndexResponse, TContext>>
     get<TContext = unknown>(params: T.GetIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetIndexResponse, TContext>>
     getAlias<TContext = unknown>(params?: T.GetAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetAliasResponse, TContext>>
-    getDataStream<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    getDataStream<TContext = unknown>(params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesGetDataStreamResponse, TContext>>
     getFieldMapping<TContext = unknown>(params: T.GetFieldMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetFieldMappingResponse, TContext>>
     getIndexTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     getMapping<TContext = unknown>(params?: T.GetMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetMappingResponse, TContext>>
@@ -274,6 +275,7 @@ interface KibanaClient {
   info<TContext = unknown>(params?: T.RootNodeInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RootNodeInfoResponse, TContext>>
   ingest: {
     deletePipeline<TContext = unknown>(params: T.DeletePipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeletePipelineResponse, TContext>>
+    geoIpStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     getPipeline<TContext = unknown>(params?: T.GetPipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetPipelineResponse, TContext>>
     processorGrok<TContext = unknown>(params?: T.GrokProcessorPatternsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GrokProcessorPatternsResponse, TContext>>
     putPipeline<TContext = unknown>(params: T.PutPipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutPipelineResponse, TContext>>
@@ -302,7 +304,7 @@ interface KibanaClient {
     deleteCalendar<TContext = unknown>(params: T.DeleteCalendarRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteCalendarResponse, TContext>>
     deleteCalendarEvent<TContext = unknown>(params: T.DeleteCalendarEventRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteCalendarEventResponse, TContext>>
     deleteCalendarJob<TContext = unknown>(params: T.DeleteCalendarJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteCalendarJobResponse, TContext>>
-    deleteDataFrameAnalytics<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    deleteDataFrameAnalytics<TContext = unknown>(params: T.DeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteDataFrameAnalyticsResponse, TContext>>
     deleteDatafeed<TContext = unknown>(params: T.DeleteDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteDatafeedResponse, TContext>>
     deleteExpiredData<TContext = unknown>(params?: T.DeleteExpiredDataRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteExpiredDataResponse, TContext>>
     deleteFilter<TContext = unknown>(params: T.DeleteFilterRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteFilterResponse, TContext>>
@@ -314,6 +316,7 @@ interface KibanaClient {
     estimateModelMemory<TContext = unknown>(params?: T.EstimateModelMemoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EstimateModelMemoryResponse, TContext>>
     evaluateDataFrame<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     explainDataFrameAnalytics<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    findFileStructure<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     flushJob<TContext = unknown>(params: T.FlushJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FlushJobResponse, TContext>>
     forecast<TContext = unknown>(params: T.ForecastJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ForecastJobResponse, TContext>>
     getBuckets<TContext = unknown>(params: T.GetBucketsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetBucketsResponse, TContext>>
@@ -365,7 +368,7 @@ interface KibanaClient {
   monitoring: {
     bulk<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
   }
-  msearch<TContext = unknown>(params?: T.MultiSearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchResponse, TContext>>
+  msearch<TDocument = unknown, TContext = unknown>(params?: T.MultiSearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchResponse<TDocument>, TContext>>
   msearchTemplate<TContext = unknown>(params?: T.MultiSearchTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchTemplateResponse, TContext>>
   mtermvectors<TContext = unknown>(params?: T.MultiTermVectorsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiTermVectorsResponse, TContext>>
   nodes: {
@@ -435,6 +438,11 @@ interface KibanaClient {
     putRoleMapping<TContext = unknown>(params: T.PutRoleMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutRoleMappingResponse, TContext>>
     putUser<TContext = unknown>(params: T.PutUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutUserResponse, TContext>>
   }
+  shutdown: {
+    deleteNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    getNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    putNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+  }
   slm: {
     deleteLifecycle<TContext = unknown>(params: T.DeleteSnapshotLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteSnapshotLifecycleResponse, TContext>>
     executeLifecycle<TContext = unknown>(params: T.ExecuteSnapshotLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ExecuteSnapshotLifecycleResponse, TContext>>
@@ -488,7 +496,7 @@ interface KibanaClient {
   }
   update<TDocumentR = unknown, TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateResponse<TDocumentR>, TContext>>
   updateByQuery<TContext = unknown>(params: T.UpdateByQueryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateByQueryResponse, TContext>>
-  updateByQueryRethrottle<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+  updateByQueryRethrottle<TContext = unknown>(params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateByQueryRethrottleResponse, TContext>>
   watcher: {
     ackWatch<TContext = unknown>(params: T.AcknowledgeWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AcknowledgeWatchResponse, TContext>>
     activateWatch<TContext = unknown>(params: T.ActivateWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ActivateWatchResponse, TContext>>

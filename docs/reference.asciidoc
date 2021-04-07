@@ -2304,8 +2304,8 @@ link:{ref}/cluster-reroute.html[Documentation] +
 [source,ts]
 ----
 client.cluster.state({
-  metric: string | string[],
   index: string | string[],
+  metric: string | string[],
   local: boolean,
   master_timeout: string,
   flat_settings: boolean,
@@ -2319,11 +2319,11 @@ client.cluster.state({
 link:{ref}/cluster-state.html[Documentation] +
 [cols=2*]
 |===
-|`metric`
-|`string \| string[]` - Limit the information returned to the specified metrics
-
 |`index`
 |`string \| string[]` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+|`metric`
+|`string \| string[]` - Limit the information returned to the specified metrics
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
@@ -3233,7 +3233,7 @@ client.features.getFeatures({
   master_timeout: string
 })
 ----
-link:{ref}/modules-snapshots.html[Documentation] +
+link:{ref}/get-features-api.html[Documentation] +
 [cols=2*]
 |===
 |`master_timeout` or `masterTimeout`
@@ -5575,6 +5575,16 @@ link:{ref}/delete-pipeline-api.html[Documentation] +
 |===
 
 [discrete]
+=== ingest.geoIpStats
+
+[source,ts]
+----
+client.ingest.geoIpStats()
+----
+link:{ref}/geoip-stats-api.html[Documentation] +
+
+
+[discrete]
 === ingest.getPipeline
 
 [source,ts]
@@ -7103,7 +7113,8 @@ link:{ref}/preview-dfanalytics.html[Documentation] +
 [source,ts]
 ----
 client.ml.previewDatafeed({
-  datafeed_id: string
+  datafeed_id: string,
+  body: object
 })
 ----
 link:{ref}/ml-preview-datafeed.html[Documentation] +
@@ -7111,6 +7122,9 @@ link:{ref}/ml-preview-datafeed.html[Documentation] +
 |===
 |`datafeed_id` or `datafeedId`
 |`string` - The ID of the datafeed to preview
+
+|`body`
+|`object` - The datafeed config and job config with which to execute the preview
 
 |===
 
@@ -9489,6 +9503,61 @@ link:{ref}/security-api-put-user.html[Documentation] +
 |===
 
 [discrete]
+=== shutdown.deleteNode
+*Stability:* experimental
+[source,ts]
+----
+client.shutdown.deleteNode({
+  node_id: string
+})
+----
+link:https://www.elastic.co/guide/en/elasticsearch/reference/current[Documentation] +
+[cols=2*]
+|===
+|`node_id` or `nodeId`
+|`string` - The node id of node to be removed from the shutdown state
+
+|===
+
+[discrete]
+=== shutdown.getNode
+*Stability:* experimental
+[source,ts]
+----
+client.shutdown.getNode({
+  node_id: string
+})
+----
+link:https://www.elastic.co/guide/en/elasticsearch/reference/current[Documentation] +
+[cols=2*]
+|===
+|`node_id` or `nodeId`
+|`string` - Which node for which to retrieve the shutdown status
+
+|===
+
+[discrete]
+=== shutdown.putNode
+*Stability:* experimental
+[source,ts]
+----
+client.shutdown.putNode({
+  node_id: string,
+  body: object
+})
+----
+link:https://www.elastic.co/guide/en/elasticsearch/reference/current[Documentation] +
+[cols=2*]
+|===
+|`node_id` or `nodeId`
+|`string` - The node id of node to be shut down
+
+|`body`
+|`object` - The shutdown type definition to register
+
+|===
+
+[discrete]
 === slm.deleteLifecycle
 
 [source,ts]
@@ -10170,7 +10239,7 @@ _Default:_ `true`
 
 [discrete]
 === textStructure.findStructure
-*Stability:* experimental
+
 [source,ts]
 ----
 client.textStructure.findStructure({
