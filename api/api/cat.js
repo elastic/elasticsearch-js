@@ -23,8 +23,8 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['format', 'local', 'h', 'help', 's', 'v', 'expand_wildcards', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'bytes', 'master_timeout', 'fields', 'time', 'ts', 'health', 'pri', 'include_unloaded_segments', 'full_id', 'include_bootstrap', 'active_only', 'detailed', 'index', 'ignore_unavailable', 'nodes', 'actions', 'parent_task_id', 'size', 'allow_no_match', 'allow_no_datafeeds', 'allow_no_jobs', 'from']
-const snakeCase = { expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', masterTimeout: 'master_timeout', includeUnloadedSegments: 'include_unloaded_segments', fullId: 'full_id', includeBootstrap: 'include_bootstrap', activeOnly: 'active_only', ignoreUnavailable: 'ignore_unavailable', parentTaskId: 'parent_task_id', allowNoMatch: 'allow_no_match', allowNoDatafeeds: 'allow_no_datafeeds', allowNoJobs: 'allow_no_jobs' }
+const acceptedQuerystring = ['format', 'local', 'h', 'help', 's', 'v', 'expand_wildcards', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'bytes', 'master_timeout', 'fields', 'time', 'ts', 'health', 'pri', 'include_unloaded_segments', 'allow_no_match', 'allow_no_datafeeds', 'allow_no_jobs', 'from', 'size', 'full_id', 'include_bootstrap', 'active_only', 'detailed', 'index', 'ignore_unavailable', 'nodes', 'actions', 'parent_task_id']
+const snakeCase = { expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', masterTimeout: 'master_timeout', includeUnloadedSegments: 'include_unloaded_segments', allowNoMatch: 'allow_no_match', allowNoDatafeeds: 'allow_no_datafeeds', allowNoJobs: 'allow_no_jobs', fullId: 'full_id', includeBootstrap: 'include_bootstrap', activeOnly: 'active_only', ignoreUnavailable: 'ignore_unavailable', parentTaskId: 'parent_task_id' }
 
 function CatApi (transport, ConfigurationError) {
   this.transport = transport
@@ -212,6 +212,110 @@ CatApi.prototype.master = function catMasterApi (params, options, callback) {
   let path = ''
   if (method == null) method = 'GET'
   path = '/' + '_cat' + '/' + 'master'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+CatApi.prototype.mlDataFrameAnalytics = function catMlDataFrameAnalyticsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if ((id) != null) {
+    if (method == null) method = 'GET'
+    path = '/' + '_cat' + '/' + 'ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
+  } else {
+    if (method == null) method = 'GET'
+    path = '/' + '_cat' + '/' + 'ml' + '/' + 'data_frame' + '/' + 'analytics'
+  }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+CatApi.prototype.mlDatafeeds = function catMlDatafeedsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, datafeedId, datafeed_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if ((datafeed_id || datafeedId) != null) {
+    if (method == null) method = 'GET'
+    path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId)
+  } else {
+    if (method == null) method = 'GET'
+    path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds'
+  }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+CatApi.prototype.mlJobs = function catMlJobsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, jobId, job_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if ((job_id || jobId) != null) {
+    if (method == null) method = 'GET'
+    path = '/' + '_cat' + '/' + 'ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
+  } else {
+    if (method == null) method = 'GET'
+    path = '/' + '_cat' + '/' + 'ml' + '/' + 'anomaly_detectors'
+  }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+CatApi.prototype.mlTrainedModels = function catMlTrainedModelsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, modelId, model_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if ((model_id || modelId) != null) {
+    if (method == null) method = 'GET'
+    path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
+  } else {
+    if (method == null) method = 'GET'
+    path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models'
+  }
 
   // build request object
   const request = {
@@ -506,110 +610,6 @@ CatApi.prototype.threadPool = function catThreadPoolApi (params, options, callba
   return this.transport.request(request, options, callback)
 }
 
-CatApi.prototype.mlDataFrameAnalytics = function catMlDataFrameAnalyticsApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  let { method, body, id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if ((id) != null) {
-    if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'ml' + '/' + 'data_frame' + '/' + 'analytics' + '/' + encodeURIComponent(id)
-  } else {
-    if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'ml' + '/' + 'data_frame' + '/' + 'analytics'
-  }
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: null,
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
-CatApi.prototype.mlDatafeeds = function catMlDatafeedsApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  let { method, body, datafeedId, datafeed_id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if ((datafeed_id || datafeedId) != null) {
-    if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId)
-  } else {
-    if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'ml' + '/' + 'datafeeds'
-  }
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: null,
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
-CatApi.prototype.mlJobs = function catMlJobsApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  let { method, body, jobId, job_id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if ((job_id || jobId) != null) {
-    if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId)
-  } else {
-    if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'ml' + '/' + 'anomaly_detectors'
-  }
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: null,
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
-CatApi.prototype.mlTrainedModels = function catMlTrainedModelsApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  let { method, body, modelId, model_id, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if ((model_id || modelId) != null) {
-    if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId)
-  } else {
-    if (method == null) method = 'GET'
-    path = '/' + '_cat' + '/' + 'ml' + '/' + 'trained_models'
-  }
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: null,
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
 CatApi.prototype.transforms = function catTransformsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -637,12 +637,12 @@ CatApi.prototype.transforms = function catTransformsApi (params, options, callba
 }
 
 Object.defineProperties(CatApi.prototype, {
-  pending_tasks: { get () { return this.pendingTasks } },
-  thread_pool: { get () { return this.threadPool } },
   ml_data_frame_analytics: { get () { return this.mlDataFrameAnalytics } },
   ml_datafeeds: { get () { return this.mlDatafeeds } },
   ml_jobs: { get () { return this.mlJobs } },
-  ml_trained_models: { get () { return this.mlTrainedModels } }
+  ml_trained_models: { get () { return this.mlTrainedModels } },
+  pending_tasks: { get () { return this.pendingTasks } },
+  thread_pool: { get () { return this.threadPool } }
 })
 
 module.exports = CatApi

@@ -445,6 +445,10 @@ interface NewClientTypes {
     getFeatures<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
     getFeatures<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     getFeatures<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    resetFeatures<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    resetFeatures<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    resetFeatures<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    resetFeatures<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
   }
   fieldCaps<TContext = unknown>(params?: T.FieldCapabilitiesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FieldCapabilitiesResponse, TContext>>
   fieldCaps<TContext = unknown>(callback: callbackFn<T.FieldCapabilitiesResponse, TContext>): TransportRequestCallback
@@ -533,10 +537,9 @@ interface NewClientTypes {
     create<TContext = unknown>(params: T.CreateIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CreateIndexResponse, TContext>>
     create<TContext = unknown>(params: T.CreateIndexRequest, callback: callbackFn<T.CreateIndexResponse, TContext>): TransportRequestCallback
     create<TContext = unknown>(params: T.CreateIndexRequest, options: TransportRequestOptions, callback: callbackFn<T.CreateIndexResponse, TContext>): TransportRequestCallback
-    createDataStream<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    createDataStream<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    createDataStream<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    createDataStream<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    createDataStream<TContext = unknown>(params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesCreateDataStreamResponse, TContext>>
+    createDataStream<TContext = unknown>(params: T.IndicesCreateDataStreamRequest, callback: callbackFn<T.IndicesCreateDataStreamResponse, TContext>): TransportRequestCallback
+    createDataStream<TContext = unknown>(params: T.IndicesCreateDataStreamRequest, options: TransportRequestOptions, callback: callbackFn<T.IndicesCreateDataStreamResponse, TContext>): TransportRequestCallback
     dataStreamsStats<TContext = unknown>(params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesDataStreamsStatsResponse, TContext>>
     dataStreamsStats<TContext = unknown>(callback: callbackFn<T.IndicesDataStreamsStatsResponse, TContext>): TransportRequestCallback
     dataStreamsStats<TContext = unknown>(params: T.IndicesDataStreamsStatsRequest, callback: callbackFn<T.IndicesDataStreamsStatsResponse, TContext>): TransportRequestCallback
@@ -595,10 +598,10 @@ interface NewClientTypes {
     getAlias<TContext = unknown>(callback: callbackFn<T.GetAliasResponse, TContext>): TransportRequestCallback
     getAlias<TContext = unknown>(params: T.GetAliasRequest, callback: callbackFn<T.GetAliasResponse, TContext>): TransportRequestCallback
     getAlias<TContext = unknown>(params: T.GetAliasRequest, options: TransportRequestOptions, callback: callbackFn<T.GetAliasResponse, TContext>): TransportRequestCallback
-    getDataStream<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    getDataStream<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    getDataStream<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    getDataStream<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    getDataStream<TContext = unknown>(params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesGetDataStreamResponse, TContext>>
+    getDataStream<TContext = unknown>(callback: callbackFn<T.IndicesGetDataStreamResponse, TContext>): TransportRequestCallback
+    getDataStream<TContext = unknown>(params: T.IndicesGetDataStreamRequest, callback: callbackFn<T.IndicesGetDataStreamResponse, TContext>): TransportRequestCallback
+    getDataStream<TContext = unknown>(params: T.IndicesGetDataStreamRequest, options: TransportRequestOptions, callback: callbackFn<T.IndicesGetDataStreamResponse, TContext>): TransportRequestCallback
     getFieldMapping<TContext = unknown>(params: T.GetFieldMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetFieldMappingResponse, TContext>>
     getFieldMapping<TContext = unknown>(params: T.GetFieldMappingRequest, callback: callbackFn<T.GetFieldMappingResponse, TContext>): TransportRequestCallback
     getFieldMapping<TContext = unknown>(params: T.GetFieldMappingRequest, options: TransportRequestOptions, callback: callbackFn<T.GetFieldMappingResponse, TContext>): TransportRequestCallback
@@ -717,6 +720,10 @@ interface NewClientTypes {
     deletePipeline<TContext = unknown>(params: T.DeletePipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeletePipelineResponse, TContext>>
     deletePipeline<TContext = unknown>(params: T.DeletePipelineRequest, callback: callbackFn<T.DeletePipelineResponse, TContext>): TransportRequestCallback
     deletePipeline<TContext = unknown>(params: T.DeletePipelineRequest, options: TransportRequestOptions, callback: callbackFn<T.DeletePipelineResponse, TContext>): TransportRequestCallback
+    geoIpStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    geoIpStats<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    geoIpStats<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    geoIpStats<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     getPipeline<TContext = unknown>(params?: T.GetPipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetPipelineResponse, TContext>>
     getPipeline<TContext = unknown>(callback: callbackFn<T.GetPipelineResponse, TContext>): TransportRequestCallback
     getPipeline<TContext = unknown>(params: T.GetPipelineRequest, callback: callbackFn<T.GetPipelineResponse, TContext>): TransportRequestCallback
@@ -800,10 +807,9 @@ interface NewClientTypes {
     deleteCalendarJob<TContext = unknown>(params: T.DeleteCalendarJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteCalendarJobResponse, TContext>>
     deleteCalendarJob<TContext = unknown>(params: T.DeleteCalendarJobRequest, callback: callbackFn<T.DeleteCalendarJobResponse, TContext>): TransportRequestCallback
     deleteCalendarJob<TContext = unknown>(params: T.DeleteCalendarJobRequest, options: TransportRequestOptions, callback: callbackFn<T.DeleteCalendarJobResponse, TContext>): TransportRequestCallback
-    deleteDataFrameAnalytics<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    deleteDataFrameAnalytics<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteDataFrameAnalytics<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteDataFrameAnalytics<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    deleteDataFrameAnalytics<TContext = unknown>(params: T.DeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteDataFrameAnalyticsResponse, TContext>>
+    deleteDataFrameAnalytics<TContext = unknown>(params: T.DeleteDataFrameAnalyticsRequest, callback: callbackFn<T.DeleteDataFrameAnalyticsResponse, TContext>): TransportRequestCallback
+    deleteDataFrameAnalytics<TContext = unknown>(params: T.DeleteDataFrameAnalyticsRequest, options: TransportRequestOptions, callback: callbackFn<T.DeleteDataFrameAnalyticsResponse, TContext>): TransportRequestCallback
     deleteDatafeed<TContext = unknown>(params: T.DeleteDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteDatafeedResponse, TContext>>
     deleteDatafeed<TContext = unknown>(params: T.DeleteDatafeedRequest, callback: callbackFn<T.DeleteDatafeedResponse, TContext>): TransportRequestCallback
     deleteDatafeed<TContext = unknown>(params: T.DeleteDatafeedRequest, options: TransportRequestOptions, callback: callbackFn<T.DeleteDatafeedResponse, TContext>): TransportRequestCallback
@@ -841,6 +847,10 @@ interface NewClientTypes {
     explainDataFrameAnalytics<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
     explainDataFrameAnalytics<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     explainDataFrameAnalytics<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    findFileStructure<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    findFileStructure<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    findFileStructure<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    findFileStructure<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     flushJob<TContext = unknown>(params: T.FlushJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FlushJobResponse, TContext>>
     flushJob<TContext = unknown>(params: T.FlushJobRequest, callback: callbackFn<T.FlushJobResponse, TContext>): TransportRequestCallback
     flushJob<TContext = unknown>(params: T.FlushJobRequest, options: TransportRequestOptions, callback: callbackFn<T.FlushJobResponse, TContext>): TransportRequestCallback
@@ -1011,10 +1021,10 @@ interface NewClientTypes {
     bulk<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     bulk<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
   }
-  msearch<TContext = unknown>(params?: T.MultiSearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchResponse, TContext>>
-  msearch<TContext = unknown>(callback: callbackFn<T.MultiSearchResponse, TContext>): TransportRequestCallback
-  msearch<TContext = unknown>(params: T.MultiSearchRequest, callback: callbackFn<T.MultiSearchResponse, TContext>): TransportRequestCallback
-  msearch<TContext = unknown>(params: T.MultiSearchRequest, options: TransportRequestOptions, callback: callbackFn<T.MultiSearchResponse, TContext>): TransportRequestCallback
+  msearch<TDocument = unknown, TContext = unknown>(params?: T.MultiSearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchResponse<TDocument>, TContext>>
+  msearch<TDocument = unknown, TContext = unknown>(callback: callbackFn<T.MultiSearchResponse<TDocument>, TContext>): TransportRequestCallback
+  msearch<TDocument = unknown, TContext = unknown>(params: T.MultiSearchRequest, callback: callbackFn<T.MultiSearchResponse<TDocument>, TContext>): TransportRequestCallback
+  msearch<TDocument = unknown, TContext = unknown>(params: T.MultiSearchRequest, options: TransportRequestOptions, callback: callbackFn<T.MultiSearchResponse<TDocument>, TContext>): TransportRequestCallback
   msearchTemplate<TContext = unknown>(params?: T.MultiSearchTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchTemplateResponse, TContext>>
   msearchTemplate<TContext = unknown>(callback: callbackFn<T.MultiSearchTemplateResponse, TContext>): TransportRequestCallback
   msearchTemplate<TContext = unknown>(params: T.MultiSearchTemplateRequest, callback: callbackFn<T.MultiSearchTemplateResponse, TContext>): TransportRequestCallback
@@ -1245,6 +1255,20 @@ interface NewClientTypes {
     putUser<TContext = unknown>(params: T.PutUserRequest, callback: callbackFn<T.PutUserResponse, TContext>): TransportRequestCallback
     putUser<TContext = unknown>(params: T.PutUserRequest, options: TransportRequestOptions, callback: callbackFn<T.PutUserResponse, TContext>): TransportRequestCallback
   }
+  shutdown: {
+    deleteNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    deleteNode<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    deleteNode<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    deleteNode<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    getNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    getNode<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    getNode<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    getNode<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    putNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    putNode<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    putNode<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    putNode<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+  }
   slm: {
     deleteLifecycle<TContext = unknown>(params: T.DeleteSnapshotLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteSnapshotLifecycleResponse, TContext>>
     deleteLifecycle<TContext = unknown>(params: T.DeleteSnapshotLifecycleRequest, callback: callbackFn<T.DeleteSnapshotLifecycleResponse, TContext>): TransportRequestCallback
@@ -1392,10 +1416,9 @@ interface NewClientTypes {
   updateByQuery<TContext = unknown>(params: T.UpdateByQueryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateByQueryResponse, TContext>>
   updateByQuery<TContext = unknown>(params: T.UpdateByQueryRequest, callback: callbackFn<T.UpdateByQueryResponse, TContext>): TransportRequestCallback
   updateByQuery<TContext = unknown>(params: T.UpdateByQueryRequest, options: TransportRequestOptions, callback: callbackFn<T.UpdateByQueryResponse, TContext>): TransportRequestCallback
-  updateByQueryRethrottle<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-  updateByQueryRethrottle<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  updateByQueryRethrottle<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  updateByQueryRethrottle<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+  updateByQueryRethrottle<TContext = unknown>(params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateByQueryRethrottleResponse, TContext>>
+  updateByQueryRethrottle<TContext = unknown>(params: T.UpdateByQueryRethrottleRequest, callback: callbackFn<T.UpdateByQueryRethrottleResponse, TContext>): TransportRequestCallback
+  updateByQueryRethrottle<TContext = unknown>(params: T.UpdateByQueryRethrottleRequest, options: TransportRequestOptions, callback: callbackFn<T.UpdateByQueryRethrottleResponse, TContext>): TransportRequestCallback
   watcher: {
     ackWatch<TContext = unknown>(params: T.AcknowledgeWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AcknowledgeWatchResponse, TContext>>
     ackWatch<TContext = unknown>(params: T.AcknowledgeWatchRequest, callback: callbackFn<T.AcknowledgeWatchResponse, TContext>): TransportRequestCallback

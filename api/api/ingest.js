@@ -58,6 +58,27 @@ IngestApi.prototype.deletePipeline = function ingestDeletePipelineApi (params, o
   return this.transport.request(request, options, callback)
 }
 
+IngestApi.prototype.geoIpStats = function ingestGeoIpStatsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'GET'
+  path = '/' + '_ingest' + '/' + 'geoip' + '/' + 'stats'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 IngestApi.prototype.getPipeline = function ingestGetPipelineApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -170,6 +191,7 @@ IngestApi.prototype.simulate = function ingestSimulateApi (params, options, call
 
 Object.defineProperties(IngestApi.prototype, {
   delete_pipeline: { get () { return this.deletePipeline } },
+  geo_ip_stats: { get () { return this.geoIpStats } },
   get_pipeline: { get () { return this.getPipeline } },
   processor_grok: { get () { return this.processorGrok } },
   put_pipeline: { get () { return this.putPipeline } }
