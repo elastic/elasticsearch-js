@@ -19,7 +19,6 @@
 
 'use strict'
 
-const semver = require('semver')
 const deprecatedParameters = require('./patch.json')
 const { ndjsonApi } = require('./generateApis')
 
@@ -32,7 +31,7 @@ const ndjsonApiKey = ndjsonApi
   .map(toPascalCase)
 
 function generate (version, api) {
-  const release = semver.valid(version) ? semver.major(version) : version
+  const release = version.charAt(0)
   let types = `/*
  * Licensed to Elasticsearch B.V. under one or more contributor
  * license agreements. See the NOTICE file distributed with

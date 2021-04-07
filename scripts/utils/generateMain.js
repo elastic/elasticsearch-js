@@ -35,11 +35,10 @@ const ndjsonApiKey = ndjsonApi
   })
   .map(toPascalCase)
 
-function genFactory (folder, paths, namespaces) {
+function genFactory (folder, specFolder, namespaces) {
   // get all the API files
   // const apiFiles = readdirSync(folder)
-  const apiFiles = readdirSync(paths[0])
-    .concat(readdirSync(paths[1]))
+  const apiFiles = readdirSync(specFolder)
     .filter(file => file !== '_common.json')
     .filter(file => !file.includes('deprecated'))
     .sort()
@@ -55,7 +54,7 @@ function genFactory (folder, paths, namespaces) {
         .split('.')
         .reverse()
         .reduce((acc, val) => {
-          const spec = readSpec(paths, file.slice(0, -5))
+          const spec = readSpec(specFolder, file.slice(0, -5))
           const isHead = isHeadMethod(spec, file.slice(0, -5))
           const body = hasBody(spec, file.slice(0, -5))
           const methods = acc === null ? buildMethodDefinition({ kibana: false }, val, name, body, isHead) : null
@@ -87,7 +86,7 @@ function genFactory (folder, paths, namespaces) {
         .split('.')
         .reverse()
         .reduce((acc, val) => {
-          const spec = readSpec(paths, file.slice(0, -5))
+          const spec = readSpec(specFolder, file.slice(0, -5))
           const isHead = isHeadMethod(spec, file.slice(0, -5))
           const body = hasBody(spec, file.slice(0, -5))
           const methods = acc === null ? buildMethodDefinition({ kibana: true }, val, name, body, isHead) : null
@@ -296,16 +295,12 @@ function isHeadMethod (spec, api) {
   return methods.length === 1 && methods[0] === 'HEAD'
 }
 
-function readSpec (paths, file) {
+function readSpec (specFolder, file) {
   try {
-    return require(join(paths[0], file))
-  } catch (err) {}
-
-  try {
-    return require(join(paths[1], file))
-  } catch (err) {}
-
-  throw new Error(`Cannot read spec file ${file}`)
+    return require(join(specFolder, file))
+  } catch (err) {
+    throw new Error(`Cannot read spec file ${file}`)
+  }
 }
 
 module.exports = genFactory

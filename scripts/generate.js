@@ -20,71 +20,84 @@
 'use strict'
 
 const { join } = require('path')
-const { readdirSync, readFileSync, writeFileSync } = require('fs')
+const { readdirSync, writeFileSync, readFileSync } = require('fs')
 const minimist = require('minimist')
-const semver = require('semver')
 const ora = require('ora')
 const rimraf = require('rimraf')
 const standard = require('standard')
+const downloadArtifacts = require('./download-artifacts')
 const {
   generate,
-  cloneAndCheckout,
   genFactory,
-  generateDocs
+  generateDocs,
+  generateRequestTypes
 } = require('./utils')
 
 start(minimist(process.argv.slice(2), {
-  string: ['tag', 'branch']
+  string: ['version', 'hash']
 }))
 
 function start (opts) {
-  const log = ora('Loading Elasticsearch Repository').start()
-  if (opts.branch == null && semver.valid(opts.tag) === null) {
-    log.fail(`Missing or invalid tag: ${opts.tag}`)
-    return
+  if (opts.version == null) {
+    console.error('Missing version parameter')
+    process.exit(1)
   }
+
   const packageFolder = join(__dirname, '..', 'api')
   const apiOutputFolder = join(packageFolder, 'api')
   const mainOutputFile = join(packageFolder, 'index.js')
   const docOutputFile = join(__dirname, '..', 'docs', 'reference.asciidoc')
+  const typeDefFile = join(__dirname, '..', 'index.d.ts')
+  const requestParamsOutputFile = join(packageFolder, 'requestParams.d.ts')
 
-  log.text = 'Cleaning API folder...'
-  rimraf.sync(join(apiOutputFolder, '*.js'))
+  let log
+  downloadArtifacts({ version: opts.version, hash: opts.hash })
+    .then(onArtifactsDownloaded)
+    .catch(err => {
+      console.log(err)
+      process.exit(1)
+    })
 
-  cloneAndCheckout({ log, tag: opts.tag, branch: opts.branch }, (err, { apiFolder, xPackFolder }) => {
-    if (err) {
-      log.fail(err.message)
-      return
-    }
+  function onArtifactsDownloaded () {
+    log = ora('Generating APIs').start()
 
-    const apiFolderContents = readdirSync(apiFolder)
-    const xPackFolderContents = readdirSync(xPackFolder)
-      .filter(file => !file.startsWith('data_frame_transform_deprecated'))
+    log.text = 'Cleaning API folder...'
+    rimraf.sync(join(apiOutputFolder, '*.js'))
 
-    const allSpec = apiFolderContents.concat(xPackFolderContents)
+    const allSpec = readdirSync(downloadArtifacts.locations.specFolder)
       .filter(file => file !== '_common.json')
       .filter(file => !file.includes('deprecated'))
       .sort()
-      .map(file => {
-        try {
-          return JSON.parse(readFileSync(join(apiFolder, file), 'utf8'))
-        } catch (err) {
-          return JSON.parse(readFileSync(join(xPackFolder, file), 'utf8'))
-        }
-      })
+      .map(file => require(join(downloadArtifacts.locations.specFolder, file)))
 
-    const namespaces = namespacify(apiFolderContents.concat(xPackFolderContents))
+    const namespaces = namespacify(readdirSync(downloadArtifacts.locations.specFolder))
     for (const namespace in namespaces) {
       if (namespace === '_common') continue
-      const code = generate(namespace, namespaces[namespace], { apiFolder, xPackFolder }, opts.branch || opts.tag)
+      const code = generate(namespace, namespaces[namespace], downloadArtifacts.locations.specFolder, opts.version)
       const filePath = join(apiOutputFolder, `${namespace}.js`)
       writeFileSync(filePath, code, { encoding: 'utf8' })
     }
 
-    const { fn: factory } = genFactory(apiOutputFolder, [apiFolder, xPackFolder], namespaces)
+    writeFileSync(
+      requestParamsOutputFile,
+      generateRequestTypes(opts.version, allSpec),
+      { encoding: 'utf8' }
+    )
+
+    const { fn: factory, types } = genFactory(apiOutputFolder, downloadArtifacts.locations.specFolder, namespaces)
     writeFileSync(
       mainOutputFile,
       factory,
+      { encoding: 'utf8' }
+    )
+
+    const oldTypeDefString = readFileSync(typeDefFile, 'utf8')
+    const start = oldTypeDefString.indexOf('/* GENERATED */')
+    const end = oldTypeDefString.indexOf('/* /GENERATED */')
+    const newTypeDefString = oldTypeDefString.slice(0, start + 15) + '\n' + types + '\n  ' + oldTypeDefString.slice(end)
+    writeFileSync(
+      typeDefFile,
+      newTypeDefString,
       { encoding: 'utf8' }
     )
 
@@ -92,13 +105,13 @@ function start (opts) {
       log.text = 'Generating documentation'
       writeFileSync(
         docOutputFile,
-        generateDocs(require(join(apiFolder, '_common.json')), allSpec),
+        generateDocs(require(join(downloadArtifacts.locations.specFolder, '_common.json')), allSpec),
         { encoding: 'utf8' }
       )
 
       log.succeed('Done!')
     })
-  })
+  }
 
   function lintFiles (log, cb) {
     log.text = 'Linting...'

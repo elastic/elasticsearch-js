@@ -25,7 +25,6 @@
 
 const { join } = require('path')
 const dedent = require('dedent')
-const semver = require('semver')
 const allowedMethods = {
   noBody: ['GET', 'HEAD', 'DELETE'],
   body: ['POST', 'PUT', 'DELETE']
@@ -71,8 +70,8 @@ const ndjsonApi = [
   'xpack.monitoring.bulk'
 ]
 
-function generateNamespace (namespace, nested, folders, version) {
-  const common = require(join(folders.apiFolder, '_common.json'))
+function generateNamespace (namespace, nested, specFolder, version) {
+  const common = require(join(specFolder, '_common.json'))
   let code = dedent`
   /*
    * Licensed to Elasticsearch B.V. under one or more contributor
@@ -110,7 +109,7 @@ function generateNamespace (namespace, nested, folders, version) {
         getters += `${n}: { get () { return this.${nameSnaked} } },\n`
       }
     }
-    const api = generateMultiApi(version, namespace, nested, common, folders)
+    const api = generateMultiApi(version, namespace, nested, common, specFolder)
     if (getters.length > 0) {
       getters = `Object.defineProperties(${api.namespace}Api.prototype, {\n${getters}})`
     }
@@ -131,12 +130,7 @@ function generateNamespace (namespace, nested, folders, version) {
   module.exports = ${api.namespace}Api
     `
   } else {
-    let spec = null
-    try {
-      spec = require(join(folders.apiFolder, `${namespace}.json`))
-    } catch (err) {
-      spec = require(join(folders.xPackFolder, `${namespace}.json`))
-    }
+    const spec = require(join(specFolder, `${namespace}.json`))
     const api = generateSingleApi(version, spec, common)
     code += `
   const acceptedQuerystring = ${JSON.stringify(api.acceptedQuerystring)}
@@ -150,7 +144,7 @@ function generateNamespace (namespace, nested, folders, version) {
   return code
 }
 
-function generateMultiApi (version, namespace, nested, common, folders) {
+function generateMultiApi (version, namespace, nested, common, specFolder) {
   const namespaceSnaked = namespace
     .replace(/\.([a-z])/g, k => k[1].toUpperCase())
     .replace(/_([a-z])/g, k => k[1].toUpperCase())
@@ -158,15 +152,10 @@ function generateMultiApi (version, namespace, nested, common, folders) {
   const snakeCase = {}
   const acceptedQuerystring = []
   for (const n of nested) {
-    let spec = null
     const nameSnaked = n
       .replace(/\.([a-z])/g, k => k[1].toUpperCase())
       .replace(/_([a-z])/g, k => k[1].toUpperCase())
-    try {
-      spec = require(join(folders.apiFolder, `${namespace}.${n}.json`))
-    } catch (err) {
-      spec = require(join(folders.xPackFolder, `${namespace}.${n}.json`))
-    }
+    const spec = require(join(specFolder, `${namespace}.${n}.json`))
     const api = generateSingleApi(version, spec, common)
     code += `${Uppercase(namespaceSnaked)}Api.prototype.${nameSnaked} = ${api.code}\n\n`
     Object.assign(snakeCase, api.snakeCase)
@@ -180,7 +169,7 @@ function generateMultiApi (version, namespace, nested, common, folders) {
 }
 
 function generateSingleApi (version, spec, common) {
-  const release = semver.valid(version) ? semver.major(version) : version
+  const release = version.charAt(0)
   const api = Object.keys(spec)[0]
   const name = api
     .replace(/\.([a-z])/g, k => k[1].toUpperCase())
