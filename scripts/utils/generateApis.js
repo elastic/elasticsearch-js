@@ -378,7 +378,9 @@ function generateSingleApi (version, spec, common) {
       })
       // sort by number of parameters (desc)
       .sort((a, b) => Object.keys(b.parts || {}).length - Object.keys(a.parts || {}).length)
-    if (paths.length === 1) sortedPaths = paths
+
+    const allDeprecated = paths.filter(path => path.deprecated != null)
+    if (allDeprecated.length === paths.length) sortedPaths = [paths[0]]
 
     let code = ''
     for (let i = 0; i < sortedPaths.length; i++) {
