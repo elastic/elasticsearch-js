@@ -17,18 +17,11 @@
  * under the License.
  */
 
+/* eslint camelcase: 0 */
+
 'use strict'
 
 const deprecatedParameters = require('./patch.json')
-const { ndjsonApi } = require('./generateApis')
-
-const ndjsonApiKey = ndjsonApi
-  .map(api => {
-    return api
-      .replace(/\.([a-z])/g, k => k[1].toUpperCase())
-      .replace(/_([a-z])/g, k => k[1].toUpperCase())
-  })
-  .map(toPascalCase)
 
 function generate (version, api) {
   const release = version.charAt(0)
@@ -122,7 +115,8 @@ export interface Generic {
       return `${e.key}${optional}: ${getType(e.value.type, e.value.options)};`
     }
 
-    const bodyGeneric = ndjsonApiKey.includes(toPascalCase(name)) ? 'RequestNDBody' : 'RequestBody'
+    const { content_type } = spec[api].headers
+    const bodyGeneric = content_type && content_type.includes('application/x-ndjson') ? 'RequestNDBody' : 'RequestBody'
 
     const code = `
 export interface ${toPascalCase(name)}${body ? `<T = ${bodyGeneric}>` : ''} extends Generic {

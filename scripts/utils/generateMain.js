@@ -18,6 +18,7 @@
  */
 
 /* eslint-disable no-template-curly-in-string  */
+/* eslint camelcase: 0 */
 
 'use strict'
 
@@ -25,15 +26,6 @@ const { readdirSync } = require('fs')
 const { join } = require('path')
 const dedent = require('dedent')
 const deepmerge = require('deepmerge')
-const { ndjsonApi } = require('./generateApis')
-
-const ndjsonApiKey = ndjsonApi
-  .map(api => {
-    return api
-      .replace(/\.([a-z])/g, k => k[1].toUpperCase())
-      .replace(/_([a-z])/g, k => k[1].toUpperCase())
-  })
-  .map(toPascalCase)
 
 function genFactory (folder, specFolder, namespaces) {
   // get all the API files
@@ -57,7 +49,7 @@ function genFactory (folder, specFolder, namespaces) {
           const spec = readSpec(specFolder, file.slice(0, -5))
           const isHead = isHeadMethod(spec, file.slice(0, -5))
           const body = hasBody(spec, file.slice(0, -5))
-          const methods = acc === null ? buildMethodDefinition({ kibana: false }, val, name, body, isHead) : null
+          const methods = acc === null ? buildMethodDefinition({ kibana: false }, val, name, body, isHead, spec) : null
           const obj = {}
           if (methods) {
             for (const m of methods) {
@@ -89,7 +81,7 @@ function genFactory (folder, specFolder, namespaces) {
           const spec = readSpec(specFolder, file.slice(0, -5))
           const isHead = isHeadMethod(spec, file.slice(0, -5))
           const body = hasBody(spec, file.slice(0, -5))
-          const methods = acc === null ? buildMethodDefinition({ kibana: true }, val, name, body, isHead) : null
+          const methods = acc === null ? buildMethodDefinition({ kibana: true }, val, name, body, isHead, spec) : null
           const obj = {}
           if (methods) {
             for (const m of methods) {
@@ -225,11 +217,12 @@ function toPascalCase (str) {
   return str[0].toUpperCase() + str.slice(1)
 }
 
-function buildMethodDefinition (opts, api, name, hasBody, isHead) {
+function buildMethodDefinition (opts, api, name, hasBody, isHead, spec) {
   const Name = toPascalCase(name)
-  const bodyType = ndjsonApiKey.includes(Name) ? 'RequestNDBody' : 'RequestBody'
+  const { content_type } = spec[Object.keys(spec)[0]].headers
+  const bodyType = content_type && content_type.includes('application/x-ndjson') ? 'RequestNDBody' : 'RequestBody'
   const responseType = isHead ? 'boolean' : 'Record<string, any>'
-  const defaultBodyType = ndjsonApiKey.includes(Name) ? 'Record<string, any>[]' : 'Record<string, any>'
+  const defaultBodyType = content_type && content_type.includes('application/x-ndjson') ? 'Record<string, any>[]' : 'Record<string, any>'
 
   if (opts.kibana) {
     if (hasBody) {
