@@ -524,7 +524,9 @@ MlApi.prototype.findFileStructure = function mlFindFileStructureApi (params, opt
   let { method, body, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
-  const path = ''
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_ml' + '/' + 'find_file_structure'
 
   // build request object
   const request = {
@@ -1176,7 +1178,7 @@ MlApi.prototype.postData = function mlPostDataApi (params, options, callback) {
   const request = {
     method,
     path,
-    body: body || '',
+    bulkBody: body,
     querystring
   }
 
