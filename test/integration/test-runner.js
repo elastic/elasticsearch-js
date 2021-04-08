@@ -26,7 +26,7 @@ const semver = require('semver')
 const helper = require('./helper')
 const deepEqual = require('fast-deep-equal')
 const { join } = require('path')
-const { locations } = require('clone-elasticsearch')
+const { locations } = require('../../scripts/download-artifacts')
 const { ConfigurationError } = require('../../lib/errors')
 
 const { delve, to, isXPackTemplate, sleep } = helper
