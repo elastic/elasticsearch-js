@@ -365,7 +365,7 @@ function build (opts = {}) {
     if (cmd.params.ignore) delete cmd.params.ignore
 
     // ndjson apis should always send the body as an array
-    if (isNDJson(cmd.method) && !Array.isArray(cmd.params.body)) {
+    if (isNDJson(cmd.api) && !Array.isArray(cmd.params.body)) {
       cmd.params.body = [cmd.params.body]
     }
 
@@ -703,6 +703,7 @@ function parseDo (action) {
         // converts underscore to camelCase
         // eg: put_mapping => putMapping
         acc.method = val.replace(/_([a-z])/g, g => g[1].toUpperCase())
+        acc.api = val
         acc.params = camelify(action[val])
     }
     return acc
