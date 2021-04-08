@@ -25,6 +25,8 @@ const assert = require('assert')
 const semver = require('semver')
 const helper = require('./helper')
 const deepEqual = require('fast-deep-equal')
+const { join } = require('path')
+const { locations } = require('clone-elasticsearch')
 const { ConfigurationError } = require('../../lib/errors')
 
 const { delve, to, isXPackTemplate, sleep } = helper
@@ -361,6 +363,11 @@ function build (opts = {}) {
     const options = { ignore: cmd.params.ignore, headers: action.headers }
     if (!Array.isArray(options.ignore)) options.ignore = [options.ignore]
     if (cmd.params.ignore) delete cmd.params.ignore
+
+    // ndjson apis should always send the body as an array
+    if (isNDJson(cmd.method) && !Array.isArray(cmd.params.body)) {
+      cmd.params.body = [cmd.params.body]
+    }
 
     const [err, result] = await to(api(cmd.params, options))
     let warnings = result ? result.warnings : null
@@ -846,6 +853,12 @@ function shouldSkip (esVersion, action) {
   if (shouldSkip) return true
 
   return false
+}
+
+function isNDJson (api) {
+  const spec = require(join(locations.specFolder, `${api}.json`))
+  const { content_type } = spec[Object.keys(spec)[0]].headers
+  return Boolean(content_type && content_type.includes('application/x-ndjson'))
 }
 
 /**
