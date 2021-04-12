@@ -19,11 +19,11 @@
 
 import { expectType, expectNotType, expectError } from 'tsd'
 import { Client, RequestEvent, ResurrectEvent, ApiError, ApiResponse, estypes } from '../../'
-import { NewClientTypes } from '../../api/new'
+import type { Client as NewTypes } from '../../api/new'
 import { TransportRequestPromise, Context } from '../../lib/Transport'
 
 // @ts-expect-error
-const client: NewClientTypes = new Client({
+const client: NewTypes = new Client({
   node: 'http://localhost:9200'
 })
 
@@ -104,5 +104,5 @@ client.async_search.get()
 
 // the child api should return a KibanaClient instance
 const child = client.child()
-expectType<NewClientTypes>(child)
+expectType<NewTypes>(child)
 expectNotType<Client>(child)
