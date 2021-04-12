@@ -31,7 +31,8 @@ import {
   RequestEvent,
   ResurrectEvent,
   ApiError,
-  NodeOptions
+  NodeOptions,
+  events
 } from '../index'
 import Helpers from '../lib/Helpers'
 import {
@@ -1474,15 +1475,6 @@ interface Client {
     usage<TContext = unknown>(params: T.XPackUsageRequest, options: TransportRequestOptions, callback: callbackFn<T.XPackUsageResponse, TContext>): TransportRequestCallback
   }
 }
-
-declare const events: {
-  SERIALIZATION: string;
-  REQUEST: string;
-  DESERIALIZATION: string;
-  RESPONSE: string;
-  SNIFF: string;
-  RESURRECT: string;
-};
 
 export * as estypes from './types'
 export {
