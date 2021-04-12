@@ -22,12 +22,16 @@
 import {
   ClientOptions,
   ConnectionPool,
+  BaseConnectionPool,
+  CloudConnectionPool,
+  Connection,
   Serializer,
   Transport,
   errors,
   RequestEvent,
   ResurrectEvent,
-  ApiError
+  ApiError,
+  NodeOptions
 } from '../index'
 import Helpers from '../lib/Helpers'
 import {
@@ -61,14 +65,14 @@ declare type extendsCallback = (options: ClientExtendsCallbackOptions) => any;
 // /Extend API
 
 declare type callbackFn<TResponse, TContext> = (err: ApiError, result: ApiResponse<TResponse, TContext>) => void;
-interface NewClientTypes {
+interface Client {
   connectionPool: ConnectionPool
   transport: Transport
   serializer: Serializer
   extend(method: string, fn: extendsCallback): void
   extend(method: string, opts: { force: boolean }, fn: extendsCallback): void;
   helpers: Helpers
-  child(opts?: ClientOptions): NewClientTypes
+  child(opts?: ClientOptions): Client
   close(callback: Function): void;
   close(): Promise<void>;
   emit(event: string | symbol, ...args: any[]): boolean;
@@ -1471,4 +1475,31 @@ interface NewClientTypes {
   }
 }
 
-export { NewClientTypes }
+declare const events: {
+  SERIALIZATION: string;
+  REQUEST: string;
+  DESERIALIZATION: string;
+  RESPONSE: string;
+  SNIFF: string;
+  RESURRECT: string;
+};
+
+export * as estypes from './types'
+export {
+  Client,
+  Transport,
+  ConnectionPool,
+  BaseConnectionPool,
+  CloudConnectionPool,
+  Connection,
+  Serializer,
+  events,
+  errors,
+  ApiError,
+  ApiResponse,
+  RequestEvent,
+  ResurrectEvent,
+  ClientOptions,
+  NodeOptions,
+  ClientExtendsCallbackOptions
+};
