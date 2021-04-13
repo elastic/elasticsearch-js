@@ -56,7 +56,7 @@ MonitoringApi.prototype.bulk = function monitoringBulkApi (params, options, call
   const request = {
     method,
     path,
-    body: body || '',
+    bulkBody: body,
     querystring
   }
 
