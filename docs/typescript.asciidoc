@@ -50,6 +50,9 @@ const response = await client.search<Source>({
 The types are not 100% complete yet. Some APIs are missing (the newest ones, e.g. EQL),
 and others may contain some errors, but we are continuously pushing fixes & improvements.
 
+[discrete]
+==== Request & Response types
+
 Once you migrate to the new types, those are automatically integrated into the Elasticsearch client, you will get them out of the box.
 If everything works, meaning that you won’t get compiler errors, you are good to go!
 The types are already correct, and there is nothing more to do.
@@ -63,6 +66,30 @@ a `TODO` type, which accepts any object.
 
 Open an issue in the client repository letting us know if you encounter any problem!
 
+If needed you can import the request and response types.
+
+[source,ts]
+----
+import { Client, estypes } from '@elastic/elasticsearch'
+import type { Client as NewTypes } from '@elastic/elasticsearch/api/new'
+
+// @ts-expect-error @elastic/elasticsearch
+const client: NewTypes = new Client({
+  node: 'http://localhost:9200'
+})
+
+interface Source {
+  foo: string
+}
+
+const request: estypes.IndexRequest<Source> = {
+  index: 'test',
+  body: { foo: 'bar' }
+}
+
+await client.index(request)
+----
+
 [discrete]
 ===== How to migrate to the new type definitions
 
@@ -72,12 +99,12 @@ Following you will find a snippet that shows you how to override the default typ
 [source,ts]
 ----
 import { Client } from '@elastic/elasticsearch'
-import type { NewClientTypes } from '@elastic/elasticsearch/api/new'
+import type { Client as NewTypes } from '@elastic/elasticsearch/api/new'
 
 // @ts-expect-error @elastic/elasticsearch
-const client = new Client({
+const client: NewTypes = new Client({
   node: 'http://localhost:9200'
-}) as NewClientTypes
+})
 
 interface Source {
   foo: string
