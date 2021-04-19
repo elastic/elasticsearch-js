@@ -17,14 +17,32 @@
  * under the License.
  */
 
-import * as T from './types'
+/// <reference types="node" />
+
 import {
-  TransportRequestPromise,
-  TransportRequestCallback,
-  TransportRequestOptions,
+  ClientOptions,
+  ConnectionPool,
+  BaseConnectionPool,
+  CloudConnectionPool,
+  Connection,
+  Serializer,
+  Transport,
+  errors,
+  RequestEvent,
+  ResurrectEvent,
   ApiError,
-  ApiResponse
+  NodeOptions,
+  events
+} from '../index'
+import Helpers from '../lib/Helpers'
+import {
+  ApiResponse,
+  TransportRequestCallback,
+  TransportRequestPromise,
+  TransportRequestParams,
+  TransportRequestOptions
 } from '../lib/Transport'
+import * as T from './types'
 
 /**
   * We are still working on this type, it will arrive soon.
@@ -33,8 +51,42 @@ import {
   */
 type TODO = Record<string, any>
 
+// Extend API
+interface ClientExtendsCallbackOptions {
+  ConfigurationError: errors.ConfigurationError,
+  makeRequest(params: TransportRequestParams, options?: TransportRequestOptions): Promise<void> | void;
+  result: {
+    body: null,
+    statusCode: null,
+    headers: null,
+    warnings: null
+  }
+}
+declare type extendsCallback = (options: ClientExtendsCallbackOptions) => any;
+// /Extend API
+
 declare type callbackFn<TResponse, TContext> = (err: ApiError, result: ApiResponse<TResponse, TContext>) => void;
-declare class ESAPI {
+declare class Client {
+  constructor(opts: ClientOptions);
+  connectionPool: ConnectionPool
+  transport: Transport
+  serializer: Serializer
+  extend(method: string, fn: extendsCallback): void
+  extend(method: string, opts: { force: boolean }, fn: extendsCallback): void;
+  helpers: Helpers
+  child(opts?: ClientOptions): Client
+  close(callback: Function): void;
+  close(): Promise<void>;
+  emit(event: string | symbol, ...args: any[]): boolean;
+  on(event: 'request', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  on(event: 'response', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  on(event: 'sniff', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  on(event: 'resurrect', listener: (err: null, meta: ResurrectEvent) => void): this;
+  once(event: 'request', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  once(event: 'response', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  once(event: 'sniff', listener: (err: ApiError, meta: RequestEvent) => void): this;
+  once(event: 'resurrect', listener: (err: null, meta: ResurrectEvent) => void): this;
+  off(event: string | symbol, listener: (...args: any[]) => void): this;
   asyncSearch: {
     delete<TContext = unknown>(params: T.AsyncSearchDeleteRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AsyncSearchDeleteResponse, TContext>>
     delete<TContext = unknown>(params: T.AsyncSearchDeleteRequest, callback: callbackFn<T.AsyncSearchDeleteResponse, TContext>): TransportRequestCallback
@@ -199,9 +251,9 @@ declare class ESAPI {
     pauseFollow<TContext = unknown>(params: T.PauseFollowIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PauseFollowIndexResponse, TContext>>
     pauseFollow<TContext = unknown>(params: T.PauseFollowIndexRequest, callback: callbackFn<T.PauseFollowIndexResponse, TContext>): TransportRequestCallback
     pauseFollow<TContext = unknown>(params: T.PauseFollowIndexRequest, options: TransportRequestOptions, callback: callbackFn<T.PauseFollowIndexResponse, TContext>): TransportRequestCallback
-    putAutoFollowPattern<TContext = unknown>(params: T.CreateAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CreateAutoFollowPatternResponse, TContext>>
-    putAutoFollowPattern<TContext = unknown>(params: T.CreateAutoFollowPatternRequest, callback: callbackFn<T.CreateAutoFollowPatternResponse, TContext>): TransportRequestCallback
-    putAutoFollowPattern<TContext = unknown>(params: T.CreateAutoFollowPatternRequest, options: TransportRequestOptions, callback: callbackFn<T.CreateAutoFollowPatternResponse, TContext>): TransportRequestCallback
+    putAutoFollowPattern<TContext = unknown>(params: T.PutAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutAutoFollowPatternResponse, TContext>>
+    putAutoFollowPattern<TContext = unknown>(params: T.PutAutoFollowPatternRequest, callback: callbackFn<T.PutAutoFollowPatternResponse, TContext>): TransportRequestCallback
+    putAutoFollowPattern<TContext = unknown>(params: T.PutAutoFollowPatternRequest, options: TransportRequestOptions, callback: callbackFn<T.PutAutoFollowPatternResponse, TContext>): TransportRequestCallback
     resumeAutoFollowPattern<TContext = unknown>(params: T.ResumeAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ResumeAutoFollowPatternResponse, TContext>>
     resumeAutoFollowPattern<TContext = unknown>(params: T.ResumeAutoFollowPatternRequest, callback: callbackFn<T.ResumeAutoFollowPatternResponse, TContext>): TransportRequestCallback
     resumeAutoFollowPattern<TContext = unknown>(params: T.ResumeAutoFollowPatternRequest, options: TransportRequestOptions, callback: callbackFn<T.ResumeAutoFollowPatternResponse, TContext>): TransportRequestCallback
@@ -229,10 +281,9 @@ declare class ESAPI {
     allocationExplain<TContext = unknown>(callback: callbackFn<T.ClusterAllocationExplainResponse, TContext>): TransportRequestCallback
     allocationExplain<TContext = unknown>(params: T.ClusterAllocationExplainRequest, callback: callbackFn<T.ClusterAllocationExplainResponse, TContext>): TransportRequestCallback
     allocationExplain<TContext = unknown>(params: T.ClusterAllocationExplainRequest, options: TransportRequestOptions, callback: callbackFn<T.ClusterAllocationExplainResponse, TContext>): TransportRequestCallback
-    deleteComponentTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    deleteComponentTemplate<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteComponentTemplate<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteComponentTemplate<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    deleteComponentTemplate<TContext = unknown>(params: T.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterDeleteComponentTemplateResponse, TContext>>
+    deleteComponentTemplate<TContext = unknown>(params: T.ClusterDeleteComponentTemplateRequest, callback: callbackFn<T.ClusterDeleteComponentTemplateResponse, TContext>): TransportRequestCallback
+    deleteComponentTemplate<TContext = unknown>(params: T.ClusterDeleteComponentTemplateRequest, options: TransportRequestOptions, callback: callbackFn<T.ClusterDeleteComponentTemplateResponse, TContext>): TransportRequestCallback
     deleteVotingConfigExclusions<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     deleteVotingConfigExclusions<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
     deleteVotingConfigExclusions<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
@@ -373,22 +424,18 @@ declare class ESAPI {
     stats<TContext = unknown>(params: T.EnrichStatsRequest, options: TransportRequestOptions, callback: callbackFn<T.EnrichStatsResponse, TContext>): TransportRequestCallback
   }
   eql: {
-    delete<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    delete<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    delete<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    delete<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    get<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    get<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    get<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    get<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    getStatus<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    getStatus<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    getStatus<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    getStatus<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    search<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    search<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    search<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    search<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    delete<TContext = unknown>(params: T.EqlDeleteRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EqlDeleteResponse, TContext>>
+    delete<TContext = unknown>(params: T.EqlDeleteRequest, callback: callbackFn<T.EqlDeleteResponse, TContext>): TransportRequestCallback
+    delete<TContext = unknown>(params: T.EqlDeleteRequest, options: TransportRequestOptions, callback: callbackFn<T.EqlDeleteResponse, TContext>): TransportRequestCallback
+    get<TEvent = unknown, TContext = unknown>(params: T.EqlGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EqlGetResponse<TEvent>, TContext>>
+    get<TEvent = unknown, TContext = unknown>(params: T.EqlGetRequest, callback: callbackFn<T.EqlGetResponse<TEvent>, TContext>): TransportRequestCallback
+    get<TEvent = unknown, TContext = unknown>(params: T.EqlGetRequest, options: TransportRequestOptions, callback: callbackFn<T.EqlGetResponse<TEvent>, TContext>): TransportRequestCallback
+    getStatus<TContext = unknown>(params: T.EqlGetStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EqlGetStatusResponse, TContext>>
+    getStatus<TContext = unknown>(params: T.EqlGetStatusRequest, callback: callbackFn<T.EqlGetStatusResponse, TContext>): TransportRequestCallback
+    getStatus<TContext = unknown>(params: T.EqlGetStatusRequest, options: TransportRequestOptions, callback: callbackFn<T.EqlGetStatusResponse, TContext>): TransportRequestCallback
+    search<TEvent = unknown, TContext = unknown>(params: T.EqlSearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EqlSearchResponse<TEvent>, TContext>>
+    search<TEvent = unknown, TContext = unknown>(params: T.EqlSearchRequest, callback: callbackFn<T.EqlSearchResponse<TEvent>, TContext>): TransportRequestCallback
+    search<TEvent = unknown, TContext = unknown>(params: T.EqlSearchRequest, options: TransportRequestOptions, callback: callbackFn<T.EqlSearchResponse<TEvent>, TContext>): TransportRequestCallback
   }
   exists<TContext = unknown>(params: T.DocumentExistsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DocumentExistsResponse, TContext>>
   exists<TContext = unknown>(params: T.DocumentExistsRequest, callback: callbackFn<T.DocumentExistsResponse, TContext>): TransportRequestCallback
@@ -404,6 +451,10 @@ declare class ESAPI {
     getFeatures<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
     getFeatures<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     getFeatures<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    resetFeatures<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    resetFeatures<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    resetFeatures<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    resetFeatures<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
   }
   fieldCaps<TContext = unknown>(params?: T.FieldCapabilitiesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FieldCapabilitiesResponse, TContext>>
   fieldCaps<TContext = unknown>(callback: callbackFn<T.FieldCapabilitiesResponse, TContext>): TransportRequestCallback
@@ -472,10 +523,9 @@ declare class ESAPI {
   index<TDocument = unknown, TContext = unknown>(params: T.IndexRequest<TDocument>, callback: callbackFn<T.IndexResponse, TContext>): TransportRequestCallback
   index<TDocument = unknown, TContext = unknown>(params: T.IndexRequest<TDocument>, options: TransportRequestOptions, callback: callbackFn<T.IndexResponse, TContext>): TransportRequestCallback
   indices: {
-    addBlock<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    addBlock<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    addBlock<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    addBlock<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    addBlock<TContext = unknown>(params: T.IndexAddBlockRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndexAddBlockResponse, TContext>>
+    addBlock<TContext = unknown>(params: T.IndexAddBlockRequest, callback: callbackFn<T.IndexAddBlockResponse, TContext>): TransportRequestCallback
+    addBlock<TContext = unknown>(params: T.IndexAddBlockRequest, options: TransportRequestOptions, callback: callbackFn<T.IndexAddBlockResponse, TContext>): TransportRequestCallback
     analyze<TContext = unknown>(params?: T.AnalyzeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AnalyzeResponse, TContext>>
     analyze<TContext = unknown>(callback: callbackFn<T.AnalyzeResponse, TContext>): TransportRequestCallback
     analyze<TContext = unknown>(params: T.AnalyzeRequest, callback: callbackFn<T.AnalyzeResponse, TContext>): TransportRequestCallback
@@ -493,24 +543,22 @@ declare class ESAPI {
     create<TContext = unknown>(params: T.CreateIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CreateIndexResponse, TContext>>
     create<TContext = unknown>(params: T.CreateIndexRequest, callback: callbackFn<T.CreateIndexResponse, TContext>): TransportRequestCallback
     create<TContext = unknown>(params: T.CreateIndexRequest, options: TransportRequestOptions, callback: callbackFn<T.CreateIndexResponse, TContext>): TransportRequestCallback
-    createDataStream<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    createDataStream<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    createDataStream<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    createDataStream<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    dataStreamsStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    dataStreamsStats<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    dataStreamsStats<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    dataStreamsStats<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    createDataStream<TContext = unknown>(params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesCreateDataStreamResponse, TContext>>
+    createDataStream<TContext = unknown>(params: T.IndicesCreateDataStreamRequest, callback: callbackFn<T.IndicesCreateDataStreamResponse, TContext>): TransportRequestCallback
+    createDataStream<TContext = unknown>(params: T.IndicesCreateDataStreamRequest, options: TransportRequestOptions, callback: callbackFn<T.IndicesCreateDataStreamResponse, TContext>): TransportRequestCallback
+    dataStreamsStats<TContext = unknown>(params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesDataStreamsStatsResponse, TContext>>
+    dataStreamsStats<TContext = unknown>(callback: callbackFn<T.IndicesDataStreamsStatsResponse, TContext>): TransportRequestCallback
+    dataStreamsStats<TContext = unknown>(params: T.IndicesDataStreamsStatsRequest, callback: callbackFn<T.IndicesDataStreamsStatsResponse, TContext>): TransportRequestCallback
+    dataStreamsStats<TContext = unknown>(params: T.IndicesDataStreamsStatsRequest, options: TransportRequestOptions, callback: callbackFn<T.IndicesDataStreamsStatsResponse, TContext>): TransportRequestCallback
     delete<TContext = unknown>(params: T.DeleteIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteIndexResponse, TContext>>
     delete<TContext = unknown>(params: T.DeleteIndexRequest, callback: callbackFn<T.DeleteIndexResponse, TContext>): TransportRequestCallback
     delete<TContext = unknown>(params: T.DeleteIndexRequest, options: TransportRequestOptions, callback: callbackFn<T.DeleteIndexResponse, TContext>): TransportRequestCallback
     deleteAlias<TContext = unknown>(params: T.DeleteAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteAliasResponse, TContext>>
     deleteAlias<TContext = unknown>(params: T.DeleteAliasRequest, callback: callbackFn<T.DeleteAliasResponse, TContext>): TransportRequestCallback
     deleteAlias<TContext = unknown>(params: T.DeleteAliasRequest, options: TransportRequestOptions, callback: callbackFn<T.DeleteAliasResponse, TContext>): TransportRequestCallback
-    deleteDataStream<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    deleteDataStream<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteDataStream<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteDataStream<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    deleteDataStream<TContext = unknown>(params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesDeleteDataStreamResponse, TContext>>
+    deleteDataStream<TContext = unknown>(params: T.IndicesDeleteDataStreamRequest, callback: callbackFn<T.IndicesDeleteDataStreamResponse, TContext>): TransportRequestCallback
+    deleteDataStream<TContext = unknown>(params: T.IndicesDeleteDataStreamRequest, options: TransportRequestOptions, callback: callbackFn<T.IndicesDeleteDataStreamResponse, TContext>): TransportRequestCallback
     deleteIndexTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     deleteIndexTemplate<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
     deleteIndexTemplate<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
@@ -556,10 +604,10 @@ declare class ESAPI {
     getAlias<TContext = unknown>(callback: callbackFn<T.GetAliasResponse, TContext>): TransportRequestCallback
     getAlias<TContext = unknown>(params: T.GetAliasRequest, callback: callbackFn<T.GetAliasResponse, TContext>): TransportRequestCallback
     getAlias<TContext = unknown>(params: T.GetAliasRequest, options: TransportRequestOptions, callback: callbackFn<T.GetAliasResponse, TContext>): TransportRequestCallback
-    getDataStream<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    getDataStream<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    getDataStream<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    getDataStream<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    getDataStream<TContext = unknown>(params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesGetDataStreamResponse, TContext>>
+    getDataStream<TContext = unknown>(callback: callbackFn<T.IndicesGetDataStreamResponse, TContext>): TransportRequestCallback
+    getDataStream<TContext = unknown>(params: T.IndicesGetDataStreamRequest, callback: callbackFn<T.IndicesGetDataStreamResponse, TContext>): TransportRequestCallback
+    getDataStream<TContext = unknown>(params: T.IndicesGetDataStreamRequest, options: TransportRequestOptions, callback: callbackFn<T.IndicesGetDataStreamResponse, TContext>): TransportRequestCallback
     getFieldMapping<TContext = unknown>(params: T.GetFieldMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetFieldMappingResponse, TContext>>
     getFieldMapping<TContext = unknown>(params: T.GetFieldMappingRequest, callback: callbackFn<T.GetFieldMappingResponse, TContext>): TransportRequestCallback
     getFieldMapping<TContext = unknown>(params: T.GetFieldMappingRequest, options: TransportRequestOptions, callback: callbackFn<T.GetFieldMappingResponse, TContext>): TransportRequestCallback
@@ -583,10 +631,9 @@ declare class ESAPI {
     getUpgrade<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
     getUpgrade<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     getUpgrade<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    migrateToDataStream<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    migrateToDataStream<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    migrateToDataStream<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    migrateToDataStream<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    migrateToDataStream<TContext = unknown>(params: T.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesMigrateToDataStreamResponse, TContext>>
+    migrateToDataStream<TContext = unknown>(params: T.IndicesMigrateToDataStreamRequest, callback: callbackFn<T.IndicesMigrateToDataStreamResponse, TContext>): TransportRequestCallback
+    migrateToDataStream<TContext = unknown>(params: T.IndicesMigrateToDataStreamRequest, options: TransportRequestOptions, callback: callbackFn<T.IndicesMigrateToDataStreamResponse, TContext>): TransportRequestCallback
     open<TContext = unknown>(params: T.OpenIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.OpenIndexResponse, TContext>>
     open<TContext = unknown>(params: T.OpenIndexRequest, callback: callbackFn<T.OpenIndexResponse, TContext>): TransportRequestCallback
     open<TContext = unknown>(params: T.OpenIndexRequest, options: TransportRequestOptions, callback: callbackFn<T.OpenIndexResponse, TContext>): TransportRequestCallback
@@ -623,10 +670,9 @@ declare class ESAPI {
     reloadSearchAnalyzers<TContext = unknown>(params: T.ReloadSearchAnalyzersRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ReloadSearchAnalyzersResponse, TContext>>
     reloadSearchAnalyzers<TContext = unknown>(params: T.ReloadSearchAnalyzersRequest, callback: callbackFn<T.ReloadSearchAnalyzersResponse, TContext>): TransportRequestCallback
     reloadSearchAnalyzers<TContext = unknown>(params: T.ReloadSearchAnalyzersRequest, options: TransportRequestOptions, callback: callbackFn<T.ReloadSearchAnalyzersResponse, TContext>): TransportRequestCallback
-    resolveIndex<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    resolveIndex<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    resolveIndex<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    resolveIndex<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    resolveIndex<TContext = unknown>(params: T.ResolveIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ResolveIndexResponse, TContext>>
+    resolveIndex<TContext = unknown>(params: T.ResolveIndexRequest, callback: callbackFn<T.ResolveIndexResponse, TContext>): TransportRequestCallback
+    resolveIndex<TContext = unknown>(params: T.ResolveIndexRequest, options: TransportRequestOptions, callback: callbackFn<T.ResolveIndexResponse, TContext>): TransportRequestCallback
     rollover<TContext = unknown>(params: T.RolloverIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RolloverIndexResponse, TContext>>
     rollover<TContext = unknown>(params: T.RolloverIndexRequest, callback: callbackFn<T.RolloverIndexResponse, TContext>): TransportRequestCallback
     rollover<TContext = unknown>(params: T.RolloverIndexRequest, options: TransportRequestOptions, callback: callbackFn<T.RolloverIndexResponse, TContext>): TransportRequestCallback
@@ -680,6 +726,10 @@ declare class ESAPI {
     deletePipeline<TContext = unknown>(params: T.DeletePipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeletePipelineResponse, TContext>>
     deletePipeline<TContext = unknown>(params: T.DeletePipelineRequest, callback: callbackFn<T.DeletePipelineResponse, TContext>): TransportRequestCallback
     deletePipeline<TContext = unknown>(params: T.DeletePipelineRequest, options: TransportRequestOptions, callback: callbackFn<T.DeletePipelineResponse, TContext>): TransportRequestCallback
+    geoIpStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    geoIpStats<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    geoIpStats<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    geoIpStats<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     getPipeline<TContext = unknown>(params?: T.GetPipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetPipelineResponse, TContext>>
     getPipeline<TContext = unknown>(callback: callbackFn<T.GetPipelineResponse, TContext>): TransportRequestCallback
     getPipeline<TContext = unknown>(params: T.GetPipelineRequest, callback: callbackFn<T.GetPipelineResponse, TContext>): TransportRequestCallback
@@ -763,10 +813,9 @@ declare class ESAPI {
     deleteCalendarJob<TContext = unknown>(params: T.DeleteCalendarJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteCalendarJobResponse, TContext>>
     deleteCalendarJob<TContext = unknown>(params: T.DeleteCalendarJobRequest, callback: callbackFn<T.DeleteCalendarJobResponse, TContext>): TransportRequestCallback
     deleteCalendarJob<TContext = unknown>(params: T.DeleteCalendarJobRequest, options: TransportRequestOptions, callback: callbackFn<T.DeleteCalendarJobResponse, TContext>): TransportRequestCallback
-    deleteDataFrameAnalytics<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    deleteDataFrameAnalytics<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteDataFrameAnalytics<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteDataFrameAnalytics<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    deleteDataFrameAnalytics<TContext = unknown>(params: T.DeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteDataFrameAnalyticsResponse, TContext>>
+    deleteDataFrameAnalytics<TContext = unknown>(params: T.DeleteDataFrameAnalyticsRequest, callback: callbackFn<T.DeleteDataFrameAnalyticsResponse, TContext>): TransportRequestCallback
+    deleteDataFrameAnalytics<TContext = unknown>(params: T.DeleteDataFrameAnalyticsRequest, options: TransportRequestOptions, callback: callbackFn<T.DeleteDataFrameAnalyticsResponse, TContext>): TransportRequestCallback
     deleteDatafeed<TContext = unknown>(params: T.DeleteDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteDatafeedResponse, TContext>>
     deleteDatafeed<TContext = unknown>(params: T.DeleteDatafeedRequest, callback: callbackFn<T.DeleteDatafeedResponse, TContext>): TransportRequestCallback
     deleteDatafeed<TContext = unknown>(params: T.DeleteDatafeedRequest, options: TransportRequestOptions, callback: callbackFn<T.DeleteDatafeedResponse, TContext>): TransportRequestCallback
@@ -786,14 +835,12 @@ declare class ESAPI {
     deleteModelSnapshot<TContext = unknown>(params: T.DeleteModelSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteModelSnapshotResponse, TContext>>
     deleteModelSnapshot<TContext = unknown>(params: T.DeleteModelSnapshotRequest, callback: callbackFn<T.DeleteModelSnapshotResponse, TContext>): TransportRequestCallback
     deleteModelSnapshot<TContext = unknown>(params: T.DeleteModelSnapshotRequest, options: TransportRequestOptions, callback: callbackFn<T.DeleteModelSnapshotResponse, TContext>): TransportRequestCallback
-    deleteTrainedModel<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    deleteTrainedModel<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteTrainedModel<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteTrainedModel<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteTrainedModelAlias<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    deleteTrainedModelAlias<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteTrainedModelAlias<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    deleteTrainedModelAlias<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    deleteTrainedModel<TContext = unknown>(params: T.DeleteTrainedModelRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteTrainedModelResponse, TContext>>
+    deleteTrainedModel<TContext = unknown>(params: T.DeleteTrainedModelRequest, callback: callbackFn<T.DeleteTrainedModelResponse, TContext>): TransportRequestCallback
+    deleteTrainedModel<TContext = unknown>(params: T.DeleteTrainedModelRequest, options: TransportRequestOptions, callback: callbackFn<T.DeleteTrainedModelResponse, TContext>): TransportRequestCallback
+    deleteTrainedModelAlias<TContext = unknown>(params: T.DeleteTrainedModelAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteTrainedModelAliasResponse, TContext>>
+    deleteTrainedModelAlias<TContext = unknown>(params: T.DeleteTrainedModelAliasRequest, callback: callbackFn<T.DeleteTrainedModelAliasResponse, TContext>): TransportRequestCallback
+    deleteTrainedModelAlias<TContext = unknown>(params: T.DeleteTrainedModelAliasRequest, options: TransportRequestOptions, callback: callbackFn<T.DeleteTrainedModelAliasResponse, TContext>): TransportRequestCallback
     estimateModelMemory<TContext = unknown>(params?: T.EstimateModelMemoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EstimateModelMemoryResponse, TContext>>
     estimateModelMemory<TContext = unknown>(callback: callbackFn<T.EstimateModelMemoryResponse, TContext>): TransportRequestCallback
     estimateModelMemory<TContext = unknown>(params: T.EstimateModelMemoryRequest, callback: callbackFn<T.EstimateModelMemoryResponse, TContext>): TransportRequestCallback
@@ -806,6 +853,10 @@ declare class ESAPI {
     explainDataFrameAnalytics<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
     explainDataFrameAnalytics<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     explainDataFrameAnalytics<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    findFileStructure<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    findFileStructure<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    findFileStructure<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    findFileStructure<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     flushJob<TContext = unknown>(params: T.FlushJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FlushJobResponse, TContext>>
     flushJob<TContext = unknown>(params: T.FlushJobRequest, callback: callbackFn<T.FlushJobResponse, TContext>): TransportRequestCallback
     flushJob<TContext = unknown>(params: T.FlushJobRequest, options: TransportRequestOptions, callback: callbackFn<T.FlushJobResponse, TContext>): TransportRequestCallback
@@ -976,10 +1027,10 @@ declare class ESAPI {
     bulk<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     bulk<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
   }
-  msearch<TContext = unknown>(params?: T.MultiSearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchResponse, TContext>>
-  msearch<TContext = unknown>(callback: callbackFn<T.MultiSearchResponse, TContext>): TransportRequestCallback
-  msearch<TContext = unknown>(params: T.MultiSearchRequest, callback: callbackFn<T.MultiSearchResponse, TContext>): TransportRequestCallback
-  msearch<TContext = unknown>(params: T.MultiSearchRequest, options: TransportRequestOptions, callback: callbackFn<T.MultiSearchResponse, TContext>): TransportRequestCallback
+  msearch<TDocument = unknown, TContext = unknown>(params?: T.MultiSearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchResponse<TDocument>, TContext>>
+  msearch<TDocument = unknown, TContext = unknown>(callback: callbackFn<T.MultiSearchResponse<TDocument>, TContext>): TransportRequestCallback
+  msearch<TDocument = unknown, TContext = unknown>(params: T.MultiSearchRequest, callback: callbackFn<T.MultiSearchResponse<TDocument>, TContext>): TransportRequestCallback
+  msearch<TDocument = unknown, TContext = unknown>(params: T.MultiSearchRequest, options: TransportRequestOptions, callback: callbackFn<T.MultiSearchResponse<TDocument>, TContext>): TransportRequestCallback
   msearchTemplate<TContext = unknown>(params?: T.MultiSearchTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchTemplateResponse, TContext>>
   msearchTemplate<TContext = unknown>(callback: callbackFn<T.MultiSearchTemplateResponse, TContext>): TransportRequestCallback
   msearchTemplate<TContext = unknown>(params: T.MultiSearchTemplateRequest, callback: callbackFn<T.MultiSearchTemplateResponse, TContext>): TransportRequestCallback
@@ -1092,10 +1143,9 @@ declare class ESAPI {
     clearCache<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
     clearCache<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     clearCache<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    mount<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    mount<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    mount<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    mount<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    mount<TContext = unknown>(params: T.SearchableSnapshotsMountRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SearchableSnapshotsMountResponse, TContext>>
+    mount<TContext = unknown>(params: T.SearchableSnapshotsMountRequest, callback: callbackFn<T.SearchableSnapshotsMountResponse, TContext>): TransportRequestCallback
+    mount<TContext = unknown>(params: T.SearchableSnapshotsMountRequest, options: TransportRequestOptions, callback: callbackFn<T.SearchableSnapshotsMountResponse, TContext>): TransportRequestCallback
     repositoryStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     repositoryStats<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
     repositoryStats<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
@@ -1118,10 +1168,9 @@ declare class ESAPI {
     clearApiKeyCache<TContext = unknown>(callback: callbackFn<T.ClearApiKeyCacheResponse, TContext>): TransportRequestCallback
     clearApiKeyCache<TContext = unknown>(params: T.ClearApiKeyCacheRequest, callback: callbackFn<T.ClearApiKeyCacheResponse, TContext>): TransportRequestCallback
     clearApiKeyCache<TContext = unknown>(params: T.ClearApiKeyCacheRequest, options: TransportRequestOptions, callback: callbackFn<T.ClearApiKeyCacheResponse, TContext>): TransportRequestCallback
-    clearCachedPrivileges<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    clearCachedPrivileges<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    clearCachedPrivileges<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    clearCachedPrivileges<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    clearCachedPrivileges<TContext = unknown>(params: T.ClearCachedPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClearCachedPrivilegesResponse, TContext>>
+    clearCachedPrivileges<TContext = unknown>(params: T.ClearCachedPrivilegesRequest, callback: callbackFn<T.ClearCachedPrivilegesResponse, TContext>): TransportRequestCallback
+    clearCachedPrivileges<TContext = unknown>(params: T.ClearCachedPrivilegesRequest, options: TransportRequestOptions, callback: callbackFn<T.ClearCachedPrivilegesResponse, TContext>): TransportRequestCallback
     clearCachedRealms<TContext = unknown>(params: T.ClearCachedRealmsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClearCachedRealmsResponse, TContext>>
     clearCachedRealms<TContext = unknown>(params: T.ClearCachedRealmsRequest, callback: callbackFn<T.ClearCachedRealmsResponse, TContext>): TransportRequestCallback
     clearCachedRealms<TContext = unknown>(params: T.ClearCachedRealmsRequest, options: TransportRequestOptions, callback: callbackFn<T.ClearCachedRealmsResponse, TContext>): TransportRequestCallback
@@ -1211,6 +1260,20 @@ declare class ESAPI {
     putUser<TContext = unknown>(params: T.PutUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutUserResponse, TContext>>
     putUser<TContext = unknown>(params: T.PutUserRequest, callback: callbackFn<T.PutUserResponse, TContext>): TransportRequestCallback
     putUser<TContext = unknown>(params: T.PutUserRequest, options: TransportRequestOptions, callback: callbackFn<T.PutUserResponse, TContext>): TransportRequestCallback
+  }
+  shutdown: {
+    deleteNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    deleteNode<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    deleteNode<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    deleteNode<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    getNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    getNode<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    getNode<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    getNode<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    putNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    putNode<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    putNode<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    putNode<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
   }
   slm: {
     deleteLifecycle<TContext = unknown>(params: T.DeleteSnapshotLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteSnapshotLifecycleResponse, TContext>>
@@ -1359,10 +1422,9 @@ declare class ESAPI {
   updateByQuery<TContext = unknown>(params: T.UpdateByQueryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateByQueryResponse, TContext>>
   updateByQuery<TContext = unknown>(params: T.UpdateByQueryRequest, callback: callbackFn<T.UpdateByQueryResponse, TContext>): TransportRequestCallback
   updateByQuery<TContext = unknown>(params: T.UpdateByQueryRequest, options: TransportRequestOptions, callback: callbackFn<T.UpdateByQueryResponse, TContext>): TransportRequestCallback
-  updateByQueryRethrottle<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-  updateByQueryRethrottle<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  updateByQueryRethrottle<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  updateByQueryRethrottle<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+  updateByQueryRethrottle<TContext = unknown>(params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateByQueryRethrottleResponse, TContext>>
+  updateByQueryRethrottle<TContext = unknown>(params: T.UpdateByQueryRethrottleRequest, callback: callbackFn<T.UpdateByQueryRethrottleResponse, TContext>): TransportRequestCallback
+  updateByQueryRethrottle<TContext = unknown>(params: T.UpdateByQueryRethrottleRequest, options: TransportRequestOptions, callback: callbackFn<T.UpdateByQueryRethrottleResponse, TContext>): TransportRequestCallback
   watcher: {
     ackWatch<TContext = unknown>(params: T.AcknowledgeWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AcknowledgeWatchResponse, TContext>>
     ackWatch<TContext = unknown>(params: T.AcknowledgeWatchRequest, callback: callbackFn<T.AcknowledgeWatchResponse, TContext>): TransportRequestCallback
@@ -1415,4 +1477,22 @@ declare class ESAPI {
   }
 }
 
-export default ESAPI
+export * as estypes from './types'
+export {
+  Client,
+  Transport,
+  ConnectionPool,
+  BaseConnectionPool,
+  CloudConnectionPool,
+  Connection,
+  Serializer,
+  events,
+  errors,
+  ApiError,
+  ApiResponse,
+  RequestEvent,
+  ResurrectEvent,
+  ClientOptions,
+  NodeOptions,
+  ClientExtendsCallbackOptions
+};

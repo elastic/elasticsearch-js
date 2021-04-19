@@ -19,11 +19,11 @@
 
 import { expectType, expectNotType, expectError } from 'tsd'
 import { Client, RequestEvent, ResurrectEvent, ApiError, ApiResponse, estypes } from '../../'
-import { KibanaClient } from '../../api/kibana'
+import type { Client as NewTypes } from '../../api/new'
 import { TransportRequestPromise, Context } from '../../lib/Transport'
 
 // @ts-expect-error
-const client: KibanaClient = new Client({
+const client: NewTypes = new Client({
   node: 'http://localhost:9200'
 })
 
@@ -102,15 +102,7 @@ expectError(
 // @ts-expect-error
 client.async_search.get()
 
-// callback api is not supported
-expectError(client.cat.count({ index: 'test' }, {}, (err: any, result: any) => {}))
-
-// close api, only promises should be supported
-// callback api is not supported
-expectType<Promise<void>>(client.close())
-expectError(client.close(() => {}))
-
 // the child api should return a KibanaClient instance
 const child = client.child()
-expectType<KibanaClient>(child)
+expectType<NewTypes>(child)
 expectNotType<Client>(child)

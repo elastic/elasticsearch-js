@@ -211,6 +211,59 @@ IndicesApi.prototype.create = function indicesCreateApi (params, options, callba
   return this.transport.request(request, options, callback)
 }
 
+IndicesApi.prototype.createDataStream = function indicesCreateDataStreamApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.name == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: name')
+    return handleError(err, callback)
+  }
+
+  let { method, body, name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'PUT'
+  path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+IndicesApi.prototype.dataStreamsStats = function indicesDataStreamsStatsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if ((name) != null) {
+    if (method == null) method = 'GET'
+    path = '/' + '_data_stream' + '/' + encodeURIComponent(name) + '/' + '_stats'
+  } else {
+    if (method == null) method = 'GET'
+    path = '/' + '_data_stream' + '/' + '_stats'
+  }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 IndicesApi.prototype.delete = function indicesDeleteApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -268,6 +321,33 @@ IndicesApi.prototype.deleteAlias = function indicesDeleteAliasApi (params, optio
     if (method == null) method = 'DELETE'
     path = '/' + encodeURIComponent(index) + '/' + '_aliases' + '/' + encodeURIComponent(name)
   }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+IndicesApi.prototype.deleteDataStream = function indicesDeleteDataStreamApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.name == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: name')
+    return handleError(err, callback)
+  }
+
+  let { method, body, name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'DELETE'
+  path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
 
   // build request object
   const request = {
@@ -536,6 +616,33 @@ IndicesApi.prototype.forcemerge = function indicesForcemergeApi (params, options
   return this.transport.request(request, options, callback)
 }
 
+IndicesApi.prototype.freeze = function indicesFreezeApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.index == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: index')
+    return handleError(err, callback)
+  }
+
+  let { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + encodeURIComponent(index) + '/' + '_freeze'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 IndicesApi.prototype.get = function indicesGetApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -582,6 +689,32 @@ IndicesApi.prototype.getAlias = function indicesGetAliasApi (params, options, ca
   } else {
     if (method == null) method = 'GET'
     path = '/' + '_alias'
+  }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+IndicesApi.prototype.getDataStream = function indicesGetDataStreamApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if ((name) != null) {
+    if (method == null) method = 'GET'
+    path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
+  } else {
+    if (method == null) method = 'GET'
+    path = '/' + '_data_stream'
   }
 
   // build request object
@@ -737,6 +870,33 @@ IndicesApi.prototype.getTemplate = function indicesGetTemplateApi (params, optio
   return this.transport.request(request, options, callback)
 }
 
+IndicesApi.prototype.migrateToDataStream = function indicesMigrateToDataStreamApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.name == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: name')
+    return handleError(err, callback)
+  }
+
+  let { method, body, name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_data_stream' + '/' + '_migrate' + '/' + encodeURIComponent(name)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 IndicesApi.prototype.open = function indicesOpenApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -752,6 +912,33 @@ IndicesApi.prototype.open = function indicesOpenApi (params, options, callback) 
   let path = ''
   if (method == null) method = 'POST'
   path = '/' + encodeURIComponent(index) + '/' + '_open'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+IndicesApi.prototype.promoteDataStream = function indicesPromoteDataStreamApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.name == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: name')
+    return handleError(err, callback)
+  }
+
+  let { method, body, name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_data_stream' + '/' + '_promote' + '/' + encodeURIComponent(name)
 
   // build request object
   const request = {
@@ -971,6 +1158,33 @@ IndicesApi.prototype.refresh = function indicesRefreshApi (params, options, call
     if (method == null) method = body == null ? 'GET' : 'POST'
     path = '/' + '_refresh'
   }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+IndicesApi.prototype.reloadSearchAnalyzers = function indicesReloadSearchAnalyzersApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.index == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: index')
+    return handleError(err, callback)
+  }
+
+  let { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = body == null ? 'GET' : 'POST'
+  path = '/' + encodeURIComponent(index) + '/' + '_reload_search_analyzers'
 
   // build request object
   const request = {
@@ -1259,6 +1473,33 @@ IndicesApi.prototype.stats = function indicesStatsApi (params, options, callback
   return this.transport.request(request, options, callback)
 }
 
+IndicesApi.prototype.unfreeze = function indicesUnfreezeApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.index == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: index')
+    return handleError(err, callback)
+  }
+
+  let { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + encodeURIComponent(index) + '/' + '_unfreeze'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 IndicesApi.prototype.updateAliases = function indicesUpdateAliasesApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1321,251 +1562,13 @@ IndicesApi.prototype.validateQuery = function indicesValidateQueryApi (params, o
   return this.transport.request(request, options, callback)
 }
 
-IndicesApi.prototype.createDataStream = function indicesCreateDataStreamApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  // check required parameters
-  if (params.name == null) {
-    const err = new this[kConfigurationError]('Missing required parameter: name')
-    return handleError(err, callback)
-  }
-
-  let { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if (method == null) method = 'PUT'
-  path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: body || '',
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
-IndicesApi.prototype.dataStreamsStats = function indicesDataStreamsStatsApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  let { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if ((name) != null) {
-    if (method == null) method = 'GET'
-    path = '/' + '_data_stream' + '/' + encodeURIComponent(name) + '/' + '_stats'
-  } else {
-    if (method == null) method = 'GET'
-    path = '/' + '_data_stream' + '/' + '_stats'
-  }
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: null,
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
-IndicesApi.prototype.deleteDataStream = function indicesDeleteDataStreamApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  // check required parameters
-  if (params.name == null) {
-    const err = new this[kConfigurationError]('Missing required parameter: name')
-    return handleError(err, callback)
-  }
-
-  let { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if (method == null) method = 'DELETE'
-  path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: body || '',
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
-IndicesApi.prototype.freeze = function indicesFreezeApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  // check required parameters
-  if (params.index == null) {
-    const err = new this[kConfigurationError]('Missing required parameter: index')
-    return handleError(err, callback)
-  }
-
-  let { method, body, index, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if (method == null) method = 'POST'
-  path = '/' + encodeURIComponent(index) + '/' + '_freeze'
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: body || '',
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
-IndicesApi.prototype.getDataStream = function indicesGetDataStreamApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  let { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if ((name) != null) {
-    if (method == null) method = 'GET'
-    path = '/' + '_data_stream' + '/' + encodeURIComponent(name)
-  } else {
-    if (method == null) method = 'GET'
-    path = '/' + '_data_stream'
-  }
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: null,
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
-IndicesApi.prototype.migrateToDataStream = function indicesMigrateToDataStreamApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  // check required parameters
-  if (params.name == null) {
-    const err = new this[kConfigurationError]('Missing required parameter: name')
-    return handleError(err, callback)
-  }
-
-  let { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if (method == null) method = 'POST'
-  path = '/' + '_data_stream' + '/' + '_migrate' + '/' + encodeURIComponent(name)
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: body || '',
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
-IndicesApi.prototype.promoteDataStream = function indicesPromoteDataStreamApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  // check required parameters
-  if (params.name == null) {
-    const err = new this[kConfigurationError]('Missing required parameter: name')
-    return handleError(err, callback)
-  }
-
-  let { method, body, name, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if (method == null) method = 'POST'
-  path = '/' + '_data_stream' + '/' + '_promote' + '/' + encodeURIComponent(name)
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: body || '',
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
-IndicesApi.prototype.reloadSearchAnalyzers = function indicesReloadSearchAnalyzersApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  // check required parameters
-  if (params.index == null) {
-    const err = new this[kConfigurationError]('Missing required parameter: index')
-    return handleError(err, callback)
-  }
-
-  let { method, body, index, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if (method == null) method = body == null ? 'GET' : 'POST'
-  path = '/' + encodeURIComponent(index) + '/' + '_reload_search_analyzers'
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: body || '',
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
-IndicesApi.prototype.unfreeze = function indicesUnfreezeApi (params, options, callback) {
-  ;[params, options, callback] = normalizeArguments(params, options, callback)
-
-  // check required parameters
-  if (params.index == null) {
-    const err = new this[kConfigurationError]('Missing required parameter: index')
-    return handleError(err, callback)
-  }
-
-  let { method, body, index, ...querystring } = params
-  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
-
-  let path = ''
-  if (method == null) method = 'POST'
-  path = '/' + encodeURIComponent(index) + '/' + '_unfreeze'
-
-  // build request object
-  const request = {
-    method,
-    path,
-    body: body || '',
-    querystring
-  }
-
-  return this.transport.request(request, options, callback)
-}
-
 Object.defineProperties(IndicesApi.prototype, {
   add_block: { get () { return this.addBlock } },
   clear_cache: { get () { return this.clearCache } },
+  create_data_stream: { get () { return this.createDataStream } },
+  data_streams_stats: { get () { return this.dataStreamsStats } },
   delete_alias: { get () { return this.deleteAlias } },
+  delete_data_stream: { get () { return this.deleteDataStream } },
   delete_index_template: { get () { return this.deleteIndexTemplate } },
   delete_template: { get () { return this.deleteTemplate } },
   exists_alias: { get () { return this.existsAlias } },
@@ -1573,29 +1576,26 @@ Object.defineProperties(IndicesApi.prototype, {
   exists_template: { get () { return this.existsTemplate } },
   exists_type: { get () { return this.existsType } },
   get_alias: { get () { return this.getAlias } },
+  get_data_stream: { get () { return this.getDataStream } },
   get_field_mapping: { get () { return this.getFieldMapping } },
   get_index_template: { get () { return this.getIndexTemplate } },
   get_mapping: { get () { return this.getMapping } },
   get_settings: { get () { return this.getSettings } },
   get_template: { get () { return this.getTemplate } },
+  migrate_to_data_stream: { get () { return this.migrateToDataStream } },
+  promote_data_stream: { get () { return this.promoteDataStream } },
   put_alias: { get () { return this.putAlias } },
   put_index_template: { get () { return this.putIndexTemplate } },
   put_mapping: { get () { return this.putMapping } },
   put_settings: { get () { return this.putSettings } },
   put_template: { get () { return this.putTemplate } },
+  reload_search_analyzers: { get () { return this.reloadSearchAnalyzers } },
   resolve_index: { get () { return this.resolveIndex } },
   shard_stores: { get () { return this.shardStores } },
   simulate_index_template: { get () { return this.simulateIndexTemplate } },
   simulate_template: { get () { return this.simulateTemplate } },
   update_aliases: { get () { return this.updateAliases } },
-  validate_query: { get () { return this.validateQuery } },
-  create_data_stream: { get () { return this.createDataStream } },
-  data_streams_stats: { get () { return this.dataStreamsStats } },
-  delete_data_stream: { get () { return this.deleteDataStream } },
-  get_data_stream: { get () { return this.getDataStream } },
-  migrate_to_data_stream: { get () { return this.migrateToDataStream } },
-  promote_data_stream: { get () { return this.promoteDataStream } },
-  reload_search_analyzers: { get () { return this.reloadSearchAnalyzers } }
+  validate_query: { get () { return this.validateQuery } }
 })
 
 module.exports = IndicesApi

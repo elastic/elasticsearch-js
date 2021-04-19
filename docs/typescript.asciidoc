@@ -1,11 +1,133 @@
 [[typescript]]
 === TypeScript support
 
-The client offers a first-class support for TypeScript, since it ships the type 
-definitions for every exposed API.
+The client offers a first-class support for TypeScript, shipping a complete set
+of type definitions of Elasticsearch's API surface.
+
 
 NOTE: If you are using TypeScript you need to use _snake_case_ style to define 
 the API parameters instead of _camelCase_. 
+
+Currently the client exposes two type definitions, the legacy one, which is the default
+and the new one, which will be the default in the next major.
+We strongly recommend to migrate to the new one as soon as possible, as the new types
+are offering a vastly improved developer experience and guarantee you that your code
+will always be in sync with the latest Elasticsearch features.
+
+[discrete]
+==== New type definitions
+
+The new type definition is more advanced compared to the legacy one. In the legacy
+type definitions you were expected to configure via generics both request and response
+bodies. The new type definitions comes with a complete type definition for every
+Elasticsearch endpoint.
+
+For example:
+
+[source,ts]
+----
+// legacy definitions
+const response = await client.search<SearchResponse<Source>, SearchBody>({
+  index: 'test',
+  body: {
+  query: {
+      match: { foo: 'bar' }
+    }
+  }
+})
+
+// new definitions
+const response = await client.search<Source>({
+  index: 'test',
+  body: {
+  query: {
+      match: { foo: 'bar' }
+    }
+  }
+})
+----
+
+The types are not 100% complete yet. Some APIs are missing (the newest ones, e.g. EQL),
+and others may contain some errors, but we are continuously pushing fixes & improvements.
+
+[discrete]
+==== Request & Response types
+
+Once you migrate to the new types, those are automatically integrated into the Elasticsearch client, you will get them out of the box.
+If everything works, meaning that you won’t get compiler errors, you are good to go!
+The types are already correct, and there is nothing more to do.
+
+If a type is incorrect, you should add a comment `// @ts-expect-error @elastic/elasticsearch`
+telling TypeScript that you are aware of the warning and you would like to temporarily suppress it.
+In this way, your code will compile until the type is fixed, and when it happens, you’ll only need to remove the
+`// @ts-expect-error @elastic/elasticsearch` comment (TypeScript will let you know when it is time).
+Finally, if the type you need is missing, you’ll see that the client method returns (or defines as a parameter)
+a `TODO` type, which accepts any object.
+
+Open an issue in the client repository letting us know if you encounter any problem!
+
+If needed you can import the request and response types.
+
+[source,ts]
+----
+import { Client, estypes } from '@elastic/elasticsearch'
+import type { Client as NewTypes } from '@elastic/elasticsearch/api/new'
+
+// @ts-expect-error @elastic/elasticsearch
+const client: NewTypes = new Client({
+  node: 'http://localhost:9200'
+})
+
+interface Source {
+  foo: string
+}
+
+const request: estypes.IndexRequest<Source> = {
+  index: 'test',
+  body: { foo: 'bar' }
+}
+
+await client.index(request)
+----
+
+[discrete]
+===== How to migrate to the new type definitions
+
+Since the new type definitions can be considered a breaking change we couldn't add the directly to the client.
+Following you will find a snippet that shows you how to override the default types with the new ones.
+
+[source,ts]
+----
+import { Client } from '@elastic/elasticsearch'
+import type { Client as NewTypes } from '@elastic/elasticsearch/api/new'
+
+// @ts-expect-error @elastic/elasticsearch
+const client: NewTypes = new Client({
+  node: 'http://localhost:9200'
+})
+
+interface Source {
+  foo: string
+}
+
+// try the new code completion when building a query!
+const response = await client.search<Source>({
+  index: 'test',
+  body: {
+    query: {
+      match_all: {}
+    }
+  }
+})
+
+// try the new code completion when traversing a response!
+const results = response.body.hits.hits.map(hit => hit._source)
+// results type will be `Source[]`
+console.log(results)
+----
+
+[discrete]
+==== Legacy type definitions
 
 By default event API uses 
 https://www.typescriptlang.org/docs/handbook/generics.html[generics] to specify 
@@ -45,7 +167,7 @@ You don't have to specify all the generics, but the order must be respected.
 
 
 [discrete]
-==== A complete example
+===== A complete example
 
 [source,ts]
 ----

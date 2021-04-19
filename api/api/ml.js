@@ -1151,7 +1151,7 @@ MlApi.prototype.postData = function mlPostDataApi (params, options, callback) {
   const request = {
     method,
     path,
-    body: body || '',
+    bulkBody: body,
     querystring
   }
 
@@ -1187,24 +1187,23 @@ MlApi.prototype.previewDataFrameAnalytics = function mlPreviewDataFrameAnalytics
 MlApi.prototype.previewDatafeed = function mlPreviewDatafeedApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // check required parameters
-  if (params.datafeed_id == null && params.datafeedId == null) {
-    const err = new this[kConfigurationError]('Missing required parameter: datafeed_id or datafeedId')
-    return handleError(err, callback)
-  }
-
   let { method, body, datafeedId, datafeed_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   let path = ''
-  if (method == null) method = 'GET'
-  path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_preview'
+  if ((datafeed_id || datafeedId) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_preview'
+  } else {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + '_ml' + '/' + 'datafeeds' + '/' + '_preview'
+  }
 
   // build request object
   const request = {
     method,
     path,
-    body: null,
+    body: body || '',
     querystring
   }
 

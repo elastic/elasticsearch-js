@@ -564,8 +564,8 @@ export interface ClusterReroute<T = RequestBody> extends Generic {
 }
 
 export interface ClusterState extends Generic {
-  metric?: string | string[];
   index?: string | string[];
+  metric?: string | string[];
   local?: boolean;
   master_timeout?: string;
   flat_settings?: boolean;
@@ -1362,6 +1362,9 @@ export interface IngestDeletePipeline extends Generic {
   timeout?: string;
 }
 
+export interface IngestGeoIpStats extends Generic {
+}
+
 export interface IngestGetPipeline extends Generic {
   id?: string;
   summary?: boolean;
@@ -1716,7 +1719,7 @@ export interface MlPostCalendarEvents<T = RequestBody> extends Generic {
   body: T;
 }
 
-export interface MlPostData<T = RequestBody> extends Generic {
+export interface MlPostData<T = RequestNDBody> extends Generic {
   job_id: string;
   reset_start?: string;
   reset_end?: string;
@@ -1728,8 +1731,9 @@ export interface MlPreviewDataFrameAnalytics<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface MlPreviewDatafeed extends Generic {
-  datafeed_id: string;
+export interface MlPreviewDatafeed<T = RequestBody> extends Generic {
+  datafeed_id?: string;
+  body?: T;
 }
 
 export interface MlPutCalendar<T = RequestBody> extends Generic {
@@ -1865,7 +1869,7 @@ export interface MlValidateDetector<T = RequestBody> extends Generic {
   body: T;
 }
 
-export interface MonitoringBulk<T = RequestNDBody> extends Generic {
+export interface MonitoringBulk<T = RequestBody> extends Generic {
   type?: string;
   system_id?: string;
   system_api_version?: string;
@@ -2300,6 +2304,19 @@ export interface SecurityPutUser<T = RequestBody> extends Generic {
   body: T;
 }
 
+export interface ShutdownDeleteNode extends Generic {
+  node_id: string;
+}
+
+export interface ShutdownGetNode extends Generic {
+  node_id?: string;
+}
+
+export interface ShutdownPutNode<T = RequestBody> extends Generic {
+  node_id: string;
+  body: T;
+}
+
 export interface SlmDeleteLifecycle extends Generic {
   policy_id: string;
 }
@@ -2466,7 +2483,7 @@ export interface Termvectors<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface TextStructureFindStructure<T = RequestBody> extends Generic {
+export interface TextStructureFindStructure<T = RequestNDBody> extends Generic {
   lines_to_sample?: number;
   line_merge_size_limit?: number;
   timeout?: string;
