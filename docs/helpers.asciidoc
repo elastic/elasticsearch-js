@@ -497,7 +497,7 @@ for (const doc of documents) {
 
 This helpers offers a simple and intuitive way to use the scroll search API. 
 Once called, it returns an 
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of[async iterator] 
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function[async iterator] 
 which can be used in conjuction with a for-await...of. It handles automatically 
 the `429` error and uses the `maxRetries` option of the client.
 
