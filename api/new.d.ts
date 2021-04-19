@@ -66,7 +66,7 @@ declare type extendsCallback = (options: ClientExtendsCallbackOptions) => any;
 // /Extend API
 
 declare type callbackFn<TResponse, TContext> = (err: ApiError, result: ApiResponse<TResponse, TContext>) => void;
-interface Client {
+declare class Client {
   connectionPool: ConnectionPool
   transport: Transport
   serializer: Serializer
