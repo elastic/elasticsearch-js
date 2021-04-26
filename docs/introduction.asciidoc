@@ -4,6 +4,8 @@
 This is the official Node.js client for {es}. This page gives a quick overview 
 about the features of the client.
 
+Refer to <<breaking-changes,this page>> for breaking changes coming from the old 
+client.
 
 [discrete]
 === Features
@@ -189,3 +191,5 @@ npm install esmaster@github:elastic/elasticsearch-js
 ----
 WARNING: This command installs the master branch of the client which is not
 considered stable.
+
+include::breaking-changes.asciidoc[]
