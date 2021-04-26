@@ -810,6 +810,14 @@ export interface FieldCaps<T = RequestBody> extends Generic {
   body?: T;
 }
 
+export interface FleetGlobalCheckpoints extends Generic {
+  index: string;
+  wait_for_advance?: boolean;
+  wait_for_index?: boolean;
+  checkpoints?: string | string[];
+  timeout?: string;
+}
+
 export interface Get extends Generic {
   id: string;
   index: string;
@@ -1869,7 +1877,7 @@ export interface MlValidateDetector<T = RequestBody> extends Generic {
   body: T;
 }
 
-export interface MonitoringBulk<T = RequestBody> extends Generic {
+export interface MonitoringBulk<T = RequestNDBody> extends Generic {
   type?: string;
   system_id?: string;
   system_api_version?: string;
@@ -1879,7 +1887,7 @@ export interface MonitoringBulk<T = RequestBody> extends Generic {
 
 export interface Msearch<T = RequestNDBody> extends Generic {
   index?: string | string[];
-  search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
+  search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   max_concurrent_searches?: number;
   typed_keys?: boolean;
   pre_filter_shard_size?: number;
@@ -1891,7 +1899,7 @@ export interface Msearch<T = RequestNDBody> extends Generic {
 
 export interface MsearchTemplate<T = RequestNDBody> extends Generic {
   index?: string | string[];
-  search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
+  search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   typed_keys?: boolean;
   max_concurrent_searches?: number;
   rest_total_hits_as_int?: boolean;
@@ -2136,13 +2144,17 @@ export interface SearchTemplate<T = RequestBody> extends Generic {
   preference?: string;
   routing?: string | string[];
   scroll?: string;
-  search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
+  search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   explain?: boolean;
   profile?: boolean;
   typed_keys?: boolean;
   rest_total_hits_as_int?: boolean;
   ccs_minimize_roundtrips?: boolean;
   body: T;
+}
+
+export interface SearchableSnapshotsCacheStats extends Generic {
+  node_id?: string | string[];
 }
 
 export interface SearchableSnapshotsClearCache extends Generic {
@@ -2192,9 +2204,22 @@ export interface SecurityClearCachedRoles extends Generic {
   name: string | string[];
 }
 
+export interface SecurityClearCachedServiceTokens extends Generic {
+  namespace: string;
+  service: string;
+  name: string | string[];
+}
+
 export interface SecurityCreateApiKey<T = RequestBody> extends Generic {
   refresh?: 'wait_for' | boolean;
   body: T;
+}
+
+export interface SecurityCreateServiceToken extends Generic {
+  namespace: string;
+  service: string;
+  name?: string;
+  refresh?: 'wait_for' | boolean;
 }
 
 export interface SecurityDeletePrivileges extends Generic {
@@ -2209,6 +2234,13 @@ export interface SecurityDeleteRole extends Generic {
 }
 
 export interface SecurityDeleteRoleMapping extends Generic {
+  name: string;
+  refresh?: 'wait_for' | boolean;
+}
+
+export interface SecurityDeleteServiceToken extends Generic {
+  namespace: string;
+  service: string;
   name: string;
   refresh?: 'wait_for' | boolean;
 }
@@ -2250,6 +2282,16 @@ export interface SecurityGetRole extends Generic {
 
 export interface SecurityGetRoleMapping extends Generic {
   name?: string | string[];
+}
+
+export interface SecurityGetServiceAccounts extends Generic {
+  namespace?: string;
+  service?: string;
+}
+
+export interface SecurityGetServiceCredentials extends Generic {
+  namespace: string;
+  service: string;
 }
 
 export interface SecurityGetToken<T = RequestBody> extends Generic {
@@ -2396,6 +2438,7 @@ export interface SnapshotGet extends Generic {
   snapshot: string | string[];
   master_timeout?: string;
   ignore_unavailable?: boolean;
+  index_details?: boolean;
   verbose?: boolean;
 }
 
