@@ -192,6 +192,50 @@ SecurityApi.prototype.clearCachedRoles = function securityClearCachedRolesApi (p
   return this.transport.request(request, options, callback)
 }
 
+SecurityApi.prototype.clearCachedServiceTokens = function securityClearCachedServiceTokensApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.namespace == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: namespace')
+    return handleError(err, callback)
+  }
+  if (params.service == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: service')
+    return handleError(err, callback)
+  }
+  if (params.name == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: name')
+    return handleError(err, callback)
+  }
+
+  // check required url components
+  if (params.name != null && (params.service == null || params.namespace == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: service, namespace')
+    return handleError(err, callback)
+  } else if (params.service != null && (params.namespace == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: namespace')
+    return handleError(err, callback)
+  }
+
+  let { method, body, namespace, service, name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_security' + '/' + 'service' + '/' + encodeURIComponent(namespace) + '/' + encodeURIComponent(service) + '/' + 'credential' + '/' + 'token' + '/' + encodeURIComponent(name) + '/' + '_clear_cache'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 SecurityApi.prototype.createApiKey = function securityCreateApiKeyApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -207,6 +251,51 @@ SecurityApi.prototype.createApiKey = function securityCreateApiKeyApi (params, o
   let path = ''
   if (method == null) method = 'PUT'
   path = '/' + '_security' + '/' + 'api_key'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SecurityApi.prototype.createServiceToken = function securityCreateServiceTokenApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.namespace == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: namespace')
+    return handleError(err, callback)
+  }
+  if (params.service == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: service')
+    return handleError(err, callback)
+  }
+
+  // check required url components
+  if (params.name != null && (params.service == null || params.namespace == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: service, namespace')
+    return handleError(err, callback)
+  } else if (params.service != null && (params.namespace == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: namespace')
+    return handleError(err, callback)
+  }
+
+  let { method, body, namespace, service, name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if ((namespace) != null && (service) != null && (name) != null) {
+    if (method == null) method = 'PUT'
+    path = '/' + '_security' + '/' + 'service' + '/' + encodeURIComponent(namespace) + '/' + encodeURIComponent(service) + '/' + 'credential' + '/' + 'token' + '/' + encodeURIComponent(name)
+  } else {
+    if (method == null) method = 'POST'
+    path = '/' + '_security' + '/' + 'service' + '/' + encodeURIComponent(namespace) + '/' + encodeURIComponent(service) + '/' + 'credential' + '/' + 'token'
+  }
 
   // build request object
   const request = {
@@ -298,6 +387,50 @@ SecurityApi.prototype.deleteRoleMapping = function securityDeleteRoleMappingApi 
   let path = ''
   if (method == null) method = 'DELETE'
   path = '/' + '_security' + '/' + 'role_mapping' + '/' + encodeURIComponent(name)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SecurityApi.prototype.deleteServiceToken = function securityDeleteServiceTokenApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.namespace == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: namespace')
+    return handleError(err, callback)
+  }
+  if (params.service == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: service')
+    return handleError(err, callback)
+  }
+  if (params.name == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: name')
+    return handleError(err, callback)
+  }
+
+  // check required url components
+  if (params.name != null && (params.service == null || params.namespace == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: service, namespace')
+    return handleError(err, callback)
+  } else if (params.service != null && (params.namespace == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: namespace')
+    return handleError(err, callback)
+  }
+
+  let { method, body, namespace, service, name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'DELETE'
+  path = '/' + '_security' + '/' + 'service' + '/' + encodeURIComponent(namespace) + '/' + encodeURIComponent(service) + '/' + 'credential' + '/' + 'token' + '/' + encodeURIComponent(name)
 
   // build request object
   const request = {
@@ -508,6 +641,78 @@ SecurityApi.prototype.getRoleMapping = function securityGetRoleMappingApi (param
     if (method == null) method = 'GET'
     path = '/' + '_security' + '/' + 'role_mapping'
   }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SecurityApi.prototype.getServiceAccounts = function securityGetServiceAccountsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required url components
+  if (params.service != null && (params.namespace == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: namespace')
+    return handleError(err, callback)
+  }
+
+  let { method, body, namespace, service, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if ((namespace) != null && (service) != null) {
+    if (method == null) method = 'GET'
+    path = '/' + '_security' + '/' + 'service' + '/' + encodeURIComponent(namespace) + '/' + encodeURIComponent(service)
+  } else if ((namespace) != null) {
+    if (method == null) method = 'GET'
+    path = '/' + '_security' + '/' + 'service' + '/' + encodeURIComponent(namespace)
+  } else {
+    if (method == null) method = 'GET'
+    path = '/' + '_security' + '/' + 'service'
+  }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SecurityApi.prototype.getServiceCredentials = function securityGetServiceCredentialsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.namespace == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: namespace')
+    return handleError(err, callback)
+  }
+  if (params.service == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: service')
+    return handleError(err, callback)
+  }
+
+  // check required url components
+  if (params.service != null && (params.namespace == null)) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: namespace')
+    return handleError(err, callback)
+  }
+
+  let { method, body, namespace, service, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'GET'
+  path = '/' + '_security' + '/' + 'service' + '/' + encodeURIComponent(namespace) + '/' + encodeURIComponent(service) + '/' + 'credential'
 
   // build request object
   const request = {
@@ -833,10 +1038,13 @@ Object.defineProperties(SecurityApi.prototype, {
   clear_cached_privileges: { get () { return this.clearCachedPrivileges } },
   clear_cached_realms: { get () { return this.clearCachedRealms } },
   clear_cached_roles: { get () { return this.clearCachedRoles } },
+  clear_cached_service_tokens: { get () { return this.clearCachedServiceTokens } },
   create_api_key: { get () { return this.createApiKey } },
+  create_service_token: { get () { return this.createServiceToken } },
   delete_privileges: { get () { return this.deletePrivileges } },
   delete_role: { get () { return this.deleteRole } },
   delete_role_mapping: { get () { return this.deleteRoleMapping } },
+  delete_service_token: { get () { return this.deleteServiceToken } },
   delete_user: { get () { return this.deleteUser } },
   disable_user: { get () { return this.disableUser } },
   enable_user: { get () { return this.enableUser } },
@@ -845,6 +1053,8 @@ Object.defineProperties(SecurityApi.prototype, {
   get_privileges: { get () { return this.getPrivileges } },
   get_role: { get () { return this.getRole } },
   get_role_mapping: { get () { return this.getRoleMapping } },
+  get_service_accounts: { get () { return this.getServiceAccounts } },
+  get_service_credentials: { get () { return this.getServiceCredentials } },
   get_token: { get () { return this.getToken } },
   get_user: { get () { return this.getUser } },
   get_user_privileges: { get () { return this.getUserPrivileges } },

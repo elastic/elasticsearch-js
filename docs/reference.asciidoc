@@ -2058,7 +2058,7 @@ client.cluster.getSettings({
   include_defaults: boolean
 })
 ----
-link:{ref}/cluster-update-settings.html[Documentation] +
+link:{ref}/cluster-get-settings.html[Documentation] +
 [cols=2*]
 |===
 |`flat_settings` or `flatSettings`
@@ -3290,6 +3290,41 @@ _Default:_ `open`
 
 |`body`
 |`object` - An index filter specified with the Query DSL
+
+|===
+
+[discrete]
+=== fleet.globalCheckpoints
+*Stability:* experimental
+[source,ts]
+----
+client.fleet.globalCheckpoints({
+  index: string,
+  wait_for_advance: boolean,
+  wait_for_index: boolean,
+  checkpoints: string | string[],
+  timeout: string
+})
+----
+[cols=2*]
+|===
+|`index`
+|`string` - The name of the index.
+
+|`wait_for_advance` or `waitForAdvance`
+|`boolean` - Whether to wait for the global checkpoint to advance past the specified current checkpoints +
+_Default:_ `false`
+
+|`wait_for_index` or `waitForIndex`
+|`boolean` - Whether to wait for the target index to exist and all primary shards be active +
+_Default:_ `false`
+
+|`checkpoints`
+|`string \| string[]` - Comma separated list of checkpoints
+
+|`timeout`
+|`string` - Timeout to wait for global checkpoint to advance +
+_Default:_ `30s`
 
 |===
 
@@ -6010,7 +6045,7 @@ link:{ref}/ml-delete-calendar-job.html[Documentation] +
 
 [discrete]
 === ml.deleteDataFrameAnalytics
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.deleteDataFrameAnalytics({
@@ -6178,7 +6213,7 @@ link:{ref}/ml-delete-snapshot.html[Documentation] +
 
 [discrete]
 === ml.deleteTrainedModel
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.deleteTrainedModel({
@@ -6195,7 +6230,7 @@ link:{ref}/delete-trained-models.html[Documentation] +
 
 [discrete]
 === ml.deleteTrainedModelAlias
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.deleteTrainedModelAlias({
@@ -6233,7 +6268,7 @@ link:{ref}/ml-apis.html[Documentation] +
 
 [discrete]
 === ml.evaluateDataFrame
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.evaluateDataFrame({
@@ -6250,7 +6285,7 @@ link:{ref}/evaluate-dfanalytics.html[Documentation] +
 
 [discrete]
 === ml.explainDataFrameAnalytics
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.explainDataFrameAnalytics({
@@ -6505,7 +6540,7 @@ link:{ref}/ml-get-category.html[Documentation] +
 
 [discrete]
 === ml.getDataFrameAnalytics
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.getDataFrameAnalytics({
@@ -6540,7 +6575,7 @@ _Default:_ `100`
 
 [discrete]
 === ml.getDataFrameAnalyticsStats
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.getDataFrameAnalyticsStats({
@@ -6926,7 +6961,7 @@ link:{ref}/ml-get-record.html[Documentation] +
 
 [discrete]
 === ml.getTrainedModels
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.getTrainedModels({
@@ -6980,7 +7015,7 @@ _Default:_ `100`
 
 [discrete]
 === ml.getTrainedModelsStats
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.getTrainedModelsStats({
@@ -7088,7 +7123,7 @@ link:{ref}/ml-post-data.html[Documentation] +
 
 [discrete]
 === ml.previewDataFrameAnalytics
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.previewDataFrameAnalytics({
@@ -7172,7 +7207,7 @@ link:{ref}/ml-put-calendar-job.html[Documentation] +
 
 [discrete]
 === ml.putDataFrameAnalytics
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.putDataFrameAnalytics({
@@ -7272,7 +7307,7 @@ link:{ref}/ml-put-job.html[Documentation] +
 
 [discrete]
 === ml.putTrainedModel
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.putTrainedModel({
@@ -7293,7 +7328,7 @@ link:{ref}/put-trained-models.html[Documentation] +
 
 [discrete]
 === ml.putTrainedModelAlias
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.putTrainedModelAlias({
@@ -7368,7 +7403,7 @@ link:{ref}/ml-set-upgrade-mode.html[Documentation] +
 
 [discrete]
 === ml.startDataFrameAnalytics
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.startDataFrameAnalytics({
@@ -7426,7 +7461,7 @@ link:{ref}/ml-start-datafeed.html[Documentation] +
 
 [discrete]
 === ml.stopDataFrameAnalytics
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.stopDataFrameAnalytics({
@@ -7498,7 +7533,7 @@ WARNING: This parameter has been deprecated.
 
 [discrete]
 === ml.updateDataFrameAnalytics
-*Stability:* beta
+
 [source,ts]
 ----
 client.ml.updateDataFrameAnalytics({
@@ -7726,7 +7761,7 @@ WARNING: This parameter has been deprecated.
 ----
 client.msearch({
   index: string | string[],
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   max_concurrent_searches: number,
   typed_keys: boolean,
   pre_filter_shard_size: number,
@@ -7744,7 +7779,7 @@ link:{ref}/search-multi-search.html[Documentation] +
 |`string \| string[]` - A comma-separated list of index names to use as default
 
 |`search_type` or `searchType`
-|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
 
 |`max_concurrent_searches` or `maxConcurrentSearches`
 |`number` - Controls the maximum number of concurrent searches the multi search api will execute
@@ -7778,7 +7813,7 @@ _Default:_ `true`
 ----
 client.msearchTemplate({
   index: string | string[],
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   typed_keys: boolean,
   max_concurrent_searches: number,
   rest_total_hits_as_int: boolean,
@@ -7793,7 +7828,7 @@ link:{ref}/search-multi-search.html[Documentation] +
 |`string \| string[]` - A comma-separated list of index names to use as default
 
 |`search_type` or `searchType`
-|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
 
 |`typed_keys` or `typedKeys`
 |`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
@@ -8780,7 +8815,7 @@ client.searchTemplate({
   preference: string,
   routing: string | string[],
   scroll: string,
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   explain: boolean,
   profile: boolean,
   typed_keys: boolean,
@@ -8818,7 +8853,7 @@ _Default:_ `open`
 |`string` - Specify how long a consistent view of the index should be maintained for scrolled search
 
 |`search_type` or `searchType`
-|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
 
 |`explain`
 |`boolean` - Specify whether to return detailed information about score computation as part of a hit
@@ -8838,6 +8873,23 @@ _Default:_ `true`
 
 |`body`
 |`object` - The search definition template and its params
+
+|===
+
+[discrete]
+=== searchableSnapshots.cacheStats
+*Stability:* experimental
+[source,ts]
+----
+client.searchableSnapshots.cacheStats({
+  node_id: string | string[]
+})
+----
+link:{ref}/searchable-snapshots-apis.html[Documentation] +
+[cols=2*]
+|===
+|`node_id` or `nodeId`
+|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
 |===
 
@@ -9038,6 +9090,31 @@ link:{ref}/security-api-clear-role-cache.html[Documentation] +
 |===
 
 [discrete]
+=== security.clearCachedServiceTokens
+*Stability:* beta
+[source,ts]
+----
+client.security.clearCachedServiceTokens({
+  namespace: string,
+  service: string,
+  name: string | string[]
+})
+----
+link:{ref}/security-api-clear-service-token-caches.html[Documentation] +
+[cols=2*]
+|===
+|`namespace`
+|`string` - An identifier for the namespace
+
+|`service`
+|`string` - An identifier for the service name
+
+|`name`
+|`string \| string[]` - A comma-separated list of service token names
+
+|===
+
+[discrete]
 === security.createApiKey
 
 [source,ts]
@@ -9055,6 +9132,35 @@ link:{ref}/security-api-create-api-key.html[Documentation] +
 
 |`body`
 |`object` - The api key request to create an API key
+
+|===
+
+[discrete]
+=== security.createServiceToken
+*Stability:* beta
+[source,ts]
+----
+client.security.createServiceToken({
+  namespace: string,
+  service: string,
+  name: string,
+  refresh: 'true' | 'false' | 'wait_for'
+})
+----
+link:{ref}/security-api-create-service-token.html[Documentation] +
+[cols=2*]
+|===
+|`namespace`
+|`string` - An identifier for the namespace
+
+|`service`
+|`string` - An identifier for the service name
+
+|`name`
+|`string` - An identifier for the token name
+
+|`refresh`
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 |===
 
@@ -9122,6 +9228,35 @@ link:{ref}/security-api-delete-role-mapping.html[Documentation] +
 
 |`refresh`
 |`'true' \| 'false' \| 'wait_for'` - If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+|===
+
+[discrete]
+=== security.deleteServiceToken
+*Stability:* beta
+[source,ts]
+----
+client.security.deleteServiceToken({
+  namespace: string,
+  service: string,
+  name: string,
+  refresh: 'true' | 'false' | 'wait_for'
+})
+----
+link:{ref}/security-api-delete-service-token.html[Documentation] +
+[cols=2*]
+|===
+|`namespace`
+|`string` - An identifier for the namespace
+
+|`service`
+|`string` - An identifier for the service name
+
+|`name`
+|`string` - An identifier for the token name
+
+|`refresh`
+|`'true' \| 'false' \| 'wait_for'` - If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 |===
 
@@ -9283,6 +9418,48 @@ link:{ref}/security-api-get-role-mapping.html[Documentation] +
 |===
 |`name`
 |`string \| string[]` - A comma-separated list of role-mapping names
+
+|===
+
+[discrete]
+=== security.getServiceAccounts
+*Stability:* beta
+[source,ts]
+----
+client.security.getServiceAccounts({
+  namespace: string,
+  service: string
+})
+----
+link:{ref}/security-api-get-service-accounts.html[Documentation] +
+[cols=2*]
+|===
+|`namespace`
+|`string` - An identifier for the namespace
+
+|`service`
+|`string` - An identifier for the service name
+
+|===
+
+[discrete]
+=== security.getServiceCredentials
+*Stability:* beta
+[source,ts]
+----
+client.security.getServiceCredentials({
+  namespace: string,
+  service: string
+})
+----
+link:{ref}/security-api-get-service-credentials.html[Documentation] +
+[cols=2*]
+|===
+|`namespace`
+|`string` - An identifier for the namespace
+
+|`service`
+|`string` - An identifier for the service name
 
 |===
 
@@ -9863,6 +10040,7 @@ client.snapshot.get({
   snapshot: string | string[],
   master_timeout: string,
   ignore_unavailable: boolean,
+  index_details: boolean,
   verbose: boolean
 })
 ----
@@ -9880,6 +10058,9 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |`ignore_unavailable` or `ignoreUnavailable`
 |`boolean` - Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
+
+|`index_details` or `indexDetails`
+|`boolean` - Whether to include details of each index in the snapshot, if those details are available. Defaults to false.
 
 |`verbose`
 |`boolean` - Whether to show verbose snapshot info or only show the basic info found in the repository index blob
