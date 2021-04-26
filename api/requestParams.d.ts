@@ -818,6 +818,14 @@ export interface FieldCaps<T = RequestBody> extends Generic {
   body?: T;
 }
 
+export interface FleetGlobalCheckpoints extends Generic {
+  index: string;
+  wait_for_advance?: boolean;
+  wait_for_index?: boolean;
+  checkpoints?: string | string[];
+  timeout?: string;
+}
+
 export interface Get extends Generic {
   id: string;
   index: string;
@@ -1936,7 +1944,7 @@ export interface MlValidateDetector<T = RequestBody> extends Generic {
   body: T;
 }
 
-export interface MonitoringBulk<T = RequestBody> extends Generic {
+export interface MonitoringBulk<T = RequestNDBody> extends Generic {
   type?: string;
   system_id?: string;
   system_api_version?: string;
@@ -2217,6 +2225,10 @@ export interface SearchTemplate<T = RequestBody> extends Generic {
   body: T;
 }
 
+export interface SearchableSnapshotsCacheStats extends Generic {
+  node_id?: string | string[];
+}
+
 export interface SearchableSnapshotsClearCache extends Generic {
   index?: string | string[];
   ignore_unavailable?: boolean;
@@ -2268,9 +2280,22 @@ export interface SecurityClearCachedRoles extends Generic {
   name: string | string[];
 }
 
+export interface SecurityClearCachedServiceTokens extends Generic {
+  namespace: string;
+  service: string;
+  name: string | string[];
+}
+
 export interface SecurityCreateApiKey<T = RequestBody> extends Generic {
   refresh?: 'wait_for' | boolean;
   body: T;
+}
+
+export interface SecurityCreateServiceToken extends Generic {
+  namespace: string;
+  service: string;
+  name?: string;
+  refresh?: 'wait_for' | boolean;
 }
 
 export interface SecurityDeletePrivileges extends Generic {
@@ -2285,6 +2310,13 @@ export interface SecurityDeleteRole extends Generic {
 }
 
 export interface SecurityDeleteRoleMapping extends Generic {
+  name: string;
+  refresh?: 'wait_for' | boolean;
+}
+
+export interface SecurityDeleteServiceToken extends Generic {
+  namespace: string;
+  service: string;
   name: string;
   refresh?: 'wait_for' | boolean;
 }
@@ -2326,6 +2358,16 @@ export interface SecurityGetRole extends Generic {
 
 export interface SecurityGetRoleMapping extends Generic {
   name?: string | string[];
+}
+
+export interface SecurityGetServiceAccounts extends Generic {
+  namespace?: string;
+  service?: string;
+}
+
+export interface SecurityGetServiceCredentials extends Generic {
+  namespace: string;
+  service: string;
 }
 
 export interface SecurityGetToken<T = RequestBody> extends Generic {
@@ -2472,6 +2514,7 @@ export interface SnapshotGet extends Generic {
   snapshot: string | string[];
   master_timeout?: string;
   ignore_unavailable?: boolean;
+  index_details?: boolean;
   verbose?: boolean;
 }
 

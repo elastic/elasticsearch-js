@@ -23,44 +23,43 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['system_id', 'system_api_version', 'interval', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
-const snakeCase = { systemId: 'system_id', systemApiVersion: 'system_api_version', errorTrace: 'error_trace', filterPath: 'filter_path' }
+const acceptedQuerystring = ['wait_for_advance', 'wait_for_index', 'checkpoints', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { waitForAdvance: 'wait_for_advance', waitForIndex: 'wait_for_index', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-function MonitoringApi (transport, ConfigurationError) {
+function FleetApi (transport, ConfigurationError) {
   this.transport = transport
   this[kConfigurationError] = ConfigurationError
 }
 
-MonitoringApi.prototype.bulk = function monitoringBulkApi (params, options, callback) {
+FleetApi.prototype.globalCheckpoints = function fleetGlobalCheckpointsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
-  if (params.body == null) {
-    const err = new this[kConfigurationError]('Missing required parameter: body')
+  if (params.index == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
 
-  let { method, body, type, ...querystring } = params
+  let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   let path = ''
-  if ((type) != null) {
-    if (method == null) method = 'POST'
-    path = '/' + '_monitoring' + '/' + encodeURIComponent(type) + '/' + 'bulk'
-  } else {
-    if (method == null) method = 'POST'
-    path = '/' + '_monitoring' + '/' + 'bulk'
-  }
+  if (method == null) method = 'GET'
+  path = '/' + encodeURIComponent(index) + '/' + '_fleet' + '/' + 'global_checkpoints'
 
   // build request object
   const request = {
     method,
     path,
-    bulkBody: body,
+    body: null,
     querystring
   }
 
   return this.transport.request(request, options, callback)
 }
 
-module.exports = MonitoringApi
+Object.defineProperties(FleetApi.prototype, {
+  global_checkpoints: { get () { return this.globalCheckpoints } }
+})
+
+module.exports = FleetApi
