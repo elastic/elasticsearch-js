@@ -1613,7 +1613,7 @@ test('Should cast to boolean HEAD request', t => {
   })
 
   t.test('4xx response', t => {
-    t.plan(2)
+    t.plan(3)
 
     const pool = new ConnectionPool({ Connection: MockConnection })
     pool.addConnection('http://localhost:9200')
@@ -1633,12 +1633,13 @@ test('Should cast to boolean HEAD request', t => {
       path: '/400'
     }, (err, { body, statusCode }) => {
       t.ok(err instanceof ResponseError)
+      t.false(typeof err.body === 'boolean')
       t.strictEqual(statusCode, 400)
     })
   })
 
   t.test('5xx response', t => {
-    t.plan(2)
+    t.plan(3)
     const pool = new ConnectionPool({ Connection: MockConnection })
     pool.addConnection('http://localhost:9200')
 
@@ -1657,6 +1658,7 @@ test('Should cast to boolean HEAD request', t => {
       path: '/500'
     }, (err, { body, statusCode }) => {
       t.ok(err instanceof ResponseError)
+      t.false(typeof err.body === 'boolean')
       t.strictEqual(statusCode, 500)
     })
   })
