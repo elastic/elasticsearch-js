@@ -104,7 +104,7 @@ test('RequestAbortedError', t => {
   t.end()
 })
 
-test('ResponseError with meaningful message', t => {
+test('ResponseError with meaningful message / 1', t => {
   const meta = {
     body: {
       error: {
@@ -131,7 +131,47 @@ test('ResponseError with meaningful message', t => {
     headers: {}
   }
   const err = new errors.ResponseError(meta)
-  t.strictEqual(err.message, '[index_not_found_exception]. Reason: no such index [foo]')
+  t.strictEqual(err.message, '[index_not_found_exception] Reason: no such index [foo]')
+  t.strictEqual(err.toString(), JSON.stringify(meta.body))
+  t.end()
+})
+
+test('ResponseError with meaningful message / 2', t => {
+  const meta = {
+    body: {
+      error: {
+        root_cause: [
+          {
+            type: 'index_not_found_exception',
+            reason: 'no such index [foo]',
+            'resource.type': 'index_expression',
+            'resource.id': 'foo',
+            index_uuid: '_na_',
+            index: 'foo'
+          },
+          {
+            type: 'nested_cause',
+            reason: 'this is a nested cause',
+            'resource.type': 'index_expression',
+            'resource.id': 'foo',
+            index_uuid: '_na_',
+            index: 'foo'
+          }
+        ],
+        type: 'index_not_found_exception',
+        reason: 'no such index [foo]',
+        'resource.type': 'index_expression',
+        'resource.id': 'foo',
+        index_uuid: '_na_',
+        index: 'foo'
+      },
+      status: 404
+    },
+    statusCode: 404,
+    headers: {}
+  }
+  const err = new errors.ResponseError(meta)
+  t.strictEqual(err.message, '[index_not_found_exception] Reason: no such index [foo] > [nested_cause] Reason: this is a nested cause')
   t.strictEqual(err.toString(), JSON.stringify(meta.body))
   t.end()
 })
