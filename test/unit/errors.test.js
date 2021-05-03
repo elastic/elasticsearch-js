@@ -171,7 +171,7 @@ test('ResponseError with meaningful message / 2', t => {
     headers: {}
   }
   const err = new errors.ResponseError(meta)
-  t.strictEqual(err.message, '[index_not_found_exception] Reason: no such index [foo] > [nested_cause] Reason: this is a nested cause')
+  t.strictEqual(err.message, '[index_not_found_exception] Reason: no such index [foo]; [nested_cause] Reason: this is a nested cause')
   t.strictEqual(err.toString(), JSON.stringify(meta.body))
   t.end()
 })
