@@ -119,19 +119,19 @@ interface KibanaClient {
     transforms<TContext = unknown>(params?: T.CatTransformsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CatTransformsResponse, TContext>>
   }
   ccr: {
-    deleteAutoFollowPattern<TContext = unknown>(params: T.DeleteAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteAutoFollowPatternResponse, TContext>>
-    follow<TContext = unknown>(params: T.CreateFollowIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CreateFollowIndexResponse, TContext>>
-    followInfo<TContext = unknown>(params: T.FollowInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FollowInfoResponse, TContext>>
-    followStats<TContext = unknown>(params: T.FollowIndexStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FollowIndexStatsResponse, TContext>>
-    forgetFollower<TContext = unknown>(params: T.ForgetFollowerIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ForgetFollowerIndexResponse, TContext>>
-    getAutoFollowPattern<TContext = unknown>(params?: T.GetAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetAutoFollowPatternResponse, TContext>>
-    pauseAutoFollowPattern<TContext = unknown>(params: T.PauseAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PauseAutoFollowPatternResponse, TContext>>
-    pauseFollow<TContext = unknown>(params: T.PauseFollowIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PauseFollowIndexResponse, TContext>>
-    putAutoFollowPattern<TContext = unknown>(params: T.PutAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutAutoFollowPatternResponse, TContext>>
-    resumeAutoFollowPattern<TContext = unknown>(params: T.ResumeAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ResumeAutoFollowPatternResponse, TContext>>
-    resumeFollow<TContext = unknown>(params: T.ResumeFollowIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ResumeFollowIndexResponse, TContext>>
+    deleteAutoFollowPattern<TContext = unknown>(params: T.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrDeleteAutoFollowPatternResponse, TContext>>
+    follow<TContext = unknown>(params: T.CcrCreateFollowIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrCreateFollowIndexResponse, TContext>>
+    followInfo<TContext = unknown>(params: T.CcrFollowInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrFollowInfoResponse, TContext>>
+    followStats<TContext = unknown>(params: T.CcrFollowIndexStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrFollowIndexStatsResponse, TContext>>
+    forgetFollower<TContext = unknown>(params: T.CcrForgetFollowerIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrForgetFollowerIndexResponse, TContext>>
+    getAutoFollowPattern<TContext = unknown>(params?: T.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrGetAutoFollowPatternResponse, TContext>>
+    pauseAutoFollowPattern<TContext = unknown>(params: T.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrPauseAutoFollowPatternResponse, TContext>>
+    pauseFollow<TContext = unknown>(params: T.CcrPauseFollowIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrPauseFollowIndexResponse, TContext>>
+    putAutoFollowPattern<TContext = unknown>(params: T.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrPutAutoFollowPatternResponse, TContext>>
+    resumeAutoFollowPattern<TContext = unknown>(params: T.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrResumeAutoFollowPatternResponse, TContext>>
+    resumeFollow<TContext = unknown>(params: T.CcrResumeFollowIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrResumeFollowIndexResponse, TContext>>
     stats<TContext = unknown>(params?: T.CcrStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrStatsResponse, TContext>>
-    unfollow<TContext = unknown>(params: T.UnfollowIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UnfollowIndexResponse, TContext>>
+    unfollow<TContext = unknown>(params: T.CcrUnfollowIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CcrUnfollowIndexResponse, TContext>>
   }
   clearScroll<TContext = unknown>(params?: T.ClearScrollRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClearScrollResponse, TContext>>
   closePointInTime<TContext = unknown>(params?: T.ClosePointInTimeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClosePointInTimeResponse, TContext>>
@@ -140,14 +140,14 @@ interface KibanaClient {
     deleteComponentTemplate<TContext = unknown>(params: T.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterDeleteComponentTemplateResponse, TContext>>
     deleteVotingConfigExclusions<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     existsComponentTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    getComponentTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    getComponentTemplate<TContext = unknown>(params?: T.ClusterGetComponentTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterGetComponentTemplateResponse, TContext>>
     getSettings<TContext = unknown>(params?: T.ClusterGetSettingsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterGetSettingsResponse, TContext>>
     health<TContext = unknown>(params?: T.ClusterHealthRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterHealthResponse, TContext>>
     pendingTasks<TContext = unknown>(params?: T.ClusterPendingTasksRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterPendingTasksResponse, TContext>>
     postVotingConfigExclusions<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    putComponentTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    putComponentTemplate<TContext = unknown>(params: T.ClusterPutComponentTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterPutComponentTemplateResponse, TContext>>
     putSettings<TContext = unknown>(params?: T.ClusterPutSettingsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterPutSettingsResponse, TContext>>
-    remoteInfo<TContext = unknown>(params?: T.RemoteInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RemoteInfoResponse, TContext>>
+    remoteInfo<TContext = unknown>(params?: T.ClusterRemoteInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterRemoteInfoResponse, TContext>>
     reroute<TContext = unknown>(params?: T.ClusterRerouteRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterRerouteResponse, TContext>>
     state<TContext = unknown>(params?: T.ClusterStateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterStateResponse, TContext>>
     stats<TContext = unknown>(params?: T.ClusterStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClusterStatsResponse, TContext>>
@@ -174,10 +174,10 @@ interface KibanaClient {
   deleteByQueryRethrottle<TContext = unknown>(params: T.DeleteByQueryRethrottleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteByQueryRethrottleResponse, TContext>>
   deleteScript<TContext = unknown>(params: T.DeleteScriptRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteScriptResponse, TContext>>
   enrich: {
-    deletePolicy<TContext = unknown>(params: T.DeleteEnrichPolicyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteEnrichPolicyResponse, TContext>>
-    executePolicy<TContext = unknown>(params: T.ExecuteEnrichPolicyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ExecuteEnrichPolicyResponse, TContext>>
-    getPolicy<TContext = unknown>(params?: T.GetEnrichPolicyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetEnrichPolicyResponse, TContext>>
-    putPolicy<TContext = unknown>(params: T.PutEnrichPolicyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutEnrichPolicyResponse, TContext>>
+    deletePolicy<TContext = unknown>(params: T.EnrichDeletePolicyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EnrichDeletePolicyResponse, TContext>>
+    executePolicy<TContext = unknown>(params: T.EnrichExecutePolicyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EnrichExecutePolicyResponse, TContext>>
+    getPolicy<TContext = unknown>(params?: T.EnrichGetPolicyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EnrichGetPolicyResponse, TContext>>
+    putPolicy<TContext = unknown>(params: T.EnrichPutPolicyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EnrichPutPolicyResponse, TContext>>
     stats<TContext = unknown>(params?: T.EnrichStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EnrichStatsResponse, TContext>>
   }
   eql: {
@@ -186,257 +186,266 @@ interface KibanaClient {
     getStatus<TContext = unknown>(params: T.EqlGetStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EqlGetStatusResponse, TContext>>
     search<TEvent = unknown, TContext = unknown>(params: T.EqlSearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EqlSearchResponse<TEvent>, TContext>>
   }
-  exists<TContext = unknown>(params: T.DocumentExistsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DocumentExistsResponse, TContext>>
-  existsSource<TContext = unknown>(params: T.SourceExistsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SourceExistsResponse, TContext>>
+  exists<TContext = unknown>(params: T.ExistsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ExistsResponse, TContext>>
+  existsSource<TContext = unknown>(params: T.ExistsSourceRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ExistsSourceResponse, TContext>>
   explain<TDocument = unknown, TContext = unknown>(params: T.ExplainRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ExplainResponse<TDocument>, TContext>>
   features: {
     getFeatures<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     resetFeatures<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
   }
-  fieldCaps<TContext = unknown>(params?: T.FieldCapabilitiesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FieldCapabilitiesResponse, TContext>>
+  fieldCaps<TContext = unknown>(params?: T.FieldCapsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FieldCapsResponse, TContext>>
+  fleet: {
+    globalCheckpoints<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+  }
   get<TDocument = unknown, TContext = unknown>(params: T.GetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetResponse<TDocument>, TContext>>
   getScript<TContext = unknown>(params: T.GetScriptRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetScriptResponse, TContext>>
-  getScriptContext<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-  getScriptLanguages<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-  getSource<TDocument = unknown, TContext = unknown>(params: T.SourceRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SourceResponse<TDocument>, TContext>>
+  getScriptContext<TContext = unknown>(params?: T.GetScriptContextRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetScriptContextResponse, TContext>>
+  getScriptLanguages<TContext = unknown>(params?: T.GetScriptLanguagesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetScriptLanguagesResponse, TContext>>
+  getSource<TDocument = unknown, TContext = unknown>(params?: T.GetSourceRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetSourceResponse<TDocument>, TContext>>
   graph: {
     explore<TContext = unknown>(params: T.GraphExploreRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GraphExploreResponse, TContext>>
   }
   ilm: {
-    deleteLifecycle<TContext = unknown>(params: T.DeleteLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteLifecycleResponse, TContext>>
-    explainLifecycle<TContext = unknown>(params: T.ExplainLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ExplainLifecycleResponse, TContext>>
-    getLifecycle<TContext = unknown>(params?: T.GetLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetLifecycleResponse, TContext>>
-    getStatus<TContext = unknown>(params?: T.GetIlmStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetIlmStatusResponse, TContext>>
-    moveToStep<TContext = unknown>(params: T.MoveToStepRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MoveToStepResponse, TContext>>
-    putLifecycle<TContext = unknown>(params?: T.PutLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutLifecycleResponse, TContext>>
-    removePolicy<TContext = unknown>(params: T.RemovePolicyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RemovePolicyResponse, TContext>>
-    retry<TContext = unknown>(params: T.RetryIlmRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RetryIlmResponse, TContext>>
-    start<TContext = unknown>(params?: T.StartIlmRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StartIlmResponse, TContext>>
-    stop<TContext = unknown>(params?: T.StopIlmRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StopIlmResponse, TContext>>
+    deleteLifecycle<TContext = unknown>(params: T.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmDeleteLifecycleResponse, TContext>>
+    explainLifecycle<TContext = unknown>(params: T.IlmExplainLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmExplainLifecycleResponse, TContext>>
+    getLifecycle<TContext = unknown>(params?: T.IlmGetLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmGetLifecycleResponse, TContext>>
+    getStatus<TContext = unknown>(params?: T.IlmGetStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmGetStatusResponse, TContext>>
+    moveToStep<TContext = unknown>(params: T.IlmMoveToStepRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmMoveToStepResponse, TContext>>
+    putLifecycle<TContext = unknown>(params?: T.IlmPutLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmPutLifecycleResponse, TContext>>
+    removePolicy<TContext = unknown>(params: T.IlmRemovePolicyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmRemovePolicyResponse, TContext>>
+    retry<TContext = unknown>(params: T.IlmRetryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmRetryResponse, TContext>>
+    start<TContext = unknown>(params?: T.IlmStartRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmStartResponse, TContext>>
+    stop<TContext = unknown>(params?: T.IlmStopRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmStopResponse, TContext>>
   }
   index<TDocument = unknown, TContext = unknown>(params: T.IndexRequest<TDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndexResponse, TContext>>
   indices: {
-    addBlock<TContext = unknown>(params: T.IndexAddBlockRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndexAddBlockResponse, TContext>>
-    analyze<TContext = unknown>(params?: T.AnalyzeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AnalyzeResponse, TContext>>
-    clearCache<TContext = unknown>(params?: T.ClearCacheRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClearCacheResponse, TContext>>
-    clone<TContext = unknown>(params: T.CloneIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CloneIndexResponse, TContext>>
-    close<TContext = unknown>(params: T.CloseIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CloseIndexResponse, TContext>>
-    create<TContext = unknown>(params: T.CreateIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CreateIndexResponse, TContext>>
+    addBlock<TContext = unknown>(params: T.IndicesAddBlockRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesAddBlockResponse, TContext>>
+    analyze<TContext = unknown>(params?: T.IndicesAnalyzeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesAnalyzeResponse, TContext>>
+    clearCache<TContext = unknown>(params?: T.IndicesClearCacheRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesClearCacheResponse, TContext>>
+    clone<TContext = unknown>(params: T.IndicesCloneRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesCloneResponse, TContext>>
+    close<TContext = unknown>(params: T.IndicesCloseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesCloseResponse, TContext>>
+    create<TContext = unknown>(params: T.IndicesCreateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesCreateResponse, TContext>>
     createDataStream<TContext = unknown>(params: T.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesCreateDataStreamResponse, TContext>>
     dataStreamsStats<TContext = unknown>(params?: T.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesDataStreamsStatsResponse, TContext>>
-    delete<TContext = unknown>(params: T.DeleteIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteIndexResponse, TContext>>
-    deleteAlias<TContext = unknown>(params: T.DeleteAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteAliasResponse, TContext>>
+    delete<TContext = unknown>(params: T.IndicesDeleteRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesDeleteResponse, TContext>>
+    deleteAlias<TContext = unknown>(params: T.IndicesDeleteAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesDeleteAliasResponse, TContext>>
     deleteDataStream<TContext = unknown>(params: T.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesDeleteDataStreamResponse, TContext>>
-    deleteIndexTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    deleteTemplate<TContext = unknown>(params: T.DeleteIndexTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteIndexTemplateResponse, TContext>>
-    exists<TContext = unknown>(params: T.IndexExistsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndexExistsResponse, TContext>>
-    existsAlias<TContext = unknown>(params: T.AliasExistsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AliasExistsResponse, TContext>>
-    existsIndexTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    existsTemplate<TContext = unknown>(params: T.IndexTemplateExistsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndexTemplateExistsResponse, TContext>>
-    existsType<TContext = unknown>(params: T.TypeExistsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TypeExistsResponse, TContext>>
-    flush<TContext = unknown>(params?: T.FlushRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FlushResponse, TContext>>
-    flushSynced<TContext = unknown>(params?: T.SyncedFlushRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SyncedFlushResponse, TContext>>
-    forcemerge<TContext = unknown>(params?: T.ForceMergeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ForceMergeResponse, TContext>>
-    freeze<TContext = unknown>(params: T.FreezeIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FreezeIndexResponse, TContext>>
-    get<TContext = unknown>(params: T.GetIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetIndexResponse, TContext>>
-    getAlias<TContext = unknown>(params?: T.GetAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetAliasResponse, TContext>>
+    deleteIndexTemplate<TContext = unknown>(params: T.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesDeleteIndexTemplateResponse, TContext>>
+    deleteTemplate<TContext = unknown>(params: T.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesDeleteTemplateResponse, TContext>>
+    exists<TContext = unknown>(params: T.IndicesExistsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesExistsResponse, TContext>>
+    existsAlias<TContext = unknown>(params: T.IndicesExistsAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesExistsAliasResponse, TContext>>
+    existsIndexTemplate<TContext = unknown>(params: T.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesExistsIndexTemplateResponse, TContext>>
+    existsTemplate<TContext = unknown>(params: T.IndicesExistsTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesExistsTemplateResponse, TContext>>
+    existsType<TContext = unknown>(params: T.IndicesExistsTypeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesExistsTypeResponse, TContext>>
+    flush<TContext = unknown>(params?: T.IndicesFlushRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesFlushResponse, TContext>>
+    flushSynced<TContext = unknown>(params?: T.IndicesFlushSyncedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesFlushSyncedResponse, TContext>>
+    forcemerge<TContext = unknown>(params?: T.IndicesForcemergeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesForcemergeResponse, TContext>>
+    freeze<TContext = unknown>(params: T.IndicesFreezeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesFreezeResponse, TContext>>
+    get<TContext = unknown>(params: T.IndicesGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesGetResponse, TContext>>
+    getAlias<TContext = unknown>(params?: T.IndicesGetAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesGetAliasResponse, TContext>>
     getDataStream<TContext = unknown>(params?: T.IndicesGetDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesGetDataStreamResponse, TContext>>
-    getFieldMapping<TContext = unknown>(params: T.GetFieldMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetFieldMappingResponse, TContext>>
-    getIndexTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    getMapping<TContext = unknown>(params?: T.GetMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetMappingResponse, TContext>>
-    getSettings<TContext = unknown>(params?: T.GetIndexSettingsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetIndexSettingsResponse, TContext>>
-    getTemplate<TContext = unknown>(params?: T.GetIndexTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetIndexTemplateResponse, TContext>>
+    getFieldMapping<TContext = unknown>(params: T.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesGetFieldMappingResponse, TContext>>
+    getIndexTemplate<TContext = unknown>(params?: T.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesGetIndexTemplateResponse, TContext>>
+    getMapping<TContext = unknown>(params?: T.IndicesGetMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesGetMappingResponse, TContext>>
+    getSettings<TContext = unknown>(params?: T.IndicesGetSettingsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesGetSettingsResponse, TContext>>
+    getTemplate<TContext = unknown>(params?: T.IndicesGetTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesGetTemplateResponse, TContext>>
     getUpgrade<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     migrateToDataStream<TContext = unknown>(params: T.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesMigrateToDataStreamResponse, TContext>>
-    open<TContext = unknown>(params: T.OpenIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.OpenIndexResponse, TContext>>
+    open<TContext = unknown>(params: T.IndicesOpenRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesOpenResponse, TContext>>
     promoteDataStream<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    putAlias<TContext = unknown>(params: T.PutAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutAliasResponse, TContext>>
-    putIndexTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    putMapping<TContext = unknown>(params?: T.PutMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutMappingResponse, TContext>>
-    putSettings<TContext = unknown>(params?: T.UpdateIndexSettingsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateIndexSettingsResponse, TContext>>
-    putTemplate<TContext = unknown>(params: T.PutIndexTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutIndexTemplateResponse, TContext>>
-    recovery<TContext = unknown>(params?: T.RecoveryStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RecoveryStatusResponse, TContext>>
-    refresh<TContext = unknown>(params?: T.RefreshRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RefreshResponse, TContext>>
-    reloadSearchAnalyzers<TContext = unknown>(params: T.ReloadSearchAnalyzersRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ReloadSearchAnalyzersResponse, TContext>>
-    resolveIndex<TContext = unknown>(params: T.ResolveIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ResolveIndexResponse, TContext>>
-    rollover<TContext = unknown>(params: T.RolloverIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RolloverIndexResponse, TContext>>
-    segments<TContext = unknown>(params?: T.SegmentsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SegmentsResponse, TContext>>
+    putAlias<TContext = unknown>(params: T.IndicesPutAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesPutAliasResponse, TContext>>
+    putIndexTemplate<TContext = unknown>(params: T.IndicesPutIndexTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesPutIndexTemplateResponse, TContext>>
+    putMapping<TContext = unknown>(params?: T.IndicesPutMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesPutMappingResponse, TContext>>
+    putSettings<TContext = unknown>(params?: T.IndicesPutSettingsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesPutSettingsResponse, TContext>>
+    putTemplate<TContext = unknown>(params: T.IndicesPutTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesPutTemplateResponse, TContext>>
+    recovery<TContext = unknown>(params?: T.IndicesRecoveryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesRecoveryResponse, TContext>>
+    refresh<TContext = unknown>(params?: T.IndicesRefreshRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesRefreshResponse, TContext>>
+    reloadSearchAnalyzers<TContext = unknown>(params: T.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesReloadSearchAnalyzersResponse, TContext>>
+    resolveIndex<TContext = unknown>(params: T.IndicesResolveIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesResolveIndexResponse, TContext>>
+    rollover<TContext = unknown>(params: T.IndicesRolloverRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesRolloverResponse, TContext>>
+    segments<TContext = unknown>(params?: T.IndicesSegmentsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesSegmentsResponse, TContext>>
     shardStores<TContext = unknown>(params?: T.IndicesShardStoresRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesShardStoresResponse, TContext>>
-    shrink<TContext = unknown>(params: T.ShrinkIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ShrinkIndexResponse, TContext>>
-    simulateIndexTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    shrink<TContext = unknown>(params: T.IndicesShrinkRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesShrinkResponse, TContext>>
+    simulateIndexTemplate<TContext = unknown>(params?: T.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesSimulateIndexTemplateResponse, TContext>>
     simulateTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    split<TContext = unknown>(params: T.SplitIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SplitIndexResponse, TContext>>
+    split<TContext = unknown>(params: T.IndicesSplitRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesSplitResponse, TContext>>
     stats<TContext = unknown>(params?: T.IndicesStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesStatsResponse, TContext>>
-    unfreeze<TContext = unknown>(params: T.UnfreezeIndexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UnfreezeIndexResponse, TContext>>
-    updateAliases<TContext = unknown>(params?: T.BulkAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.BulkAliasResponse, TContext>>
+    unfreeze<TContext = unknown>(params: T.IndicesUnfreezeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesUnfreezeResponse, TContext>>
+    updateAliases<TContext = unknown>(params?: T.IndicesUpdateAliasesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesUpdateAliasesResponse, TContext>>
     upgrade<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    validateQuery<TContext = unknown>(params?: T.ValidateQueryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ValidateQueryResponse, TContext>>
+    validateQuery<TContext = unknown>(params?: T.IndicesValidateQueryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IndicesValidateQueryResponse, TContext>>
   }
-  info<TContext = unknown>(params?: T.RootNodeInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RootNodeInfoResponse, TContext>>
+  info<TContext = unknown>(params?: T.InfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.InfoResponse, TContext>>
   ingest: {
-    deletePipeline<TContext = unknown>(params: T.DeletePipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeletePipelineResponse, TContext>>
-    geoIpStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    getPipeline<TContext = unknown>(params?: T.GetPipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetPipelineResponse, TContext>>
-    processorGrok<TContext = unknown>(params?: T.GrokProcessorPatternsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GrokProcessorPatternsResponse, TContext>>
-    putPipeline<TContext = unknown>(params: T.PutPipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutPipelineResponse, TContext>>
-    simulate<TContext = unknown>(params?: T.SimulatePipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SimulatePipelineResponse, TContext>>
+    deletePipeline<TContext = unknown>(params: T.IngestDeletePipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IngestDeletePipelineResponse, TContext>>
+    geoIpStats<TContext = unknown>(params?: T.IngestGeoIpStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IngestGeoIpStatsResponse, TContext>>
+    getPipeline<TContext = unknown>(params?: T.IngestGetPipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IngestGetPipelineResponse, TContext>>
+    processorGrok<TContext = unknown>(params?: T.IngestProcessorGrokRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IngestProcessorGrokResponse, TContext>>
+    putPipeline<TContext = unknown>(params: T.IngestPutPipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IngestPutPipelineResponse, TContext>>
+    simulate<TContext = unknown>(params?: T.IngestSimulatePipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IngestSimulatePipelineResponse, TContext>>
   }
   license: {
-    delete<TContext = unknown>(params?: T.DeleteLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteLicenseResponse, TContext>>
-    get<TContext = unknown>(params?: T.GetLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetLicenseResponse, TContext>>
-    getBasicStatus<TContext = unknown>(params?: T.GetBasicLicenseStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetBasicLicenseStatusResponse, TContext>>
-    getTrialStatus<TContext = unknown>(params?: T.GetTrialLicenseStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetTrialLicenseStatusResponse, TContext>>
-    post<TContext = unknown>(params?: T.PostLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PostLicenseResponse, TContext>>
-    postStartBasic<TContext = unknown>(params?: T.StartBasicLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StartBasicLicenseResponse, TContext>>
-    postStartTrial<TContext = unknown>(params?: T.StartTrialLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StartTrialLicenseResponse, TContext>>
+    delete<TContext = unknown>(params?: T.LicenseDeleteLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseDeleteLicenseResponse, TContext>>
+    get<TContext = unknown>(params?: T.LicenseGetLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetLicenseResponse, TContext>>
+    getBasicStatus<TContext = unknown>(params?: T.LicenseGetBasicLicenseStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetBasicLicenseStatusResponse, TContext>>
+    getTrialStatus<TContext = unknown>(params?: T.LicenseGetTrialLicenseStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetTrialLicenseStatusResponse, TContext>>
+    post<TContext = unknown>(params?: T.LicensePostLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicensePostLicenseResponse, TContext>>
+    postStartBasic<TContext = unknown>(params?: T.LicenseStartBasicLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseStartBasicLicenseResponse, TContext>>
+    postStartTrial<TContext = unknown>(params?: T.LicenseStartTrialLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseStartTrialLicenseResponse, TContext>>
   }
   logstash: {
     deletePipeline<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     getPipeline<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     putPipeline<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
   }
-  mget<TDocument = unknown, TContext = unknown>(params?: T.MultiGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiGetResponse<TDocument>, TContext>>
+  mget<TDocument = unknown, TContext = unknown>(params?: T.MgetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MgetResponse<TDocument>, TContext>>
   migration: {
-    deprecations<TContext = unknown>(params?: T.DeprecationInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeprecationInfoResponse, TContext>>
+    deprecations<TContext = unknown>(params?: T.MigrationDeprecationInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MigrationDeprecationInfoResponse, TContext>>
   }
   ml: {
-    closeJob<TContext = unknown>(params: T.CloseJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CloseJobResponse, TContext>>
-    deleteCalendar<TContext = unknown>(params: T.DeleteCalendarRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteCalendarResponse, TContext>>
-    deleteCalendarEvent<TContext = unknown>(params: T.DeleteCalendarEventRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteCalendarEventResponse, TContext>>
-    deleteCalendarJob<TContext = unknown>(params: T.DeleteCalendarJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteCalendarJobResponse, TContext>>
-    deleteDataFrameAnalytics<TContext = unknown>(params: T.DeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteDataFrameAnalyticsResponse, TContext>>
-    deleteDatafeed<TContext = unknown>(params: T.DeleteDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteDatafeedResponse, TContext>>
-    deleteExpiredData<TContext = unknown>(params?: T.DeleteExpiredDataRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteExpiredDataResponse, TContext>>
-    deleteFilter<TContext = unknown>(params: T.DeleteFilterRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteFilterResponse, TContext>>
-    deleteForecast<TContext = unknown>(params: T.DeleteForecastRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteForecastResponse, TContext>>
-    deleteJob<TContext = unknown>(params: T.DeleteJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteJobResponse, TContext>>
-    deleteModelSnapshot<TContext = unknown>(params: T.DeleteModelSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteModelSnapshotResponse, TContext>>
-    deleteTrainedModel<TContext = unknown>(params: T.DeleteTrainedModelRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteTrainedModelResponse, TContext>>
-    deleteTrainedModelAlias<TContext = unknown>(params: T.DeleteTrainedModelAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteTrainedModelAliasResponse, TContext>>
-    estimateModelMemory<TContext = unknown>(params?: T.EstimateModelMemoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EstimateModelMemoryResponse, TContext>>
-    evaluateDataFrame<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    explainDataFrameAnalytics<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    closeJob<TContext = unknown>(params: T.MlCloseJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlCloseJobResponse, TContext>>
+    deleteCalendar<TContext = unknown>(params: T.MlDeleteCalendarRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteCalendarResponse, TContext>>
+    deleteCalendarEvent<TContext = unknown>(params: T.MlDeleteCalendarEventRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteCalendarEventResponse, TContext>>
+    deleteCalendarJob<TContext = unknown>(params: T.MlDeleteCalendarJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteCalendarJobResponse, TContext>>
+    deleteDataFrameAnalytics<TContext = unknown>(params: T.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteDataFrameAnalyticsResponse, TContext>>
+    deleteDatafeed<TContext = unknown>(params: T.MlDeleteDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteDatafeedResponse, TContext>>
+    deleteExpiredData<TContext = unknown>(params?: T.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteExpiredDataResponse, TContext>>
+    deleteFilter<TContext = unknown>(params: T.MlDeleteFilterRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteFilterResponse, TContext>>
+    deleteForecast<TContext = unknown>(params: T.MlDeleteForecastRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteForecastResponse, TContext>>
+    deleteJob<TContext = unknown>(params: T.MlDeleteJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteJobResponse, TContext>>
+    deleteModelSnapshot<TContext = unknown>(params: T.MlDeleteModelSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteModelSnapshotResponse, TContext>>
+    deleteTrainedModel<TContext = unknown>(params: T.MlDeleteTrainedModelRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteTrainedModelResponse, TContext>>
+    deleteTrainedModelAlias<TContext = unknown>(params: T.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlDeleteTrainedModelAliasResponse, TContext>>
+    estimateModelMemory<TContext = unknown>(params?: T.MlEstimateModelMemoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlEstimateModelMemoryResponse, TContext>>
+    evaluateDataFrame<TContext = unknown>(params?: T.MlEvaluateDataFrameRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlEvaluateDataFrameResponse, TContext>>
+    explainDataFrameAnalytics<TContext = unknown>(params?: T.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlExplainDataFrameAnalyticsResponse, TContext>>
     findFileStructure<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    flushJob<TContext = unknown>(params: T.FlushJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FlushJobResponse, TContext>>
-    forecast<TContext = unknown>(params: T.ForecastJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ForecastJobResponse, TContext>>
-    getBuckets<TContext = unknown>(params: T.GetBucketsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetBucketsResponse, TContext>>
-    getCalendarEvents<TContext = unknown>(params: T.GetCalendarEventsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetCalendarEventsResponse, TContext>>
-    getCalendars<TContext = unknown>(params?: T.GetCalendarsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetCalendarsResponse, TContext>>
-    getCategories<TContext = unknown>(params: T.GetCategoriesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetCategoriesResponse, TContext>>
-    getDataFrameAnalytics<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    getDataFrameAnalyticsStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    getDatafeedStats<TContext = unknown>(params?: T.GetDatafeedStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetDatafeedStatsResponse, TContext>>
-    getDatafeeds<TContext = unknown>(params?: T.GetDatafeedsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetDatafeedsResponse, TContext>>
-    getFilters<TContext = unknown>(params?: T.GetFiltersRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetFiltersResponse, TContext>>
-    getInfluencers<TContext = unknown>(params: T.GetInfluencersRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetInfluencersResponse, TContext>>
-    getJobStats<TContext = unknown>(params?: T.GetJobStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetJobStatsResponse, TContext>>
-    getJobs<TContext = unknown>(params?: T.GetJobsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetJobsResponse, TContext>>
-    getModelSnapshots<TContext = unknown>(params: T.GetModelSnapshotsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetModelSnapshotsResponse, TContext>>
-    getOverallBuckets<TContext = unknown>(params: T.GetOverallBucketsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetOverallBucketsResponse, TContext>>
-    getRecords<TContext = unknown>(params: T.GetAnomalyRecordsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetAnomalyRecordsResponse, TContext>>
-    getTrainedModels<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    getTrainedModelsStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    info<TContext = unknown>(params?: T.MachineLearningInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MachineLearningInfoResponse, TContext>>
-    openJob<TContext = unknown>(params: T.OpenJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.OpenJobResponse, TContext>>
-    postCalendarEvents<TContext = unknown>(params: T.PostCalendarEventsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PostCalendarEventsResponse, TContext>>
-    postData<TContext = unknown>(params: T.PostJobDataRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PostJobDataResponse, TContext>>
-    previewDataFrameAnalytics<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    previewDatafeed<TDocument = unknown, TContext = unknown>(params: T.PreviewDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PreviewDatafeedResponse<TDocument>, TContext>>
-    putCalendar<TContext = unknown>(params: T.PutCalendarRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutCalendarResponse, TContext>>
-    putCalendarJob<TContext = unknown>(params: T.PutCalendarJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutCalendarJobResponse, TContext>>
-    putDataFrameAnalytics<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    putDatafeed<TContext = unknown>(params: T.PutDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutDatafeedResponse, TContext>>
-    putFilter<TContext = unknown>(params: T.PutFilterRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutFilterResponse, TContext>>
-    putJob<TContext = unknown>(params: T.PutJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutJobResponse, TContext>>
+    flushJob<TContext = unknown>(params: T.MlFlushJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlFlushJobResponse, TContext>>
+    forecast<TContext = unknown>(params: T.MlForecastJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlForecastJobResponse, TContext>>
+    getBuckets<TContext = unknown>(params: T.MlGetBucketsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetBucketsResponse, TContext>>
+    getCalendarEvents<TContext = unknown>(params: T.MlGetCalendarEventsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetCalendarEventsResponse, TContext>>
+    getCalendars<TContext = unknown>(params?: T.MlGetCalendarsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetCalendarsResponse, TContext>>
+    getCategories<TContext = unknown>(params: T.MlGetCategoriesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetCategoriesResponse, TContext>>
+    getDataFrameAnalytics<TContext = unknown>(params?: T.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetDataFrameAnalyticsResponse, TContext>>
+    getDataFrameAnalyticsStats<TContext = unknown>(params?: T.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetDataFrameAnalyticsStatsResponse, TContext>>
+    getDatafeedStats<TContext = unknown>(params?: T.MlGetDatafeedStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetDatafeedStatsResponse, TContext>>
+    getDatafeeds<TContext = unknown>(params?: T.MlGetDatafeedsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetDatafeedsResponse, TContext>>
+    getFilters<TContext = unknown>(params?: T.MlGetFiltersRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetFiltersResponse, TContext>>
+    getInfluencers<TContext = unknown>(params: T.MlGetInfluencersRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetInfluencersResponse, TContext>>
+    getJobStats<TContext = unknown>(params?: T.MlGetJobStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetJobStatsResponse, TContext>>
+    getJobs<TContext = unknown>(params?: T.MlGetJobsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetJobsResponse, TContext>>
+    getModelSnapshots<TContext = unknown>(params: T.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetModelSnapshotsResponse, TContext>>
+    getOverallBuckets<TContext = unknown>(params: T.MlGetOverallBucketsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetOverallBucketsResponse, TContext>>
+    getRecords<TContext = unknown>(params: T.MlGetAnomalyRecordsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetAnomalyRecordsResponse, TContext>>
+    getTrainedModels<TContext = unknown>(params?: T.MlGetTrainedModelsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetTrainedModelsResponse, TContext>>
+    getTrainedModelsStats<TContext = unknown>(params?: T.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetTrainedModelsStatsResponse, TContext>>
+    info<TContext = unknown>(params?: T.MlInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlInfoResponse, TContext>>
+    openJob<TContext = unknown>(params: T.MlOpenJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlOpenJobResponse, TContext>>
+    postCalendarEvents<TContext = unknown>(params?: T.MlPostCalendarEventsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPostCalendarEventsResponse, TContext>>
+    postData<TContext = unknown>(params: T.MlPostJobDataRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPostJobDataResponse, TContext>>
+    previewDataFrameAnalytics<TContext = unknown>(params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPreviewDataFrameAnalyticsResponse, TContext>>
+    previewDatafeed<TDocument = unknown, TContext = unknown>(params: T.MlPreviewDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPreviewDatafeedResponse<TDocument>, TContext>>
+    putCalendar<TContext = unknown>(params: T.MlPutCalendarRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPutCalendarResponse, TContext>>
+    putCalendarJob<TContext = unknown>(params: T.MlPutCalendarJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPutCalendarJobResponse, TContext>>
+    putDataFrameAnalytics<TContext = unknown>(params: T.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPutDataFrameAnalyticsResponse, TContext>>
+    putDatafeed<TContext = unknown>(params: T.MlPutDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPutDatafeedResponse, TContext>>
+    putFilter<TContext = unknown>(params: T.MlPutFilterRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPutFilterResponse, TContext>>
+    putJob<TContext = unknown>(params: T.MlPutJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPutJobResponse, TContext>>
     putTrainedModel<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    putTrainedModelAlias<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    revertModelSnapshot<TContext = unknown>(params: T.RevertModelSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RevertModelSnapshotResponse, TContext>>
-    setUpgradeMode<TContext = unknown>(params?: T.SetUpgradeModeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SetUpgradeModeResponse, TContext>>
-    startDataFrameAnalytics<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    startDatafeed<TContext = unknown>(params: T.StartDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StartDatafeedResponse, TContext>>
-    stopDataFrameAnalytics<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    stopDatafeed<TContext = unknown>(params: T.StopDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StopDatafeedResponse, TContext>>
-    updateDataFrameAnalytics<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    updateDatafeed<TContext = unknown>(params: T.UpdateDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateDatafeedResponse, TContext>>
-    updateFilter<TContext = unknown>(params: T.UpdateFilterRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateFilterResponse, TContext>>
-    updateJob<TContext = unknown>(params: T.UpdateJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateJobResponse, TContext>>
-    updateModelSnapshot<TContext = unknown>(params: T.UpdateModelSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateModelSnapshotResponse, TContext>>
-    upgradeJobSnapshot<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    validate<TContext = unknown>(params?: T.ValidateJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ValidateJobResponse, TContext>>
-    validateDetector<TContext = unknown>(params?: T.ValidateDetectorRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ValidateDetectorResponse, TContext>>
+    putTrainedModelAlias<TContext = unknown>(params: T.MlPutTrainedModelAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPutTrainedModelAliasResponse, TContext>>
+    revertModelSnapshot<TContext = unknown>(params: T.MlRevertModelSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlRevertModelSnapshotResponse, TContext>>
+    setUpgradeMode<TContext = unknown>(params?: T.MlSetUpgradeModeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlSetUpgradeModeResponse, TContext>>
+    startDataFrameAnalytics<TContext = unknown>(params: T.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlStartDataFrameAnalyticsResponse, TContext>>
+    startDatafeed<TContext = unknown>(params: T.MlStartDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlStartDatafeedResponse, TContext>>
+    stopDataFrameAnalytics<TContext = unknown>(params: T.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlStopDataFrameAnalyticsResponse, TContext>>
+    stopDatafeed<TContext = unknown>(params: T.MlStopDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlStopDatafeedResponse, TContext>>
+    updateDataFrameAnalytics<TContext = unknown>(params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateDataFrameAnalyticsResponse, TContext>>
+    updateDatafeed<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    updateFilter<TContext = unknown>(params: T.MlUpdateFilterRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateFilterResponse, TContext>>
+    updateJob<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    updateModelSnapshot<TContext = unknown>(params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateModelSnapshotResponse, TContext>>
+    upgradeJobSnapshot<TContext = unknown>(params: T.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpgradeJobSnapshotResponse, TContext>>
+    validate<TContext = unknown>(params?: T.MlValidateJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlValidateJobResponse, TContext>>
+    validateDetector<TContext = unknown>(params?: T.MlValidateDetectorRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlValidateDetectorResponse, TContext>>
   }
   monitoring: {
     bulk<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
   }
-  msearch<TDocument = unknown, TContext = unknown>(params?: T.MultiSearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchResponse<TDocument>, TContext>>
-  msearchTemplate<TContext = unknown>(params?: T.MultiSearchTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiSearchTemplateResponse, TContext>>
-  mtermvectors<TContext = unknown>(params?: T.MultiTermVectorsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MultiTermVectorsResponse, TContext>>
+  msearch<TDocument = unknown, TContext = unknown>(params?: T.MsearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MsearchResponse<TDocument>, TContext>>
+  msearchTemplate<TDocument = unknown, TContext = unknown>(params?: T.MsearchTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MsearchTemplateResponse<TDocument>, TContext>>
+  mtermvectors<TContext = unknown>(params?: T.MtermvectorsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MtermvectorsResponse, TContext>>
   nodes: {
-    hotThreads<TContext = unknown>(params?: T.NodesHotThreadsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesHotThreadsResponse, TContext>>
-    info<TContext = unknown>(params?: T.NodesInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesInfoResponse, TContext>>
-    reloadSecureSettings<TContext = unknown>(params?: T.ReloadSecureSettingsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ReloadSecureSettingsResponse, TContext>>
-    stats<TContext = unknown>(params?: T.NodesStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesStatsResponse, TContext>>
-    usage<TContext = unknown>(params?: T.NodesUsageRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesUsageResponse, TContext>>
+    hotThreads<TContext = unknown>(params?: T.NodesNodesHotThreadsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesHotThreadsResponse, TContext>>
+    info<TContext = unknown>(params?: T.NodesNodesInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesInfoResponse, TContext>>
+    reloadSecureSettings<TContext = unknown>(params?: T.NodesReloadSecureSettingsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesReloadSecureSettingsResponse, TContext>>
+    stats<TContext = unknown>(params?: T.NodesNodesStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesStatsResponse, TContext>>
+    usage<TContext = unknown>(params?: T.NodesNodesUsageRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesUsageResponse, TContext>>
   }
   openPointInTime<TContext = unknown>(params: T.OpenPointInTimeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.OpenPointInTimeResponse, TContext>>
   ping<TContext = unknown>(params?: T.PingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PingResponse, TContext>>
   putScript<TContext = unknown>(params: T.PutScriptRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutScriptResponse, TContext>>
-  rankEval<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+  rankEval<TContext = unknown>(params: T.RankEvalRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RankEvalResponse, TContext>>
   reindex<TContext = unknown>(params?: T.ReindexRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ReindexResponse, TContext>>
   reindexRethrottle<TContext = unknown>(params: T.ReindexRethrottleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ReindexRethrottleResponse, TContext>>
   renderSearchTemplate<TContext = unknown>(params?: T.RenderSearchTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RenderSearchTemplateResponse, TContext>>
   rollup: {
-    deleteJob<TContext = unknown>(params: T.DeleteRollupJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteRollupJobResponse, TContext>>
-    getJobs<TContext = unknown>(params?: T.GetRollupJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetRollupJobResponse, TContext>>
-    getRollupCaps<TContext = unknown>(params?: T.GetRollupCapabilitiesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetRollupCapabilitiesResponse, TContext>>
-    getRollupIndexCaps<TContext = unknown>(params: T.GetRollupIndexCapabilitiesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetRollupIndexCapabilitiesResponse, TContext>>
-    putJob<TContext = unknown>(params: T.CreateRollupJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CreateRollupJobResponse, TContext>>
+    deleteJob<TContext = unknown>(params: T.RollupDeleteRollupJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RollupDeleteRollupJobResponse, TContext>>
+    getJobs<TContext = unknown>(params?: T.RollupGetRollupJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RollupGetRollupJobResponse, TContext>>
+    getRollupCaps<TContext = unknown>(params?: T.RollupGetRollupCapabilitiesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RollupGetRollupCapabilitiesResponse, TContext>>
+    getRollupIndexCaps<TContext = unknown>(params: T.RollupGetRollupIndexCapabilitiesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RollupGetRollupIndexCapabilitiesResponse, TContext>>
+    putJob<TContext = unknown>(params: T.RollupCreateRollupJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RollupCreateRollupJobResponse, TContext>>
     rollup<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    rollupSearch<TDocument = unknown, TContext = unknown>(params: T.RollupSearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RollupSearchResponse<TDocument>, TContext>>
-    startJob<TContext = unknown>(params: T.StartRollupJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StartRollupJobResponse, TContext>>
-    stopJob<TContext = unknown>(params: T.StopRollupJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StopRollupJobResponse, TContext>>
+    rollupSearch<TDocument = unknown, TContext = unknown>(params: T.RollupRollupSearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RollupRollupSearchResponse<TDocument>, TContext>>
+    startJob<TContext = unknown>(params: T.RollupStartRollupJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RollupStartRollupJobResponse, TContext>>
+    stopJob<TContext = unknown>(params: T.RollupStopRollupJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RollupStopRollupJobResponse, TContext>>
   }
-  scriptsPainlessExecute<TResult = unknown, TContext = unknown>(params?: T.ExecutePainlessScriptRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ExecutePainlessScriptResponse<TResult>, TContext>>
+  scriptsPainlessExecute<TResult = unknown, TContext = unknown>(params?: T.ScriptsPainlessExecuteRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ScriptsPainlessExecuteResponse<TResult>, TContext>>
   scroll<TDocument = unknown, TContext = unknown>(params?: T.ScrollRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ScrollResponse<TDocument>, TContext>>
   search<TDocument = unknown, TContext = unknown>(params?: T.SearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SearchResponse<TDocument>, TContext>>
   searchShards<TContext = unknown>(params?: T.SearchShardsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SearchShardsResponse, TContext>>
-  searchTemplate<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+  searchTemplate<TDocument = unknown, TContext = unknown>(params?: T.SearchTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SearchTemplateResponse<TDocument>, TContext>>
   searchableSnapshots: {
+    cacheStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     clearCache<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     mount<TContext = unknown>(params: T.SearchableSnapshotsMountRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SearchableSnapshotsMountResponse, TContext>>
     repositoryStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     stats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
   }
   security: {
-    authenticate<TContext = unknown>(params?: T.AuthenticateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AuthenticateResponse, TContext>>
-    changePassword<TContext = unknown>(params?: T.ChangePasswordRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ChangePasswordResponse, TContext>>
-    clearApiKeyCache<TContext = unknown>(params?: T.ClearApiKeyCacheRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClearApiKeyCacheResponse, TContext>>
-    clearCachedPrivileges<TContext = unknown>(params: T.ClearCachedPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClearCachedPrivilegesResponse, TContext>>
-    clearCachedRealms<TContext = unknown>(params: T.ClearCachedRealmsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClearCachedRealmsResponse, TContext>>
-    clearCachedRoles<TContext = unknown>(params: T.ClearCachedRolesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClearCachedRolesResponse, TContext>>
-    createApiKey<TContext = unknown>(params?: T.CreateApiKeyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CreateApiKeyResponse, TContext>>
-    deletePrivileges<TContext = unknown>(params: T.DeletePrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeletePrivilegesResponse, TContext>>
-    deleteRole<TContext = unknown>(params: T.DeleteRoleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteRoleResponse, TContext>>
-    deleteRoleMapping<TContext = unknown>(params: T.DeleteRoleMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteRoleMappingResponse, TContext>>
-    deleteUser<TContext = unknown>(params: T.DeleteUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteUserResponse, TContext>>
-    disableUser<TContext = unknown>(params: T.DisableUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DisableUserResponse, TContext>>
-    enableUser<TContext = unknown>(params: T.EnableUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.EnableUserResponse, TContext>>
-    getApiKey<TContext = unknown>(params?: T.GetApiKeyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetApiKeyResponse, TContext>>
-    getBuiltinPrivileges<TContext = unknown>(params?: T.GetBuiltinPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetBuiltinPrivilegesResponse, TContext>>
-    getPrivileges<TContext = unknown>(params?: T.GetPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetPrivilegesResponse, TContext>>
-    getRole<TContext = unknown>(params?: T.GetRoleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetRoleResponse, TContext>>
-    getRoleMapping<TContext = unknown>(params?: T.GetRoleMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetRoleMappingResponse, TContext>>
-    getToken<TContext = unknown>(params?: T.GetUserAccessTokenRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetUserAccessTokenResponse, TContext>>
-    getUser<TContext = unknown>(params?: T.GetUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetUserResponse, TContext>>
-    getUserPrivileges<TContext = unknown>(params?: T.GetUserPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetUserPrivilegesResponse, TContext>>
-    grantApiKey<TContext = unknown>(params?: T.GrantApiKeyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GrantApiKeyResponse, TContext>>
-    hasPrivileges<TContext = unknown>(params?: T.HasPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.HasPrivilegesResponse, TContext>>
-    invalidateApiKey<TContext = unknown>(params?: T.InvalidateApiKeyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.InvalidateApiKeyResponse, TContext>>
-    invalidateToken<TContext = unknown>(params?: T.InvalidateUserAccessTokenRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.InvalidateUserAccessTokenResponse, TContext>>
-    putPrivileges<TContext = unknown>(params?: T.PutPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutPrivilegesResponse, TContext>>
-    putRole<TContext = unknown>(params: T.PutRoleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutRoleResponse, TContext>>
-    putRoleMapping<TContext = unknown>(params: T.PutRoleMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutRoleMappingResponse, TContext>>
-    putUser<TContext = unknown>(params: T.PutUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutUserResponse, TContext>>
+    authenticate<TContext = unknown>(params?: T.SecurityAuthenticateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityAuthenticateResponse, TContext>>
+    changePassword<TContext = unknown>(params?: T.SecurityChangePasswordRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityChangePasswordResponse, TContext>>
+    clearApiKeyCache<TContext = unknown>(params?: T.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityClearApiKeyCacheResponse, TContext>>
+    clearCachedPrivileges<TContext = unknown>(params: T.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityClearCachedPrivilegesResponse, TContext>>
+    clearCachedRealms<TContext = unknown>(params: T.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityClearCachedRealmsResponse, TContext>>
+    clearCachedRoles<TContext = unknown>(params: T.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityClearCachedRolesResponse, TContext>>
+    clearCachedServiceTokens<TContext = unknown>(params: T.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityClearCachedServiceTokensResponse, TContext>>
+    createApiKey<TContext = unknown>(params?: T.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityCreateApiKeyResponse, TContext>>
+    createServiceToken<TContext = unknown>(params: T.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityCreateServiceTokenResponse, TContext>>
+    deletePrivileges<TContext = unknown>(params: T.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityDeletePrivilegesResponse, TContext>>
+    deleteRole<TContext = unknown>(params: T.SecurityDeleteRoleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityDeleteRoleResponse, TContext>>
+    deleteRoleMapping<TContext = unknown>(params: T.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityDeleteRoleMappingResponse, TContext>>
+    deleteServiceToken<TContext = unknown>(params: T.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityDeleteServiceTokenResponse, TContext>>
+    deleteUser<TContext = unknown>(params: T.SecurityDeleteUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityDeleteUserResponse, TContext>>
+    disableUser<TContext = unknown>(params: T.SecurityDisableUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityDisableUserResponse, TContext>>
+    enableUser<TContext = unknown>(params: T.SecurityEnableUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityEnableUserResponse, TContext>>
+    getApiKey<TContext = unknown>(params?: T.SecurityGetApiKeyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityGetApiKeyResponse, TContext>>
+    getBuiltinPrivileges<TContext = unknown>(params?: T.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityGetBuiltinPrivilegesResponse, TContext>>
+    getPrivileges<TContext = unknown>(params?: T.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityGetPrivilegesResponse, TContext>>
+    getRole<TContext = unknown>(params?: T.SecurityGetRoleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityGetRoleResponse, TContext>>
+    getRoleMapping<TContext = unknown>(params?: T.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityGetRoleMappingResponse, TContext>>
+    getServiceAccounts<TContext = unknown>(params?: T.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityGetServiceAccountsResponse, TContext>>
+    getServiceCredentials<TContext = unknown>(params: T.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityGetServiceCredentialsResponse, TContext>>
+    getToken<TContext = unknown>(params?: T.SecurityGetTokenRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityGetTokenResponse, TContext>>
+    getUser<TContext = unknown>(params?: T.SecurityGetUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityGetUserResponse, TContext>>
+    getUserPrivileges<TContext = unknown>(params?: T.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityGetUserPrivilegesResponse, TContext>>
+    grantApiKey<TContext = unknown>(params?: T.SecurityGrantApiKeyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityGrantApiKeyResponse, TContext>>
+    hasPrivileges<TContext = unknown>(params?: T.SecurityHasPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityHasPrivilegesResponse, TContext>>
+    invalidateApiKey<TContext = unknown>(params?: T.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityInvalidateApiKeyResponse, TContext>>
+    invalidateToken<TContext = unknown>(params?: T.SecurityInvalidateTokenRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityInvalidateTokenResponse, TContext>>
+    putPrivileges<TContext = unknown>(params?: T.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityPutPrivilegesResponse, TContext>>
+    putRole<TContext = unknown>(params: T.SecurityPutRoleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityPutRoleResponse, TContext>>
+    putRoleMapping<TContext = unknown>(params: T.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityPutRoleMappingResponse, TContext>>
+    putUser<TContext = unknown>(params: T.SecurityPutUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityPutUserResponse, TContext>>
   }
   shutdown: {
     deleteNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
@@ -444,75 +453,75 @@ interface KibanaClient {
     putNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
   }
   slm: {
-    deleteLifecycle<TContext = unknown>(params: T.DeleteSnapshotLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteSnapshotLifecycleResponse, TContext>>
-    executeLifecycle<TContext = unknown>(params: T.ExecuteSnapshotLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ExecuteSnapshotLifecycleResponse, TContext>>
-    executeRetention<TContext = unknown>(params?: T.ExecuteRetentionRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ExecuteRetentionResponse, TContext>>
-    getLifecycle<TContext = unknown>(params?: T.GetSnapshotLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetSnapshotLifecycleResponse, TContext>>
-    getStats<TContext = unknown>(params?: T.GetSnapshotLifecycleStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetSnapshotLifecycleStatsResponse, TContext>>
-    getStatus<TContext = unknown>(params?: T.GetSnapshotLifecycleManagementStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetSnapshotLifecycleManagementStatusResponse, TContext>>
-    putLifecycle<TContext = unknown>(params: T.PutSnapshotLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutSnapshotLifecycleResponse, TContext>>
-    start<TContext = unknown>(params?: T.StartSnapshotLifecycleManagementRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StartSnapshotLifecycleManagementResponse, TContext>>
-    stop<TContext = unknown>(params?: T.StopSnapshotLifecycleManagementRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StopSnapshotLifecycleManagementResponse, TContext>>
+    deleteLifecycle<TContext = unknown>(params: T.SlmDeleteLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SlmDeleteLifecycleResponse, TContext>>
+    executeLifecycle<TContext = unknown>(params: T.SlmExecuteLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SlmExecuteLifecycleResponse, TContext>>
+    executeRetention<TContext = unknown>(params?: T.SlmExecuteRetentionRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SlmExecuteRetentionResponse, TContext>>
+    getLifecycle<TContext = unknown>(params?: T.SlmGetLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SlmGetLifecycleResponse, TContext>>
+    getStats<TContext = unknown>(params?: T.SlmGetStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SlmGetStatsResponse, TContext>>
+    getStatus<TContext = unknown>(params?: T.SlmGetStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SlmGetStatusResponse, TContext>>
+    putLifecycle<TContext = unknown>(params: T.SlmPutLifecycleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SlmPutLifecycleResponse, TContext>>
+    start<TContext = unknown>(params?: T.SlmStartRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SlmStartResponse, TContext>>
+    stop<TContext = unknown>(params?: T.SlmStopRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SlmStopResponse, TContext>>
   }
   snapshot: {
-    cleanupRepository<TContext = unknown>(params: T.CleanupRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CleanupRepositoryResponse, TContext>>
-    clone<TContext = unknown>(params: T.CloneSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CloneSnapshotResponse, TContext>>
-    create<TContext = unknown>(params: T.SnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotResponse, TContext>>
-    createRepository<TContext = unknown>(params: T.CreateRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CreateRepositoryResponse, TContext>>
-    delete<TContext = unknown>(params: T.DeleteSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteSnapshotResponse, TContext>>
-    deleteRepository<TContext = unknown>(params: T.DeleteRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteRepositoryResponse, TContext>>
-    get<TContext = unknown>(params: T.GetSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetSnapshotResponse, TContext>>
-    getRepository<TContext = unknown>(params?: T.GetRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetRepositoryResponse, TContext>>
-    restore<TContext = unknown>(params: T.RestoreRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.RestoreResponse, TContext>>
+    cleanupRepository<TContext = unknown>(params: T.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotCleanupRepositoryResponse, TContext>>
+    clone<TContext = unknown>(params: T.SnapshotCloneRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotCloneResponse, TContext>>
+    create<TContext = unknown>(params: T.SnapshotCreateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotCreateResponse, TContext>>
+    createRepository<TContext = unknown>(params: T.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotCreateRepositoryResponse, TContext>>
+    delete<TContext = unknown>(params: T.SnapshotDeleteRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotDeleteResponse, TContext>>
+    deleteRepository<TContext = unknown>(params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotDeleteRepositoryResponse, TContext>>
+    get<TContext = unknown>(params: T.SnapshotGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotGetResponse, TContext>>
+    getRepository<TContext = unknown>(params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotGetRepositoryResponse, TContext>>
+    restore<TContext = unknown>(params: T.SnapshotRestoreRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotRestoreResponse, TContext>>
     status<TContext = unknown>(params?: T.SnapshotStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotStatusResponse, TContext>>
-    verifyRepository<TContext = unknown>(params: T.VerifyRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.VerifyRepositoryResponse, TContext>>
+    verifyRepository<TContext = unknown>(params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotVerifyRepositoryResponse, TContext>>
   }
   sql: {
-    clearCursor<TContext = unknown>(params?: T.ClearSqlCursorRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ClearSqlCursorResponse, TContext>>
-    query<TContext = unknown>(params?: T.QuerySqlRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.QuerySqlResponse, TContext>>
-    translate<TContext = unknown>(params?: T.TranslateSqlRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TranslateSqlResponse, TContext>>
+    clearCursor<TContext = unknown>(params?: T.SqlClearSqlCursorRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlClearSqlCursorResponse, TContext>>
+    query<TContext = unknown>(params?: T.SqlQuerySqlRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlQuerySqlResponse, TContext>>
+    translate<TContext = unknown>(params?: T.SqlTranslateSqlRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlTranslateSqlResponse, TContext>>
   }
   ssl: {
-    certificates<TContext = unknown>(params?: T.GetCertificatesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetCertificatesResponse, TContext>>
+    certificates<TContext = unknown>(params?: T.SslGetCertificatesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SslGetCertificatesResponse, TContext>>
   }
   tasks: {
-    cancel<TContext = unknown>(params?: T.CancelTasksRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CancelTasksResponse, TContext>>
-    get<TContext = unknown>(params: T.GetTaskRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetTaskResponse, TContext>>
-    list<TContext = unknown>(params?: T.ListTasksRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ListTasksResponse, TContext>>
+    cancel<TContext = unknown>(params?: T.TaskCancelTasksRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskCancelTasksResponse, TContext>>
+    get<TContext = unknown>(params: T.TaskGetTaskRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskGetTaskResponse, TContext>>
+    list<TContext = unknown>(params?: T.TaskListTasksRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskListTasksResponse, TContext>>
   }
-  termvectors<TDocument = unknown, TContext = unknown>(params: T.TermVectorsRequest<TDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TermVectorsResponse, TContext>>
+  termvectors<TDocument = unknown, TContext = unknown>(params: T.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TermvectorsResponse, TContext>>
   textStructure: {
-    findStructure<TBody = unknown, TContext = unknown>(params: T.FindStructureRequest<TBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FindStructureResponse, TContext>>
+    findStructure<TJsonDocument = unknown, TContext = unknown>(params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TextStructureFindStructureResponse, TContext>>
   }
   transform: {
-    deleteTransform<TContext = unknown>(params: T.DeleteTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteTransformResponse, TContext>>
-    getTransform<TContext = unknown>(params?: T.GetTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetTransformResponse, TContext>>
-    getTransformStats<TContext = unknown>(params: T.GetTransformStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetTransformStatsResponse, TContext>>
-    previewTransform<TTransform = unknown, TContext = unknown>(params?: T.PreviewTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PreviewTransformResponse<TTransform>, TContext>>
-    putTransform<TContext = unknown>(params: T.PutTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutTransformResponse, TContext>>
-    startTransform<TContext = unknown>(params: T.StartTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StartTransformResponse, TContext>>
-    stopTransform<TContext = unknown>(params: T.StopTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StopTransformResponse, TContext>>
-    updateTransform<TContext = unknown>(params: T.UpdateTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateTransformResponse, TContext>>
+    deleteTransform<TContext = unknown>(params: T.TransformDeleteTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TransformDeleteTransformResponse, TContext>>
+    getTransform<TContext = unknown>(params?: T.TransformGetTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TransformGetTransformResponse, TContext>>
+    getTransformStats<TContext = unknown>(params: T.TransformGetTransformStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TransformGetTransformStatsResponse, TContext>>
+    previewTransform<TTransform = unknown, TContext = unknown>(params?: T.TransformPreviewTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TransformPreviewTransformResponse<TTransform>, TContext>>
+    putTransform<TContext = unknown>(params: T.TransformPutTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TransformPutTransformResponse, TContext>>
+    startTransform<TContext = unknown>(params: T.TransformStartTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TransformStartTransformResponse, TContext>>
+    stopTransform<TContext = unknown>(params: T.TransformStopTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TransformStopTransformResponse, TContext>>
+    updateTransform<TContext = unknown>(params?: T.TransformUpdateTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TransformUpdateTransformResponse, TContext>>
   }
   update<TDocumentR = unknown, TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateResponse<TDocumentR>, TContext>>
   updateByQuery<TContext = unknown>(params: T.UpdateByQueryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateByQueryResponse, TContext>>
   updateByQueryRethrottle<TContext = unknown>(params: T.UpdateByQueryRethrottleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateByQueryRethrottleResponse, TContext>>
   watcher: {
-    ackWatch<TContext = unknown>(params: T.AcknowledgeWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.AcknowledgeWatchResponse, TContext>>
-    activateWatch<TContext = unknown>(params: T.ActivateWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ActivateWatchResponse, TContext>>
-    deactivateWatch<TContext = unknown>(params: T.DeactivateWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeactivateWatchResponse, TContext>>
-    deleteWatch<TContext = unknown>(params: T.DeleteWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.DeleteWatchResponse, TContext>>
-    executeWatch<TContext = unknown>(params?: T.ExecuteWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.ExecuteWatchResponse, TContext>>
-    getWatch<TContext = unknown>(params: T.GetWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.GetWatchResponse, TContext>>
-    putWatch<TContext = unknown>(params: T.PutWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PutWatchResponse, TContext>>
+    ackWatch<TContext = unknown>(params: T.WatcherAckWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.WatcherAckWatchResponse, TContext>>
+    activateWatch<TContext = unknown>(params: T.WatcherActivateWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.WatcherActivateWatchResponse, TContext>>
+    deactivateWatch<TContext = unknown>(params: T.WatcherDeactivateWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.WatcherDeactivateWatchResponse, TContext>>
+    deleteWatch<TContext = unknown>(params: T.WatcherDeleteWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.WatcherDeleteWatchResponse, TContext>>
+    executeWatch<TContext = unknown>(params?: T.WatcherExecuteWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.WatcherExecuteWatchResponse, TContext>>
+    getWatch<TContext = unknown>(params: T.WatcherGetWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.WatcherGetWatchResponse, TContext>>
+    putWatch<TContext = unknown>(params: T.WatcherPutWatchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.WatcherPutWatchResponse, TContext>>
     queryWatches<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    start<TContext = unknown>(params?: T.StartWatcherRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StartWatcherResponse, TContext>>
+    start<TContext = unknown>(params?: T.WatcherStartRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.WatcherStartResponse, TContext>>
     stats<TContext = unknown>(params?: T.WatcherStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.WatcherStatsResponse, TContext>>
-    stop<TContext = unknown>(params?: T.StopWatcherRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.StopWatcherResponse, TContext>>
+    stop<TContext = unknown>(params?: T.WatcherStopRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.WatcherStopResponse, TContext>>
   }
   xpack: {
-    info<TContext = unknown>(params?: T.XPackInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.XPackInfoResponse, TContext>>
-    usage<TContext = unknown>(params?: T.XPackUsageRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.XPackUsageResponse, TContext>>
+    info<TContext = unknown>(params?: T.XpackInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.XpackInfoResponse, TContext>>
+    usage<TContext = unknown>(params?: T.XpackUsageRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.XpackUsageResponse, TContext>>
   }
 }
 
