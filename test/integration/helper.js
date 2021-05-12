@@ -87,6 +87,7 @@ function isXPackTemplate (name) {
     case '.deprecation-indexing-template':
     case '.deprecation-indexing-mappings':
     case '.deprecation-indexing-settings':
+    case 'data-streams-mappings':
       return true
   }
   return false
