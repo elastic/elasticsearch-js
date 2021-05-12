@@ -2561,6 +2561,10 @@ declare class Client {
     list<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.TasksList, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     list<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.TasksList, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
+  termsenum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Termsenum<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  termsenum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  termsenum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Termsenum<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  termsenum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Termsenum<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   termvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Termvectors<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   termvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   termvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Termvectors<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
