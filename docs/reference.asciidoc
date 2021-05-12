@@ -8066,7 +8066,7 @@ WARNING: This parameter has been deprecated.
 client.msearch({
   index: string | string[],
   type: string | string[],
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   max_concurrent_searches: number,
   typed_keys: boolean,
   pre_filter_shard_size: number,
@@ -8087,7 +8087,7 @@ link:{ref}/search-multi-search.html[Documentation] +
 |`string \| string[]` - A comma-separated list of document types to use as default
 
 |`search_type` or `searchType`
-|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
 
 |`max_concurrent_searches` or `maxConcurrentSearches`
 |`number` - Controls the maximum number of concurrent searches the multi search api will execute
@@ -8122,7 +8122,7 @@ _Default:_ `true`
 client.msearchTemplate({
   index: string | string[],
   type: string | string[],
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   typed_keys: boolean,
   max_concurrent_searches: number,
   rest_total_hits_as_int: boolean,
@@ -8140,7 +8140,7 @@ link:{ref}/search-multi-search.html[Documentation] +
 |`string \| string[]` - A comma-separated list of document types to use as default
 
 |`search_type` or `searchType`
-|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
 
 |`typed_keys` or `typedKeys`
 |`boolean` - Specify whether aggregation and suggester names should be prefixed by their respective types in the response
@@ -9136,7 +9136,7 @@ client.searchTemplate({
   preference: string,
   routing: string | string[],
   scroll: string,
-  search_type: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch',
+  search_type: 'query_then_fetch' | 'dfs_query_then_fetch',
   explain: boolean,
   profile: boolean,
   typed_keys: boolean,
@@ -9177,7 +9177,7 @@ _Default:_ `open`
 |`string` - Specify how long a consistent view of the index should be maintained for scrolled search
 
 |`search_type` or `searchType`
-|`'query_then_fetch' \| 'query_and_fetch' \| 'dfs_query_then_fetch' \| 'dfs_query_and_fetch'` - Search operation type
+|`'query_then_fetch' \| 'dfs_query_then_fetch'` - Search operation type
 
 |`explain`
 |`boolean` - Specify whether to return detailed information about score computation as part of a hit

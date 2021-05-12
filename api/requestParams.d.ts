@@ -1955,7 +1955,7 @@ export interface MonitoringBulk<T = RequestNDBody> extends Generic {
 export interface Msearch<T = RequestNDBody> extends Generic {
   index?: string | string[];
   type?: string | string[];
-  search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
+  search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   max_concurrent_searches?: number;
   typed_keys?: boolean;
   pre_filter_shard_size?: number;
@@ -1968,7 +1968,7 @@ export interface Msearch<T = RequestNDBody> extends Generic {
 export interface MsearchTemplate<T = RequestNDBody> extends Generic {
   index?: string | string[];
   type?: string | string[];
-  search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
+  search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   typed_keys?: boolean;
   max_concurrent_searches?: number;
   rest_total_hits_as_int?: boolean;
@@ -2216,7 +2216,7 @@ export interface SearchTemplate<T = RequestBody> extends Generic {
   preference?: string;
   routing?: string | string[];
   scroll?: string;
-  search_type?: 'query_then_fetch' | 'query_and_fetch' | 'dfs_query_then_fetch' | 'dfs_query_and_fetch';
+  search_type?: 'query_then_fetch' | 'dfs_query_then_fetch';
   explain?: boolean;
   profile?: boolean;
   typed_keys?: boolean;
