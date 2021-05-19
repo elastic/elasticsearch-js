@@ -66,27 +66,27 @@ client.on('resurrect', (err, meta) => {
 // Check API returned type and optional parameters
 {
   const promise = client.info()
-  expectType<TransportRequestPromise<ApiResponse<estypes.RootNodeInfoResponse, Context>>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<estypes.InfoResponse, Context>>>(promise)
   promise
-    .then(result => expectType<ApiResponse<estypes.RootNodeInfoResponse, Context>>(result))
+    .then(result => expectType<ApiResponse<estypes.InfoResponse, Context>>(result))
     .catch((err: ApiError) => expectType<ApiError>(err))
   expectType<void>(promise.abort())
 }
 
 {
   const promise = client.info({ pretty: true })
-  expectType<TransportRequestPromise<ApiResponse<estypes.RootNodeInfoResponse, Context>>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<estypes.InfoResponse, Context>>>(promise)
   promise
-    .then(result => expectType<ApiResponse<estypes.RootNodeInfoResponse, Context>>(result))
+    .then(result => expectType<ApiResponse<estypes.InfoResponse, Context>>(result))
     .catch((err: ApiError) => expectType<ApiError>(err))
   expectType<void>(promise.abort())
 }
 
 {
   const promise = client.info({ pretty: true }, { ignore: [404] })
-  expectType<TransportRequestPromise<ApiResponse<estypes.RootNodeInfoResponse, Context>>>(promise)
+  expectType<TransportRequestPromise<ApiResponse<estypes.InfoResponse, Context>>>(promise)
   promise
-    .then(result => expectType<ApiResponse<estypes.RootNodeInfoResponse, Context>>(result))
+    .then(result => expectType<ApiResponse<estypes.InfoResponse, Context>>(result))
     .catch((err: ApiError) => expectType<ApiError>(err))
   expectType<void>(promise.abort())
 }
