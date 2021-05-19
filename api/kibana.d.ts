@@ -285,13 +285,13 @@ interface KibanaClient {
     simulate<TContext = unknown>(params?: T.IngestSimulatePipelineRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IngestSimulatePipelineResponse, TContext>>
   }
   license: {
-    delete<TContext = unknown>(params?: T.LicenseDeleteLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseDeleteLicenseResponse, TContext>>
-    get<TContext = unknown>(params?: T.LicenseGetLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetLicenseResponse, TContext>>
-    getBasicStatus<TContext = unknown>(params?: T.LicenseGetBasicLicenseStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetBasicLicenseStatusResponse, TContext>>
-    getTrialStatus<TContext = unknown>(params?: T.LicenseGetTrialLicenseStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetTrialLicenseStatusResponse, TContext>>
-    post<TContext = unknown>(params?: T.LicensePostLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicensePostLicenseResponse, TContext>>
-    postStartBasic<TContext = unknown>(params?: T.LicenseStartBasicLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseStartBasicLicenseResponse, TContext>>
-    postStartTrial<TContext = unknown>(params?: T.LicenseStartTrialLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseStartTrialLicenseResponse, TContext>>
+    delete<TContext = unknown>(params?: T.LicenseDeleteRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseDeleteResponse, TContext>>
+    get<TContext = unknown>(params?: T.LicenseGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetResponse, TContext>>
+    getBasicStatus<TContext = unknown>(params?: T.LicenseGetBasicStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetBasicStatusResponse, TContext>>
+    getTrialStatus<TContext = unknown>(params?: T.LicenseGetTrialStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetTrialStatusResponse, TContext>>
+    post<TContext = unknown>(params?: T.LicensePostRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicensePostResponse, TContext>>
+    postStartBasic<TContext = unknown>(params?: T.LicensePostStartBasicRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicensePostStartBasicResponse, TContext>>
+    postStartTrial<TContext = unknown>(params?: T.LicensePostStartTrialRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicensePostStartTrialResponse, TContext>>
   }
   logstash: {
     deletePipeline<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
@@ -375,11 +375,11 @@ interface KibanaClient {
   msearchTemplate<TDocument = unknown, TContext = unknown>(params?: T.MsearchTemplateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MsearchTemplateResponse<TDocument>, TContext>>
   mtermvectors<TContext = unknown>(params?: T.MtermvectorsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MtermvectorsResponse, TContext>>
   nodes: {
-    hotThreads<TContext = unknown>(params?: T.NodesNodesHotThreadsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesHotThreadsResponse, TContext>>
-    info<TContext = unknown>(params?: T.NodesNodesInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesInfoResponse, TContext>>
+    hotThreads<TContext = unknown>(params?: T.NodesHotThreadsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesHotThreadsResponse, TContext>>
+    info<TContext = unknown>(params?: T.NodesInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesInfoResponse, TContext>>
     reloadSecureSettings<TContext = unknown>(params?: T.NodesReloadSecureSettingsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesReloadSecureSettingsResponse, TContext>>
-    stats<TContext = unknown>(params?: T.NodesNodesStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesStatsResponse, TContext>>
-    usage<TContext = unknown>(params?: T.NodesNodesUsageRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesUsageResponse, TContext>>
+    stats<TContext = unknown>(params?: T.NodesStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesStatsResponse, TContext>>
+    usage<TContext = unknown>(params?: T.NodesUsageRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesUsageResponse, TContext>>
   }
   openPointInTime<TContext = unknown>(params: T.OpenPointInTimeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.OpenPointInTimeResponse, TContext>>
   ping<TContext = unknown>(params?: T.PingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.PingResponse, TContext>>
@@ -477,18 +477,19 @@ interface KibanaClient {
     verifyRepository<TContext = unknown>(params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotVerifyRepositoryResponse, TContext>>
   }
   sql: {
-    clearCursor<TContext = unknown>(params?: T.SqlClearSqlCursorRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlClearSqlCursorResponse, TContext>>
-    query<TContext = unknown>(params?: T.SqlQuerySqlRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlQuerySqlResponse, TContext>>
-    translate<TContext = unknown>(params?: T.SqlTranslateSqlRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlTranslateSqlResponse, TContext>>
+    clearCursor<TContext = unknown>(params?: T.SqlClearCursorRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlClearCursorResponse, TContext>>
+    query<TContext = unknown>(params?: T.SqlQueryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlQueryResponse, TContext>>
+    translate<TContext = unknown>(params?: T.SqlTranslateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlTranslateResponse, TContext>>
   }
   ssl: {
     certificates<TContext = unknown>(params?: T.SslGetCertificatesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SslGetCertificatesResponse, TContext>>
   }
   tasks: {
-    cancel<TContext = unknown>(params?: T.TaskCancelTasksRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskCancelTasksResponse, TContext>>
-    get<TContext = unknown>(params: T.TaskGetTaskRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskGetTaskResponse, TContext>>
-    list<TContext = unknown>(params?: T.TaskListTasksRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskListTasksResponse, TContext>>
+    cancel<TContext = unknown>(params?: T.TaskCancelRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskCancelResponse, TContext>>
+    get<TContext = unknown>(params: T.TaskGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskGetResponse, TContext>>
+    list<TContext = unknown>(params?: T.TaskListRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskListResponse, TContext>>
   }
+  termsEnum<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
   termvectors<TDocument = unknown, TContext = unknown>(params: T.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TermvectorsResponse, TContext>>
   textStructure: {
     findStructure<TJsonDocument = unknown, TContext = unknown>(params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TextStructureFindStructureResponse, TContext>>

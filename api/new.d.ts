@@ -750,34 +750,34 @@ declare class Client {
     simulate<TContext = unknown>(params: T.IngestSimulatePipelineRequest, options: TransportRequestOptions, callback: callbackFn<T.IngestSimulatePipelineResponse, TContext>): TransportRequestCallback
   }
   license: {
-    delete<TContext = unknown>(params?: T.LicenseDeleteLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseDeleteLicenseResponse, TContext>>
-    delete<TContext = unknown>(callback: callbackFn<T.LicenseDeleteLicenseResponse, TContext>): TransportRequestCallback
-    delete<TContext = unknown>(params: T.LicenseDeleteLicenseRequest, callback: callbackFn<T.LicenseDeleteLicenseResponse, TContext>): TransportRequestCallback
-    delete<TContext = unknown>(params: T.LicenseDeleteLicenseRequest, options: TransportRequestOptions, callback: callbackFn<T.LicenseDeleteLicenseResponse, TContext>): TransportRequestCallback
-    get<TContext = unknown>(params?: T.LicenseGetLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetLicenseResponse, TContext>>
-    get<TContext = unknown>(callback: callbackFn<T.LicenseGetLicenseResponse, TContext>): TransportRequestCallback
-    get<TContext = unknown>(params: T.LicenseGetLicenseRequest, callback: callbackFn<T.LicenseGetLicenseResponse, TContext>): TransportRequestCallback
-    get<TContext = unknown>(params: T.LicenseGetLicenseRequest, options: TransportRequestOptions, callback: callbackFn<T.LicenseGetLicenseResponse, TContext>): TransportRequestCallback
-    getBasicStatus<TContext = unknown>(params?: T.LicenseGetBasicLicenseStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetBasicLicenseStatusResponse, TContext>>
-    getBasicStatus<TContext = unknown>(callback: callbackFn<T.LicenseGetBasicLicenseStatusResponse, TContext>): TransportRequestCallback
-    getBasicStatus<TContext = unknown>(params: T.LicenseGetBasicLicenseStatusRequest, callback: callbackFn<T.LicenseGetBasicLicenseStatusResponse, TContext>): TransportRequestCallback
-    getBasicStatus<TContext = unknown>(params: T.LicenseGetBasicLicenseStatusRequest, options: TransportRequestOptions, callback: callbackFn<T.LicenseGetBasicLicenseStatusResponse, TContext>): TransportRequestCallback
-    getTrialStatus<TContext = unknown>(params?: T.LicenseGetTrialLicenseStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetTrialLicenseStatusResponse, TContext>>
-    getTrialStatus<TContext = unknown>(callback: callbackFn<T.LicenseGetTrialLicenseStatusResponse, TContext>): TransportRequestCallback
-    getTrialStatus<TContext = unknown>(params: T.LicenseGetTrialLicenseStatusRequest, callback: callbackFn<T.LicenseGetTrialLicenseStatusResponse, TContext>): TransportRequestCallback
-    getTrialStatus<TContext = unknown>(params: T.LicenseGetTrialLicenseStatusRequest, options: TransportRequestOptions, callback: callbackFn<T.LicenseGetTrialLicenseStatusResponse, TContext>): TransportRequestCallback
-    post<TContext = unknown>(params?: T.LicensePostLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicensePostLicenseResponse, TContext>>
-    post<TContext = unknown>(callback: callbackFn<T.LicensePostLicenseResponse, TContext>): TransportRequestCallback
-    post<TContext = unknown>(params: T.LicensePostLicenseRequest, callback: callbackFn<T.LicensePostLicenseResponse, TContext>): TransportRequestCallback
-    post<TContext = unknown>(params: T.LicensePostLicenseRequest, options: TransportRequestOptions, callback: callbackFn<T.LicensePostLicenseResponse, TContext>): TransportRequestCallback
-    postStartBasic<TContext = unknown>(params?: T.LicenseStartBasicLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseStartBasicLicenseResponse, TContext>>
-    postStartBasic<TContext = unknown>(callback: callbackFn<T.LicenseStartBasicLicenseResponse, TContext>): TransportRequestCallback
-    postStartBasic<TContext = unknown>(params: T.LicenseStartBasicLicenseRequest, callback: callbackFn<T.LicenseStartBasicLicenseResponse, TContext>): TransportRequestCallback
-    postStartBasic<TContext = unknown>(params: T.LicenseStartBasicLicenseRequest, options: TransportRequestOptions, callback: callbackFn<T.LicenseStartBasicLicenseResponse, TContext>): TransportRequestCallback
-    postStartTrial<TContext = unknown>(params?: T.LicenseStartTrialLicenseRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseStartTrialLicenseResponse, TContext>>
-    postStartTrial<TContext = unknown>(callback: callbackFn<T.LicenseStartTrialLicenseResponse, TContext>): TransportRequestCallback
-    postStartTrial<TContext = unknown>(params: T.LicenseStartTrialLicenseRequest, callback: callbackFn<T.LicenseStartTrialLicenseResponse, TContext>): TransportRequestCallback
-    postStartTrial<TContext = unknown>(params: T.LicenseStartTrialLicenseRequest, options: TransportRequestOptions, callback: callbackFn<T.LicenseStartTrialLicenseResponse, TContext>): TransportRequestCallback
+    delete<TContext = unknown>(params?: T.LicenseDeleteRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseDeleteResponse, TContext>>
+    delete<TContext = unknown>(callback: callbackFn<T.LicenseDeleteResponse, TContext>): TransportRequestCallback
+    delete<TContext = unknown>(params: T.LicenseDeleteRequest, callback: callbackFn<T.LicenseDeleteResponse, TContext>): TransportRequestCallback
+    delete<TContext = unknown>(params: T.LicenseDeleteRequest, options: TransportRequestOptions, callback: callbackFn<T.LicenseDeleteResponse, TContext>): TransportRequestCallback
+    get<TContext = unknown>(params?: T.LicenseGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetResponse, TContext>>
+    get<TContext = unknown>(callback: callbackFn<T.LicenseGetResponse, TContext>): TransportRequestCallback
+    get<TContext = unknown>(params: T.LicenseGetRequest, callback: callbackFn<T.LicenseGetResponse, TContext>): TransportRequestCallback
+    get<TContext = unknown>(params: T.LicenseGetRequest, options: TransportRequestOptions, callback: callbackFn<T.LicenseGetResponse, TContext>): TransportRequestCallback
+    getBasicStatus<TContext = unknown>(params?: T.LicenseGetBasicStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetBasicStatusResponse, TContext>>
+    getBasicStatus<TContext = unknown>(callback: callbackFn<T.LicenseGetBasicStatusResponse, TContext>): TransportRequestCallback
+    getBasicStatus<TContext = unknown>(params: T.LicenseGetBasicStatusRequest, callback: callbackFn<T.LicenseGetBasicStatusResponse, TContext>): TransportRequestCallback
+    getBasicStatus<TContext = unknown>(params: T.LicenseGetBasicStatusRequest, options: TransportRequestOptions, callback: callbackFn<T.LicenseGetBasicStatusResponse, TContext>): TransportRequestCallback
+    getTrialStatus<TContext = unknown>(params?: T.LicenseGetTrialStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicenseGetTrialStatusResponse, TContext>>
+    getTrialStatus<TContext = unknown>(callback: callbackFn<T.LicenseGetTrialStatusResponse, TContext>): TransportRequestCallback
+    getTrialStatus<TContext = unknown>(params: T.LicenseGetTrialStatusRequest, callback: callbackFn<T.LicenseGetTrialStatusResponse, TContext>): TransportRequestCallback
+    getTrialStatus<TContext = unknown>(params: T.LicenseGetTrialStatusRequest, options: TransportRequestOptions, callback: callbackFn<T.LicenseGetTrialStatusResponse, TContext>): TransportRequestCallback
+    post<TContext = unknown>(params?: T.LicensePostRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicensePostResponse, TContext>>
+    post<TContext = unknown>(callback: callbackFn<T.LicensePostResponse, TContext>): TransportRequestCallback
+    post<TContext = unknown>(params: T.LicensePostRequest, callback: callbackFn<T.LicensePostResponse, TContext>): TransportRequestCallback
+    post<TContext = unknown>(params: T.LicensePostRequest, options: TransportRequestOptions, callback: callbackFn<T.LicensePostResponse, TContext>): TransportRequestCallback
+    postStartBasic<TContext = unknown>(params?: T.LicensePostStartBasicRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicensePostStartBasicResponse, TContext>>
+    postStartBasic<TContext = unknown>(callback: callbackFn<T.LicensePostStartBasicResponse, TContext>): TransportRequestCallback
+    postStartBasic<TContext = unknown>(params: T.LicensePostStartBasicRequest, callback: callbackFn<T.LicensePostStartBasicResponse, TContext>): TransportRequestCallback
+    postStartBasic<TContext = unknown>(params: T.LicensePostStartBasicRequest, options: TransportRequestOptions, callback: callbackFn<T.LicensePostStartBasicResponse, TContext>): TransportRequestCallback
+    postStartTrial<TContext = unknown>(params?: T.LicensePostStartTrialRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.LicensePostStartTrialResponse, TContext>>
+    postStartTrial<TContext = unknown>(callback: callbackFn<T.LicensePostStartTrialResponse, TContext>): TransportRequestCallback
+    postStartTrial<TContext = unknown>(params: T.LicensePostStartTrialRequest, callback: callbackFn<T.LicensePostStartTrialResponse, TContext>): TransportRequestCallback
+    postStartTrial<TContext = unknown>(params: T.LicensePostStartTrialRequest, options: TransportRequestOptions, callback: callbackFn<T.LicensePostStartTrialResponse, TContext>): TransportRequestCallback
   }
   logstash: {
     deletePipeline<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
@@ -1040,26 +1040,26 @@ declare class Client {
   mtermvectors<TContext = unknown>(params: T.MtermvectorsRequest, callback: callbackFn<T.MtermvectorsResponse, TContext>): TransportRequestCallback
   mtermvectors<TContext = unknown>(params: T.MtermvectorsRequest, options: TransportRequestOptions, callback: callbackFn<T.MtermvectorsResponse, TContext>): TransportRequestCallback
   nodes: {
-    hotThreads<TContext = unknown>(params?: T.NodesNodesHotThreadsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesHotThreadsResponse, TContext>>
-    hotThreads<TContext = unknown>(callback: callbackFn<T.NodesNodesHotThreadsResponse, TContext>): TransportRequestCallback
-    hotThreads<TContext = unknown>(params: T.NodesNodesHotThreadsRequest, callback: callbackFn<T.NodesNodesHotThreadsResponse, TContext>): TransportRequestCallback
-    hotThreads<TContext = unknown>(params: T.NodesNodesHotThreadsRequest, options: TransportRequestOptions, callback: callbackFn<T.NodesNodesHotThreadsResponse, TContext>): TransportRequestCallback
-    info<TContext = unknown>(params?: T.NodesNodesInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesInfoResponse, TContext>>
-    info<TContext = unknown>(callback: callbackFn<T.NodesNodesInfoResponse, TContext>): TransportRequestCallback
-    info<TContext = unknown>(params: T.NodesNodesInfoRequest, callback: callbackFn<T.NodesNodesInfoResponse, TContext>): TransportRequestCallback
-    info<TContext = unknown>(params: T.NodesNodesInfoRequest, options: TransportRequestOptions, callback: callbackFn<T.NodesNodesInfoResponse, TContext>): TransportRequestCallback
+    hotThreads<TContext = unknown>(params?: T.NodesHotThreadsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesHotThreadsResponse, TContext>>
+    hotThreads<TContext = unknown>(callback: callbackFn<T.NodesHotThreadsResponse, TContext>): TransportRequestCallback
+    hotThreads<TContext = unknown>(params: T.NodesHotThreadsRequest, callback: callbackFn<T.NodesHotThreadsResponse, TContext>): TransportRequestCallback
+    hotThreads<TContext = unknown>(params: T.NodesHotThreadsRequest, options: TransportRequestOptions, callback: callbackFn<T.NodesHotThreadsResponse, TContext>): TransportRequestCallback
+    info<TContext = unknown>(params?: T.NodesInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesInfoResponse, TContext>>
+    info<TContext = unknown>(callback: callbackFn<T.NodesInfoResponse, TContext>): TransportRequestCallback
+    info<TContext = unknown>(params: T.NodesInfoRequest, callback: callbackFn<T.NodesInfoResponse, TContext>): TransportRequestCallback
+    info<TContext = unknown>(params: T.NodesInfoRequest, options: TransportRequestOptions, callback: callbackFn<T.NodesInfoResponse, TContext>): TransportRequestCallback
     reloadSecureSettings<TContext = unknown>(params?: T.NodesReloadSecureSettingsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesReloadSecureSettingsResponse, TContext>>
     reloadSecureSettings<TContext = unknown>(callback: callbackFn<T.NodesReloadSecureSettingsResponse, TContext>): TransportRequestCallback
     reloadSecureSettings<TContext = unknown>(params: T.NodesReloadSecureSettingsRequest, callback: callbackFn<T.NodesReloadSecureSettingsResponse, TContext>): TransportRequestCallback
     reloadSecureSettings<TContext = unknown>(params: T.NodesReloadSecureSettingsRequest, options: TransportRequestOptions, callback: callbackFn<T.NodesReloadSecureSettingsResponse, TContext>): TransportRequestCallback
-    stats<TContext = unknown>(params?: T.NodesNodesStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesStatsResponse, TContext>>
-    stats<TContext = unknown>(callback: callbackFn<T.NodesNodesStatsResponse, TContext>): TransportRequestCallback
-    stats<TContext = unknown>(params: T.NodesNodesStatsRequest, callback: callbackFn<T.NodesNodesStatsResponse, TContext>): TransportRequestCallback
-    stats<TContext = unknown>(params: T.NodesNodesStatsRequest, options: TransportRequestOptions, callback: callbackFn<T.NodesNodesStatsResponse, TContext>): TransportRequestCallback
-    usage<TContext = unknown>(params?: T.NodesNodesUsageRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesNodesUsageResponse, TContext>>
-    usage<TContext = unknown>(callback: callbackFn<T.NodesNodesUsageResponse, TContext>): TransportRequestCallback
-    usage<TContext = unknown>(params: T.NodesNodesUsageRequest, callback: callbackFn<T.NodesNodesUsageResponse, TContext>): TransportRequestCallback
-    usage<TContext = unknown>(params: T.NodesNodesUsageRequest, options: TransportRequestOptions, callback: callbackFn<T.NodesNodesUsageResponse, TContext>): TransportRequestCallback
+    stats<TContext = unknown>(params?: T.NodesStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesStatsResponse, TContext>>
+    stats<TContext = unknown>(callback: callbackFn<T.NodesStatsResponse, TContext>): TransportRequestCallback
+    stats<TContext = unknown>(params: T.NodesStatsRequest, callback: callbackFn<T.NodesStatsResponse, TContext>): TransportRequestCallback
+    stats<TContext = unknown>(params: T.NodesStatsRequest, options: TransportRequestOptions, callback: callbackFn<T.NodesStatsResponse, TContext>): TransportRequestCallback
+    usage<TContext = unknown>(params?: T.NodesUsageRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.NodesUsageResponse, TContext>>
+    usage<TContext = unknown>(callback: callbackFn<T.NodesUsageResponse, TContext>): TransportRequestCallback
+    usage<TContext = unknown>(params: T.NodesUsageRequest, callback: callbackFn<T.NodesUsageResponse, TContext>): TransportRequestCallback
+    usage<TContext = unknown>(params: T.NodesUsageRequest, options: TransportRequestOptions, callback: callbackFn<T.NodesUsageResponse, TContext>): TransportRequestCallback
   }
   openPointInTime<TContext = unknown>(params: T.OpenPointInTimeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.OpenPointInTimeResponse, TContext>>
   openPointInTime<TContext = unknown>(params: T.OpenPointInTimeRequest, callback: callbackFn<T.OpenPointInTimeResponse, TContext>): TransportRequestCallback
@@ -1367,18 +1367,18 @@ declare class Client {
     verifyRepository<TContext = unknown>(params: T.SnapshotVerifyRepositoryRequest, options: TransportRequestOptions, callback: callbackFn<T.SnapshotVerifyRepositoryResponse, TContext>): TransportRequestCallback
   }
   sql: {
-    clearCursor<TContext = unknown>(params?: T.SqlClearSqlCursorRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlClearSqlCursorResponse, TContext>>
-    clearCursor<TContext = unknown>(callback: callbackFn<T.SqlClearSqlCursorResponse, TContext>): TransportRequestCallback
-    clearCursor<TContext = unknown>(params: T.SqlClearSqlCursorRequest, callback: callbackFn<T.SqlClearSqlCursorResponse, TContext>): TransportRequestCallback
-    clearCursor<TContext = unknown>(params: T.SqlClearSqlCursorRequest, options: TransportRequestOptions, callback: callbackFn<T.SqlClearSqlCursorResponse, TContext>): TransportRequestCallback
-    query<TContext = unknown>(params?: T.SqlQuerySqlRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlQuerySqlResponse, TContext>>
-    query<TContext = unknown>(callback: callbackFn<T.SqlQuerySqlResponse, TContext>): TransportRequestCallback
-    query<TContext = unknown>(params: T.SqlQuerySqlRequest, callback: callbackFn<T.SqlQuerySqlResponse, TContext>): TransportRequestCallback
-    query<TContext = unknown>(params: T.SqlQuerySqlRequest, options: TransportRequestOptions, callback: callbackFn<T.SqlQuerySqlResponse, TContext>): TransportRequestCallback
-    translate<TContext = unknown>(params?: T.SqlTranslateSqlRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlTranslateSqlResponse, TContext>>
-    translate<TContext = unknown>(callback: callbackFn<T.SqlTranslateSqlResponse, TContext>): TransportRequestCallback
-    translate<TContext = unknown>(params: T.SqlTranslateSqlRequest, callback: callbackFn<T.SqlTranslateSqlResponse, TContext>): TransportRequestCallback
-    translate<TContext = unknown>(params: T.SqlTranslateSqlRequest, options: TransportRequestOptions, callback: callbackFn<T.SqlTranslateSqlResponse, TContext>): TransportRequestCallback
+    clearCursor<TContext = unknown>(params?: T.SqlClearCursorRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlClearCursorResponse, TContext>>
+    clearCursor<TContext = unknown>(callback: callbackFn<T.SqlClearCursorResponse, TContext>): TransportRequestCallback
+    clearCursor<TContext = unknown>(params: T.SqlClearCursorRequest, callback: callbackFn<T.SqlClearCursorResponse, TContext>): TransportRequestCallback
+    clearCursor<TContext = unknown>(params: T.SqlClearCursorRequest, options: TransportRequestOptions, callback: callbackFn<T.SqlClearCursorResponse, TContext>): TransportRequestCallback
+    query<TContext = unknown>(params?: T.SqlQueryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlQueryResponse, TContext>>
+    query<TContext = unknown>(callback: callbackFn<T.SqlQueryResponse, TContext>): TransportRequestCallback
+    query<TContext = unknown>(params: T.SqlQueryRequest, callback: callbackFn<T.SqlQueryResponse, TContext>): TransportRequestCallback
+    query<TContext = unknown>(params: T.SqlQueryRequest, options: TransportRequestOptions, callback: callbackFn<T.SqlQueryResponse, TContext>): TransportRequestCallback
+    translate<TContext = unknown>(params?: T.SqlTranslateRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SqlTranslateResponse, TContext>>
+    translate<TContext = unknown>(callback: callbackFn<T.SqlTranslateResponse, TContext>): TransportRequestCallback
+    translate<TContext = unknown>(params: T.SqlTranslateRequest, callback: callbackFn<T.SqlTranslateResponse, TContext>): TransportRequestCallback
+    translate<TContext = unknown>(params: T.SqlTranslateRequest, options: TransportRequestOptions, callback: callbackFn<T.SqlTranslateResponse, TContext>): TransportRequestCallback
   }
   ssl: {
     certificates<TContext = unknown>(params?: T.SslGetCertificatesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SslGetCertificatesResponse, TContext>>
@@ -1387,18 +1387,22 @@ declare class Client {
     certificates<TContext = unknown>(params: T.SslGetCertificatesRequest, options: TransportRequestOptions, callback: callbackFn<T.SslGetCertificatesResponse, TContext>): TransportRequestCallback
   }
   tasks: {
-    cancel<TContext = unknown>(params?: T.TaskCancelTasksRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskCancelTasksResponse, TContext>>
-    cancel<TContext = unknown>(callback: callbackFn<T.TaskCancelTasksResponse, TContext>): TransportRequestCallback
-    cancel<TContext = unknown>(params: T.TaskCancelTasksRequest, callback: callbackFn<T.TaskCancelTasksResponse, TContext>): TransportRequestCallback
-    cancel<TContext = unknown>(params: T.TaskCancelTasksRequest, options: TransportRequestOptions, callback: callbackFn<T.TaskCancelTasksResponse, TContext>): TransportRequestCallback
-    get<TContext = unknown>(params: T.TaskGetTaskRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskGetTaskResponse, TContext>>
-    get<TContext = unknown>(params: T.TaskGetTaskRequest, callback: callbackFn<T.TaskGetTaskResponse, TContext>): TransportRequestCallback
-    get<TContext = unknown>(params: T.TaskGetTaskRequest, options: TransportRequestOptions, callback: callbackFn<T.TaskGetTaskResponse, TContext>): TransportRequestCallback
-    list<TContext = unknown>(params?: T.TaskListTasksRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskListTasksResponse, TContext>>
-    list<TContext = unknown>(callback: callbackFn<T.TaskListTasksResponse, TContext>): TransportRequestCallback
-    list<TContext = unknown>(params: T.TaskListTasksRequest, callback: callbackFn<T.TaskListTasksResponse, TContext>): TransportRequestCallback
-    list<TContext = unknown>(params: T.TaskListTasksRequest, options: TransportRequestOptions, callback: callbackFn<T.TaskListTasksResponse, TContext>): TransportRequestCallback
+    cancel<TContext = unknown>(params?: T.TaskCancelRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskCancelResponse, TContext>>
+    cancel<TContext = unknown>(callback: callbackFn<T.TaskCancelResponse, TContext>): TransportRequestCallback
+    cancel<TContext = unknown>(params: T.TaskCancelRequest, callback: callbackFn<T.TaskCancelResponse, TContext>): TransportRequestCallback
+    cancel<TContext = unknown>(params: T.TaskCancelRequest, options: TransportRequestOptions, callback: callbackFn<T.TaskCancelResponse, TContext>): TransportRequestCallback
+    get<TContext = unknown>(params: T.TaskGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskGetResponse, TContext>>
+    get<TContext = unknown>(params: T.TaskGetRequest, callback: callbackFn<T.TaskGetResponse, TContext>): TransportRequestCallback
+    get<TContext = unknown>(params: T.TaskGetRequest, options: TransportRequestOptions, callback: callbackFn<T.TaskGetResponse, TContext>): TransportRequestCallback
+    list<TContext = unknown>(params?: T.TaskListRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskListResponse, TContext>>
+    list<TContext = unknown>(callback: callbackFn<T.TaskListResponse, TContext>): TransportRequestCallback
+    list<TContext = unknown>(params: T.TaskListRequest, callback: callbackFn<T.TaskListResponse, TContext>): TransportRequestCallback
+    list<TContext = unknown>(params: T.TaskListRequest, options: TransportRequestOptions, callback: callbackFn<T.TaskListResponse, TContext>): TransportRequestCallback
   }
+  termsEnum<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+  termsEnum<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+  termsEnum<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+  termsEnum<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
   termvectors<TDocument = unknown, TContext = unknown>(params: T.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TermvectorsResponse, TContext>>
   termvectors<TDocument = unknown, TContext = unknown>(params: T.TermvectorsRequest<TDocument>, callback: callbackFn<T.TermvectorsResponse, TContext>): TransportRequestCallback
   termvectors<TDocument = unknown, TContext = unknown>(params: T.TermvectorsRequest<TDocument>, options: TransportRequestOptions, callback: callbackFn<T.TermvectorsResponse, TContext>): TransportRequestCallback

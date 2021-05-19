@@ -17,25 +17,25 @@
  * under the License.
  */
 
-export interface BulkBulkCreateOperation extends BulkBulkOperation {
+export interface BulkCreateOperation extends BulkOperation {
 }
 
-export interface BulkBulkCreateResponseItem extends BulkBulkResponseItemBase {
+export interface BulkCreateResponseItem extends BulkResponseItemBase {
 }
 
-export interface BulkBulkDeleteOperation extends BulkBulkOperation {
+export interface BulkDeleteOperation extends BulkOperation {
 }
 
-export interface BulkBulkDeleteResponseItem extends BulkBulkResponseItemBase {
+export interface BulkDeleteResponseItem extends BulkResponseItemBase {
 }
 
-export interface BulkBulkIndexOperation extends BulkBulkOperation {
+export interface BulkIndexOperation extends BulkOperation {
 }
 
-export interface BulkBulkIndexResponseItem extends BulkBulkResponseItemBase {
+export interface BulkIndexResponseItem extends BulkResponseItemBase {
 }
 
-export interface BulkBulkOperation {
+export interface BulkOperation {
   _id: Id
   _index: IndexName
   retry_on_conflict: integer
@@ -44,39 +44,11 @@ export interface BulkBulkOperation {
   version_type: VersionType
 }
 
-export interface BulkBulkOperationContainer {
-  index?: BulkBulkIndexOperation
-  create?: BulkBulkCreateOperation
-  update?: BulkBulkUpdateOperation
-  delete?: BulkBulkDeleteOperation
-}
-
-export interface BulkBulkResponseItemBase {
-  _id?: string | null
-  _index: string
-  status: integer
-  error?: ErrorCause
-  _primary_term?: long
-  result?: string
-  _seq_no?: SequenceNumber
-  _shards?: ShardStatistics
-  _type?: string
-  _version?: VersionNumber
-  forced_refresh?: boolean
-  get?: InlineGet<Record<string, any>>
-}
-
-export interface BulkBulkResponseItemContainer {
-  index?: BulkBulkIndexResponseItem
-  create?: BulkBulkCreateResponseItem
-  update?: BulkBulkUpdateResponseItem
-  delete?: BulkBulkDeleteResponseItem
-}
-
-export interface BulkBulkUpdateOperation extends BulkBulkOperation {
-}
-
-export interface BulkBulkUpdateResponseItem extends BulkBulkResponseItemBase {
+export interface BulkOperationContainer {
+  index?: BulkIndexOperation
+  create?: BulkCreateOperation
+  update?: BulkUpdateOperation
+  delete?: BulkDeleteOperation
 }
 
 export interface BulkRequest<TSource = unknown> extends RequestBase {
@@ -91,14 +63,42 @@ export interface BulkRequest<TSource = unknown> extends RequestBase {
   timeout?: Time
   wait_for_active_shards?: WaitForActiveShards
   require_alias?: boolean
-  body?: (BulkBulkOperationContainer | TSource)[]
+  body?: (BulkOperationContainer | TSource)[]
 }
 
 export interface BulkResponse {
   errors: boolean
-  items: BulkBulkResponseItemContainer[]
+  items: BulkResponseItemContainer[]
   took: long
   ingest_took?: long
+}
+
+export interface BulkResponseItemBase {
+  _id?: string | null
+  _index: string
+  status: integer
+  error?: ErrorCause
+  _primary_term?: long
+  result?: string
+  _seq_no?: SequenceNumber
+  _shards?: ShardStatistics
+  _type?: string
+  _version?: VersionNumber
+  forced_refresh?: boolean
+  get?: InlineGet<Record<string, any>>
+}
+
+export interface BulkResponseItemContainer {
+  index?: BulkIndexResponseItem
+  create?: BulkCreateResponseItem
+  update?: BulkUpdateResponseItem
+  delete?: BulkDeleteResponseItem
+}
+
+export interface BulkUpdateOperation extends BulkOperation {
+}
+
+export interface BulkUpdateResponseItem extends BulkResponseItemBase {
 }
 
 export interface ClearScrollRequest extends RequestBase {
@@ -251,7 +251,7 @@ export interface DeleteByQueryRethrottleRequest extends RequestBase {
   requests_per_second?: long
 }
 
-export interface DeleteByQueryRethrottleResponse extends TaskListTasksResponse {
+export interface DeleteByQueryRethrottleResponse extends TaskListResponse {
 }
 
 export interface DeleteScriptRequest extends RequestBase {
@@ -527,7 +527,7 @@ export interface MgetOperation {
   _id: MgetMultiGetId
   _index?: IndexName
   routing?: Routing
-  _source?: boolean | Fields | SearchTypesSourceFilter
+  _source?: boolean | Fields | SearchSourceFilter
   stored_fields?: Fields
   _type?: Type
   version?: VersionNumber
@@ -561,9 +561,9 @@ export interface MsearchBody {
   query?: QueryDslQueryContainer
   from?: integer
   size?: integer
-  pit?: SearchTypesPointInTimeReference
+  pit?: SearchPointInTimeReference
   track_total_hits?: boolean | integer
-  suggest?: SearchTypesSuggestContainer | Record<string, SearchTypesSuggestContainer>
+  suggest?: SearchSuggestContainer | Record<string, SearchSuggestContainer>
 }
 
 export interface MsearchHeader {
@@ -857,7 +857,7 @@ export interface ReindexSource {
   remote?: ReindexRemoteSource
   size?: integer
   slice?: SlicedScroll
-  sort?: SearchTypesSort
+  sort?: SearchSort
   _source?: Fields
 }
 
@@ -1001,33 +1001,33 @@ export interface SearchRequest extends RequestBase {
   body?: {
     aggs?: Record<string, AggregationsAggregationContainer>
     aggregations?: Record<string, AggregationsAggregationContainer>
-    collapse?: SearchTypesFieldCollapse
+    collapse?: SearchFieldCollapse
     explain?: boolean
     from?: integer
-    highlight?: SearchTypesHighlight
+    highlight?: SearchHighlight
     track_total_hits?: boolean | integer
     indices_boost?: Record<IndexName, double>[]
-    docvalue_fields?: SearchTypesDocValueField | (Field | SearchTypesDocValueField)[]
+    docvalue_fields?: SearchDocValueField | (Field | SearchDocValueField)[]
     min_score?: double
     post_filter?: QueryDslQueryContainer
     profile?: boolean
     query?: QueryDslQueryContainer
-    rescore?: SearchTypesRescore | SearchTypesRescore[]
+    rescore?: SearchRescore | SearchRescore[]
     script_fields?: Record<string, ScriptField>
     search_after?: (integer | string)[]
     size?: integer
     slice?: SlicedScroll
-    sort?: SearchTypesSort
-    _source?: boolean | Fields | SearchTypesSourceFilter
+    sort?: SearchSort
+    _source?: boolean | Fields | SearchSourceFilter
     fields?: (Field | DateField)[]
-    suggest?: SearchTypesSuggestContainer | Record<string, SearchTypesSuggestContainer>
+    suggest?: SearchSuggestContainer | Record<string, SearchSuggestContainer>
     terminate_after?: long
     timeout?: string
     track_scores?: boolean
     version?: boolean
     seq_no_primary_term?: boolean
     stored_fields?: Fields
-    pit?: SearchTypesPointInTimeReference
+    pit?: SearchPointInTimeReference
     runtime_mappings?: MappingRuntimeFields
     stats?: string[]
   }
@@ -1037,21 +1037,21 @@ export interface SearchResponse<TDocument = unknown> {
   took: long
   timed_out: boolean
   _shards: ShardStatistics
-  hits: SearchTypesHitsMetadata<TDocument>
+  hits: SearchHitsMetadata<TDocument>
   aggregations?: Record<AggregateName, AggregationsAggregate>
   _clusters?: ClusterStatistics
   documents?: TDocument[]
   fields?: Record<string, any>
   max_score?: double
   num_reduce_phases?: long
-  profile?: SearchTypesProfile
+  profile?: SearchProfile
   pit_id?: Id
   _scroll_id?: ScrollId
-  suggest?: Record<SuggestionName, SearchTypesSuggest<TDocument>[]>
+  suggest?: Record<SuggestionName, SearchSuggest<TDocument>[]>
   terminated_early?: boolean
 }
 
-export interface SearchTypesAggregationBreakdown {
+export interface SearchAggregationBreakdown {
   build_aggregation: long
   build_aggregation_count: long
   build_leaf_collector: long
@@ -1066,30 +1066,30 @@ export interface SearchTypesAggregationBreakdown {
   reduce_count: long
 }
 
-export interface SearchTypesAggregationProfile {
-  breakdown: SearchTypesAggregationBreakdown
+export interface SearchAggregationProfile {
+  breakdown: SearchAggregationBreakdown
   description: string
   time_in_nanos: long
   type: string
-  debug?: SearchTypesAggregationProfileDebug
-  children?: SearchTypesAggregationProfileDebug[]
+  debug?: SearchAggregationProfileDebug
+  children?: SearchAggregationProfileDebug[]
 }
 
-export interface SearchTypesAggregationProfileDebug {
+export interface SearchAggregationProfileDebug {
 }
 
-export type SearchTypesBoundaryScanner = 'chars' | 'sentence' | 'word'
+export type SearchBoundaryScanner = 'chars' | 'sentence' | 'word'
 
-export interface SearchTypesCollector {
+export interface SearchCollector {
   name: string
   reason: string
   time_in_nanos: long
-  children?: SearchTypesCollector[]
+  children?: SearchCollector[]
 }
 
-export interface SearchTypesCompletionSuggestOption<TDocument = unknown> {
+export interface SearchCompletionSuggestOption<TDocument = unknown> {
   collate_match?: boolean
-  contexts?: Record<string, SearchTypesContext[]>
+  contexts?: Record<string, SearchContext[]>
   fields?: Record<string, any>
   _id: string
   _index: IndexName
@@ -1100,17 +1100,17 @@ export interface SearchTypesCompletionSuggestOption<TDocument = unknown> {
   text: string
 }
 
-export interface SearchTypesCompletionSuggester extends SearchTypesSuggesterBase {
-  contexts?: Record<string, string | string[] | QueryDslGeoLocation | SearchTypesSuggestContextQuery[]>
-  fuzzy?: SearchTypesSuggestFuzziness
+export interface SearchCompletionSuggester extends SearchSuggesterBase {
+  contexts?: Record<string, string | string[] | QueryDslGeoLocation | SearchSuggestContextQuery[]>
+  fuzzy?: SearchSuggestFuzziness
   prefix?: string
   regex?: string
   skip_duplicates?: boolean
 }
 
-export type SearchTypesContext = string | QueryDslGeoLocation
+export type SearchContext = string | QueryDslGeoLocation
 
-export interface SearchTypesDirectGenerator {
+export interface SearchDirectGenerator {
   field: Field
   max_edits?: integer
   max_inspections?: float
@@ -1124,65 +1124,65 @@ export interface SearchTypesDirectGenerator {
   suggest_mode?: SuggestMode
 }
 
-export interface SearchTypesDocValueField {
+export interface SearchDocValueField {
   field: Field
   format?: string
 }
 
-export interface SearchTypesFieldCollapse {
+export interface SearchFieldCollapse {
   field: Field
-  inner_hits?: SearchTypesInnerHits | SearchTypesInnerHits[]
+  inner_hits?: SearchInnerHits | SearchInnerHits[]
   max_concurrent_group_searches?: integer
 }
 
-export interface SearchTypesFieldSort {
+export interface SearchFieldSort {
   missing?: AggregationsMissing
-  mode?: SearchTypesSortMode
-  nested?: SearchTypesNestedSortValue
-  order?: SearchTypesSortOrder
+  mode?: SearchSortMode
+  nested?: SearchNestedSortValue
+  order?: SearchSortOrder
   unmapped_type?: MappingFieldType
 }
 
-export interface SearchTypesGeoDistanceSortKeys {
-  mode?: SearchTypesSortMode
+export interface SearchGeoDistanceSortKeys {
+  mode?: SearchSortMode
   distance_type?: GeoDistanceType
-  order?: SearchTypesSortOrder
+  order?: SearchSortOrder
   unit?: DistanceUnit
 }
-export type SearchTypesGeoDistanceSort = SearchTypesGeoDistanceSortKeys |
+export type SearchGeoDistanceSort = SearchGeoDistanceSortKeys |
     { [property: string]: QueryDslGeoLocation | QueryDslGeoLocation[] }
 
-export interface SearchTypesHighlight {
-  fields: Record<Field, SearchTypesHighlightField>
-  type?: SearchTypesHighlighterType
+export interface SearchHighlight {
+  fields: Record<Field, SearchHighlightField>
+  type?: SearchHighlighterType
   boundary_chars?: string
   boundary_max_scan?: integer
-  boundary_scanner?: SearchTypesBoundaryScanner
+  boundary_scanner?: SearchBoundaryScanner
   boundary_scanner_locale?: string
-  encoder?: SearchTypesHighlighterEncoder
-  fragmenter?: SearchTypesHighlighterFragmenter
+  encoder?: SearchHighlighterEncoder
+  fragmenter?: SearchHighlighterFragmenter
   fragment_offset?: integer
   fragment_size?: integer
   max_fragment_length?: integer
   no_match_size?: integer
   number_of_fragments?: integer
-  order?: SearchTypesHighlighterOrder
+  order?: SearchHighlighterOrder
   post_tags?: string[]
   pre_tags?: string[]
   require_field_match?: boolean
-  tags_schema?: SearchTypesHighlighterTagsSchema
+  tags_schema?: SearchHighlighterTagsSchema
   highlight_query?: QueryDslQueryContainer
   max_analyzed_offset?: string | integer
 }
 
-export interface SearchTypesHighlightField {
+export interface SearchHighlightField {
   boundary_chars?: string
   boundary_max_scan?: integer
-  boundary_scanner?: SearchTypesBoundaryScanner
+  boundary_scanner?: SearchBoundaryScanner
   boundary_scanner_locale?: string
   field?: Field
   force_source?: boolean
-  fragmenter?: SearchTypesHighlighterFragmenter
+  fragmenter?: SearchHighlighterFragmenter
   fragment_offset?: integer
   fragment_size?: integer
   highlight_query?: QueryDslQueryContainer
@@ -1190,26 +1190,26 @@ export interface SearchTypesHighlightField {
   max_fragment_length?: integer
   no_match_size?: integer
   number_of_fragments?: integer
-  order?: SearchTypesHighlighterOrder
+  order?: SearchHighlighterOrder
   phrase_limit?: integer
   post_tags?: string[]
   pre_tags?: string[]
   require_field_match?: boolean
-  tags_schema?: SearchTypesHighlighterTagsSchema
-  type?: SearchTypesHighlighterType | string
+  tags_schema?: SearchHighlighterTagsSchema
+  type?: SearchHighlighterType | string
 }
 
-export type SearchTypesHighlighterEncoder = 'default' | 'html'
+export type SearchHighlighterEncoder = 'default' | 'html'
 
-export type SearchTypesHighlighterFragmenter = 'simple' | 'span'
+export type SearchHighlighterFragmenter = 'simple' | 'span'
 
-export type SearchTypesHighlighterOrder = 'score'
+export type SearchHighlighterOrder = 'score'
 
-export type SearchTypesHighlighterTagsSchema = 'styled'
+export type SearchHighlighterTagsSchema = 'styled'
 
-export type SearchTypesHighlighterType = 'plain' | 'fvh' | 'unified'
+export type SearchHighlighterType = 'plain' | 'fvh' | 'unified'
 
-export interface SearchTypesHit<TDocument = unknown> {
+export interface SearchHit<TDocument = unknown> {
   _index: IndexName
   _id: Id
   _score?: double
@@ -1217,9 +1217,9 @@ export interface SearchTypesHit<TDocument = unknown> {
   _explanation?: ExplainExplanation
   fields?: Record<string, any>
   highlight?: Record<string, string[]>
-  inner_hits?: Record<string, SearchTypesInnerHitsResult>
+  inner_hits?: Record<string, SearchInnerHitsResult>
   matched_queries?: string[]
-  _nested?: SearchTypesNestedIdentity
+  _nested?: SearchNestedIdentity
   _ignored?: string[]
   _shard?: string
   _node?: string
@@ -1228,112 +1228,112 @@ export interface SearchTypesHit<TDocument = unknown> {
   _seq_no?: SequenceNumber
   _primary_term?: long
   _version?: VersionNumber
-  sort?: SearchTypesSortResults
+  sort?: SearchSortResults
 }
 
-export interface SearchTypesHitsMetadata<T = unknown> {
-  total: SearchTypesTotalHits | long
-  hits: SearchTypesHit<T>[]
+export interface SearchHitsMetadata<T = unknown> {
+  total: SearchTotalHits | long
+  hits: SearchHit<T>[]
   max_score?: double
 }
 
-export interface SearchTypesInnerHits {
+export interface SearchInnerHits {
   name?: Name
   size?: integer
   from?: integer
-  collapse?: SearchTypesFieldCollapse
+  collapse?: SearchFieldCollapse
   docvalue_fields?: Fields
   explain?: boolean
-  highlight?: SearchTypesHighlight
+  highlight?: SearchHighlight
   ignore_unmapped?: boolean
   script_fields?: Record<string, ScriptField>
   seq_no_primary_term?: boolean
   fields?: Fields
-  sort?: SearchTypesSort
-  _source?: boolean | SearchTypesSourceFilter
+  sort?: SearchSort
+  _source?: boolean | SearchSourceFilter
   version?: boolean
 }
 
-export interface SearchTypesInnerHitsMetadata {
-  total: SearchTypesTotalHits | long
-  hits: SearchTypesHit<Record<string, any>>[]
+export interface SearchInnerHitsMetadata {
+  total: SearchTotalHits | long
+  hits: SearchHit<Record<string, any>>[]
   max_score?: double
 }
 
-export interface SearchTypesInnerHitsResult {
-  hits: SearchTypesInnerHitsMetadata
+export interface SearchInnerHitsResult {
+  hits: SearchInnerHitsMetadata
 }
 
-export interface SearchTypesLaplaceSmoothingModel {
+export interface SearchLaplaceSmoothingModel {
   alpha: double
 }
 
-export interface SearchTypesLinearInterpolationSmoothingModel {
+export interface SearchLinearInterpolationSmoothingModel {
   bigram_lambda: double
   trigram_lambda: double
   unigram_lambda: double
 }
 
-export interface SearchTypesNestedIdentity {
+export interface SearchNestedIdentity {
   field: Field
   offset: integer
-  _nested?: SearchTypesNestedIdentity
+  _nested?: SearchNestedIdentity
 }
 
-export interface SearchTypesNestedSortValue {
+export interface SearchNestedSortValue {
   filter?: QueryDslQueryContainer
   max_children?: integer
   path: Field
 }
 
-export interface SearchTypesPhraseSuggestCollate {
+export interface SearchPhraseSuggestCollate {
   params?: Record<string, any>
   prune?: boolean
-  query: SearchTypesPhraseSuggestCollateQuery
+  query: SearchPhraseSuggestCollateQuery
 }
 
-export interface SearchTypesPhraseSuggestCollateQuery {
+export interface SearchPhraseSuggestCollateQuery {
   id?: Id
   source?: string
 }
 
-export interface SearchTypesPhraseSuggestHighlight {
+export interface SearchPhraseSuggestHighlight {
   post_tag: string
   pre_tag: string
 }
 
-export interface SearchTypesPhraseSuggestOption {
+export interface SearchPhraseSuggestOption {
   text: string
   highlighted: string
   score: double
 }
 
-export interface SearchTypesPhraseSuggester extends SearchTypesSuggesterBase {
-  collate?: SearchTypesPhraseSuggestCollate
+export interface SearchPhraseSuggester extends SearchSuggesterBase {
+  collate?: SearchPhraseSuggestCollate
   confidence?: double
-  direct_generator?: SearchTypesDirectGenerator[]
+  direct_generator?: SearchDirectGenerator[]
   force_unigrams?: boolean
   gram_size?: integer
-  highlight?: SearchTypesPhraseSuggestHighlight
+  highlight?: SearchPhraseSuggestHighlight
   max_errors?: double
   real_word_error_likelihood?: double
   separator?: string
   shard_size?: integer
-  smoothing?: SearchTypesSmoothingModelContainer
+  smoothing?: SearchSmoothingModelContainer
   text?: string
   token_limit?: integer
 }
 
-export interface SearchTypesPointInTimeReference {
+export interface SearchPointInTimeReference {
   id: Id
   keep_alive?: Time
 }
 
-export interface SearchTypesProfile {
-  shards: SearchTypesShardProfile[]
+export interface SearchProfile {
+  shards: SearchShardProfile[]
 }
 
-export interface SearchTypesQueryBreakdown {
+export interface SearchQueryBreakdown {
   advance: long
   advance_count: long
   build_scorer: long
@@ -1354,114 +1354,114 @@ export interface SearchTypesQueryBreakdown {
   set_min_competitive_score_count: long
 }
 
-export interface SearchTypesQueryProfile {
-  breakdown: SearchTypesQueryBreakdown
+export interface SearchQueryProfile {
+  breakdown: SearchQueryBreakdown
   description: string
   time_in_nanos: long
   type: string
-  children?: SearchTypesQueryProfile[]
+  children?: SearchQueryProfile[]
 }
 
-export interface SearchTypesRescore {
-  query: SearchTypesRescoreQuery
+export interface SearchRescore {
+  query: SearchRescoreQuery
   window_size?: integer
 }
 
-export interface SearchTypesRescoreQuery {
+export interface SearchRescoreQuery {
   rescore_query: QueryDslQueryContainer
   query_weight?: double
   rescore_query_weight?: double
-  score_mode?: SearchTypesScoreMode
+  score_mode?: SearchScoreMode
 }
 
-export type SearchTypesScoreMode = 'avg' | 'max' | 'min' | 'multiply' | 'total'
+export type SearchScoreMode = 'avg' | 'max' | 'min' | 'multiply' | 'total'
 
-export interface SearchTypesScoreSort {
-  mode?: SearchTypesSortMode
-  order?: SearchTypesSortOrder
+export interface SearchScoreSort {
+  mode?: SearchSortMode
+  order?: SearchSortOrder
 }
 
-export interface SearchTypesScriptSort {
-  order?: SearchTypesSortOrder
+export interface SearchScriptSort {
+  order?: SearchSortOrder
   script: Script
   type?: string
 }
 
-export interface SearchTypesSearchProfile {
-  collector: SearchTypesCollector[]
-  query: SearchTypesQueryProfile[]
+export interface SearchSearchProfile {
+  collector: SearchCollector[]
+  query: SearchQueryProfile[]
   rewrite_time: long
 }
 
-export interface SearchTypesShardProfile {
-  aggregations: SearchTypesAggregationProfile[]
+export interface SearchShardProfile {
+  aggregations: SearchAggregationProfile[]
   id: string
-  searches: SearchTypesSearchProfile[]
+  searches: SearchSearchProfile[]
 }
 
-export interface SearchTypesSmoothingModelContainer {
-  laplace?: SearchTypesLaplaceSmoothingModel
-  linear_interpolation?: SearchTypesLinearInterpolationSmoothingModel
-  stupid_backoff?: SearchTypesStupidBackoffSmoothingModel
+export interface SearchSmoothingModelContainer {
+  laplace?: SearchLaplaceSmoothingModel
+  linear_interpolation?: SearchLinearInterpolationSmoothingModel
+  stupid_backoff?: SearchStupidBackoffSmoothingModel
 }
 
-export type SearchTypesSort = SearchTypesSortCombinations | SearchTypesSortCombinations[]
+export type SearchSort = SearchSortCombinations | SearchSortCombinations[]
 
-export type SearchTypesSortCombinations = Field | SearchTypesSortContainer | SearchTypesSortOrder
+export type SearchSortCombinations = Field | SearchSortContainer | SearchSortOrder
 
-export interface SearchTypesSortContainerKeys {
-  _score?: SearchTypesScoreSort
-  _doc?: SearchTypesScoreSort
-  _geo_distance?: SearchTypesGeoDistanceSort
-  _script?: SearchTypesScriptSort
+export interface SearchSortContainerKeys {
+  _score?: SearchScoreSort
+  _doc?: SearchScoreSort
+  _geo_distance?: SearchGeoDistanceSort
+  _script?: SearchScriptSort
 }
-export type SearchTypesSortContainer = SearchTypesSortContainerKeys |
-    { [property: string]: SearchTypesFieldSort | SearchTypesSortOrder }
+export type SearchSortContainer = SearchSortContainerKeys |
+    { [property: string]: SearchFieldSort | SearchSortOrder }
 
-export type SearchTypesSortMode = 'min' | 'max' | 'sum' | 'avg' | 'median'
+export type SearchSortMode = 'min' | 'max' | 'sum' | 'avg' | 'median'
 
-export type SearchTypesSortOrder = 'asc' | 'desc' | '_doc'
+export type SearchSortOrder = 'asc' | 'desc' | '_doc'
 
-export type SearchTypesSortResults = (long | double | string | null)[]
+export type SearchSortResults = (long | double | string | null)[]
 
-export interface SearchTypesSourceFilter {
+export interface SearchSourceFilter {
   excludes?: Fields
   includes?: Fields
   exclude?: Fields
   include?: Fields
 }
 
-export type SearchTypesStringDistance = 'internal' | 'damerau_levenshtein' | 'levenshtein' | 'jaro_winkler' | 'ngram'
+export type SearchStringDistance = 'internal' | 'damerau_levenshtein' | 'levenshtein' | 'jaro_winkler' | 'ngram'
 
-export interface SearchTypesStupidBackoffSmoothingModel {
+export interface SearchStupidBackoffSmoothingModel {
   discount: double
 }
 
-export interface SearchTypesSuggest<T = unknown> {
+export interface SearchSuggest<T = unknown> {
   length: integer
   offset: integer
-  options: SearchTypesSuggestOption<T>[]
+  options: SearchSuggestOption<T>[]
   text: string
 }
 
-export interface SearchTypesSuggestContainer {
-  completion?: SearchTypesCompletionSuggester
-  phrase?: SearchTypesPhraseSuggester
+export interface SearchSuggestContainer {
+  completion?: SearchCompletionSuggester
+  phrase?: SearchPhraseSuggester
   prefix?: string
   regex?: string
-  term?: SearchTypesTermSuggester
+  term?: SearchTermSuggester
   text?: string
 }
 
-export interface SearchTypesSuggestContextQuery {
+export interface SearchSuggestContextQuery {
   boost?: double
-  context: SearchTypesContext
+  context: SearchContext
   neighbours?: Distance[] | integer[]
   precision?: Distance | integer
   prefix?: boolean
 }
 
-export interface SearchTypesSuggestFuzziness {
+export interface SearchSuggestFuzziness {
   fuzziness: Fuzziness
   min_length: integer
   prefix_length: integer
@@ -1469,23 +1469,23 @@ export interface SearchTypesSuggestFuzziness {
   unicode_aware: boolean
 }
 
-export type SearchTypesSuggestOption<TDocument = unknown> = SearchTypesCompletionSuggestOption<TDocument> | SearchTypesPhraseSuggestOption | SearchTypesTermSuggestOption
+export type SearchSuggestOption<TDocument = unknown> = SearchCompletionSuggestOption<TDocument> | SearchPhraseSuggestOption | SearchTermSuggestOption
 
-export type SearchTypesSuggestSort = 'score' | 'frequency'
+export type SearchSuggestSort = 'score' | 'frequency'
 
-export interface SearchTypesSuggesterBase {
+export interface SearchSuggesterBase {
   field: Field
   analyzer?: string
   size?: integer
 }
 
-export interface SearchTypesTermSuggestOption {
+export interface SearchTermSuggestOption {
   text: string
   freq?: long
   score: double
 }
 
-export interface SearchTypesTermSuggester extends SearchTypesSuggesterBase {
+export interface SearchTermSuggester extends SearchSuggesterBase {
   lowercase_terms?: boolean
   max_edits?: integer
   max_inspections?: integer
@@ -1494,18 +1494,18 @@ export interface SearchTypesTermSuggester extends SearchTypesSuggesterBase {
   min_word_length?: integer
   prefix_length?: integer
   shard_size?: integer
-  sort?: SearchTypesSuggestSort
-  string_distance?: SearchTypesStringDistance
+  sort?: SearchSuggestSort
+  string_distance?: SearchStringDistance
   suggest_mode?: SuggestMode
   text?: string
 }
 
-export interface SearchTypesTotalHits {
-  relation: SearchTypesTotalHitsRelation
+export interface SearchTotalHits {
+  relation: SearchTotalHitsRelation
   value: long
 }
 
-export type SearchTypesTotalHitsRelation = 'eq' | 'gte'
+export type SearchTotalHitsRelation = 'eq' | 'gte'
 
 export interface SearchShardsRequest extends RequestBase {
   index?: Indices
@@ -1555,7 +1555,7 @@ export interface SearchTemplateResponse<TDocument = unknown> {
   _shards: ShardStatistics
   timed_out: boolean
   took: integer
-  hits: SearchTypesHitsMetadata<TDocument>
+  hits: SearchHitsMetadata<TDocument>
 }
 
 export interface TermvectorsFieldStatistics {
@@ -1649,7 +1649,7 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
     doc_as_upsert?: boolean
     script?: Script
     scripted_upsert?: boolean
-    _source?: boolean | SearchTypesSourceFilter
+    _source?: boolean | SearchSourceFilter
     upsert?: TDocument
   }
 }
@@ -2521,7 +2521,7 @@ export interface AggregationsBucketSortAggregation extends AggregationsAggregati
   from?: integer
   gap_policy?: AggregationsGapPolicy
   size?: integer
-  sort?: SearchTypesSort
+  sort?: SearchSort
 }
 
 export interface AggregationsBucketsPath {
@@ -2732,7 +2732,7 @@ export interface AggregationsGeoLineAggregation {
   point: AggregationsGeoLinePoint
   sort: AggregationsGeoLineSort
   include_sort?: boolean
-  sort_order?: SearchTypesSortOrder
+  sort_order?: SearchSortOrder
   size?: integer
 }
 
@@ -2791,8 +2791,8 @@ export interface AggregationsHistogramAggregation extends AggregationsBucketAggr
 }
 
 export interface AggregationsHistogramOrder {
-  _count?: SearchTypesSortOrder
-  _key?: SearchTypesSortOrder
+  _count?: SearchSortOrder
+  _key?: SearchSortOrder
 }
 
 export interface AggregationsHoltLinearModelSettings {
@@ -3202,7 +3202,7 @@ export type AggregationsTermsAggregationCollectMode = 'depth_first' | 'breadth_f
 
 export type AggregationsTermsAggregationExecutionHint = 'map' | 'global_ordinals' | 'global_ordinals_hash' | 'global_ordinals_low_cardinality'
 
-export type AggregationsTermsAggregationOrder = SearchTypesSortOrder | Record<string, SearchTypesSortOrder> | Record<string, SearchTypesSortOrder>[]
+export type AggregationsTermsAggregationOrder = SearchSortOrder | Record<string, SearchSortOrder> | Record<string, SearchSortOrder>[]
 
 export interface AggregationsTermsInclude {
   num_partitions: long
@@ -3216,18 +3216,18 @@ export interface AggregationsTestPopulation {
 }
 
 export interface AggregationsTopHitsAggregate extends AggregationsAggregateBase {
-  hits: SearchTypesHitsMetadata<Record<string, any>>
+  hits: SearchHitsMetadata<Record<string, any>>
 }
 
 export interface AggregationsTopHitsAggregation extends AggregationsMetricAggregationBase {
   docvalue_fields?: Fields
   explain?: boolean
   from?: integer
-  highlight?: SearchTypesHighlight
+  highlight?: SearchHighlight
   script_fields?: Record<string, ScriptField>
   size?: integer
-  sort?: SearchTypesSort
-  _source?: boolean | SearchTypesSourceFilter | Fields
+  sort?: SearchSort
+  _source?: boolean | SearchSourceFilter | Fields
   stored_fields?: Fields
   track_scores?: boolean
   version?: boolean
@@ -3246,7 +3246,7 @@ export interface AggregationsTopMetricsAggregate extends AggregationsAggregateBa
 export interface AggregationsTopMetricsAggregation extends AggregationsMetricAggregationBase {
   metrics?: AggregationsTopMetricsValue | AggregationsTopMetricsValue[]
   size?: integer
-  sort?: SearchTypesSort
+  sort?: SearchSort
 }
 
 export interface AggregationsTopMetricsValue {
@@ -4180,7 +4180,7 @@ export type QueryDslGeoValidationMethod = 'coerce' | 'ignore_malformed' | 'stric
 
 export interface QueryDslHasChildQuery extends QueryDslQueryBase {
   ignore_unmapped?: boolean
-  inner_hits?: SearchTypesInnerHits
+  inner_hits?: SearchInnerHits
   max_children?: integer
   min_children?: integer
   query?: QueryDslQueryContainer
@@ -4190,7 +4190,7 @@ export interface QueryDslHasChildQuery extends QueryDslQueryBase {
 
 export interface QueryDslHasParentQuery extends QueryDslQueryBase {
   ignore_unmapped?: boolean
-  inner_hits?: SearchTypesInnerHits
+  inner_hits?: SearchInnerHits
   parent_type?: RelationName
   query?: QueryDslQueryContainer
   score?: boolean
@@ -4387,7 +4387,7 @@ export type QueryDslNamedQuery<TQuery = unknown> = QueryDslNamedQueryKeys<TQuery
 
 export interface QueryDslNestedQuery extends QueryDslQueryBase {
   ignore_unmapped?: boolean
-  inner_hits?: SearchTypesInnerHits
+  inner_hits?: SearchInnerHits
   path?: Field
   query?: QueryDslQueryContainer
   score_mode?: QueryDslNestedScoreMode
@@ -4707,14 +4707,14 @@ export interface AsyncSearchAsyncSearch<TDocument = unknown> {
   aggregations?: Record<string, AggregationsAggregate>
   _clusters?: ClusterStatistics
   fields?: Record<string, any>
-  hits: SearchTypesHitsMetadata<TDocument>
+  hits: SearchHitsMetadata<TDocument>
   max_score?: double
   num_reduce_phases?: long
-  profile?: SearchTypesProfile
+  profile?: SearchProfile
   pit_id?: Id
   _scroll_id?: Id
   _shards: ShardStatistics
-  suggest?: Record<SuggestionName, SearchTypesSuggest<TDocument>[]>
+  suggest?: Record<SuggestionName, SearchSuggest<TDocument>[]>
   terminated_early?: boolean
   timed_out: boolean
   took: long
@@ -4771,14 +4771,14 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
     analyzer?: string
     analyze_wildcard?: boolean
     batched_reduce_size?: long
-    collapse?: SearchTypesFieldCollapse
+    collapse?: SearchFieldCollapse
     default_operator?: DefaultOperator
     df?: string
     docvalue_fields?: Fields
     expand_wildcards?: ExpandWildcards
     explain?: boolean
     from?: integer
-    highlight?: SearchTypesHighlight
+    highlight?: SearchHighlight
     ignore_throttled?: boolean
     ignore_unavailable?: boolean
     indices_boost?: Record<IndexName, double>[]
@@ -4790,22 +4790,22 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
     post_filter?: QueryDslQueryContainer
     preference?: string
     profile?: boolean
-    pit?: SearchTypesPointInTimeReference
+    pit?: SearchPointInTimeReference
     query?: QueryDslQueryContainer
     query_on_query_string?: string
     request_cache?: boolean
-    rescore?: SearchTypesRescore[]
+    rescore?: SearchRescore[]
     routing?: Routing
     script_fields?: Record<string, ScriptField>
     search_after?: any[]
     search_type?: SearchType
     sequence_number_primary_term?: boolean
     size?: integer
-    sort?: SearchTypesSort
-    _source?: boolean | SearchTypesSourceFilter
+    sort?: SearchSort
+    _source?: boolean | SearchSourceFilter
     stats?: string[]
     stored_fields?: Fields
-    suggest?: Record<string, SearchTypesSuggestContainer>
+    suggest?: Record<string, SearchSuggestContainer>
     suggest_field?: Field
     suggest_mode?: SuggestMode
     suggest_size?: long
@@ -6742,7 +6742,15 @@ export interface CcrForgetFollowerIndexResponse {
 
 export interface CcrGetAutoFollowPatternAutoFollowPattern {
   name: Name
-  pattern: CcrGetAutoFollowPatternAutoFollowPattern
+  pattern: CcrGetAutoFollowPatternAutoFollowPatternSummary
+}
+
+export interface CcrGetAutoFollowPatternAutoFollowPatternSummary {
+  active: boolean
+  remote_cluster: string
+  follow_index_pattern?: IndexPattern
+  leader_index_patterns: IndexPatterns
+  max_outstanding_read_requests: integer
 }
 
 export interface CcrGetAutoFollowPatternRequest extends RequestBase {
@@ -7672,6 +7680,7 @@ export interface EnrichPolicy {
   indices: Indices
   match_field: Field
   query?: string
+  name?: Name
 }
 
 export interface EnrichSummary {
@@ -7742,7 +7751,7 @@ export interface EnrichStatsResponse {
 }
 
 export interface EqlEqlHits<TEvent = unknown> {
-  total?: SearchTypesTotalHits
+  total?: SearchTotalHits
   events?: EqlHitsEvent<TEvent>[]
   sequences?: EqlHitsSequence<TEvent>[]
 }
@@ -8264,6 +8273,11 @@ export interface IndicesNumericFielddata {
 
 export type IndicesNumericFielddataFormat = 'array' | 'disabled'
 
+export interface IndicesOverlappingIndexTemplate {
+  name: Name
+  index_patterns?: IndexName[]
+}
+
 export interface IndicesStringFielddata {
   format: IndicesStringFielddataFormat
 }
@@ -8782,7 +8796,7 @@ export interface IndicesGetUpgradeRequest extends RequestBase {
 }
 
 export interface IndicesGetUpgradeResponse {
-  overlapping?: IndicesSimulateIndexTemplateOverlappingIndexTemplate[]
+  overlapping?: IndicesOverlappingIndexTemplate[]
   template?: IndicesTemplateMapping
 }
 
@@ -9215,22 +9229,17 @@ export interface IndicesShrinkResponse extends AcknowledgedResponseBase {
   index: IndexName
 }
 
-export interface IndicesSimulateIndexTemplateOverlappingIndexTemplate {
-  name: Name
-  index_patterns?: IndexName[]
-}
-
 export interface IndicesSimulateIndexTemplateRequest extends RequestBase {
   name?: Name
   body?: {
     index_patterns?: IndexName[]
     composed_of?: Name[]
-    overlapping?: IndicesSimulateIndexTemplateOverlappingIndexTemplate[]
+    overlapping?: IndicesOverlappingIndexTemplate[]
     template?: IndicesTemplateMapping
   }
 }
 
-export interface IndicesSimulateIndexTemplateResponse extends AcknowledgedResponseBase {
+export interface IndicesSimulateIndexTemplateResponse {
 }
 
 export interface IndicesSimulateTemplateRequest extends RequestBase {
@@ -9319,6 +9328,10 @@ export interface IndicesStatsShardCommit {
 export interface IndicesStatsShardFileSizeInfo {
   description: string
   size_in_bytes: long
+  min_size_in_bytes?: long
+  max_size_in_bytes?: long
+  average_size_in_bytes?: long
+  count?: long
 }
 
 export interface IndicesStatsShardLease {
@@ -9729,7 +9742,7 @@ export type IngestShapeType = 'geo_shape' | 'shape'
 
 export interface IngestSortProcessor extends IngestProcessorBase {
   field: Field
-  order: SearchTypesSortOrder
+  order: SearchSortOrder
   target_field: Field
 }
 
@@ -9834,6 +9847,12 @@ export interface IngestPutPipelineRequest extends RequestBase {
 export interface IngestPutPipelineResponse extends AcknowledgedResponseBase {
 }
 
+export interface IngestSimulatePipelineDocument {
+  _id?: Id
+  _index?: IndexName
+  _source: any
+}
+
 export interface IngestSimulatePipelineDocumentSimulation {
   _id: Id
   _index: IndexName
@@ -9861,19 +9880,13 @@ export interface IngestSimulatePipelineRequest extends RequestBase {
   id?: Id
   verbose?: boolean
   body?: {
-    docs?: IngestSimulatePipelineSimulatePipelineDocument[]
+    docs?: IngestSimulatePipelineDocument[]
     pipeline?: IngestPipeline
   }
 }
 
 export interface IngestSimulatePipelineResponse {
   docs: IngestSimulatePipelinePipelineSimulation[]
-}
-
-export interface IngestSimulatePipelineSimulatePipelineDocument {
-  _id?: Id
-  _index?: IndexName
-  _source: any
 }
 
 export interface LicenseLicense {
@@ -9893,20 +9906,13 @@ export type LicenseLicenseStatus = 'active' | 'valid' | 'invalid' | 'expired'
 
 export type LicenseLicenseType = 'missing' | 'trial' | 'basic' | 'standard' | 'dev' | 'silver' | 'gold' | 'platinum' | 'enterprise'
 
-export interface LicenseDeleteLicenseRequest extends RequestBase {
+export interface LicenseDeleteRequest extends RequestBase {
 }
 
-export interface LicenseDeleteLicenseResponse extends AcknowledgedResponseBase {
+export interface LicenseDeleteResponse extends AcknowledgedResponseBase {
 }
 
-export interface LicenseGetBasicLicenseStatusRequest extends RequestBase {
-}
-
-export interface LicenseGetBasicLicenseStatusResponse {
-  eligible_to_start_basic: boolean
-}
-
-export interface LicenseGetLicenseLicenseInformation {
+export interface LicenseGetLicenseInformation {
   expiry_date: DateString
   expiry_date_in_millis: EpochMillis
   issue_date: DateString
@@ -9921,28 +9927,35 @@ export interface LicenseGetLicenseLicenseInformation {
   start_date_in_millis: EpochMillis
 }
 
-export interface LicenseGetLicenseRequest extends RequestBase {
+export interface LicenseGetRequest extends RequestBase {
   accept_enterprise?: boolean
   local?: boolean
 }
 
-export interface LicenseGetLicenseResponse {
-  license: LicenseGetLicenseLicenseInformation
+export interface LicenseGetResponse {
+  license: LicenseGetLicenseInformation
 }
 
-export interface LicenseGetTrialLicenseStatusRequest extends RequestBase {
+export interface LicenseGetBasicStatusRequest extends RequestBase {
 }
 
-export interface LicenseGetTrialLicenseStatusResponse {
+export interface LicenseGetBasicStatusResponse {
+  eligible_to_start_basic: boolean
+}
+
+export interface LicenseGetTrialStatusRequest extends RequestBase {
+}
+
+export interface LicenseGetTrialStatusResponse {
   eligible_to_start_trial: boolean
 }
 
-export interface LicensePostLicenseAcknowledgement {
+export interface LicensePostAcknowledgement {
   license: string[]
   message: string
 }
 
-export interface LicensePostLicenseRequest extends RequestBase {
+export interface LicensePostRequest extends RequestBase {
   acknowledge?: boolean
   body?: {
     license?: LicenseLicense
@@ -9950,28 +9963,28 @@ export interface LicensePostLicenseRequest extends RequestBase {
   }
 }
 
-export interface LicensePostLicenseResponse {
-  acknowledge?: LicensePostLicenseAcknowledgement
+export interface LicensePostResponse {
+  acknowledge?: LicensePostAcknowledgement
   acknowledged: boolean
   license_status: LicenseLicenseStatus
 }
 
-export interface LicenseStartBasicLicenseRequest extends RequestBase {
+export interface LicensePostStartBasicRequest extends RequestBase {
   acknowledge?: boolean
 }
 
-export interface LicenseStartBasicLicenseResponse extends AcknowledgedResponseBase {
+export interface LicensePostStartBasicResponse extends AcknowledgedResponseBase {
   acknowledge: Record<string, string | string[]>
   basic_was_started: boolean
   error_message: string
 }
 
-export interface LicenseStartTrialLicenseRequest extends RequestBase {
+export interface LicensePostStartTrialRequest extends RequestBase {
   acknowledge?: boolean
   type_query_string?: string
 }
 
-export interface LicenseStartTrialLicenseResponse extends AcknowledgedResponseBase {
+export interface LicensePostStartTrialResponse extends AcknowledgedResponseBase {
   error_message?: string
   acknowledged: boolean
   trial_was_started: boolean
@@ -11315,6 +11328,7 @@ export interface MlGetOverallBucketsRequest extends RequestBase {
   end?: Time
   start?: Time
   exclude_interim?: boolean
+  allow_no_match?: boolean
   body?: {
     allow_no_jobs?: boolean
   }
@@ -12023,14 +12037,14 @@ export interface NodesTransport {
   tx_size_in_bytes: long
 }
 
-export interface NodesNodesHotThreadsHotThread {
+export interface NodesHotThreadsHotThread {
   hosts: Host[]
   node_id: Id
   node_name: Name
   threads: string[]
 }
 
-export interface NodesNodesHotThreadsRequest extends RequestBase {
+export interface NodesHotThreadsRequest extends RequestBase {
   node_id?: NodeIds
   ignore_idle_threads?: boolean
   interval?: Time
@@ -12040,73 +12054,73 @@ export interface NodesNodesHotThreadsRequest extends RequestBase {
   timeout?: Time
 }
 
-export interface NodesNodesHotThreadsResponse {
-  hot_threads: NodesNodesHotThreadsHotThread[]
+export interface NodesHotThreadsResponse {
+  hot_threads: NodesHotThreadsHotThread[]
 }
 
-export interface NodesNodesInfoNodeInfo {
+export interface NodesInfoNodeInfo {
   attributes: Record<string, string>
   build_flavor: string
   build_hash: string
   build_type: string
   host: Host
-  http?: NodesNodesInfoNodeInfoHttp
+  http?: NodesInfoNodeInfoHttp
   ip: Ip
-  jvm?: NodesNodesInfoNodeJvmInfo
+  jvm?: NodesInfoNodeJvmInfo
   name: Name
-  network?: NodesNodesInfoNodeInfoNetwork
-  os?: NodesNodesInfoNodeOperatingSystemInfo
+  network?: NodesInfoNodeInfoNetwork
+  os?: NodesInfoNodeOperatingSystemInfo
   plugins?: PluginStats[]
-  process?: NodesNodesInfoNodeProcessInfo
+  process?: NodesInfoNodeProcessInfo
   roles: NodeRoles
-  settings?: NodesNodesInfoNodeInfoSettings
-  thread_pool?: Record<string, NodesNodesInfoNodeThreadPoolInfo>
+  settings?: NodesInfoNodeInfoSettings
+  thread_pool?: Record<string, NodesInfoNodeThreadPoolInfo>
   total_indexing_buffer?: long
   total_indexing_buffer_in_bytes?: ByteSize
-  transport?: NodesNodesInfoNodeInfoTransport
+  transport?: NodesInfoNodeInfoTransport
   transport_address: TransportAddress
   version: VersionString
   modules?: PluginStats[]
-  ingest?: NodesNodesInfoNodeInfoIngest
-  aggregations?: Record<string, NodesNodesInfoNodeInfoAggregation>
+  ingest?: NodesInfoNodeInfoIngest
+  aggregations?: Record<string, NodesInfoNodeInfoAggregation>
 }
 
-export interface NodesNodesInfoNodeInfoAction {
+export interface NodesInfoNodeInfoAction {
   destructive_requires_name: string
 }
 
-export interface NodesNodesInfoNodeInfoAggregation {
+export interface NodesInfoNodeInfoAggregation {
   types: string[]
 }
 
-export interface NodesNodesInfoNodeInfoBootstrap {
+export interface NodesInfoNodeInfoBootstrap {
   memory_lock: string
 }
 
-export interface NodesNodesInfoNodeInfoClient {
+export interface NodesInfoNodeInfoClient {
   type: string
 }
 
-export interface NodesNodesInfoNodeInfoDiscover {
+export interface NodesInfoNodeInfoDiscover {
   seed_hosts: string
 }
 
-export interface NodesNodesInfoNodeInfoHttp {
+export interface NodesInfoNodeInfoHttp {
   bound_address: string[]
   max_content_length?: ByteSize
   max_content_length_in_bytes: long
   publish_address: string
 }
 
-export interface NodesNodesInfoNodeInfoIngest {
-  processors: NodesNodesInfoNodeInfoIngestProcessor[]
+export interface NodesInfoNodeInfoIngest {
+  processors: NodesInfoNodeInfoIngestProcessor[]
 }
 
-export interface NodesNodesInfoNodeInfoIngestProcessor {
+export interface NodesInfoNodeInfoIngestProcessor {
   type: string
 }
 
-export interface NodesNodesInfoNodeInfoJvmMemory {
+export interface NodesInfoNodeInfoJvmMemory {
   direct_max?: ByteSize
   direct_max_in_bytes: long
   heap_init?: ByteSize
@@ -12119,23 +12133,23 @@ export interface NodesNodesInfoNodeInfoJvmMemory {
   non_heap_max_in_bytes: long
 }
 
-export interface NodesNodesInfoNodeInfoMemory {
+export interface NodesInfoNodeInfoMemory {
   total: string
   total_in_bytes: long
 }
 
-export interface NodesNodesInfoNodeInfoNetwork {
-  primary_interface: NodesNodesInfoNodeInfoNetworkInterface
+export interface NodesInfoNodeInfoNetwork {
+  primary_interface: NodesInfoNodeInfoNetworkInterface
   refresh_interval: integer
 }
 
-export interface NodesNodesInfoNodeInfoNetworkInterface {
+export interface NodesInfoNodeInfoNetworkInterface {
   address: string
   mac_address: string
   name: Name
 }
 
-export interface NodesNodesInfoNodeInfoOSCPU {
+export interface NodesInfoNodeInfoOSCPU {
   cache_size: string
   cache_size_in_bytes: integer
   cores_per_socket: integer
@@ -12146,151 +12160,151 @@ export interface NodesNodesInfoNodeInfoOSCPU {
   vendor: string
 }
 
-export interface NodesNodesInfoNodeInfoPath {
+export interface NodesInfoNodeInfoPath {
   logs: string
   home: string
   repo: string[]
   data?: string[]
 }
 
-export interface NodesNodesInfoNodeInfoRepositories {
-  url: NodesNodesInfoNodeInfoRepositoriesUrl
+export interface NodesInfoNodeInfoRepositories {
+  url: NodesInfoNodeInfoRepositoriesUrl
 }
 
-export interface NodesNodesInfoNodeInfoRepositoriesUrl {
+export interface NodesInfoNodeInfoRepositoriesUrl {
   allowed_urls: string
 }
 
-export interface NodesNodesInfoNodeInfoScript {
+export interface NodesInfoNodeInfoScript {
   allowed_types: string
   disable_max_compilations_rate: string
 }
 
-export interface NodesNodesInfoNodeInfoSearch {
-  remote: NodesNodesInfoNodeInfoSearchRemote
+export interface NodesInfoNodeInfoSearch {
+  remote: NodesInfoNodeInfoSearchRemote
 }
 
-export interface NodesNodesInfoNodeInfoSearchRemote {
+export interface NodesInfoNodeInfoSearchRemote {
   connect: string
 }
 
-export interface NodesNodesInfoNodeInfoSettings {
-  cluster: NodesNodesInfoNodeInfoSettingsCluster
-  node: NodesNodesInfoNodeInfoSettingsNode
-  path: NodesNodesInfoNodeInfoPath
-  repositories?: NodesNodesInfoNodeInfoRepositories
-  discovery?: NodesNodesInfoNodeInfoDiscover
-  action?: NodesNodesInfoNodeInfoAction
-  client: NodesNodesInfoNodeInfoClient
-  http: NodesNodesInfoNodeInfoSettingsHttp
-  bootstrap?: NodesNodesInfoNodeInfoBootstrap
-  transport: NodesNodesInfoNodeInfoSettingsTransport
-  network?: NodesNodesInfoNodeInfoSettingsNetwork
-  xpack?: NodesNodesInfoNodeInfoXpack
-  script?: NodesNodesInfoNodeInfoScript
-  search?: NodesNodesInfoNodeInfoSearch
+export interface NodesInfoNodeInfoSettings {
+  cluster: NodesInfoNodeInfoSettingsCluster
+  node: NodesInfoNodeInfoSettingsNode
+  path: NodesInfoNodeInfoPath
+  repositories?: NodesInfoNodeInfoRepositories
+  discovery?: NodesInfoNodeInfoDiscover
+  action?: NodesInfoNodeInfoAction
+  client: NodesInfoNodeInfoClient
+  http: NodesInfoNodeInfoSettingsHttp
+  bootstrap?: NodesInfoNodeInfoBootstrap
+  transport: NodesInfoNodeInfoSettingsTransport
+  network?: NodesInfoNodeInfoSettingsNetwork
+  xpack?: NodesInfoNodeInfoXpack
+  script?: NodesInfoNodeInfoScript
+  search?: NodesInfoNodeInfoSearch
 }
 
-export interface NodesNodesInfoNodeInfoSettingsCluster {
+export interface NodesInfoNodeInfoSettingsCluster {
   name: Name
   routing?: IndicesIndexRouting
-  election: NodesNodesInfoNodeInfoSettingsClusterElection
+  election: NodesInfoNodeInfoSettingsClusterElection
   initial_master_nodes?: string
 }
 
-export interface NodesNodesInfoNodeInfoSettingsClusterElection {
+export interface NodesInfoNodeInfoSettingsClusterElection {
   strategy: Name
 }
 
-export interface NodesNodesInfoNodeInfoSettingsHttp {
-  type: string | NodesNodesInfoNodeInfoSettingsHttpType
+export interface NodesInfoNodeInfoSettingsHttp {
+  type: string | NodesInfoNodeInfoSettingsHttpType
   'type.default'?: string
   compression?: boolean | string
   port?: integer | string
 }
 
-export interface NodesNodesInfoNodeInfoSettingsHttpType {
+export interface NodesInfoNodeInfoSettingsHttpType {
   default: string
 }
 
-export interface NodesNodesInfoNodeInfoSettingsNetwork {
+export interface NodesInfoNodeInfoSettingsNetwork {
   host: Host
 }
 
-export interface NodesNodesInfoNodeInfoSettingsNode {
+export interface NodesInfoNodeInfoSettingsNode {
   name: Name
   attr: Record<string, any>
   max_local_storage_nodes?: string
 }
 
-export interface NodesNodesInfoNodeInfoSettingsTransport {
-  type: string | NodesNodesInfoNodeInfoSettingsTransportType
+export interface NodesInfoNodeInfoSettingsTransport {
+  type: string | NodesInfoNodeInfoSettingsTransportType
   'type.default'?: string
-  features?: NodesNodesInfoNodeInfoSettingsTransportFeatures
+  features?: NodesInfoNodeInfoSettingsTransportFeatures
 }
 
-export interface NodesNodesInfoNodeInfoSettingsTransportFeatures {
+export interface NodesInfoNodeInfoSettingsTransportFeatures {
   'x-pack': string
 }
 
-export interface NodesNodesInfoNodeInfoSettingsTransportType {
+export interface NodesInfoNodeInfoSettingsTransportType {
   default: string
 }
 
-export interface NodesNodesInfoNodeInfoTransport {
+export interface NodesInfoNodeInfoTransport {
   bound_address: string[]
   publish_address: string
   profiles: Record<string, string>
 }
 
-export interface NodesNodesInfoNodeInfoXpack {
-  license?: NodesNodesInfoNodeInfoXpackLicense
-  security: NodesNodesInfoNodeInfoXpackSecurity
+export interface NodesInfoNodeInfoXpack {
+  license?: NodesInfoNodeInfoXpackLicense
+  security: NodesInfoNodeInfoXpackSecurity
   notification?: Record<string, any>
 }
 
-export interface NodesNodesInfoNodeInfoXpackLicense {
-  self_generated: NodesNodesInfoNodeInfoXpackLicenseType
+export interface NodesInfoNodeInfoXpackLicense {
+  self_generated: NodesInfoNodeInfoXpackLicenseType
 }
 
-export interface NodesNodesInfoNodeInfoXpackLicenseType {
+export interface NodesInfoNodeInfoXpackLicenseType {
   type: string
 }
 
-export interface NodesNodesInfoNodeInfoXpackSecurity {
-  http: NodesNodesInfoNodeInfoXpackSecuritySsl
+export interface NodesInfoNodeInfoXpackSecurity {
+  http: NodesInfoNodeInfoXpackSecuritySsl
   enabled: string
-  transport: NodesNodesInfoNodeInfoXpackSecuritySsl
-  authc?: NodesNodesInfoNodeInfoXpackSecurityAuthc
+  transport: NodesInfoNodeInfoXpackSecuritySsl
+  authc?: NodesInfoNodeInfoXpackSecurityAuthc
 }
 
-export interface NodesNodesInfoNodeInfoXpackSecurityAuthc {
-  realms: NodesNodesInfoNodeInfoXpackSecurityAuthcRealms
-  token: NodesNodesInfoNodeInfoXpackSecurityAuthcToken
+export interface NodesInfoNodeInfoXpackSecurityAuthc {
+  realms: NodesInfoNodeInfoXpackSecurityAuthcRealms
+  token: NodesInfoNodeInfoXpackSecurityAuthcToken
 }
 
-export interface NodesNodesInfoNodeInfoXpackSecurityAuthcRealms {
-  file?: Record<string, NodesNodesInfoNodeInfoXpackSecurityAuthcRealmsStatus>
-  native?: Record<string, NodesNodesInfoNodeInfoXpackSecurityAuthcRealmsStatus>
-  pki?: Record<string, NodesNodesInfoNodeInfoXpackSecurityAuthcRealmsStatus>
+export interface NodesInfoNodeInfoXpackSecurityAuthcRealms {
+  file?: Record<string, NodesInfoNodeInfoXpackSecurityAuthcRealmsStatus>
+  native?: Record<string, NodesInfoNodeInfoXpackSecurityAuthcRealmsStatus>
+  pki?: Record<string, NodesInfoNodeInfoXpackSecurityAuthcRealmsStatus>
 }
 
-export interface NodesNodesInfoNodeInfoXpackSecurityAuthcRealmsStatus {
+export interface NodesInfoNodeInfoXpackSecurityAuthcRealmsStatus {
   enabled?: string
   order: string
 }
 
-export interface NodesNodesInfoNodeInfoXpackSecurityAuthcToken {
+export interface NodesInfoNodeInfoXpackSecurityAuthcToken {
   enabled: string
 }
 
-export interface NodesNodesInfoNodeInfoXpackSecuritySsl {
+export interface NodesInfoNodeInfoXpackSecuritySsl {
   ssl: Record<string, string>
 }
 
-export interface NodesNodesInfoNodeJvmInfo {
+export interface NodesInfoNodeJvmInfo {
   gc_collectors: string[]
-  mem: NodesNodesInfoNodeInfoJvmMemory
+  mem: NodesInfoNodeInfoJvmMemory
   memory_pools: string[]
   pid: integer
   start_time_in_millis: long
@@ -12304,7 +12318,7 @@ export interface NodesNodesInfoNodeJvmInfo {
   input_arguments: string[]
 }
 
-export interface NodesNodesInfoNodeOperatingSystemInfo {
+export interface NodesInfoNodeOperatingSystemInfo {
   arch: string
   available_processors: integer
   allocated_processors?: integer
@@ -12312,18 +12326,18 @@ export interface NodesNodesInfoNodeOperatingSystemInfo {
   pretty_name: Name
   refresh_interval_in_millis: integer
   version: VersionString
-  cpu?: NodesNodesInfoNodeInfoOSCPU
-  mem?: NodesNodesInfoNodeInfoMemory
-  swap?: NodesNodesInfoNodeInfoMemory
+  cpu?: NodesInfoNodeInfoOSCPU
+  mem?: NodesInfoNodeInfoMemory
+  swap?: NodesInfoNodeInfoMemory
 }
 
-export interface NodesNodesInfoNodeProcessInfo {
+export interface NodesInfoNodeProcessInfo {
   id: long
   mlockall: boolean
   refresh_interval_in_millis: long
 }
 
-export interface NodesNodesInfoNodeThreadPoolInfo {
+export interface NodesInfoNodeThreadPoolInfo {
   core?: integer
   keep_alive?: string
   max?: integer
@@ -12332,7 +12346,7 @@ export interface NodesNodesInfoNodeThreadPoolInfo {
   type: string
 }
 
-export interface NodesNodesInfoRequest extends RequestBase {
+export interface NodesInfoRequest extends RequestBase {
   node_id?: NodeIds
   metric?: Metrics
   flat_settings?: boolean
@@ -12340,48 +12354,9 @@ export interface NodesNodesInfoRequest extends RequestBase {
   timeout?: Time
 }
 
-export interface NodesNodesInfoResponse extends NodesNodesResponseBase {
+export interface NodesInfoResponse extends NodesNodesResponseBase {
   cluster_name: Name
-  nodes: Record<string, NodesNodesInfoNodeInfo>
-}
-
-export interface NodesNodesStatsRequest extends RequestBase {
-  node_id?: NodeIds
-  metric?: Metrics
-  index_metric?: Metrics
-  completion_fields?: Fields
-  fielddata_fields?: Fields
-  fields?: Fields
-  groups?: boolean
-  include_segment_file_sizes?: boolean
-  level?: Level
-  master_timeout?: Time
-  timeout?: Time
-  types?: string[]
-  include_unloaded_segments?: boolean
-}
-
-export interface NodesNodesStatsResponse extends NodesNodesResponseBase {
-  cluster_name: Name
-  nodes: Record<string, NodesStats>
-}
-
-export interface NodesNodesUsageNodeUsage {
-  rest_actions: Record<string, integer>
-  since: EpochMillis
-  timestamp: EpochMillis
-  aggregations: Record<string, any>
-}
-
-export interface NodesNodesUsageRequest extends RequestBase {
-  node_id?: NodeIds
-  metric?: Metrics
-  timeout?: Time
-}
-
-export interface NodesNodesUsageResponse extends NodesNodesResponseBase {
-  cluster_name: Name
-  nodes: Record<string, NodesNodesUsageNodeUsage>
+  nodes: Record<string, NodesInfoNodeInfo>
 }
 
 export interface NodesReloadSecureSettingsNodeReloadException {
@@ -12406,6 +12381,45 @@ export interface NodesReloadSecureSettingsRequest extends RequestBase {
 export interface NodesReloadSecureSettingsResponse extends NodesNodesResponseBase {
   cluster_name: Name
   nodes: Record<string, NodesStats | NodesReloadSecureSettingsNodeReloadException>
+}
+
+export interface NodesStatsRequest extends RequestBase {
+  node_id?: NodeIds
+  metric?: Metrics
+  index_metric?: Metrics
+  completion_fields?: Fields
+  fielddata_fields?: Fields
+  fields?: Fields
+  groups?: boolean
+  include_segment_file_sizes?: boolean
+  level?: Level
+  master_timeout?: Time
+  timeout?: Time
+  types?: string[]
+  include_unloaded_segments?: boolean
+}
+
+export interface NodesStatsResponse extends NodesNodesResponseBase {
+  cluster_name: Name
+  nodes: Record<string, NodesStats>
+}
+
+export interface NodesUsageNodeUsage {
+  rest_actions: Record<string, integer>
+  since: EpochMillis
+  timestamp: EpochMillis
+  aggregations: Record<string, any>
+}
+
+export interface NodesUsageRequest extends RequestBase {
+  node_id?: NodeIds
+  metric?: Metrics
+  timeout?: Time
+}
+
+export interface NodesUsageResponse extends NodesNodesResponseBase {
+  cluster_name: Name
+  nodes: Record<string, NodesUsageNodeUsage>
 }
 
 export interface RollupDateHistogramGrouping {
@@ -12589,7 +12603,14 @@ export interface RollupRollupSearchRequest extends RequestBase {
   }
 }
 
-export type RollupRollupSearchResponse<TDocument = unknown> = boolean
+export interface RollupRollupSearchResponse<TDocument = unknown> {
+  took: long
+  timed_out: boolean
+  terminated_early?: boolean
+  _shards: ShardStatistics
+  hits: SearchHitsMetadata<TDocument>
+  aggregations?: Record<AggregateName, AggregationsAggregate>
+}
 
 export interface RollupStartRollupJobRequest extends RequestBase {
   id: Id
@@ -13727,22 +13748,22 @@ export interface SnapshotVerifyRepositoryResponse {
   nodes: Record<string, SnapshotVerifyRepositoryCompactNodeInfo>
 }
 
-export interface SqlClearSqlCursorRequest extends RequestBase {
+export interface SqlClearCursorRequest extends RequestBase {
   body?: {
     cursor: string
   }
 }
 
-export interface SqlClearSqlCursorResponse {
+export interface SqlClearCursorResponse {
   succeeded: boolean
 }
 
-export interface SqlQuerySqlColumn {
+export interface SqlQueryColumn {
   name: Name
   type: string
 }
 
-export interface SqlQuerySqlRequest extends RequestBase {
+export interface SqlQueryRequest extends RequestBase {
   format?: string
   body?: {
     columnar?: boolean
@@ -13757,15 +13778,15 @@ export interface SqlQuerySqlRequest extends RequestBase {
   }
 }
 
-export interface SqlQuerySqlResponse {
-  columns?: SqlQuerySqlColumn[]
+export interface SqlQueryResponse {
+  columns?: SqlQueryColumn[]
   cursor?: string
-  rows: SqlQuerySqlRow[]
+  rows: SqlQueryRow[]
 }
 
-export type SqlQuerySqlRow = any[]
+export type SqlQueryRow = any[]
 
-export interface SqlTranslateSqlRequest extends RequestBase {
+export interface SqlTranslateRequest extends RequestBase {
   body?: {
     fetch_size?: integer
     filter?: QueryDslQueryContainer
@@ -13774,11 +13795,11 @@ export interface SqlTranslateSqlRequest extends RequestBase {
   }
 }
 
-export interface SqlTranslateSqlResponse {
+export interface SqlTranslateResponse {
   size: long
-  _source: boolean | Fields | SearchTypesSourceFilter
+  _source: boolean | Fields | SearchSourceFilter
   fields: Record<Field, string>[]
-  sort: SearchTypesSort
+  sort: SearchSort
 }
 
 export interface SslGetCertificatesCertificateInformation {
@@ -13849,7 +13870,7 @@ export interface TaskTaskExecutingNode extends SpecUtilsBaseNode {
   tasks: Record<TaskId, TaskState>
 }
 
-export interface TaskCancelTasksRequest extends RequestBase {
+export interface TaskCancelRequest extends RequestBase {
   task_id?: TaskId
   actions?: string | string[]
   nodes?: string[]
@@ -13857,25 +13878,25 @@ export interface TaskCancelTasksRequest extends RequestBase {
   wait_for_completion?: boolean
 }
 
-export interface TaskCancelTasksResponse {
+export interface TaskCancelResponse {
   node_failures?: ErrorCause[]
   nodes: Record<string, TaskTaskExecutingNode>
 }
 
-export interface TaskGetTaskRequest extends RequestBase {
+export interface TaskGetRequest extends RequestBase {
   task_id: Id
   timeout?: Time
   wait_for_completion?: boolean
 }
 
-export interface TaskGetTaskResponse {
+export interface TaskGetResponse {
   completed: boolean
   task: TaskInfo
   response?: TaskStatus
   error?: ErrorCause
 }
 
-export interface TaskListTasksRequest extends RequestBase {
+export interface TaskListRequest extends RequestBase {
   actions?: string | string[]
   detailed?: boolean
   group_by?: GroupBy
@@ -13885,7 +13906,7 @@ export interface TaskListTasksRequest extends RequestBase {
   wait_for_completion?: boolean
 }
 
-export interface TaskListTasksResponse {
+export interface TaskListResponse {
   node_failures?: ErrorCause[]
   nodes?: Record<string, TaskTaskExecutingNode>
   tasks?: Record<string, TaskInfo> | TaskInfo[]
