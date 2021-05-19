@@ -2585,6 +2585,11 @@ export interface TasksList extends Generic {
   timeout?: string;
 }
 
+export interface TermsEnum<T = RequestBody> extends Generic {
+  index: string | string[];
+  body?: T;
+}
+
 export interface Termvectors<T = RequestBody> extends Generic {
   index: string;
   id?: string;
