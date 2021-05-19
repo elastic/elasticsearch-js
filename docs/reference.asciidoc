@@ -9330,8 +9330,6 @@ link:{ref}/security-api-enable-user.html[Documentation] +
 ----
 client.security.enrollNode()
 ----
-link:{ref}/security-api-enroll-node.html[Documentation] +
-
 
 [discrete]
 === security.getApiKey
