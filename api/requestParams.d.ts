@@ -2260,6 +2260,9 @@ export interface SecurityEnableUser extends Generic {
   refresh?: 'wait_for' | boolean;
 }
 
+export interface SecurityEnrollNode extends Generic {
+}
+
 export interface SecurityGetApiKey extends Generic {
   id?: string;
   name?: string;
@@ -2509,7 +2512,7 @@ export interface TasksList extends Generic {
   timeout?: string;
 }
 
-export interface Termsenum<T = RequestBody> extends Generic {
+export interface TermsEnum<T = RequestBody> extends Generic {
   index: string | string[];
   body?: T;
 }

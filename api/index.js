@@ -84,7 +84,7 @@ const SnapshotApi = require('./api/snapshot')
 const SqlApi = require('./api/sql')
 const SslApi = require('./api/ssl')
 const TasksApi = require('./api/tasks')
-const termsenumApi = require('./api/termsenum')
+const termsEnumApi = require('./api/terms_enum')
 const termvectorsApi = require('./api/termvectors')
 const TextStructureApi = require('./api/text_structure')
 const TransformApi = require('./api/transform')
@@ -202,7 +202,7 @@ ESAPI.prototype.scroll = scrollApi
 ESAPI.prototype.search = searchApi
 ESAPI.prototype.searchShards = searchShardsApi
 ESAPI.prototype.searchTemplate = searchTemplateApi
-ESAPI.prototype.termsenum = termsenumApi
+ESAPI.prototype.termsEnum = termsEnumApi
 ESAPI.prototype.termvectors = termvectorsApi
 ESAPI.prototype.update = updateApi
 ESAPI.prototype.updateByQuery = updateByQueryApi
@@ -464,6 +464,7 @@ Object.defineProperties(ESAPI.prototype, {
       return this[kTasks]
     }
   },
+  terms_enum: { get () { return this.termsEnum } },
   textStructure: {
     get () {
       if (this[kTextStructure] === null) {

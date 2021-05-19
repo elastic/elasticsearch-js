@@ -26,7 +26,7 @@ const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = 
 const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
 
-function termsenumApi (params, options, callback) {
+function termsEnumApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
@@ -53,4 +53,4 @@ function termsenumApi (params, options, callback) {
   return this.transport.request(request, options, callback)
 }
 
-module.exports = termsenumApi
+module.exports = termsEnumApi

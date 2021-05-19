@@ -9324,6 +9324,16 @@ link:{ref}/security-api-enable-user.html[Documentation] +
 |===
 
 [discrete]
+=== security.enrollNode
+
+[source,ts]
+----
+client.security.enrollNode()
+----
+link:{ref}/security-api-enroll-node.html[Documentation] +
+
+
+[discrete]
 === security.getApiKey
 
 [source,ts]
@@ -10346,16 +10356,16 @@ _Default:_ `nodes`
 |===
 
 [discrete]
-=== termsenum
+=== termsEnum
 *Stability:* beta
 [source,ts]
 ----
-client.termsenum({
+client.termsEnum({
   index: string | string[],
   body: object
 })
 ----
-link:{ref}/terms-enum.html[Documentation] +
+link:{ref}/search-terms-enum.html[Documentation] +
 [cols=2*]
 |===
 |`index`

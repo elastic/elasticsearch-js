@@ -2220,6 +2220,14 @@ declare class Client {
     enableUser<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     enableUser<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityEnableUser, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     enableUser<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityEnableUser, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    enroll_node<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityEnrollNode, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    enroll_node<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    enroll_node<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityEnrollNode, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    enroll_node<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityEnrollNode, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    enrollNode<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityEnrollNode, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    enrollNode<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    enrollNode<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityEnrollNode, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    enrollNode<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityEnrollNode, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_api_key<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityGetApiKey, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     get_api_key<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_api_key<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetApiKey, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2561,10 +2569,14 @@ declare class Client {
     list<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.TasksList, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     list<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.TasksList, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
-  termsenum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Termsenum<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-  termsenum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  termsenum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Termsenum<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-  termsenum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Termsenum<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  terms_enum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.TermsEnum<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  terms_enum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  terms_enum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.TermsEnum<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  terms_enum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.TermsEnum<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  termsEnum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.TermsEnum<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+  termsEnum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  termsEnum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.TermsEnum<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  termsEnum<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.TermsEnum<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   termvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Termvectors<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   termvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   termvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Termvectors<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
