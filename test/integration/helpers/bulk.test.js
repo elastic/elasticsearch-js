@@ -102,9 +102,9 @@ test('bulk index with custom id', async t => {
     id: '19273860' // id of document n° 4242
   })
 
-  t.strictEqual(body._index, INDEX)
-  t.strictEqual(body._id, '19273860')
-  t.strictEqual(body._source.id, '19273860')
+  t.equal(body._index, INDEX)
+  t.equal(body._id, '19273860')
+  t.equal(body._source.id, '19273860')
 })
 
 test('abort the operation on document drop', async t => {
@@ -113,9 +113,9 @@ test('abort the operation on document drop', async t => {
     datasource: stream.pipe(split(JSON.parse)),
     concurrency: 1,
     onDrop (doc) {
-      t.strictEqual(doc.status, 400)
-      t.strictEqual(doc.error.type, 'mapper_parsing_exception')
-      t.strictEqual(doc.document.id, '45924372')
+      t.equal(doc.status, 400)
+      t.equal(doc.error.type, 'mapper_parsing_exception')
+      t.equal(doc.document.id, '45924372')
       b.abort()
     },
     onDocument (doc) {
@@ -135,7 +135,7 @@ test('abort the operation on document drop', async t => {
   const result = await b
   t.type(result.time, 'number')
   t.type(result.bytes, 'number')
-  t.strictEqual(result.total - 1, result.successful)
+  t.equal(result.total - 1, result.successful)
   t.match(result, {
     retry: 0,
     failed: 1,

@@ -26,7 +26,7 @@ const { connection } = require('../../utils')
 test('Search should have an additional documents property', async t => {
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
-      t.strictEqual(params.querystring, 'filter_path=hits.hits._source')
+      t.equal(params.querystring, 'filter_path=hits.hits._source')
       return {
         body: {
           hits: {
@@ -50,7 +50,7 @@ test('Search should have an additional documents property', async t => {
     index: 'test',
     body: { foo: 'bar' }
   })
-  t.deepEqual(result, [
+  t.same(result, [
     { one: 'one' },
     { two: 'two' },
     { three: 'three' }
@@ -60,7 +60,7 @@ test('Search should have an additional documents property', async t => {
 test('kGetHits fallback', async t => {
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
-      t.strictEqual(params.querystring, 'filter_path=hits.hits._source')
+      t.equal(params.querystring, 'filter_path=hits.hits._source')
       return { body: {} }
     }
   })
@@ -74,13 +74,13 @@ test('kGetHits fallback', async t => {
     index: 'test',
     body: { foo: 'bar' }
   })
-  t.deepEqual(result, [])
+  t.same(result, [])
 })
 
 test('Merge filter paths (snake_case)', async t => {
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
-      t.strictEqual(params.querystring, 'filter_path=foo%2Chits.hits._source')
+      t.equal(params.querystring, 'filter_path=foo%2Chits.hits._source')
       return {
         body: {
           hits: {
@@ -105,7 +105,7 @@ test('Merge filter paths (snake_case)', async t => {
     filter_path: 'foo',
     body: { foo: 'bar' }
   })
-  t.deepEqual(result, [
+  t.same(result, [
     { one: 'one' },
     { two: 'two' },
     { three: 'three' }
@@ -115,7 +115,7 @@ test('Merge filter paths (snake_case)', async t => {
 test('Merge filter paths (camelCase)', async t => {
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
-      t.strictEqual(params.querystring, 'filter_path=foo%2Chits.hits._source')
+      t.equal(params.querystring, 'filter_path=foo%2Chits.hits._source')
       return {
         body: {
           hits: {
@@ -140,7 +140,7 @@ test('Merge filter paths (camelCase)', async t => {
     filterPath: 'foo',
     body: { foo: 'bar' }
   })
-  t.deepEqual(result, [
+  t.same(result, [
     { one: 'one' },
     { two: 'two' },
     { three: 'three' }

@@ -64,8 +64,8 @@ test('search helper', async t => {
       }
     }
   })
-  t.strictEqual(results.length, 10)
+  t.equal(results.length, 10)
   for (const result of results) {
-    t.true(result.title.toLowerCase().includes('javascript'))
+    t.ok(result.title.toLowerCase().includes('javascript'))
   }
 })

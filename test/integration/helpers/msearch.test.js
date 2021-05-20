@@ -62,7 +62,7 @@ test('Basic', t => {
     { query: { match: { title: 'javascript' } } },
     (err, result) => {
       t.error(err)
-      t.strictEqual(result.body.hits.total.value, 106)
+      t.equal(result.body.hits.total.value, 106)
     }
   )
 
@@ -71,7 +71,7 @@ test('Basic', t => {
     { query: { match: { title: 'ruby' } } },
     (err, result) => {
       t.error(err)
-      t.strictEqual(result.body.hits.total.value, 29)
+      t.equal(result.body.hits.total.value, 29)
     }
   )
 
@@ -87,7 +87,7 @@ test('Bad request', t => {
     { query: { match: { title: 'javascript' } } },
     (err, result) => {
       t.error(err)
-      t.strictEqual(result.body.hits.total.value, 106)
+      t.equal(result.body.hits.total.value, 106)
     }
   )
 
@@ -95,7 +95,7 @@ test('Bad request', t => {
     { index: INDEX },
     { query: { foo: { title: 'ruby' } } },
     (err, result) => {
-      t.true(err instanceof errors.ResponseError)
+      t.ok(err instanceof errors.ResponseError)
     }
   )
 
@@ -112,7 +112,7 @@ test('Send multiple request concurrently over the concurrency limit', t => {
       { query: { match: { title: 'javascript' } } },
       (err, result) => {
         t.error(err)
-        t.strictEqual(result.body.hits.total.value, 106)
+        t.equal(result.body.hits.total.value, 106)
       }
     )
   }

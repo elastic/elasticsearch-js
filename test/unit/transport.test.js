@@ -71,7 +71,7 @@ test('Basic', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -99,7 +99,7 @@ test('Basic (promises support)', t => {
       path: '/hello'
     })
     .then(({ body }) => {
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
     })
     .catch(t.fail)
 })
@@ -154,7 +154,7 @@ test('Basic (options + promises support)', t => {
       requestTimeout: 1000
     })
     .then(({ body }) => {
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
     })
     .catch(t.fail)
 })
@@ -171,7 +171,7 @@ test('Send POST', t => {
     req.on('data', chunk => { json += chunk })
     req.on('error', err => t.fail(err))
     req.on('end', () => {
-      t.deepEqual(JSON.parse(json), { hello: 'world' })
+      t.same(JSON.parse(json), { hello: 'world' })
       res.setHeader('Content-Type', 'application/json;utf=8')
       res.end(JSON.stringify({ hello: 'world' }))
     })
@@ -197,7 +197,7 @@ test('Send POST', t => {
       body: { hello: 'world' }
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -222,7 +222,7 @@ test('Send POST (ndjson)', t => {
     req.on('data', chunk => { json += chunk })
     req.on('error', err => t.fail(err))
     req.on('end', () => {
-      t.strictEqual(
+      t.equal(
         json,
         JSON.stringify(bulkBody[0]) + '\n' +
         JSON.stringify(bulkBody[1]) + '\n' +
@@ -253,7 +253,7 @@ test('Send POST (ndjson)', t => {
       bulkBody
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -270,7 +270,7 @@ test('Send stream', t => {
     req.on('data', chunk => { json += chunk })
     req.on('error', err => t.fail(err))
     req.on('end', () => {
-      t.deepEqual(JSON.parse(json), { hello: 'world' })
+      t.same(JSON.parse(json), { hello: 'world' })
       res.setHeader('Content-Type', 'application/json;utf=8')
       res.end(JSON.stringify({ hello: 'world' }))
     })
@@ -296,7 +296,7 @@ test('Send stream', t => {
       body: intoStream(JSON.stringify({ hello: 'world' }))
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -313,7 +313,7 @@ test('Send stream (bulkBody)', t => {
     req.on('data', chunk => { json += chunk })
     req.on('error', err => t.fail(err))
     req.on('end', () => {
-      t.deepEqual(JSON.parse(json), { hello: 'world' })
+      t.same(JSON.parse(json), { hello: 'world' })
       res.setHeader('Content-Type', 'application/json;utf=8')
       res.end(JSON.stringify({ hello: 'world' }))
     })
@@ -339,7 +339,7 @@ test('Send stream (bulkBody)', t => {
       bulkBody: intoStream(JSON.stringify({ hello: 'world' }))
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -371,7 +371,7 @@ test('Not JSON payload from server', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.error(err)
-      t.strictEqual(body, 'hello!')
+      t.equal(body, 'hello!')
       server.stop()
     })
   })
@@ -391,8 +391,8 @@ test('NoLivingConnectionsError (null connection)', t => {
     sniffInterval: false,
     sniffOnStart: false,
     nodeSelector (connections) {
-      t.is(connections.length, 1)
-      t.true(connections[0] instanceof Connection)
+      t.equal(connections.length, 1)
+      t.ok(connections[0] instanceof Connection)
       return null
     }
   })
@@ -419,8 +419,8 @@ test('NoLivingConnectionsError (undefined connection)', t => {
     sniffInterval: false,
     sniffOnStart: false,
     nodeSelector (connections) {
-      t.is(connections.length, 1)
-      t.true(connections[0] instanceof Connection)
+      t.equal(connections.length, 1)
+      t.ok(connections[0] instanceof Connection)
       return undefined
     }
   })
@@ -521,7 +521,7 @@ test('TimeoutError (should call markDead on the failing connection)', t => {
 
   class CustomConnectionPool extends ConnectionPool {
     markDead (connection) {
-      t.strictEqual(connection.id, 'node1')
+      t.equal(connection.id, 'node1')
       super.markDead(connection)
     }
   }
@@ -555,7 +555,7 @@ test('ConnectionError (should call markDead on the failing connection)', t => {
 
   class CustomConnectionPool extends ConnectionPool {
     markDead (connection) {
-      t.strictEqual(connection.id, 'node1')
+      t.equal(connection.id, 'node1')
       super.markDead(connection)
     }
   }
@@ -626,7 +626,7 @@ test('Retry mechanism', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -671,7 +671,7 @@ test('Should not retry if the body is a stream', t => {
       body: intoStream(JSON.stringify({ hello: 'world' }))
     }, (err, { body }) => {
       t.ok(err instanceof ResponseError)
-      t.strictEqual(count, 1)
+      t.equal(count, 1)
       server.stop()
     })
   })
@@ -716,7 +716,7 @@ test('Should not retry if the bulkBody is a stream', t => {
       bulkBody: intoStream(JSON.stringify([{ hello: 'world' }]))
     }, (err, { body }) => {
       t.ok(err instanceof ResponseError)
-      t.strictEqual(count, 1)
+      t.equal(count, 1)
       server.stop()
     })
   })
@@ -763,7 +763,7 @@ test('No retry', t => {
       maxRetries: 0
     }, (err, { body }) => {
       t.ok(err instanceof ResponseError)
-      t.strictEqual(count, 1)
+      t.equal(count, 1)
       server.stop()
     })
   })
@@ -813,7 +813,7 @@ test('Custom retry mechanism', t => {
       maxRetries: 1
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -824,7 +824,7 @@ test('Should not retry on 429', t => {
 
   let count = 0
   function handler (req, res) {
-    t.strictEqual(count++, 0)
+    t.equal(count++, 0)
     res.statusCode = 429
     res.setHeader('Content-Type', 'application/json;utf=8')
     res.end(JSON.stringify({ hello: 'world' }))
@@ -858,7 +858,7 @@ test('Should not retry on 429', t => {
       path: '/hello'
     }, (err, result) => {
       t.ok(err)
-      t.strictEqual(err.statusCode, 429)
+      t.equal(err.statusCode, 429)
       server.stop()
     })
   })
@@ -869,7 +869,7 @@ test('Should call markAlive with a successful response', t => {
 
   class CustomConnectionPool extends ConnectionPool {
     markAlive (connection) {
-      t.strictEqual(connection.id, 'node1')
+      t.equal(connection.id, 'node1')
       super.markAlive(connection)
     }
   }
@@ -895,7 +895,7 @@ test('Should call markAlive with a successful response', t => {
     path: '/hello'
   }, (err, { body }) => {
     t.error(err)
-    t.deepEqual(body, { hello: 'world' })
+    t.same(body, { hello: 'world' })
   })
 })
 
@@ -932,7 +932,7 @@ test('Should call resurrect on every request', t => {
     path: '/hello'
   }, (err, { body }) => {
     t.error(err)
-    t.deepEqual(body, { hello: 'world' })
+    t.same(body, { hello: 'world' })
   })
 })
 
@@ -1076,8 +1076,8 @@ test('ResponseError', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.ok(err instanceof ResponseError)
-      t.deepEqual(err.body, { status: 500 })
-      t.strictEqual(err.statusCode, 500)
+      t.same(err.body, { status: 500 })
+      t.equal(err.statusCode, 500)
       server.stop()
     })
   })
@@ -1113,7 +1113,7 @@ test('Override requestTimeout', t => {
       requestTimeout: 2000
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -1125,7 +1125,7 @@ test('sniff', t => {
 
     class MyTransport extends Transport {
       sniff (opts) {
-        t.strictEqual(opts.reason, Transport.sniffReasons.SNIFF_ON_START)
+        t.equal(opts.reason, Transport.sniffReasons.SNIFF_ON_START)
       }
     }
 
@@ -1150,7 +1150,7 @@ test('sniff', t => {
 
     class MyTransport extends Transport {
       sniff (opts) {
-        t.strictEqual(opts.reason, Transport.sniffReasons.SNIFF_ON_CONNECTION_FAULT)
+        t.equal(opts.reason, Transport.sniffReasons.SNIFF_ON_CONNECTION_FAULT)
       }
     }
 
@@ -1184,7 +1184,7 @@ test('sniff', t => {
 
     class MyTransport extends Transport {
       sniff (opts) {
-        t.strictEqual(opts.reason, Transport.sniffReasons.SNIFF_INTERVAL)
+        t.equal(opts.reason, Transport.sniffReasons.SNIFF_INTERVAL)
       }
     }
 
@@ -1329,7 +1329,7 @@ test('Should retry the request if the statusCode is 502/3/4', t => {
           path: '/hello'
         }, (err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           server.stop()
         })
       })
@@ -1362,7 +1362,7 @@ test('Ignore status code', t => {
     ignore: [404]
   }, (err, { body }) => {
     t.error(err)
-    t.deepEqual(body, { hello: 'world' })
+    t.same(body, { hello: 'world' })
   })
 
   transport.request({
@@ -1386,7 +1386,7 @@ test('Should serialize the querystring', t => {
   t.plan(2)
 
   function handler (req, res) {
-    t.strictEqual(req.url, '/hello?hello=world&you_know=for%20search')
+    t.equal(req.url, '/hello?hello=world&you_know=for%20search')
     res.end('ok')
   }
 
@@ -1582,8 +1582,8 @@ test('Should cast to boolean HEAD request', t => {
       path: '/200'
     }, (err, { body, statusCode }) => {
       t.error(err)
-      t.strictEqual(statusCode, 200)
-      t.strictEqual(body, true)
+      t.equal(statusCode, 200)
+      t.equal(body, true)
     })
   })
 
@@ -1607,8 +1607,8 @@ test('Should cast to boolean HEAD request', t => {
       path: '/404'
     }, (err, { body, statusCode }) => {
       t.error(err)
-      t.strictEqual(statusCode, 404)
-      t.strictEqual(body, false)
+      t.equal(statusCode, 404)
+      t.equal(body, false)
     })
   })
 
@@ -1633,8 +1633,8 @@ test('Should cast to boolean HEAD request', t => {
       path: '/400'
     }, (err, { body, statusCode }) => {
       t.ok(err instanceof ResponseError)
-      t.false(typeof err.body === 'boolean')
-      t.strictEqual(statusCode, 400)
+      t.notOk(typeof err.body === 'boolean')
+      t.equal(statusCode, 400)
     })
   })
 
@@ -1658,8 +1658,8 @@ test('Should cast to boolean HEAD request', t => {
       path: '/500'
     }, (err, { body, statusCode }) => {
       t.ok(err instanceof ResponseError)
-      t.false(typeof err.body === 'boolean')
-      t.strictEqual(statusCode, 500)
+      t.notOk(typeof err.body === 'boolean')
+      t.equal(statusCode, 500)
     })
   })
 
@@ -1700,7 +1700,7 @@ test('Suggest compression', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -1775,7 +1775,7 @@ test('Warning header', t => {
         path: '/hello'
       }, (err, { warnings }) => {
         t.error(err)
-        t.deepEqual(warnings, [warn])
+        t.same(warnings, [warn])
         warnings.forEach(w => t.type(w, 'string'))
         server.stop()
       })
@@ -1812,7 +1812,7 @@ test('Warning header', t => {
         path: '/hello'
       }, (err, { warnings }) => {
         t.error(err)
-        t.deepEqual(warnings, [warn1, warn2])
+        t.same(warnings, [warn1, warn2])
         warnings.forEach(w => t.type(w, 'string'))
         server.stop()
       })
@@ -1846,7 +1846,7 @@ test('Warning header', t => {
         path: '/hello'
       }, (err, { warnings }) => {
         t.error(err)
-        t.strictEqual(warnings, null)
+        t.equal(warnings, null)
         server.stop()
       })
     })
@@ -1893,7 +1893,7 @@ test('asStream set to true', t => {
       body.on('data', chunk => { payload += chunk })
       body.on('error', err => t.fail(err))
       body.on('end', () => {
-        t.deepEqual(JSON.parse(payload), { hello: 'world' })
+        t.same(JSON.parse(payload), { hello: 'world' })
         server.stop()
       })
     })
@@ -1914,7 +1914,7 @@ test('Compress request', t => {
         .on('data', chunk => { json += chunk })
         .on('error', err => t.fail(err))
         .on('end', () => {
-          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          t.same(JSON.parse(json), { you_know: 'for search' })
           res.setHeader('Content-Type', 'application/json;utf=8')
           res.end(JSON.stringify({ you_know: 'for search' }))
         })
@@ -1942,7 +1942,7 @@ test('Compress request', t => {
         compression: 'gzip'
       }, (err, { body }) => {
         t.error(err)
-        t.deepEqual(body, { you_know: 'for search' })
+        t.same(body, { you_know: 'for search' })
         server.stop()
       })
     })
@@ -1961,7 +1961,7 @@ test('Compress request', t => {
         .on('data', chunk => { json += chunk })
         .on('error', err => t.fail(err))
         .on('end', () => {
-          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          t.same(JSON.parse(json), { you_know: 'for search' })
           res.setHeader('Content-Type', 'application/json;utf=8')
           res.end(JSON.stringify({ you_know: 'for search' }))
         })
@@ -1988,7 +1988,7 @@ test('Compress request', t => {
         body: { you_know: 'for search' }
       }, (err, { body }) => {
         t.error(err)
-        t.deepEqual(body, { you_know: 'for search' })
+        t.same(body, { you_know: 'for search' })
         server.stop()
       })
     })
@@ -2007,7 +2007,7 @@ test('Compress request', t => {
         .on('data', chunk => { json += chunk })
         .on('error', err => t.fail(err))
         .on('end', () => {
-          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          t.same(JSON.parse(json), { you_know: 'for search' })
           res.setHeader('Content-Type', 'application/json;utf=8')
           res.end(JSON.stringify({ you_know: 'for search' }))
         })
@@ -2035,7 +2035,7 @@ test('Compress request', t => {
         compression: 'gzip'
       }, (err, { body }) => {
         t.error(err)
-        t.deepEqual(body, { you_know: 'for search' })
+        t.same(body, { you_know: 'for search' })
         server.stop()
       })
     })
@@ -2057,8 +2057,8 @@ test('Compress request', t => {
       })
       t.fail('Should throw')
     } catch (err) {
-      t.true(err instanceof ConfigurationError)
-      t.is(err.message, 'Invalid compression: \'deflate\'')
+      t.ok(err instanceof ConfigurationError)
+      t.equal(err.message, 'Invalid compression: \'deflate\'')
     }
   })
 
@@ -2066,8 +2066,8 @@ test('Compress request', t => {
     t.plan(9)
 
     function handler (req, res) {
-      t.strictEqual(req.headers['content-encoding'], undefined)
-      t.strictEqual(req.headers['content-type'], undefined)
+      t.equal(req.headers['content-encoding'], undefined)
+      t.equal(req.headers['content-type'], undefined)
       res.end()
     }
 
@@ -2126,7 +2126,7 @@ test('Compress request', t => {
         .on('data', chunk => { json += chunk })
         .on('error', err => t.fail(err))
         .on('end', () => {
-          t.deepEqual(JSON.parse(json), { you_know: 'for search' })
+          t.same(JSON.parse(json), { you_know: 'for search' })
           res.setHeader('Content-Type', 'application/json;utf=8')
           if (count++ > 0) {
             res.end(JSON.stringify({ you_know: 'for search' }))
@@ -2160,8 +2160,8 @@ test('Compress request', t => {
         compression: 'gzip'
       }, (err, { body, meta }) => {
         t.error(err)
-        t.deepEqual(body, { you_know: 'for search' })
-        t.strictEqual(count, 2)
+        t.same(body, { you_know: 'for search' })
+        t.equal(count, 2)
         server.stop()
       })
     })
@@ -2201,7 +2201,7 @@ test('Headers configuration', t => {
         path: '/hello'
       }, (err, { body }) => {
         t.error(err)
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
         server.stop()
       })
     })
@@ -2242,7 +2242,7 @@ test('Headers configuration', t => {
         headers: { 'x-baz': 'faz' }
       }, (err, { body }) => {
         t.error(err)
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
         server.stop()
       })
     })
@@ -2280,7 +2280,7 @@ test('Headers configuration', t => {
         headers: { 'x-foo': 'faz' }
       }, (err, { body }) => {
         t.error(err)
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
         server.stop()
       })
     })
@@ -2318,7 +2318,7 @@ test('nodeFilter and nodeSelector', t => {
     path: '/hello'
   }, (err, { body }) => {
     t.error(err)
-    t.deepEqual(body, { hello: 'world' })
+    t.same(body, { hello: 'world' })
   })
 })
 
@@ -2327,7 +2327,7 @@ test('Should accept custom querystring in the optons object', t => {
     t.plan(3)
 
     function handler (req, res) {
-      t.strictEqual(req.url, '/hello?foo=bar')
+      t.equal(req.url, '/hello?foo=bar')
       res.setHeader('Content-Type', 'application/json;utf=8')
       res.end(JSON.stringify({ hello: 'world' }))
     }
@@ -2353,7 +2353,7 @@ test('Should accept custom querystring in the optons object', t => {
         querystring: { foo: 'bar' }
       }, (err, { body }) => {
         t.error(err)
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
         server.stop()
       })
     })
@@ -2363,7 +2363,7 @@ test('Should accept custom querystring in the optons object', t => {
     t.plan(3)
 
     function handler (req, res) {
-      t.strictEqual(req.url, '/hello?baz=faz&foo=bar')
+      t.equal(req.url, '/hello?baz=faz&foo=bar')
       res.setHeader('Content-Type', 'application/json;utf=8')
       res.end(JSON.stringify({ hello: 'world' }))
     }
@@ -2390,7 +2390,7 @@ test('Should accept custom querystring in the optons object', t => {
         querystring: { foo: 'bar' }
       }, (err, { body }) => {
         t.error(err)
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
         server.stop()
       })
     })
@@ -2454,8 +2454,8 @@ test('Should pass request params and options to generateRequestId', t => {
     sniffInterval: false,
     sniffOnStart: false,
     generateRequestId: function (requestParams, requestOptions) {
-      t.deepEqual(requestParams, params)
-      t.deepEqual(requestOptions, options)
+      t.same(requestParams, params)
+      t.same(requestOptions, options)
       return 'id'
     }
   })
@@ -2489,8 +2489,8 @@ test('Secure json parsing', t => {
         method: 'GET',
         path: '/hello'
       }, (err, { body }) => {
-        t.true(err instanceof DeserializationError)
-        t.is(err.message, 'Object contains forbidden prototype property')
+        t.ok(err instanceof DeserializationError)
+        t.equal(err.message, 'Object contains forbidden prototype property')
         server.stop()
       })
     })
@@ -2521,8 +2521,8 @@ test('Secure json parsing', t => {
         method: 'GET',
         path: '/hello'
       }, (err, { body }) => {
-        t.true(err instanceof DeserializationError)
-        t.is(err.message, 'Object contains forbidden prototype property')
+        t.ok(err instanceof DeserializationError)
+        t.equal(err.message, 'Object contains forbidden prototype property')
         server.stop()
       })
     })
@@ -2535,7 +2535,7 @@ test('Lowercase headers utilty', t => {
   t.plan(4)
   const { lowerCaseHeaders } = Transport.internals
 
-  t.deepEqual(lowerCaseHeaders({
+  t.same(lowerCaseHeaders({
     Foo: 'bar',
     Faz: 'baz',
     'X-Hello': 'world'
@@ -2545,7 +2545,7 @@ test('Lowercase headers utilty', t => {
     'x-hello': 'world'
   })
 
-  t.deepEqual(lowerCaseHeaders({
+  t.same(lowerCaseHeaders({
     Foo: 'bar',
     faz: 'baz',
     'X-hello': 'world'
@@ -2555,9 +2555,9 @@ test('Lowercase headers utilty', t => {
     'x-hello': 'world'
   })
 
-  t.strictEqual(lowerCaseHeaders(null), null)
+  t.equal(lowerCaseHeaders(null), null)
 
-  t.strictEqual(lowerCaseHeaders(undefined), undefined)
+  t.equal(lowerCaseHeaders(undefined), undefined)
 })
 
 test('The callback with a sync error should be called in the next tick - json', t => {
