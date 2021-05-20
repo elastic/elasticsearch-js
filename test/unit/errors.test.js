@@ -26,57 +26,57 @@ const { errors } = require('../../index')
 
 test('ElasticsearchClientError', t => {
   const err = new errors.ElasticsearchClientError()
-  t.true(err instanceof Error)
+  t.ok(err instanceof Error)
   t.end()
 })
 
 test('TimeoutError', t => {
   const err = new errors.TimeoutError()
-  t.true(err instanceof Error)
-  t.true(err instanceof errors.ElasticsearchClientError)
-  t.true(err.hasOwnProperty('meta'))
+  t.ok(err instanceof Error)
+  t.ok(err instanceof errors.ElasticsearchClientError)
+  t.ok(err.hasOwnProperty('meta'))
   t.end()
 })
 
 test('ConnectionError', t => {
   const err = new errors.ConnectionError()
-  t.true(err instanceof Error)
-  t.true(err instanceof errors.ElasticsearchClientError)
-  t.true(err.hasOwnProperty('meta'))
+  t.ok(err instanceof Error)
+  t.ok(err instanceof errors.ElasticsearchClientError)
+  t.ok(err.hasOwnProperty('meta'))
   t.end()
 })
 
 test('NoLivingConnectionsError', t => {
   const err = new errors.NoLivingConnectionsError()
-  t.true(err instanceof Error)
-  t.true(err instanceof errors.ElasticsearchClientError)
-  t.true(err.hasOwnProperty('meta'))
+  t.ok(err instanceof Error)
+  t.ok(err instanceof errors.ElasticsearchClientError)
+  t.ok(err.hasOwnProperty('meta'))
   t.end()
 })
 
 test('SerializationError', t => {
   const err = new errors.SerializationError()
-  t.true(err instanceof Error)
-  t.true(err instanceof errors.ElasticsearchClientError)
-  t.false(err.hasOwnProperty('meta'))
-  t.true(err.hasOwnProperty('data'))
+  t.ok(err instanceof Error)
+  t.ok(err instanceof errors.ElasticsearchClientError)
+  t.notOk(err.hasOwnProperty('meta'))
+  t.ok(err.hasOwnProperty('data'))
   t.end()
 })
 
 test('DeserializationError', t => {
   const err = new errors.DeserializationError()
-  t.true(err instanceof Error)
-  t.true(err instanceof errors.ElasticsearchClientError)
-  t.false(err.hasOwnProperty('meta'))
-  t.true(err.hasOwnProperty('data'))
+  t.ok(err instanceof Error)
+  t.ok(err instanceof errors.ElasticsearchClientError)
+  t.notOk(err.hasOwnProperty('meta'))
+  t.ok(err.hasOwnProperty('data'))
   t.end()
 })
 
 test('ConfigurationError', t => {
   const err = new errors.ConfigurationError()
-  t.true(err instanceof Error)
-  t.true(err instanceof errors.ElasticsearchClientError)
-  t.false(err.hasOwnProperty('meta'))
+  t.ok(err instanceof Error)
+  t.ok(err instanceof errors.ElasticsearchClientError)
+  t.notOk(err.hasOwnProperty('meta'))
   t.end()
 })
 
@@ -87,9 +87,9 @@ test('ResponseError', t => {
     headers: 1
   }
   const err = new errors.ResponseError(meta)
-  t.true(err instanceof Error)
-  t.true(err instanceof errors.ElasticsearchClientError)
-  t.true(err.hasOwnProperty('meta'))
+  t.ok(err instanceof Error)
+  t.ok(err instanceof errors.ElasticsearchClientError)
+  t.ok(err.hasOwnProperty('meta'))
   t.ok(err.body)
   t.ok(err.statusCode)
   t.ok(err.headers)
@@ -98,9 +98,9 @@ test('ResponseError', t => {
 
 test('RequestAbortedError', t => {
   const err = new errors.RequestAbortedError()
-  t.true(err instanceof Error)
-  t.true(err instanceof errors.ElasticsearchClientError)
-  t.true(err.hasOwnProperty('meta'))
+  t.ok(err instanceof Error)
+  t.ok(err instanceof errors.ElasticsearchClientError)
+  t.ok(err.hasOwnProperty('meta'))
   t.end()
 })
 
@@ -131,8 +131,8 @@ test('ResponseError with meaningful message / 1', t => {
     headers: {}
   }
   const err = new errors.ResponseError(meta)
-  t.strictEqual(err.message, 'index_not_found_exception: [index_not_found_exception] Reason: no such index [foo]')
-  t.strictEqual(err.toString(), JSON.stringify(meta.body))
+  t.equal(err.message, 'index_not_found_exception: [index_not_found_exception] Reason: no such index [foo]')
+  t.equal(err.toString(), JSON.stringify(meta.body))
   t.end()
 })
 
@@ -171,8 +171,8 @@ test('ResponseError with meaningful message / 2', t => {
     headers: {}
   }
   const err = new errors.ResponseError(meta)
-  t.strictEqual(err.message, 'index_not_found_exception: [index_not_found_exception] Reason: no such index [foo]; [nested_cause] Reason: this is a nested cause')
-  t.strictEqual(err.toString(), JSON.stringify(meta.body))
+  t.equal(err.message, 'index_not_found_exception: [index_not_found_exception] Reason: no such index [foo]; [nested_cause] Reason: this is a nested cause')
+  t.equal(err.toString(), JSON.stringify(meta.body))
   t.end()
 })
 
@@ -193,7 +193,7 @@ test('ResponseError with meaningful message / 3', t => {
     headers: {}
   }
   const err = new errors.ResponseError(meta)
-  t.strictEqual(err.message, 'index_not_found_exception')
-  t.strictEqual(err.toString(), JSON.stringify(meta.body))
+  t.equal(err.message, 'index_not_found_exception')
+  t.equal(err.toString(), JSON.stringify(meta.body))
   t.end()
 })

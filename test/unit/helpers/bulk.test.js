@@ -44,14 +44,14 @@ test('bulk index', t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
-          t.strictEqual(params.path, '/_bulk')
+          t.equal(params.path, '/_bulk')
           t.match(params.headers, {
             'content-type': 'application/x-ndjson',
             'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion},h=bp`
           })
           const [action, payload] = params.body.split('\n')
-          t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
-          t.deepEqual(JSON.parse(payload), dataset[count++])
+          t.same(JSON.parse(action), { index: { _index: 'test' } })
+          t.same(JSON.parse(payload), dataset[count++])
           return { body: { errors: false, items: [{}] } }
         }
       })
@@ -89,14 +89,14 @@ test('bulk index', t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
-          t.strictEqual(params.path, '/_bulk')
+          t.equal(params.path, '/_bulk')
           t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           t.notMatch(params.headers, {
             'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${clientVersion},hc=${nodeVersion},h=bp`
           })
           const [action, payload] = params.body.split('\n')
-          t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
-          t.deepEqual(JSON.parse(payload), dataset[count++])
+          t.same(JSON.parse(action), { index: { _index: 'test' } })
+          t.same(JSON.parse(payload), dataset[count++])
           return { body: { errors: false, items: [{}] } }
         }
       })
@@ -134,9 +134,9 @@ test('bulk index', t => {
     t.test('Should perform a bulk request (high flush size)', async t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
-          t.strictEqual(params.path, '/_bulk')
+          t.equal(params.path, '/_bulk')
           t.match(params.headers, { 'content-type': 'application/x-ndjson' })
-          t.strictEqual(params.body.split('\n').filter(Boolean).length, 6)
+          t.equal(params.body.split('\n').filter(Boolean).length, 6)
           return { body: { errors: false, items: new Array(3).fill({}) } }
         }
       })
@@ -175,14 +175,14 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           if (params.method === 'GET') {
-            t.strictEqual(params.path, '/_all/_refresh')
+            t.equal(params.path, '/_all/_refresh')
             return { body: { acknowledged: true } }
           } else {
-            t.strictEqual(params.path, '/_bulk')
+            t.equal(params.path, '/_bulk')
             t.match(params.headers, { 'content-type': 'application/x-ndjson' })
             const [action, payload] = params.body.split('\n')
-            t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
-            t.deepEqual(JSON.parse(payload), dataset[count++])
+            t.same(JSON.parse(action), { index: { _index: 'test' } })
+            t.same(JSON.parse(payload), dataset[count++])
             return { body: { errors: false, items: [{}] } }
           }
         }
@@ -220,14 +220,14 @@ test('bulk index', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           if (params.method === 'GET') {
-            t.strictEqual(params.path, '/test/_refresh')
+            t.equal(params.path, '/test/_refresh')
             return { body: { acknowledged: true } }
           } else {
-            t.strictEqual(params.path, '/_bulk')
+            t.equal(params.path, '/_bulk')
             t.match(params.headers, { 'content-type': 'application/x-ndjson' })
             const [action, payload] = params.body.split('\n')
-            t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
-            t.deepEqual(JSON.parse(payload), dataset[count++])
+            t.same(JSON.parse(action), { index: { _index: 'test' } })
+            t.same(JSON.parse(payload), dataset[count++])
             return { body: { errors: false, items: [{}] } }
           }
         }
@@ -264,11 +264,11 @@ test('bulk index', t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
-          t.strictEqual(params.path, '/_bulk')
+          t.equal(params.path, '/_bulk')
           t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
-          t.deepEqual(JSON.parse(action), { index: { _index: 'test', _id: count } })
-          t.deepEqual(JSON.parse(payload), dataset[count++])
+          t.same(JSON.parse(action), { index: { _index: 'test', _id: count } })
+          t.same(JSON.parse(payload), dataset[count++])
           return { body: { errors: false, items: [{}] } }
         }
       })
@@ -308,7 +308,7 @@ test('bulk index', t => {
 
     t.test('Should perform a bulk request (retry)', async t => {
       async function handler (req, res) {
-        t.strictEqual(req.url, '/_bulk')
+        t.equal(req.url, '/_bulk')
         t.match(req.headers, { 'content-type': 'application/x-ndjson' })
 
         let body = ''
@@ -353,7 +353,7 @@ test('bulk index', t => {
           }
         },
         onDrop (doc) {
-          t.deepEqual(doc, {
+          t.same(doc, {
             status: 429,
             error: null,
             operation: { index: { _index: 'test' } },
@@ -402,7 +402,7 @@ test('bulk index', t => {
           }
         },
         onDrop (doc) {
-          t.deepEqual(doc, {
+          t.same(doc, {
             status: 429,
             error: null,
             operation: { index: { _index: 'test' } },
@@ -426,7 +426,7 @@ test('bulk index', t => {
 
     t.test('Should perform a bulk request (failure)', async t => {
       async function handler (req, res) {
-        t.strictEqual(req.url, '/_bulk')
+        t.equal(req.url, '/_bulk')
         t.match(req.headers, { 'content-type': 'application/x-ndjson' })
 
         let body = ''
@@ -471,7 +471,7 @@ test('bulk index', t => {
           }
         },
         onDrop (doc) {
-          t.deepEqual(doc, {
+          t.same(doc, {
             status: 400,
             error: { something: 'went wrong' },
             operation: { index: { _index: 'test' } },
@@ -525,7 +525,7 @@ test('bulk index', t => {
         await b
         t.fail('Should throw')
       } catch (err) {
-        t.true(err instanceof errors.ResponseError)
+        t.ok(err instanceof errors.ResponseError)
       }
     })
 
@@ -561,13 +561,13 @@ test('bulk index', t => {
         await b
         t.fail('Should throw')
       } catch (err) {
-        t.true(err instanceof errors.ResponseError)
+        t.ok(err instanceof errors.ResponseError)
       }
     })
 
     t.test('Should abort a bulk request', async t => {
       async function handler (req, res) {
-        t.strictEqual(req.url, '/_bulk')
+        t.equal(req.url, '/_bulk')
         t.match(req.headers, { 'content-type': 'application/x-ndjson' })
 
         let body = ''
@@ -653,8 +653,8 @@ test('bulk index', t => {
           }
         })
         .catch(err => {
-          t.true(err instanceof errors.ConfigurationError)
-          t.is(err.message, 'Bulk helper invalid action: \'foo\'')
+          t.ok(err instanceof errors.ConfigurationError)
+          t.equal(err.message, 'Bulk helper invalid action: \'foo\'')
         })
     })
 
@@ -666,11 +666,11 @@ test('bulk index', t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
-          t.strictEqual(params.path, '/_bulk')
+          t.equal(params.path, '/_bulk')
           t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
-          t.deepEqual(JSON.parse(action), { index: { _index: 'test', _id: count } })
-          t.deepEqual(JSON.parse(payload), dataset[count++])
+          t.same(JSON.parse(action), { index: { _index: 'test', _id: count } })
+          t.same(JSON.parse(payload), dataset[count++])
           return { body: { errors: false, items: [{}] } }
         }
       })
@@ -718,11 +718,11 @@ test('bulk index', t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
-          t.strictEqual(params.path, '/_bulk')
+          t.equal(params.path, '/_bulk')
           t.match(params.headers, { 'content-type': 'application/x-ndjson' })
           const [action, payload] = params.body.split('\n')
-          t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
-          t.deepEqual(JSON.parse(payload), dataset[count++])
+          t.same(JSON.parse(action), { index: { _index: 'test' } })
+          t.same(JSON.parse(payload), dataset[count++])
           return { body: { errors: false, items: [{}] } }
         }
       })
@@ -774,11 +774,11 @@ test('bulk create', t => {
     let count = 0
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
-        t.strictEqual(params.path, '/_bulk')
+        t.equal(params.path, '/_bulk')
         t.match(params.headers, { 'content-type': 'application/x-ndjson' })
         const [action, payload] = params.body.split('\n')
-        t.deepEqual(JSON.parse(action), { create: { _index: 'test', _id: count } })
-        t.deepEqual(JSON.parse(payload), dataset[count++])
+        t.same(JSON.parse(action), { create: { _index: 'test', _id: count } })
+        t.same(JSON.parse(payload), dataset[count++])
         return { body: { errors: false, items: [{}] } }
       }
     })
@@ -823,11 +823,11 @@ test('bulk update', t => {
     let count = 0
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
-        t.strictEqual(params.path, '/_bulk')
+        t.equal(params.path, '/_bulk')
         t.match(params.headers, { 'content-type': 'application/x-ndjson' })
         const [action, payload] = params.body.split('\n')
-        t.deepEqual(JSON.parse(action), { update: { _index: 'test', _id: count } })
-        t.deepEqual(JSON.parse(payload), { doc: dataset[count++], doc_as_upsert: true })
+        t.same(JSON.parse(action), { update: { _index: 'test', _id: count } })
+        t.same(JSON.parse(payload), { doc: dataset[count++], doc_as_upsert: true })
         return { body: { errors: false, items: [{}] } }
       }
     })
@@ -871,11 +871,11 @@ test('bulk update', t => {
     let count = 0
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
-        t.strictEqual(params.path, '/_bulk')
+        t.equal(params.path, '/_bulk')
         t.match(params.headers, { 'content-type': 'application/x-ndjson' })
         const [action, payload] = params.body.split('\n')
-        t.deepEqual(JSON.parse(action), { update: { _index: 'test', _id: count } })
-        t.deepEqual(JSON.parse(payload), { doc: dataset[count++] })
+        t.same(JSON.parse(action), { update: { _index: 'test', _id: count } })
+        t.same(JSON.parse(payload), { doc: dataset[count++] })
         return { body: { errors: false, items: [{}] } }
       }
     })
@@ -921,9 +921,9 @@ test('bulk delete', t => {
     let count = 0
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
-        t.strictEqual(params.path, '/_bulk')
+        t.equal(params.path, '/_bulk')
         t.match(params.headers, { 'content-type': 'application/x-ndjson' })
-        t.deepEqual(JSON.parse(params.body), { delete: { _index: 'test', _id: count++ } })
+        t.same(JSON.parse(params.body), { delete: { _index: 'test', _id: count++ } })
         return { body: { errors: false, items: [{}] } }
       }
     })
@@ -963,7 +963,7 @@ test('bulk delete', t => {
 
   t.test('Should perform a bulk request (failure)', async t => {
     async function handler (req, res) {
-      t.strictEqual(req.url, '/_bulk')
+      t.equal(req.url, '/_bulk')
       t.match(req.headers, { 'content-type': 'application/x-ndjson' })
 
       let body = ''
@@ -1011,7 +1011,7 @@ test('bulk delete', t => {
         }
       },
       onDrop (doc) {
-        t.deepEqual(doc, {
+        t.same(doc, {
           status: 400,
           error: { something: 'went wrong' },
           operation: { delete: { _index: 'test', _id: 1 } },
@@ -1051,7 +1051,7 @@ test('transport options', t => {
           return { body: { errors: false, items: [{}] } }
         }
 
-        t.strictEqual(params.path, '/_all/_refresh')
+        t.equal(params.path, '/_all/_refresh')
         t.match(params.headers, {
           foo: 'bar'
         })
@@ -1081,7 +1081,7 @@ test('transport options', t => {
       }
     })
 
-    t.strictEqual(count, 4) // three bulk requests, one refresh
+    t.equal(count, 4) // three bulk requests, one refresh
     t.type(result.time, 'number')
     t.type(result.bytes, 'number')
     t.match(result, {
@@ -1111,8 +1111,8 @@ test('errors', t => {
         }
       })
     } catch (err) {
-      t.true(err instanceof errors.ConfigurationError)
-      t.is(err.message, 'bulk helper: the datasource must be an array or a buffer or a readable stream or an async generator')
+      t.ok(err instanceof errors.ConfigurationError)
+      t.equal(err.message, 'bulk helper: the datasource must be an array or a buffer or a readable stream or an async generator')
     }
   })
 
@@ -1129,8 +1129,8 @@ test('errors', t => {
         }
       })
     } catch (err) {
-      t.true(err instanceof errors.ConfigurationError)
-      t.is(err.message, 'bulk helper: the datasource is required')
+      t.ok(err instanceof errors.ConfigurationError)
+      t.equal(err.message, 'bulk helper: the datasource is required')
     }
   })
 
@@ -1143,8 +1143,8 @@ test('errors', t => {
         datasource: dataset.slice()
       })
     } catch (err) {
-      t.true(err instanceof errors.ConfigurationError)
-      t.is(err.message, 'bulk helper: the onDocument callback is required')
+      t.ok(err instanceof errors.ConfigurationError)
+      t.equal(err.message, 'bulk helper: the onDocument callback is required')
     }
   })
 
@@ -1159,11 +1159,11 @@ test('Flush interval', t => {
     let count = 0
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
-        t.strictEqual(params.path, '/_bulk')
+        t.equal(params.path, '/_bulk')
         t.match(params.headers, { 'content-type': 'application/x-ndjson' })
         const [action, payload] = params.body.split('\n')
-        t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
-        t.deepEqual(JSON.parse(payload), dataset[count++])
+        t.same(JSON.parse(action), { index: { _index: 'test' } })
+        t.same(JSON.parse(payload), dataset[count++])
         return { body: { errors: false, items: [{}] } }
       }
     })
@@ -1210,12 +1210,12 @@ test('Flush interval', t => {
     let count = 0
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
-        t.true(count < 2)
-        t.strictEqual(params.path, '/_bulk')
+        t.ok(count < 2)
+        t.equal(params.path, '/_bulk')
         t.match(params.headers, { 'content-type': 'application/x-ndjson' })
         const [action, payload] = params.body.split('\n')
-        t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
-        t.deepEqual(JSON.parse(payload), dataset[count++])
+        t.same(JSON.parse(action), { index: { _index: 'test' } })
+        t.same(JSON.parse(payload), dataset[count++])
         return { body: { errors: false, items: [{}] } }
       }
     })

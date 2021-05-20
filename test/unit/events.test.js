@@ -289,7 +289,7 @@ test('Emit event', t => {
 
   client.on(events.REQUEST, (err, request) => {
     t.error(err)
-    t.deepEqual(request, { hello: 'world' })
+    t.same(request, { hello: 'world' })
   })
 
   client.emit(events.REQUEST, null, { hello: 'world' })

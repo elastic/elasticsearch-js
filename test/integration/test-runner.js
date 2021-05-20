@@ -594,7 +594,7 @@ function match (val1, val2, action) {
     // tap.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}, action: ${JSON.stringify(action)}`)
   // everything else
   } else {
-    assert.strictEqual(val1, val2, `should be equal: ${val1} - ${val2}, action: ${JSON.stringify(action)}`)
+    assert.equal(val1, val2, `should be equal: ${val1} - ${val2}, action: ${JSON.stringify(action)}`)
   }
 }
 
@@ -654,9 +654,9 @@ function gte (val1, val2) {
  */
 function length (val, len) {
   if (typeof val === 'string' || Array.isArray(val)) {
-    assert.strictEqual(val.length, len)
+    assert.equal(val.length, len)
   } else if (typeof val === 'object' && val !== null) {
-    assert.strictEqual(Object.keys(val).length, len)
+    assert.equal(Object.keys(val).length, len)
   } else {
     assert.fail(`length: the given value is invalid: ${val}`)
   }

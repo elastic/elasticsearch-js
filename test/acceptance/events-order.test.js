@@ -57,27 +57,27 @@ test('No errors', t => {
 
   client.on(events.SERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.SERIALIZATION)
+    t.equal(order.shift(), events.SERIALIZATION)
   })
 
   client.on(events.REQUEST, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.REQUEST)
+    t.equal(order.shift(), events.REQUEST)
   })
 
   client.on(events.DESERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.DESERIALIZATION)
+    t.equal(order.shift(), events.DESERIALIZATION)
   })
 
   client.on(events.RESPONSE, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.RESPONSE)
+    t.equal(order.shift(), events.RESPONSE)
   })
 
   client.info((err, result) => {
     t.error(err)
-    t.strictEqual(order.length, 0)
+    t.equal(order.length, 0)
   })
 })
 
@@ -99,12 +99,12 @@ test('Connection error', t => {
 
   client.on(events.SERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.SERIALIZATION)
+    t.equal(order.shift(), events.SERIALIZATION)
   })
 
   client.on(events.REQUEST, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.REQUEST)
+    t.equal(order.shift(), events.REQUEST)
   })
 
   client.on(events.DESERIALIZATION, (_err, request) => {
@@ -113,12 +113,12 @@ test('Connection error', t => {
 
   client.on(events.RESPONSE, (err, request) => {
     t.ok(err instanceof ConnectionError)
-    t.strictEqual(order.shift(), events.RESPONSE)
+    t.equal(order.shift(), events.RESPONSE)
   })
 
   client.info((err, result) => {
     t.ok(err instanceof ConnectionError)
-    t.strictEqual(order.length, 0)
+    t.equal(order.length, 0)
   })
 })
 
@@ -140,12 +140,12 @@ test('TimeoutError error', t => {
 
   client.on(events.SERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.SERIALIZATION)
+    t.equal(order.shift(), events.SERIALIZATION)
   })
 
   client.on(events.REQUEST, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.REQUEST)
+    t.equal(order.shift(), events.REQUEST)
   })
 
   client.on(events.DESERIALIZATION, (_err, request) => {
@@ -154,12 +154,12 @@ test('TimeoutError error', t => {
 
   client.on(events.RESPONSE, (err, request) => {
     t.ok(err instanceof TimeoutError)
-    t.strictEqual(order.shift(), events.RESPONSE)
+    t.equal(order.shift(), events.RESPONSE)
   })
 
   client.info((err, result) => {
     t.ok(err instanceof TimeoutError)
-    t.strictEqual(order.length, 0)
+    t.equal(order.length, 0)
   })
 })
 
@@ -180,12 +180,12 @@ test('RequestAbortedError error', t => {
 
   client.on(events.SERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.SERIALIZATION)
+    t.equal(order.shift(), events.SERIALIZATION)
   })
 
   client.on(events.REQUEST, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.REQUEST)
+    t.equal(order.shift(), events.REQUEST)
   })
 
   client.on(events.DESERIALIZATION, (_err, request) => {
@@ -194,12 +194,12 @@ test('RequestAbortedError error', t => {
 
   client.on(events.RESPONSE, (err, request) => {
     t.ok(err instanceof RequestAbortedError)
-    t.strictEqual(order.shift(), events.RESPONSE)
+    t.equal(order.shift(), events.RESPONSE)
   })
 
   const request = client.info((err, result) => {
     t.ok(err instanceof RequestAbortedError)
-    t.strictEqual(order.length, 0)
+    t.equal(order.length, 0)
   })
 
   request.abort()
@@ -232,27 +232,27 @@ test('ResponseError error (no retry)', t => {
 
   client.on(events.SERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.SERIALIZATION)
+    t.equal(order.shift(), events.SERIALIZATION)
   })
 
   client.on(events.REQUEST, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.REQUEST)
+    t.equal(order.shift(), events.REQUEST)
   })
 
   client.on(events.DESERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.DESERIALIZATION)
+    t.equal(order.shift(), events.DESERIALIZATION)
   })
 
   client.on(events.RESPONSE, (err, request) => {
     t.ok(err instanceof ResponseError)
-    t.strictEqual(order.shift(), events.RESPONSE)
+    t.equal(order.shift(), events.RESPONSE)
   })
 
   client.info((err, result) => {
     t.ok(err instanceof ResponseError)
-    t.strictEqual(order.length, 0)
+    t.equal(order.length, 0)
   })
 })
 
@@ -285,27 +285,27 @@ test('ResponseError error (with retry)', t => {
 
   client.on(events.SERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.SERIALIZATION)
+    t.equal(order.shift(), events.SERIALIZATION)
   })
 
   client.on(events.REQUEST, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.REQUEST)
+    t.equal(order.shift(), events.REQUEST)
   })
 
   client.on(events.DESERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.DESERIALIZATION)
+    t.equal(order.shift(), events.DESERIALIZATION)
   })
 
   client.on(events.RESPONSE, (err, request) => {
     t.ok(err instanceof ResponseError)
-    t.strictEqual(order.shift(), events.RESPONSE)
+    t.equal(order.shift(), events.RESPONSE)
   })
 
   client.info((err, result) => {
     t.ok(err instanceof ResponseError)
-    t.strictEqual(order.length, 0)
+    t.equal(order.length, 0)
   })
 })
 
@@ -325,12 +325,12 @@ test('Serialization Error', t => {
 
   client.on(events.SERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.SERIALIZATION)
+    t.equal(order.shift(), events.SERIALIZATION)
   })
 
   client.on(events.REQUEST, (err, request) => {
     t.ok(err instanceof SerializationError)
-    t.strictEqual(order.shift(), events.REQUEST)
+    t.equal(order.shift(), events.REQUEST)
   })
 
   client.on(events.DESERIALIZATION, (_err, request) => {
@@ -345,7 +345,7 @@ test('Serialization Error', t => {
   body.o = body
   client.index({ index: 'test', body }, (err, result) => {
     t.ok(err instanceof SerializationError)
-    t.strictEqual(order.length, 0)
+    t.equal(order.length, 0)
   })
 })
 
@@ -384,27 +384,27 @@ test('Deserialization Error', t => {
 
   client.on(events.SERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.SERIALIZATION)
+    t.equal(order.shift(), events.SERIALIZATION)
   })
 
   client.on(events.REQUEST, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.REQUEST)
+    t.equal(order.shift(), events.REQUEST)
   })
 
   client.on(events.DESERIALIZATION, (err, request) => {
     t.error(err)
-    t.strictEqual(order.shift(), events.DESERIALIZATION)
+    t.equal(order.shift(), events.DESERIALIZATION)
   })
 
   client.on(events.RESPONSE, (err, request) => {
     t.ok(err instanceof DeserializationError)
-    t.strictEqual(order.shift(), events.RESPONSE)
+    t.equal(order.shift(), events.RESPONSE)
   })
 
   client.info((err, result) => {
     t.ok(err instanceof DeserializationError)
-    t.strictEqual(order.length, 0)
+    t.equal(order.length, 0)
   })
 })
 
@@ -435,27 +435,27 @@ test('Socket destroyed while reading the body', t => {
 
     client.on(events.SERIALIZATION, (err, request) => {
       t.error(err)
-      t.strictEqual(order.shift(), events.SERIALIZATION)
+      t.equal(order.shift(), events.SERIALIZATION)
     })
 
     client.on(events.REQUEST, (err, request) => {
       t.error(err)
-      t.strictEqual(order.shift(), events.REQUEST)
+      t.equal(order.shift(), events.REQUEST)
     })
 
     client.on(events.DESERIALIZATION, (err, request) => {
       t.error(err)
-      t.strictEqual(order.shift(), events.DESERIALIZATION)
+      t.equal(order.shift(), events.DESERIALIZATION)
     })
 
     client.on(events.RESPONSE, (err, request) => {
       t.ok(err instanceof ConnectionError)
-      t.strictEqual(order.shift(), events.RESPONSE)
+      t.equal(order.shift(), events.RESPONSE)
     })
 
     client.info((err, result) => {
       t.ok(err instanceof ConnectionError)
-      t.strictEqual(order.length, 0)
+      t.equal(order.length, 0)
       server.stop()
     })
   })

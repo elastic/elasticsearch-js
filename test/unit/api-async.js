@@ -42,7 +42,7 @@ function runAsyncTest (test) {
           type: 'doc',
           q: 'foo:bar'
         })
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
       } catch (err) {
         t.fail(err)
       }

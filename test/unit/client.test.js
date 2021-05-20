@@ -111,7 +111,7 @@ test('Configure host', t => {
       resurrectTimeout: 0
     })
 
-    t.deepEqual(pool.connections.find(c => c.id === 'node').roles, {
+    t.same(pool.connections.find(c => c.id === 'node').roles, {
       master: true,
       data: false,
       ingest: false,
@@ -152,7 +152,7 @@ test('Configure host', t => {
       resurrectTimeout: 0
     })
 
-    t.deepEqual(pool.connections.find(c => c.id === 'node1').roles, {
+    t.same(pool.connections.find(c => c.id === 'node1').roles, {
       master: true,
       data: false,
       ingest: false,
@@ -167,7 +167,7 @@ test('Configure host', t => {
       resurrectTimeout: 0
     })
 
-    t.deepEqual(pool.connections.find(c => c.id === 'node2').roles, {
+    t.same(pool.connections.find(c => c.id === 'node2').roles, {
       master: false,
       data: true,
       ingest: false,
@@ -226,7 +226,7 @@ test('Authentication', t => {
 
         client.info((err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           server.stop()
         })
       })
@@ -250,7 +250,7 @@ test('Authentication', t => {
 
         client.info((err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           server.stop()
         })
       })
@@ -278,7 +278,7 @@ test('Authentication', t => {
 
         client.info((err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           server.stop()
         })
       })
@@ -307,12 +307,12 @@ test('Authentication', t => {
           }
         }, (err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           first = false
 
           client.info((err, { body }) => {
             t.error(err)
-            t.deepEqual(body, { hello: 'world' })
+            t.same(body, { hello: 'world' })
             server.stop()
           })
         })
@@ -346,12 +346,12 @@ test('Authentication', t => {
           }
         }, (err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           first = false
 
           client.info((err, { body }) => {
             t.error(err)
-            t.deepEqual(body, { hello: 'world' })
+            t.same(body, { hello: 'world' })
             server.stop()
           })
         })
@@ -383,7 +383,7 @@ test('Authentication', t => {
 
         client.info((err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           server.stop()
         })
       })
@@ -410,7 +410,7 @@ test('Authentication', t => {
 
         client.info((err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           server.stop()
         })
       })
@@ -439,12 +439,12 @@ test('Authentication', t => {
           }
         }, (err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           first = false
 
           client.info((err, { body }) => {
             t.error(err)
-            t.deepEqual(body, { hello: 'world' })
+            t.same(body, { hello: 'world' })
             server.stop()
           })
         })
@@ -477,12 +477,12 @@ test('Authentication', t => {
           }
         }, (err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           first = false
 
           client.info((err, { body }) => {
             t.error(err)
-            t.deepEqual(body, { hello: 'world' })
+            t.same(body, { hello: 'world' })
             server.stop()
           })
         })
@@ -510,7 +510,7 @@ test('Authentication', t => {
 
         client.info((err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           server.stop()
         })
       })
@@ -539,7 +539,7 @@ test('Authentication', t => {
 
         client.info((err, { body }) => {
           t.error(err)
-          t.deepEqual(body, { hello: 'world' })
+          t.same(body, { hello: 'world' })
           server.stop()
         })
       })
@@ -575,7 +575,7 @@ test('Custom headers per request', t => {
       }
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -625,8 +625,8 @@ test('Extend client APIs', t => {
     const client = new Client({ node: 'http://localhost:9200' })
     client.extend('method', ({ makeRequest, result, ConfigurationError }) => {
       t.type(makeRequest, 'function')
-      t.true(new ConfigurationError() instanceof Error)
-      t.deepEqual(result, {
+      t.ok(new ConfigurationError() instanceof Error)
+      t.same(result, {
         body: null,
         statusCode: null,
         headers: null,
@@ -634,8 +634,8 @@ test('Extend client APIs', t => {
       })
 
       return (params, options) => {
-        t.deepEqual(params, { you_know: 'for search' })
-        t.deepEqual(options, { winter: 'is coming' })
+        t.same(params, { you_know: 'for search' })
+        t.same(options, { winter: 'is coming' })
       }
     })
 
@@ -651,8 +651,8 @@ test('Extend client APIs', t => {
     const client = new Client({ node: 'http://localhost:9200' })
     client.extend('namespace.method', ({ makeRequest, result, ConfigurationError }) => {
       t.type(makeRequest, 'function')
-      t.true(new ConfigurationError() instanceof Error)
-      t.deepEqual(result, {
+      t.ok(new ConfigurationError() instanceof Error)
+      t.same(result, {
         body: null,
         statusCode: null,
         headers: null,
@@ -660,8 +660,8 @@ test('Extend client APIs', t => {
       })
 
       return (params, options) => {
-        t.deepEqual(params, { you_know: 'for search' })
-        t.deepEqual(options, { winter: 'is coming' })
+        t.same(params, { you_know: 'for search' })
+        t.same(options, { winter: 'is coming' })
       }
     })
 
@@ -677,8 +677,8 @@ test('Extend client APIs', t => {
     const client = new Client({ node: 'http://localhost:9200' })
     client.extend('namespace.method1', ({ makeRequest, result, ConfigurationError }) => {
       t.type(makeRequest, 'function')
-      t.true(new ConfigurationError() instanceof Error)
-      t.deepEqual(result, {
+      t.ok(new ConfigurationError() instanceof Error)
+      t.same(result, {
         body: null,
         statusCode: null,
         headers: null,
@@ -686,15 +686,15 @@ test('Extend client APIs', t => {
       })
 
       return (params, options) => {
-        t.deepEqual(params, { you_know: 'for search' })
-        t.deepEqual(options, { winter: 'is coming' })
+        t.same(params, { you_know: 'for search' })
+        t.same(options, { winter: 'is coming' })
       }
     })
 
     client.extend('namespace.method2', ({ makeRequest, result, ConfigurationError }) => {
       t.type(makeRequest, 'function')
-      t.true(new ConfigurationError() instanceof Error)
-      t.deepEqual(result, {
+      t.ok(new ConfigurationError() instanceof Error)
+      t.same(result, {
         body: null,
         statusCode: null,
         headers: null,
@@ -702,8 +702,8 @@ test('Extend client APIs', t => {
       })
 
       return (params, options) => {
-        t.deepEqual(params, { you_know: 'for search' })
-        t.deepEqual(options, { winter: 'is coming' })
+        t.same(params, { you_know: 'for search' })
+        t.same(options, { winter: 'is coming' })
       }
     })
 
@@ -726,7 +726,7 @@ test('Extend client APIs', t => {
       client.extend('index', () => {})
       t.fail('Should throw')
     } catch (err) {
-      t.is(err.message, 'The method "index" already exists')
+      t.equal(err.message, 'The method "index" already exists')
     }
   })
 
@@ -738,7 +738,7 @@ test('Extend client APIs', t => {
       client.extend('indices.delete', () => {})
       t.fail('Should throw')
     } catch (err) {
-      t.is(err.message, 'The method "delete" already exists on namespace "indices"')
+      t.equal(err.message, 'The method "delete" already exists on namespace "indices"')
     }
   })
 
@@ -769,8 +769,8 @@ test('Extend client APIs', t => {
 
     class MyTransport extends Transport {
       request (params, options) {
-        t.deepEqual(params, { you_know: 'for search' })
-        t.deepEqual(options, { winter: 'is coming' })
+        t.same(params, { you_know: 'for search' })
+        t.same(options, { winter: 'is coming' })
       }
     }
 
@@ -803,7 +803,7 @@ test('Extend client APIs', t => {
       { winter: 'is coming' },
       (err, res) => {
         t.error(err)
-        t.deepEqual(res, { hello: 'world' })
+        t.same(res, { hello: 'world' })
       }
     )
   })
@@ -825,7 +825,7 @@ test('Extend client APIs', t => {
         { you_know: 'for search' },
         { winter: 'is coming' }
       )
-      .then(res => t.deepEqual(res, { hello: 'world' }))
+      .then(res => t.same(res, { hello: 'world' }))
       .catch(err => t.fail(err))
   })
 
@@ -863,9 +863,9 @@ test('Elastic cloud config', t => {
       }
     })
 
-    t.strictEqual(client.transport.compression, 'gzip')
-    t.strictEqual(client.transport.suggestCompression, true)
-    t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
+    t.equal(client.transport.compression, 'gzip')
+    t.equal(client.transport.suggestCompression, true)
+    t.same(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
   })
 
   t.test('Without kibana component', t => {
@@ -898,9 +898,9 @@ test('Elastic cloud config', t => {
       }
     })
 
-    t.strictEqual(client.transport.compression, 'gzip')
-    t.strictEqual(client.transport.suggestCompression, true)
-    t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
+    t.equal(client.transport.compression, 'gzip')
+    t.equal(client.transport.suggestCompression, true)
+    t.same(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
   })
 
   t.test('Auth as separate option', t => {
@@ -935,9 +935,9 @@ test('Elastic cloud config', t => {
       }
     })
 
-    t.strictEqual(client.transport.compression, 'gzip')
-    t.strictEqual(client.transport.suggestCompression, true)
-    t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
+    t.equal(client.transport.compression, 'gzip')
+    t.equal(client.transport.suggestCompression, true)
+    t.same(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
   })
 
   t.test('ApiKey should take precedence over basic auth', t => {
@@ -973,9 +973,9 @@ test('Elastic cloud config', t => {
       }
     })
 
-    t.strictEqual(client.transport.compression, 'gzip')
-    t.strictEqual(client.transport.suggestCompression, true)
-    t.deepEqual(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
+    t.equal(client.transport.compression, 'gzip')
+    t.equal(client.transport.suggestCompression, true)
+    t.same(pool._ssl, { secureProtocol: 'TLSv1_2_method' })
   })
 
   t.test('Override default options', t => {
@@ -995,9 +995,9 @@ test('Elastic cloud config', t => {
     })
 
     t.ok(client.connectionPool instanceof CloudConnectionPool)
-    t.strictEqual(client.transport.compression, false)
-    t.strictEqual(client.transport.suggestCompression, false)
-    t.deepEqual(client.connectionPool._ssl, { secureProtocol: 'TLSv1_1_method' })
+    t.equal(client.transport.compression, false)
+    t.equal(client.transport.suggestCompression, false)
+    t.same(client.connectionPool._ssl, { secureProtocol: 'TLSv1_1_method' })
   })
 
   t.end()
@@ -1008,7 +1008,7 @@ test('Opaque Id support', t => {
     t.plan(3)
 
     function handler (req, res) {
-      t.strictEqual(req.headers['x-opaque-id'], undefined)
+      t.equal(req.headers['x-opaque-id'], undefined)
       res.setHeader('Content-Type', 'application/json;utf=8')
       res.end(JSON.stringify({ hello: 'world' }))
     }
@@ -1023,7 +1023,7 @@ test('Opaque Id support', t => {
         q: 'foo:bar'
       }, (err, { body }) => {
         t.error(err)
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
         server.stop()
       })
     })
@@ -1033,7 +1033,7 @@ test('Opaque Id support', t => {
     t.plan(3)
 
     function handler (req, res) {
-      t.strictEqual(req.headers['x-opaque-id'], 'bar')
+      t.equal(req.headers['x-opaque-id'], 'bar')
       res.setHeader('Content-Type', 'application/json;utf=8')
       res.end(JSON.stringify({ hello: 'world' }))
     }
@@ -1050,7 +1050,7 @@ test('Opaque Id support', t => {
         opaqueId: 'bar'
       }, (err, { body }) => {
         t.error(err)
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
         server.stop()
       })
     })
@@ -1060,7 +1060,7 @@ test('Opaque Id support', t => {
     t.plan(3)
 
     function handler (req, res) {
-      t.strictEqual(req.headers['x-opaque-id'], 'foo-bar')
+      t.equal(req.headers['x-opaque-id'], 'foo-bar')
       res.setHeader('Content-Type', 'application/json;utf=8')
       res.end(JSON.stringify({ hello: 'world' }))
     }
@@ -1078,7 +1078,7 @@ test('Opaque Id support', t => {
         opaqueId: 'bar'
       }, (err, { body }) => {
         t.error(err)
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
         server.stop()
       })
     })
@@ -1091,8 +1091,8 @@ test('Correctly handles the same header cased differently', t => {
   t.plan(4)
 
   function handler (req, res) {
-    t.strictEqual(req.headers.authorization, 'Basic foobar')
-    t.strictEqual(req.headers.foo, 'baz')
+    t.equal(req.headers.authorization, 'Basic foobar')
+    t.equal(req.headers.foo, 'baz')
     res.setHeader('Content-Type', 'application/json;utf=8')
     res.end(JSON.stringify({ hello: 'world' }))
   }
@@ -1119,7 +1119,7 @@ test('Correctly handles the same header cased differently', t => {
       }
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -1144,7 +1144,7 @@ test('Random selector', t => {
       q: 'foo:bar'
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -1154,7 +1154,7 @@ test('Disable keep alive agent', t => {
   t.plan(3)
 
   function handler (req, res) {
-    t.strictEqual(req.headers.connection, 'close')
+    t.equal(req.headers.connection, 'close')
     res.setHeader('Content-Type', 'application/json;utf=8')
     res.end(JSON.stringify({ hello: 'world' }))
   }
@@ -1170,7 +1170,7 @@ test('Disable keep alive agent', t => {
       q: 'foo:bar'
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -1184,7 +1184,7 @@ test('name property as string', t => {
     name: 'client-name'
   })
 
-  t.strictEqual(client.name, 'client-name')
+  t.equal(client.name, 'client-name')
 })
 
 test('name property as symbol', t => {
@@ -1196,7 +1196,7 @@ test('name property as symbol', t => {
     name: symbol
   })
 
-  t.strictEqual(client.name, symbol)
+  t.equal(client.name, symbol)
 })
 
 // The nodejs http agent will try to wait for the whole
@@ -1218,8 +1218,8 @@ test('Bad content length', t => {
     const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
     client.info((err, { body }) => {
       t.ok(err instanceof errors.ConnectionError)
-      t.is(err.message, 'Response aborted while reading the body')
-      t.strictEqual(count, 2)
+      t.equal(err.message, 'Response aborted while reading the body')
+      t.equal(count, 2)
       server.stop()
     })
   })
@@ -1244,8 +1244,8 @@ test('Socket destryed while reading the body', t => {
     const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
     client.info((err, { body }) => {
       t.ok(err instanceof errors.ConnectionError)
-      t.is(err.message, 'Response aborted while reading the body')
-      t.strictEqual(count, 2)
+      t.equal(err.message, 'Response aborted while reading the body')
+      t.equal(count, 2)
       server.stop()
     })
   })
@@ -1274,8 +1274,8 @@ test('Content length too big (buffer)', t => {
   const client = new Client({ node: 'http://localhost:9200', Connection: MockConnection })
   client.info((err, result) => {
     t.ok(err instanceof errors.RequestAbortedError)
-    t.is(err.message, `The content length (${buffer.constants.MAX_LENGTH + 10}) is bigger than the maximum allowed buffer (${buffer.constants.MAX_LENGTH})`)
-    t.strictEqual(result.meta.attempts, 0)
+    t.equal(err.message, `The content length (${buffer.constants.MAX_LENGTH + 10}) is bigger than the maximum allowed buffer (${buffer.constants.MAX_LENGTH})`)
+    t.equal(result.meta.attempts, 0)
   })
 })
 
@@ -1301,8 +1301,8 @@ test('Content length too big (string)', t => {
   const client = new Client({ node: 'http://localhost:9200', Connection: MockConnection })
   client.info((err, result) => {
     t.ok(err instanceof errors.RequestAbortedError)
-    t.is(err.message, `The content length (${buffer.constants.MAX_STRING_LENGTH + 10}) is bigger than the maximum allowed string (${buffer.constants.MAX_STRING_LENGTH})`)
-    t.strictEqual(result.meta.attempts, 0)
+    t.equal(err.message, `The content length (${buffer.constants.MAX_STRING_LENGTH + 10}) is bigger than the maximum allowed string (${buffer.constants.MAX_STRING_LENGTH})`)
+    t.equal(result.meta.attempts, 0)
   })
 })
 
@@ -1389,7 +1389,7 @@ test('Prototype poisoning protection enabled by default', t => {
   })
 
   client.info((err, result) => {
-    t.true(err instanceof errors.DeserializationError)
+    t.ok(err instanceof errors.DeserializationError)
   })
 })
 
