@@ -17,7 +17,7 @@ test('Request id', t => {
     t.type(genReqId, 'function')
 
     for (let i = 1; i <= 10; i++) {
-      t.strictEqual(genReqId(), i)
+      t.equal(genReqId(), i)
     }
 
     t.end()
@@ -40,12 +40,12 @@ test('Request id', t => {
 
     client.on('request', (err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.request.id, 'custom-id')
+      t.equal(meta.request.id, 'custom-id')
     })
 
     client.on('response', (err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.request.id, 'custom-id')
+      t.equal(meta.request.id, 'custom-id')
     })
 
     client.info({}, options, t.error)
@@ -61,12 +61,12 @@ test('Request id', t => {
 
     client.on('request', (err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.request.id, 'custom-id')
+      t.equal(meta.request.id, 'custom-id')
     })
 
     client.on('response', (err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.request.id, 'custom-id')
+      t.equal(meta.request.id, 'custom-id')
     })
 
     client.info({}, { id: 'custom-id' }, t.error)
@@ -84,7 +84,7 @@ test('Request id', t => {
 
       client.on('sniff', (err, { meta }) => {
         t.error(err)
-        t.strictEqual(meta.request.id, 1)
+        t.equal(meta.request.id, 1)
       })
     })
 
@@ -99,15 +99,15 @@ test('Request id', t => {
       })
 
       client.on('request', (e, { meta }) => {
-        t.strictEqual(meta.request.id, 'custom')
+        t.equal(meta.request.id, 'custom')
       })
 
       client.on('response', (e, { meta }) => {
-        t.strictEqual(meta.request.id, 'custom')
+        t.equal(meta.request.id, 'custom')
       })
 
       client.on('sniff', (e, { meta }) => {
-        t.strictEqual(meta.request.id, 'custom')
+        t.equal(meta.request.id, 'custom')
       })
 
       client.transport.request({
@@ -139,7 +139,7 @@ test('Request id', t => {
 
     client.on('resurrect', (err, meta) => {
       t.error(err)
-      t.strictEqual(meta.request.id, 'custom')
+      t.equal(meta.request.id, 'custom')
       clock.uninstall()
     })
 
@@ -160,12 +160,12 @@ test('Request context', t => {
 
     client.on('request', (err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.context, null)
+      t.equal(meta.context, null)
     })
 
     client.on('response', (err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.context, null)
+      t.equal(meta.context, null)
     })
 
     client.info(t.error)
@@ -181,12 +181,12 @@ test('Request context', t => {
 
     client.on('request', (err, { meta }) => {
       t.error(err)
-      t.deepEqual(meta.context, { winter: 'is coming' })
+      t.same(meta.context, { winter: 'is coming' })
     })
 
     client.on('response', (err, { meta }) => {
       t.error(err)
-      t.deepEqual(meta.context, { winter: 'is coming' })
+      t.same(meta.context, { winter: 'is coming' })
     })
 
     client.info({}, { context: { winter: 'is coming' } }, t.error)
@@ -203,12 +203,12 @@ test('Request context', t => {
 
     client.on('request', (err, { meta }) => {
       t.error(err)
-      t.deepEqual(meta.context, { winter: 'is coming' })
+      t.same(meta.context, { winter: 'is coming' })
     })
 
     client.on('response', (err, { meta }) => {
       t.error(err)
-      t.deepEqual(meta.context, { winter: 'is coming' })
+      t.same(meta.context, { winter: 'is coming' })
     })
 
     client.info(t.error)
@@ -225,12 +225,12 @@ test('Request context', t => {
 
     client.on('request', (err, { meta }) => {
       t.error(err)
-      t.deepEqual(meta.context, { winter: 'has come' })
+      t.same(meta.context, { winter: 'has come' })
     })
 
     client.on('response', (err, { meta }) => {
       t.error(err)
-      t.deepEqual(meta.context, { winter: 'has come' })
+      t.same(meta.context, { winter: 'has come' })
     })
 
     client.info({}, { context: { winter: 'has come' } }, t.error)
@@ -245,7 +245,7 @@ test('Client name', t => {
       node: 'http://localhost:9200',
       name: 'cluster'
     })
-    t.strictEqual(client.name, 'cluster')
+    t.equal(client.name, 'cluster')
     t.end()
   })
 
@@ -259,17 +259,17 @@ test('Client name', t => {
 
     client.on('request', (err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.name, 'cluster')
+      t.equal(meta.name, 'cluster')
     })
 
     client.on('response', (err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.name, 'cluster')
+      t.equal(meta.name, 'cluster')
     })
 
     client.info((err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.name, 'cluster')
+      t.equal(meta.name, 'cluster')
     })
   })
 
@@ -284,17 +284,17 @@ test('Client name', t => {
 
     client.on('request', (err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.name, symbol)
+      t.equal(meta.name, symbol)
     })
 
     client.on('response', (err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.name, symbol)
+      t.equal(meta.name, symbol)
     })
 
     client.info((err, { meta }) => {
       t.error(err)
-      t.strictEqual(meta.name, symbol)
+      t.equal(meta.name, symbol)
     })
   })
 
@@ -310,7 +310,7 @@ test('Client name', t => {
 
       client.on('sniff', (err, { meta }) => {
         t.error(err)
-        t.strictEqual(meta.name, 'elasticsearch-js')
+        t.equal(meta.name, 'elasticsearch-js')
       })
     })
 
@@ -325,15 +325,15 @@ test('Client name', t => {
       })
 
       client.on('request', (e, { meta }) => {
-        t.strictEqual(meta.name, 'elasticsearch-js')
+        t.equal(meta.name, 'elasticsearch-js')
       })
 
       client.on('response', (e, { meta }) => {
-        t.strictEqual(meta.name, 'elasticsearch-js')
+        t.equal(meta.name, 'elasticsearch-js')
       })
 
       client.on('sniff', (e, { meta }) => {
-        t.strictEqual(meta.name, 'elasticsearch-js')
+        t.equal(meta.name, 'elasticsearch-js')
       })
 
       client.transport.request({
@@ -364,7 +364,7 @@ test('Client name', t => {
 
     client.on('resurrect', (err, meta) => {
       t.error(err)
-      t.strictEqual(meta.name, 'elasticsearch-js')
+      t.equal(meta.name, 'elasticsearch-js')
       clock.uninstall()
     })
 
@@ -392,7 +392,7 @@ test('Client name', t => {
 
     client.on('resurrect', (err, meta) => {
       t.error(err)
-      t.strictEqual(meta.name, 'child-client')
+      t.equal(meta.name, 'child-client')
       clock.uninstall()
     })
 

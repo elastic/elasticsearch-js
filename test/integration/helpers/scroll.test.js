@@ -69,10 +69,10 @@ test('search helper', async t => {
   for await (const search of scrollSearch) {
     count += 1
     for (const doc of search.documents) {
-      t.true(doc.title.toLowerCase().includes('javascript'))
+      t.ok(doc.title.toLowerCase().includes('javascript'))
     }
   }
-  t.strictEqual(count, 11)
+  t.equal(count, 11)
 })
 
 test('clear a scroll search', async t => {
@@ -94,7 +94,7 @@ test('clear a scroll search', async t => {
       search.clear()
     }
   }
-  t.strictEqual(count, 2)
+  t.equal(count, 2)
 })
 
 test('scroll documents', async t => {
@@ -112,7 +112,7 @@ test('scroll documents', async t => {
   let count = 0
   for await (const doc of scrollSearch) {
     count += 1
-    t.true(doc.title.toLowerCase().includes('javascript'))
+    t.ok(doc.title.toLowerCase().includes('javascript'))
   }
-  t.strictEqual(count, 106)
+  t.equal(count, 106)
 })

@@ -41,7 +41,7 @@ test('Basic (callback)', t => {
       q: 'foo:bar'
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -66,7 +66,7 @@ test('Basic (promises)', t => {
         q: 'foo:bar'
       })
       .then(({ body }) => {
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
         server.stop()
       })
       .catch(t.fail)
@@ -169,7 +169,7 @@ test('Abort method (callback)', t => {
       q: 'foo:bar'
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
 
@@ -197,7 +197,7 @@ test('Abort method (promises)', t => {
 
     request
       .then(({ body }) => {
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
         server.stop()
       })
       .catch(t.fail)
@@ -226,7 +226,7 @@ test('Basic (options and callback)', t => {
       requestTimeout: 10000
     }, (err, { body }) => {
       t.error(err)
-      t.deepEqual(body, { hello: 'world' })
+      t.same(body, { hello: 'world' })
       server.stop()
     })
   })
@@ -253,7 +253,7 @@ test('Basic (options and promises)', t => {
         requestTimeout: 10000
       })
       .then(({ body }) => {
-        t.deepEqual(body, { hello: 'world' })
+        t.same(body, { hello: 'world' })
         server.stop()
       })
       .catch(t.fail)
@@ -264,7 +264,7 @@ test('If the API uses the same key for both url and query parameter, the url sho
   t.plan(2)
 
   function handler (req, res) {
-    t.strictEqual(req.url, '/index/_bulk')
+    t.equal(req.url, '/index/_bulk')
     res.setHeader('Content-Type', 'application/json;utf=8')
     res.end(JSON.stringify({ hello: 'world' }))
   }

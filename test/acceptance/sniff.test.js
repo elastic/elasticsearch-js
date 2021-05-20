@@ -43,11 +43,11 @@ test('Should update the connection pool', t => {
     const client = new Client({
       node: nodes[Object.keys(nodes)[0]].url
     })
-    t.strictEqual(client.connectionPool.size, 1)
+    t.equal(client.connectionPool.size, 1)
 
     client.on(events.SNIFF, (err, request) => {
       t.error(err)
-      t.strictEqual(
+      t.equal(
         request.meta.sniff.reason,
         Transport.sniffReasons.DEFAULT
       )
@@ -56,14 +56,14 @@ test('Should update the connection pool', t => {
     // run the sniffer
     client.transport.sniff((err, hosts) => {
       t.error(err)
-      t.strictEqual(hosts.length, 4)
+      t.equal(hosts.length, 4)
 
       const ids = Object.keys(nodes)
       for (let i = 0; i < hosts.length; i++) {
         const id = ids[i]
         // the first node will be an update of the existing one
         if (id === 'node0') {
-          t.deepEqual(hosts[i], {
+          t.same(hosts[i], {
             url: new URL(nodes[id].url),
             id: id,
             roles: {
@@ -74,7 +74,7 @@ test('Should update the connection pool', t => {
             }
           })
         } else {
-          t.deepEqual(hosts[i], {
+          t.same(hosts[i], {
             url: new URL(nodes[id].url),
             id: id,
             roles: {
@@ -90,7 +90,7 @@ test('Should update the connection pool', t => {
         }
       }
 
-      t.strictEqual(client.connectionPool.size, 4)
+      t.equal(client.connectionPool.size, 4)
     })
     t.teardown(shutdown)
   })
@@ -103,11 +103,11 @@ test('Should handle hostnames in publish_address', t => {
     const client = new Client({
       node: nodes[Object.keys(nodes)[0]].url
     })
-    t.strictEqual(client.connectionPool.size, 1)
+    t.equal(client.connectionPool.size, 1)
 
     client.on(events.SNIFF, (err, request) => {
       t.error(err)
-      t.strictEqual(
+      t.equal(
         request.meta.sniff.reason,
         Transport.sniffReasons.DEFAULT
       )
@@ -116,14 +116,14 @@ test('Should handle hostnames in publish_address', t => {
     // run the sniffer
     client.transport.sniff((err, hosts) => {
       t.error(err)
-      t.strictEqual(hosts.length, 4)
+      t.equal(hosts.length, 4)
 
       for (let i = 0; i < hosts.length; i++) {
         // the first node will be an update of the existing one
-        t.strictEqual(hosts[i].url.hostname, 'localhost')
+        t.equal(hosts[i].url.hostname, 'localhost')
       }
 
-      t.strictEqual(client.connectionPool.size, 4)
+      t.equal(client.connectionPool.size, 4)
     })
     t.teardown(shutdown)
   })
@@ -144,21 +144,21 @@ test('Sniff interval', t => {
     client.on(events.SNIFF, (err, request) => {
       t.error(err)
       const { hosts, reason } = request.meta.sniff
-      t.strictEqual(
+      t.equal(
         client.connectionPool.size,
         hosts.length
       )
-      t.strictEqual(reason, Transport.sniffReasons.SNIFF_INTERVAL)
+      t.equal(reason, Transport.sniffReasons.SNIFF_INTERVAL)
     })
 
-    t.strictEqual(client.connectionPool.size, 1)
+    t.equal(client.connectionPool.size, 1)
 
     q.add((q, done) => {
       clock.tick(51)
       client.info(err => {
         t.error(err)
         waitSniffEnd(() => {
-          t.strictEqual(client.connectionPool.size, 4)
+          t.equal(client.connectionPool.size, 4)
           done()
         })
       })
@@ -173,7 +173,7 @@ test('Sniff interval', t => {
       client.info(err => {
         t.error(err)
         waitSniffEnd(() => {
-          t.strictEqual(client.connectionPool.size, 3)
+          t.equal(client.connectionPool.size, 3)
           done()
         })
       })
@@ -208,14 +208,14 @@ test('Sniff on start', t => {
     client.on(events.SNIFF, (err, request) => {
       t.error(err)
       const { hosts, reason } = request.meta.sniff
-      t.strictEqual(
+      t.equal(
         client.connectionPool.size,
         hosts.length
       )
-      t.strictEqual(reason, Transport.sniffReasons.SNIFF_ON_START)
+      t.equal(reason, Transport.sniffReasons.SNIFF_ON_START)
     })
 
-    t.strictEqual(client.connectionPool.size, 1)
+    t.equal(client.connectionPool.size, 1)
     t.teardown(shutdown)
   })
 })
@@ -238,10 +238,10 @@ test('Should not close living connections', t => {
       Connection: MyConnection
     })
 
-    t.strictEqual(client.connectionPool.size, 1)
+    t.equal(client.connectionPool.size, 1)
     client.transport.sniff((err, hosts) => {
       t.error(err)
-      t.strictEqual(
+      t.equal(
         client.connectionPool.size,
         hosts.length
       )
@@ -276,16 +276,16 @@ test('Sniff on connection fault', t => {
       Connection: MyConnection
     })
 
-    t.strictEqual(client.connectionPool.size, 2)
+    t.equal(client.connectionPool.size, 2)
     // this event will be triggered by the connection fault
     client.on(events.SNIFF, (err, request) => {
       t.error(err)
       const { hosts, reason } = request.meta.sniff
-      t.strictEqual(
+      t.equal(
         client.connectionPool.size,
         hosts.length
       )
-      t.strictEqual(reason, Transport.sniffReasons.SNIFF_ON_CONNECTION_FAULT)
+      t.equal(reason, Transport.sniffReasons.SNIFF_ON_CONNECTION_FAULT)
     })
 
     client.info((err, result) => {

@@ -56,7 +56,7 @@ test('Basic', async t => {
     { query: { match: { foo: 'bar' } } }
   )
 
-  t.deepEqual(result.body, {
+  t.same(result.body, {
     status: 200,
     hits: {
       hits: [
@@ -67,7 +67,7 @@ test('Basic', async t => {
     }
   })
 
-  t.deepEqual(result.documents, [
+  t.same(result.documents, [
     { one: 'one' },
     { two: 'two' },
     { three: 'three' }
@@ -116,7 +116,7 @@ test('Multiple searches (inside async iterator)', t => {
 
   m.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
     t.error(err)
-    t.deepEqual(result.body, {
+    t.same(result.body, {
       status: 200,
       hits: {
         hits: [
@@ -127,7 +127,7 @@ test('Multiple searches (inside async iterator)', t => {
       }
     })
 
-    t.deepEqual(result.documents, [
+    t.same(result.documents, [
       { one: 'one' },
       { two: 'two' },
       { three: 'three' }
@@ -136,7 +136,7 @@ test('Multiple searches (inside async iterator)', t => {
 
   m.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
     t.error(err)
-    t.deepEqual(result.body, {
+    t.same(result.body, {
       status: 200,
       hits: {
         hits: [
@@ -147,7 +147,7 @@ test('Multiple searches (inside async iterator)', t => {
       }
     })
 
-    t.deepEqual(result.documents, [
+    t.same(result.documents, [
       { four: 'four' },
       { five: 'five' },
       { six: 'six' }
@@ -197,7 +197,7 @@ test('Multiple searches (async iterator exits)', t => {
 
   m.search({ index: 'test' }, { query: {} }, (err, result) => {
     t.error(err)
-    t.deepEqual(result.body, {
+    t.same(result.body, {
       status: 200,
       hits: {
         hits: [
@@ -208,7 +208,7 @@ test('Multiple searches (async iterator exits)', t => {
       }
     })
 
-    t.deepEqual(result.documents, [
+    t.same(result.documents, [
       { one: 'one' },
       { two: 'two' },
       { three: 'three' }
@@ -217,7 +217,7 @@ test('Multiple searches (async iterator exits)', t => {
 
   m.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
     t.error(err)
-    t.deepEqual(result.body, {
+    t.same(result.body, {
       status: 200,
       hits: {
         hits: [
@@ -228,7 +228,7 @@ test('Multiple searches (async iterator exits)', t => {
       }
     })
 
-    t.deepEqual(result.documents, [
+    t.same(result.documents, [
       { four: 'four' },
       { five: 'five' },
       { six: 'six' }
@@ -260,7 +260,7 @@ test('Stop a msearch processor (promises)', async t => {
       { query: { match: { foo: 'bar' } } }
     )
   } catch (err) {
-    t.strictEqual(err.message, 'The msearch processor has been stopped')
+    t.equal(err.message, 'The msearch processor has been stopped')
   }
 
   t.teardown(() => m.stop())
@@ -285,7 +285,7 @@ test('Stop a msearch processor (callbacks)', t => {
   m.stop()
 
   m.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
-    t.strictEqual(err.message, 'The msearch processor has been stopped')
+    t.equal(err.message, 'The msearch processor has been stopped')
   })
 })
 
@@ -306,12 +306,12 @@ test('Bad header', t => {
   const m = client.helpers.msearch()
 
   m.search(null, { query: { match: { foo: 'bar' } } }, (err, result) => {
-    t.strictEqual(err.message, 'The header should be an object')
+    t.equal(err.message, 'The header should be an object')
   })
 
   m.search(null, { query: { match: { foo: 'bar' } } })
     .catch(err => {
-      t.strictEqual(err.message, 'The header should be an object')
+      t.equal(err.message, 'The header should be an object')
     })
 
   t.teardown(() => m.stop())
@@ -334,12 +334,12 @@ test('Bad body', t => {
   const m = client.helpers.msearch()
 
   m.search({ index: 'test' }, null, (err, result) => {
-    t.strictEqual(err.message, 'The body should be an object')
+    t.equal(err.message, 'The body should be an object')
   })
 
   m.search({ index: 'test' }, null)
     .catch(err => {
-      t.strictEqual(err.message, 'The body should be an object')
+      t.equal(err.message, 'The body should be an object')
     })
 
   t.teardown(() => m.stop())
@@ -389,7 +389,7 @@ test('Retry on 429', async t => {
     { query: { match: { foo: 'bar' } } }
   )
 
-  t.deepEqual(result.body, {
+  t.same(result.body, {
     status: 200,
     hits: {
       hits: [
@@ -400,7 +400,7 @@ test('Retry on 429', async t => {
     }
   })
 
-  t.deepEqual(result.documents, [
+  t.same(result.documents, [
     { one: 'one' },
     { two: 'two' },
     { three: 'three' }
@@ -436,7 +436,7 @@ test('Single search errors', async t => {
       { query: { match: { foo: 'bar' } } }
     )
   } catch (err) {
-    t.true(err instanceof errors.ResponseError)
+    t.ok(err instanceof errors.ResponseError)
   }
 
   t.teardown(() => m.stop())
@@ -465,13 +465,13 @@ test('Entire msearch fails', t => {
   const m = client.helpers.msearch({ operations: 1 })
 
   m.search({ index: 'test' }, { query: {} }, (err, result) => {
-    t.true(err instanceof errors.ResponseError)
-    t.deepEqual(result.documents, [])
+    t.ok(err instanceof errors.ResponseError)
+    t.same(result.documents, [])
   })
 
   m.search({ index: 'test' }, { query: {} }, (err, result) => {
-    t.true(err instanceof errors.ResponseError)
-    t.deepEqual(result.documents, [])
+    t.ok(err instanceof errors.ResponseError)
+    t.same(result.documents, [])
   })
 
   t.teardown(() => m.stop())
@@ -523,13 +523,13 @@ test('Stop the msearch helper with an error', t => {
 
   m.then(
     () => t.fail('Should fail'),
-    err => t.is(err.message, 'kaboom')
+    err => t.equal(err.message, 'kaboom')
   )
 
-  m.catch(err => t.is(err.message, 'kaboom'))
+  m.catch(err => t.equal(err.message, 'kaboom'))
 
   m.search({ index: 'test' }, { query: {} }, (err, result) => {
-    t.is(err.message, 'kaboom')
+    t.equal(err.message, 'kaboom')
   })
 })
 
@@ -564,7 +564,7 @@ test('Multiple searches (concurrency = 1)', t => {
 
   m.search({ index: 'test' }, { query: {} }, (err, result) => {
     t.error(err)
-    t.deepEqual(result.body, {
+    t.same(result.body, {
       status: 200,
       hits: {
         hits: [
@@ -575,7 +575,7 @@ test('Multiple searches (concurrency = 1)', t => {
       }
     })
 
-    t.deepEqual(result.documents, [
+    t.same(result.documents, [
       { one: 'one' },
       { two: 'two' },
       { three: 'three' }
@@ -584,7 +584,7 @@ test('Multiple searches (concurrency = 1)', t => {
 
   m.search({ index: 'test' }, { query: {} }, (err, result) => {
     t.error(err)
-    t.deepEqual(result.body, {
+    t.same(result.body, {
       status: 200,
       hits: {
         hits: [
@@ -595,7 +595,7 @@ test('Multiple searches (concurrency = 1)', t => {
       }
     })
 
-    t.deepEqual(result.documents, [
+    t.same(result.documents, [
       { one: 'one' },
       { two: 'two' },
       { three: 'three' }
@@ -647,12 +647,12 @@ test('Flush interval', t => {
 
   m.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
     t.error(err)
-    t.is(result.documents.length, 3)
+    t.equal(result.documents.length, 3)
   })
 
   m.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
     t.error(err)
-    t.is(result.documents.length, 3)
+    t.equal(result.documents.length, 3)
   })
 
   setImmediate(clock.next)
@@ -691,7 +691,7 @@ test('Flush interval - early stop', t => {
 
   m.search({ index: 'test' }, { query: { match: { foo: 'bar' } } }, (err, result) => {
     t.error(err)
-    t.is(result.documents.length, 3)
+    t.equal(result.documents.length, 3)
   })
 
   setImmediate(() => {
@@ -750,11 +750,11 @@ test('Stop should resolve the helper (error)', t => {
   setImmediate(m.stop, new Error('kaboom'))
 
   m.then(() => t.fail('Should not fail'))
-    .catch(err => t.is(err.message, 'kaboom'))
+    .catch(err => t.equal(err.message, 'kaboom'))
 
-  m.catch(err => t.is(err.message, 'kaboom'))
+  m.catch(err => t.equal(err.message, 'kaboom'))
 
-  m.then(() => t.fail('Should not fail'), err => t.is(err.message, 'kaboom'))
+  m.then(() => t.fail('Should not fail'), err => t.equal(err.message, 'kaboom'))
 })
 
 test('Should use req options', async t => {
