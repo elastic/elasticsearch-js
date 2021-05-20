@@ -91,7 +91,7 @@
     "url": "https://github.com/elastic/elasticsearch-js/issues"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "tsd": {
     "directory": "test/types"
