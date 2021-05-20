@@ -33,7 +33,7 @@ test('Should expose a cloudConnection property', t => {
 test('Get connection should always return cloudConnection', t => {
   const pool = new CloudConnectionPool({ Connection })
   const conn = pool.addConnection('http://localhost:9200/')
-  t.deepEqual(pool.getConnection(), conn)
+  t.same(pool.getConnection(), conn)
   t.end()
 })
 
@@ -42,7 +42,7 @@ test('pool.empty should reset cloudConnection', t => {
   pool.addConnection('http://localhost:9200/')
   t.ok(pool.cloudConnection instanceof Connection)
   pool.empty(() => {
-    t.strictEqual(pool.cloudConnection, null)
+    t.equal(pool.cloudConnection, null)
     t.end()
   })
 })

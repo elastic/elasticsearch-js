@@ -76,7 +76,7 @@ test('Should create a child client (timeout check)', t => {
     client.info((err, res) => {
       t.error(err)
       child.info((err, res) => {
-        t.true(err instanceof errors.TimeoutError)
+        t.ok(err instanceof errors.TimeoutError)
         server.stop()
       })
     })
@@ -238,7 +238,7 @@ test('Should create a child client (generateRequestId check)', t => {
   let count = 0
   client.on('request', (err, { meta }) => {
     t.error(err)
-    t.strictEqual(
+    t.equal(
       meta.request.id,
       count++ === 0 ? 'trace-1-0' : 'trace-2-0'
     )
@@ -263,13 +263,13 @@ test('Should create a child client (name check)', t => {
     name: 'child'
   })
 
-  t.strictEqual(client.name, 'parent')
-  t.strictEqual(child.name, 'child')
+  t.equal(client.name, 'parent')
+  t.equal(child.name, 'child')
 
   let count = 0
   client.on('request', (err, { meta }) => {
     t.error(err)
-    t.strictEqual(
+    t.equal(
       meta.name,
       count++ === 0 ? 'parent' : 'child'
     )

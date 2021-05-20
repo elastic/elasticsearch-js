@@ -32,8 +32,8 @@ test('API', t => {
     const href = 'http://localhost:9200/'
     pool.addConnection(href)
     t.ok(pool.connections.find(c => c.id === href) instanceof Connection)
-    t.strictEqual(pool.connections.find(c => c.id === href).status, Connection.statuses.ALIVE)
-    t.deepEqual(pool.dead, [])
+    t.equal(pool.connections.find(c => c.id === href).status, Connection.statuses.ALIVE)
+    t.same(pool.dead, [])
     t.end()
   })
 
@@ -45,7 +45,7 @@ test('API', t => {
       pool.addConnection(href)
       t.fail('Should throw')
     } catch (err) {
-      t.is(err.message, `Connection with id '${href}' is already present`)
+      t.equal(err.message, `Connection with id '${href}' is already present`)
     }
     t.end()
   })
@@ -55,8 +55,8 @@ test('API', t => {
     const href = 'http://us"er:p@assword@localhost:9200/'
     pool.addConnection(href)
     const conn = pool.getConnection()
-    t.strictEqual(conn.url.username, 'us%22er')
-    t.strictEqual(conn.url.password, 'p%40assword')
+    t.equal(conn.url.username, 'us%22er')
+    t.equal(conn.url.password, 'p%40assword')
     t.match(conn.headers, {
       authorization: 'Basic ' + Buffer.from('us"er:p@assword').toString('base64')
     })
@@ -69,9 +69,9 @@ test('API', t => {
     let connection = pool.addConnection(href)
     pool.markDead(connection)
     connection = pool.connections.find(c => c.id === href)
-    t.strictEqual(connection.deadCount, 1)
-    t.true(connection.resurrectTimeout > 0)
-    t.deepEqual(pool.dead, [href])
+    t.equal(connection.deadCount, 1)
+    t.ok(connection.resurrectTimeout > 0)
+    t.same(pool.dead, [href])
     t.end()
   })
 
@@ -84,7 +84,7 @@ test('API', t => {
     pool.markDead(conn2)
     setTimeout(() => {
       pool.markDead(conn1)
-      t.deepEqual(pool.dead, [href2, href1])
+      t.same(pool.dead, [href2, href1])
       t.end()
     }, 10)
   })
@@ -93,7 +93,7 @@ test('API', t => {
     const pool = new ConnectionPool({ Connection, sniffEnabled: true })
     pool.addConnection('http://localhost:9200/')
     pool.markDead({ id: 'foo-bar' })
-    t.deepEqual(pool.dead, [])
+    t.same(pool.dead, [])
     t.end()
   })
 
@@ -104,10 +104,10 @@ test('API', t => {
     pool.markDead(connection)
     pool.markAlive(connection)
     connection = pool.connections.find(c => c.id === href)
-    t.strictEqual(connection.deadCount, 0)
-    t.strictEqual(connection.resurrectTimeout, 0)
-    t.strictEqual(connection.status, Connection.statuses.ALIVE)
-    t.deepEqual(pool.dead, [])
+    t.equal(connection.deadCount, 0)
+    t.equal(connection.resurrectTimeout, 0)
+    t.equal(connection.status, Connection.statuses.ALIVE)
+    t.same(pool.dead, [])
     t.end()
   })
 
@@ -129,12 +129,12 @@ test('API', t => {
           name: 'elasticsearch-js'
         }
         pool.resurrect(opts, (isAlive, connection) => {
-          t.true(isAlive)
+          t.ok(isAlive)
           connection = pool.connections.find(c => c.id === connection.id)
-          t.strictEqual(connection.deadCount, 0)
-          t.strictEqual(connection.resurrectTimeout, 0)
-          t.strictEqual(connection.status, Connection.statuses.ALIVE)
-          t.deepEqual(pool.dead, [])
+          t.equal(connection.deadCount, 0)
+          t.equal(connection.resurrectTimeout, 0)
+          t.equal(connection.status, Connection.statuses.ALIVE)
+          t.same(pool.dead, [])
           t.end()
         })
       })
@@ -155,12 +155,12 @@ test('API', t => {
           name: 'elasticsearch-js'
         }
         pool.resurrect(opts, (isAlive, connection) => {
-          t.false(isAlive)
+          t.notOk(isAlive)
           connection = pool.connections.find(c => c.id === connection.id)
-          t.strictEqual(connection.deadCount, 2)
-          t.true(connection.resurrectTimeout > 0)
-          t.strictEqual(connection.status, Connection.statuses.DEAD)
-          t.deepEqual(pool.dead, [href])
+          t.equal(connection.deadCount, 2)
+          t.ok(connection.resurrectTimeout > 0)
+          t.equal(connection.status, Connection.statuses.DEAD)
+          t.same(pool.dead, [href])
           t.end()
         })
       })
@@ -183,12 +183,12 @@ test('API', t => {
         name: 'elasticsearch-js'
       }
       pool.resurrect(opts, (isAlive, connection) => {
-        t.true(isAlive)
+        t.ok(isAlive)
         connection = pool.connections.find(c => c.id === connection.id)
-        t.strictEqual(connection.deadCount, 1)
-        t.true(connection.resurrectTimeout > 0)
-        t.strictEqual(connection.status, Connection.statuses.ALIVE)
-        t.deepEqual(pool.dead, [])
+        t.equal(connection.deadCount, 1)
+        t.ok(connection.resurrectTimeout > 0)
+        t.equal(connection.status, Connection.statuses.ALIVE)
+        t.same(pool.dead, [])
         t.end()
       })
     })
@@ -211,10 +211,10 @@ test('API', t => {
         t.ok(isAlive === null)
         t.ok(connection === null)
         connection = pool.connections.find(c => c.id === href)
-        t.strictEqual(connection.deadCount, 1)
-        t.true(connection.resurrectTimeout > 0)
-        t.strictEqual(connection.status, Connection.statuses.DEAD)
-        t.deepEqual(pool.dead, [href])
+        t.equal(connection.deadCount, 1)
+        t.ok(connection.resurrectTimeout > 0)
+        t.equal(connection.status, Connection.statuses.DEAD)
+        t.same(pool.dead, [href])
         t.end()
       })
     })
@@ -238,7 +238,7 @@ test('API', t => {
       pool.addConnection([href1, href2])
 
       const filter = node => node.id === href1
-      t.strictEqual(pool.getConnection({ filter }).id, href1)
+      t.equal(pool.getConnection({ filter }).id, href1)
       t.end()
     })
 
@@ -266,7 +266,7 @@ test('API', t => {
       pool.markDead(conn)
 
       const filter = node => {
-        t.strictEqual(node.status, Connection.statuses.ALIVE)
+        t.equal(node.status, Connection.statuses.ALIVE)
         return true
       }
       pool.getConnection({ filter })
@@ -282,7 +282,7 @@ test('API', t => {
       pool.markDead(conn2)
       const conn = pool.getConnection()
       t.ok(conn instanceof Connection)
-      t.is(conn.status, 'dead')
+      t.equal(conn.status, 'dead')
       t.end()
     })
 
@@ -295,7 +295,7 @@ test('API', t => {
     const connection = pool.addConnection(href)
     t.ok(pool.getConnection() instanceof Connection)
     pool.removeConnection(connection)
-    t.strictEqual(pool.getConnection(), null)
+    t.equal(pool.getConnection(), null)
     t.end()
   })
 
@@ -304,8 +304,8 @@ test('API', t => {
     pool.addConnection('http://localhost:9200/')
     pool.addConnection('http://localhost:9201/')
     pool.empty(() => {
-      t.strictEqual(pool.size, 0)
-      t.deepEqual(pool.dead, [])
+      t.equal(pool.size, 0)
+      t.same(pool.dead, [])
       t.end()
     })
   })
@@ -313,7 +313,7 @@ test('API', t => {
   t.test('urlToHost', t => {
     const pool = new ConnectionPool({ Connection })
     const url = 'http://localhost:9200'
-    t.deepEqual(
+    t.same(
       pool.urlToHost(url),
       { url: new URL(url) }
     )
@@ -338,7 +338,7 @@ test('API', t => {
         }
       }
 
-      t.deepEqual(pool.nodesToHost(nodes, 'http:'), [{
+      t.same(pool.nodesToHost(nodes, 'http:'), [{
         url: new URL('http://127.0.0.1:9200'),
         id: 'a1',
         roles: {
@@ -358,8 +358,8 @@ test('API', t => {
         }
       }])
 
-      t.strictEqual(pool.nodesToHost(nodes, 'http:')[0].url.host, '127.0.0.1:9200')
-      t.strictEqual(pool.nodesToHost(nodes, 'http:')[1].url.host, '127.0.0.1:9201')
+      t.equal(pool.nodesToHost(nodes, 'http:')[0].url.host, '127.0.0.1:9200')
+      t.equal(pool.nodesToHost(nodes, 'http:')[1].url.host, '127.0.0.1:9201')
       t.end()
     })
 
@@ -380,7 +380,7 @@ test('API', t => {
         }
       }
 
-      t.deepEqual(pool.nodesToHost(nodes, 'http:'), [{
+      t.same(pool.nodesToHost(nodes, 'http:'), [{
         url: new URL('http://[::1]:9200'),
         id: 'a1',
         roles: {
@@ -400,8 +400,8 @@ test('API', t => {
         }
       }])
 
-      t.strictEqual(pool.nodesToHost(nodes, 'http:')[0].url.host, '[::1]:9200')
-      t.strictEqual(pool.nodesToHost(nodes, 'http:')[1].url.host, '[::1]:9201')
+      t.equal(pool.nodesToHost(nodes, 'http:')[0].url.host, '[::1]:9200')
+      t.equal(pool.nodesToHost(nodes, 'http:')[1].url.host, '[::1]:9201')
       t.end()
     })
 
@@ -422,7 +422,7 @@ test('API', t => {
         }
       }
 
-      t.deepEqual(pool.nodesToHost(nodes, 'http:'), [{
+      t.same(pool.nodesToHost(nodes, 'http:'), [{
         url: new URL('http://example.com:9200'),
         id: 'a1',
         roles: {
@@ -442,8 +442,8 @@ test('API', t => {
         }
       }])
 
-      t.strictEqual(pool.nodesToHost(nodes, 'http:')[0].url.host, 'example.com:9200')
-      t.strictEqual(pool.nodesToHost(nodes, 'http:')[1].url.host, 'example.com:9201')
+      t.equal(pool.nodesToHost(nodes, 'http:')[0].url.host, 'example.com:9200')
+      t.equal(pool.nodesToHost(nodes, 'http:')[1].url.host, 'example.com:9201')
       t.end()
     })
 
@@ -464,7 +464,7 @@ test('API', t => {
         }
       }
 
-      t.deepEqual(pool.nodesToHost(nodes, 'http:'), [{
+      t.same(pool.nodesToHost(nodes, 'http:'), [{
         url: new URL('http://example.com:9200'),
         id: 'a1',
         roles: {
@@ -484,8 +484,8 @@ test('API', t => {
         }
       }])
 
-      t.strictEqual(pool.nodesToHost(nodes, 'http:')[0].url.host, 'example.com:9200')
-      t.strictEqual(pool.nodesToHost(nodes, 'http:')[1].url.host, 'example.com:9201')
+      t.equal(pool.nodesToHost(nodes, 'http:')[0].url.host, 'example.com:9200')
+      t.equal(pool.nodesToHost(nodes, 'http:')[1].url.host, 'example.com:9201')
       t.end()
     })
 
@@ -506,8 +506,8 @@ test('API', t => {
         }
       }
 
-      t.strictEqual(pool.nodesToHost(nodes, 'https:')[0].url.protocol, 'https:')
-      t.strictEqual(pool.nodesToHost(nodes, 'http:')[1].url.protocol, 'http:')
+      t.equal(pool.nodesToHost(nodes, 'https:')[0].url.protocol, 'https:')
+      t.equal(pool.nodesToHost(nodes, 'http:')[1].url.protocol, 'http:')
       t.end()
     })
 
@@ -662,13 +662,13 @@ test('API', t => {
 
       // roles will never be updated, we only use it to do
       // a dummy check to see if the connection has been updated
-      t.deepEqual(pool.connections.find(c => c.id === 'a1').roles, {
+      t.same(pool.connections.find(c => c.id === 'a1').roles, {
         master: true,
         data: true,
         ingest: true,
         ml: false
       })
-      t.strictEqual(pool.connections.find(c => c.id === 'http://127.0.0.1:9200/'), undefined)
+      t.equal(pool.connections.find(c => c.id === 'http://127.0.0.1:9200/'), undefined)
     })
 
     t.test('Add a new connection', t => {
@@ -717,9 +717,9 @@ test('API', t => {
         roles: null
       }])
 
-      t.false(pool.connections.find(c => c.id === 'a1'))
-      t.true(pool.connections.find(c => c.id === 'a2'))
-      t.true(pool.connections.find(c => c.id === 'a3'))
+      t.notOk(pool.connections.find(c => c.id === 'a1'))
+      t.ok(pool.connections.find(c => c.id === 'a2'))
+      t.ok(pool.connections.find(c => c.id === 'a3'))
     })
 
     t.test('Remove old connections (markDead)', t => {
@@ -732,7 +732,7 @@ test('API', t => {
       })
 
       pool.markDead(conn)
-      t.deepEqual(pool.dead, ['a1'])
+      t.same(pool.dead, ['a1'])
 
       pool.update([{
         url: new URL('http://127.0.0.1:9200'),
@@ -744,10 +744,10 @@ test('API', t => {
         roles: null
       }])
 
-      t.deepEqual(pool.dead, [])
-      t.false(pool.connections.find(c => c.id === 'a1'))
-      t.true(pool.connections.find(c => c.id === 'a2'))
-      t.true(pool.connections.find(c => c.id === 'a3'))
+      t.same(pool.dead, [])
+      t.notOk(pool.connections.find(c => c.id === 'a1'))
+      t.ok(pool.connections.find(c => c.id === 'a2'))
+      t.ok(pool.connections.find(c => c.id === 'a3'))
     })
 
     t.end()
@@ -761,14 +761,14 @@ test('Node selector', t => {
     t.plan(1)
     const pool = new ConnectionPool({ Connection })
     pool.addConnection('http://localhost:9200/')
-    t.true(pool.getConnection({ selector: roundRobinSelector() }) instanceof Connection)
+    t.ok(pool.getConnection({ selector: roundRobinSelector() }) instanceof Connection)
   })
 
   t.test('random', t => {
     t.plan(1)
     const pool = new ConnectionPool({ Connection })
     pool.addConnection('http://localhost:9200/')
-    t.true(pool.getConnection({ selector: roundRobinSelector() }) instanceof Connection)
+    t.ok(pool.getConnection({ selector: roundRobinSelector() }) instanceof Connection)
   })
 
   t.end()
@@ -779,7 +779,7 @@ test('Node filter', t => {
     t.plan(1)
     const pool = new ConnectionPool({ Connection })
     pool.addConnection({ url: new URL('http://localhost:9200/') })
-    t.true(pool.getConnection({ filter: defaultNodeFilter }) instanceof Connection)
+    t.ok(pool.getConnection({ filter: defaultNodeFilter }) instanceof Connection)
   })
 
   t.test('Should filter master only nodes', t => {
@@ -794,7 +794,7 @@ test('Node filter', t => {
         ml: false
       }
     })
-    t.strictEqual(pool.getConnection({ filter: defaultNodeFilter }), null)
+    t.equal(pool.getConnection({ filter: defaultNodeFilter }), null)
   })
 
   t.end()

@@ -29,8 +29,8 @@ test('Basic', t => {
   const s = new Serializer()
   const obj = { hello: 'world' }
   const json = JSON.stringify(obj)
-  t.strictEqual(s.serialize(obj), json)
-  t.deepEqual(s.deserialize(json), obj)
+  t.equal(s.serialize(obj), json)
+  t.same(s.deserialize(json), obj)
 })
 
 test('ndserialize', t => {
@@ -41,7 +41,7 @@ test('ndserialize', t => {
     { winter: 'is coming' },
     { you_know: 'for search' }
   ]
-  t.strictEqual(
+  t.equal(
     s.ndserialize(obj),
     JSON.stringify(obj[0]) + '\n' +
     JSON.stringify(obj[1]) + '\n' +
@@ -57,7 +57,7 @@ test('ndserialize (strings)', t => {
     JSON.stringify({ winter: 'is coming' }),
     JSON.stringify({ you_know: 'for search' })
   ]
-  t.strictEqual(
+  t.equal(
     s.ndserialize(obj),
     obj[0] + '\n' +
     obj[1] + '\n' +
@@ -73,7 +73,7 @@ test('qserialize', t => {
     you_know: 'for search'
   }
 
-  t.strictEqual(
+  t.equal(
     s.qserialize(obj),
     stringify(obj)
   )
@@ -87,7 +87,7 @@ test('qserialize (array)', t => {
     arr: ['foo', 'bar']
   }
 
-  t.strictEqual(
+  t.equal(
     s.qserialize(obj),
     'hello=world&arr=foo%2Cbar'
   )
@@ -101,7 +101,7 @@ test('qserialize (string)', t => {
     you_know: 'for search'
   }
 
-  t.strictEqual(
+  t.equal(
     s.qserialize(stringify(obj)),
     stringify(obj)
   )
@@ -116,7 +116,7 @@ test('qserialize (key with undefined value)', t => {
     foo: 'bar'
   }
 
-  t.strictEqual(
+  t.equal(
     s.qserialize(obj),
     'hello=world&foo=bar'
   )

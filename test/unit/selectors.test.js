@@ -28,7 +28,7 @@ test('RoundRobinSelector', t => {
 
   t.plan(arr.length + 1)
   for (let i = 0; i <= arr.length; i++) {
-    t.strictEqual(
+    t.equal(
       selector(arr),
       i === arr.length ? arr[0] : arr[i]
     )

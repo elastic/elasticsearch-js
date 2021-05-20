@@ -63,7 +63,7 @@ test('Basic (http)', t => {
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
       res.on('end', () => {
-        t.strictEqual(payload, 'ok')
+        t.equal(payload, 'ok')
         server.stop()
       })
     })
@@ -103,7 +103,7 @@ test('Basic (https)', t => {
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
       res.on('end', () => {
-        t.strictEqual(payload, 'ok')
+        t.equal(payload, 'ok')
         server.stop()
       })
     })
@@ -144,7 +144,7 @@ test('Basic (https with ssl agent)', t => {
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
       res.on('end', () => {
-        t.strictEqual(payload, 'ok')
+        t.equal(payload, 'ok')
         server.stop()
       })
     })
@@ -179,7 +179,7 @@ test('Custom http agent', t => {
         return agent
       }
     })
-    t.true(connection.agent.custom)
+    t.ok(connection.agent.custom)
     connection.request({
       path: '/hello',
       method: 'GET',
@@ -198,7 +198,7 @@ test('Custom http agent', t => {
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
       res.on('end', () => {
-        t.strictEqual(payload, 'ok')
+        t.equal(payload, 'ok')
         server.stop()
       })
     })
@@ -268,7 +268,7 @@ test('querystring', t => {
     t.plan(2)
 
     function handler (req, res) {
-      t.strictEqual(req.url, '/hello?hello=world&you_know=for%20search')
+      t.equal(req.url, '/hello?hello=world&you_know=for%20search')
       res.end('ok')
     }
 
@@ -291,7 +291,7 @@ test('querystring', t => {
     t.plan(2)
 
     function handler (req, res) {
-      t.strictEqual(req.url, '/hello')
+      t.equal(req.url, '/hello')
       res.end('ok')
     }
 
@@ -322,7 +322,7 @@ test('Body request', t => {
     req.on('data', chunk => { payload += chunk })
     req.on('error', err => t.fail(err))
     req.on('end', () => {
-      t.strictEqual(payload, 'hello')
+      t.equal(payload, 'hello')
       res.end('ok')
     })
   }
@@ -351,7 +351,7 @@ test('Send body as buffer', t => {
     req.on('data', chunk => { payload += chunk })
     req.on('error', err => t.fail(err))
     req.on('end', () => {
-      t.strictEqual(payload, 'hello')
+      t.equal(payload, 'hello')
       res.end('ok')
     })
   }
@@ -380,7 +380,7 @@ test('Send body as stream', t => {
     req.on('data', chunk => { payload += chunk })
     req.on('error', err => t.fail(err))
     req.on('end', () => {
-      t.strictEqual(payload, 'hello')
+      t.equal(payload, 'hello')
       res.end('ok')
     })
   }
@@ -413,7 +413,7 @@ test('Should not close a connection if there are open requests', t => {
     })
 
     setTimeout(() => {
-      t.strictEqual(connection._openRequests, 1)
+      t.equal(connection._openRequests, 1)
       connection.close()
     }, 500)
 
@@ -422,14 +422,14 @@ test('Should not close a connection if there are open requests', t => {
       method: 'GET'
     }, (err, res) => {
       t.error(err)
-      t.strictEqual(connection._openRequests, 0)
+      t.equal(connection._openRequests, 0)
 
       let payload = ''
       res.setEncoding('utf8')
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
       res.on('end', () => {
-        t.strictEqual(payload, 'ok')
+        t.equal(payload, 'ok')
         server.stop()
       })
     })
@@ -450,7 +450,7 @@ test('Should not close a connection if there are open requests (with agent disab
     })
 
     setTimeout(() => {
-      t.strictEqual(connection._openRequests, 1)
+      t.equal(connection._openRequests, 1)
       connection.close()
     }, 500)
 
@@ -459,14 +459,14 @@ test('Should not close a connection if there are open requests (with agent disab
       method: 'GET'
     }, (err, res) => {
       t.error(err)
-      t.strictEqual(connection._openRequests, 0)
+      t.equal(connection._openRequests, 0)
 
       let payload = ''
       res.setEncoding('utf8')
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
       res.on('end', () => {
-        t.strictEqual(payload, 'ok')
+        t.equal(payload, 'ok')
         server.stop()
       })
     })
@@ -502,7 +502,7 @@ test('Url with querystring', t => {
   t.plan(2)
 
   function handler (req, res) {
-    t.strictEqual(req.url, '/hello?foo=bar&baz=faz')
+    t.equal(req.url, '/hello?foo=bar&baz=faz')
     res.end('ok')
   }
 
@@ -546,7 +546,7 @@ test('Custom headers for connection', t => {
     }, (err, res) => {
       t.error(err)
       // should not update the default
-      t.deepEqual(connection.headers, { 'x-foo': 'bar' })
+      t.same(connection.headers, { 'x-foo': 'bar' })
       server.stop()
     })
   })
@@ -576,7 +576,7 @@ test('asStream set to true', t => {
       res.on('data', chunk => { payload += chunk })
       res.on('error', err => t.fail(err))
       res.on('end', () => {
-        t.strictEqual(payload, 'ok')
+        t.equal(payload, 'ok')
         server.stop()
       })
     })
@@ -587,7 +587,7 @@ test('Connection id should not contain credentials', t => {
   const connection = new Connection({
     url: new URL('http://user:password@localhost:9200')
   })
-  t.strictEqual(connection.id, 'http://localhost:9200/')
+  t.equal(connection.id, 'http://localhost:9200/')
   t.end()
 })
 
@@ -595,7 +595,7 @@ test('Ipv6 support', t => {
   const connection = new Connection({
     url: new URL('http://[::1]:9200')
   })
-  t.strictEqual(connection.buildRequestObject({}).hostname, '::1')
+  t.equal(connection.buildRequestObject({}).hostname, '::1')
   t.end()
 })
 
@@ -607,7 +607,7 @@ test('Should throw if the protocol is not http or https', t => {
     t.fail('Should throw')
   } catch (err) {
     t.ok(err instanceof ConfigurationError)
-    t.is(err.message, 'Invalid protocol: \'nope:\'')
+    t.equal(err.message, 'Invalid protocol: \'nope:\'')
   }
   t.end()
 })
@@ -623,7 +623,7 @@ test('Should disallow two-byte characters in URL path', t => {
     path: '/thisisinvalid\uffe2',
     method: 'GET'
   }, (err, res) => {
-    t.strictEqual(
+    t.equal(
       err.message,
       'ERR_UNESCAPED_CHARACTERS: /thisisinvalid\uffe2'
     )
@@ -638,7 +638,7 @@ test('setRole', t => {
       url: new URL('http://localhost:9200')
     })
 
-    t.deepEqual(connection.roles, {
+    t.same(connection.roles, {
       master: true,
       data: true,
       ingest: true,
@@ -647,7 +647,7 @@ test('setRole', t => {
 
     connection.setRole('master', false)
 
-    t.deepEqual(connection.roles, {
+    t.same(connection.roles, {
       master: false,
       data: true,
       ingest: true,
@@ -666,8 +666,8 @@ test('setRole', t => {
       connection.setRole('car', true)
       t.fail('Shoud throw')
     } catch (err) {
-      t.true(err instanceof ConfigurationError)
-      t.is(err.message, 'Unsupported role: \'car\'')
+      t.ok(err instanceof ConfigurationError)
+      t.equal(err.message, 'Unsupported role: \'car\'')
     }
   })
 
@@ -682,8 +682,8 @@ test('setRole', t => {
       connection.setRole('master', 1)
       t.fail('Shoud throw')
     } catch (err) {
-      t.true(err instanceof ConfigurationError)
-      t.is(err.message, 'enabled should be a boolean')
+      t.ok(err instanceof ConfigurationError)
+      t.equal(err.message, 'enabled should be a boolean')
     }
   })
 
@@ -708,7 +708,7 @@ test('Util.inspect Connection class should hide agent, ssl and auth', t => {
       .replace(/(\r\n|\n|\r)/gm, '')
   }
 
-  t.strictEqual(cleanStr(inspect(connection)), cleanStr(`{ url: 'http://localhost:9200/',
+  t.equal(cleanStr(inspect(connection)), cleanStr(`{ url: 'http://localhost:9200/',
   id: 'node-id',
   headers: { foo: 'bar' },
   deadCount: 0,
@@ -728,7 +728,7 @@ test('connection.toJSON should hide agent, ssl and auth', t => {
     headers: { foo: 'bar' }
   })
 
-  t.deepEqual(connection.toJSON(), {
+  t.same(connection.toJSON(), {
     url: 'http://localhost:9200/',
     id: 'node-id',
     headers: {
@@ -754,7 +754,7 @@ test('Port handling', t => {
       url: new URL('http://localhost:80')
     })
 
-    t.strictEqual(
+    t.equal(
       connection.buildRequestObject({}).port,
       undefined
     )
@@ -767,7 +767,7 @@ test('Port handling', t => {
       url: new URL('https://localhost:443')
     })
 
-    t.strictEqual(
+    t.equal(
       connection.buildRequestObject({}).port,
       undefined
     )
@@ -784,7 +784,7 @@ test('Authorization header', t => {
       url: new URL('http://localhost:9200')
     })
 
-    t.deepEqual(connection.headers, {})
+    t.same(connection.headers, {})
 
     t.end()
   })
@@ -795,7 +795,7 @@ test('Authorization header', t => {
       auth: { username: 'foo', password: 'bar' }
     })
 
-    t.deepEqual(connection.headers, { authorization: 'Basic Zm9vOmJhcg==' })
+    t.same(connection.headers, { authorization: 'Basic Zm9vOmJhcg==' })
 
     t.end()
   })
@@ -806,7 +806,7 @@ test('Authorization header', t => {
       auth: { apiKey: 'Zm9vOmJhcg==' }
     })
 
-    t.deepEqual(connection.headers, { authorization: 'ApiKey Zm9vOmJhcg==' })
+    t.same(connection.headers, { authorization: 'ApiKey Zm9vOmJhcg==' })
 
     t.end()
   })
@@ -817,7 +817,7 @@ test('Authorization header', t => {
       auth: { apiKey: { id: 'foo', api_key: 'bar' } }
     })
 
-    t.deepEqual(connection.headers, { authorization: 'ApiKey Zm9vOmJhcg==' })
+    t.same(connection.headers, { authorization: 'ApiKey Zm9vOmJhcg==' })
 
     t.end()
   })
@@ -830,7 +830,7 @@ test('Should not add agent and ssl to the serialized connection', t => {
     url: new URL('http://localhost:9200')
   })
 
-  t.strictEqual(
+  t.equal(
     JSON.stringify(connection),
     '{"url":"http://localhost:9200/","id":"http://localhost:9200/","headers":{},"deadCount":0,"resurrectTimeout":0,"_openRequests":0,"status":"alive","roles":{"master":true,"data":true,"ingest":true,"ml":false}}'
   )
@@ -890,7 +890,7 @@ test('Should correctly resolve request pathname', t => {
     url: new URL('http://localhost:80/test')
   })
 
-  t.strictEqual(
+  t.equal(
     connection.buildRequestObject({
       path: 'hello'
     }).pathname,
@@ -906,7 +906,7 @@ test('Proxy agent (http)', t => {
     proxy: 'http://localhost:8080'
   })
 
-  t.true(connection.agent instanceof hpagent.HttpProxyAgent)
+  t.ok(connection.agent instanceof hpagent.HttpProxyAgent)
 })
 
 test('Proxy agent (https)', t => {
@@ -917,7 +917,7 @@ test('Proxy agent (https)', t => {
     proxy: 'http://localhost:8080'
   })
 
-  t.true(connection.agent instanceof hpagent.HttpsProxyAgent)
+  t.ok(connection.agent instanceof hpagent.HttpsProxyAgent)
 })
 
 test('Abort with a slow body', t => {

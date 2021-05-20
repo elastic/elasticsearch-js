@@ -38,11 +38,11 @@ test('Scroll search', async t => {
 
       count += 1
       if (params.method === 'POST') {
-        t.strictEqual(params.querystring, 'scroll=1m')
+        t.equal(params.querystring, 'scroll=1m')
       }
       if (count === 4) {
         // final automated clear
-        t.strictEqual(params.method, 'DELETE')
+        t.equal(params.method, 'DELETE')
       }
       return {
         body: {
@@ -73,8 +73,8 @@ test('Scroll search', async t => {
   })
 
   for await (const result of scrollSearch) {
-    t.strictEqual(result.body.count, count)
-    t.strictEqual(result.body._scroll_id, 'id')
+    t.equal(result.body.count, count)
+    t.equal(result.body._scroll_id, 'id')
   }
 })
 
@@ -87,7 +87,7 @@ test('Clear a scroll search', async t => {
       })
       if (params.method === 'DELETE') {
         const body = JSON.parse(params.body)
-        t.strictEqual(body.scroll_id, 'id')
+        t.equal(body.scroll_id, 'id')
       }
       return {
         body: {
@@ -120,7 +120,7 @@ test('Clear a scroll search', async t => {
     if (count === 2) {
       t.fail('The scroll search should be cleared')
     }
-    t.strictEqual(result.body.count, count)
+    t.equal(result.body.count, count)
     if (count === 1) {
       await result.clear()
     }
@@ -138,7 +138,7 @@ test('Scroll search (retry)', async t => {
       }
       if (count === 5) {
         // final automated clear
-        t.strictEqual(params.method, 'DELETE')
+        t.equal(params.method, 'DELETE')
       }
       return {
         statusCode: 200,
@@ -172,9 +172,9 @@ test('Scroll search (retry)', async t => {
   })
 
   for await (const result of scrollSearch) {
-    t.strictEqual(result.body.count, count)
-    t.notStrictEqual(result.body.count, 1)
-    t.strictEqual(result.body._scroll_id, 'id')
+    t.equal(result.body.count, count)
+    t.not(result.body.count, 1)
+    t.equal(result.body._scroll_id, 'id')
   }
 })
 
@@ -208,9 +208,9 @@ test('Scroll search (retry throws and maxRetries)', async t => {
       t.fail('we should not be here')
     }
   } catch (err) {
-    t.true(err instanceof errors.ResponseError)
-    t.strictEqual(err.statusCode, 429)
-    t.strictEqual(count, expectedAttempts)
+    t.ok(err instanceof errors.ResponseError)
+    t.equal(err.statusCode, 429)
+    t.equal(count, expectedAttempts)
   }
 })
 
@@ -222,7 +222,7 @@ test('Scroll search (retry throws later)', async t => {
     onRequest (params) {
       count += 1
       // filter_path should not be added if is not already present
-      t.strictEqual(params.querystring, 'scroll=1m')
+      t.equal(params.querystring, 'scroll=1m')
       if (count > 1) {
         return { body: {}, statusCode: 429 }
       }
@@ -258,12 +258,12 @@ test('Scroll search (retry throws later)', async t => {
 
   try {
     for await (const result of scrollSearch) { // eslint-disable-line
-      t.strictEqual(result.body.count, count)
+      t.equal(result.body.count, count)
     }
   } catch (err) {
-    t.true(err instanceof errors.ResponseError)
-    t.strictEqual(err.statusCode, 429)
-    t.strictEqual(count, expectedAttempts)
+    t.ok(err instanceof errors.ResponseError)
+    t.equal(err.statusCode, 429)
+    t.equal(count, expectedAttempts)
   }
 })
 
@@ -272,11 +272,11 @@ test('Scroll search documents', async t => {
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       if (count === 0) {
-        t.strictEqual(params.querystring, 'filter_path=hits.hits._source%2C_scroll_id&scroll=1m')
+        t.equal(params.querystring, 'filter_path=hits.hits._source%2C_scroll_id&scroll=1m')
       } else {
         if (params.method !== 'DELETE') {
-          t.strictEqual(params.querystring, 'scroll=1m')
-          t.strictEqual(params.body, '{"scroll_id":"id"}')
+          t.equal(params.querystring, 'scroll=1m')
+          t.equal(params.body, '{"scroll_id":"id"}')
         }
       }
       return {
@@ -309,7 +309,7 @@ test('Scroll search documents', async t => {
 
   let n = 1
   for await (const hit of scrollSearch) {
-    t.deepEqual(hit, { val: n * count })
+    t.same(hit, { val: n * count })
     n += 1
     if (n === 4) {
       count += 1
@@ -348,9 +348,9 @@ test('Should not retry if maxRetries = 0', async t => {
       t.fail('we should not be here')
     }
   } catch (err) {
-    t.true(err instanceof errors.ResponseError)
-    t.strictEqual(err.statusCode, 429)
-    t.strictEqual(count, expectedAttempts)
+    t.ok(err instanceof errors.ResponseError)
+    t.equal(err.statusCode, 429)
+    t.equal(count, expectedAttempts)
   }
 })
 
@@ -359,10 +359,10 @@ test('Fix querystring for scroll search', async t => {
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       if (count === 0) {
-        t.strictEqual(params.querystring, 'size=1&scroll=1m')
+        t.equal(params.querystring, 'size=1&scroll=1m')
       } else {
         if (params.method !== 'DELETE') {
-          t.strictEqual(params.querystring, 'scroll=1m')
+          t.equal(params.querystring, 'scroll=1m')
         }
       }
       return {
@@ -392,7 +392,7 @@ test('Fix querystring for scroll search', async t => {
   })
 
   for await (const response of scrollSearch) {
-    t.strictEqual(response.body.hits.hits.length, 1)
+    t.equal(response.body.hits.hits.length, 1)
     count += 1
   }
 })
