@@ -2,6 +2,52 @@
 == Release notes
 
 [discrete]
+=== 7.13.0
+
+[discrete]
+==== Breaking changes
+
+[discrete]
+===== Remove Node.js v10 support https://github.com/elastic/elasticsearch-js/pull/1471[#1471]
+
+According to our 
+https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/installation.html#nodejs-support[support matrix].
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v7.13`
+
+You can find all the API changes 
+https://www.elastic.co/guide/en/elasticsearch/reference/7.13/release-notes-7.13.0.html[here].
+
+[discrete]
+===== Added new TypeScript definitions
+
+The new type definition is more advanced compared to the legacy one.
+In the legacy type definitions you were expected to configure via generics both request and response bodies.
+The new type definitions comes with a complete type definition for every Elasticsearch endpoint.
+
+You can see how to use them now https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html[here].
+
+[discrete]
+===== Improve response error message https://github.com/elastic/elasticsearch-js/pull/1457[#1457]
+
+In case of Elasticsearch errors, now the error message show more info about the underlying issue,
+improving the debugging experience.
+
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Catch HEAD errors https://github.com/elastic/elasticsearch-js/pull/1460[#1460]
+
+In case of http errors in HEAD request, the client was swalling the response body.
+This is now fixed and in case of error you will get the full body response.
+
+[discrete]
 === 7.12.0
 
 [discrete]
