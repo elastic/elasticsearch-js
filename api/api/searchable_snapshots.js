@@ -23,12 +23,38 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'index', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'master_timeout', 'wait_for_completion', 'storage', 'level']
-const snakeCase = { ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', masterTimeout: 'master_timeout', waitForCompletion: 'wait_for_completion' }
+const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'index', 'master_timeout', 'wait_for_completion', 'storage', 'level']
+const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', masterTimeout: 'master_timeout', waitForCompletion: 'wait_for_completion' }
 
 function SearchableSnapshotsApi (transport, ConfigurationError) {
   this.transport = transport
   this[kConfigurationError] = ConfigurationError
+}
+
+SearchableSnapshotsApi.prototype.cacheStats = function searchableSnapshotsCacheStatsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, nodeId, node_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if ((node_id || nodeId) != null) {
+    if (method == null) method = 'GET'
+    path = '/' + '_searchable_snapshots' + '/' + encodeURIComponent(node_id || nodeId) + '/' + 'cache' + '/' + 'stats'
+  } else {
+    if (method == null) method = 'GET'
+    path = '/' + '_searchable_snapshots' + '/' + 'cache' + '/' + 'stats'
+  }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
 }
 
 SearchableSnapshotsApi.prototype.clearCache = function searchableSnapshotsClearCacheApi (params, options, callback) {
@@ -152,6 +178,7 @@ SearchableSnapshotsApi.prototype.stats = function searchableSnapshotsStatsApi (p
 }
 
 Object.defineProperties(SearchableSnapshotsApi.prototype, {
+  cache_stats: { get () { return this.cacheStats } },
   clear_cache: { get () { return this.clearCache } },
   repository_stats: { get () { return this.repositoryStats } }
 })

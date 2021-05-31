@@ -747,6 +747,16 @@ declare class Client {
   fieldCaps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   fieldCaps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.FieldCaps<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   fieldCaps<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.FieldCaps<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  fleet: {
+    global_checkpoints<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.FleetGlobalCheckpoints, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    global_checkpoints<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    global_checkpoints<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.FleetGlobalCheckpoints, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    global_checkpoints<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.FleetGlobalCheckpoints, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    globalCheckpoints<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.FleetGlobalCheckpoints, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    globalCheckpoints<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    globalCheckpoints<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.FleetGlobalCheckpoints, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    globalCheckpoints<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.FleetGlobalCheckpoints, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+  }
   get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.Get, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   get<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   get<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.Get, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1860,10 +1870,10 @@ declare class Client {
     validateDetector<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlValidateDetector<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   monitoring: {
-    bulk<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MonitoringBulk<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    bulk<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    bulk<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MonitoringBulk<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    bulk<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MonitoringBulk<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    bulk<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params?: RequestParams.MonitoringBulk<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    bulk<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    bulk<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params: RequestParams.MonitoringBulk<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    bulk<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params: RequestParams.MonitoringBulk<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   msearch<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params?: RequestParams.Msearch<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   msearch<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2062,6 +2072,14 @@ declare class Client {
   searchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SearchTemplate<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   searchTemplate<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SearchTemplate<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   searchable_snapshots: {
+    cache_stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsCacheStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    cache_stats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cache_stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsCacheStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cache_stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsCacheStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cacheStats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsCacheStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    cacheStats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cacheStats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsCacheStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cacheStats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsCacheStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     clear_cache<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsClearCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     clear_cache<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     clear_cache<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsClearCache, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2088,6 +2106,14 @@ declare class Client {
     stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   searchableSnapshots: {
+    cache_stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsCacheStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    cache_stats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cache_stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsCacheStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cache_stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsCacheStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cacheStats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsCacheStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    cacheStats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cacheStats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsCacheStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    cacheStats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsCacheStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     clear_cache<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SearchableSnapshotsClearCache, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     clear_cache<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     clear_cache<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SearchableSnapshotsClearCache, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2158,6 +2184,14 @@ declare class Client {
     clearCachedRoles<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     clearCachedRoles<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityClearCachedRoles, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     clearCachedRoles<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityClearCachedRoles, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cached_service_tokens<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityClearCachedServiceTokens, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clear_cached_service_tokens<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cached_service_tokens<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityClearCachedServiceTokens, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_cached_service_tokens<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityClearCachedServiceTokens, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCachedServiceTokens<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityClearCachedServiceTokens, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clearCachedServiceTokens<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCachedServiceTokens<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityClearCachedServiceTokens, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearCachedServiceTokens<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityClearCachedServiceTokens, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     create_api_key<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityCreateApiKey<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     create_api_key<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     create_api_key<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SecurityCreateApiKey<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2166,6 +2200,14 @@ declare class Client {
     createApiKey<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     createApiKey<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SecurityCreateApiKey<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     createApiKey<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SecurityCreateApiKey<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_service_token<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityCreateServiceToken, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    create_service_token<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_service_token<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityCreateServiceToken, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    create_service_token<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityCreateServiceToken, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createServiceToken<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityCreateServiceToken, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    createServiceToken<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createServiceToken<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityCreateServiceToken, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    createServiceToken<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityCreateServiceToken, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     delete_privileges<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityDeletePrivileges, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     delete_privileges<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     delete_privileges<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityDeletePrivileges, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2190,6 +2232,14 @@ declare class Client {
     deleteRoleMapping<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteRoleMapping<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityDeleteRoleMapping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deleteRoleMapping<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityDeleteRoleMapping, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_service_token<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityDeleteServiceToken, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    delete_service_token<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_service_token<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityDeleteServiceToken, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    delete_service_token<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityDeleteServiceToken, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteServiceToken<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityDeleteServiceToken, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    deleteServiceToken<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteServiceToken<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityDeleteServiceToken, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    deleteServiceToken<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityDeleteServiceToken, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     delete_user<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityDeleteUser, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     delete_user<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     delete_user<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityDeleteUser, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2254,6 +2304,22 @@ declare class Client {
     getRoleMapping<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getRoleMapping<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetRoleMapping, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getRoleMapping<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetRoleMapping, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_service_accounts<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityGetServiceAccounts, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get_service_accounts<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_service_accounts<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetServiceAccounts, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_service_accounts<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetServiceAccounts, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getServiceAccounts<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityGetServiceAccounts, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getServiceAccounts<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getServiceAccounts<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetServiceAccounts, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getServiceAccounts<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetServiceAccounts, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_service_credentials<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityGetServiceCredentials, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get_service_credentials<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_service_credentials<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetServiceCredentials, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_service_credentials<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetServiceCredentials, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getServiceCredentials<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityGetServiceCredentials, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getServiceCredentials<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getServiceCredentials<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetServiceCredentials, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getServiceCredentials<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetServiceCredentials, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_token<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.SecurityGetToken<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     get_token<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_token<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.SecurityGetToken<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
