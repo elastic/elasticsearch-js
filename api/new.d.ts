@@ -1279,6 +1279,10 @@ declare class Client {
     putUser<TContext = unknown>(params: T.SecurityPutUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityPutUserResponse, TContext>>
     putUser<TContext = unknown>(params: T.SecurityPutUserRequest, callback: callbackFn<T.SecurityPutUserResponse, TContext>): TransportRequestCallback
     putUser<TContext = unknown>(params: T.SecurityPutUserRequest, options: TransportRequestOptions, callback: callbackFn<T.SecurityPutUserResponse, TContext>): TransportRequestCallback
+    samlCompleteLogout<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    samlCompleteLogout<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    samlCompleteLogout<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    samlCompleteLogout<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
   }
   shutdown: {
     deleteNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
@@ -1355,6 +1359,10 @@ declare class Client {
     getRepository<TContext = unknown>(callback: callbackFn<T.SnapshotGetRepositoryResponse, TContext>): TransportRequestCallback
     getRepository<TContext = unknown>(params: T.SnapshotGetRepositoryRequest, callback: callbackFn<T.SnapshotGetRepositoryResponse, TContext>): TransportRequestCallback
     getRepository<TContext = unknown>(params: T.SnapshotGetRepositoryRequest, options: TransportRequestOptions, callback: callbackFn<T.SnapshotGetRepositoryResponse, TContext>): TransportRequestCallback
+    repositoryAnalyze<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    repositoryAnalyze<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    repositoryAnalyze<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    repositoryAnalyze<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     restore<TContext = unknown>(params: T.SnapshotRestoreRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotRestoreResponse, TContext>>
     restore<TContext = unknown>(params: T.SnapshotRestoreRequest, callback: callbackFn<T.SnapshotRestoreResponse, TContext>): TransportRequestCallback
     restore<TContext = unknown>(params: T.SnapshotRestoreRequest, options: TransportRequestOptions, callback: callbackFn<T.SnapshotRestoreResponse, TContext>): TransportRequestCallback
@@ -1399,10 +1407,9 @@ declare class Client {
     list<TContext = unknown>(params: T.TaskListRequest, callback: callbackFn<T.TaskListResponse, TContext>): TransportRequestCallback
     list<TContext = unknown>(params: T.TaskListRequest, options: TransportRequestOptions, callback: callbackFn<T.TaskListResponse, TContext>): TransportRequestCallback
   }
-  termsEnum<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-  termsEnum<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  termsEnum<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-  termsEnum<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+  termsEnum<TContext = unknown>(params: T.TermsEnumRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TermsEnumResponse, TContext>>
+  termsEnum<TContext = unknown>(params: T.TermsEnumRequest, callback: callbackFn<T.TermsEnumResponse, TContext>): TransportRequestCallback
+  termsEnum<TContext = unknown>(params: T.TermsEnumRequest, options: TransportRequestOptions, callback: callbackFn<T.TermsEnumResponse, TContext>): TransportRequestCallback
   termvectors<TDocument = unknown, TContext = unknown>(params: T.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TermvectorsResponse, TContext>>
   termvectors<TDocument = unknown, TContext = unknown>(params: T.TermvectorsRequest<TDocument>, callback: callbackFn<T.TermvectorsResponse, TContext>): TransportRequestCallback
   termvectors<TDocument = unknown, TContext = unknown>(params: T.TermvectorsRequest<TDocument>, options: TransportRequestOptions, callback: callbackFn<T.TermvectorsResponse, TContext>): TransportRequestCallback
