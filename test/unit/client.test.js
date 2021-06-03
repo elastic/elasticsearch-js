@@ -1421,3 +1421,25 @@ test('Disable prototype poisoning protection', t => {
     t.error(err)
   })
 })
+
+test('API compatibility header', t => {
+  t.plan(3)
+
+  function handler (req, res) {
+    t.equal(req.headers.accept, 'application/vnd.elasticsearch+json; compatible-with=7')
+    res.setHeader('Content-Type', 'application/vnd.elasticsearch+json; compatible-with=7')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://localhost:${port}`
+    })
+
+    client.info((err, { body }) => {
+      t.error(err)
+      t.same(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
