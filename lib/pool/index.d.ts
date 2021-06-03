@@ -28,7 +28,7 @@ interface BaseConnectionPoolOptions {
   ssl?: SecureContextOptions;
   agent?: AgentOptions;
   proxy?: string | URL;
-  auth?: BasicAuth | ApiKeyAuth;
+  auth?: BasicAuth | ApiKeyAuth | ServiceAccountTokenAuth;
   emit: (event: string | symbol, ...args: any[]) => boolean;
   Connection: typeof Connection;
 }
@@ -59,6 +59,10 @@ interface ApiKeyAuth {
 interface BasicAuth {
   username: string;
   password: string;
+}
+
+interface ServiceAccountTokenAuth {
+  serviceAccountToken: string;
 }
 
 interface resurrectOptions {
@@ -204,6 +208,7 @@ export {
   getConnectionOptions,
   ApiKeyAuth,
   BasicAuth,
+  ServiceAccountTokenAuth,
   internals,
   resurrectOptions,
   ResurrectEvent,

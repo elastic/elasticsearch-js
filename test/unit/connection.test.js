@@ -822,6 +822,17 @@ test('Authorization header', t => {
     t.end()
   })
 
+  t.test('Service account token', t => {
+    const connection = new Connection({
+      url: new URL('http://localhost:9200'),
+      auth: { serviceAccountToken: 'ABCZm9vOmJhcg==' }
+    })
+
+    t.same(connection.headers, { authorization: 'Bearer ABCZm9vOmJhcg==' })
+
+    t.end()
+  })
+
   t.end()
 })
 

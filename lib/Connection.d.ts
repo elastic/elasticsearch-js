@@ -22,7 +22,7 @@
 import { URL } from 'url';
 import { inspect, InspectOptions } from 'util'
 import { Readable as ReadableStream } from 'stream';
-import { ApiKeyAuth, BasicAuth } from './pool'
+import { ApiKeyAuth, BasicAuth, ServiceAccountTokenAuth } from './pool'
 import * as http from 'http'
 import * as https from 'https'
 import * as hpagent from 'hpagent'
@@ -38,7 +38,7 @@ export interface ConnectionOptions {
   agent?: AgentOptions | agentFn;
   status?: string;
   roles?: ConnectionRoles;
-  auth?: BasicAuth | ApiKeyAuth;
+  auth?: BasicAuth | ApiKeyAuth | ServiceAccountTokenAuth;
   proxy?: string | URL;
 }
 

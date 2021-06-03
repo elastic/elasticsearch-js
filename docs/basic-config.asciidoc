@@ -46,8 +46,8 @@ node: {
 ----
 
 |`auth`
-a|Your authentication data. You can use both basic authentication and 
-{ref}/security-api-create-api-key.html[ApiKey]. +
+a|Your authentication data. You can authenticate via basic authentication (username/password),  
+{ref}/security-api-create-api-key.html[api key], or  {ref}/security-api-create-service-token.html[service account token]+
 See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] 
 for more details. +
 _Default:_ `null`
