@@ -95,6 +95,7 @@ const platinumBlackList = {
   // the body is correct, but the regex is failing
   'sql/sql.yml': ['Getting textual representation'],
   'searchable_snapshots/10_usage.yml': ['*'],
+  'service_accounts/10_basic.yml': ['*'],
   // we are setting two certificates in the docker config
   'ssl/10_basic.yml': ['*'],
   // very likely, the index template has not been loaded yet.
