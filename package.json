@@ -12,7 +12,7 @@
   },
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
   "version": "8.0.0-SNAPSHOT.9f33e3c7",
-  "versionCanary": "8.0.0-canary.11",
+  "versionCanary": "8.0.0-canary.12",
   "keywords": [
     "elasticsearch",
     "elastic",

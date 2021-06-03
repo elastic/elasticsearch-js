@@ -446,6 +446,7 @@ interface KibanaClient {
     putRole<TContext = unknown>(params: T.SecurityPutRoleRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityPutRoleResponse, TContext>>
     putRoleMapping<TContext = unknown>(params: T.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityPutRoleMappingResponse, TContext>>
     putUser<TContext = unknown>(params: T.SecurityPutUserRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SecurityPutUserResponse, TContext>>
+    samlCompleteLogout<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
   }
   shutdown: {
     deleteNode<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
@@ -472,6 +473,7 @@ interface KibanaClient {
     deleteRepository<TContext = unknown>(params: T.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotDeleteRepositoryResponse, TContext>>
     get<TContext = unknown>(params: T.SnapshotGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotGetResponse, TContext>>
     getRepository<TContext = unknown>(params?: T.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotGetRepositoryResponse, TContext>>
+    repositoryAnalyze<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     restore<TContext = unknown>(params: T.SnapshotRestoreRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotRestoreResponse, TContext>>
     status<TContext = unknown>(params?: T.SnapshotStatusRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotStatusResponse, TContext>>
     verifyRepository<TContext = unknown>(params: T.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SnapshotVerifyRepositoryResponse, TContext>>
@@ -489,7 +491,7 @@ interface KibanaClient {
     get<TContext = unknown>(params: T.TaskGetRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskGetResponse, TContext>>
     list<TContext = unknown>(params?: T.TaskListRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TaskListResponse, TContext>>
   }
-  termsEnum<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+  termsEnum<TContext = unknown>(params: T.TermsEnumRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TermsEnumResponse, TContext>>
   termvectors<TDocument = unknown, TContext = unknown>(params: T.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TermvectorsResponse, TContext>>
   textStructure: {
     findStructure<TJsonDocument = unknown, TContext = unknown>(params: T.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TextStructureFindStructureResponse, TContext>>
