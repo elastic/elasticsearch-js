@@ -10231,7 +10231,7 @@ export interface MlDatafeed {
   chunking_config?: MlChunkingConfig
   datafeed_id: Id
   frequency?: Timestamp
-  indices: Indices
+  indices: string[]
   indexes?: string[]
   job_id: Id
   max_empty_searches?: integer
@@ -10692,8 +10692,8 @@ export interface MlModelSizeStats {
 export interface MlModelSnapshot {
   description?: string
   job_id: Id
-  latest_record_time_stamp?: integer
-  latest_result_time_stamp?: integer
+  latest_record_time_stamp: integer
+  latest_result_time_stamp: integer
   min_version: VersionString
   model_size_stats: MlModelSizeStats
   retain: boolean
@@ -11241,7 +11241,7 @@ export interface MlGetDatafeedStatsResponse {
 }
 
 export interface MlGetDatafeedsRequest extends RequestBase {
-  datafeed_id?: Id
+  datafeed_id?: Ids
   allow_no_datafeeds?: boolean
   exclude_generated?: boolean
 }
@@ -11389,9 +11389,9 @@ export interface MlInfoDefaults {
 }
 
 export interface MlInfoLimits {
-  max_model_memory_limit?: ByteSize
-  effective_max_model_memory_limit: ByteSize
-  total_ml_memory: ByteSize
+  max_model_memory_limit?: string
+  effective_max_model_memory_limit: string
+  total_ml_memory: string
 }
 
 export interface MlInfoNativeCode {
@@ -11478,7 +11478,7 @@ export interface MlPreviewDataFrameAnalyticsResponse {
 }
 
 export interface MlPreviewDatafeedRequest extends RequestBase {
-  datafeed_id: Id
+  datafeed_id?: Id
   body?: {
     job_config?: MlJob
     datafeed_config?: MlDatafeed
@@ -11520,7 +11520,7 @@ export interface MlPutDataFrameAnalyticsRequest extends RequestBase {
     dest: MlDataframeAnalyticsDestination
     analysis: MlDataframeAnalysisContainer
     description?: string
-    model_memory_limit?: ByteSize
+    model_memory_limit?: string
     max_num_threads?: integer
     analyzed_fields?: MlDataframeAnalysisAnalyzedFields
     allow_lazy_start?: boolean
@@ -11534,7 +11534,7 @@ export interface MlPutDataFrameAnalyticsResponse {
   source: MlDataframeAnalyticsSource
   description?: string
   dest: MlDataframeAnalyticsDestination
-  model_memory_limit: ByteSize
+  model_memory_limit: string
   allow_lazy_start: boolean
   max_num_threads: integer
   analysis: MlDataframeAnalysisContainer
@@ -11552,7 +11552,7 @@ export interface MlPutDatafeedRequest extends RequestBase {
     chunking_config?: MlChunkingConfig
     delayed_data_check_config?: MlDelayedDataCheckConfig
     frequency?: Time
-    indices?: Indices
+    indices?: string[]
     indexes?: string[]
     indices_options?: MlDatafeedIndicesOptions
     job_id?: Id
@@ -11571,7 +11571,7 @@ export interface MlPutDatafeedResponse {
   delayed_data_check_config?: MlDelayedDataCheckConfig
   datafeed_id: Id
   frequency: Time
-  indices: Indices
+  indices: string[]
   job_id: Id
   indices_options?: MlDatafeedIndicesOptions
   max_empty_searches: integer
@@ -11628,7 +11628,7 @@ export interface MlPutJobResponse {
   description: string
   job_id: Id
   job_type: string
-  model_plot_config: MlModelPlotConfig
+  model_plot_config?: MlModelPlotConfig
   model_snapshot_id: Id
   model_snapshot_retention_days: long
   renormalization_window_days: long
