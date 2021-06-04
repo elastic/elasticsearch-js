@@ -945,7 +945,8 @@ declare class Client {
     previewDataFrameAnalytics<TContext = unknown>(callback: callbackFn<T.MlPreviewDataFrameAnalyticsResponse, TContext>): TransportRequestCallback
     previewDataFrameAnalytics<TContext = unknown>(params: T.MlPreviewDataFrameAnalyticsRequest, callback: callbackFn<T.MlPreviewDataFrameAnalyticsResponse, TContext>): TransportRequestCallback
     previewDataFrameAnalytics<TContext = unknown>(params: T.MlPreviewDataFrameAnalyticsRequest, options: TransportRequestOptions, callback: callbackFn<T.MlPreviewDataFrameAnalyticsResponse, TContext>): TransportRequestCallback
-    previewDatafeed<TDocument = unknown, TContext = unknown>(params: T.MlPreviewDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPreviewDatafeedResponse<TDocument>, TContext>>
+    previewDatafeed<TDocument = unknown, TContext = unknown>(params?: T.MlPreviewDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPreviewDatafeedResponse<TDocument>, TContext>>
+    previewDatafeed<TDocument = unknown, TContext = unknown>(callback: callbackFn<T.MlPreviewDatafeedResponse<TDocument>, TContext>): TransportRequestCallback
     previewDatafeed<TDocument = unknown, TContext = unknown>(params: T.MlPreviewDatafeedRequest, callback: callbackFn<T.MlPreviewDatafeedResponse<TDocument>, TContext>): TransportRequestCallback
     previewDatafeed<TDocument = unknown, TContext = unknown>(params: T.MlPreviewDatafeedRequest, options: TransportRequestOptions, callback: callbackFn<T.MlPreviewDatafeedResponse<TDocument>, TContext>): TransportRequestCallback
     putCalendar<TContext = unknown>(params: T.MlPutCalendarRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPutCalendarResponse, TContext>>
