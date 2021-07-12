@@ -1422,24 +1422,52 @@ test('Disable prototype poisoning protection', t => {
   })
 })
 
-test('API compatibility header', t => {
-  t.plan(3)
+test('API compatibility header (json)', t => {
+  t.plan(4)
 
   function handler (req, res) {
     t.equal(req.headers.accept, 'application/vnd.elasticsearch+json; compatible-with=7')
+    t.equal(req.headers['content-type'], 'application/vnd.elasticsearch+json; compatible-with=7')
     res.setHeader('Content-Type', 'application/vnd.elasticsearch+json; compatible-with=7')
     res.end(JSON.stringify({ hello: 'world' }))
   }
 
   buildServer(handler, ({ port }, server) => {
+    process.env.ELASTIC_CLIENT_APIVERSIONING = 'true'
     const client = new Client({
       node: `http://localhost:${port}`
     })
 
-    client.info((err, { body }) => {
+    client.index({ index: 'foo', body: {} }, (err, { body }) => {
       t.error(err)
       t.same(body, { hello: 'world' })
       server.stop()
+      delete process.env.ELASTIC_CLIENT_APIVERSIONING
+    })
+  })
+})
+
+test('API compatibility header (x-ndjson)', t => {
+  t.plan(4)
+
+  function handler (req, res) {
+    t.equal(req.headers.accept, 'application/vnd.elasticsearch+json; compatible-with=7')
+    t.equal(req.headers['content-type'], 'application/vnd.elasticsearch+x-ndjson; compatible-with=7')
+    res.setHeader('Content-Type', 'application/vnd.elasticsearch+json; compatible-with=7')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    process.env.ELASTIC_CLIENT_APIVERSIONING = 'true'
+    const client = new Client({
+      node: `http://localhost:${port}`
+    })
+
+    client.bulk({ index: 'foo', body: [{}, {}] }, (err, { body }) => {
+      t.error(err)
+      t.same(body, { hello: 'world' })
+      server.stop()
+      delete process.env.ELASTIC_CLIENT_APIVERSIONING
     })
   })
 })
