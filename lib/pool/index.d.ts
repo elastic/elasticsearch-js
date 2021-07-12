@@ -208,6 +208,7 @@ export {
   getConnectionOptions,
   ApiKeyAuth,
   BasicAuth,
+  BearerAuth,
   internals,
   resurrectOptions,
   ResurrectEvent,
