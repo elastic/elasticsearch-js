@@ -1349,7 +1349,7 @@ test('Flush interval', t => {
 
     t.type(result.time, 'number')
     t.type(result.bytes, 'number')
-    t.match(result, b.stats())
+    t.match(result, b.stats)
     t.match(result, {
       total: 3,
       successful: 3,

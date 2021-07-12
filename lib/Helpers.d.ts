@@ -36,7 +36,7 @@ export interface ScrollSearchResponse<TDocument = unknown, TResponse = Record<st
 
 export interface BulkHelper<T> extends Promise<T> {
   abort: () => BulkHelper<T>
-  stats: () => BulkStats
+  readonly stats: BulkStats
 }
 
 export interface BulkStats {
