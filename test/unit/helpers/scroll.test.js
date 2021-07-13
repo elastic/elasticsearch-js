@@ -20,8 +20,8 @@
 'use strict'
 
 const { test } = require('tap')
-const { Client, errors } = require('../../../')
-const { connection } = require('../../utils')
+const { errors } = require('../../../')
+const { Client, connection } = require('../../utils')
 let clientVersion = require('../../../package.json').version
 if (clientVersion.includes('-')) {
   clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'

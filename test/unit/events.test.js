@@ -20,9 +20,10 @@
 'use strict'
 
 const { test } = require('tap')
-const { Client, events } = require('../../index')
+const { events } = require('../../index')
 const { TimeoutError } = require('../../lib/errors')
 const {
+  Client,
   connection: {
     MockConnection,
     MockConnectionTimeout

@@ -24,8 +24,8 @@ const { join } = require('path')
 const split = require('split2')
 const FakeTimers = require('@sinonjs/fake-timers')
 const { test } = require('tap')
-const { Client, errors } = require('../../../')
-const { buildServer, connection } = require('../../utils')
+const { errors } = require('../../../')
+const { Client, buildServer, connection } = require('../../utils')
 let clientVersion = require('../../../package.json').version
 if (clientVersion.includes('-')) {
   clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'

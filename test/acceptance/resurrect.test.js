@@ -23,8 +23,8 @@ const { test } = require('tap')
 const { URL } = require('url')
 const FakeTimers = require('@sinonjs/fake-timers')
 const workq = require('workq')
-const { buildCluster } = require('../utils')
-const { Client, events } = require('../../index')
+const { Client, buildCluster } = require('../utils')
+const { events } = require('../../index')
 
 /**
  * The aim of this test is to verify how the resurrect logic behaves
