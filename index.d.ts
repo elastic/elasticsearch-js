@@ -43,7 +43,8 @@ import {
   CloudConnectionPool,
   ResurrectEvent,
   BasicAuth,
-  ApiKeyAuth
+  ApiKeyAuth,
+  BearerAuth
 } from './lib/pool';
 import Serializer from './lib/Serializer';
 import Helpers from './lib/Helpers';
@@ -106,7 +107,7 @@ interface ClientOptions {
   opaqueIdPrefix?: string;
   generateRequestId?: generateRequestIdFn;
   name?: string | symbol;
-  auth?: BasicAuth | ApiKeyAuth;
+  auth?: BasicAuth | ApiKeyAuth | BearerAuth;
   context?: Context;
   proxy?: string | URL;
   enableMetaHeader?: boolean;

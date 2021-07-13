@@ -61,6 +61,10 @@ interface BasicAuth {
   password: string;
 }
 
+interface BearerAuth {
+  bearer: string
+}
+
 interface resurrectOptions {
   now?: number;
   requestId: string;
@@ -204,6 +208,7 @@ export {
   getConnectionOptions,
   ApiKeyAuth,
   BasicAuth,
+  BearerAuth,
   internals,
   resurrectOptions,
   ResurrectEvent,
