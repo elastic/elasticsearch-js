@@ -93,6 +93,26 @@ const client = new Client({
 })
 ----
 
+[discrete]
+[[auth-bearer]]
+==== Bearer authentication
+
+You can provide your credentials by passing the `bearer` token
+parameter via the `auth` option.
+Useful for https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-service-token.html[service account tokens].
+Be aware that it does not handle automatic token refresh.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://localhost:9200',
+  auth: {
+    bearer: 'token'
+  }
+})
+----
+
 
 [discrete]
 [[auth-basic]]
