@@ -84,3 +84,17 @@ const client = new Client({
   Serializer: MySerializer
 })
 ----
+
+[discrete]
+==== Migrate to v8
+
+The Node.js client can be configured to emit an HTTP header
+``Accept: application/vnd.elasticsearch+json; compatible-with=7``
+which signals to Elasticsearch that the client is requesting
+``7.x`` version of request and response bodies. This allows for
+upgrading from 7.x to 8.x version of Elasticsearch without upgrading
+everything at once. Elasticsearch should be upgraded first after
+the compatibility header is configured and clients should be upgraded
+second.
+To enable to setting, configure the environment variable
+``ELASTIC_CLIENT_APIVERSIONING`` to ``true``.
