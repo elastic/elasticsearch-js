@@ -116,7 +116,7 @@ class Client extends ESAPI {
         disablePrototypePoisoningProtection: false
       }, opts)
 
-    if (process.env.ELASTIC_CLIENT_APIVERSIONING === '1' || process.env.ELASTIC_CLIENT_APIVERSIONING === 'true') {
+    if (process.env.ELASTIC_CLIENT_APIVERSIONING === 'true') {
       options.headers = Object.assign({ accept: 'application/vnd.elasticsearch+json; compatible-with=7' }, options.headers)
     }
 
