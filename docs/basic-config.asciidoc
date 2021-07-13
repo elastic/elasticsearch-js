@@ -67,6 +67,13 @@ auth: {
   apiKey: 'base64EncodedKey'
 }
 ----
+Bearer authentication, useful for https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-service-token.html[service account tokens]. Be aware that it does not handle automatic token refresh:
+[source,js]
+----
+auth: {
+  bearer: 'token'
+}
+----
 
 
 |`maxRetries`

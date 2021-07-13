@@ -1558,6 +1558,25 @@ export interface SearchTemplateResponse<TDocument = unknown> {
   hits: SearchHitsMetadata<TDocument>
 }
 
+export interface TermsEnumRequest extends RequestBase {
+  index: IndexName
+  body?: {
+    field: Field
+    size?: integer
+    timeout?: Time
+    case_insensitive?: boolean
+    index_filter?: QueryDslQueryContainer
+    string?: string
+    search_after?: string
+  }
+}
+
+export interface TermsEnumResponse {
+  _shards: ShardStatistics
+  terms: string[]
+  complete: boolean
+}
+
 export interface TermvectorsFieldStatistics {
   doc_count: integer
   sum_doc_freq: long
@@ -3825,9 +3844,7 @@ export interface MappingMurmur3HashProperty extends MappingDocValuesPropertyBase
 }
 
 export interface MappingNestedProperty extends MappingCorePropertyBase {
-  dynamic?: boolean | MappingDynamicMapping
   enabled?: boolean
-  properties?: Record<PropertyName, MappingProperty>
   include_in_parent?: boolean
   include_in_root?: boolean
   type: 'nested'
@@ -3847,9 +3864,7 @@ export interface MappingNumberProperty extends MappingDocValuesPropertyBase {
 export type MappingNumberType = 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer' | 'long' | 'short' | 'byte' | 'unsigned_long'
 
 export interface MappingObjectProperty extends MappingCorePropertyBase {
-  dynamic?: boolean | MappingDynamicMapping
   enabled?: boolean
-  properties?: Record<PropertyName, MappingProperty>
   type?: 'object'
 }
 
@@ -4046,7 +4061,6 @@ export interface QueryDslCommonTermsQuery extends QueryDslQueryBase {
 
 export interface QueryDslConstantScoreQuery extends QueryDslQueryBase {
   filter?: QueryDslQueryContainer
-  boost?: float
 }
 
 export interface QueryDslDateDecayFunctionKeys extends QueryDslDecayFunctionBase {
@@ -4070,7 +4084,6 @@ export interface QueryDslDecayPlacement<TOrigin = unknown, TScale = unknown> {
 export interface QueryDslDisMaxQuery extends QueryDslQueryBase {
   queries?: QueryDslQueryContainer[]
   tie_breaker?: double
-  boost?: float
 }
 
 export interface QueryDslDistanceFeatureQuery extends QueryDslQueryBase {
@@ -4121,7 +4134,6 @@ export interface QueryDslFunctionScoreQuery extends QueryDslQueryBase {
   min_score?: double
   query?: QueryDslQueryContainer
   score_mode?: QueryDslFunctionScoreMode
-  boost?: float
 }
 
 export interface QueryDslFuzzyQuery extends QueryDslQueryBase {
@@ -5492,9 +5504,9 @@ export interface CatJobsJobsRecord {
   'model.bytes'?: ByteSize
   mb?: ByteSize
   modelBytes?: ByteSize
-  'model.memory_status'?: CatJobsModelMemoryStatus
-  mms?: CatJobsModelMemoryStatus
-  modelMemoryStatus?: CatJobsModelMemoryStatus
+  'model.memory_status'?: MlMemoryStatus
+  mms?: MlMemoryStatus
+  modelMemoryStatus?: MlMemoryStatus
   'model.bytes_exceeded'?: ByteSize
   mbe?: ByteSize
   modelBytesExceeded?: ByteSize
@@ -5513,9 +5525,9 @@ export interface CatJobsJobsRecord {
   'model.bucket_allocation_failures'?: string
   mbaf?: string
   modelBucketAllocationFailures?: string
-  'model.categorization_status'?: CatJobsModelCategorizationStatus
-  mcs?: CatJobsModelCategorizationStatus
-  modelCategorizationStatus?: CatJobsModelCategorizationStatus
+  'model.categorization_status'?: MlCategorizationStatus
+  mcs?: MlCategorizationStatus
+  modelCategorizationStatus?: MlCategorizationStatus
   'model.categorized_doc_count'?: string
   mcdc?: string
   modelCategorizedDocCount?: string
@@ -5609,10 +5621,6 @@ export interface CatJobsJobsRecord {
   bteah?: string
   bucketsTimeExpAvgHour?: string
 }
-
-export type CatJobsModelCategorizationStatus = 'ok' | 'warn'
-
-export type CatJobsModelMemoryStatus = 'ok' | 'soft_limit' | 'hard_limit'
 
 export interface CatJobsRequest extends CatCatRequestBase {
   job_id?: Id
@@ -10052,7 +10060,7 @@ export interface MlAnalysisConfig {
   categorization_field_name?: Field
   categorization_filters?: string[]
   detectors: MlDetector[]
-  influencers?: Field[]
+  influencers: Field[]
   latency?: Time
   multivariate_by_fields?: boolean
   per_partition_categorization?: MlPerPartitionCategorization
@@ -10155,6 +10163,8 @@ export interface MlCategorizationAnalyzer {
   char_filter?: (string | AnalysisCharFilter)[]
 }
 
+export type MlCategorizationStatus = 'ok' | 'warn'
+
 export interface MlCategory {
   category_id: ulong
   examples: string[]
@@ -10181,20 +10191,26 @@ export type MlChunkingMode = 'auto' | 'manual' | 'off'
 
 export type MlConditionOperator = 'gt' | 'gte' | 'lt' | 'lte'
 
+export interface MlCustomSettings {
+  custom_urls?: XpackUsageUrlConfig[]
+  created_by?: string
+  job_tags?: Record<string, string>
+}
+
 export interface MlDataCounts {
   bucket_count: long
-  earliest_record_timestamp?: long
+  earliest_record_timestamp: long
   empty_bucket_count: long
   input_bytes: long
   input_field_count: long
   input_record_count: long
   invalid_date_count: long
   job_id: Id
-  last_data_time?: long
-  latest_empty_bucket_timestamp?: long
-  latest_record_timestamp?: long
-  latest_sparse_bucket_timestamp?: long
-  latest_bucket_timestamp?: long
+  last_data_time: long
+  latest_empty_bucket_timestamp: long
+  latest_record_timestamp: long
+  latest_sparse_bucket_timestamp: long
+  latest_bucket_timestamp: long
   missing_field_count: long
   out_of_order_timestamp_count: long
   processed_field_count: long
@@ -10215,7 +10231,7 @@ export interface MlDatafeed {
   chunking_config?: MlChunkingConfig
   datafeed_id: Id
   frequency?: Timestamp
-  indices: Indices
+  indices: string[]
   indexes?: string[]
   job_id: Id
   max_empty_searches?: integer
@@ -10238,9 +10254,9 @@ export interface MlDatafeedIndicesOptions {
 export type MlDatafeedState = 'started' | 'stopped' | 'starting' | 'stopping'
 
 export interface MlDatafeedStats {
-  assignment_explanation?: string
+  assignment_explanation: string
   datafeed_id: Id
-  node?: MlDiscoveryNode
+  node: MlDiscoveryNode
   state: MlDatafeedState
   timing_stats: MlDatafeedTimingStats
 }
@@ -10251,6 +10267,7 @@ export interface MlDatafeedTimingStats {
   job_id: Id
   search_count: long
   total_search_time_ms: double
+  average_search_time_per_bucket_ms: number
 }
 
 export interface MlDataframeAnalysis {
@@ -10372,8 +10389,8 @@ export interface MlDataframeAnalyticsFieldSelection {
 }
 
 export interface MlDataframeAnalyticsMemoryEstimation {
-  expected_memory_with_disk: ByteSize
-  expected_memory_without_disk: ByteSize
+  expected_memory_with_disk: string
+  expected_memory_without_disk: string
 }
 
 export interface MlDataframeAnalyticsSource {
@@ -10427,7 +10444,7 @@ export interface MlDataframeAnalyticsSummary {
   dest: MlDataframeAnalyticsDestination
   analysis: MlDataframeAnalysisContainer
   description?: string
-  model_memory_limit?: ByteSize
+  model_memory_limit?: string
   max_num_threads?: integer
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields
   allow_lazy_start?: boolean
@@ -10504,7 +10521,7 @@ export interface MlDelayedDataCheckConfig {
 
 export interface MlDetectionRule {
   actions?: MlRuleAction[]
-  conditions: MlRuleCondition[]
+  conditions?: MlRuleCondition[]
   scope?: Record<Field, MlFilterRef>
 }
 
@@ -10515,11 +10532,10 @@ export interface MlDetector {
   detector_index?: integer
   exclude_frequent?: MlExcludeFrequent
   field_name?: Field
-  function?: string
+  function: string
   use_null?: boolean
   over_field_name?: Field
   partition_field_name?: Field
-  description?: string
 }
 
 export interface MlDiscoveryNode {
@@ -10577,29 +10593,23 @@ export interface MlInfluence {
 
 export interface MlJob {
   allow_lazy_open?: boolean
-  analysis_config?: MlAnalysisConfig
+  analysis_config: MlAnalysisConfig
   analysis_limits?: MlAnalysisLimits
-  background_persist_interval?: Time
-  count?: integer
-  created_by?: EmptyObject
-  create_time?: integer
-  detectors?: MlJobStatistics
-  data_description?: MlDataDescription
-  description?: string
-  finished_time?: integer
-  forecasts?: XpackUsageMlJobForecasts
-  job_id?: Id
-  job_type?: string
-  model_plot?: MlModelPlotConfig
-  model_size?: MlJobStatistics
-  model_snapshot_id?: Id
-  model_snapshot_retention_days?: long
-  renormalization_window_days?: long
+  background_persist_interval: Time
+  create_time: integer
+  data_description: MlDataDescription
+  description: string
+  finished_time: integer
+  job_id: Id
+  job_type: string
+  model_snapshot_id: Id
+  model_snapshot_retention_days: long
+  renormalization_window_days: long
   results_index_name?: IndexName
   results_retention_days?: long
   groups?: string[]
   model_plot_config?: MlModelPlotConfig
-  custom_settings?: XpackUsageCustomSettings
+  custom_settings?: MlCustomSettings
   job_version?: VersionString
   deleting?: boolean
   daily_model_snapshot_retention_after_days?: long
@@ -10624,12 +10634,12 @@ export interface MlJobStatistics {
 }
 
 export interface MlJobStats {
-  assignment_explanation?: string
+  assignment_explanation: string
   data_counts: MlDataCounts
   forecasts_stats: MlJobForecastStatistics
   job_id: string
   model_size_stats: MlModelSizeStats
-  node?: MlDiscoveryNode
+  node: MlDiscoveryNode
   open_time?: DateString
   state: MlJobState
   timing_stats: MlJobTimingStats
@@ -10637,14 +10647,14 @@ export interface MlJobStats {
 }
 
 export interface MlJobTimingStats {
-  average_bucket_processing_time_ms?: double
+  average_bucket_processing_time_ms: double
   bucket_count: long
-  exponential_average_bucket_processing_time_ms?: double
+  exponential_average_bucket_processing_time_ms: double
   exponential_average_bucket_processing_time_per_hour_ms: double
   job_id: Id
   total_bucket_processing_time_ms: double
-  maximum_bucket_processing_time_ms?: double
-  minimum_bucket_processing_time_ms?: double
+  maximum_bucket_processing_time_ms: double
+  minimum_bucket_processing_time_ms: double
 }
 
 export type MlMemoryStatus = 'ok' | 'soft_limit' | 'hard_limit'
@@ -10655,27 +10665,21 @@ export interface MlModelPlotConfig {
   annotations_enabled?: boolean
 }
 
-export interface MlModelPlotConfigEnabled {
-  enabled: boolean
-  annotations_enabled?: boolean
-  terms?: string
-}
-
 export interface MlModelSizeStats {
   bucket_allocation_failures_count: long
   job_id: Id
   log_time: Time
   memory_status: MlMemoryStatus
   model_bytes: long
-  model_bytes_exceeded?: long
-  model_bytes_memory_limit?: long
-  peak_model_bytes?: long
+  model_bytes_exceeded: long
+  model_bytes_memory_limit: long
+  peak_model_bytes: long
   assignment_memory_basis?: string
   result_type: string
   total_by_field_count: long
   total_over_field_count: long
   total_partition_field_count: long
-  categorization_status: string
+  categorization_status: MlCategorizationStatus
   categorized_doc_count: integer
   dead_category_count: integer
   failed_category_count: integer
@@ -10688,14 +10692,14 @@ export interface MlModelSizeStats {
 export interface MlModelSnapshot {
   description?: string
   job_id: Id
-  latest_record_time_stamp?: Time
-  latest_result_time_stamp?: Time
+  latest_record_time_stamp: integer
+  latest_result_time_stamp: integer
   min_version: VersionString
-  model_size_stats?: MlModelSizeStats
+  model_size_stats: MlModelSizeStats
   retain: boolean
   snapshot_doc_count: long
   snapshot_id: Id
-  timestamp: Time
+  timestamp: integer
 }
 
 export interface MlOutlierDetectionParameters {
@@ -10943,7 +10947,7 @@ export interface MlEstimateModelMemoryRequest extends RequestBase {
 }
 
 export interface MlEstimateModelMemoryResponse {
-  model_memory_estimate: ByteSize
+  model_memory_estimate: string
 }
 
 export interface MlEvaluateDataFrameConfusionMatrixItem {
@@ -11046,7 +11050,7 @@ export interface MlExplainDataFrameAnalyticsRequest extends RequestBase {
     dest?: MlDataframeAnalyticsDestination
     analysis: MlDataframeAnalysisContainer
     description?: string
-    model_memory_limit?: ByteSize
+    model_memory_limit?: string
     max_num_threads?: integer
     analyzed_fields?: MlDataframeAnalysisAnalyzedFields
     allow_lazy_start?: boolean
@@ -11237,7 +11241,7 @@ export interface MlGetDatafeedStatsResponse {
 }
 
 export interface MlGetDatafeedsRequest extends RequestBase {
-  datafeed_id?: Id
+  datafeed_id?: Ids
   allow_no_datafeeds?: boolean
   exclude_generated?: boolean
 }
@@ -11370,7 +11374,7 @@ export interface MlGetTrainedModelsStatsResponse {
 export interface MlInfoAnomalyDetectors {
   categorization_analyzer: MlCategorizationAnalyzer
   categorization_examples_limit: integer
-  model_memory_limit: ByteSize
+  model_memory_limit: string
   model_snapshot_retention_days: integer
   daily_model_snapshot_retention_after_days: integer
 }
@@ -11385,9 +11389,9 @@ export interface MlInfoDefaults {
 }
 
 export interface MlInfoLimits {
-  max_model_memory_limit?: ByteSize
-  effective_max_model_memory_limit: ByteSize
-  total_ml_memory: ByteSize
+  max_model_memory_limit?: string
+  effective_max_model_memory_limit: string
+  total_ml_memory: string
 }
 
 export interface MlInfoNativeCode {
@@ -11457,7 +11461,7 @@ export interface MlPostJobDataResponse {
 export interface MlPreviewDataFrameAnalyticsDataframePreviewConfig {
   source: MlDataframeAnalyticsSource
   analysis: MlDataframeAnalysisContainer
-  model_memory_limit?: ByteSize
+  model_memory_limit?: string
   max_num_threads?: integer
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields
 }
@@ -11474,7 +11478,11 @@ export interface MlPreviewDataFrameAnalyticsResponse {
 }
 
 export interface MlPreviewDatafeedRequest extends RequestBase {
-  datafeed_id: Id
+  datafeed_id?: Id
+  body?: {
+    job_config?: MlJob
+    datafeed_config?: MlDatafeed
+  }
 }
 
 export interface MlPreviewDatafeedResponse<TDocument = unknown> {
@@ -11512,7 +11520,7 @@ export interface MlPutDataFrameAnalyticsRequest extends RequestBase {
     dest: MlDataframeAnalyticsDestination
     analysis: MlDataframeAnalysisContainer
     description?: string
-    model_memory_limit?: ByteSize
+    model_memory_limit?: string
     max_num_threads?: integer
     analyzed_fields?: MlDataframeAnalysisAnalyzedFields
     allow_lazy_start?: boolean
@@ -11526,7 +11534,7 @@ export interface MlPutDataFrameAnalyticsResponse {
   source: MlDataframeAnalyticsSource
   description?: string
   dest: MlDataframeAnalyticsDestination
-  model_memory_limit: ByteSize
+  model_memory_limit: string
   allow_lazy_start: boolean
   max_num_threads: integer
   analysis: MlDataframeAnalysisContainer
@@ -11542,13 +11550,16 @@ export interface MlPutDatafeedRequest extends RequestBase {
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
     chunking_config?: MlChunkingConfig
+    delayed_data_check_config?: MlDelayedDataCheckConfig
     frequency?: Time
-    indices?: Indices
+    indices?: string[]
     indexes?: string[]
+    indices_options?: MlDatafeedIndicesOptions
     job_id?: Id
     max_empty_searches?: integer
     query?: QueryDslQueryContainer
     query_delay?: Time
+    runtime_mappings?: MappingRuntimeFields
     script_fields?: Record<string, ScriptField>
     scroll_size?: integer
   }
@@ -11557,14 +11568,17 @@ export interface MlPutDatafeedRequest extends RequestBase {
 export interface MlPutDatafeedResponse {
   aggregations: Record<string, AggregationsAggregationContainer>
   chunking_config: MlChunkingConfig
+  delayed_data_check_config?: MlDelayedDataCheckConfig
   datafeed_id: Id
   frequency: Time
-  indices: Indices
+  indices: string[]
   job_id: Id
+  indices_options?: MlDatafeedIndicesOptions
   max_empty_searches: integer
   query: QueryDslQueryContainer
   query_delay: Time
-  script_fields: Record<string, ScriptField>
+  runtime_mappings?: MappingRuntimeFields
+  script_fields?: Record<string, ScriptField>
   scroll_size: integer
 }
 
@@ -11586,32 +11600,40 @@ export interface MlPutJobRequest extends RequestBase {
   job_id: Id
   body?: {
     allow_lazy_open?: boolean
-    analysis_config?: MlAnalysisConfig
+    analysis_config: MlAnalysisConfig
     analysis_limits?: MlAnalysisLimits
+    background_persist_interval: Time
+    custom_settings?: MlCustomSettings
     data_description?: MlDataDescription
+    daily_model_snapshot_retention_after_days?: long
+    groups?: string[]
     description?: string
-    model_plot?: MlModelPlotConfig
+    model_plot_config?: MlModelPlotConfig
     model_snapshot_retention_days?: long
     results_index_name?: IndexName
+    results_retention_days?: long
   }
 }
 
 export interface MlPutJobResponse {
   allow_lazy_open: boolean
   analysis_config: MlAnalysisConfig
-  analysis_limits: MlAnalysisLimits
+  analysis_limits?: MlAnalysisLimits
   background_persist_interval: Time
   create_time: DateString
+  custom_settings?: MlCustomSettings
   data_description: MlDataDescription
+  daily_model_snapshot_retention_after_days?: long
+  groups?: string[]
   description: string
   job_id: Id
   job_type: string
-  model_plot: MlModelPlotConfig
+  model_plot_config?: MlModelPlotConfig
   model_snapshot_id: Id
   model_snapshot_retention_days: long
   renormalization_window_days: long
   results_index_name: string
-  results_retention_days: long
+  results_retention_days?: long
 }
 
 export interface MlPutTrainedModelRequest extends RequestBase {
@@ -11690,7 +11712,7 @@ export interface MlStopDataFrameAnalyticsResponse {
 }
 
 export interface MlStopDatafeedRequest extends RequestBase {
-  datafeed_id: Ids
+  datafeed_id: Id
   allow_no_match?: boolean
   force?: boolean
   body?: {
@@ -11707,7 +11729,7 @@ export interface MlUpdateDataFrameAnalyticsRequest extends RequestBase {
   id: Id
   body?: {
     description?: string
-    model_memory_limit?: ByteSize
+    model_memory_limit?: string
     max_num_threads?: integer
     allow_lazy_start?: boolean
   }
@@ -11720,7 +11742,7 @@ export interface MlUpdateDataFrameAnalyticsResponse {
   source: MlDataframeAnalyticsSource
   description?: string
   dest: MlDataframeAnalyticsDestination
-  model_memory_limit: ByteSize
+  model_memory_limit: string
   allow_lazy_start: boolean
   max_num_threads: integer
   analysis: MlDataframeAnalysisContainer
@@ -11751,7 +11773,7 @@ export interface MlUpdateJobRequest extends RequestBase {
     custom_settings?: Record<string, any>
     categorization_filters?: string[]
     description?: string
-    model_plot_config?: MlModelPlotConfigEnabled
+    model_plot_config?: MlModelPlotConfig
     daily_model_snapshot_retention_after_days?: long
     model_snapshot_retention_days?: long
     renormalization_window_days?: long
@@ -14881,12 +14903,6 @@ export interface XpackUsageCounter {
   total: long
 }
 
-export interface XpackUsageCustomSettings {
-  custom_urls?: XpackUsageUrlConfig[]
-  created_by?: string
-  job_tags?: Record<string, string>
-}
-
 export interface XpackUsageDataStreams extends XpackUsageBase {
   data_streams: long
   indices_count: long
@@ -15050,11 +15066,6 @@ export interface XpackUsageMlInferenceTrainedModelsCount {
   other: long
   regression: long
   classification: long
-}
-
-export interface XpackUsageMlJobForecasts {
-  total: long
-  forecasted_jobs: long
 }
 
 export interface XpackUsageMonitoring extends XpackUsageBase {

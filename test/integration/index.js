@@ -82,6 +82,7 @@ const platinumBlackList = {
   ],
   // The cleanup fails with a index not found when retrieving the jobs
   'ml/get_datafeed_stats.yml': ['Test get datafeed stats when total_search_time_ms mapping is missing'],
+  'ml/bucket_correlation_agg.yml': ['Test correlation bucket agg simple'],
   'ml/preview_datafeed.yml': ['*'],
   // Investigate why is failing
   'ml/inference_crud.yml': ['*'],
@@ -94,6 +95,7 @@ const platinumBlackList = {
   // the body is correct, but the regex is failing
   'sql/sql.yml': ['Getting textual representation'],
   'searchable_snapshots/10_usage.yml': ['*'],
+  'service_accounts/10_basic.yml': ['*'],
   // we are setting two certificates in the docker config
   'ssl/10_basic.yml': ['*'],
   // very likely, the index template has not been loaded yet.
