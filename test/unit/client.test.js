@@ -1421,3 +1421,30 @@ test('Disable prototype poisoning protection', t => {
     t.error(err)
   })
 })
+
+test('Bearer auth', t => {
+  t.plan(3)
+
+  function handler (req, res) {
+    t.match(req.headers, {
+      authorization: 'Bearer Zm9vOmJhcg=='
+    })
+    res.setHeader('Content-Type', 'application/json;utf=8')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const client = new Client({
+      node: `http://localhost:${port}`,
+      auth: {
+        bearer: 'Zm9vOmJhcg=='
+      }
+    })
+
+    client.info((err, { body }) => {
+      t.error(err)
+      t.same(body, { hello: 'world' })
+      server.stop()
+    })
+  })
+})
