@@ -409,7 +409,7 @@ test('Auth error', t => {
 
   process.on('warning', onWarning)
   function onWarning (warning) {
-    t.equal(warning.message, 'The client is unable to verify that the server is Elasticsearch due security privileges on the server side.')
+    t.equal(warning.message, 'The client is unable to verify that the server is Elasticsearch due to security privileges on the server side. Some functionality may not be compatible if the server is running an unsupported product.')
   }
 
   const requests = [{
