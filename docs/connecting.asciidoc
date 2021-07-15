@@ -10,6 +10,7 @@ This page contains the information you need to connect and use the Client with
 * <<client-usage, Using the client>>
 * <<client-connect-proxy, Connecting through a proxy>>
 * <<client-error-handling, Handling errors>>
+* <<product-check, Automatic product check>>
 
 [[auth-reference]]
 [discrete]
@@ -497,3 +498,15 @@ a|* `name` - `string`
 * `statusCode` - `object`, the response headers
 * `headers` - `object`, the response status code
 |===
+
+[discrete]
+[[product-check]]
+=== Automatic product check
+
+Since v7.14.0, the client performs a required product check before the first call.
+This pre-flight product check allows the client to establish the version of Elasticsearch
+that it is communicating with. The product check requires one additional HTTP request to
+be sent to the server as part of the request pipeline before the main API call is sent.
+In most cases, this will succeed during the very first API call that the client sends.
+Once the product check completes, no further product check HTTP requests are sent for 
+subsequent API calls.
