@@ -80,6 +80,18 @@ function build (opts = {}) {
 
       // remove 'x_pack_rest_user', used in some xpack test
       await client.security.deleteUser({ username: 'x_pack_rest_user' }, { ignore: [404] })
+
+      const { body: searchableSnapshotIndices } = await client.cluster.state({
+        metric: 'metadata',
+        filter_path: 'metadata.indices.*.settings.index.store.snapshot'
+      })
+      if (searchableSnapshotIndices.metadata.indices != null) {
+        await helper.runInParallel(
+          client, 'indices.delete',
+          Object.keys(searchableSnapshotIndices.metadata.indices).map(i => ({ index: i })),
+          { ignore: [404] }
+        )
+      }
     }
 
     // clean snapshots
@@ -162,6 +174,13 @@ function build (opts = {}) {
         client, 'tasks.cancel',
         tasks.map(id => ({ taskId: id }))
       )
+    }
+
+    const { body: shutdownNodes } = await client.shutdown.getNode()
+    if (shutdownNodes._nodes == null && shutdownNodes.cluster_name == null) {
+      for (const node of shutdownNodes.nodes) {
+        await client.shutdown.deleteNode({ node_id: node.node_id })
+      }
     }
 
     // wait for pending task before resolving the promise
