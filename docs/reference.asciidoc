@@ -7147,7 +7147,7 @@ client.ml.inferTrainedModelDeployment({
   timeout: string
 })
 ----
-link:{ref}/ml-infer-trained-model-deployment.html[Documentation] +
+link:{ref}/ml-df-analytics-apis.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7621,7 +7621,7 @@ client.ml.startTrainedModelDeployment({
   timeout: string
 })
 ----
-link:{ref}/ml-start-trained-model-deployment.html[Documentation] +
+link:{ref}/ml-df-analytics-apis.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
@@ -7713,7 +7713,7 @@ client.ml.stopTrainedModelDeployment({
   model_id: string
 })
 ----
-link:{ref}/stop-trained-model-deployment.html[Documentation] +
+link:{ref}/ml-df-analytics-apis.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
