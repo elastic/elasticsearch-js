@@ -23,8 +23,8 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'format']
-const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path' }
+const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'delimiter', 'format', 'keep_alive', 'wait_for_completion_timeout']
+const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', keepAlive: 'keep_alive', waitForCompletionTimeout: 'wait_for_completion_timeout' }
 
 function SqlApi (transport, ConfigurationError) {
   this.transport = transport
@@ -52,6 +52,87 @@ SqlApi.prototype.clearCursor = function sqlClearCursorApi (params, options, call
     method,
     path,
     body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SqlApi.prototype.deleteAsync = function sqlDeleteAsyncApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.id == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: id')
+    return handleError(err, callback)
+  }
+
+  let { method, body, id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'DELETE'
+  path = '/' + '_sql' + '/' + 'async' + '/' + 'delete' + '/' + encodeURIComponent(id)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SqlApi.prototype.getAsync = function sqlGetAsyncApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.id == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: id')
+    return handleError(err, callback)
+  }
+
+  let { method, body, id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'GET'
+  path = '/' + '_sql' + '/' + 'async' + '/' + encodeURIComponent(id)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SqlApi.prototype.getAsyncStatus = function sqlGetAsyncStatusApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.id == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: id')
+    return handleError(err, callback)
+  }
+
+  let { method, body, id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'GET'
+  path = '/' + '_sql' + '/' + 'async' + '/' + 'status' + '/' + encodeURIComponent(id)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
     querystring
   }
 
@@ -113,7 +194,10 @@ SqlApi.prototype.translate = function sqlTranslateApi (params, options, callback
 }
 
 Object.defineProperties(SqlApi.prototype, {
-  clear_cursor: { get () { return this.clearCursor } }
+  clear_cursor: { get () { return this.clearCursor } },
+  delete_async: { get () { return this.deleteAsync } },
+  get_async: { get () { return this.getAsync } },
+  get_async_status: { get () { return this.getAsyncStatus } }
 })
 
 module.exports = SqlApi

@@ -3587,6 +3587,27 @@ link:{ref}/ilm-get-status.html[Documentation] +
 
 
 [discrete]
+=== ilm.migrateToDataTiers
+
+[source,ts]
+----
+client.ilm.migrateToDataTiers({
+  dry_run: boolean,
+  body: object
+})
+----
+link:{ref}/ilm-migrate-to-data-tiers.html[Documentation] +
+[cols=2*]
+|===
+|`dry_run` or `dryRun`
+|`boolean` - If set to true it will simulate the migration, providing a way to retrieve the ILM policies and indices that need to be migrated. The default is false
+
+|`body`
+|`object` - Optionally specify a legacy index template name to delete and optionally specify a node attribute name used for index shard routing (defaults to "data")
+
+|===
+
+[discrete]
 === ilm.moveToStep
 
 [source,ts]
@@ -4146,6 +4167,44 @@ link:{ref}/indices-templates.html[Documentation] +
 |===
 
 [discrete]
+=== indices.diskUsage
+*Stability:* experimental
+[source,ts]
+----
+client.indices.diskUsage({
+  index: string,
+  run_expensive_tasks: boolean,
+  flush: boolean,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
+})
+----
+link:{ref}/indices-disk-usage.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - Comma-separated list of indices or data streams to analyze the disk usage
+
+|`run_expensive_tasks` or `runExpensiveTasks`
+|`boolean` - Must be set to [true] in order for the task to be performed. Defaults to false.
+
+|`flush`
+|`boolean` - Whether flush or not before analyzing the index disk usage. Defaults to true
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
+
+|===
+
+[discrete]
 === indices.exists
 
 [source,ts]
@@ -4318,6 +4377,40 @@ _Default:_ `open`
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|===
+
+[discrete]
+=== indices.fieldUsageStats
+*Stability:* experimental
+[source,ts]
+----
+client.indices.fieldUsageStats({
+  index: string,
+  fields: string | string[],
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
+})
+----
+link:{ref}/indices-field-usage-stats.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string` - A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+
+|`fields`
+|`string \| string[]` - A comma-separated list of fields to include in the stats if only a subset of fields should be returned (supports wildcards)
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Whether specified concrete indices should be ignored when unavailable (missing or closed)
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether to expand wildcard expression to concrete indices that are open, closed or both. +
+_Default:_ `open`
 
 |===
 
@@ -7045,6 +7138,27 @@ _Default:_ `100`
 |===
 
 [discrete]
+=== ml.inferTrainedModelDeployment
+*Stability:* experimental
+[source,ts]
+----
+client.ml.inferTrainedModelDeployment({
+  model_id: string,
+  timeout: string
+})
+----
+link:{ref}/ml-infer-trained-model-deployment.html[Documentation] +
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the model to perform inference on
+
+|`timeout`
+|`string` - Controls the time to wait for the inference result
+
+|===
+
+[discrete]
 === ml.info
 
 [source,ts]
@@ -7291,6 +7405,10 @@ link:{ref}/ml-put-filter.html[Documentation] +
 ----
 client.ml.putJob({
   job_id: string,
+  ignore_unavailable: boolean,
+  allow_no_indices: boolean,
+  ignore_throttled: boolean,
+  expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all',
   body: object
 })
 ----
@@ -7299,6 +7417,18 @@ link:{ref}/ml-put-job.html[Documentation] +
 |===
 |`job_id` or `jobId`
 |`string` - The ID of the job to create
+
+|`ignore_unavailable` or `ignoreUnavailable`
+|`boolean` - Ignore unavailable indexes (default: false). Only set if datafeed_config is provided.
+
+|`allow_no_indices` or `allowNoIndices`
+|`boolean` - Ignore if the source indices expressions resolves to no concrete indices (default: true). Only set if datafeed_config is provided.
+
+|`ignore_throttled` or `ignoreThrottled`
+|`boolean` - Ignore indices that are marked as throttled (default: true). Only set if datafeed_config is provided.
+
+|`expand_wildcards` or `expandWildcards`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether source index expressions should get expanded to open or closed indices (default: open). Only set if datafeed_config is provided.
 
 |`body`
 |`object` - The job
@@ -7348,6 +7478,28 @@ link:{ref}/put-trained-models-aliases.html[Documentation] +
 
 |`reassign`
 |`boolean` - If the model_alias already exists and points to a separate model_id, this parameter must be true. Defaults to false.
+
+|===
+
+[discrete]
+=== ml.resetJob
+
+[source,ts]
+----
+client.ml.resetJob({
+  job_id: string,
+  wait_for_completion: boolean
+})
+----
+link:{ref}/ml-reset-job.html[Documentation] +
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job to reset
+
+|`wait_for_completion` or `waitForCompletion`
+|`boolean` - Should this request wait until the operation has completed before returning +
+_Default:_ `true`
 
 |===
 
@@ -7460,6 +7612,27 @@ link:{ref}/ml-start-datafeed.html[Documentation] +
 |===
 
 [discrete]
+=== ml.startTrainedModelDeployment
+*Stability:* experimental
+[source,ts]
+----
+client.ml.startTrainedModelDeployment({
+  model_id: string,
+  timeout: string
+})
+----
+link:{ref}/ml-start-trained-model-deployment.html[Documentation] +
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the model to deploy
+
+|`timeout`
+|`string` - Controls the time to wait until the model is deployed
+
+|===
+
+[discrete]
 === ml.stopDataFrameAnalytics
 
 [source,ts]
@@ -7528,6 +7701,23 @@ WARNING: This parameter has been deprecated.
 
 |`body`
 |`object` - The URL params optionally sent in the body
+
+|===
+
+[discrete]
+=== ml.stopTrainedModelDeployment
+*Stability:* experimental
+[source,ts]
+----
+client.ml.stopTrainedModelDeployment({
+  model_id: string
+})
+----
+link:{ref}/stop-trained-model-deployment.html[Documentation] +
+[cols=2*]
+|===
+|`model_id` or `modelId`
+|`string` - The ID of the model to undeploy
 
 |===
 
@@ -8307,7 +8497,7 @@ client.renderSearchTemplate({
   body: object
 })
 ----
-link:{ref}/search-template.html#_validating_templates[Documentation] +
+link:{ref}/render-search-template-api.html[Documentation] +
 [cols=2*]
 |===
 |`id`
@@ -8409,7 +8599,7 @@ link:{ref}/rollup-put-job.html[Documentation] +
 
 [discrete]
 === rollup.rollup
-
+*Stability:* experimental
 [source,ts]
 ----
 client.rollup.rollup({
@@ -8418,7 +8608,7 @@ client.rollup.rollup({
   body: object
 })
 ----
-link:{ref}/rollup-api.html[Documentation] +
+link:{ref}/xpack-rollup.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -9324,12 +9514,24 @@ link:{ref}/security-api-enable-user.html[Documentation] +
 |===
 
 [discrete]
+=== security.enrollKibana
+
+[source,ts]
+----
+client.security.enrollKibana()
+----
+link:{ref}/security-api-enroll-kibana.html[Documentation] +
+
+
+[discrete]
 === security.enrollNode
 
 [source,ts]
 ----
 client.security.enrollNode()
 ----
+link:{ref}/security-api-node-enrollment.html[Documentation] +
+
 
 [discrete]
 === security.getApiKey
@@ -9684,6 +9886,108 @@ link:{ref}/security-api-put-user.html[Documentation] +
 
 |`body`
 |`object` - The user to add
+
+|===
+
+[discrete]
+=== security.samlAuthenticate
+
+[source,ts]
+----
+client.security.samlAuthenticate({
+  body: object
+})
+----
+link:{ref}/security-api-saml-authenticate.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - The SAML response to authenticate
+
+|===
+
+[discrete]
+=== security.samlCompleteLogout
+
+[source,ts]
+----
+client.security.samlCompleteLogout({
+  body: object
+})
+----
+link:{ref}/security-api-saml-complete-logout.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - The logout response to verify
+
+|===
+
+[discrete]
+=== security.samlInvalidate
+
+[source,ts]
+----
+client.security.samlInvalidate({
+  body: object
+})
+----
+link:{ref}/security-api-saml-invalidate.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - The LogoutRequest message
+
+|===
+
+[discrete]
+=== security.samlLogout
+
+[source,ts]
+----
+client.security.samlLogout({
+  body: object
+})
+----
+link:{ref}/security-api-saml-logout.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - The tokens to invalidate
+
+|===
+
+[discrete]
+=== security.samlPrepareAuthentication
+
+[source,ts]
+----
+client.security.samlPrepareAuthentication({
+  body: object
+})
+----
+link:{ref}/security-api-saml-prepare-authentication.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - The realm for which to create the authentication request, identified by either its name or the ACS URL
+
+|===
+
+[discrete]
+=== security.samlServiceProviderMetadata
+
+[source,ts]
+----
+client.security.samlServiceProviderMetadata({
+  realm_name: string
+})
+----
+link:{ref}/security-api-saml-sp-metadata.html[Documentation] +
+[cols=2*]
+|===
+|`realm_name` or `realmName`
+|`string` - The name of the SAML realm to get the metadata for
 
 |===
 
@@ -10049,6 +10353,7 @@ client.snapshot.get({
   master_timeout: string,
   ignore_unavailable: boolean,
   index_details: boolean,
+  include_repository: boolean,
   verbose: boolean
 })
 ----
@@ -10069,6 +10374,9 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |`index_details` or `indexDetails`
 |`boolean` - Whether to include details of each index in the snapshot, if those details are available. Defaults to false.
+
+|`include_repository` or `includeRepository`
+|`boolean` - Whether to include the repository name in the snapshot info. Defaults to true.
 
 |`verbose`
 |`boolean` - Whether to show verbose snapshot info or only show the basic info found in the repository index blob
@@ -10097,6 +10405,67 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |`local`
 |`boolean` - Return local information, do not retrieve the state from master node (default: false)
+
+|===
+
+[discrete]
+=== snapshot.repositoryAnalyze
+
+[source,ts]
+----
+client.snapshot.repositoryAnalyze({
+  repository: string,
+  blob_count: number,
+  concurrency: number,
+  read_node_count: number,
+  early_read_node_count: number,
+  seed: number,
+  rare_action_probability: number,
+  max_blob_size: string,
+  max_total_data_size: string,
+  timeout: string,
+  detailed: boolean,
+  rarely_abort_writes: boolean
+})
+----
+link:{ref}/modules-snapshots.html[Documentation] +
+[cols=2*]
+|===
+|`repository`
+|`string` - A repository name
+
+|`blob_count` or `blobCount`
+|`number` - Number of blobs to create during the test. Defaults to 100.
+
+|`concurrency`
+|`number` - Number of operations to run concurrently during the test. Defaults to 10.
+
+|`read_node_count` or `readNodeCount`
+|`number` - Number of nodes on which to read a blob after writing. Defaults to 10.
+
+|`early_read_node_count` or `earlyReadNodeCount`
+|`number` - Number of nodes on which to perform an early read on a blob, i.e. before writing has completed. Early reads are rare actions so the 'rare_action_probability' parameter is also relevant. Defaults to 2.
+
+|`seed`
+|`number` - Seed for the random number generator used to create the test workload. Defaults to a random value.
+
+|`rare_action_probability` or `rareActionProbability`
+|`number` - Probability of taking a rare action such as an early read or an overwrite. Defaults to 0.02.
+
+|`max_blob_size` or `maxBlobSize`
+|`string` - Maximum size of a blob to create during the test, e.g '1gb' or '100mb'. Defaults to '10mb'.
+
+|`max_total_data_size` or `maxTotalDataSize`
+|`string` - Maximum total size of all blobs to create during the test, e.g '1tb' or '100gb'. Defaults to '1gb'.
+
+|`timeout`
+|`string` - Explicit operation timeout. Defaults to '30s'.
+
+|`detailed`
+|`boolean` - Whether to return detailed results or a summary. Defaults to 'false' so that only the summary is returned.
+
+|`rarely_abort_writes` or `rarelyAbortWrites`
+|`boolean` - Whether to rarely abort writes before they complete. Defaults to 'true'.
 
 |===
 
@@ -10201,6 +10570,75 @@ link:{ref}/sql-pagination.html[Documentation] +
 |===
 |`body`
 |`object` - Specify the cursor value in the `cursor` element to clean the cursor.
+
+|===
+
+[discrete]
+=== sql.deleteAsync
+
+[source,ts]
+----
+client.sql.deleteAsync({
+  id: string
+})
+----
+link:{ref}/delete-async-sql-search-api.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|===
+
+[discrete]
+=== sql.getAsync
+
+[source,ts]
+----
+client.sql.getAsync({
+  id: string,
+  delimiter: string,
+  format: string,
+  keep_alive: string,
+  wait_for_completion_timeout: string
+})
+----
+link:{ref}/get-async-sql-search-api.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
+
+|`delimiter`
+|`string` - Separator for CSV results +
+_Default:_ `,`
+
+|`format`
+|`string` - Short version of the Accept header, e.g. json, yaml
+
+|`keep_alive` or `keepAlive`
+|`string` - Retention period for the search and its results +
+_Default:_ `5d`
+
+|`wait_for_completion_timeout` or `waitForCompletionTimeout`
+|`string` - Duration to wait for complete results
+
+|===
+
+[discrete]
+=== sql.getAsyncStatus
+
+[source,ts]
+----
+client.sql.getAsyncStatus({
+  id: string
+})
+----
+link:{ref}/get-async-sql-search-status-api.html[Documentation] +
+[cols=2*]
+|===
+|`id`
+|`string` - The async search ID
 
 |===
 
