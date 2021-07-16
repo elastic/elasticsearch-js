@@ -47,6 +47,8 @@ const freeSkips = {
   // TODO: remove this once 'arbitrary_key' is implemented
   // https://github.com/elastic/elasticsearch/pull/41492
   'indices.split/30_copy_settings.yml': ['*'],
+  'indices.stats/50_disk_usage.yml': ['Disk usage stats'],
+  'indices.stats/60_field_usage.yml': ['Field usage stats'],
   // skipping because we are booting ES with `discovery.type=single-node`
   // and this test will fail because of this configuration
   'nodes.stats/30_discovery.yml': ['*'],
@@ -55,6 +57,7 @@ const freeSkips = {
   'search.aggregation/240_max_buckets.yml': ['*']
 }
 const platinumBlackList = {
+  'analytics/histogram.yml': ['Histogram requires values in increasing order'],
   // this two test cases are broken, we should
   // return on those in the future.
   'analytics/top_metrics.yml': [
