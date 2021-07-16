@@ -58,6 +58,7 @@ const freeSkips = {
   'search/320_disallow_queries.yml': ['Test disallow expensive queries']
 }
 const platinumBlackList = {
+  'analytics/histogram.yml': ['Histogram requires values in increasing order'],
   // this two test cases are broken, we should
   // return on those in the future.
   'analytics/top_metrics.yml': [
