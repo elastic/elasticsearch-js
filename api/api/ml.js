@@ -1493,6 +1493,33 @@ MlApi.prototype.putTrainedModelAlias = function mlPutTrainedModelAliasApi (param
   return this.transport.request(request, options, callback)
 }
 
+MlApi.prototype.resetJob = function mlResetJobApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.job_id == null && params.jobId == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
+    return handleError(err, callback)
+  }
+
+  let { method, body, jobId, job_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_reset'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 MlApi.prototype.revertModelSnapshot = function mlRevertModelSnapshotApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1964,6 +1991,7 @@ Object.defineProperties(MlApi.prototype, {
   put_job: { get () { return this.putJob } },
   put_trained_model: { get () { return this.putTrainedModel } },
   put_trained_model_alias: { get () { return this.putTrainedModelAlias } },
+  reset_job: { get () { return this.resetJob } },
   revert_model_snapshot: { get () { return this.revertModelSnapshot } },
   set_upgrade_mode: { get () { return this.setUpgradeMode } },
   start_data_frame_analytics: { get () { return this.startDataFrameAnalytics } },

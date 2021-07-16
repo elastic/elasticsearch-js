@@ -897,6 +897,11 @@ export interface IlmGetLifecycle extends Generic {
 export interface IlmGetStatus extends Generic {
 }
 
+export interface IlmMigrateToDataTiers<T = RequestBody> extends Generic {
+  dry_run?: boolean;
+  body?: T;
+}
+
 export interface IlmMoveToStep<T = RequestBody> extends Generic {
   index: string;
   body?: T;
@@ -1856,6 +1861,11 @@ export interface MlPutTrainedModelAlias extends Generic {
   reassign?: boolean;
 }
 
+export interface MlResetJob extends Generic {
+  job_id: string;
+  wait_for_completion?: boolean;
+}
+
 export interface MlRevertModelSnapshot<T = RequestBody> extends Generic {
   job_id: string;
   snapshot_id: string;
@@ -2422,6 +2432,30 @@ export interface SecurityPutUser<T = RequestBody> extends Generic {
   body: T;
 }
 
+export interface SecuritySamlAuthenticate<T = RequestBody> extends Generic {
+  body: T;
+}
+
+export interface SecuritySamlCompleteLogout<T = RequestBody> extends Generic {
+  body: T;
+}
+
+export interface SecuritySamlInvalidate<T = RequestBody> extends Generic {
+  body: T;
+}
+
+export interface SecuritySamlLogout<T = RequestBody> extends Generic {
+  body: T;
+}
+
+export interface SecuritySamlPrepareAuthentication<T = RequestBody> extends Generic {
+  body: T;
+}
+
+export interface SecuritySamlServiceProviderMetadata extends Generic {
+  realm_name: string;
+}
+
 export interface ShutdownDeleteNode extends Generic {
   node_id: string;
 }
@@ -2515,6 +2549,7 @@ export interface SnapshotGet extends Generic {
   master_timeout?: string;
   ignore_unavailable?: boolean;
   index_details?: boolean;
+  include_repository?: boolean;
   verbose?: boolean;
 }
 
@@ -2522,6 +2557,21 @@ export interface SnapshotGetRepository extends Generic {
   repository?: string | string[];
   master_timeout?: string;
   local?: boolean;
+}
+
+export interface SnapshotRepositoryAnalyze extends Generic {
+  repository: string;
+  blob_count?: number;
+  concurrency?: number;
+  read_node_count?: number;
+  early_read_node_count?: number;
+  seed?: number;
+  rare_action_probability?: number;
+  max_blob_size?: string;
+  max_total_data_size?: string;
+  timeout?: string;
+  detailed?: boolean;
+  rarely_abort_writes?: boolean;
 }
 
 export interface SnapshotRestore<T = RequestBody> extends Generic {
@@ -2547,6 +2597,22 @@ export interface SnapshotVerifyRepository extends Generic {
 
 export interface SqlClearCursor<T = RequestBody> extends Generic {
   body: T;
+}
+
+export interface SqlDeleteAsync extends Generic {
+  id: string;
+}
+
+export interface SqlGetAsync extends Generic {
+  id: string;
+  delimiter?: string;
+  format?: string;
+  keep_alive?: string;
+  wait_for_completion_timeout?: string;
+}
+
+export interface SqlGetAsyncStatus extends Generic {
+  id: string;
 }
 
 export interface SqlQuery<T = RequestBody> extends Generic {

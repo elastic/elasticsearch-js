@@ -23,8 +23,8 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['master_timeout', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'wait_for_completion', 'verify', 'ignore_unavailable', 'index_details', 'verbose', 'local']
-const snakeCase = { masterTimeout: 'master_timeout', errorTrace: 'error_trace', filterPath: 'filter_path', waitForCompletion: 'wait_for_completion', ignoreUnavailable: 'ignore_unavailable', indexDetails: 'index_details' }
+const acceptedQuerystring = ['master_timeout', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'wait_for_completion', 'verify', 'ignore_unavailable', 'index_details', 'include_repository', 'verbose', 'local', 'blob_count', 'concurrency', 'read_node_count', 'early_read_node_count', 'seed', 'rare_action_probability', 'max_blob_size', 'max_total_data_size', 'detailed', 'rarely_abort_writes']
+const snakeCase = { masterTimeout: 'master_timeout', errorTrace: 'error_trace', filterPath: 'filter_path', waitForCompletion: 'wait_for_completion', ignoreUnavailable: 'ignore_unavailable', indexDetails: 'index_details', includeRepository: 'include_repository', blobCount: 'blob_count', readNodeCount: 'read_node_count', earlyReadNodeCount: 'early_read_node_count', rareActionProbability: 'rare_action_probability', maxBlobSize: 'max_blob_size', maxTotalDataSize: 'max_total_data_size', rarelyAbortWrites: 'rarely_abort_writes' }
 
 function SnapshotApi (transport, ConfigurationError) {
   this.transport = transport
@@ -301,6 +301,33 @@ SnapshotApi.prototype.getRepository = function snapshotGetRepositoryApi (params,
   return this.transport.request(request, options, callback)
 }
 
+SnapshotApi.prototype.repositoryAnalyze = function snapshotRepositoryAnalyzeApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.repository == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: repository')
+    return handleError(err, callback)
+  }
+
+  let { method, body, repository, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_snapshot' + '/' + encodeURIComponent(repository) + '/' + '_analyze'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 SnapshotApi.prototype.restore = function snapshotRestoreApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -405,6 +432,7 @@ Object.defineProperties(SnapshotApi.prototype, {
   create_repository: { get () { return this.createRepository } },
   delete_repository: { get () { return this.deleteRepository } },
   get_repository: { get () { return this.getRepository } },
+  repository_analyze: { get () { return this.repositoryAnalyze } },
   verify_repository: { get () { return this.verifyRepository } }
 })
 

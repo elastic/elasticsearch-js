@@ -1032,6 +1032,168 @@ SecurityApi.prototype.putUser = function securityPutUserApi (params, options, ca
   return this.transport.request(request, options, callback)
 }
 
+SecurityApi.prototype.samlAuthenticate = function securitySamlAuthenticateApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.body == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
+  }
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_security' + '/' + 'saml' + '/' + 'authenticate'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SecurityApi.prototype.samlCompleteLogout = function securitySamlCompleteLogoutApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.body == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
+  }
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_security' + '/' + 'saml' + '/' + 'complete_logout'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SecurityApi.prototype.samlInvalidate = function securitySamlInvalidateApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.body == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
+  }
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_security' + '/' + 'saml' + '/' + 'invalidate'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SecurityApi.prototype.samlLogout = function securitySamlLogoutApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.body == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
+  }
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_security' + '/' + 'saml' + '/' + 'logout'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SecurityApi.prototype.samlPrepareAuthentication = function securitySamlPrepareAuthenticationApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.body == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
+  }
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_security' + '/' + 'saml' + '/' + 'prepare'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+SecurityApi.prototype.samlServiceProviderMetadata = function securitySamlServiceProviderMetadataApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.realm_name == null && params.realmName == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: realm_name or realmName')
+    return handleError(err, callback)
+  }
+
+  let { method, body, realmName, realm_name, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'GET'
+  path = '/' + '_security' + '/' + 'saml' + '/' + 'metadata' + '/' + encodeURIComponent(realm_name || realmName)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 Object.defineProperties(SecurityApi.prototype, {
   change_password: { get () { return this.changePassword } },
   clear_api_key_cache: { get () { return this.clearApiKeyCache } },
@@ -1065,7 +1227,13 @@ Object.defineProperties(SecurityApi.prototype, {
   put_privileges: { get () { return this.putPrivileges } },
   put_role: { get () { return this.putRole } },
   put_role_mapping: { get () { return this.putRoleMapping } },
-  put_user: { get () { return this.putUser } }
+  put_user: { get () { return this.putUser } },
+  saml_authenticate: { get () { return this.samlAuthenticate } },
+  saml_complete_logout: { get () { return this.samlCompleteLogout } },
+  saml_invalidate: { get () { return this.samlInvalidate } },
+  saml_logout: { get () { return this.samlLogout } },
+  saml_prepare_authentication: { get () { return this.samlPrepareAuthentication } },
+  saml_service_provider_metadata: { get () { return this.samlServiceProviderMetadata } }
 })
 
 module.exports = SecurityApi
