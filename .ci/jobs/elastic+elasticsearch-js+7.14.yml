@@ -1,13 +1,13 @@
 ---
 - job:
-    name: elastic+elasticsearch-js+7.12
-    display-name: 'elastic / elasticsearch-js # 7.12'
-    description: Testing the elasticsearch-js 7.12 branch.
+    name: elastic+elasticsearch-js+7.14
+    display-name: 'elastic / elasticsearch-js # 7.14'
+    description: Testing the elasticsearch-js 7.14 branch.
     junit_results: "*-junit.xml"
     parameters:
     - string:
         name: branch_specifier
-        default: refs/heads/7.12
+        default: refs/heads/7.14
         description: the Git branch specifier to build (&lt;branchName&gt;, &lt;tagName&gt;,
           &lt;commitId&gt;, etc.)
     triggers:
