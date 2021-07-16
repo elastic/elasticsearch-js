@@ -23,8 +23,8 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['timeout', 'master_timeout', 'ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'index', 'fielddata', 'fields', 'query', 'request', 'wait_for_active_shards', 'include_type_name', 'local', 'flat_settings', 'include_defaults', 'force', 'wait_if_ongoing', 'flush', 'max_num_segments', 'only_expunge_deletes', 'create', 'cause', 'write_index_only', 'preserve_existing', 'order', 'detailed', 'active_only', 'dry_run', 'verbose', 'status', 'copy_settings', 'completion_fields', 'fielddata_fields', 'groups', 'level', 'types', 'include_segment_file_sizes', 'include_unloaded_segments', 'forbid_closed_indices', 'wait_for_completion', 'only_ancient_segments', 'explain', 'q', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'rewrite', 'all_shards']
-const snakeCase = { masterTimeout: 'master_timeout', ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', waitForActiveShards: 'wait_for_active_shards', includeTypeName: 'include_type_name', flatSettings: 'flat_settings', includeDefaults: 'include_defaults', waitIfOngoing: 'wait_if_ongoing', maxNumSegments: 'max_num_segments', onlyExpungeDeletes: 'only_expunge_deletes', writeIndexOnly: 'write_index_only', preserveExisting: 'preserve_existing', activeOnly: 'active_only', dryRun: 'dry_run', copySettings: 'copy_settings', completionFields: 'completion_fields', fielddataFields: 'fielddata_fields', includeSegmentFileSizes: 'include_segment_file_sizes', includeUnloadedSegments: 'include_unloaded_segments', forbidClosedIndices: 'forbid_closed_indices', waitForCompletion: 'wait_for_completion', onlyAncientSegments: 'only_ancient_segments', analyzeWildcard: 'analyze_wildcard', defaultOperator: 'default_operator', allShards: 'all_shards' }
+const acceptedQuerystring = ['timeout', 'master_timeout', 'ignore_unavailable', 'allow_no_indices', 'expand_wildcards', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'index', 'fielddata', 'fields', 'query', 'request', 'wait_for_active_shards', 'include_type_name', 'run_expensive_tasks', 'flush', 'local', 'flat_settings', 'include_defaults', 'force', 'wait_if_ongoing', 'max_num_segments', 'only_expunge_deletes', 'create', 'cause', 'write_index_only', 'preserve_existing', 'order', 'detailed', 'active_only', 'dry_run', 'verbose', 'status', 'copy_settings', 'completion_fields', 'fielddata_fields', 'groups', 'level', 'types', 'include_segment_file_sizes', 'include_unloaded_segments', 'forbid_closed_indices', 'wait_for_completion', 'only_ancient_segments', 'explain', 'q', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'rewrite', 'all_shards']
+const snakeCase = { masterTimeout: 'master_timeout', ignoreUnavailable: 'ignore_unavailable', allowNoIndices: 'allow_no_indices', expandWildcards: 'expand_wildcards', errorTrace: 'error_trace', filterPath: 'filter_path', waitForActiveShards: 'wait_for_active_shards', includeTypeName: 'include_type_name', runExpensiveTasks: 'run_expensive_tasks', flatSettings: 'flat_settings', includeDefaults: 'include_defaults', waitIfOngoing: 'wait_if_ongoing', maxNumSegments: 'max_num_segments', onlyExpungeDeletes: 'only_expunge_deletes', writeIndexOnly: 'write_index_only', preserveExisting: 'preserve_existing', activeOnly: 'active_only', dryRun: 'dry_run', copySettings: 'copy_settings', completionFields: 'completion_fields', fielddataFields: 'fielddata_fields', includeSegmentFileSizes: 'include_segment_file_sizes', includeUnloadedSegments: 'include_unloaded_segments', forbidClosedIndices: 'forbid_closed_indices', waitForCompletion: 'wait_for_completion', onlyAncientSegments: 'only_ancient_segments', analyzeWildcard: 'analyze_wildcard', defaultOperator: 'default_operator', allShards: 'all_shards' }
 
 function IndicesApi (transport, ConfigurationError) {
   this.transport = transport
@@ -414,6 +414,33 @@ IndicesApi.prototype.deleteTemplate = function indicesDeleteTemplateApi (params,
   return this.transport.request(request, options, callback)
 }
 
+IndicesApi.prototype.diskUsage = function indicesDiskUsageApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.index == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: index')
+    return handleError(err, callback)
+  }
+
+  let { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + encodeURIComponent(index) + '/' + '_disk_usage'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 IndicesApi.prototype.exists = function indicesExistsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -552,6 +579,33 @@ IndicesApi.prototype.existsType = function indicesExistsTypeApi (params, options
   let path = ''
   if (method == null) method = 'HEAD'
   path = '/' + encodeURIComponent(index) + '/' + '_mapping' + '/' + encodeURIComponent(type)
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+IndicesApi.prototype.fieldUsageStats = function indicesFieldUsageStatsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.index == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: index')
+    return handleError(err, callback)
+  }
+
+  let { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'GET'
+  path = '/' + encodeURIComponent(index) + '/' + '_field_usage_stats'
 
   // build request object
   const request = {
@@ -1665,10 +1719,12 @@ Object.defineProperties(IndicesApi.prototype, {
   delete_data_stream: { get () { return this.deleteDataStream } },
   delete_index_template: { get () { return this.deleteIndexTemplate } },
   delete_template: { get () { return this.deleteTemplate } },
+  disk_usage: { get () { return this.diskUsage } },
   exists_alias: { get () { return this.existsAlias } },
   exists_index_template: { get () { return this.existsIndexTemplate } },
   exists_template: { get () { return this.existsTemplate } },
   exists_type: { get () { return this.existsType } },
+  field_usage_stats: { get () { return this.fieldUsageStats } },
   flush_synced: { get () { return this.flushSynced } },
   get_alias: { get () { return this.getAlias } },
   get_data_stream: { get () { return this.getDataStream } },
