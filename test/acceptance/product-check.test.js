@@ -391,7 +391,7 @@ test('Errors v6', t => {
   })
 })
 
-test('Auth error', t => {
+test('Auth error - 401', t => {
   t.plan(8)
   const MockConnection = buildMockConnection({
     onRequest (params) {
@@ -441,6 +441,60 @@ test('Auth error', t => {
     }
   }, (err, result) => {
     t.equal(err.statusCode, 401)
+    process.removeListener('warning', onWarning)
+  })
+})
+
+test('Auth error - 403', t => {
+  t.plan(8)
+  const MockConnection = buildMockConnection({
+    onRequest (params) {
+      return {
+        statusCode: 403,
+        headers: {
+          'x-elastic-product': 'Elasticsearch'
+        },
+        body: {
+          security: 'exception'
+        }
+      }
+    }
+  })
+
+  process.on('warning', onWarning)
+  function onWarning (warning) {
+    t.equal(warning.message, 'The client is unable to verify that the server is Elasticsearch due to security privileges on the server side. Some functionality may not be compatible if the server is running an unsupported product.')
+  }
+
+  const requests = [{
+    method: 'GET',
+    path: '/'
+  }, {
+    method: 'POST',
+    path: '/foo/_search'
+  }]
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.on('request', (err, event) => {
+    t.error(err)
+    const req = requests.shift()
+    t.equal(event.meta.request.params.method, req.method)
+    t.equal(event.meta.request.params.path, req.path)
+  })
+
+  client.search({
+    index: 'foo',
+    body: {
+      query: {
+        match_all: {}
+      }
+    }
+  }, (err, result) => {
+    t.equal(err.statusCode, 403)
     process.removeListener('warning', onWarning)
   })
 })
