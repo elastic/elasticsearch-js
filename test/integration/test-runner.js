@@ -85,7 +85,7 @@ function build (opts = {}) {
         metric: 'metadata',
         filter_path: 'metadata.indices.*.settings.index.store.snapshot'
       })
-      if (searchableSnapshotIndices.metadata.indices != null) {
+      if (searchableSnapshotIndices.metadata != null && searchableSnapshotIndices.metadata.indices != null) {
         await helper.runInParallel(
           client, 'indices.delete',
           Object.keys(searchableSnapshotIndices.metadata.indices).map(i => ({ index: i })),
