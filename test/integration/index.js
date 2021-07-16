@@ -58,7 +58,9 @@ const freeSkips = {
   'search/320_disallow_queries.yml': ['Test disallow expensive queries']
 }
 const platinumBlackList = {
+  // re-enable once the yaml file have been fixed
   'aggregate-metrics/10_basic.yml': ['*'],
+  'aggregate-metrics/20_min_max_agg.yml': ['*'],
   // this two test cases are broken, we should
   // return on those in the future.
   'analytics/top_metrics.yml': [
