@@ -1048,6 +1048,33 @@ MlApi.prototype.getTrainedModelsStats = function mlGetTrainedModelsStatsApi (par
   return this.transport.request(request, options, callback)
 }
 
+MlApi.prototype.inferTrainedModelDeployment = function mlInferTrainedModelDeploymentApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.model_id == null && params.modelId == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: model_id or modelId')
+    return handleError(err, callback)
+  }
+
+  let { method, body, modelId, model_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId) + '/' + 'deployment' + '/' + '_infer'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 MlApi.prototype.info = function mlInfoApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1466,6 +1493,33 @@ MlApi.prototype.putTrainedModelAlias = function mlPutTrainedModelAliasApi (param
   return this.transport.request(request, options, callback)
 }
 
+MlApi.prototype.resetJob = function mlResetJobApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.job_id == null && params.jobId == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
+    return handleError(err, callback)
+  }
+
+  let { method, body, jobId, job_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + '_reset'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 MlApi.prototype.revertModelSnapshot = function mlRevertModelSnapshotApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1578,6 +1632,33 @@ MlApi.prototype.startDatafeed = function mlStartDatafeedApi (params, options, ca
   return this.transport.request(request, options, callback)
 }
 
+MlApi.prototype.startTrainedModelDeployment = function mlStartTrainedModelDeploymentApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.model_id == null && params.modelId == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: model_id or modelId')
+    return handleError(err, callback)
+  }
+
+  let { method, body, modelId, model_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId) + '/' + 'deployment' + '/' + '_start'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 MlApi.prototype.stopDataFrameAnalytics = function mlStopDataFrameAnalyticsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1620,6 +1701,33 @@ MlApi.prototype.stopDatafeed = function mlStopDatafeedApi (params, options, call
   let path = ''
   if (method == null) method = 'POST'
   path = '/' + '_ml' + '/' + 'datafeeds' + '/' + encodeURIComponent(datafeed_id || datafeedId) + '/' + '_stop'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+MlApi.prototype.stopTrainedModelDeployment = function mlStopTrainedModelDeploymentApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.model_id == null && params.modelId == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: model_id or modelId')
+    return handleError(err, callback)
+  }
+
+  let { method, body, modelId, model_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_ml' + '/' + 'trained_models' + '/' + encodeURIComponent(model_id || modelId) + '/' + 'deployment' + '/' + '_stop'
 
   // build request object
   const request = {
@@ -1923,6 +2031,7 @@ Object.defineProperties(MlApi.prototype, {
   get_records: { get () { return this.getRecords } },
   get_trained_models: { get () { return this.getTrainedModels } },
   get_trained_models_stats: { get () { return this.getTrainedModelsStats } },
+  infer_trained_model_deployment: { get () { return this.inferTrainedModelDeployment } },
   open_job: { get () { return this.openJob } },
   post_calendar_events: { get () { return this.postCalendarEvents } },
   post_data: { get () { return this.postData } },
@@ -1936,12 +2045,15 @@ Object.defineProperties(MlApi.prototype, {
   put_job: { get () { return this.putJob } },
   put_trained_model: { get () { return this.putTrainedModel } },
   put_trained_model_alias: { get () { return this.putTrainedModelAlias } },
+  reset_job: { get () { return this.resetJob } },
   revert_model_snapshot: { get () { return this.revertModelSnapshot } },
   set_upgrade_mode: { get () { return this.setUpgradeMode } },
   start_data_frame_analytics: { get () { return this.startDataFrameAnalytics } },
   start_datafeed: { get () { return this.startDatafeed } },
+  start_trained_model_deployment: { get () { return this.startTrainedModelDeployment } },
   stop_data_frame_analytics: { get () { return this.stopDataFrameAnalytics } },
   stop_datafeed: { get () { return this.stopDatafeed } },
+  stop_trained_model_deployment: { get () { return this.stopTrainedModelDeployment } },
   update_data_frame_analytics: { get () { return this.updateDataFrameAnalytics } },
   update_datafeed: { get () { return this.updateDatafeed } },
   update_filter: { get () { return this.updateFilter } },

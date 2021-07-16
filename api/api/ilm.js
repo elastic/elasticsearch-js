@@ -23,8 +23,8 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'only_managed', 'only_errors']
-const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', onlyManaged: 'only_managed', onlyErrors: 'only_errors' }
+const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'only_managed', 'only_errors', 'dry_run']
+const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', onlyManaged: 'only_managed', onlyErrors: 'only_errors', dryRun: 'dry_run' }
 
 function IlmApi (transport, ConfigurationError) {
   this.transport = transport
@@ -126,6 +126,27 @@ IlmApi.prototype.getStatus = function ilmGetStatusApi (params, options, callback
     method,
     path,
     body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+IlmApi.prototype.migrateToDataTiers = function ilmMigrateToDataTiersApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_ilm' + '/' + 'migrate_to_data_tiers'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
     querystring
   }
 
@@ -287,6 +308,7 @@ Object.defineProperties(IlmApi.prototype, {
   explain_lifecycle: { get () { return this.explainLifecycle } },
   get_lifecycle: { get () { return this.getLifecycle } },
   get_status: { get () { return this.getStatus } },
+  migrate_to_data_tiers: { get () { return this.migrateToDataTiers } },
   move_to_step: { get () { return this.moveToStep } },
   put_lifecycle: { get () { return this.putLifecycle } },
   remove_policy: { get () { return this.removePolicy } }

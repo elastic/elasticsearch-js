@@ -30,7 +30,7 @@ npm install @elastic/elasticsearch
 
 NOTE: The minimum supported version of Node.js is `v10`.
 
-The client versioning follows the Elastc Stack versioning, this means that
+The client versioning follows the Elastic Stack versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
 often does not coincide with the [Node.js release](https://nodejs.org/en/about/releases/) times.
 
