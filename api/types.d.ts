@@ -12833,9 +12833,9 @@ export interface SecurityClearCachedRealmsRequest extends RequestBase {
 }
 
 export interface SecurityClearCachedRealmsResponse {
+  _nodes: NodeStatistics
   cluster_name: Name
   nodes: Record<string, SecurityClusterNode>
-  _nodes: NodeStatistics
 }
 
 export interface SecurityClearCachedRolesRequest extends RequestBase {
@@ -14760,10 +14760,10 @@ export interface WatcherStatsRequest extends RequestBase {
 }
 
 export interface WatcherStatsResponse {
+  _nodes: NodeStatistics
   cluster_name: Name
   manually_stopped: boolean
   stats: WatcherStatsWatcherNodeStats[]
-  _nodes: NodeStatistics
 }
 
 export interface WatcherStatsWatchRecordQueuedStats {
