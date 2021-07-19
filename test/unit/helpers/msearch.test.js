@@ -20,8 +20,8 @@
 'use strict'
 
 const { test } = require('tap')
-const { Client, errors } = require('../../../')
-const { connection } = require('../../utils')
+const { errors } = require('../../../')
+const { Client, connection } = require('../../utils')
 const FakeTimers = require('@sinonjs/fake-timers')
 
 test('Basic', async t => {

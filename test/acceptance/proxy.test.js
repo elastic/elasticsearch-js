@@ -4,8 +4,8 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
 
 const { test } = require('tap')
-const { Client } = require('../../index')
 const {
+  Client,
   buildProxy: {
     createProxy,
     createSecureProxy,

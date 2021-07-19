@@ -81,3 +81,10 @@ export declare class RequestAbortedError<TResponse = Record<string, any>, TConte
   meta: ApiResponse<TResponse, TContext>;
   constructor(message: string, meta: ApiResponse);
 }
+
+export declare class ProductNotSupportedError<TResponse = Record<string, any>, TContext = Context> extends ElasticsearchClientError {
+  name: string;
+  message: string;
+  meta: ApiResponse<TResponse, TContext>;
+  constructor(meta: ApiResponse);
+}

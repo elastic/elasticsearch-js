@@ -19,8 +19,8 @@
 
 'use strict'
 
-const { Client, errors } = require('../../index')
-const { buildServer } = require('../utils')
+const { errors } = require('../../index')
+const { Client, buildServer } = require('../utils')
 
 function runAsyncTest (test) {
   test('async await (search)', t => {
