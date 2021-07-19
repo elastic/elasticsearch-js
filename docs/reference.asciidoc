@@ -4465,7 +4465,7 @@ client.indices.fieldUsageStats({
   expand_wildcards: 'open' | 'closed' | 'hidden' | 'none' | 'all'
 })
 ----
-link:{ref}/indices-field-usage-stats.html[Documentation] +
+link:{ref}/field-usage-stats.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -8365,6 +8365,44 @@ _Default:_ `true`
 
 |`body`
 |`object` - Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
+
+|===
+
+[discrete]
+=== nodes.clearMeteringArchive
+*Stability:* experimental
+[source,ts]
+----
+client.nodes.clearMeteringArchive({
+  node_id: string | string[],
+  max_archive_version: number
+})
+----
+link:{ref}/clear-repositories-metering-archive-api.html[Documentation] +
+[cols=2*]
+|===
+|`node_id` or `nodeId`
+|`string \| string[]` - Comma-separated list of node IDs or names used to limit returned information.
+
+|`max_archive_version` or `maxArchiveVersion`
+|`number` - Specifies the maximum archive_version to be cleared from the archive.
+
+|===
+
+[discrete]
+=== nodes.getMeteringInfo
+*Stability:* experimental
+[source,ts]
+----
+client.nodes.getMeteringInfo({
+  node_id: string | string[]
+})
+----
+link:{ref}/get-repositories-metering-api.html[Documentation] +
+[cols=2*]
+|===
+|`node_id` or `nodeId`
+|`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information.
 
 |===
 

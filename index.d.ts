@@ -1925,6 +1925,22 @@ declare class Client {
   mtermvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Mtermvectors<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   mtermvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Mtermvectors<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   nodes: {
+    clear_metering_archive<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesClearMeteringArchive, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clear_metering_archive<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_metering_archive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearMeteringArchive, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_metering_archive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearMeteringArchive, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearMeteringArchive<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesClearMeteringArchive, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clearMeteringArchive<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearMeteringArchive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearMeteringArchive, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearMeteringArchive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearMeteringArchive, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_metering_info<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesGetMeteringInfo, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get_metering_info<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_metering_info<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetMeteringInfo, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_metering_info<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetMeteringInfo, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getMeteringInfo<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesGetMeteringInfo, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getMeteringInfo<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getMeteringInfo<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetMeteringInfo, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getMeteringInfo<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetMeteringInfo, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     hot_threads<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesHotThreads, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     hot_threads<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     hot_threads<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesHotThreads, callback: callbackFn<TResponse, TContext>): TransportRequestCallback

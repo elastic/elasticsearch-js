@@ -2025,6 +2025,15 @@ export interface Mtermvectors<T = RequestBody> extends Generic {
   body?: T;
 }
 
+export interface NodesClearMeteringArchive extends Generic {
+  node_id: string | string[];
+  max_archive_version: number;
+}
+
+export interface NodesGetMeteringInfo extends Generic {
+  node_id: string | string[];
+}
+
 export interface NodesHotThreads extends Generic {
   node_id?: string | string[];
   interval?: string;
