@@ -133,7 +133,7 @@ function buildMockConnection (opts) {
 
   class MockConnection extends Connection {
     request (params, callback) {
-      let { body, statusCode } = opts.onRequest(params)
+      let { body, statusCode, headers } = opts.onRequest(params)
       if (typeof body !== 'string') {
         body = JSON.stringify(body)
       }
@@ -144,7 +144,8 @@ function buildMockConnection (opts) {
         'content-type': 'application/json;utf=8',
         date: new Date().toISOString(),
         connection: 'keep-alive',
-        'content-length': Buffer.byteLength(body)
+        'content-length': Buffer.byteLength(body),
+        ...headers
       }
       process.nextTick(() => {
         if (!aborted) {
