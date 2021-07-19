@@ -27,6 +27,7 @@ const os = require('os')
 const intoStream = require('into-stream')
 const {
   buildServer,
+  skipProductCheck,
   connection: { MockConnection, MockConnectionTimeout, MockConnectionError }
 } = require('../utils')
 const {
@@ -65,6 +66,7 @@ test('Basic', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -92,6 +94,7 @@ test('Basic (promises support)', t => {
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   transport
     .request({
@@ -119,6 +122,7 @@ test('Basic - failing (promises support)', t => {
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   transport
     .request({
@@ -145,6 +149,7 @@ test('Basic (options + promises support)', t => {
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   transport
     .request({
@@ -190,6 +195,7 @@ test('Send POST', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'POST',
@@ -246,6 +252,7 @@ test('Send POST (ndjson)', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'POST',
@@ -289,6 +296,7 @@ test('Send stream', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'POST',
@@ -332,6 +340,7 @@ test('Send stream (bulkBody)', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'POST',
@@ -365,6 +374,7 @@ test('Not JSON payload from server', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -396,6 +406,7 @@ test('NoLivingConnectionsError (null connection)', t => {
       return null
     }
   })
+  skipProductCheck(transport)
 
   transport.request({
     method: 'GET',
@@ -424,6 +435,7 @@ test('NoLivingConnectionsError (undefined connection)', t => {
       return undefined
     }
   })
+  skipProductCheck(transport)
 
   transport.request({
     method: 'GET',
@@ -447,6 +459,7 @@ test('SerializationError', t => {
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   const body = { hello: 'world' }
   body.o = body
@@ -473,6 +486,7 @@ test('SerializationError (bulk)', t => {
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   const bulkBody = { hello: 'world' }
   bulkBody.o = bulkBody
@@ -505,6 +519,7 @@ test('DeserializationError', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -541,6 +556,7 @@ test('TimeoutError (should call markDead on the failing connection)', t => {
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   transport.request({
     method: 'GET',
@@ -575,6 +591,7 @@ test('ConnectionError (should call markDead on the failing connection)', t => {
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   transport.request({
     method: 'GET',
@@ -620,6 +637,7 @@ test('Retry mechanism', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -664,6 +682,7 @@ test('Should not retry if the body is a stream', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'POST',
@@ -709,6 +728,7 @@ test('Should not retry if the bulkBody is a stream', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'POST',
@@ -754,6 +774,7 @@ test('No retry', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'POST',
@@ -805,6 +826,7 @@ test('Custom retry mechanism', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -852,6 +874,7 @@ test('Should not retry on 429', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -889,6 +912,7 @@ test('Should call markAlive with a successful response', t => {
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   transport.request({
     method: 'GET',
@@ -926,6 +950,7 @@ test('Should call resurrect on every request', t => {
     sniffOnStart: false,
     name: 'elasticsearch-js'
   })
+  skipProductCheck(transport)
 
   transport.request({
     method: 'GET',
@@ -954,6 +979,7 @@ test('Should return a request aborter utility', t => {
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   const request = transport.request({
     method: 'GET',
@@ -1002,6 +1028,7 @@ test('Retry mechanism and abort', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     const request = transport.request({
       method: 'GET',
@@ -1031,6 +1058,7 @@ test('Abort a request with the promise API', t => {
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   const request = transport.request({
     method: 'GET',
@@ -1070,6 +1098,7 @@ test('ResponseError', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -1105,6 +1134,7 @@ test('Override requestTimeout', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -1167,6 +1197,7 @@ test('sniff', t => {
       sniffOnConnectionFault: true,
       sniffEndpoint: '/sniff'
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -1200,6 +1231,7 @@ test('sniff', t => {
       sniffInterval: 1,
       sniffEndpoint: '/sniff'
     })
+    skipProductCheck(transport)
 
     const params = { method: 'GET', path: '/' }
     clock.tick(100)
@@ -1233,6 +1265,7 @@ test('sniff', t => {
       sniffInterval: false,
       sniffEndpoint: '/sniff'
     })
+    skipProductCheck(transport)
 
     transport.sniff((err, hosts) => {
       t.ok(err instanceof ConnectionError)
@@ -1269,6 +1302,7 @@ test(`Should mark as dead connections where the statusCode is 502/3/4
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'GET',
@@ -1323,6 +1357,7 @@ test('Should retry the request if the statusCode is 502/3/4', t => {
           sniffInterval: false,
           sniffOnStart: false
         })
+        skipProductCheck(transport)
 
         transport.request({
           method: 'GET',
@@ -1354,6 +1389,7 @@ test('Ignore status code', t => {
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   transport.request({
     method: 'GET',
@@ -1403,6 +1439,7 @@ test('Should serialize the querystring', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -1446,6 +1483,7 @@ test('timeout option', t => {
           sniffInterval: false,
           sniffOnStart: false
         })
+        skipProductCheck(transport)
 
         transport.request({
           method: 'GET',
@@ -1476,6 +1514,7 @@ test('timeout option', t => {
           sniffInterval: false,
           sniffOnStart: false
         })
+        skipProductCheck(transport)
 
         transport.request({
           method: 'GET',
@@ -1512,6 +1551,7 @@ test('timeout option', t => {
           sniffInterval: false,
           sniffOnStart: false
         })
+        skipProductCheck(transport)
 
         transport.request({
           method: 'GET',
@@ -1542,6 +1582,7 @@ test('timeout option', t => {
           sniffInterval: false,
           sniffOnStart: false
         })
+        skipProductCheck(transport)
 
         transport.request({
           method: 'GET',
@@ -1576,6 +1617,7 @@ test('Should cast to boolean HEAD request', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'HEAD',
@@ -1601,6 +1643,7 @@ test('Should cast to boolean HEAD request', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'HEAD',
@@ -1627,6 +1670,7 @@ test('Should cast to boolean HEAD request', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'HEAD',
@@ -1652,6 +1696,7 @@ test('Should cast to boolean HEAD request', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'HEAD',
@@ -1694,6 +1739,7 @@ test('Suggest compression', t => {
       sniffOnStart: false,
       suggestCompression: true
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -1734,6 +1780,7 @@ test('Broken compression', t => {
       sniffOnStart: false,
       suggestCompression: true
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -1769,6 +1816,7 @@ test('Warning header', t => {
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'GET',
@@ -1806,6 +1854,7 @@ test('Warning header', t => {
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'GET',
@@ -1840,6 +1889,7 @@ test('Warning header', t => {
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'GET',
@@ -1875,6 +1925,7 @@ test('asStream set to true', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -1933,6 +1984,7 @@ test('Compress request', t => {
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'POST',
@@ -1981,6 +2033,7 @@ test('Compress request', t => {
         sniffOnStart: false,
         compression: 'gzip'
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'POST',
@@ -2026,6 +2079,7 @@ test('Compress request', t => {
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'POST',
@@ -2085,6 +2139,7 @@ test('Compress request', t => {
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'DELETE',
@@ -2151,6 +2206,7 @@ test('Compress request', t => {
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'POST',
@@ -2195,6 +2251,7 @@ test('Headers configuration', t => {
           'x-foo': 'bar'
         }
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'GET',
@@ -2234,6 +2291,7 @@ test('Headers configuration', t => {
           'x-foo': 'bar'
         }
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'GET',
@@ -2272,6 +2330,7 @@ test('Headers configuration', t => {
           'x-foo': 'bar'
         }
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'GET',
@@ -2312,6 +2371,7 @@ test('nodeFilter and nodeSelector', t => {
       return conns[0]
     }
   })
+  skipProductCheck(transport)
 
   transport.request({
     method: 'GET',
@@ -2345,6 +2405,7 @@ test('Should accept custom querystring in the optons object', t => {
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'GET',
@@ -2381,6 +2442,7 @@ test('Should accept custom querystring in the optons object', t => {
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'GET',
@@ -2425,6 +2487,7 @@ test('Should add an User-Agent header', t => {
       sniffInterval: false,
       sniffOnStart: false
     })
+    skipProductCheck(transport)
 
     transport.request({
       method: 'GET',
@@ -2459,6 +2522,7 @@ test('Should pass request params and options to generateRequestId', t => {
       return 'id'
     }
   })
+  skipProductCheck(transport)
 
   transport.request(params, options, t.error)
 })
@@ -2484,6 +2548,7 @@ test('Secure json parsing', t => {
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'GET',
@@ -2516,6 +2581,7 @@ test('Secure json parsing', t => {
         sniffInterval: false,
         sniffOnStart: false
       })
+      skipProductCheck(transport)
 
       transport.request({
         method: 'GET',
@@ -2574,6 +2640,7 @@ test('The callback with a sync error should be called in the next tick - json', 
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   const body = { a: true }
   body.o = body
@@ -2605,6 +2672,7 @@ test('The callback with a sync error should be called in the next tick - ndjson'
     sniffInterval: false,
     sniffOnStart: false
   })
+  skipProductCheck(transport)
 
   const field = { a: true }
   field.o = field

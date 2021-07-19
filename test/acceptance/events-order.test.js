@@ -21,7 +21,7 @@
 
 const { test } = require('tap')
 const intoStream = require('into-stream')
-const { Client, Connection, events } = require('../../index')
+const { Connection, events } = require('../../index')
 const {
   TimeoutError,
   ConnectionError,
@@ -31,6 +31,7 @@ const {
   DeserializationError
 } = require('../../lib/errors')
 const {
+  Client,
   buildServer,
   connection: {
     MockConnection,

@@ -20,8 +20,8 @@
 'use strict'
 
 const { test } = require('tap')
-const { Client, errors } = require('../../index')
-const { buildServer } = require('../utils')
+const { errors } = require('../../index')
+const { Client, buildServer } = require('../utils')
 
 test('Basic (callback)', t => {
   t.plan(2)
