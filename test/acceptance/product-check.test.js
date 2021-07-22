@@ -346,7 +346,6 @@ test('Errors ≤v7.13 (build flavor)', t => {
       t.equal(err.message, 'The client noticed that the server is not a supported distribution of Elasticsearch')
     })
   }, 100)
-
 })
 
 test('No errors v6', t => {
