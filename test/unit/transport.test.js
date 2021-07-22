@@ -2689,3 +2689,72 @@ test('The callback with a sync error should be called in the next tick - ndjson'
   t.type(transportReturn.catch, 'function')
   t.type(transportReturn.abort, 'function')
 })
+
+test('Support mapbox vector tile', t => {
+  t.plan(2)
+  function handler (req, res) {
+    res.setHeader('Content-Type', 'application/vnd.mapbox-vector-tile')
+    res.end(Buffer.from('vector tile stuff'))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+    skipProductCheck(transport)
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, { body }) => {
+      t.error(err)
+      t.same(body.toString(), Buffer.from('vector tile stuff').toString())
+      server.stop()
+    })
+  })
+})
+
+test('Compressed mapbox vector tile', t => {
+  t.plan(2)
+  function handler (req, res) {
+    const body = gzipSync(Buffer.from('vector tile stuff'))
+    res.setHeader('Content-Type', 'application/vnd.mapbox-vector-tile')
+    res.setHeader('Content-Encoding', 'gzip')
+    res.setHeader('Content-Length', Buffer.byteLength(body))
+    res.end(body)
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+    skipProductCheck(transport)
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, { body }) => {
+      t.error(err)
+      t.same(body.toString(), Buffer.from('vector tile stuff').toString())
+      server.stop()
+    })
+  })
+})
