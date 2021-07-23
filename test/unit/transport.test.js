@@ -2692,9 +2692,11 @@ test('The callback with a sync error should be called in the next tick - ndjson'
 
 test('Support mapbox vector tile', t => {
   t.plan(2)
+  const mvtContent = 'GoMCCgRtZXRhEikSFAAAAQACAQMBBAAFAgYDBwAIBAkAGAMiDwkAgEAagEAAAP8//z8ADxoOX3NoYXJkcy5mYWlsZWQaD19zaGFyZHMuc2tpcHBlZBoSX3NoYXJkcy5zdWNjZXNzZnVsGg1fc2hhcmRzLnRvdGFsGhlhZ2dyZWdhdGlvbnMuX2NvdW50LmNvdW50GhdhZ2dyZWdhdGlvbnMuX2NvdW50LnN1bRoTaGl0cy50b3RhbC5yZWxhdGlvbhoQaGl0cy50b3RhbC52YWx1ZRoJdGltZWRfb3V0GgR0b29rIgIwACICMAIiCRkAAAAAAAAAACIECgJlcSICOAAogCB4Ag=='
+
   function handler (req, res) {
     res.setHeader('Content-Type', 'application/vnd.mapbox-vector-tile')
-    res.end(Buffer.from('vector tile stuff'))
+    res.end(Buffer.from(mvtContent, 'base64'))
   }
 
   buildServer(handler, ({ port }, server) => {
@@ -2717,7 +2719,7 @@ test('Support mapbox vector tile', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.error(err)
-      t.same(body.toString(), Buffer.from('vector tile stuff').toString())
+      t.same(body.toString('base64'), Buffer.from(mvtContent, 'base64').toString('base64'))
       server.stop()
     })
   })
@@ -2725,8 +2727,10 @@ test('Support mapbox vector tile', t => {
 
 test('Compressed mapbox vector tile', t => {
   t.plan(2)
+  const mvtContent = 'GoMCCgRtZXRhEikSFAAAAQACAQMBBAAFAgYDBwAIBAkAGAMiDwkAgEAagEAAAP8//z8ADxoOX3NoYXJkcy5mYWlsZWQaD19zaGFyZHMuc2tpcHBlZBoSX3NoYXJkcy5zdWNjZXNzZnVsGg1fc2hhcmRzLnRvdGFsGhlhZ2dyZWdhdGlvbnMuX2NvdW50LmNvdW50GhdhZ2dyZWdhdGlvbnMuX2NvdW50LnN1bRoTaGl0cy50b3RhbC5yZWxhdGlvbhoQaGl0cy50b3RhbC52YWx1ZRoJdGltZWRfb3V0GgR0b29rIgIwACICMAIiCRkAAAAAAAAAACIECgJlcSICOAAogCB4Ag=='
+
   function handler (req, res) {
-    const body = gzipSync(Buffer.from('vector tile stuff'))
+    const body = gzipSync(Buffer.from(mvtContent, 'base64'))
     res.setHeader('Content-Type', 'application/vnd.mapbox-vector-tile')
     res.setHeader('Content-Encoding', 'gzip')
     res.setHeader('Content-Length', Buffer.byteLength(body))
@@ -2753,7 +2757,7 @@ test('Compressed mapbox vector tile', t => {
       path: '/hello'
     }, (err, { body }) => {
       t.error(err)
-      t.same(body.toString(), Buffer.from('vector tile stuff').toString())
+      t.same(body.toString('base64'), Buffer.from(mvtContent, 'base64').toString('base64'))
       server.stop()
     })
   })
