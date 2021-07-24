@@ -54,7 +54,9 @@ of `^7.10.0`).
 
 ### Compatibility
 
-The library is compatible with all Elasticsearch versions since 5.x, and you should use the same major version of the Elasticsearch instance that you are using.
+Elastic language clients are guaranteed to be able to communicate with Elasticsearch or Elastic solutions running on the same major version and greater or equal minor version.
+
+Language clients are forward compatible; meaning that clients support communicating with greater minor versions of Elasticsearch. Elastic language clients are not guaranteed to be backwards compatible.
 
 | Elasticsearch Version | Client Version |
 | --------------------- |----------------|
