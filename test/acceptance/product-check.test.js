@@ -24,6 +24,7 @@ const { Client } = require('../../')
 const {
   connection: {
     MockConnectionTimeout,
+    MockConnectionError,
     buildMockConnection
   }
 } = require('../utils')
@@ -648,7 +649,7 @@ test('500 error', t => {
       }
     }
   }, (err, result) => {
-    t.equal(err.message, 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.')
+    t.equal(err.message, 'Response Error')
 
     client.search({
       index: 'foo',
@@ -685,7 +686,7 @@ test('TimeoutError', t => {
     if (req.method === 'GET') {
       t.error(err)
     } else {
-      t.equal(err.message, 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.')
+      t.equal(err.message, 'Request timed out')
     }
   })
 
@@ -697,7 +698,45 @@ test('TimeoutError', t => {
       }
     }
   }, (err, result) => {
-    t.equal(err.message, 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.')
+    t.equal(err.message, 'Request timed out')
+  })
+})
+
+test('ConnectionError', t => {
+  t.plan(3)
+
+  const requests = [{
+    method: 'GET',
+    path: '/'
+  }, {
+    method: 'POST',
+    path: '/foo/_search'
+  }]
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnectionError,
+    maxRetries: 0
+  })
+
+  client.on('request', (err, event) => {
+    const req = requests.shift()
+    if (req.method === 'GET') {
+      t.error(err)
+    } else {
+      t.equal(err.message, 'Kaboom')
+    }
+  })
+
+  client.search({
+    index: 'foo',
+    body: {
+      query: {
+        match_all: {}
+      }
+    }
+  }, (err, result) => {
+    t.equal(err.message, 'Kaboom')
   })
 })
 
