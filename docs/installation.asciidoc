@@ -17,7 +17,7 @@ To install a specific major version of the client, run the following command:
 npm install @elastic/elasticsearch@<major>
 ----
 
-To learn more about the supported major versions, please refer to the 
+To learn more about the supported major versions, please refer to the
 <<js-compatibility-matrix>>.
 
 [discrete]
@@ -37,7 +37,7 @@ to support that version for at least another minor release. If you are using the
 with a version of Node.js that will be unsupported soon, you will see a warning
 in your logs (the client will start logging the warning with two minors in advance).
 
-Unless you are *always* using a supported version of Node.js, 
+Unless you are *always* using a supported version of Node.js,
 we recommend defining the client dependency in your
 `package.json` with the `~` instead of `^`. In this way, you will lock the
 dependency on the minor release and not the major. (for example, `~7.10.0` instead
@@ -62,9 +62,12 @@ of `^7.10.0`).
 [[js-compatibility-matrix]]
 === Compatibility matrix
 
-The library is compatible with all {es} versions since 5.x. We recommend you to
-use the same major version of the client as the {es} instance that you are
-using.
+Elastic language clients are guaranteed to be able to communicate with Elasticsearch
+or Elastic solutions running on the same major version and greater or equal minor version.
+
+Language clients are forward compatible; meaning that clients support communicating
+with greater minor versions of Elasticsearch. Elastic language clients are not
+guaranteed to be backwards compatible.
 
 [%header,cols=2*]
 |===
