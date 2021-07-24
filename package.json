@@ -100,6 +100,7 @@
     "jsx": false,
     "flow": false,
     "coverage": false,
-    "jobs-auto": true
+    "jobs-auto": true,
+    "check-coverage": false
   }
 }
