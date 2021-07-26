@@ -24,6 +24,7 @@ const { Client } = require('../../')
 const {
   connection: {
     MockConnectionTimeout,
+    MockConnectionError,
     buildMockConnection
   }
 } = require('../utils')
@@ -210,7 +211,7 @@ test('No errors ≤v7.13', t => {
   })
 })
 
-test('Errors ≤v7.13', t => {
+test('Errors ≤v7.13 (tagline)', t => {
   t.plan(3)
   const MockConnection = buildMockConnection({
     onRequest (params) {
@@ -222,7 +223,7 @@ test('Errors ≤v7.13', t => {
           cluster_uuid: 'cQ5pAMvRRTyEzObH4L5mTA',
           version: {
             number: '7.13.0-SNAPSHOT',
-            build_flavor: 'other',
+            build_flavor: 'default',
             build_type: 'docker',
             build_hash: '5fb4c050958a6b0b6a70a6fb3e616d0e390eaac3',
             build_date: '2021-07-10T01:45:02.136546168Z',
@@ -269,6 +270,83 @@ test('Errors ≤v7.13', t => {
   }, (err, result) => {
     t.equal(err.message, 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.')
   })
+})
+
+test('Errors ≤v7.13 (build flavor)', t => {
+  t.plan(5)
+  const MockConnection = buildMockConnection({
+    onRequest (params) {
+      return {
+        statusCode: 200,
+        body: {
+          name: '1ef419078577',
+          cluster_name: 'docker-cluster',
+          cluster_uuid: 'cQ5pAMvRRTyEzObH4L5mTA',
+          version: {
+            number: '7.13.0-SNAPSHOT',
+            build_flavor: 'other',
+            build_type: 'docker',
+            build_hash: '5fb4c050958a6b0b6a70a6fb3e616d0e390eaac3',
+            build_date: '2021-07-10T01:45:02.136546168Z',
+            build_snapshot: true,
+            lucene_version: '8.9.0',
+            minimum_wire_compatibility_version: '7.15.0',
+            minimum_index_compatibility_version: '7.0.0'
+          },
+          tagline: 'You Know, for Search'
+        }
+      }
+    }
+  })
+
+  const requests = [{
+    method: 'GET',
+    path: '/'
+  }, {
+    method: 'POST',
+    path: '/foo/_search'
+  }, {
+    method: 'POST',
+    path: '/foo/_search'
+  }]
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.on('request', (err, event) => {
+    const req = requests.shift()
+    if (req.method === 'GET') {
+      t.error(err)
+    } else {
+      t.equal(err.message, 'The client noticed that the server is not a supported distribution of Elasticsearch')
+    }
+  })
+
+  client.search({
+    index: 'foo',
+    body: {
+      query: {
+        match_all: {}
+      }
+    }
+  }, (err, result) => {
+    t.equal(err.message, 'The client noticed that the server is not a supported distribution of Elasticsearch')
+  })
+
+  setTimeout(() => {
+    client.search({
+      index: 'foo',
+      body: {
+        query: {
+          match_all: {}
+        }
+      }
+    }, (err, result) => {
+      t.equal(err.message, 'The client noticed that the server is not a supported distribution of Elasticsearch')
+    })
+  }, 100)
 })
 
 test('No errors v6', t => {
@@ -571,7 +649,7 @@ test('500 error', t => {
       }
     }
   }, (err, result) => {
-    t.equal(err.message, 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.')
+    t.equal(err.message, 'Response Error')
 
     client.search({
       index: 'foo',
@@ -608,7 +686,7 @@ test('TimeoutError', t => {
     if (req.method === 'GET') {
       t.error(err)
     } else {
-      t.equal(err.message, 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.')
+      t.equal(err.message, 'Request timed out')
     }
   })
 
@@ -620,7 +698,45 @@ test('TimeoutError', t => {
       }
     }
   }, (err, result) => {
-    t.equal(err.message, 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.')
+    t.equal(err.message, 'Request timed out')
+  })
+})
+
+test('ConnectionError', t => {
+  t.plan(3)
+
+  const requests = [{
+    method: 'GET',
+    path: '/'
+  }, {
+    method: 'POST',
+    path: '/foo/_search'
+  }]
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnectionError,
+    maxRetries: 0
+  })
+
+  client.on('request', (err, event) => {
+    const req = requests.shift()
+    if (req.method === 'GET') {
+      t.error(err)
+    } else {
+      t.equal(err.message, 'Kaboom')
+    }
+  })
+
+  client.search({
+    index: 'foo',
+    body: {
+      query: {
+        match_all: {}
+      }
+    }
+  }, (err, result) => {
+    t.equal(err.message, 'Kaboom')
   })
 })
 

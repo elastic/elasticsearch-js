@@ -1,7 +1,7 @@
 [[basic-config]]
 === Basic configuration
 
-This page shows you the possible basic configuration options that the clients 
+This page shows you the possible basic configuration options that the clients
 offers.
 
 
@@ -46,9 +46,9 @@ node: {
 ----
 
 |`auth`
-a|Your authentication data. You can use both basic authentication and 
+a|Your authentication data. You can use both basic authentication and
 {ref}/security-api-create-api-key.html[ApiKey]. +
-See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] 
+See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication]
 for more details. +
 _Default:_ `null`
 
@@ -141,7 +141,7 @@ const client = new Client({
 ----
 
 |`agent`
-a|`http.AgentOptions, function` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options], 
+a|`http.AgentOptions, function` - http agent https://nodejs.org/api/http.html#http_new_agent_options[options],
 or a function that returns an actual http agent instance. If you want to disable the http agent use entirely
 (and disable the `keep-alive` feature), set the agent to `false`. +
 _Default:_ `null`
@@ -196,7 +196,7 @@ function nodeSelector (connections) {
 ----
 
 |`generateRequestId`
-a|`function` - function to generate the request id for every request, it takes 
+a|`function` - function to generate the request id for every request, it takes
 two parameters, the request parameters and options. +
 By default it generates an incremental integer for every request. +
 _Custom function example:_
@@ -233,17 +233,17 @@ such as the client and platform version. +
 _Default:_ `true`
 
 |`cloud`
-a|`object` - Custom configuration for connecting to 
-https://cloud.elastic.co[Elastic Cloud]. See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication] 
+a|`object` - Custom configuration for connecting to
+https://cloud.elastic.co[Elastic Cloud]. See https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/auth-reference.html[Authentication]
 for more details. +
-_Default:_ `null` + 
-_Cloud configuration example:_ 
+_Default:_ `null` +
+_Cloud configuration example:_
 [source,js]
 ----
 const client = new Client({
   cloud: {
     id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA=='
-  }, 
+  },
   auth: {
     username: 'elastic',
     password: 'changeme'
@@ -260,3 +260,24 @@ _Default:_ `false`
 _Default:_ `null`
 
 |===
+
+[discrete]
+==== Performances considerations
+
+By default, the client will protection you against prototype poisoning attacks.
+Read https://web.archive.org/web/20200319091159/https://hueniverse.com/square-brackets-are-the-enemy-ff5b9fd8a3e8?gi=184a27ee2a08[this article] to learn more.
+If needed you can disable prototype poisoning protection entirely or one of the two checks.
+Read the `secure-json-parse` https://github.com/fastify/secure-json-parse[documentation] to learn more.
+
+While it's good to be safe, you should know that security always comes with a cost.
+With big enough payloads, this security check could causea drop in the overall performances,
+which might be a problem for your application.
+If you know you can trust the data stored in Elasticsearch, you can safely disable this check.
+
+[source,js]
+----
+const client = new Client({
+  disablePrototypePoisoningProtection: true
+})
+----
+
