@@ -1498,3 +1498,44 @@ test('Bearer auth', t => {
     })
   })
 })
+
+test('Check server fingerprint (success)', t => {
+  t.plan(1)
+
+  function handler (req, res) {
+    res.end('ok')
+  }
+
+  buildServer(handler, { secure: true }, ({ port, caFingerprint }, server) => {
+    const client = new Client({
+      node: `https://localhost:${port}`,
+      caFingerprint
+    })
+
+    client.info((err, res) => {
+      t.error(err)
+      server.stop()
+    })
+  })
+})
+
+test('Check server fingerprint (failure)', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    res.end('ok')
+  }
+
+  buildServer(handler, { secure: true }, ({ port }, server) => {
+    const client = new Client({
+      node: `https://localhost:${port}`,
+      caFingerprint: 'FO:OB:AR'
+    })
+
+    client.info((err, res) => {
+      t.ok(err instanceof errors.ConnectionError)
+      t.equal(err.message, 'Fingerprint does not match')
+      server.stop()
+    })
+  })
+})
