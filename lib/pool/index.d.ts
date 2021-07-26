@@ -31,6 +31,7 @@ interface BaseConnectionPoolOptions {
   auth?: BasicAuth | ApiKeyAuth;
   emit: (event: string | symbol, ...args: any[]) => boolean;
   Connection: typeof Connection;
+  caFingerprint?: string;
 }
 
 interface ConnectionPoolOptions extends BaseConnectionPoolOptions {

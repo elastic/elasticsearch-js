@@ -40,6 +40,7 @@ export interface ConnectionOptions {
   roles?: ConnectionRoles;
   auth?: BasicAuth | ApiKeyAuth;
   proxy?: string | URL;
+  caFingerprint?: string;
 }
 
 interface ConnectionRoles {

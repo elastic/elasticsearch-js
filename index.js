@@ -102,7 +102,7 @@ class Client extends ESAPI {
         suggestCompression: false,
         compression: false,
         ssl: null,
-        certFingerprint: null,
+        caFingerprint: null,
         agent: null,
         headers: {},
         nodeFilter: null,
@@ -147,7 +147,7 @@ class Client extends ESAPI {
         Connection: options.Connection,
         auth: options.auth,
         emit: this[kEventEmitter].emit.bind(this[kEventEmitter]),
-        certFingerprint: options.certFingerprint,
+        caFingerprint: options.caFingerprint,
         sniffEnabled: options.sniffInterval !== false ||
                       options.sniffOnStart !== false ||
                       options.sniffOnConnectionFault !== false
