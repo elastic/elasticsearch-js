@@ -955,10 +955,10 @@ test('Check server fingerprint (success)', t => {
     res.end('ok')
   }
 
-  buildServer(handler, { secure: true }, ({ port, certFingerprint }, server) => {
+  buildServer(handler, { secure: true }, ({ port, caFingerprint }, server) => {
     const connection = new Connection({
       url: new URL(`https://localhost:${port}`),
-      certFingerprint
+      caFingerprint
     })
 
     connection.request({
@@ -989,7 +989,7 @@ test('Check server fingerprint (failure)', t => {
   buildServer(handler, { secure: true }, ({ port }, server) => {
     const connection = new Connection({
       url: new URL(`https://localhost:${port}`),
-      certFingerprint: 'FO:OB:AR'
+      caFingerprint: 'FO:OB:AR'
     })
 
     connection.request({

@@ -36,7 +36,7 @@ const secureOpts = {
   cert: readFileSync(join(__dirname, '..', 'fixtures', 'https.cert'), 'utf8')
 }
 
-const certFingerprint = getFingerprint(secureOpts.cert
+const caFingerprint = getFingerprint(secureOpts.cert
   .split('\n')
   .slice(1, -1)
   .map(line => line.trim())
@@ -66,7 +66,7 @@ function buildServer (handler, opts, cb) {
       server.listen(0, () => {
         const port = server.address().port
         debug(`Server '${serverId}' booted on port ${port}`)
-        resolve([Object.assign({}, secureOpts, { port, certFingerprint }), server])
+        resolve([Object.assign({}, secureOpts, { port, caFingerprint }), server])
       })
     })
   } else {
@@ -79,7 +79,7 @@ function buildServer (handler, opts, cb) {
 }
 
 function getFingerprint (content, inputEncoding = 'base64', outputEncoding = 'hex') {
-  const shasum = crypto.createHash('sha1')
+  const shasum = crypto.createHash('sha256')
   shasum.update(content, inputEncoding)
   const res = shasum.digest(outputEncoding)
   return res.toUpperCase().match(/.{1,2}/g).join(':')

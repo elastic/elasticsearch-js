@@ -77,6 +77,7 @@ test('Should update the connection pool', t => {
           t.same(hosts[i], {
             url: new URL(nodes[id].url),
             id: id,
+            caFingerprint: null,
             roles: {
               master: true,
               data: true,
