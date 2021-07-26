@@ -176,6 +176,28 @@ const client = new Client({
 })
 ----
 
+[discrete]
+[[auth-ca-fingerprint]]
+==== CA fingerprint
+
+To improve the security of your connection to Elasticsearch, you can provide
+a `caFingerprint` option, which will verify the supplied certificate authority fingerprint.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://example.com'
+  auth: { ... },
+  // the fingerprint (SHA256) of the CA certificate that is used to sign the certificate that the Elasticsearch node presents for TLS.
+  caFingerprint: 'SHA-256-DER',
+  ssl: {
+    // might be required if it's a self-signed certificate
+    rejectUnauthorized: false
+  }
+})
+----
+
 
 [discrete]
 [[client-usage]]

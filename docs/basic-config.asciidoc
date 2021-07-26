@@ -255,4 +255,8 @@ const client = new Client({
 |`boolean`, `'proto'`, `'constructor'` - By the default the client will protect you against prototype poisoning attacks. Read https://web.archive.org/web/20200319091159/https://hueniverse.com/square-brackets-are-the-enemy-ff5b9fd8a3e8?gi=184a27ee2a08[this article] to learn more. If needed you can disable prototype poisoning protection entirely or one of the two checks. Read the `secure-json-parse` https://github.com/fastify/secure-json-parse[documentation] to learn more. +
 _Default:_ `false`
 
+|`caFingerprint`
+|`string` - If configured, verify the supplied certificate authority fingerprint. +
+_Default:_ `null`
+
 |===
