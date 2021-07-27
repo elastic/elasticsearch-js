@@ -117,6 +117,10 @@ class Client extends ESAPI {
         disablePrototypePoisoningProtection: false
       }, opts)
 
+    if (options.caFingerprint !== null && isHttpConnection(opts.node || opts.nodes)) {
+      throw new ConfigurationError('You can\'t configure the caFingerprint with a http connection')
+    }
+
     if (process.env.ELASTIC_CLIENT_APIVERSIONING === 'true') {
       options.headers = Object.assign({ accept: 'application/vnd.elasticsearch+json; compatible-with=7' }, options.headers)
     }
@@ -314,6 +318,19 @@ function getAuth (node) {
         password: decodeURIComponent(node.url.password)
       }
     }
+  }
+}
+
+function isHttpConnection (node) {
+  if (Array.isArray(node)) {
+    for (const n of node) {
+      if (new URL(n).protocol === 'http:') {
+        return true
+      }
+    }
+    return false
+  } else {
+    return new URL(node).protocol === 'http:'
   }
 }
 
