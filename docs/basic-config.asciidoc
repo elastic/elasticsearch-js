@@ -256,7 +256,7 @@ const client = new Client({
 _Default:_ `false`
 
 |`caFingerprint`
-|`string` - If configured, verify the supplied certificate authority fingerprint. +
+|`string` - If configured, verify the supplied CA certificate fingerprint. +
 _Default:_ `null`
 
 |===
@@ -280,4 +280,3 @@ const client = new Client({
   disablePrototypePoisoningProtection: true
 })
 ----
-
