@@ -182,6 +182,7 @@ const client = new Client({
 
 To improve the security of your connection to Elasticsearch, you can provide
 a `caFingerprint` option, which will verify the supplied certificate authority fingerprint.
+You must configure a SHA256 digest.
 
 [source,js]
 ----

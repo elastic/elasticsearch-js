@@ -256,7 +256,7 @@ const client = new Client({
 _Default:_ `false`
 
 |`caFingerprint`
-|`string` - If configured, verify the supplied CA certificate fingerprint. +
+|`string` - If configured, verify the supplied CA certificate fingerprint. You must configure a SHA256 diagest. +
 _Default:_ `null`
 
 |===
