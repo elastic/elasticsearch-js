@@ -323,12 +323,7 @@ function getAuth (node) {
 
 function isHttpConnection (node) {
   if (Array.isArray(node)) {
-    for (const n of node) {
-      if (new URL(n).protocol === 'http:') {
-        return true
-      }
-    }
-    return false
+    return node.some((n) => new URL(n).protocol === 'http:')
   } else {
     return new URL(node).protocol === 'http:'
   }
