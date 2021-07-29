@@ -180,7 +180,7 @@ const client = new Client({
 [[auth-ca-fingerprint]]
 ==== CA fingerprint
 
-To improve the security of your connection to Elasticsearch, you can provide
+You can configure <not sure how we refer to the client in docs here> to only trust  certificates that are signed by a specific CA certificate ( CA certificate pinning ) by providing a `caFingerprint` option. This will verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied value.
 a `caFingerprint` option, which will verify the supplied certificate authority fingerprint.
 You must configure a SHA256 digest.
 
