@@ -1564,7 +1564,7 @@ test('caFingerprint can\'t be configured over http / 2', t => {
       nodes: ['http://localhost:9200'],
       caFingerprint: 'FO:OB:AR'
     })
-    t.fail('shuld throw')
+    t.fail('should throw')
   } catch (err) {
     t.ok(err instanceof errors.ConfigurationError)
     t.equal(err.message, 'You can\'t configure the caFingerprint with a http connection')
