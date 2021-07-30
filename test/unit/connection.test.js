@@ -998,7 +998,7 @@ test('Check server fingerprint (failure)', t => {
       method: 'GET'
     }, (err, res) => {
       t.ok(err instanceof ConnectionError)
-      t.equal(err.message, 'Server certificate CA fingerprint does not match the value configured in  caFingerprint')
+      t.equal(err.message, 'Server certificate CA fingerprint does not match the value configured in caFingerprint')
       server.stop()
     })
   })
