@@ -29,6 +29,7 @@ const intoStream = require('into-stream')
 const { buildServer } = require('../utils')
 const Connection = require('../../lib/Connection')
 const { TimeoutError, ConfigurationError, RequestAbortedError, ConnectionError } = require('../../lib/errors')
+const { getIssuerCertificate } = Connection.internals
 
 test('Basic (http)', t => {
   t.plan(4)
@@ -997,8 +998,190 @@ test('Check server fingerprint (failure)', t => {
       method: 'GET'
     }, (err, res) => {
       t.ok(err instanceof ConnectionError)
-      t.equal(err.message, 'Fingerprint does not match')
+      t.equal(err.message, 'Server certificate CA fingerprint does not match the value configured in  caFingerprint')
       server.stop()
     })
   })
+})
+
+test('getIssuerCertificate returns the root CA / 1', t => {
+  t.plan(2)
+  const issuerCertificate = {
+    fingerprint256: 'BA:ZF:AZ',
+    subject: {
+      C: '1',
+      ST: '1',
+      L: '1',
+      O: '1',
+      OU: '1',
+      CN: '1'
+    },
+    issuer: {
+      C: '1',
+      ST: '1',
+      L: '1',
+      O: '1',
+      OU: '1',
+      CN: '1'
+    }
+  }
+  issuerCertificate.issuerCertificate = issuerCertificate
+
+  const socket = {
+    getPeerCertificate (bool) {
+      t.ok(bool)
+      return {
+        fingerprint256: 'FO:OB:AR',
+        subject: {
+          C: '1',
+          ST: '1',
+          L: '1',
+          O: '1',
+          OU: '1',
+          CN: '1'
+        },
+        issuer: {
+          C: '2',
+          ST: '2',
+          L: '2',
+          O: '2',
+          OU: '2',
+          CN: '2'
+        },
+        issuerCertificate
+      }
+    }
+  }
+  t.same(getIssuerCertificate(socket), issuerCertificate)
+})
+
+test('getIssuerCertificate returns the root CA / 2', t => {
+  t.plan(2)
+  const issuerCertificate = {
+    subject: {
+      C: '1',
+      ST: '1',
+      L: '1',
+      O: '1',
+      OU: '1',
+      CN: '1'
+    },
+    issuer: {
+      C: '1',
+      ST: '1',
+      L: '1',
+      O: '1',
+      OU: '1',
+      CN: '1'
+    }
+  }
+  issuerCertificate.issuerCertificate = issuerCertificate
+
+  const socket = {
+    getPeerCertificate (bool) {
+      t.ok(bool)
+      return {
+        fingerprint256: 'FO:OB:AR',
+        subject: {
+          C: '1',
+          ST: '1',
+          L: '1',
+          O: '1',
+          OU: '1',
+          CN: '1'
+        },
+        issuer: {
+          C: '2',
+          ST: '2',
+          L: '2',
+          O: '2',
+          OU: '2',
+          CN: '2'
+        },
+        issuerCertificate
+      }
+    }
+  }
+  t.same(getIssuerCertificate(socket), issuerCertificate)
+})
+
+test('getIssuerCertificate returns the root CA / 3', t => {
+  t.plan(2)
+  const issuerCertificate = {
+    fingerprint256: 'FO:OB:AR',
+    subject: {
+      C: '1',
+      ST: '1',
+      L: '1',
+      O: '1',
+      OU: '1',
+      CN: '1'
+    },
+    issuer: {
+      C: '1',
+      ST: '1',
+      L: '1',
+      O: '1',
+      OU: '1',
+      CN: '1'
+    }
+  }
+  issuerCertificate.issuerCertificate = issuerCertificate
+
+  const socket = {
+    getPeerCertificate (bool) {
+      t.ok(bool)
+      return {
+        fingerprint256: 'FO:OB:AR',
+        subject: {
+          C: '1',
+          ST: '1',
+          L: '1',
+          O: '1',
+          OU: '1',
+          CN: '1'
+        },
+        issuer: {
+          C: '2',
+          ST: '2',
+          L: '2',
+          O: '2',
+          OU: '2',
+          CN: '2'
+        },
+        issuerCertificate
+      }
+    }
+  }
+  t.equal(getIssuerCertificate(socket).fingerprint256, 'FO:OB:AR')
+})
+
+test('getIssuerCertificate detects invalid/malformed certificates', t => {
+  t.plan(2)
+  const socket = {
+    getPeerCertificate (bool) {
+      t.ok(bool)
+      return {
+        fingerprint256: 'FO:OB:AR',
+        subject: {
+          C: '1',
+          ST: '1',
+          L: '1',
+          O: '1',
+          OU: '1',
+          CN: '1'
+        },
+        issuer: {
+          C: '2',
+          ST: '2',
+          L: '2',
+          O: '2',
+          OU: '2',
+          CN: '2'
+        }
+        // missing issuerCertificate
+      }
+    }
+  }
+  t.equal(getIssuerCertificate(socket), null)
 })
