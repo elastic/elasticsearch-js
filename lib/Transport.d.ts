@@ -155,8 +155,8 @@ export default class Transport {
   _nextSniff: number;
   _isSniffing: boolean;
   constructor(opts: TransportOptions);
-  request(params: TransportRequestParams, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse>;
-  request(params: TransportRequestParams, options?: TransportRequestOptions, callback?: (err: ApiError, result: ApiResponse) => void): TransportRequestCallback;
+  request<TResponse = Record<string, any>, TContext = Context>(params: TransportRequestParams, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>;
+  request<TResponse = Record<string, any>, TContext = Context>(params: TransportRequestParams, options?: TransportRequestOptions, callback?: (err: ApiError, result: ApiResponse<TResponse, TContext>) => void): TransportRequestCallback;
   getConnection(opts: TransportGetConnectionOptions): Connection | null;
   sniff(opts?: TransportSniffOptions, callback?: (...args: any[]) => void): void;
 }

@@ -2689,3 +2689,76 @@ test('The callback with a sync error should be called in the next tick - ndjson'
   t.type(transportReturn.catch, 'function')
   t.type(transportReturn.abort, 'function')
 })
+
+test('Support mapbox vector tile', t => {
+  t.plan(2)
+  const mvtContent = 'GoMCCgRtZXRhEikSFAAAAQACAQMBBAAFAgYDBwAIBAkAGAMiDwkAgEAagEAAAP8//z8ADxoOX3NoYXJkcy5mYWlsZWQaD19zaGFyZHMuc2tpcHBlZBoSX3NoYXJkcy5zdWNjZXNzZnVsGg1fc2hhcmRzLnRvdGFsGhlhZ2dyZWdhdGlvbnMuX2NvdW50LmNvdW50GhdhZ2dyZWdhdGlvbnMuX2NvdW50LnN1bRoTaGl0cy50b3RhbC5yZWxhdGlvbhoQaGl0cy50b3RhbC52YWx1ZRoJdGltZWRfb3V0GgR0b29rIgIwACICMAIiCRkAAAAAAAAAACIECgJlcSICOAAogCB4Ag=='
+
+  function handler (req, res) {
+    res.setHeader('Content-Type', 'application/vnd.mapbox-vector-tile')
+    res.end(Buffer.from(mvtContent, 'base64'))
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+    skipProductCheck(transport)
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, { body }) => {
+      t.error(err)
+      t.same(body.toString('base64'), Buffer.from(mvtContent, 'base64').toString('base64'))
+      server.stop()
+    })
+  })
+})
+
+test('Compressed mapbox vector tile', t => {
+  t.plan(2)
+  const mvtContent = 'GoMCCgRtZXRhEikSFAAAAQACAQMBBAAFAgYDBwAIBAkAGAMiDwkAgEAagEAAAP8//z8ADxoOX3NoYXJkcy5mYWlsZWQaD19zaGFyZHMuc2tpcHBlZBoSX3NoYXJkcy5zdWNjZXNzZnVsGg1fc2hhcmRzLnRvdGFsGhlhZ2dyZWdhdGlvbnMuX2NvdW50LmNvdW50GhdhZ2dyZWdhdGlvbnMuX2NvdW50LnN1bRoTaGl0cy50b3RhbC5yZWxhdGlvbhoQaGl0cy50b3RhbC52YWx1ZRoJdGltZWRfb3V0GgR0b29rIgIwACICMAIiCRkAAAAAAAAAACIECgJlcSICOAAogCB4Ag=='
+
+  function handler (req, res) {
+    const body = gzipSync(Buffer.from(mvtContent, 'base64'))
+    res.setHeader('Content-Type', 'application/vnd.mapbox-vector-tile')
+    res.setHeader('Content-Encoding', 'gzip')
+    res.setHeader('Content-Length', Buffer.byteLength(body))
+    res.end(body)
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const pool = new ConnectionPool({ Connection })
+    pool.addConnection(`http://localhost:${port}`)
+
+    const transport = new Transport({
+      emit: () => {},
+      connectionPool: pool,
+      serializer: new Serializer(),
+      maxRetries: 3,
+      requestTimeout: 30000,
+      sniffInterval: false,
+      sniffOnStart: false
+    })
+    skipProductCheck(transport)
+
+    transport.request({
+      method: 'GET',
+      path: '/hello'
+    }, (err, { body }) => {
+      t.error(err)
+      t.same(body.toString('base64'), Buffer.from(mvtContent, 'base64').toString('base64'))
+      server.stop()
+    })
+  })
+})
