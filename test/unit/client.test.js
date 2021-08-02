@@ -26,6 +26,7 @@ const intoStream = require('into-stream')
 const { ConnectionPool, Transport, Connection, errors } = require('../../index')
 const { CloudConnectionPool } = require('../../lib/pool')
 const { Client, buildServer } = require('../utils')
+
 let clientVersion = require('../../package.json').version
 if (clientVersion.includes('-')) {
   clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
@@ -1497,4 +1498,89 @@ test('Bearer auth', t => {
       server.stop()
     })
   })
+})
+
+test('Check server fingerprint (success)', t => {
+  t.plan(1)
+
+  function handler (req, res) {
+    res.end('ok')
+  }
+
+  buildServer(handler, { secure: true }, ({ port, caFingerprint }, server) => {
+    const client = new Client({
+      node: `https://localhost:${port}`,
+      caFingerprint
+    })
+
+    client.info((err, res) => {
+      t.error(err)
+      server.stop()
+    })
+  })
+})
+
+test('Check server fingerprint (failure)', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    res.end('ok')
+  }
+
+  buildServer(handler, { secure: true }, ({ port }, server) => {
+    const client = new Client({
+      node: `https://localhost:${port}`,
+      caFingerprint: 'FO:OB:AR'
+    })
+
+    client.info((err, res) => {
+      t.ok(err instanceof errors.ConnectionError)
+      t.equal(err.message, 'Server certificate CA fingerprint does not match the value configured in caFingerprint')
+      server.stop()
+    })
+  })
+})
+
+test('caFingerprint can\'t be configured over http / 1', t => {
+  t.plan(2)
+
+  try {
+    new Client({ // eslint-disable-line
+      node: 'http://localhost:9200',
+      caFingerprint: 'FO:OB:AR'
+    })
+    t.fail('shuld throw')
+  } catch (err) {
+    t.ok(err instanceof errors.ConfigurationError)
+    t.equal(err.message, 'You can\'t configure the caFingerprint with a http connection')
+  }
+})
+
+test('caFingerprint can\'t be configured over http / 2', t => {
+  t.plan(2)
+
+  try {
+    new Client({ // eslint-disable-line
+      nodes: ['http://localhost:9200'],
+      caFingerprint: 'FO:OB:AR'
+    })
+    t.fail('should throw')
+  } catch (err) {
+    t.ok(err instanceof errors.ConfigurationError)
+    t.equal(err.message, 'You can\'t configure the caFingerprint with a http connection')
+  }
+})
+
+test('caFingerprint can\'t be configured over http / 3', t => {
+  t.plan(1)
+
+  try {
+    new Client({ // eslint-disable-line
+      nodes: ['https://localhost:9200'],
+      caFingerprint: 'FO:OB:AR'
+    })
+    t.pass('should not throw')
+  } catch (err) {
+    t.fail('shuld not throw')
+  }
 })

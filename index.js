@@ -102,6 +102,7 @@ class Client extends ESAPI {
         suggestCompression: false,
         compression: false,
         ssl: null,
+        caFingerprint: null,
         agent: null,
         headers: {},
         nodeFilter: null,
@@ -115,6 +116,10 @@ class Client extends ESAPI {
         enableMetaHeader: true,
         disablePrototypePoisoningProtection: false
       }, opts)
+
+    if (options.caFingerprint !== null && isHttpConnection(opts.node || opts.nodes)) {
+      throw new ConfigurationError('You can\'t configure the caFingerprint with a http connection')
+    }
 
     if (process.env.ELASTIC_CLIENT_APIVERSIONING === 'true') {
       options.headers = Object.assign({ accept: 'application/vnd.elasticsearch+json; compatible-with=7' }, options.headers)
@@ -146,6 +151,7 @@ class Client extends ESAPI {
         Connection: options.Connection,
         auth: options.auth,
         emit: this[kEventEmitter].emit.bind(this[kEventEmitter]),
+        caFingerprint: options.caFingerprint,
         sniffEnabled: options.sniffInterval !== false ||
                       options.sniffOnStart !== false ||
                       options.sniffOnConnectionFault !== false
@@ -312,6 +318,14 @@ function getAuth (node) {
         password: decodeURIComponent(node.url.password)
       }
     }
+  }
+}
+
+function isHttpConnection (node) {
+  if (Array.isArray(node)) {
+    return node.some((n) => new URL(n).protocol === 'http:')
+  } else {
+    return new URL(node).protocol === 'http:'
   }
 }
 

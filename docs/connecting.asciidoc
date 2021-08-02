@@ -176,6 +176,29 @@ const client = new Client({
 })
 ----
 
+[discrete]
+[[auth-ca-fingerprint]]
+==== CA fingerprint
+
+You can configure the client to only trust certificates that are signed by a specific CA certificate ( CA certificate pinning ) by providing a `caFingerprint` option. This will verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied value.
+a `caFingerprint` option, which will verify the supplied certificate authority fingerprint.
+You must configure a SHA256 digest.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://example.com'
+  auth: { ... },
+  // the fingerprint (SHA256) of the CA certificate that is used to sign the certificate that the Elasticsearch node presents for TLS.
+  caFingerprint: '20:0D:CA:FA:76:...',
+  ssl: {
+    // might be required if it's a self-signed certificate
+    rejectUnauthorized: false
+  }
+})
+----
+
 
 [discrete]
 [[client-usage]]

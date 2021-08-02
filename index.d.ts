@@ -118,6 +118,7 @@ interface ClientOptions {
     password?: string;
   };
   disablePrototypePoisoningProtection?: boolean | 'proto' | 'constructor';
+  caFingerprint?: string;
 }
 
 declare class Client {
