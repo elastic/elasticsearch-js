@@ -28,7 +28,8 @@ const hpagent = require('hpagent')
 const intoStream = require('into-stream')
 const { buildServer } = require('../utils')
 const Connection = require('../../lib/Connection')
-const { TimeoutError, ConfigurationError, RequestAbortedError } = require('../../lib/errors')
+const { TimeoutError, ConfigurationError, RequestAbortedError, ConnectionError } = require('../../lib/errors')
+const { getIssuerCertificate } = Connection.internals
 
 test('Basic (http)', t => {
   t.plan(4)
@@ -946,4 +947,140 @@ test('Abort with a slow body', t => {
   })
 
   setImmediate(() => request.abort())
+})
+
+test('Check server fingerprint (success)', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    res.end('ok')
+  }
+
+  buildServer(handler, { secure: true }, ({ port, caFingerprint }, server) => {
+    const connection = new Connection({
+      url: new URL(`https://localhost:${port}`),
+      caFingerprint
+    })
+
+    connection.request({
+      path: '/hello',
+      method: 'GET'
+    }, (err, res) => {
+      t.error(err)
+
+      let payload = ''
+      res.setEncoding('utf8')
+      res.on('data', chunk => { payload += chunk })
+      res.on('error', err => t.fail(err))
+      res.on('end', () => {
+        t.equal(payload, 'ok')
+        server.stop()
+      })
+    })
+  })
+})
+
+test('Check server fingerprint (failure)', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    res.end('ok')
+  }
+
+  buildServer(handler, { secure: true }, ({ port }, server) => {
+    const connection = new Connection({
+      url: new URL(`https://localhost:${port}`),
+      caFingerprint: 'FO:OB:AR'
+    })
+
+    connection.request({
+      path: '/hello',
+      method: 'GET'
+    }, (err, res) => {
+      t.ok(err instanceof ConnectionError)
+      t.equal(err.message, 'Server certificate CA fingerprint does not match the value configured in caFingerprint')
+      server.stop()
+    })
+  })
+})
+
+test('getIssuerCertificate returns the root CA', t => {
+  t.plan(2)
+  const issuerCertificate = {
+    fingerprint256: 'BA:ZF:AZ',
+    subject: {
+      C: '1',
+      ST: '1',
+      L: '1',
+      O: '1',
+      OU: '1',
+      CN: '1'
+    },
+    issuer: {
+      C: '1',
+      ST: '1',
+      L: '1',
+      O: '1',
+      OU: '1',
+      CN: '1'
+    }
+  }
+  issuerCertificate.issuerCertificate = issuerCertificate
+
+  const socket = {
+    getPeerCertificate (bool) {
+      t.ok(bool)
+      return {
+        fingerprint256: 'FO:OB:AR',
+        subject: {
+          C: '1',
+          ST: '1',
+          L: '1',
+          O: '1',
+          OU: '1',
+          CN: '1'
+        },
+        issuer: {
+          C: '2',
+          ST: '2',
+          L: '2',
+          O: '2',
+          OU: '2',
+          CN: '2'
+        },
+        issuerCertificate
+      }
+    }
+  }
+  t.same(getIssuerCertificate(socket), issuerCertificate)
+})
+
+test('getIssuerCertificate detects invalid/malformed certificates', t => {
+  t.plan(2)
+  const socket = {
+    getPeerCertificate (bool) {
+      t.ok(bool)
+      return {
+        fingerprint256: 'FO:OB:AR',
+        subject: {
+          C: '1',
+          ST: '1',
+          L: '1',
+          O: '1',
+          OU: '1',
+          CN: '1'
+        },
+        issuer: {
+          C: '2',
+          ST: '2',
+          L: '2',
+          O: '2',
+          OU: '2',
+          CN: '2'
+        }
+        // missing issuerCertificate
+      }
+    }
+  }
+  t.equal(getIssuerCertificate(socket), null)
 })
