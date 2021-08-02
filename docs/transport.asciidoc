@@ -32,3 +32,10 @@ class MyTransport extends Transport {
 }
 ----
 
+==== Supported content types
+
+- `application/json`, in this case the transport will return a plain JavaScript object
+- `text/plain`, in this case the transport will return a plain string
+- `application/vnd.mapbox-vector-tile`, in this case the transport will return a Buffer
+- `application/vnd.elasticsearch+json`, in this case the transport will return a plain JavaScript object
+
