@@ -1737,9 +1737,10 @@ export interface MlGetTrainedModelsStats extends Generic {
   size?: number;
 }
 
-export interface MlInferTrainedModelDeployment extends Generic {
+export interface MlInferTrainedModelDeployment<T = RequestBody> extends Generic {
   model_id: string;
   timeout?: string;
+  body: T;
 }
 
 export interface MlInfo extends Generic {

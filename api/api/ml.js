@@ -1056,6 +1056,10 @@ MlApi.prototype.inferTrainedModelDeployment = function mlInferTrainedModelDeploy
     const err = new this[kConfigurationError]('Missing required parameter: model_id or modelId')
     return handleError(err, callback)
   }
+  if (params.body == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
+  }
 
   let { method, body, modelId, model_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)

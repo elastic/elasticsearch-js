@@ -1949,7 +1949,7 @@ link:{ref}/cluster-allocation-explain.html[Documentation] +
 |`boolean` - Return information about disk usage and shard sizes (default: false)
 
 |`body`
-|`object` - The index, shard, and primary flag to explain. Empty means 'explain the first unassigned shard'
+|`object` - The index, shard, and primary flag to explain. Empty means 'explain a randomly-chosen unassigned shard'
 
 |===
 
@@ -7144,17 +7144,22 @@ _Default:_ `100`
 ----
 client.ml.inferTrainedModelDeployment({
   model_id: string,
-  timeout: string
+  timeout: string,
+  body: object
 })
 ----
-link:{ref}/ml-df-analytics-apis.html[Documentation] +
+link:{ref}/infer-trained-model-deployment.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
-|`string` - The ID of the model to perform inference on
+|`string` - The unique identifier of the trained model.
 
 |`timeout`
-|`string` - Controls the time to wait for the inference result
+|`string` - Controls the amount of time to wait for inference results. +
+_Default:_ `10s`
+
+|`body`
+|`object` - The input text to be evaluated.
 
 |===
 
@@ -7621,14 +7626,15 @@ client.ml.startTrainedModelDeployment({
   timeout: string
 })
 ----
-link:{ref}/ml-df-analytics-apis.html[Documentation] +
+link:{ref}/start-trained-model-deployment.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
-|`string` - The ID of the model to deploy
+|`string` - The unique identifier of the trained model.
 
 |`timeout`
-|`string` - Controls the time to wait until the model is deployed
+|`string` - Controls the amount of time to wait for the model to deploy. +
+_Default:_ `20s`
 
 |===
 
@@ -7713,11 +7719,11 @@ client.ml.stopTrainedModelDeployment({
   model_id: string
 })
 ----
-link:{ref}/ml-df-analytics-apis.html[Documentation] +
+link:{ref}/stop-trained-model-deployment.html[Documentation] +
 [cols=2*]
 |===
 |`model_id` or `modelId`
-|`string` - The ID of the model to undeploy
+|`string` - The unique identifier of the trained model.
 
 |===
 
@@ -10603,7 +10609,7 @@ client.sql.clearCursor({
   body: object
 })
 ----
-link:{ref}/sql-pagination.html[Documentation] +
+link:{ref}/clear-sql-cursor-api.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -10690,7 +10696,7 @@ client.sql.query({
   body: object
 })
 ----
-link:{ref}/sql-rest-overview.html[Documentation] +
+link:{ref}/sql-search-api.html[Documentation] +
 {jsclient}/sql_query_examples.html[Code Example] +
 [cols=2*]
 |===
@@ -10711,7 +10717,7 @@ client.sql.translate({
   body: object
 })
 ----
-link:{ref}/sql-translate.html[Documentation] +
+link:{ref}/sql-translate-api.html[Documentation] +
 [cols=2*]
 |===
 |`body`
