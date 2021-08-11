@@ -345,7 +345,7 @@ interface KibanaClient {
     info<TContext = unknown>(params?: T.MlInfoRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlInfoResponse, TContext>>
     openJob<TContext = unknown>(params: T.MlOpenJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlOpenJobResponse, TContext>>
     postCalendarEvents<TContext = unknown>(params?: T.MlPostCalendarEventsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPostCalendarEventsResponse, TContext>>
-    postData<TContext = unknown>(params: T.MlPostJobDataRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPostJobDataResponse, TContext>>
+    postData<TContext = unknown>(params: T.MlPostDataRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPostDataResponse, TContext>>
     previewDataFrameAnalytics<TContext = unknown>(params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPreviewDataFrameAnalyticsResponse, TContext>>
     previewDatafeed<TDocument = unknown, TContext = unknown>(params?: T.MlPreviewDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPreviewDatafeedResponse<TDocument>, TContext>>
     putCalendar<TContext = unknown>(params: T.MlPutCalendarRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPutCalendarResponse, TContext>>
@@ -356,7 +356,7 @@ interface KibanaClient {
     putJob<TContext = unknown>(params: T.MlPutJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPutJobResponse, TContext>>
     putTrainedModel<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     putTrainedModelAlias<TContext = unknown>(params: T.MlPutTrainedModelAliasRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPutTrainedModelAliasResponse, TContext>>
-    resetJob<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    resetJob<TContext = unknown>(params: T.MlResetJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlResetJobResponse, TContext>>
     revertModelSnapshot<TContext = unknown>(params: T.MlRevertModelSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlRevertModelSnapshotResponse, TContext>>
     setUpgradeMode<TContext = unknown>(params?: T.MlSetUpgradeModeRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlSetUpgradeModeResponse, TContext>>
     startDataFrameAnalytics<TContext = unknown>(params: T.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlStartDataFrameAnalyticsResponse, TContext>>
@@ -366,7 +366,7 @@ interface KibanaClient {
     updateDataFrameAnalytics<TContext = unknown>(params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateDataFrameAnalyticsResponse, TContext>>
     updateDatafeed<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     updateFilter<TContext = unknown>(params: T.MlUpdateFilterRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateFilterResponse, TContext>>
-    updateJob<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    updateJob<TContext = unknown>(params: T.MlUpdateJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateJobResponse, TContext>>
     updateModelSnapshot<TContext = unknown>(params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateModelSnapshotResponse, TContext>>
     upgradeJobSnapshot<TContext = unknown>(params: T.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpgradeJobSnapshotResponse, TContext>>
     validate<TContext = unknown>(params?: T.MlValidateJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlValidateJobResponse, TContext>>
