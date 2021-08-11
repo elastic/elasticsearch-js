@@ -1014,7 +1014,7 @@ export interface SearchRequest extends RequestBase {
     query?: QueryDslQueryContainer
     rescore?: SearchRescore | SearchRescore[]
     script_fields?: Record<string, ScriptField>
-    search_after?: (integer | string)[]
+    search_after?: SearchSortResults
     size?: integer
     slice?: SlicedScroll
     sort?: SearchSort
@@ -1127,6 +1127,12 @@ export interface SearchDirectGenerator {
 export interface SearchDocValueField {
   field: Field
   format?: string
+}
+
+export interface SearchFieldAndFormat {
+  field: Field
+  format?: string
+  include_unmapped?: boolean
 }
 
 export interface SearchFieldCollapse {
@@ -1242,15 +1248,17 @@ export interface SearchInnerHits {
   size?: integer
   from?: integer
   collapse?: SearchFieldCollapse
-  docvalue_fields?: Fields
+  docvalue_fields?: (SearchFieldAndFormat | Field)[]
   explain?: boolean
   highlight?: SearchHighlight
   ignore_unmapped?: boolean
-  script_fields?: Record<string, ScriptField>
+  script_fields?: Record<Field, ScriptField>
   seq_no_primary_term?: boolean
   fields?: Fields
   sort?: SearchSort
   _source?: boolean | SearchSourceFilter
+  stored_field?: Fields
+  track_scores?: boolean
   version?: boolean
 }
 
@@ -1820,6 +1828,8 @@ export interface DateField {
   include_unmapped?: boolean
 }
 
+export type DateFormat = string
+
 export type DateMath = string
 
 export type DateMathTime = string
@@ -1934,6 +1944,8 @@ export type GeoDistanceType = 'arc' | 'plane'
 
 export type GeoHashPrecision = number
 
+export type GeoShape = any
+
 export type GeoShapeRelation = 'intersects' | 'disjoint' | 'within' | 'contains'
 
 export type GeoTilePrecision = number
@@ -2024,7 +2036,6 @@ export type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 
 export interface MainError extends ErrorCause {
   headers?: Record<string, string>
-  root_cause: ErrorCause[]
 }
 
 export interface MergesStats {
@@ -2171,7 +2182,7 @@ export interface Retries {
   search: long
 }
 
-export type Routing = string | number
+export type Routing = string
 
 export type Script = InlineScript | IndexedScript | string
 
@@ -2182,6 +2193,7 @@ export interface ScriptBase {
 
 export interface ScriptField {
   script: Script
+  ignore_failure?: boolean
 }
 
 export type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java'
@@ -2304,6 +2316,8 @@ export type Time = string | integer
 
 export type TimeSpan = string
 
+export type TimeZone = string
+
 export type Timestamp = string
 
 export interface Transform {
@@ -2366,7 +2380,6 @@ export interface WriteResponseBase {
   _type?: Type
   _version: VersionNumber
   forced_refresh?: boolean
-  error?: ErrorCause
 }
 
 export type double = number
@@ -3533,7 +3546,7 @@ export interface AnalysisStopTokenFilter extends AnalysisTokenFilterBase {
   stopwords_path?: string
 }
 
-export type AnalysisStopWords = string | string[]
+export type AnalysisStopWords = string[]
 
 export type AnalysisSynonymFormat = 'solr' | 'wordnet'
 
@@ -4031,24 +4044,37 @@ export interface QueryDslBoolQuery extends QueryDslQueryBase {
 }
 
 export interface QueryDslBoostingQuery extends QueryDslQueryBase {
-  negative_boost?: double
-  negative?: QueryDslQueryContainer
-  positive?: QueryDslQueryContainer
+  negative_boost: double
+  negative: QueryDslQueryContainer
+  positive: QueryDslQueryContainer
 }
 
 export interface QueryDslBoundingBox {
   bottom_right?: QueryDslGeoLocation
   top_left?: QueryDslGeoLocation
+  top_right?: QueryDslGeoLocation
+  bottom_left?: QueryDslGeoLocation
+  top?: double
+  left?: double
+  right?: double
+  bottom?: double
   wkt?: string
 }
 
 export type QueryDslChildScoreMode = 'none' | 'avg' | 'sum' | 'max' | 'min'
 
-export interface QueryDslCombinedFieldsQuery {
-  query: string
+export type QueryDslCombinedFieldsOperator = 'or' | 'and'
+
+export interface QueryDslCombinedFieldsQuery extends QueryDslQueryBase {
   fields: Field[]
-  operator?: string
+  query: string
+  auto_generate_synonyms_phrase_query?: boolean
+  operator?: QueryDslCombinedFieldsOperator
+  mimimum_should_match?: MinimumShouldMatch
+  zero_terms_query?: QueryDslCombinedFieldsZeroTerms
 }
+
+export type QueryDslCombinedFieldsZeroTerms = 'none' | 'all'
 
 export interface QueryDslCommonTermsQuery extends QueryDslQueryBase {
   analyzer?: string
@@ -4056,17 +4082,29 @@ export interface QueryDslCommonTermsQuery extends QueryDslQueryBase {
   high_freq_operator?: QueryDslOperator
   low_freq_operator?: QueryDslOperator
   minimum_should_match?: MinimumShouldMatch
-  query?: string
+  query: string
 }
 
 export interface QueryDslConstantScoreQuery extends QueryDslQueryBase {
-  filter?: QueryDslQueryContainer
+  filter: QueryDslQueryContainer
 }
 
 export interface QueryDslDateDecayFunctionKeys extends QueryDslDecayFunctionBase {
 }
 export type QueryDslDateDecayFunction = QueryDslDateDecayFunctionKeys |
     { [property: string]: QueryDslDecayPlacement<DateMath, Time> }
+
+export interface QueryDslDateDistanceFeatureQuery extends QueryDslDistanceFeatureQueryBase<DateMath, Time> {
+}
+
+export interface QueryDslDateRangeQuery extends QueryDslRangeQueryBase {
+  gt?: DateMath
+  gte?: DateMath
+  lt?: DateMath
+  lte?: DateMath
+  format?: DateFormat
+  time_zone?: TimeZone
+}
 
 export type QueryDslDecayFunction = QueryDslDateDecayFunction | QueryDslNumericDecayFunction | QueryDslGeoDecayFunction
 
@@ -4082,22 +4120,24 @@ export interface QueryDslDecayPlacement<TOrigin = unknown, TScale = unknown> {
 }
 
 export interface QueryDslDisMaxQuery extends QueryDslQueryBase {
-  queries?: QueryDslQueryContainer[]
+  queries: QueryDslQueryContainer[]
   tie_breaker?: double
 }
 
-export interface QueryDslDistanceFeatureQuery extends QueryDslQueryBase {
-  origin?: number[] | QueryDslGeoCoordinate | DateMath
-  pivot?: Distance | Time
-  field?: Field
+export type QueryDslDistanceFeatureQuery = QueryDslGeoDistanceFeatureQuery | QueryDslDateDistanceFeatureQuery
+
+export interface QueryDslDistanceFeatureQueryBase<TOrigin = unknown, TDistance = unknown> extends QueryDslQueryBase {
+  origin: TOrigin
+  pivot: TDistance
+  field: Field
 }
 
 export interface QueryDslExistsQuery extends QueryDslQueryBase {
-  field?: Field
+  field: Field
 }
 
 export interface QueryDslFieldLookup {
-  id?: Id
+  id: Id
   index?: IndexName
   path?: Field
   routing?: Routing
@@ -4142,16 +4182,15 @@ export interface QueryDslFuzzyQuery extends QueryDslQueryBase {
   rewrite?: MultiTermQueryRewrite
   transpositions?: boolean
   fuzziness?: Fuzziness
-  value: any
+  value: string
 }
 
-export interface QueryDslGeoBoundingBoxQuery extends QueryDslQueryBase {
-  bounding_box?: QueryDslBoundingBox
+export interface QueryDslGeoBoundingBoxQueryKeys extends QueryDslQueryBase {
   type?: QueryDslGeoExecution
   validation_method?: QueryDslGeoValidationMethod
-  top_left?: LatLon
-  bottom_right?: LatLon
 }
+export type QueryDslGeoBoundingBoxQuery = QueryDslGeoBoundingBoxQueryKeys |
+    { [property: string]: QueryDslBoundingBox }
 
 export type QueryDslGeoCoordinate = string | double[] | QueryDslThreeDimensionalPoint
 
@@ -4159,6 +4198,9 @@ export interface QueryDslGeoDecayFunctionKeys extends QueryDslDecayFunctionBase 
 }
 export type QueryDslGeoDecayFunction = QueryDslGeoDecayFunctionKeys |
     { [property: string]: QueryDslDecayPlacement<QueryDslGeoLocation, Distance> }
+
+export interface QueryDslGeoDistanceFeatureQuery extends QueryDslDistanceFeatureQueryBase<QueryDslGeoCoordinate, Distance> {
+}
 
 export interface QueryDslGeoDistanceQueryKeys extends QueryDslQueryBase {
   distance?: Distance
@@ -4172,21 +4214,27 @@ export type QueryDslGeoExecution = 'memory' | 'indexed'
 
 export type QueryDslGeoLocation = string | double[] | QueryDslTwoDimensionalPoint
 
-export interface QueryDslGeoPolygonQuery extends QueryDslQueryBase {
-  points?: QueryDslGeoLocation[]
+export interface QueryDslGeoPolygonPoints {
+  points: QueryDslGeoLocation[]
+}
+
+export interface QueryDslGeoPolygonQueryKeys extends QueryDslQueryBase {
   validation_method?: QueryDslGeoValidationMethod
 }
+export type QueryDslGeoPolygonQuery = QueryDslGeoPolygonQueryKeys |
+    { [property: string]: QueryDslGeoPolygonPoints }
 
-export interface QueryDslGeoShape {
-  type?: string
-}
-
-export interface QueryDslGeoShapeQuery extends QueryDslQueryBase {
-  ignore_unmapped?: boolean
+export interface QueryDslGeoShapeFieldQuery {
+  shape?: GeoShape
   indexed_shape?: QueryDslFieldLookup
   relation?: GeoShapeRelation
-  shape?: QueryDslGeoShape
 }
+
+export interface QueryDslGeoShapeQueryKeys extends QueryDslQueryBase {
+  ignore_unmapped?: boolean
+}
+export type QueryDslGeoShapeQuery = QueryDslGeoShapeQueryKeys |
+    { [property: string]: QueryDslGeoShapeFieldQuery }
 
 export type QueryDslGeoValidationMethod = 'coerce' | 'ignore_malformed' | 'strict'
 
@@ -4195,32 +4243,32 @@ export interface QueryDslHasChildQuery extends QueryDslQueryBase {
   inner_hits?: SearchInnerHits
   max_children?: integer
   min_children?: integer
-  query?: QueryDslQueryContainer
+  query: QueryDslQueryContainer
   score_mode?: QueryDslChildScoreMode
-  type?: RelationName
+  type: RelationName
 }
 
 export interface QueryDslHasParentQuery extends QueryDslQueryBase {
   ignore_unmapped?: boolean
   inner_hits?: SearchInnerHits
-  parent_type?: RelationName
-  query?: QueryDslQueryContainer
+  parent_type: RelationName
+  query: QueryDslQueryContainer
   score?: boolean
 }
 
 export interface QueryDslIdsQuery extends QueryDslQueryBase {
-  values?: Id[] | long[]
+  values?: Ids
 }
 
 export interface QueryDslIntervalsAllOf {
-  intervals?: QueryDslIntervalsContainer[]
+  intervals: QueryDslIntervalsContainer[]
   max_gaps?: integer
   ordered?: boolean
   filter?: QueryDslIntervalsFilter
 }
 
 export interface QueryDslIntervalsAnyOf {
-  intervals?: QueryDslIntervalsContainer[]
+  intervals: QueryDslIntervalsContainer[]
   filter?: QueryDslIntervalsFilter
 }
 
@@ -4249,7 +4297,7 @@ export interface QueryDslIntervalsFuzzy {
   analyzer?: string
   fuzziness?: Fuzziness
   prefix_length?: integer
-  term?: string
+  term: string
   transpositions?: boolean
   use_field?: Field
 }
@@ -4258,14 +4306,14 @@ export interface QueryDslIntervalsMatch {
   analyzer?: string
   max_gaps?: integer
   ordered?: boolean
-  query?: string
+  query: string
   use_field?: Field
   filter?: QueryDslIntervalsFilter
 }
 
 export interface QueryDslIntervalsPrefix {
   analyzer?: string
-  prefix?: string
+  prefix: string
   use_field?: Field
 }
 
@@ -4280,7 +4328,7 @@ export interface QueryDslIntervalsQuery extends QueryDslQueryBase {
 
 export interface QueryDslIntervalsWildcard {
   analyzer?: string
-  pattern?: string
+  pattern: string
   use_field?: Field
 }
 
@@ -4288,16 +4336,17 @@ export type QueryDslLike = string | QueryDslLikeDocument
 
 export interface QueryDslLikeDocument {
   doc?: any
-  fields?: Fields
-  _id?: Id | number
+  fields?: Field[]
+  _id?: Id
   _type?: Type
   _index?: IndexName
   per_field_analyzer?: Record<Field, string>
   routing?: Routing
+  version?: VersionNumber
+  version_type?: VersionType
 }
 
 export interface QueryDslMatchAllQuery extends QueryDslQueryBase {
-  norm_field?: string
 }
 
 export interface QueryDslMatchBoolPrefixQuery extends QueryDslQueryBase {
@@ -4309,7 +4358,7 @@ export interface QueryDslMatchBoolPrefixQuery extends QueryDslQueryBase {
   minimum_should_match?: MinimumShouldMatch
   operator?: QueryDslOperator
   prefix_length?: integer
-  query?: string
+  query: string
 }
 
 export interface QueryDslMatchNoneQuery extends QueryDslQueryBase {
@@ -4318,15 +4367,16 @@ export interface QueryDslMatchNoneQuery extends QueryDslQueryBase {
 export interface QueryDslMatchPhrasePrefixQuery extends QueryDslQueryBase {
   analyzer?: string
   max_expansions?: integer
-  query?: string
+  query: string
   slop?: integer
   zero_terms_query?: QueryDslZeroTermsQuery
 }
 
 export interface QueryDslMatchPhraseQuery extends QueryDslQueryBase {
   analyzer?: string
-  query?: string
+  query: string
   slop?: integer
+  zero_terms_query?: QueryDslZeroTermsQuery
 }
 
 export interface QueryDslMatchQuery extends QueryDslQueryBase {
@@ -4341,16 +4391,17 @@ export interface QueryDslMatchQuery extends QueryDslQueryBase {
   minimum_should_match?: MinimumShouldMatch
   operator?: QueryDslOperator
   prefix_length?: integer
-  query?: string | float | boolean
+  query: string | float | boolean
   zero_terms_query?: QueryDslZeroTermsQuery
 }
 
 export interface QueryDslMoreLikeThisQuery extends QueryDslQueryBase {
   analyzer?: string
   boost_terms?: double
-  fields?: Fields
+  fail_on_unsupported_field?: boolean
+  fields?: Field[]
   include?: boolean
-  like?: QueryDslLike | QueryDslLike[]
+  like: QueryDslLike | QueryDslLike[]
   max_doc_freq?: integer
   max_query_terms?: integer
   max_word_length?: integer
@@ -4379,40 +4430,38 @@ export interface QueryDslMultiMatchQuery extends QueryDslQueryBase {
   minimum_should_match?: MinimumShouldMatch
   operator?: QueryDslOperator
   prefix_length?: integer
-  query?: string
+  query: string
   slop?: integer
   tie_breaker?: double
   type?: QueryDslTextQueryType
-  use_dis_max?: boolean
   zero_terms_query?: QueryDslZeroTermsQuery
 }
 
 export type QueryDslMultiValueMode = 'min' | 'max' | 'avg' | 'sum'
 
-export interface QueryDslNamedQueryKeys<TQuery = unknown> {
-  boost?: float
-  _name?: string
-  ignore_unmapped?: boolean
-}
-export type QueryDslNamedQuery<TQuery = unknown> = QueryDslNamedQueryKeys<TQuery> |
-    { [property: string]: TQuery }
-
 export interface QueryDslNestedQuery extends QueryDslQueryBase {
   ignore_unmapped?: boolean
   inner_hits?: SearchInnerHits
-  path?: Field
-  query?: QueryDslQueryContainer
+  path: Field
+  query: QueryDslQueryContainer
   score_mode?: QueryDslNestedScoreMode
 }
 
 export type QueryDslNestedScoreMode = 'avg' | 'sum' | 'min' | 'max' | 'none'
+
+export interface QueryDslNumberRangeQuery extends QueryDslRangeQueryBase {
+  gt?: double
+  gte?: double
+  lt?: double
+  lte?: double
+}
 
 export interface QueryDslNumericDecayFunctionKeys extends QueryDslDecayFunctionBase {
 }
 export type QueryDslNumericDecayFunction = QueryDslNumericDecayFunctionKeys |
     { [property: string]: QueryDslDecayPlacement<double, double> }
 
-export type QueryDslOperator = 'and' | 'or' | 'AND' | 'OR'
+export type QueryDslOperator = 'and' | 'or'
 
 export interface QueryDslParentIdQuery extends QueryDslQueryBase {
   id?: Id
@@ -4423,22 +4472,24 @@ export interface QueryDslParentIdQuery extends QueryDslQueryBase {
 export interface QueryDslPercolateQuery extends QueryDslQueryBase {
   document?: any
   documents?: any[]
-  field?: Field
+  field: Field
   id?: Id
   index?: IndexName
+  name?: string
   preference?: string
   routing?: Routing
   version?: VersionNumber
 }
 
 export interface QueryDslPinnedQuery extends QueryDslQueryBase {
-  ids?: Id[] | long[]
-  organic?: QueryDslQueryContainer
+  ids: Id[]
+  organic: QueryDslQueryContainer
 }
 
 export interface QueryDslPrefixQuery extends QueryDslQueryBase {
   rewrite?: MultiTermQueryRewrite
   value: string
+  case_insensitive?: boolean
 }
 
 export interface QueryDslQueryBase {
@@ -4453,38 +4504,38 @@ export interface QueryDslQueryContainer {
   combined_fields?: QueryDslCombinedFieldsQuery
   constant_score?: QueryDslConstantScoreQuery
   dis_max?: QueryDslDisMaxQuery
-  distance_feature?: Record<Field, QueryDslDistanceFeatureQuery | string> | QueryDslDistanceFeatureQuery
+  distance_feature?: QueryDslDistanceFeatureQuery
   exists?: QueryDslExistsQuery
   function_score?: QueryDslFunctionScoreQuery
   fuzzy?: Record<Field, QueryDslFuzzyQuery | string>
-  geo_bounding_box?: QueryDslNamedQuery<QueryDslGeoBoundingBoxQuery | string>
+  geo_bounding_box?: QueryDslGeoBoundingBoxQuery
   geo_distance?: QueryDslGeoDistanceQuery
-  geo_polygon?: QueryDslNamedQuery<QueryDslGeoPolygonQuery | string>
-  geo_shape?: QueryDslNamedQuery<QueryDslGeoShapeQuery | string>
+  geo_polygon?: QueryDslGeoPolygonQuery
+  geo_shape?: QueryDslGeoShapeQuery
   has_child?: QueryDslHasChildQuery
   has_parent?: QueryDslHasParentQuery
   ids?: QueryDslIdsQuery
-  intervals?: QueryDslNamedQuery<QueryDslIntervalsQuery | string>
-  match?: QueryDslNamedQuery<QueryDslMatchQuery | string | float | boolean>
+  intervals?: Record<Field, QueryDslIntervalsQuery>
+  match?: Record<Field, QueryDslMatchQuery | string | float | boolean>
   match_all?: QueryDslMatchAllQuery
-  match_bool_prefix?: QueryDslNamedQuery<QueryDslMatchBoolPrefixQuery | string>
+  match_bool_prefix?: Record<Field, QueryDslMatchBoolPrefixQuery | string>
   match_none?: QueryDslMatchNoneQuery
-  match_phrase?: QueryDslNamedQuery<QueryDslMatchPhraseQuery | string>
-  match_phrase_prefix?: QueryDslNamedQuery<QueryDslMatchPhrasePrefixQuery | string>
+  match_phrase?: Record<Field, QueryDslMatchPhraseQuery | string>
+  match_phrase_prefix?: Record<Field, QueryDslMatchPhrasePrefixQuery | string>
   more_like_this?: QueryDslMoreLikeThisQuery
   multi_match?: QueryDslMultiMatchQuery
   nested?: QueryDslNestedQuery
   parent_id?: QueryDslParentIdQuery
   percolate?: QueryDslPercolateQuery
   pinned?: QueryDslPinnedQuery
-  prefix?: QueryDslNamedQuery<QueryDslPrefixQuery | string>
+  prefix?: Record<Field, QueryDslPrefixQuery | string>
   query_string?: QueryDslQueryStringQuery
-  range?: QueryDslNamedQuery<QueryDslRangeQuery>
-  rank_feature?: QueryDslNamedQuery<QueryDslRankFeatureQuery | string>
-  regexp?: QueryDslNamedQuery<QueryDslRegexpQuery | string>
+  range?: Record<Field, QueryDslRangeQuery>
+  rank_feature?: QueryDslRankFeatureQuery
+  regexp?: Record<Field, QueryDslRegexpQuery | string>
   script?: QueryDslScriptQuery
   script_score?: QueryDslScriptScoreQuery
-  shape?: QueryDslNamedQuery<QueryDslShapeQuery | string>
+  shape?: QueryDslShapeQuery
   simple_query_string?: QueryDslSimpleQueryStringQuery
   span_containing?: QueryDslSpanContainingQuery
   field_masking_span?: QueryDslSpanFieldMaskingQuery
@@ -4493,13 +4544,12 @@ export interface QueryDslQueryContainer {
   span_near?: QueryDslSpanNearQuery
   span_not?: QueryDslSpanNotQuery
   span_or?: QueryDslSpanOrQuery
-  span_term?: QueryDslNamedQuery<QueryDslSpanTermQuery | string>
+  span_term?: Record<Field, QueryDslSpanTermQuery | string>
   span_within?: QueryDslSpanWithinQuery
-  template?: QueryDslQueryTemplate
-  term?: QueryDslNamedQuery<QueryDslTermQuery | string | float | boolean>
-  terms?: QueryDslNamedQuery<QueryDslTermsQuery | string[] | long[]>
-  terms_set?: QueryDslNamedQuery<QueryDslTermsSetQuery | string>
-  wildcard?: QueryDslNamedQuery<QueryDslWildcardQuery | string>
+  term?: Record<Field, QueryDslTermQuery | string | float | boolean>
+  terms?: QueryDslTermsQuery
+  terms_set?: Record<Field, QueryDslTermsSetQuery>
+  wildcard?: Record<Field, QueryDslWildcardQuery | string>
   type?: QueryDslTypeQuery
 }
 
@@ -4512,7 +4562,7 @@ export interface QueryDslQueryStringQuery extends QueryDslQueryBase {
   default_operator?: QueryDslOperator
   enable_position_increments?: boolean
   escape?: boolean
-  fields?: Fields
+  fields?: Field[]
   fuzziness?: Fuzziness
   fuzzy_max_expansions?: integer
   fuzzy_prefix_length?: integer
@@ -4522,17 +4572,13 @@ export interface QueryDslQueryStringQuery extends QueryDslQueryBase {
   max_determinized_states?: integer
   minimum_should_match?: MinimumShouldMatch
   phrase_slop?: double
-  query?: string
+  query: string
   quote_analyzer?: string
   quote_field_suffix?: string
   rewrite?: MultiTermQueryRewrite
   tie_breaker?: double
-  time_zone?: string
+  time_zone?: TimeZone
   type?: QueryDslTextQueryType
-}
-
-export interface QueryDslQueryTemplate {
-  source: string
 }
 
 export interface QueryDslRandomScoreFunction extends QueryDslScoreFunctionBase {
@@ -4540,15 +4586,10 @@ export interface QueryDslRandomScoreFunction extends QueryDslScoreFunctionBase {
   seed?: long | string
 }
 
-export interface QueryDslRangeQuery extends QueryDslQueryBase {
-  gt?: double | DateMath
-  gte?: double | DateMath
-  lt?: double | DateMath
-  lte?: double | DateMath
+export type QueryDslRangeQuery = QueryDslDateRangeQuery | QueryDslNumberRangeQuery
+
+export interface QueryDslRangeQueryBase extends QueryDslQueryBase {
   relation?: QueryDslRangeRelation
-  time_zone?: string
-  from?: double | DateMath
-  to?: double | DateMath
 }
 
 export type QueryDslRangeRelation = 'within' | 'contains' | 'intersects'
@@ -4556,14 +4597,36 @@ export type QueryDslRangeRelation = 'within' | 'contains' | 'intersects'
 export interface QueryDslRankFeatureFunction {
 }
 
+export interface QueryDslRankFeatureFunctionLinear extends QueryDslRankFeatureFunction {
+}
+
+export interface QueryDslRankFeatureFunctionLogarithm extends QueryDslRankFeatureFunction {
+  scaling_factor: float
+}
+
+export interface QueryDslRankFeatureFunctionSaturation extends QueryDslRankFeatureFunction {
+  pivot?: float
+}
+
+export interface QueryDslRankFeatureFunctionSigmoid extends QueryDslRankFeatureFunction {
+  pivot: float
+  exponent: float
+}
+
 export interface QueryDslRankFeatureQuery extends QueryDslQueryBase {
-  function?: QueryDslRankFeatureFunction
+  field: Field
+  saturation?: QueryDslRankFeatureFunctionSaturation
+  log?: QueryDslRankFeatureFunctionLogarithm
+  linear?: QueryDslRankFeatureFunctionLinear
+  sigmoid?: QueryDslRankFeatureFunctionSigmoid
 }
 
 export interface QueryDslRegexpQuery extends QueryDslQueryBase {
+  case_insensitive?: boolean
   flags?: string
   max_determinized_states?: integer
-  value?: string
+  rewrite?: MultiTermQueryRewrite
+  value: string
 }
 
 export interface QueryDslScoreFunctionBase {
@@ -4572,7 +4635,7 @@ export interface QueryDslScoreFunctionBase {
 }
 
 export interface QueryDslScriptQuery extends QueryDslQueryBase {
-  script?: Script
+  script: Script
 }
 
 export interface QueryDslScriptScoreFunction extends QueryDslScoreFunctionBase {
@@ -4580,16 +4643,22 @@ export interface QueryDslScriptScoreFunction extends QueryDslScoreFunctionBase {
 }
 
 export interface QueryDslScriptScoreQuery extends QueryDslQueryBase {
-  query?: QueryDslQueryContainer
-  script?: Script
+  min_score?: float
+  query: QueryDslQueryContainer
+  script: Script
 }
 
-export interface QueryDslShapeQuery extends QueryDslQueryBase {
+export interface QueryDslShapeFieldQuery {
   ignore_unmapped?: boolean
   indexed_shape?: QueryDslFieldLookup
   relation?: ShapeRelation
-  shape?: QueryDslGeoShape
+  shape?: GeoShape
 }
+
+export interface QueryDslShapeQueryKeys extends QueryDslQueryBase {
+}
+export type QueryDslShapeQuery = QueryDslShapeQueryKeys |
+    { [property: string]: QueryDslShapeFieldQuery }
 
 export type QueryDslSimpleQueryStringFlags = 'NONE' | 'AND' | 'OR' | 'NOT' | 'PREFIX' | 'PHRASE' | 'PRECEDENCE' | 'ESCAPE' | 'WHITESPACE' | 'FUZZY' | 'NEAR' | 'SLOP' | 'ALL'
 
@@ -4598,70 +4667,65 @@ export interface QueryDslSimpleQueryStringQuery extends QueryDslQueryBase {
   analyze_wildcard?: boolean
   auto_generate_synonyms_phrase_query?: boolean
   default_operator?: QueryDslOperator
-  fields?: Fields
+  fields?: Field[]
   flags?: QueryDslSimpleQueryStringFlags | string
   fuzzy_max_expansions?: integer
   fuzzy_prefix_length?: integer
   fuzzy_transpositions?: boolean
   lenient?: boolean
   minimum_should_match?: MinimumShouldMatch
-  query?: string
+  query: string
   quote_field_suffix?: string
 }
 
 export interface QueryDslSpanContainingQuery extends QueryDslQueryBase {
-  big?: QueryDslSpanQuery
-  little?: QueryDslSpanQuery
+  big: QueryDslSpanQuery
+  little: QueryDslSpanQuery
 }
 
 export interface QueryDslSpanFieldMaskingQuery extends QueryDslQueryBase {
-  field?: Field
-  query?: QueryDslSpanQuery
+  field: Field
+  query: QueryDslSpanQuery
 }
 
 export interface QueryDslSpanFirstQuery extends QueryDslQueryBase {
-  end?: integer
-  match?: QueryDslSpanQuery
-}
-
-export interface QueryDslSpanGapQuery extends QueryDslQueryBase {
-  field?: Field
-  width?: integer
+  end: integer
+  match: QueryDslSpanQuery
 }
 
 export interface QueryDslSpanMultiTermQuery extends QueryDslQueryBase {
-  match?: QueryDslQueryContainer
+  match: QueryDslQueryContainer
 }
 
 export interface QueryDslSpanNearQuery extends QueryDslQueryBase {
-  clauses?: QueryDslSpanQuery[]
+  clauses: QueryDslSpanQuery[]
   in_order?: boolean
   slop?: integer
 }
 
 export interface QueryDslSpanNotQuery extends QueryDslQueryBase {
   dist?: integer
-  exclude?: QueryDslSpanQuery
-  include?: QueryDslSpanQuery
+  exclude: QueryDslSpanQuery
+  include: QueryDslSpanQuery
   post?: integer
   pre?: integer
 }
 
 export interface QueryDslSpanOrQuery extends QueryDslQueryBase {
-  clauses?: QueryDslSpanQuery[]
+  clauses: QueryDslSpanQuery[]
 }
 
-export interface QueryDslSpanQuery extends QueryDslQueryBase {
-  span_containing?: QueryDslNamedQuery<QueryDslSpanContainingQuery | string>
-  field_masking_span?: QueryDslNamedQuery<QueryDslSpanFieldMaskingQuery | string>
-  span_first?: QueryDslNamedQuery<QueryDslSpanFirstQuery | string>
-  span_gap?: QueryDslNamedQuery<QueryDslSpanGapQuery | integer>
+export interface QueryDslSpanQuery {
+  span_containing?: QueryDslSpanContainingQuery
+  field_masking_span?: QueryDslSpanFieldMaskingQuery
+  span_first?: QueryDslSpanFirstQuery
+  span_gap?: Record<Field, integer>
   span_multi?: QueryDslSpanMultiTermQuery
-  span_near?: QueryDslNamedQuery<QueryDslSpanNearQuery | string>
-  span_not?: QueryDslNamedQuery<QueryDslSpanNotQuery | string>
-  span_or?: QueryDslNamedQuery<QueryDslSpanOrQuery | string>
-  span_term?: QueryDslNamedQuery<QueryDslSpanTermQuery | string>
-  span_within?: QueryDslNamedQuery<QueryDslSpanWithinQuery | string>
+  span_near?: QueryDslSpanNearQuery
+  span_not?: QueryDslSpanNotQuery
+  span_or?: QueryDslSpanOrQuery
+  span_term?: Record<Field, QueryDslSpanTermQuery | string>
+  span_within?: QueryDslSpanWithinQuery
 }
 
 export interface QueryDslSpanTermQuery extends QueryDslQueryBase {
@@ -4669,27 +4733,37 @@ export interface QueryDslSpanTermQuery extends QueryDslQueryBase {
 }
 
 export interface QueryDslSpanWithinQuery extends QueryDslQueryBase {
-  big?: QueryDslSpanQuery
-  little?: QueryDslSpanQuery
+  big: QueryDslSpanQuery
+  little: QueryDslSpanQuery
 }
 
 export interface QueryDslTermQuery extends QueryDslQueryBase {
-  value?: string | float | boolean
+  value: string | float | boolean
+  case_insensitive?: boolean
 }
 
-export interface QueryDslTermsQuery extends QueryDslQueryBase {
-  terms?: string[]
-  index?: IndexName
-  id?: Id
-  path?: string
+export interface QueryDslTermsLookup {
+  index: IndexName
+  id: Id
+  path: Field
   routing?: Routing
 }
 
-export interface QueryDslTermsSetQuery extends QueryDslQueryBase {
+export interface QueryDslTermsQueryKeys extends QueryDslQueryBase {
+}
+export type QueryDslTermsQuery = QueryDslTermsQueryKeys |
+    { [property: string]: string[] | long[] | QueryDslTermsLookup }
+
+export interface QueryDslTermsSetFieldQuery {
   minimum_should_match_field?: Field
   minimum_should_match_script?: Script
-  terms?: string[]
+  terms: string[]
 }
+
+export interface QueryDslTermsSetQueryKeys extends QueryDslQueryBase {
+}
+export type QueryDslTermsSetQuery = QueryDslTermsSetQueryKeys |
+    { [property: string]: QueryDslTermsSetFieldQuery }
 
 export type QueryDslTextQueryType = 'best_fields' | 'most_fields' | 'cross_fields' | 'phrase' | 'phrase_prefix' | 'bool_prefix'
 
@@ -4709,6 +4783,7 @@ export interface QueryDslTypeQuery extends QueryDslQueryBase {
 }
 
 export interface QueryDslWildcardQuery extends QueryDslQueryBase {
+  case_insensitive?: boolean
   rewrite?: MultiTermQueryRewrite
   value: string
 }
@@ -4809,7 +4884,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
     rescore?: SearchRescore[]
     routing?: Routing
     script_fields?: Record<string, ScriptField>
-    search_after?: any[]
+    search_after?: SearchSortResults
     search_type?: SearchType
     sequence_number_primary_term?: boolean
     size?: integer
@@ -8480,7 +8555,6 @@ export interface IndicesDataStreamsStatsDataStreamsStatsItem {
 export interface IndicesDataStreamsStatsRequest extends RequestBase {
   name?: IndexName
   expand_wildcards?: ExpandWildcards
-  human?: boolean
 }
 
 export interface IndicesDataStreamsStatsResponse {
@@ -10057,20 +10131,21 @@ export interface MigrationDeprecationInfoResponse {
 
 export interface MlAnalysisConfig {
   bucket_span: TimeSpan
+  categorization_analyzer?: MlCategorizationAnalyzer | string
   categorization_field_name?: Field
   categorization_filters?: string[]
   detectors: MlDetector[]
-  influencers: Field[]
+  influencers?: Field[]
+  model_prune_window?: Time
   latency?: Time
   multivariate_by_fields?: boolean
   per_partition_categorization?: MlPerPartitionCategorization
   summary_count_field_name?: Field
-  categorization_analyzer?: MlCategorizationAnalyzer | string
 }
 
 export interface MlAnalysisLimits {
   categorization_examples_limit?: long
-  model_memory_limit: string
+  model_memory_limit?: string
 }
 
 export interface MlAnalysisMemoryLimit {
@@ -10158,9 +10233,9 @@ export interface MlCalendarEvent {
 }
 
 export interface MlCategorizationAnalyzer {
+  char_filter?: (string | AnalysisCharFilter)[]
   filter?: (string | AnalysisTokenFilter)[]
   tokenizer?: string | AnalysisTokenizer
-  char_filter?: (string | AnalysisCharFilter)[]
 }
 
 export type MlCategorizationStatus = 'ok' | 'warn'
@@ -10191,26 +10266,28 @@ export type MlChunkingMode = 'auto' | 'manual' | 'off'
 
 export type MlConditionOperator = 'gt' | 'gte' | 'lt' | 'lte'
 
-export interface MlCustomSettings {
+export interface MlCustomSettingsKeys {
   custom_urls?: XpackUsageUrlConfig[]
   created_by?: string
   job_tags?: Record<string, string>
 }
+export type MlCustomSettings = MlCustomSettingsKeys |
+    { [property: string]: any }
 
 export interface MlDataCounts {
   bucket_count: long
-  earliest_record_timestamp: long
+  earliest_record_timestamp?: long
   empty_bucket_count: long
   input_bytes: long
   input_field_count: long
   input_record_count: long
   invalid_date_count: long
   job_id: Id
-  last_data_time: long
-  latest_empty_bucket_timestamp: long
-  latest_record_timestamp: long
-  latest_sparse_bucket_timestamp: long
-  latest_bucket_timestamp: long
+  last_data_time?: long
+  latest_empty_bucket_timestamp?: long
+  latest_record_timestamp?: long
+  latest_sparse_bucket_timestamp?: long
+  latest_bucket_timestamp?: long
   missing_field_count: long
   out_of_order_timestamp_count: long
   processed_field_count: long
@@ -10244,6 +10321,25 @@ export interface MlDatafeed {
   indices_options?: MlDatafeedIndicesOptions
 }
 
+export interface MlDatafeedConfig {
+  aggregations?: Record<string, AggregationsAggregationContainer>
+  aggs?: Record<string, AggregationsAggregationContainer>
+  chunking_config?: MlChunkingConfig
+  datafeed_id?: Id
+  delayed_data_check_config?: MlDelayedDataCheckConfig
+  frequency?: Timestamp
+  indexes?: Indices
+  indices?: Indices
+  indices_options?: MlDatafeedIndicesOptions
+  job_id?: Id
+  max_empty_searches?: integer
+  query?: QueryDslQueryContainer
+  query_delay?: Timestamp
+  runtime_mappings?: MappingRuntimeFields
+  script_fields?: Record<string, ScriptField>
+  scroll_size?: integer
+}
+
 export interface MlDatafeedIndicesOptions {
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
@@ -10251,14 +10347,20 @@ export interface MlDatafeedIndicesOptions {
   ignore_throttled?: boolean
 }
 
+export interface MlDatafeedRunningState {
+  real_time_configured: boolean
+  real_time_running: boolean
+}
+
 export type MlDatafeedState = 'started' | 'stopped' | 'starting' | 'stopping'
 
 export interface MlDatafeedStats {
-  assignment_explanation: string
+  assignment_explanation?: string
   datafeed_id: Id
-  node: MlDiscoveryNode
+  node?: MlDiscoveryNode
   state: MlDatafeedState
   timing_stats: MlDatafeedTimingStats
+  running_state?: MlDatafeedRunningState
 }
 
 export interface MlDatafeedTimingStats {
@@ -10267,7 +10369,7 @@ export interface MlDatafeedTimingStats {
   job_id: Id
   search_count: long
   total_search_time_ms: double
-  average_search_time_per_bucket_ms: number
+  average_search_time_per_bucket_ms?: number
 }
 
 export interface MlDataframeAnalysis {
@@ -10532,10 +10634,11 @@ export interface MlDetector {
   detector_index?: integer
   exclude_frequent?: MlExcludeFrequent
   field_name?: Field
-  function: string
-  use_null?: boolean
+  function?: string
   over_field_name?: Field
   partition_field_name?: Field
+  use_null?: boolean
+  description?: string
 }
 
 export interface MlDiscoveryNode {
@@ -10556,7 +10659,7 @@ export interface MlFilter {
 
 export interface MlFilterRef {
   filter_id: Id
-  filter_type: MlFilterType
+  filter_type?: MlFilterType
 }
 
 export type MlFilterType = 'include' | 'exclude'
@@ -10592,27 +10695,56 @@ export interface MlInfluence {
 }
 
 export interface MlJob {
+  allow_lazy_open: boolean
+  analysis_config: MlAnalysisConfig
+  analysis_limits?: MlAnalysisLimits
+  background_persist_interval?: Time
+  blocked?: MlJobBlocked
+  create_time?: integer
+  custom_settings?: MlCustomSettings
+  daily_model_snapshot_retention_after_days?: long
+  data_description: MlDataDescription
+  datafeed_config?: MlDatafeed
+  deleting?: boolean
+  description?: string
+  finished_time?: integer
+  groups?: string[]
+  job_id: Id
+  job_type?: string
+  job_version?: VersionString
+  model_plot_config?: MlModelPlotConfig
+  model_snapshot_id?: Id
+  model_snapshot_retention_days: long
+  renormalization_window_days?: long
+  results_index_name: IndexName
+  results_retention_days?: long
+}
+
+export interface MlJobBlocked {
+  reason: MlJobBlockedReason
+  task_id?: TaskId
+}
+
+export type MlJobBlockedReason = 'delete' | 'reset' | 'revert'
+
+export interface MlJobConfig {
   allow_lazy_open?: boolean
   analysis_config: MlAnalysisConfig
   analysis_limits?: MlAnalysisLimits
-  background_persist_interval: Time
-  create_time: integer
+  background_persist_interval?: Time
+  custom_settings?: MlCustomSettings
+  daily_model_snapshot_retention_after_days?: long
   data_description: MlDataDescription
-  description: string
-  finished_time: integer
-  job_id: Id
-  job_type: string
-  model_snapshot_id: Id
-  model_snapshot_retention_days: long
-  renormalization_window_days: long
+  datafeed_config?: MlDatafeedConfig
+  description?: string
+  groups?: string[]
+  job_id?: Id
+  job_type?: string
+  model_plot_config?: MlModelPlotConfig
+  model_snapshot_retention_days?: long
+  renormalization_window_days?: long
   results_index_name?: IndexName
   results_retention_days?: long
-  groups?: string[]
-  model_plot_config?: MlModelPlotConfig
-  custom_settings?: MlCustomSettings
-  job_version?: VersionString
-  deleting?: boolean
-  daily_model_snapshot_retention_after_days?: long
 }
 
 export interface MlJobForecastStatistics {
@@ -10634,12 +10766,12 @@ export interface MlJobStatistics {
 }
 
 export interface MlJobStats {
-  assignment_explanation: string
+  assignment_explanation?: string
   data_counts: MlDataCounts
   forecasts_stats: MlJobForecastStatistics
   job_id: string
   model_size_stats: MlModelSizeStats
-  node: MlDiscoveryNode
+  node?: MlDiscoveryNode
   open_time?: DateString
   state: MlJobState
   timing_stats: MlJobTimingStats
@@ -10647,22 +10779,22 @@ export interface MlJobStats {
 }
 
 export interface MlJobTimingStats {
-  average_bucket_processing_time_ms: double
+  average_bucket_processing_time_ms?: double
   bucket_count: long
-  exponential_average_bucket_processing_time_ms: double
+  exponential_average_bucket_processing_time_ms?: double
   exponential_average_bucket_processing_time_per_hour_ms: double
   job_id: Id
   total_bucket_processing_time_ms: double
-  maximum_bucket_processing_time_ms: double
-  minimum_bucket_processing_time_ms: double
+  maximum_bucket_processing_time_ms?: double
+  minimum_bucket_processing_time_ms?: double
 }
 
 export type MlMemoryStatus = 'ok' | 'soft_limit' | 'hard_limit'
 
 export interface MlModelPlotConfig {
-  terms?: Field
-  enabled: boolean
   annotations_enabled?: boolean
+  enabled?: boolean
+  terms?: Field
 }
 
 export interface MlModelSizeStats {
@@ -10671,9 +10803,9 @@ export interface MlModelSizeStats {
   log_time: Time
   memory_status: MlMemoryStatus
   model_bytes: long
-  model_bytes_exceeded: long
-  model_bytes_memory_limit: long
-  peak_model_bytes: long
+  model_bytes_exceeded?: long
+  model_bytes_memory_limit?: long
+  peak_model_bytes?: long
   assignment_memory_basis?: string
   result_type: string
   total_by_field_count: long
@@ -10692,10 +10824,10 @@ export interface MlModelSizeStats {
 export interface MlModelSnapshot {
   description?: string
   job_id: Id
-  latest_record_time_stamp: integer
-  latest_result_time_stamp: integer
+  latest_record_time_stamp?: integer
+  latest_result_time_stamp?: integer
   min_version: VersionString
-  model_size_stats: MlModelSizeStats
+  model_size_stats?: MlModelSizeStats
   retain: boolean
   snapshot_doc_count: long
   snapshot_id: Id
@@ -10962,7 +11094,7 @@ export interface MlEvaluateDataFrameConfusionMatrixPrediction {
   count: integer
 }
 
-export interface MlEvaluateDataFrameConfusionMatrixTreshold {
+export interface MlEvaluateDataFrameConfusionMatrixThreshold {
   tp: integer
   fp: integer
   tn: integer
@@ -11019,7 +11151,7 @@ export interface MlEvaluateDataFrameDataframeOutlierDetectionSummary {
   auc_roc?: MlEvaluateDataFrameDataframeEvaluationSummaryAucRoc
   precision?: Record<string, double>
   recall?: Record<string, double>
-  confusion_matrix?: Record<string, MlEvaluateDataFrameConfusionMatrixTreshold>
+  confusion_matrix?: Record<string, MlEvaluateDataFrameConfusionMatrixThreshold>
 }
 
 export interface MlEvaluateDataFrameDataframeRegressionSummary {
@@ -11418,6 +11550,7 @@ export interface MlOpenJobRequest extends RequestBase {
 
 export interface MlOpenJobResponse {
   opened: boolean
+  node: Id
 }
 
 export interface MlPostCalendarEventsRequest extends RequestBase {
@@ -11431,18 +11564,22 @@ export interface MlPostCalendarEventsResponse {
   events: MlCalendarEvent[]
 }
 
-export interface MlPostJobDataRequest extends RequestBase {
+export type MlPostDataInput = any | MlPostDataMultipleInputs
+
+export interface MlPostDataMultipleInputs {
+  data: any[]
+}
+
+export interface MlPostDataRequest extends RequestBase {
   job_id: Id
   reset_end?: DateString
   reset_start?: DateString
-  body?: {
-    data?: any[]
-  }
+  body?: MlPostDataInput
 }
 
-export interface MlPostJobDataResponse {
+export interface MlPostDataResponse {
   bucket_count: long
-  earliest_record_timestamp: integer
+  earliest_record_timestamp?: integer
   empty_bucket_count: long
   input_bytes: long
   input_field_count: long
@@ -11450,7 +11587,7 @@ export interface MlPostJobDataResponse {
   invalid_date_count: long
   job_id: Id
   last_data_time: integer
-  latest_record_timestamp: integer
+  latest_record_timestamp?: integer
   missing_field_count: long
   out_of_order_timestamp_count: long
   processed_field_count: long
@@ -11480,25 +11617,24 @@ export interface MlPreviewDataFrameAnalyticsResponse {
 export interface MlPreviewDatafeedRequest extends RequestBase {
   datafeed_id?: Id
   body?: {
-    job_config?: MlJob
-    datafeed_config?: MlDatafeed
+    job_config?: MlJobConfig
+    datafeed_config?: MlDatafeedConfig
   }
 }
 
-export interface MlPreviewDatafeedResponse<TDocument = unknown> {
-  data: TDocument[]
-}
+export type MlPreviewDatafeedResponse<TDocument = unknown> = TDocument[]
 
 export interface MlPutCalendarRequest extends RequestBase {
   calendar_id: Id
   body?: {
+    job_ids?: Ids
     description?: string
   }
 }
 
 export interface MlPutCalendarResponse {
   calendar_id: Id
-  description: string
+  description?: string
   job_ids: Ids
 }
 
@@ -11548,12 +11684,13 @@ export interface MlPutDatafeedRequest extends RequestBase {
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   body?: {
+    aggs?: Record<string, AggregationsAggregationContainer>
     aggregations?: Record<string, AggregationsAggregationContainer>
     chunking_config?: MlChunkingConfig
     delayed_data_check_config?: MlDelayedDataCheckConfig
     frequency?: Time
-    indices?: string[]
-    indexes?: string[]
+    indices?: Indices
+    indexes?: Indices
     indices_options?: MlDatafeedIndicesOptions
     job_id?: Id
     max_empty_searches?: integer
@@ -11566,15 +11703,15 @@ export interface MlPutDatafeedRequest extends RequestBase {
 }
 
 export interface MlPutDatafeedResponse {
-  aggregations: Record<string, AggregationsAggregationContainer>
+  aggregations?: Record<string, AggregationsAggregationContainer>
   chunking_config: MlChunkingConfig
   delayed_data_check_config?: MlDelayedDataCheckConfig
   datafeed_id: Id
-  frequency: Time
+  frequency?: Time
   indices: string[]
   job_id: Id
   indices_options?: MlDatafeedIndicesOptions
-  max_empty_searches: integer
+  max_empty_searches?: integer
   query: QueryDslQueryContainer
   query_delay: Time
   runtime_mappings?: MappingRuntimeFields
@@ -11591,7 +11728,7 @@ export interface MlPutFilterRequest extends RequestBase {
 }
 
 export interface MlPutFilterResponse {
-  description: string
+  description?: string
   filter_id: Id
   items: string[]
 }
@@ -11604,12 +11741,14 @@ export interface MlPutJobRequest extends RequestBase {
     analysis_limits?: MlAnalysisLimits
     background_persist_interval: Time
     custom_settings?: MlCustomSettings
-    data_description?: MlDataDescription
     daily_model_snapshot_retention_after_days?: long
-    groups?: string[]
+    data_description: MlDataDescription
+    datafeed_config?: MlDatafeedConfig
     description?: string
+    groups?: string[]
     model_plot_config?: MlModelPlotConfig
     model_snapshot_retention_days?: long
+    renormalization_window_days?: long
     results_index_name?: IndexName
     results_retention_days?: long
   }
@@ -11618,20 +11757,22 @@ export interface MlPutJobRequest extends RequestBase {
 export interface MlPutJobResponse {
   allow_lazy_open: boolean
   analysis_config: MlAnalysisConfig
-  analysis_limits?: MlAnalysisLimits
-  background_persist_interval: Time
+  analysis_limits: MlAnalysisLimits
+  background_persist_interval?: Time
   create_time: DateString
   custom_settings?: MlCustomSettings
+  daily_model_snapshot_retention_after_days: long
   data_description: MlDataDescription
-  daily_model_snapshot_retention_after_days?: long
+  datafeed_config?: MlDatafeed
+  description?: string
   groups?: string[]
-  description: string
   job_id: Id
   job_type: string
+  job_version: string
   model_plot_config?: MlModelPlotConfig
-  model_snapshot_id: Id
+  model_snapshot_id?: Id
   model_snapshot_retention_days: long
-  renormalization_window_days: long
+  renormalization_window_days?: long
   results_index_name: string
   results_retention_days?: long
 }
@@ -11656,9 +11797,18 @@ export interface MlPutTrainedModelAliasRequest extends RequestBase {
 export interface MlPutTrainedModelAliasResponse extends AcknowledgedResponseBase {
 }
 
+export interface MlResetJobRequest extends RequestBase {
+  job_id: Id
+  wait_for_completion?: boolean
+}
+
+export interface MlResetJobResponse extends AcknowledgedResponseBase {
+}
+
 export interface MlRevertModelSnapshotRequest extends RequestBase {
   job_id: Id
   snapshot_id: Id
+  delete_intervening_results?: boolean
   body?: {
     delete_intervening_results?: boolean
   }
@@ -11785,7 +11935,27 @@ export interface MlUpdateJobRequest extends RequestBase {
 }
 
 export interface MlUpdateJobResponse {
-  stub: boolean
+  allow_lazy_open: boolean
+  analysis_config: MlAnalysisConfig
+  analysis_limits: MlAnalysisLimits
+  background_persist_interval?: Time
+  create_time: Time
+  custom_settings?: MlCustomSettings
+  daily_model_snapshot_retention_after_days: long
+  data_description: MlDataDescription
+  datafeed_config?: MlDatafeed
+  description?: string
+  groups?: string[]
+  job_id: Id
+  job_type: string
+  job_version: string
+  finished_time?: Time
+  model_plot_config?: MlModelPlotConfig
+  model_snapshot_id?: Id
+  model_snapshot_retention_days: long
+  renormalization_window_days?: long
+  results_index_name: string
+  results_retention_days?: long
 }
 
 export interface MlUpdateModelSnapshotRequest extends RequestBase {
@@ -15268,6 +15438,9 @@ export interface SpecUtilsCommonQueryParameters {
   human?: boolean
   pretty?: boolean
   source_query_string?: string
+}
+
+export interface SpecUtilsAdditionalProperty<TKey = unknown, TValue = unknown> {
 }
 
 export interface SpecUtilsCommonCatQueryParameters {
