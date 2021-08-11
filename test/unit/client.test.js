@@ -25,7 +25,8 @@ const buffer = require('buffer')
 const intoStream = require('into-stream')
 const { ConnectionPool, Transport, Connection, errors } = require('../../index')
 const { CloudConnectionPool } = require('../../lib/pool')
-const { Client, buildServer } = require('../utils')
+const { Client, buildServer, connection } = require('../utils')
+const { buildMockConnection } = connection
 
 let clientVersion = require('../../package.json').version
 if (clientVersion.includes('-')) {
@@ -1583,4 +1584,32 @@ test('caFingerprint can\'t be configured over http / 3', t => {
   } catch (err) {
     t.fail('shuld not throw')
   }
+})
+
+test('Error body that is not a json', t => {
+  t.plan(5)
+
+  const MockConnection = buildMockConnection({
+    onRequest (params) {
+      return {
+        statusCode: 400,
+        body: '<html><body>error!</body></html>',
+        headers: { 'content-type': 'text/html' }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection,
+    maxRetries: 1
+  })
+
+  client.info((err, result) => {
+    t.ok(err instanceof errors.ResponseError)
+    t.equal(err.name, 'ResponseError')
+    t.equal(err.body, '<html><body>error!</body></html>')
+    t.equal(err.message, '<html><body>error!</body></html>')
+    t.equal(err.statusCode, 400)
+  })
 })

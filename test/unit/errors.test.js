@@ -197,3 +197,29 @@ test('ResponseError with meaningful message / 3', t => {
   t.equal(err.toString(), JSON.stringify(meta.body))
   t.end()
 })
+
+test('ResponseError with meaningful message when body is not json', t => {
+  const meta = {
+    statusCode: 400,
+    body: '<html><body>error!</body></html>',
+    headers: { 'content-type': 'text/html' }
+  }
+  const err = new errors.ResponseError(meta)
+  t.equal(err.name, 'ResponseError')
+  t.equal(err.message, '<html><body>error!</body></html>')
+  t.equal(err.toString(), JSON.stringify(meta.body))
+  t.end()
+})
+
+test('ResponseError with meaningful message when body is falsy', t => {
+  const meta = {
+    statusCode: 400,
+    body: '',
+    headers: { 'content-type': 'text/plain' }
+  }
+  const err = new errors.ResponseError(meta)
+  t.equal(err.name, 'ResponseError')
+  t.equal(err.message, 'Response Error')
+  t.equal(err.toString(), JSON.stringify(meta.body))
+  t.end()
+})
