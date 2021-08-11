@@ -470,7 +470,7 @@ test('Errors v6', t => {
 })
 
 test('Auth error - 401', t => {
-  t.plan(8)
+  t.plan(9)
   const MockConnection = buildMockConnection({
     onRequest (params) {
       return {
@@ -487,6 +487,7 @@ test('Auth error - 401', t => {
 
   process.on('warning', onWarning)
   function onWarning (warning) {
+    t.equal(warning.name, 'ProductNotSupportedSecurityError')
     t.equal(warning.message, 'The client is unable to verify that the server is Elasticsearch due to security privileges on the server side. Some functionality may not be compatible if the server is running an unsupported product.')
   }
 
@@ -524,7 +525,7 @@ test('Auth error - 401', t => {
 })
 
 test('Auth error - 403', t => {
-  t.plan(8)
+  t.plan(9)
   const MockConnection = buildMockConnection({
     onRequest (params) {
       return {
@@ -541,6 +542,7 @@ test('Auth error - 403', t => {
 
   process.on('warning', onWarning)
   function onWarning (warning) {
+    t.equal(warning.name, 'ProductNotSupportedSecurityError')
     t.equal(warning.message, 'The client is unable to verify that the server is Elasticsearch due to security privileges on the server side. Some functionality may not be compatible if the server is running an unsupported product.')
   }
 
