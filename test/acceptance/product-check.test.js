@@ -649,7 +649,7 @@ test('500 error', t => {
       }
     }
   }, (err, result) => {
-    t.equal(err.message, 'Response Error')
+    t.equal(err.message, '{"error":"kaboom"}')
 
     client.search({
       index: 'foo',
