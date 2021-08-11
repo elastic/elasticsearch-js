@@ -74,6 +74,7 @@ const RollupApi = require('./api/rollup')
 const scriptsPainlessExecuteApi = require('./api/scripts_painless_execute')
 const scrollApi = require('./api/scroll')
 const searchApi = require('./api/search')
+const searchMvtApi = require('./api/search_mvt')
 const searchShardsApi = require('./api/search_shards')
 const searchTemplateApi = require('./api/search_template')
 const SearchableSnapshotsApi = require('./api/searchable_snapshots')
@@ -200,6 +201,7 @@ ESAPI.prototype.renderSearchTemplate = renderSearchTemplateApi
 ESAPI.prototype.scriptsPainlessExecute = scriptsPainlessExecuteApi
 ESAPI.prototype.scroll = scrollApi
 ESAPI.prototype.search = searchApi
+ESAPI.prototype.searchMvt = searchMvtApi
 ESAPI.prototype.searchShards = searchShardsApi
 ESAPI.prototype.searchTemplate = searchTemplateApi
 ESAPI.prototype.termsEnum = termsEnumApi
@@ -397,6 +399,7 @@ Object.defineProperties(ESAPI.prototype, {
     }
   },
   scripts_painless_execute: { get () { return this.scriptsPainlessExecute } },
+  search_mvt: { get () { return this.searchMvt } },
   search_shards: { get () { return this.searchShards } },
   search_template: { get () { return this.searchTemplate } },
   searchableSnapshots: {

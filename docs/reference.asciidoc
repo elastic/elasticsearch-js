@@ -1969,7 +1969,7 @@ link:{ref}/cluster-allocation-explain.html[Documentation] +
 |`boolean` - Return information about disk usage and shard sizes (default: false)
 
 |`body`
-|`object` - The index, shard, and primary flag to explain. Empty means 'explain the first unassigned shard'
+|`object` - The index, shard, and primary flag to explain. Empty means 'explain a randomly-chosen unassigned shard'
 
 |===
 
@@ -9249,6 +9249,67 @@ _Default:_ `5`
 |===
 
 [discrete]
+=== searchMvt
+*Stability:* experimental
+[source,ts]
+----
+client.searchMvt({
+  index: string | string[],
+  field: string,
+  zoom: integer,
+  x: integer,
+  y: integer,
+  exact_bounds: boolean,
+  extent: number,
+  grid_precision: number,
+  grid_type: 'grid' | 'point',
+  size: number,
+  body: object
+})
+----
+link:{ref}/search-vector-tile-api.html[Documentation] +
+[cols=2*]
+|===
+|`index`
+|`string \| string[]` - Comma-separated list of data streams, indices, or aliases to search
+
+|`field`
+|`string` - Field containing geospatial data to return
+
+|`zoom`
+|`integer` - Zoom level for the vector tile to search
+
+|`x`
+|`integer` - X coordinate for the vector tile to search
+
+|`y`
+|`integer` - Y coordinate for the vector tile to search
+
+|`exact_bounds` or `exactBounds`
+|`boolean` - If false, the meta layer's feature is the bounding box of the tile. If true, the meta layer's feature is a bounding box resulting from a `geo_bounds` aggregation.
+
+|`extent`
+|`number` - Size, in pixels, of a side of the vector tile. +
+_Default:_ `4096`
+
+|`grid_precision` or `gridPrecision`
+|`number` - Additional zoom levels available through the aggs layer. Accepts 0-8. +
+_Default:_ `8`
+
+|`grid_type` or `gridType`
+|`'grid' \| 'point'` - Determines the geometry type for features in the aggs layer. +
+_Default:_ `grid`
+
+|`size`
+|`number` - Maximum number of features to return in the hits layer. Accepts 0-10000. +
+_Default:_ `10000`
+
+|`body`
+|`object` - Search request body.
+
+|===
+
+[discrete]
 === searchShards
 
 [source,ts]
@@ -10865,7 +10926,7 @@ client.sql.clearCursor({
   body: object
 })
 ----
-link:{ref}/sql-pagination.html[Documentation] +
+link:{ref}/clear-sql-cursor-api.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -10952,7 +11013,7 @@ client.sql.query({
   body: object
 })
 ----
-link:{ref}/sql-rest-overview.html[Documentation] +
+link:{ref}/sql-search-api.html[Documentation] +
 {jsclient}/sql_query_examples.html[Code Example] +
 [cols=2*]
 |===
@@ -10973,7 +11034,7 @@ client.sql.translate({
   body: object
 })
 ----
-link:{ref}/sql-translate.html[Documentation] +
+link:{ref}/sql-translate-api.html[Documentation] +
 [cols=2*]
 |===
 |`body`
