@@ -61,3 +61,5 @@ test/benchmarks/macro/fixtures/*
 
 test/bundlers/**/bundle.js
 test/bundlers/parcel-test/.parcel-cache
+
+lib
