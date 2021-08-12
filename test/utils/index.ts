@@ -17,12 +17,16 @@
  * under the License.
  */
 
-import { expectType } from 'tsd'
-import { Serializer } from '../../'
+import buildServer from './buildServer'
+import * as connection from './MockConnection'
+import TestClient from './TestClient'
+import buildCluster from './buildCluster'
+import * as buildProxy from  './buildProxy'
 
-const serializer = new Serializer()
-
-expectType<string>(serializer.serialize({}))
-expectType<any>(serializer.deserialize(''))
-expectType<string>(serializer.ndserialize([]))
-expectType<string>(serializer.qserialize({}))
+export {
+  buildServer,
+  connection,
+  buildCluster,
+  buildProxy,
+  TestClient
+}

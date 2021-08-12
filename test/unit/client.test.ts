@@ -17,26 +17,17 @@
  * under the License.
  */
 
-'use strict'
+import { test } from 'tap'
+import { Client } from '../..'
 
-const { test } = require('tap')
-const { roundRobinSelector, randomSelector } = require('../../lib/Transport').internals
-
-test('RoundRobinSelector', t => {
-  const selector = roundRobinSelector()
-  const arr = [0, 1, 2, 3, 4, 5]
-
-  t.plan(arr.length + 1)
-  for (let i = 0; i <= arr.length; i++) {
-    t.equal(
-      selector(arr),
-      i === arr.length ? arr[0] : arr[i]
-    )
-  }
+test('Create a client instance, single node', t => {
+  const client = new Client({ node: 'http://localhost:9200' })
+  t.equal(client.connectionPool.size, 1)
+  t.end()
 })
 
-test('RandomSelector', t => {
-  t.plan(1)
-  const arr = [0, 1, 2, 3, 4, 5]
-  t.type(randomSelector(arr), 'number')
+test('Create a client instance, multi node', t => {
+  const client = new Client({ nodes: ['http://localhost:9200', 'http://localhost:9201'] })
+  t.equal(client.connectionPool.size, 2)
+  t.end()
 })

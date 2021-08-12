@@ -17,19 +17,18 @@
  * under the License.
  */
 
-'use strict'
+import { readFileSync } from 'fs'
+import crypto from 'crypto'
+import { join } from 'path'
+import https from 'https'
+import http from 'http'
+import Debug from 'debug'
+import stoppable, { StoppableServer } from 'stoppable'
 
-const crypto = require('crypto')
-const debug = require('debug')('elasticsearch-test')
-const stoppable = require('stoppable')
+const debug = Debug('elasticsearch-test')
 
 // allow self signed certificates for testing purposes
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
-
-const { readFileSync } = require('fs')
-const { join } = require('path')
-const https = require('https')
-const http = require('http')
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
 const secureOpts = {
   key: readFileSync(join(__dirname, '..', 'fixtures', 'https.key'), 'utf8'),
@@ -43,46 +42,48 @@ const caFingerprint = getFingerprint(secureOpts.cert
   .join('')
 )
 
+export type ServerHandler = (req: http.IncomingMessage, res: http.ServerResponse) => void
+interface Options { secure?: boolean }
+type Server = [{ key: string, cert: string, port: number, caFingerprint: string }, StoppableServer]
+
 let id = 0
-function buildServer (handler, opts, cb) {
+export default function buildServer (handler: ServerHandler, opts: Options = {}): Promise<Server> {
   const serverId = id++
   debug(`Booting server '${serverId}'`)
-  if (cb == null) {
-    cb = opts
-    opts = {}
-  }
 
   const server = opts.secure
     ? stoppable(https.createServer(secureOpts))
     : stoppable(http.createServer())
 
-  server.on('request', handler)
+  server.on('request', (req, res) => {
+    res.setHeader('x-elastic-product', 'Elasticsearch')
+    handler(req, res)
+  })
+
   server.on('error', err => {
     console.log('http server error', err)
     process.exit(1)
   })
-  if (cb === undefined) {
-    return new Promise((resolve, reject) => {
-      server.listen(0, () => {
-        const port = server.address().port
-        debug(`Server '${serverId}' booted on port ${port}`)
-        resolve([Object.assign({}, secureOpts, { port, caFingerprint }), server])
-      })
-    })
-  } else {
+
+  return new Promise((resolve, reject) => {
     server.listen(0, () => {
+      // @ts-expect-error
       const port = server.address().port
       debug(`Server '${serverId}' booted on port ${port}`)
-      cb(Object.assign({}, secureOpts, { port }), server)
+      resolve([Object.assign({}, secureOpts, { port, caFingerprint }), server])
     })
-  }
+  })
 }
 
-function getFingerprint (content, inputEncoding = 'base64', outputEncoding = 'hex') {
+function getFingerprint (content: string, inputEncoding = 'base64', outputEncoding = 'hex'): string {
   const shasum = crypto.createHash('sha256')
+  // @ts-expect-error
   shasum.update(content, inputEncoding)
+  // @ts-expect-error
   const res = shasum.digest(outputEncoding)
-  return res.toUpperCase().match(/.{1,2}/g).join(':')
+  const arr = res.toUpperCase().match(/.{1,2}/g)
+  if (arr == null) {
+    throw new Error('Should produce a match')
+  }
+  return arr.join(':')
 }
-
-module.exports = buildServer
