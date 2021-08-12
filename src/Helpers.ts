@@ -3,7 +3,7 @@
  * license agreements. See the NOTICE file distributed with
  * this work for additional information regarding copyright
  * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
+ * the Apache License, Version 2.0 (the "License") you may
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -17,14 +17,25 @@
  * under the License.
  */
 
-'use strict'
+import Client from './Client'
 
-const BaseConnectionPool = require('./BaseConnectionPool')
-const ConnectionPool = require('./ConnectionPool')
-const CloudConnectionPool = require('./CloudConnectionPool')
+export interface HelpersOptions {
+  client: Client
+  metaHeader: string
+  maxRetries: number
+}
 
-module.exports = {
-  BaseConnectionPool,
-  ConnectionPool,
-  CloudConnectionPool
+const kClient = Symbol('elasticsearch-client')
+const kMetaHeader = Symbol('meta header')
+const kMaxRetries = Symbol('max retries')
+
+export default class Helpers {
+  [kClient]: Client
+  [kMetaHeader]: string
+  [kMaxRetries]: number
+  constructor (opts: HelpersOptions) {
+    this[kClient] = opts.client
+    this[kMetaHeader] = opts.metaHeader
+    this[kMaxRetries] = opts.maxRetries
+  }
 }
