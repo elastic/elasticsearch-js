@@ -108,6 +108,7 @@ export function buildMockConnection (opts: onRequestMock) {
   class MockConnection extends BaseConnection {
     request (params: ConnectionRequestParams, options: ConnectionRequestOptions): Promise<ConnectionRequestResponse> {
       return new Promise((resolve, reject) => {
+        params.headers = { ...this.headers, ...params.headers }
         let { body, statusCode, headers } = opts.onRequest(params)
         if (typeof body !== 'string' && !(body instanceof Buffer)) {
           body = JSON.stringify(body)
