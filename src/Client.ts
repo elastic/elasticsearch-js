@@ -18,19 +18,16 @@
  */
 
 import { ConnectionOptions as TlsConnectionOptions } from 'tls'
-import assert from 'assert'
 import { URL } from 'url'
 import {
   Transport,
   HttpConnection,
-  UndiciConnection,
   WeightedConnectionPool,
   CloudConnectionPool,
   Serializer,
   Diagnostic,
-  SniffOptions,
-  ClusterConnectionPool,
-  errors
+  errors,
+  BaseConnectionPool
 } from '@elastic/transport'
 import {
   HttpAgentOptions,
@@ -44,7 +41,8 @@ import {
   BearerAuth,
   Context
 } from '@elastic/transport/lib/types'
-import { prepareHeaders } from '@elastic/transport/lib/connection/BaseConnection'
+import BaseConnection, { prepareHeaders } from '@elastic/transport/lib/connection/BaseConnection'
+import SniffingTransport from './SniffingTransport'
 
 const kChild = Symbol('elasticsearchjs-child')
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
@@ -61,39 +59,6 @@ if (transportVersion.includes('-')) {
   transportVersion = transportVersion.slice(0, transportVersion.indexOf('-')) + 'p'
 }
 const nodeVersion = process.versions.node
-
-class SniffingTransport extends Transport {
-  sniff (opts: SniffOptions): void {
-    if (this.isSniffing) return
-    this.isSniffing = true
-
-    const request = {
-      method: 'GET',
-      path: this.sniffEndpoint ?? '/_nodes/_all/http'
-    }
-
-    this.request(request, { id: opts.requestId, meta: true })
-      .then(result => {
-        assert(isObject(result.body), 'The body should be an object')
-        this.isSniffing = false
-        const protocol = result.meta.connection?.url.protocol ?? /* istanbul ignore next */ 'http:'
-        const hosts = this.connectionPool.nodesToHost(result.body.nodes, protocol)
-        this.connectionPool.update(hosts)
-
-        result.meta.sniff = { hosts, reason: opts.reason }
-        this.diagnostic.emit('sniff', null, result)
-      })
-      .catch(err => {
-        this.isSniffing = false
-        err.meta.sniff = { hosts: [], reason: opts.reason }
-        this.diagnostic.emit('sniff', err, null)
-      })
-  }
-}
-
-function isObject (obj: any): obj is Record<string, any> {
-  return typeof obj === 'object'
-}
 
 interface NodeOptions {
   url: URL
@@ -112,8 +77,8 @@ interface NodeOptions {
 interface ClientOptions {
   node?: string | string[] | NodeOptions | NodeOptions[]
   nodes?: string | string[] | NodeOptions | NodeOptions[]
-  Connection?: typeof HttpConnection | typeof UndiciConnection
-  ConnectionPool?: typeof CloudConnectionPool | typeof ClusterConnectionPool | typeof WeightedConnectionPool
+  Connection?: typeof BaseConnection
+  ConnectionPool?: typeof BaseConnectionPool
   Transport?: typeof Transport
   Serializer?: typeof Serializer
   maxRetries?: number
@@ -147,7 +112,7 @@ interface ClientOptions {
 export default class Client {
   diagnostic: Diagnostic
   name: string | symbol
-  connectionPool: CloudConnectionPool | WeightedConnectionPool | ClusterConnectionPool
+  connectionPool: BaseConnectionPool
   transport: SniffingTransport
   serializer: Serializer
   constructor (opts: ClientOptions) {
@@ -243,7 +208,8 @@ export default class Client {
         proxy: options.proxy,
         Connection: options.Connection,
         auth: options.auth,
-        diagnostic: this.diagnostic
+        diagnostic: this.diagnostic,
+        caFingerprint: options.caFingerprint
       })
       this.connectionPool.addConnection(options.node ?? options.nodes)
     }

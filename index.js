@@ -19,5 +19,7 @@
 
 'use strict'
 
+const { errors } = require('@elastic/transport')
 const { default: Client } = require('./lib/Client')
-module.exports = { Client }
+
+module.exports = { Client, errors }
