@@ -425,7 +425,7 @@ _Default:_ `null`
 
 This section illustrates the best practices for leveraging the {es} client in a Function-as-a-Service (FaaS) environment.
 The most influential optimization is to initialize the client outside of the function, the global scope.
-This practice does not only improve performance but also enables background functionality as – for example – [sniffing](https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how).
+This practice does not only improve performance but also enables background functionality as – for example – https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[sniffing].
 The following examples provide a skeleton for the best practices.
 
 [discrete]
