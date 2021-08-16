@@ -54,9 +54,8 @@ of `^7.10.0`).
 
 ### Compatibility
 
-Elastic language clients are guaranteed to be able to communicate with Elasticsearch or Elastic solutions running on the same major version and greater or equal minor version.
-
-Language clients are forward compatible; meaning that clients support communicating with greater minor versions of Elasticsearch. Elastic language clients are not guaranteed to be backwards compatible.
+Language clients are forward compatible; meaning that clients support communicating with greater minor versions of Elasticsearch.
+Elastic language clients are also backwards compatible with lesser supported minor Elasticsearch versions.
 
 | Elasticsearch Version | Client Version |
 | --------------------- |----------------|
