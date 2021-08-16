@@ -950,9 +950,9 @@ declare class Client {
     postCalendarEvents<TContext = unknown>(callback: callbackFn<T.MlPostCalendarEventsResponse, TContext>): TransportRequestCallback
     postCalendarEvents<TContext = unknown>(params: T.MlPostCalendarEventsRequest, callback: callbackFn<T.MlPostCalendarEventsResponse, TContext>): TransportRequestCallback
     postCalendarEvents<TContext = unknown>(params: T.MlPostCalendarEventsRequest, options: TransportRequestOptions, callback: callbackFn<T.MlPostCalendarEventsResponse, TContext>): TransportRequestCallback
-    postData<TContext = unknown>(params: T.MlPostDataRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPostDataResponse, TContext>>
-    postData<TContext = unknown>(params: T.MlPostDataRequest, callback: callbackFn<T.MlPostDataResponse, TContext>): TransportRequestCallback
-    postData<TContext = unknown>(params: T.MlPostDataRequest, options: TransportRequestOptions, callback: callbackFn<T.MlPostDataResponse, TContext>): TransportRequestCallback
+    postData<TContext = unknown>(params: T.MlPostJobDataRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPostJobDataResponse, TContext>>
+    postData<TContext = unknown>(params: T.MlPostJobDataRequest, callback: callbackFn<T.MlPostJobDataResponse, TContext>): TransportRequestCallback
+    postData<TContext = unknown>(params: T.MlPostJobDataRequest, options: TransportRequestOptions, callback: callbackFn<T.MlPostJobDataResponse, TContext>): TransportRequestCallback
     previewDataFrameAnalytics<TContext = unknown>(params?: T.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlPreviewDataFrameAnalyticsResponse, TContext>>
     previewDataFrameAnalytics<TContext = unknown>(callback: callbackFn<T.MlPreviewDataFrameAnalyticsResponse, TContext>): TransportRequestCallback
     previewDataFrameAnalytics<TContext = unknown>(params: T.MlPreviewDataFrameAnalyticsRequest, callback: callbackFn<T.MlPreviewDataFrameAnalyticsResponse, TContext>): TransportRequestCallback
@@ -1018,9 +1018,10 @@ declare class Client {
     updateFilter<TContext = unknown>(params: T.MlUpdateFilterRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateFilterResponse, TContext>>
     updateFilter<TContext = unknown>(params: T.MlUpdateFilterRequest, callback: callbackFn<T.MlUpdateFilterResponse, TContext>): TransportRequestCallback
     updateFilter<TContext = unknown>(params: T.MlUpdateFilterRequest, options: TransportRequestOptions, callback: callbackFn<T.MlUpdateFilterResponse, TContext>): TransportRequestCallback
-    updateJob<TContext = unknown>(params: T.MlUpdateJobRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateJobResponse, TContext>>
-    updateJob<TContext = unknown>(params: T.MlUpdateJobRequest, callback: callbackFn<T.MlUpdateJobResponse, TContext>): TransportRequestCallback
-    updateJob<TContext = unknown>(params: T.MlUpdateJobRequest, options: TransportRequestOptions, callback: callbackFn<T.MlUpdateJobResponse, TContext>): TransportRequestCallback
+    updateJob<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    updateJob<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    updateJob<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    updateJob<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     updateModelSnapshot<TContext = unknown>(params: T.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateModelSnapshotResponse, TContext>>
     updateModelSnapshot<TContext = unknown>(params: T.MlUpdateModelSnapshotRequest, callback: callbackFn<T.MlUpdateModelSnapshotResponse, TContext>): TransportRequestCallback
     updateModelSnapshot<TContext = unknown>(params: T.MlUpdateModelSnapshotRequest, options: TransportRequestOptions, callback: callbackFn<T.MlUpdateModelSnapshotResponse, TContext>): TransportRequestCallback
