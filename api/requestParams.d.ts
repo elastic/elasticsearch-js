@@ -2180,6 +2180,20 @@ export interface Search<T = RequestBody> extends Generic {
   body?: T;
 }
 
+export interface SearchMvt<T = RequestBody> extends Generic {
+  index: string | string[];
+  field: string;
+  zoom: integer;
+  x: integer;
+  y: integer;
+  exact_bounds?: boolean;
+  extent?: number;
+  grid_precision?: number;
+  grid_type?: 'grid' | 'point';
+  size?: number;
+  body?: T;
+}
+
 export interface SearchShards extends Generic {
   index?: string | string[];
   preference?: string;
