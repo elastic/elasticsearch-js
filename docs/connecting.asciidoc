@@ -441,7 +441,7 @@ const client = new Client({
   // client initialisation
 })
 
-exports.testFunction = async (req, res) => {
+exports.testFunction = async function (req, res) {
   // use the client
 }
 ----
@@ -459,7 +459,7 @@ const client = new Client({
   // client initialisation
 })
 
-exports.handler = async function(event, context) {
+exports.handler = async function (event, context) {
   // use the client
 }
 ----
