@@ -2239,9 +2239,9 @@ export interface Search<T = RequestBody> extends Generic {
 export interface SearchMvt<T = RequestBody> extends Generic {
   index: string | string[];
   field: string;
-  zoom: integer;
-  x: integer;
-  y: integer;
+  zoom: number;
+  x: number;
+  y: number;
   exact_bounds?: boolean;
   extent?: number;
   grid_precision?: number;
