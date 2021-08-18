@@ -1032,6 +1032,27 @@ SecurityApi.prototype.putUser = function securityPutUserApi (params, options, ca
   return this.transport.request(request, options, callback)
 }
 
+SecurityApi.prototype.queryApiKeys = function securityQueryApiKeysApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = body == null ? 'GET' : 'POST'
+  path = '/' + '_security' + '/' + '_query' + '/' + 'api_key'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 SecurityApi.prototype.samlAuthenticate = function securitySamlAuthenticateApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1228,6 +1249,7 @@ Object.defineProperties(SecurityApi.prototype, {
   put_role: { get () { return this.putRole } },
   put_role_mapping: { get () { return this.putRoleMapping } },
   put_user: { get () { return this.putUser } },
+  query_api_keys: { get () { return this.queryApiKeys } },
   saml_authenticate: { get () { return this.samlAuthenticate } },
   saml_complete_logout: { get () { return this.samlCompleteLogout } },
   saml_invalidate: { get () { return this.samlInvalidate } },

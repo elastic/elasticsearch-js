@@ -2476,6 +2476,10 @@ export interface SecurityPutUser<T = RequestBody> extends Generic {
   body: T;
 }
 
+export interface SecurityQueryApiKeys<T = RequestBody> extends Generic {
+  body?: T;
+}
+
 export interface SecuritySamlAuthenticate<T = RequestBody> extends Generic {
   body: T;
 }

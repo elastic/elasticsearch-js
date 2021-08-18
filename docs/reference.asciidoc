@@ -9256,9 +9256,9 @@ _Default:_ `5`
 client.searchMvt({
   index: string | string[],
   field: string,
-  zoom: integer,
-  x: integer,
-  y: integer,
+  zoom: number,
+  x: number,
+  y: number,
   exact_bounds: boolean,
   extent: number,
   grid_precision: number,
@@ -9277,13 +9277,13 @@ link:{ref}/search-vector-tile-api.html[Documentation] +
 |`string` - Field containing geospatial data to return
 
 |`zoom`
-|`integer` - Zoom level for the vector tile to search
+|`number` - Zoom level for the vector tile to search
 
 |`x`
-|`integer` - X coordinate for the vector tile to search
+|`number` - X coordinate for the vector tile to search
 
 |`y`
-|`integer` - Y coordinate for the vector tile to search
+|`number` - Y coordinate for the vector tile to search
 
 |`exact_bounds` or `exactBounds`
 |`boolean` - If false, the meta layer's feature is the bounding box of the tile. If true, the meta layer's feature is a bounding box resulting from a `geo_bounds` aggregation.
@@ -10247,6 +10247,23 @@ link:{ref}/security-api-put-user.html[Documentation] +
 
 |`body`
 |`object` - The user to add
+
+|===
+
+[discrete]
+=== security.queryApiKeys
+
+[source,ts]
+----
+client.security.queryApiKeys({
+  body: object
+})
+----
+link:{ref}/security-api-query-api-key.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - From, size, query, sort and search_after
 
 |===
 
