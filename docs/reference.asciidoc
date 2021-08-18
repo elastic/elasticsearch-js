@@ -9995,6 +9995,23 @@ link:{ref}/security-api-put-user.html[Documentation] +
 |===
 
 [discrete]
+=== security.queryApiKeys
+
+[source,ts]
+----
+client.security.queryApiKeys({
+  body: object
+})
+----
+link:{ref}/security-api-query-api-key.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - From, size, query, sort and search_after
+
+|===
+
+[discrete]
 === security.samlAuthenticate
 
 [source,ts]
