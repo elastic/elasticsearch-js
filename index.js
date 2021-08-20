@@ -323,9 +323,9 @@ function getAuth (node) {
 
 function isHttpConnection (node) {
   if (Array.isArray(node)) {
-    return node.some((n) => new URL(n).protocol === 'http:')
+    return node.some((n) => (typeof n === 'string' ? new URL(n).protocol : n.url.protocol) === 'http:')
   } else {
-    return new URL(node).protocol === 'http:'
+    return (typeof node === 'string' ? new URL(node).protocol : node.url.protocol) === 'http:'
   }
 }
 
