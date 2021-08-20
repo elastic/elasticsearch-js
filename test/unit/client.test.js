@@ -1586,6 +1586,36 @@ test('caFingerprint can\'t be configured over http / 3', t => {
   }
 })
 
+test('caFingerprint can\'t be configured over http / 4', t => {
+  t.plan(2)
+
+  try {
+    new Client({ // eslint-disable-line
+      node: { url: new URL('http://localhost:9200') },
+      caFingerprint: 'FO:OB:AR'
+    })
+    t.fail('shuld throw')
+  } catch (err) {
+    t.ok(err instanceof errors.ConfigurationError)
+    t.equal(err.message, 'You can\'t configure the caFingerprint with a http connection')
+  }
+})
+
+test('caFingerprint can\'t be configured over http / 5', t => {
+  t.plan(2)
+
+  try {
+    new Client({ // eslint-disable-line
+      nodes: [{ url: new URL('http://localhost:9200') }],
+      caFingerprint: 'FO:OB:AR'
+    })
+    t.fail('should throw')
+  } catch (err) {
+    t.ok(err instanceof errors.ConfigurationError)
+    t.equal(err.message, 'You can\'t configure the caFingerprint with a http connection')
+  }
+})
+
 test('Error body that is not a json', t => {
   t.plan(5)
 
