@@ -8,6 +8,7 @@ This page contains the information you need to connect and use the Client with
 
 * <<auth-reference, Authentication options>>
 * <<client-usage, Using the client>>
+* <<client-faas-env, Using the Client in a Function-as-a-Service Environment>>
 * <<client-connect-proxy, Connecting through a proxy>>
 * <<client-error-handling, Handling errors>>
 * <<product-check, Automatic product check>>
@@ -418,6 +419,76 @@ _Default:_ `null`
 |`any` - Custom object per request. _(you can use it to pass data to the clients events)_ +
 _Default:_ `null`
 |===
+
+[discrete]
+[[client-faas-env]]
+=== Using the Client in a Function-as-a-Service Environment
+
+This section illustrates the best practices for leveraging the {es} client in a Function-as-a-Service (FaaS) environment.
+The most influential optimization is to initialize the client outside of the function, the global scope.
+This practice does not only improve performance but also enables background functionality as – for example – https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[sniffing].
+The following examples provide a skeleton for the best practices.
+
+[discrete]
+==== GCP Cloud Functions
+
+[source,js]
+----
+'use strict'
+
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+  // client initialisation
+})
+
+exports.testFunction = async function (req, res) {
+  // use the client
+}
+----
+
+[discrete]
+==== AWS Lambda
+
+[source,js]
+----
+'use strict'
+
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+  // client initialisation
+})
+
+exports.handler = async function (event, context) {
+  // use the client
+}
+----
+
+[discrete]
+==== Azure Functions
+
+[source,js]
+----
+'use strict'
+
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+  // client initialisation
+})
+
+module.exports = async function (context, req) {
+  // use the client
+}
+----
+
+Resources used to assess these recommendations:
+
+- https://cloud.google.com/functions/docs/bestpractices/tips#use_global_variables_to_reuse_objects_in_future_invocations[GCP Cloud Functions: Tips & Tricks]
+- https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html[Best practices for working with AWS Lambda functions]
+- https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python?tabs=azurecli-linux%2Capplication-level#global-variables[Azure Functions Python developer guide]
+- https://docs.aws.amazon.com/lambda/latest/operatorguide/global-scope.html[AWS Lambda: Comparing the effect of global scope]
 
 
 [discrete]
