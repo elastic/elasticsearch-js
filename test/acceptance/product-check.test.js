@@ -1248,6 +1248,44 @@ test('No multiple checks with child clients', t => {
   }, 100)
 })
 
+test('Observability events should have all the expected properties', t => {
+  t.plan(5)
+  const MockConnection = buildMockConnection({
+    onRequest (params) {
+      return {
+        statusCode: 200,
+        body: {
+          name: '1ef419078577',
+          cluster_name: 'docker-cluster',
+          cluster_uuid: 'cQ5pAMvRRTyEzObH4L5mTA',
+          tagline: 'You Know, for Search'
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.on('request', (e, event) => {
+    t.ok(event.meta.request.params)
+    t.ok(event.meta.request.options)
+  })
+
+  client.search({
+    index: 'foo',
+    body: {
+      query: {
+        match_all: {}
+      }
+    }
+  }, (err, result) => {
+    t.equal(err.message, 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.')
+  })
+})
+
 test('Abort a request while running the product check', t => {
   t.plan(4)
   const MockConnection = buildMockConnection({
