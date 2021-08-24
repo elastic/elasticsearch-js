@@ -2183,9 +2183,9 @@ export interface Search<T = RequestBody> extends Generic {
 export interface SearchMvt<T = RequestBody> extends Generic {
   index: string | string[];
   field: string;
-  zoom: integer;
-  x: integer;
-  y: integer;
+  zoom: number;
+  x: number;
+  y: number;
   exact_bounds?: boolean;
   extent?: number;
   grid_precision?: number;
@@ -2419,6 +2419,10 @@ export interface SecurityPutUser<T = RequestBody> extends Generic {
   username: string;
   refresh?: 'wait_for' | boolean;
   body: T;
+}
+
+export interface SecurityQueryApiKeys<T = RequestBody> extends Generic {
+  body?: T;
 }
 
 export interface SecuritySamlAuthenticate<T = RequestBody> extends Generic {

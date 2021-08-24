@@ -20,7 +20,7 @@
 'use strict'
 
 const { test } = require('tap')
-const { Client } = require('../../')
+const { Client, errors } = require('../../')
 const {
   connection: {
     MockConnectionTimeout,
@@ -470,7 +470,7 @@ test('Errors v6', t => {
 })
 
 test('Auth error - 401', t => {
-  t.plan(8)
+  t.plan(9)
   const MockConnection = buildMockConnection({
     onRequest (params) {
       return {
@@ -487,6 +487,7 @@ test('Auth error - 401', t => {
 
   process.on('warning', onWarning)
   function onWarning (warning) {
+    t.equal(warning.name, 'ProductNotSupportedSecurityError')
     t.equal(warning.message, 'The client is unable to verify that the server is Elasticsearch due to security privileges on the server side. Some functionality may not be compatible if the server is running an unsupported product.')
   }
 
@@ -524,7 +525,7 @@ test('Auth error - 401', t => {
 })
 
 test('Auth error - 403', t => {
-  t.plan(8)
+  t.plan(9)
   const MockConnection = buildMockConnection({
     onRequest (params) {
       return {
@@ -541,6 +542,7 @@ test('Auth error - 403', t => {
 
   process.on('warning', onWarning)
   function onWarning (warning) {
+    t.equal(warning.name, 'ProductNotSupportedSecurityError')
     t.equal(warning.message, 'The client is unable to verify that the server is Elasticsearch due to security privileges on the server side. Some functionality may not be compatible if the server is running an unsupported product.')
   }
 
@@ -1244,4 +1246,103 @@ test('No multiple checks with child clients', t => {
       t.error(err)
     })
   }, 100)
+})
+
+test('Observability events should have all the expected properties', t => {
+  t.plan(5)
+  const MockConnection = buildMockConnection({
+    onRequest (params) {
+      return {
+        statusCode: 200,
+        body: {
+          name: '1ef419078577',
+          cluster_name: 'docker-cluster',
+          cluster_uuid: 'cQ5pAMvRRTyEzObH4L5mTA',
+          tagline: 'You Know, for Search'
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.on('request', (e, event) => {
+    t.ok(event.meta.request.params)
+    t.ok(event.meta.request.options)
+  })
+
+  client.search({
+    index: 'foo',
+    body: {
+      query: {
+        match_all: {}
+      }
+    }
+  }, (err, result) => {
+    t.equal(err.message, 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.')
+  })
+})
+
+test('Abort a request while running the product check', t => {
+  t.plan(4)
+  const MockConnection = buildMockConnection({
+    onRequest (params) {
+      return {
+        statusCode: 200,
+        headers: {
+          'x-elastic-product': 'Elasticsearch'
+        },
+        body: {
+          name: '1ef419078577',
+          cluster_name: 'docker-cluster',
+          cluster_uuid: 'cQ5pAMvRRTyEzObH4L5mTA',
+          version: {
+            number: '8.0.0-SNAPSHOT',
+            build_flavor: 'default',
+            build_type: 'docker',
+            build_hash: '5fb4c050958a6b0b6a70a6fb3e616d0e390eaac3',
+            build_date: '2021-07-10T01:45:02.136546168Z',
+            build_snapshot: true,
+            lucene_version: '8.9.0',
+            minimum_wire_compatibility_version: '7.15.0',
+            minimum_index_compatibility_version: '7.0.0'
+          },
+          tagline: 'You Know, for Search'
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+
+  client.on('request', (err, event) => {
+    if (event.meta.request.params.path.includes('search')) {
+      t.ok(err instanceof errors.RequestAbortedError)
+    }
+  })
+
+  // the response event won't be executed for the search
+  client.on('response', (err, event) => {
+    t.error(err)
+    t.equal(event.meta.request.params.path, '/')
+  })
+
+  const req = client.search({
+    index: 'foo',
+    body: {
+      query: {
+        match_all: {}
+      }
+    }
+  }, (err, result) => {
+    t.ok(err instanceof errors.RequestAbortedError)
+  })
+
+  setImmediate(() => req.abort())
 })

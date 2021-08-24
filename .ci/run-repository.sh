@@ -38,6 +38,7 @@ fi
 docker run \
   --network=${network_name} \
   --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
+  --env "TEST_SUITE=${TEST_SUITE}" \
   --volume $repo:/usr/src/app \
   --volume /usr/src/app/node_modules \
   --name elasticsearch-js \
