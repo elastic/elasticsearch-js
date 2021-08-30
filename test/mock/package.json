@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@elastic/elasticsearch": "file:../..",
-    "@elastic/elasticsearch-mock": "^0.3.0",
+    "@elastic/elasticsearch-mock": "^0.3.1",
     "standard": "^16.0.3",
     "tap": "^15.0.9"
   }
