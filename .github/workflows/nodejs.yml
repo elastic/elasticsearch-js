@@ -119,6 +119,27 @@ jobs:
         npm start --prefix test/bundlers/rollup-test
         npm start --prefix test/bundlers/webpack-test
 
+  mock-support:
+    name: Mock support
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+
+    - name: Install
+      run: |
+        npm install
+        npm install --prefix test/mock
+
+    - name: Run test
+      run: |
+        npm test --prefix test/mock
+
   code-coverage:
     name: Code coverage
     runs-on: ubuntu-latest
