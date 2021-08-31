@@ -25,15 +25,11 @@ import * as symbols from '@elastic/transport/lib/symbols'
 import { BaseConnectionPool, CloudConnectionPool, WeightedConnectionPool } from '@elastic/transport'
 
 let clientVersion: string = require('../../package.json').version // eslint-disable-line
-/* istanbul ignore next */
 if (clientVersion.includes('-')) {
-  // clean prerelease
   clientVersion = clientVersion.slice(0, clientVersion.indexOf('-')) + 'p'
 }
 let transportVersion: string = require('@elastic/transport/package.json').version // eslint-disable-line
-/* istanbul ignore next */
 if (transportVersion.includes('-')) {
-  // clean prerelease
   transportVersion = transportVersion.slice(0, transportVersion.indexOf('-')) + 'p'
 }
 const nodeVersion = process.versions.node

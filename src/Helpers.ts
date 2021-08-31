@@ -21,7 +21,7 @@ import Client from './Client'
 
 export interface HelpersOptions {
   client: Client
-  metaHeader: string
+  metaHeader: string | null
   maxRetries: number
 }
 
@@ -31,7 +31,7 @@ const kMaxRetries = Symbol('max retries')
 
 export default class Helpers {
   [kClient]: Client
-  [kMetaHeader]: string
+  [kMetaHeader]: string | null
   [kMaxRetries]: number
   constructor (opts: HelpersOptions) {
     this[kClient] = opts.client

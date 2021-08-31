@@ -43,6 +43,8 @@ import {
 } from '@elastic/transport/lib/types'
 import BaseConnection, { prepareHeaders } from '@elastic/transport/lib/connection/BaseConnection'
 import SniffingTransport from './SniffingTransport'
+import Helpers from './Helpers'
+import API from './api'
 
 const kChild = Symbol('elasticsearchjs-child')
 const kInitialOptions = Symbol('elasticsearchjs-initial-options')
@@ -109,13 +111,15 @@ interface ClientOptions {
   caFingerprint?: string
 }
 
-export default class Client {
+export default class Client extends API {
   diagnostic: Diagnostic
   name: string | symbol
   connectionPool: BaseConnectionPool
   transport: SniffingTransport
   serializer: Serializer
+  helpers: Helpers
   constructor (opts: ClientOptions) {
+    super()
     // @ts-expect-error kChild symbol is for internal use only
     if ((opts.cloud != null) && opts[kChild] === undefined) {
       const { id } = opts.cloud
@@ -213,6 +217,7 @@ export default class Client {
       })
       this.connectionPool.addConnection(options.node ?? options.nodes)
     }
+
     this.transport = new options.Transport({
       diagnostic: this.diagnostic,
       connectionPool: this.connectionPool,
@@ -232,6 +237,14 @@ export default class Client {
       opaqueIdPrefix: options.opaqueIdPrefix,
       context: options.context,
       productCheck: 'Elasticsearch'
+    })
+
+    this.helpers = new Helpers({
+      client: this,
+      metaHeader: options.enableMetaHeader
+        ? `es=${clientVersion},js=${nodeVersion},t=${transportVersion},hc=${nodeVersion}`
+        : null,
+      maxRetries: options.maxRetries
     })
   }
 
