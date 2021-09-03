@@ -134,7 +134,6 @@ run().catch(console.log)
 ----
 
 For a more elaborate example of how to ingest data into Elastic Cloud,refer to 
-{cloud}/ec-getting-started-node-js.html[this page].
 
 [discrete]
 ==== Install multiple versions
