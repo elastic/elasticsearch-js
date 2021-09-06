@@ -374,6 +374,7 @@ export interface FieldCapsFieldCapability {
   non_searchable_indices?: Indices
   searchable: boolean
   type: string
+  metadata_field?: boolean
 }
 
 export interface FieldCapsRequest extends RequestBase {
