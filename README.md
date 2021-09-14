@@ -28,7 +28,7 @@ npm install @elastic/elasticsearch
 
 ### Node.js support
 
-NOTE: The minimum supported version of Node.js is `v10`.
+NOTE: The minimum supported version of Node.js is `v12`.
 
 The client versioning follows the Elastic Stack versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
@@ -49,13 +49,13 @@ of `^7.10.0`).
 
 | Node.js Version | Node.js EOL date | End of support         |
 | --------------- |------------------| ---------------------- |
-| `8.x`           | `December 2019`  | `7.11` (early 2021)    |       
-| `10.x`          | `Apri 2021`      | `7.12` (mid 2021)      |        
+| `8.x`           | `December 2019`  | `7.11` (early 2021)    |
+| `10.x`          | `April 2021`      | `7.12` (mid 2021)     |
 
 ### Compatibility
 
-Language clients are forward compatible; meaning that clients support communicating with greater minor versions of Elasticsearch.
-Elastic language clients are also backwards compatible with lesser supported minor Elasticsearch versions.
+Language clients are forward compatible; meaning that clients support communicating with greater or equal minor versions of Elasticsearch.
+Elasticsearch language clients are only backwards compatible with default distributions and without guarantees made.
 
 | Elasticsearch Version | Client Version |
 | --------------------- |----------------|
