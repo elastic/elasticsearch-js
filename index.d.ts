@@ -119,6 +119,8 @@ interface ClientOptions {
   };
   disablePrototypePoisoningProtection?: boolean | 'proto' | 'constructor';
   caFingerprint?: string;
+  maxResponseSize?: number;
+  maxCompressedResponseSize?: number;
 }
 
 declare class Client {
