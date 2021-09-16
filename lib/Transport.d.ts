@@ -61,6 +61,8 @@ interface TransportOptions {
   generateRequestId?: generateRequestIdFn;
   name?: string;
   opaqueIdPrefix?: string;
+  maxResponseSize?: number;
+  maxCompressedResponseSize?: number;
 }
 
 export interface RequestEvent<TResponse = Record<string, any>, TContext = Context> {
@@ -113,6 +115,8 @@ export interface TransportRequestOptions {
   context?: Context;
   warnings?: string[];
   opaqueId?: string;
+  maxResponseSize?: number;
+  maxCompressedResponseSize?: number;
 }
 
 export interface TransportRequestCallback {
