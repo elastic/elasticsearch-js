@@ -1308,6 +1308,223 @@ test('Content length too big (string)', t => {
   })
 })
 
+test('Content length too big custom (buffer)', t => {
+  t.plan(4)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      const stream = intoStream(JSON.stringify({ hello: 'world' }))
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-encoding': 'gzip',
+        'content-length': 1100,
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      stream.on('close', () => t.pass('Stream destroyed'))
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection,
+    maxCompressedResponseSize: 1000
+  })
+  client.info((err, result) => {
+    t.ok(err instanceof errors.RequestAbortedError)
+    t.equal(err.message, 'The content length (1100) is bigger than the maximum allowed buffer (1000)')
+    t.equal(result.meta.attempts, 0)
+  })
+})
+
+test('Content length too big custom (string)', t => {
+  t.plan(4)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      const stream = intoStream(JSON.stringify({ hello: 'world' }))
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-length': 1100,
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      stream.on('close', () => t.pass('Stream destroyed'))
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection,
+    maxResponseSize: 1000
+  })
+  client.info((err, result) => {
+    t.ok(err instanceof errors.RequestAbortedError)
+    t.equal(err.message, 'The content length (1100) is bigger than the maximum allowed string (1000)')
+    t.equal(result.meta.attempts, 0)
+  })
+})
+
+test('Content length too big custom option (buffer)', t => {
+  t.plan(4)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      const stream = intoStream(JSON.stringify({ hello: 'world' }))
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-encoding': 'gzip',
+        'content-length': 1100,
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      stream.on('close', () => t.pass('Stream destroyed'))
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+  client.info({}, { maxCompressedResponseSize: 1000 }, (err, result) => {
+    t.ok(err instanceof errors.RequestAbortedError)
+    t.equal(err.message, 'The content length (1100) is bigger than the maximum allowed buffer (1000)')
+    t.equal(result.meta.attempts, 0)
+  })
+})
+
+test('Content length too big custom option (string)', t => {
+  t.plan(4)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      const stream = intoStream(JSON.stringify({ hello: 'world' }))
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-length': 1100,
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      stream.on('close', () => t.pass('Stream destroyed'))
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection
+  })
+  client.info({}, { maxResponseSize: 1000 }, (err, result) => {
+    t.ok(err instanceof errors.RequestAbortedError)
+    t.equal(err.message, 'The content length (1100) is bigger than the maximum allowed string (1000)')
+    t.equal(result.meta.attempts, 0)
+  })
+})
+
+test('Content length too big custom option override (buffer)', t => {
+  t.plan(4)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      const stream = intoStream(JSON.stringify({ hello: 'world' }))
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-encoding': 'gzip',
+        'content-length': 1100,
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      stream.on('close', () => t.pass('Stream destroyed'))
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection,
+    maxCompressedResponseSize: 2000
+  })
+  client.info({}, { maxCompressedResponseSize: 1000 }, (err, result) => {
+    t.ok(err instanceof errors.RequestAbortedError)
+    t.equal(err.message, 'The content length (1100) is bigger than the maximum allowed buffer (1000)')
+    t.equal(result.meta.attempts, 0)
+  })
+})
+
+test('Content length too big custom option override (string)', t => {
+  t.plan(4)
+
+  class MockConnection extends Connection {
+    request (params, callback) {
+      const stream = intoStream(JSON.stringify({ hello: 'world' }))
+      stream.statusCode = 200
+      stream.headers = {
+        'content-type': 'application/json;utf=8',
+        'content-length': 1100,
+        connection: 'keep-alive',
+        date: new Date().toISOString()
+      }
+      stream.on('close', () => t.pass('Stream destroyed'))
+      process.nextTick(callback, null, stream)
+      return { abort () {} }
+    }
+  }
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection: MockConnection,
+    maxResponseSize: 2000
+  })
+  client.info({}, { maxResponseSize: 1000 }, (err, result) => {
+    t.ok(err instanceof errors.RequestAbortedError)
+    t.equal(err.message, 'The content length (1100) is bigger than the maximum allowed string (1000)')
+    t.equal(result.meta.attempts, 0)
+  })
+})
+
+test('maxResponseSize cannot be bigger than buffer.constants.MAX_STRING_LENGTH', t => {
+  t.plan(2)
+
+  try {
+    new Client({ // eslint-disable-line
+      node: 'http://localhost:9200',
+      maxResponseSize: buffer.constants.MAX_STRING_LENGTH + 10
+    })
+    t.fail('should throw')
+  } catch (err) {
+    t.ok(err instanceof errors.ConfigurationError)
+    t.equal(err.message, `The maxResponseSize cannot be bigger than ${buffer.constants.MAX_STRING_LENGTH}`)
+  }
+})
+
+test('maxCompressedResponseSize cannot be bigger than buffer.constants.MAX_STRING_LENGTH', t => {
+  t.plan(2)
+
+  try {
+    new Client({ // eslint-disable-line
+      node: 'http://localhost:9200',
+      maxCompressedResponseSize: buffer.constants.MAX_LENGTH + 10
+    })
+    t.fail('should throw')
+  } catch (err) {
+    t.ok(err instanceof errors.ConfigurationError)
+    t.equal(err.message, `The maxCompressedResponseSize cannot be bigger than ${buffer.constants.MAX_LENGTH}`)
+  }
+})
+
 test('Meta header enabled', t => {
   t.plan(2)
 

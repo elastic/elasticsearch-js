@@ -418,6 +418,15 @@ _Default:_ `null`
 |`context`
 |`any` - Custom object per request. _(you can use it to pass data to the clients events)_ +
 _Default:_ `null`
+
+|`maxResponseSize`
+|`number` - When configured, it verifies that the uncompressed response size is lower than the configured number, if it's higher it will abort the request. It cannot be higher than buffer.constants.MAX_STRING_LENTGH +
+_Default:_ `null`
+
+|`maxCompressedResponseSize`
+|`number` - When configured, it verifies that the compressed response size is lower than the configured number, if it's higher it will abort the request. It cannot be higher than buffer.constants.MAX_LENTGH +
+_Default:_ `null`
+
 |===
 
 [discrete]

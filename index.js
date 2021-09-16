@@ -21,6 +21,7 @@
 
 const { EventEmitter } = require('events')
 const { URL } = require('url')
+const buffer = require('buffer')
 const debug = require('debug')('elasticsearch')
 const Transport = require('./lib/Transport')
 const Connection = require('./lib/Connection')
@@ -114,8 +115,18 @@ class Client extends ESAPI {
         context: null,
         proxy: null,
         enableMetaHeader: true,
-        disablePrototypePoisoningProtection: false
+        disablePrototypePoisoningProtection: false,
+        maxResponseSize: null,
+        maxCompressedResponseSize: null
       }, opts)
+
+    if (options.maxResponseSize !== null && options.maxResponseSize > buffer.constants.MAX_STRING_LENGTH) {
+      throw new ConfigurationError(`The maxResponseSize cannot be bigger than ${buffer.constants.MAX_STRING_LENGTH}`)
+    }
+
+    if (options.maxCompressedResponseSize !== null && options.maxCompressedResponseSize > buffer.constants.MAX_LENGTH) {
+      throw new ConfigurationError(`The maxCompressedResponseSize cannot be bigger than ${buffer.constants.MAX_LENGTH}`)
+    }
 
     if (options.caFingerprint !== null && isHttpConnection(opts.node || opts.nodes)) {
       throw new ConfigurationError('You can\'t configure the caFingerprint with a http connection')
@@ -178,7 +189,9 @@ class Client extends ESAPI {
       generateRequestId: options.generateRequestId,
       name: options.name,
       opaqueIdPrefix: options.opaqueIdPrefix,
-      context: options.context
+      context: options.context,
+      maxResponseSize: options.maxResponseSize,
+      maxCompressedResponseSize: options.maxCompressedResponseSize
     })
 
     this.helpers = new Helpers({
