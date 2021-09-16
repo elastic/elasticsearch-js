@@ -24,7 +24,7 @@ To learn more about the supported major versions, please refer to the
 [[nodejs-support]]
 === Node.js support
 
-NOTE: The minimum supported version of Node.js is `v10`.
+NOTE: The minimum supported version of Node.js is `v12`.
 
 The client versioning follows the {stack} versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
@@ -62,12 +62,8 @@ of `^7.10.0`).
 [[js-compatibility-matrix]]
 === Compatibility matrix
 
-Elastic language clients are guaranteed to be able to communicate with Elasticsearch
-or Elastic solutions running on the same major version and greater or equal minor version.
-
-Language clients are forward compatible; meaning that clients support communicating
-with greater minor versions of Elasticsearch. Elastic language clients are not
-guaranteed to be backwards compatible.
+Language clients are forward compatible; meaning that clients support communicating with greater or equal minor versions of Elasticsearch.
+Elasticsearch language clients are only backwards compatible with default distributions and without guarantees made.
 
 [%header,cols=2*]
 |===
