@@ -19,6 +19,7 @@
 
 import { ConnectionOptions as TlsConnectionOptions } from 'tls'
 import { URL } from 'url'
+import buffer from 'buffer'
 import {
   Transport,
   HttpConnection,
@@ -109,6 +110,8 @@ interface ClientOptions {
   }
   disablePrototypePoisoningProtection?: boolean | 'proto' | 'constructor'
   caFingerprint?: string
+  maxResponseSize?: number
+  maxCompressedResponseSize?: number
 }
 
 export default class Client extends API {
@@ -178,11 +181,21 @@ export default class Client extends API {
       opaqueIdPrefix: null,
       context: null,
       proxy: null,
-      enableMetaHeader: true
+      enableMetaHeader: true,
+      maxResponseSize: null,
+      maxCompressedResponseSize: null
     }, opts)
 
     if (options.caFingerprint !== null && isHttpConnection(opts.node ?? opts.nodes)) {
       throw new errors.ConfigurationError('You can\'t configure the caFingerprint with a http connection')
+    }
+
+    if (options.maxResponseSize !== null && options.maxResponseSize > buffer.constants.MAX_STRING_LENGTH) {
+      throw new errors.ConfigurationError(`The maxResponseSize cannot be bigger than ${buffer.constants.MAX_STRING_LENGTH}`)
+    }
+
+    if (options.maxCompressedResponseSize !== null && options.maxCompressedResponseSize > buffer.constants.MAX_LENGTH) {
+      throw new errors.ConfigurationError(`The maxCompressedResponseSize cannot be bigger than ${buffer.constants.MAX_LENGTH}`)
     }
 
     if (options.enableMetaHeader) {
@@ -237,6 +250,8 @@ export default class Client extends API {
       opaqueIdPrefix: options.opaqueIdPrefix,
       context: options.context,
       productCheck: 'Elasticsearch'
+      maxResponseSize: options.maxResponseSize,
+      maxCompressedResponseSize: options.maxCompressedResponseSize
     })
 
     this.helpers = new Helpers({
