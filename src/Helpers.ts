@@ -17,6 +17,9 @@
  * under the License.
  */
 
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/promise-function-async */
+
 import assert from 'assert'
 import { promisify } from 'util'
 import { Readable } from 'stream'
@@ -49,8 +52,8 @@ export interface MsearchHelperOptions extends T.MsearchRequest {
 }
 
 export interface MsearchHelper extends Promise<void> {
-  stop(error?: Error | null): void
-  search<TDocument = unknown>(header: T.MsearchHeader, body: T.MsearchBody): Promise<T.MsearchResponse<TDocument>>
+  stop: (error?: Error | null) => void
+  search: <TDocument = unknown>(header: T.MsearchHeader, body: T.MsearchBody) => Promise<T.MsearchResponse<TDocument>>
 }
 
 export interface BulkStats {
@@ -86,14 +89,7 @@ type Action = IndexAction | CreateAction | UpdateAction | DeleteAction
 export interface OnDropDocument<TDocument = unknown> {
   status: number
   operation: Action
-  error: {
-    type: string,
-    reason: string,
-    caused_by: {
-      type: string,
-      reason: string
-    }
-  } | null
+  error: T.ErrorCause | null
   document: TDocument
   retried: boolean
 }
@@ -119,7 +115,7 @@ const { ResponseError, ConfigurationError } = errors
 const sleep = promisify(setTimeout)
 const pImmediate = promisify(setImmediate)
 /* istanbul ignore next */
-const noop = () => {}
+const noop = (): void => {}
 const kClient = Symbol('elasticsearch-client')
 const kMetaHeader = Symbol('meta header')
 const kMaxRetries = Symbol('max retries')
@@ -146,7 +142,7 @@ export default class Helpers {
   async search<TDocument = unknown> (params: T.SearchRequest, options?: TransportRequestOptions): Promise<TDocument[]> {
     appendFilterPath('hits.hits._source', params, true)
     const result = await this[kClient].search<TDocument>(params, options)
-    if (result.hits != null && result.hits.hits != null) {
+    if (result.hits?.hits != null) {
       return result.hits.hits.map(d => d._source as TDocument)
     }
     return []
@@ -171,10 +167,10 @@ export default class Helpers {
     options.meta = true
     if (this[kMetaHeader] !== null) {
       options.headers = options.headers ?? {}
-      options.headers['x-elastic-client-meta'] = this[kMetaHeader] + ',h=s'
+      options.headers['x-elastic-client-meta'] = `${this[kMetaHeader] as string},h=s`
     }
     const wait = options.wait ?? 5000
-    const maxRetries = options.maxRetries || this[kMaxRetries]
+    const maxRetries = options.maxRetries ?? this[kMaxRetries]
     if (Array.isArray(options.ignore)) {
       options.ignore.push(429)
     } else {
@@ -197,7 +193,7 @@ export default class Helpers {
 
     let scroll_id = response.body._scroll_id
     let stop = false
-    const clear = async () => {
+    const clear = async (): Promise<void> => {
       stop = true
       await this[kClient].clearScroll(
         { scroll_id },
@@ -216,12 +212,12 @@ export default class Helpers {
       // @ts-expect-error
       yield response
 
-      // @ts-expect-error
-      if (stop === true) {
+      if (stop) {
         break
       }
 
       for (let i = 0; i <= maxRetries; i++) {
+        // @ts-expect-error
         response = await this[kClient].scroll({
           scroll: params.scroll,
           rest_total_hits_as_int: params.rest_total_hits_as_int,
@@ -237,7 +233,7 @@ export default class Helpers {
       }
     }
 
-    if (stop === false) {
+    if (!stop) {
       await clear()
     }
   }
@@ -273,7 +269,7 @@ export default class Helpers {
    * @param {object} reqOptions - The client optional configuration for this request.
    * @return {object} The possible operations to run.
    */
-   msearch (options: MsearchHelperOptions = {}, reqOptions: TransportRequestOptions = {}): MsearchHelper {
+  msearch (options: MsearchHelperOptions = {}, reqOptions: TransportRequestOptions = {}): MsearchHelper {
     const client = this[kClient]
     const {
       operations = 5,
@@ -283,6 +279,7 @@ export default class Helpers {
       wait = 5000,
       ...msearchOptions
     } = options
+    reqOptions.meta = true
 
     let stopReading = false
     let stopError: Error | null = null
@@ -305,7 +302,7 @@ export default class Helpers {
         return p.finally(onFinally)
       },
       stop (error = null) {
-        if (stopReading === true) return
+        if (stopReading) return
         stopReading = true
         stopError = error
         operationsStream.push(null)
@@ -314,7 +311,7 @@ export default class Helpers {
       // NOTE: the validation checks are synchronous and the callback/promise will
       //       be resolved in the same tick. We might want to fix this in the future.
       search<TDocument = unknown> (header: T.MsearchHeader, body: T.MsearchBody): Promise<T.MsearchResponse<TDocument>> {
-        if (stopReading === true) {
+        if (stopReading) {
           const error = stopError === null
             ? new ConfigurationError('The msearch processor has been stopped')
             : stopError
@@ -335,8 +332,8 @@ export default class Helpers {
           onFulfilled = resolve
           onRejected = reject
         })
-        const callback = function callback (err: Error | null, result: T.MsearchResponse<TDocument>) {
-          err ? onRejected(err) : onFulfilled(result)
+        const callback = function callback (err: Error | null, result: T.MsearchResponse<TDocument>): void {
+          err !== null ? onRejected(err) : onFulfilled(result)
         }
 
         operationsStream.push([header, body, callback])
@@ -351,7 +348,7 @@ export default class Helpers {
       const msearchBody: Array<T.MsearchHeader | T.MsearchBody> = []
       const callbacks: any[] = []
       let loadedOperations = 0
-      timeoutRef = setTimeout(onFlushTimeout, flushInterval)
+      timeoutRef = setTimeout(onFlushTimeout, flushInterval) // eslint-disable-line
 
       for await (const operation of operationsStream) {
         timeoutRef.refresh()
@@ -393,6 +390,7 @@ export default class Helpers {
           send(msearchBodyCopy, callbacksCopy)
         } catch (err) {
           /* istanbul ignore next */
+          // @ts-expect-error
           helper.stop(err)
         }
       }
@@ -409,7 +407,7 @@ export default class Helpers {
     // to send the actual msearch request.
     // It also returns a finish function, which returns a promise that is resolved
     // when there are no longer request running.
-    function buildSemaphore () {
+    function buildSemaphore (): { semaphore: () => Promise<typeof send>, finish: () => Promise<void> } {
       let resolveSemaphore: ((value?: any) => void) | null = null
       let resolveFinish: ((value?: any) => void) | null = null
       let running = 0
@@ -444,7 +442,7 @@ export default class Helpers {
         }
         msearchOperation(msearchBody, callbacks, () => {
           running -= 1
-          if (resolveSemaphore) {
+          if (resolveSemaphore !== null) {
             running += 1
             resolveSemaphore(send)
             resolveSemaphore = null
@@ -455,7 +453,7 @@ export default class Helpers {
       }
     }
 
-    function msearchOperation (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[], done: () => void) {
+    function msearchOperation (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[], done: () => void): void {
       let retryCount = retries
 
       // Instead of going full on async-await, which would make the code easier to read,
@@ -463,7 +461,7 @@ export default class Helpers {
       // This because every time we use async await, V8 will create multiple promises
       // behind the scenes, making the code slightly slower.
       tryMsearch(msearchBody, callbacks, retrySearch)
-      function retrySearch (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[]) {
+      function retrySearch (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[]): void {
         if (msearchBody.length > 0 && retryCount > 0) {
           retryCount -= 1
           setTimeout(tryMsearch, wait, msearchBody, callbacks, retrySearch)
@@ -475,11 +473,12 @@ export default class Helpers {
 
       // This function never returns an error, if the msearch operation fails,
       // the error is dispatched to all search executors.
-      function tryMsearch (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[], done: (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[]) => void) {
+      function tryMsearch (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[], done: (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[]) => void): void {
         client.msearch(Object.assign({}, msearchOptions, { body: msearchBody }), reqOptions)
           .then(results => {
             const retryBody = []
             const retryCallbacks = []
+            // @ts-expect-error
             const { responses } = results.body
             for (let i = 0, len = responses.length; i < len; i++) {
               const response = responses[i]
@@ -490,8 +489,10 @@ export default class Helpers {
                 continue
               }
               const result = { ...results, body: response }
+              // @ts-expect-error
               addDocumentsGetter(result)
               if (response.status >= 400) {
+                // @ts-expect-error
                 callbacks[i](new ResponseError(result), result)
               } else {
                 callbacks[i](null, result)
@@ -516,12 +517,12 @@ export default class Helpers {
    * @param {object} reqOptions - The client optional configuration for this request.
    * @return {object} The possible operations to run with the datasource.
    */
-   bulk<TDocument = unknown> (options: BulkHelperOptions, reqOptions: TransportRequestOptions = {}): BulkHelper<TDocument> {
+  bulk<TDocument = unknown> (options: BulkHelperOptions, reqOptions: TransportRequestOptions = {}): BulkHelper<TDocument> {
     const client = this[kClient]
     const { serializer } = client
     if (this[kMetaHeader] !== null) {
-      reqOptions.headers = reqOptions.headers || {}
-      reqOptions.headers['x-elastic-client-meta'] = this[kMetaHeader] + ',h=bp'
+      reqOptions.headers = reqOptions.headers ?? {}
+      reqOptions.headers['x-elastic-client-meta'] = `${this[kMetaHeader] as string},h=bp`
     }
     const {
       datasource,
@@ -596,18 +597,18 @@ export default class Helpers {
      * It creates an array of strings instead of a ndjson string because the bulkOperation
      * will navigate the body for matching failed operations with the original document.
      */
-    async function iterate () {
+    async function iterate (): Promise<BulkStats> {
       const { semaphore, finish } = buildSemaphore()
       const startTime = Date.now()
       const bulkBody: string[] = []
       let actionBody = ''
       let payloadBody = ''
       let chunkBytes = 0
-      timeoutRef = setTimeout(onFlushTimeout, flushInterval)
+      timeoutRef = setTimeout(onFlushTimeout, flushInterval) // eslint-disable-line
 
       // @ts-expect-error datasoruce is an iterable
       for await (const chunk of datasource) {
-        if (shouldAbort === true) break
+        if (shouldAbort) break
         timeoutRef.refresh()
         const action = onDocument(chunk)
         const operation = Array.isArray(action)
@@ -648,7 +649,7 @@ export default class Helpers {
       clearTimeout(timeoutRef)
       // In some cases the previos http call does not have finished,
       // or we didn't reach the flush bytes threshold, so we force one last operation.
-      if (shouldAbort === false && chunkBytes > 0) {
+      if (!shouldAbort && chunkBytes > 0) {
         const send = await semaphore()
         stats.bytes += chunkBytes
         send(bulkBody)
@@ -656,7 +657,7 @@ export default class Helpers {
 
       await finish()
 
-      if (refreshOnCompletion) {
+      if (refreshOnCompletion !== false) {
         await client.indices.refresh({
           index: typeof refreshOnCompletion === 'string'
             ? refreshOnCompletion
@@ -669,7 +670,7 @@ export default class Helpers {
 
       return stats
 
-      async function onFlushTimeout () {
+      async function onFlushTimeout (): Promise<void> {
         if (chunkBytes === 0) return
         stats.bytes += chunkBytes
         const bulkBodyCopy = bulkBody.slice()
@@ -678,9 +679,9 @@ export default class Helpers {
         try {
           const send = await semaphore()
           send(bulkBodyCopy)
-        } catch (err) {
+        } catch (err: any) {
           /* istanbul ignore next */
-          helper.abort()
+          helper.abort() // eslint-disable-line
         }
       }
     }
@@ -697,7 +698,7 @@ export default class Helpers {
     // It also returns a finish function, which returns a promise that is resolved
     // when there are no longer request running. It rejects an error if one
     // of the request has failed for some reason.
-    function buildSemaphore () {
+    function buildSemaphore (): { semaphore: () => Promise<typeof send>, finish: () => Promise<void> } {
       let resolveSemaphore: ((value?: any) => void) | null = null
       let resolveFinish: ((value?: any) => void) | null = null
       let rejectFinish: ((value?: any) => void) | null = null
@@ -709,7 +710,7 @@ export default class Helpers {
       function finish (): Promise<void> {
         return new Promise((resolve, reject) => {
           if (running === 0) {
-            if (error) {
+            if (error !== null) {
               reject(error)
             } else {
               resolve()
@@ -739,16 +740,16 @@ export default class Helpers {
         }
         bulkOperation(bulkBody, err => {
           running -= 1
-          if (err) {
+          if (err != null) {
             shouldAbort = true
             error = err
           }
-          if (resolveSemaphore) {
+          if (resolveSemaphore !== null) {
             running += 1
             resolveSemaphore(send)
             resolveSemaphore = null
           } else if (resolveFinish != null && rejectFinish != null && running === 0) {
-            if (error) {
+            if (error != null) {
               rejectFinish(error)
             } else {
               resolveFinish()
@@ -768,8 +769,8 @@ export default class Helpers {
       // behind the scenes, making the code slightly slower.
       tryBulk(bulkBody, retryDocuments)
       function retryDocuments (err: Error | null, bulkBody: string[]): void {
-        if (err) return callback(err)
-        if (shouldAbort === true) return callback()
+        if (err != null) return callback(err)
+        if (shouldAbort) return callback()
 
         if (bulkBody.length > 0) {
           if (retryCount > 0) {
@@ -797,14 +798,14 @@ export default class Helpers {
         callback()
       }
 
-      function tryBulk (bulkBody: string[], callback: (err: Error | null, bulkBody: string[]) => void) {
-        if (shouldAbort === true) return callback(null, [])
+      function tryBulk (bulkBody: string[], callback: (err: Error | null, bulkBody: string[]) => void): void {
+        if (shouldAbort) return callback(null, [])
         client.bulk(Object.assign({}, bulkOptions, { body: bulkBody }), reqOptions)
           .then(result => {
-            if (result.errors === false) {
+            if (!result.errors) {
               stats.successful += result.items.length
               for (const item of result.items) {
-                if (item.update && item.update.result === 'noop') {
+                if (item.update?.result === 'noop') {
                   stats.noop++
                 }
               }
@@ -815,14 +816,15 @@ export default class Helpers {
             for (let i = 0, len = items.length; i < len; i++) {
               const action = items[i]
               const operation = Object.keys(action)[0]
-              const { status } = action[operation]
+              const responseItem = action[operation as keyof T.BulkResponseItemContainer]
+              assert(responseItem !== undefined, 'The responseItem is undefined, please file a bug report')
               const indexSlice = operation !== 'delete' ? i * 2 : i
-  
-              if (status >= 400) {
+
+              if (responseItem.status >= 400) {
                 // 429 is the only staus code where we might want to retry
                 // a document, because it was not an error in the document itself,
                 // but the ES node were handling too many operations.
-                if (status === 429) {
+                if (responseItem.status === 429) {
                   retry.push(bulkBody[indexSlice])
                   /* istanbul ignore next */
                   if (operation !== 'delete') {
@@ -830,8 +832,8 @@ export default class Helpers {
                   }
                 } else {
                   onDrop({
-                    status: status,
-                    error: action[operation].error,
+                    status: responseItem.status,
+                    error: responseItem.error ?? null,
                     operation: serializer.deserialize(bulkBody[indexSlice]),
                     document: operation !== 'delete'
                       ? serializer.deserialize(bulkBody[indexSlice + 1])
@@ -859,8 +861,8 @@ export default class Helpers {
 function addDocumentsGetter<TDocument> (result: TransportResult<T.SearchResponse<TDocument>, unknown>): void {
   Object.defineProperty(result, 'documents', {
     get () {
-      if (this.body.hits != null && this.body.hits.hits != null) {
-        // @ts-ignore
+      if (this.body.hits?.hits != null) {
+        // @ts-expect-error
         return this.body.hits.hits.map(d => d._source)
       }
       return []
@@ -870,10 +872,10 @@ function addDocumentsGetter<TDocument> (result: TransportResult<T.SearchResponse
 
 function appendFilterPath (filter: string, params: Record<string, any>, force: boolean): void {
   if (params.filter_path !== undefined) {
-    params.filter_path += ',' + filter
+    params.filter_path += ',' + filter // eslint-disable-line
   } else if (params.filterPath !== undefined) {
-    params.filterPath += ',' + filter
-  } else if (force === true) {
+    params.filterPath += ',' + filter // eslint-disable-line
+  } else if (force) {
     params.filter_path = filter
   }
 }
@@ -883,5 +885,5 @@ function isReadableStream (obj: any): obj is Readable {
 }
 
 function isAsyncIterator (obj: any): obj is AsyncIterator<unknown> {
-  return obj != null && obj[Symbol.asyncIterator]
+  return obj?.[Symbol.asyncIterator] != null
 }

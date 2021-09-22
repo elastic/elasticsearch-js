@@ -249,7 +249,7 @@ export default class Client extends API {
       name: options.name,
       opaqueIdPrefix: options.opaqueIdPrefix,
       context: options.context,
-      productCheck: 'Elasticsearch'
+      productCheck: 'Elasticsearch',
       maxResponseSize: options.maxResponseSize,
       maxCompressedResponseSize: options.maxCompressedResponseSize
     })
