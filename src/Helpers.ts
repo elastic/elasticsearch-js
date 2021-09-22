@@ -53,7 +53,14 @@ export interface MsearchHelperOptions extends T.MsearchRequest {
 
 export interface MsearchHelper extends Promise<void> {
   stop: (error?: Error | null) => void
-  search: <TDocument = unknown>(header: T.MsearchHeader, body: T.MsearchBody) => Promise<T.MsearchResponse<TDocument>>
+  search: <TDocument = unknown>(header: T.MsearchHeader, body: T.MsearchBody) => Promise<MsearchHelperResponse<TDocument>>
+}
+
+export interface MsearchHelperResponse<TDocument> {
+  body: T.SearchResponse<TDocument>
+  documents: TDocument[]
+  status: number
+  responses: T.MsearchResponse
 }
 
 export interface BulkStats {
@@ -310,7 +317,7 @@ export default class Helpers {
       // TODO: support abort a single search?
       // NOTE: the validation checks are synchronous and the callback/promise will
       //       be resolved in the same tick. We might want to fix this in the future.
-      search<TDocument = unknown> (header: T.MsearchHeader, body: T.MsearchBody): Promise<T.MsearchResponse<TDocument>> {
+      search<TDocument = unknown> (header: T.MsearchHeader, body: T.MsearchBody): Promise<MsearchHelperResponse<TDocument>> {
         if (stopReading) {
           const error = stopError === null
             ? new ConfigurationError('The msearch processor has been stopped')
@@ -328,7 +335,7 @@ export default class Helpers {
 
         let onFulfilled: any = null
         let onRejected: any = null
-        const promise = new Promise<T.MsearchResponse<TDocument>>((resolve, reject) => {
+        const promise = new Promise<MsearchHelperResponse<TDocument>>((resolve, reject) => {
           onFulfilled = resolve
           onRejected = reject
         })
