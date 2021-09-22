@@ -1084,3 +1084,25 @@ test('getIssuerCertificate detects invalid/malformed certificates', t => {
   }
   t.equal(getIssuerCertificate(socket), null)
 })
+
+test('Should show local/remote socket address in case of ECONNRESET', t => {
+  t.plan(2)
+
+  function handler (req, res) {
+    res.destroy()
+  }
+
+  buildServer(handler, ({ port }, server) => {
+    const connection = new Connection({
+      url: new URL(`http://localhost:${port}`)
+    })
+    connection.request({
+      path: '/hello',
+      method: 'GET'
+    }, (err, res) => {
+      t.ok(err instanceof ConnectionError)
+      t.match(err.message, /socket\shang\sup\s-\sLocal:\s127.0.0.1:\d+,\sRemote:\s127.0.0.1:\d+/)
+      server.stop()
+    })
+  })
+})
