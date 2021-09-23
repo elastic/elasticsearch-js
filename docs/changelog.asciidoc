@@ -11,7 +11,7 @@
 ===== Support for Elasticsearch `v7.15`
 
 You can find all the API changes
-https://www.elastic.co/guide/en/elasticsearch/reference/7.14/release-notes-7.15.0.html[here].
+https://www.elastic.co/guide/en/elasticsearch/reference/7.15/release-notes-7.15.0.html[here].
 
 [discrete]
 ===== Support mapbox content type https://github.com/elastic/elasticsearch-js/pull/1500[#1500]
