@@ -2025,12 +2025,12 @@ export interface Mtermvectors<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface NodesClearMeteringArchive extends Generic {
+export interface NodesClearRepositoriesMeteringArchive extends Generic {
   node_id: string | string[];
   max_archive_version: number;
 }
 
-export interface NodesGetMeteringInfo extends Generic {
+export interface NodesGetRepositoriesMeteringInfo extends Generic {
   node_id: string | string[];
 }
 
@@ -2079,7 +2079,7 @@ export interface NodesUsage extends Generic {
 }
 
 export interface OpenPointInTime extends Generic {
-  index?: string | string[];
+  index: string | string[];
   preference?: string;
   routing?: string;
   ignore_unavailable?: boolean;

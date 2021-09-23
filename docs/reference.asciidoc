@@ -4132,8 +4132,8 @@ link:{ref}/indices-delete-index.html[Documentation] +
 |`boolean` - Ignore if a wildcard expression resolves to no concrete indices (default: false)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
-_Default:_ `open`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open, closed, or hidden indices +
+_Default:_ `open,closed`
 
 |===
 
@@ -8369,11 +8369,11 @@ _Default:_ `true`
 |===
 
 [discrete]
-=== nodes.clearMeteringArchive
+=== nodes.clearRepositoriesMeteringArchive
 *Stability:* experimental
 [source,ts]
 ----
-client.nodes.clearMeteringArchive({
+client.nodes.clearRepositoriesMeteringArchive({
   node_id: string | string[],
   max_archive_version: number
 })
@@ -8390,11 +8390,11 @@ link:{ref}/clear-repositories-metering-archive-api.html[Documentation] +
 |===
 
 [discrete]
-=== nodes.getMeteringInfo
+=== nodes.getRepositoriesMeteringInfo
 *Stability:* experimental
 [source,ts]
 ----
-client.nodes.getMeteringInfo({
+client.nodes.getRepositoriesMeteringInfo({
   node_id: string | string[]
 })
 ----

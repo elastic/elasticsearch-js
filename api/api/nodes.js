@@ -31,7 +31,7 @@ function NodesApi (transport, ConfigurationError) {
   this[kConfigurationError] = ConfigurationError
 }
 
-NodesApi.prototype.clearMeteringArchive = function nodesClearMeteringArchiveApi (params, options, callback) {
+NodesApi.prototype.clearRepositoriesMeteringArchive = function nodesClearRepositoriesMeteringArchiveApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
@@ -68,7 +68,7 @@ NodesApi.prototype.clearMeteringArchive = function nodesClearMeteringArchiveApi 
   return this.transport.request(request, options, callback)
 }
 
-NodesApi.prototype.getMeteringInfo = function nodesGetMeteringInfoApi (params, options, callback) {
+NodesApi.prototype.getRepositoriesMeteringInfo = function nodesGetRepositoriesMeteringInfoApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
   // check required parameters
@@ -259,8 +259,8 @@ NodesApi.prototype.usage = function nodesUsageApi (params, options, callback) {
 }
 
 Object.defineProperties(NodesApi.prototype, {
-  clear_metering_archive: { get () { return this.clearMeteringArchive } },
-  get_metering_info: { get () { return this.getMeteringInfo } },
+  clear_repositories_metering_archive: { get () { return this.clearRepositoriesMeteringArchive } },
+  get_repositories_metering_info: { get () { return this.getRepositoriesMeteringInfo } },
   hot_threads: { get () { return this.hotThreads } },
   reload_secure_settings: { get () { return this.reloadSecureSettings } }
 })
