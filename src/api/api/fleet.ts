@@ -50,7 +50,7 @@ export default class Fleet {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -58,7 +58,8 @@ export default class Fleet {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }

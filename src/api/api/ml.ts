@@ -51,7 +51,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_match', 'allow_no_jobs', 'force', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -60,7 +60,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -79,7 +80,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -88,7 +89,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -107,7 +109,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -116,7 +118,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -135,7 +138,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -144,7 +147,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -163,7 +167,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['force', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -172,7 +176,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -191,7 +196,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['force', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -200,7 +205,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -219,7 +225,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -228,17 +234,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'DELETE'
+    let method = ''
     let path = ''
     if (params.job_id != null) {
+      method = 'DELETE'
       path = `/_ml/_delete_expired_data/${encodeURIComponent(params.job_id.toString())}`
     } else {
+      method = 'DELETE'
       path = '/_ml/_delete_expired_data'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -252,7 +261,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -261,7 +270,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -280,7 +290,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_forecasts', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -289,17 +299,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'DELETE'
+    let method = ''
     let path = ''
     if (params.job_id != null && params.forecast_id != null) {
+      method = 'DELETE'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_forecast/${encodeURIComponent(params.forecast_id.toString())}`
     } else {
+      method = 'DELETE'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_forecast`
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -313,7 +326,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['force', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -322,7 +335,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -341,7 +355,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -350,7 +364,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -369,7 +384,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -378,7 +393,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -397,7 +413,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -406,7 +422,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -425,7 +442,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -434,7 +451,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -453,7 +471,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -462,7 +480,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -481,7 +500,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -490,17 +509,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.id != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/_ml/data_frame/analytics/${encodeURIComponent(params.id.toString())}/_explain`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = '/_ml/data_frame/analytics/_explain'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -514,7 +536,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['skip_time', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -523,7 +545,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -542,7 +565,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -551,7 +574,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -570,7 +594,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['from', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -579,17 +603,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.job_id != null && params.timestamp != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/buckets/${encodeURIComponent(params.timestamp.toString())}`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/buckets`
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -603,7 +630,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['job_id', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -612,7 +639,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -631,7 +659,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['from', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -640,17 +668,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.calendar_id != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/_ml/calendars/${encodeURIComponent(params.calendar_id.toString())}`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = '/_ml/calendars'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -664,7 +695,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['from', 'size', 'partition_field_value', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -673,17 +704,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.job_id != null && params.category_id != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/categories/${encodeURIComponent(params.category_id.toString())}`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/categories/`
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -697,7 +731,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_match', 'from', 'size', 'exclude_generated', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -706,17 +740,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.id != null) {
+      method = 'GET'
       path = `/_ml/data_frame/analytics/${encodeURIComponent(params.id.toString())}`
     } else {
+      method = 'GET'
       path = '/_ml/data_frame/analytics'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -730,7 +767,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_match', 'from', 'size', 'verbose', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -739,17 +776,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.id != null) {
+      method = 'GET'
       path = `/_ml/data_frame/analytics/${encodeURIComponent(params.id.toString())}/_stats`
     } else {
+      method = 'GET'
       path = '/_ml/data_frame/analytics/_stats'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -763,7 +803,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_datafeeds', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -772,17 +812,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.datafeed_id != null) {
+      method = 'GET'
       path = `/_ml/datafeeds/${encodeURIComponent(params.datafeed_id.toString())}/_stats`
     } else {
+      method = 'GET'
       path = '/_ml/datafeeds/_stats'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -796,7 +839,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_datafeeds', 'exclude_generated', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -805,17 +848,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.datafeed_id != null) {
+      method = 'GET'
       path = `/_ml/datafeeds/${encodeURIComponent(params.datafeed_id.toString())}`
     } else {
+      method = 'GET'
       path = '/_ml/datafeeds'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -829,7 +875,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['from', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -838,17 +884,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.filter_id != null) {
+      method = 'GET'
       path = `/_ml/filters/${encodeURIComponent(params.filter_id.toString())}`
     } else {
+      method = 'GET'
       path = '/_ml/filters'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -862,7 +911,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['desc', 'end', 'exclude_interim', 'influencer_score', 'from', 'size', 'sort', 'start', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -871,13 +920,14 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    const method = body != null ? 'POST' : 'GET'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/influencers`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
@@ -890,7 +940,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_jobs', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -899,17 +949,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.job_id != null) {
+      method = 'GET'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_stats`
     } else {
+      method = 'GET'
       path = '/_ml/anomaly_detectors/_stats'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -923,7 +976,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_match', 'allow_no_jobs', 'exclude_generated', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -932,17 +985,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.job_id != null) {
+      method = 'GET'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}`
     } else {
+      method = 'GET'
       path = '/_ml/anomaly_detectors'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -956,7 +1012,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['desc', 'from', 'size', 'sort', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -965,17 +1021,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.job_id != null && params.snapshot_id != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/model_snapshots/${encodeURIComponent(params.snapshot_id.toString())}`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/model_snapshots`
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -989,7 +1048,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['bucket_span', 'overall_score', 'top_n', 'end', 'start', 'exclude_interim', 'allow_no_match', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -998,13 +1057,14 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    const method = body != null ? 'POST' : 'GET'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/overall_buckets`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
@@ -1017,7 +1077,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['from', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1026,13 +1086,14 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    const method = body != null ? 'POST' : 'GET'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/records`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
@@ -1044,7 +1105,7 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1052,7 +1113,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -1070,7 +1132,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_match', 'decompress_definition', 'exclude_generated', 'from', 'include', 'size', 'tags', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1079,17 +1141,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.model_id != null) {
+      method = 'GET'
       path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}`
     } else {
+      method = 'GET'
       path = '/_ml/trained_models'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1103,7 +1168,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_match', 'from', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1112,17 +1177,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.model_id != null) {
+      method = 'GET'
       path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/_stats`
     } else {
+      method = 'GET'
       path = '/_ml/trained_models/_stats'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1135,7 +1203,7 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1143,7 +1211,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -1161,7 +1230,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1170,7 +1239,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1189,7 +1259,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1198,7 +1268,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1217,7 +1288,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1226,7 +1297,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1254,7 +1326,7 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
         // @ts-expect-error
         body = params[key]
       }
@@ -1273,7 +1345,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1282,17 +1354,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.id != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/_ml/data_frame/analytics/${encodeURIComponent(params.id.toString())}/_preview`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = '/_ml/data_frame/analytics/_preview'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1306,7 +1381,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1315,17 +1390,20 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.datafeed_id != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/_ml/datafeeds/${encodeURIComponent(params.datafeed_id.toString())}/_preview`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = '/_ml/datafeeds/_preview'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1339,7 +1417,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1348,7 +1426,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1367,7 +1446,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1376,7 +1455,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1395,7 +1475,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1404,7 +1484,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1423,7 +1504,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1432,7 +1513,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1451,7 +1533,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1460,7 +1542,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1479,7 +1562,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1488,7 +1571,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1507,7 +1591,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1516,7 +1600,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1535,7 +1620,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['reassign', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1544,7 +1629,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1562,7 +1648,7 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1570,7 +1656,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -1587,7 +1674,7 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1595,7 +1682,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -1613,7 +1701,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1622,7 +1710,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1641,7 +1730,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1650,7 +1739,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1669,7 +1759,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['enabled', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1678,7 +1768,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1697,7 +1788,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1706,7 +1797,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1725,7 +1817,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1734,7 +1826,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1752,7 +1845,7 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1760,7 +1853,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -1778,7 +1872,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_match', 'force', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1787,7 +1881,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1806,7 +1901,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['allow_no_match', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1815,7 +1910,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1833,7 +1929,7 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1841,7 +1937,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -1859,7 +1956,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1868,7 +1965,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1886,7 +1984,7 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1894,7 +1992,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -1912,7 +2011,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1921,7 +2020,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1940,7 +2040,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1949,7 +2049,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1968,7 +2069,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1977,7 +2078,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1996,7 +2098,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['wait_for_completion', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -2005,7 +2107,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -2024,7 +2127,7 @@ export default class Ml {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -2033,7 +2136,8 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -2061,7 +2165,7 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
         // @ts-expect-error
         body = params[key]
       }

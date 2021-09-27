@@ -45,7 +45,7 @@ export default async function SearchShardsApi (this: That, params?: T.SearchShar
   const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'local', 'preference', 'routing', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  const body: Record<string, any> = params?.body ?? {}
+  let body: Record<string, any> = params?.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
@@ -54,17 +54,20 @@ export default async function SearchShardsApi (this: That, params?: T.SearchShar
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     }
   }
 
-  const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+  let method = ''
   let path = ''
   if (params.index != null) {
+    method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_search_shards`
   } else {
+    method = body != null ? 'POST' : 'GET'
     path = '/_search_shards'
   }
   return await this.transport.request({ path, method, querystring, body }, options)

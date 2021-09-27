@@ -51,7 +51,7 @@ export default class DanglingIndices {
     const acceptedQuery: string[] = ['accept_data_loss', 'master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -60,7 +60,8 @@ export default class DanglingIndices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -79,7 +80,7 @@ export default class DanglingIndices {
     const acceptedQuery: string[] = ['accept_data_loss', 'master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -88,7 +89,8 @@ export default class DanglingIndices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -107,7 +109,7 @@ export default class DanglingIndices {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -116,7 +118,8 @@ export default class DanglingIndices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }

@@ -45,7 +45,7 @@ export default async function ExistsApi (this: That, params: T.ExistsRequest | T
   const acceptedQuery: string[] = ['preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'stored_fields', 'version', 'version_type', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  const body: Record<string, any> = params.body ?? {}
+  let body: Record<string, any> = params.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
@@ -54,7 +54,8 @@ export default async function ExistsApi (this: That, params: T.ExistsRequest | T
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     }

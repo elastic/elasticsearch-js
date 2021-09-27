@@ -45,7 +45,7 @@ export default async function CountApi (this: That, params?: T.CountRequest | TB
   const acceptedQuery: string[] = ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'min_score', 'preference', 'routing', 'terminate_after', 'q', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  const body: Record<string, any> = params?.body ?? {}
+  let body: Record<string, any> = params?.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
@@ -54,17 +54,20 @@ export default async function CountApi (this: That, params?: T.CountRequest | TB
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     }
   }
 
-  const method = Object.keys(body).length > 0 ? 'POST' : 'POST'
+  let method = ''
   let path = ''
   if (params.index != null) {
+    method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_count`
   } else {
+    method = body != null ? 'POST' : 'GET'
     path = '/_count'
   }
   return await this.transport.request({ path, method, querystring, body }, options)

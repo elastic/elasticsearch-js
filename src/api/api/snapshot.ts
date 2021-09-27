@@ -51,7 +51,7 @@ export default class Snapshot {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -60,7 +60,8 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -79,7 +80,7 @@ export default class Snapshot {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -88,7 +89,8 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -107,7 +109,7 @@ export default class Snapshot {
     const acceptedQuery: string[] = ['master_timeout', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -116,7 +118,8 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -135,7 +138,7 @@ export default class Snapshot {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'verify', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -144,7 +147,8 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -163,7 +167,7 @@ export default class Snapshot {
     const acceptedQuery: string[] = ['master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -172,7 +176,8 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -191,7 +196,7 @@ export default class Snapshot {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -200,7 +205,8 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -219,7 +225,7 @@ export default class Snapshot {
     const acceptedQuery: string[] = ['ignore_unavailable', 'master_timeout', 'verbose', 'index_details', 'human', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -228,7 +234,8 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -247,7 +254,7 @@ export default class Snapshot {
     const acceptedQuery: string[] = ['local', 'master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -256,17 +263,20 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.repository != null) {
+      method = 'GET'
       path = `/_snapshot/${encodeURIComponent(params.repository.toString())}`
     } else {
+      method = 'GET'
       path = '/_snapshot'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -279,7 +289,7 @@ export default class Snapshot {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -287,7 +297,8 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -305,7 +316,7 @@ export default class Snapshot {
     const acceptedQuery: string[] = ['master_timeout', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -314,7 +325,8 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -333,7 +345,7 @@ export default class Snapshot {
     const acceptedQuery: string[] = ['ignore_unavailable', 'master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -342,19 +354,23 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.repository != null && params.snapshot != null) {
+      method = 'GET'
       path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}/_status`
     } else if (params.repository != null) {
+      method = 'GET'
       path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/_status`
     } else {
+      method = 'GET'
       path = '/_snapshot/_status'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -368,7 +384,7 @@ export default class Snapshot {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -377,7 +393,8 @@ export default class Snapshot {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }

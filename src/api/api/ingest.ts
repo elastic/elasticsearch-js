@@ -51,7 +51,7 @@ export default class Ingest {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -60,7 +60,8 @@ export default class Ingest {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -79,7 +80,7 @@ export default class Ingest {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -88,7 +89,8 @@ export default class Ingest {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -107,7 +109,7 @@ export default class Ingest {
     const acceptedQuery: string[] = ['master_timeout', 'summary', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -116,17 +118,20 @@ export default class Ingest {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.id != null) {
+      method = 'GET'
       path = `/_ingest/pipeline/${encodeURIComponent(params.id.toString())}`
     } else {
+      method = 'GET'
       path = '/_ingest/pipeline'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -140,7 +145,7 @@ export default class Ingest {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -149,7 +154,8 @@ export default class Ingest {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -168,7 +174,7 @@ export default class Ingest {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -177,7 +183,8 @@ export default class Ingest {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -196,7 +203,7 @@ export default class Ingest {
     const acceptedQuery: string[] = ['verbose', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -205,17 +212,20 @@ export default class Ingest {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.id != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/_ingest/pipeline/${encodeURIComponent(params.id.toString())}/_simulate`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = '/_ingest/pipeline/_simulate'
     }
     return await this.transport.request({ path, method, querystring, body }, options)

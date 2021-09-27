@@ -51,7 +51,7 @@ export default class Sql {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -60,7 +60,8 @@ export default class Sql {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -78,7 +79,7 @@ export default class Sql {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -86,7 +87,8 @@ export default class Sql {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -103,7 +105,7 @@ export default class Sql {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -111,7 +113,8 @@ export default class Sql {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -128,7 +131,7 @@ export default class Sql {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -136,7 +139,8 @@ export default class Sql {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -154,7 +158,7 @@ export default class Sql {
     const acceptedQuery: string[] = ['format', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -163,13 +167,14 @@ export default class Sql {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'POST'
+    const method = body != null ? 'POST' : 'GET'
     const path = '/_sql'
     return await this.transport.request({ path, method, querystring, body }, options)
   }
@@ -182,7 +187,7 @@ export default class Sql {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -191,13 +196,14 @@ export default class Sql {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'POST'
+    const method = body != null ? 'POST' : 'GET'
     const path = '/_sql/translate'
     return await this.transport.request({ path, method, querystring, body }, options)
   }

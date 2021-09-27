@@ -54,17 +54,19 @@ export default async function MsearchTemplateApi<TDocument = unknown> (this: Tha
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
       // @ts-expect-error
       body = params[key]
     }
   }
 
-  const method = body != null ? 'POST' : 'GET'
+  let method = ''
   let path = ''
   if (params.index != null) {
+    method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_msearch/template`
   } else {
+    method = body != null ? 'POST' : 'GET'
     path = '/_msearch/template'
   }
   return await this.transport.request({ path, method, querystring, bulkBody: body }, options)

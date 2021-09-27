@@ -51,7 +51,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['expand_wildcards', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -60,17 +60,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.name != null) {
+      method = 'GET'
       path = `/_cat/aliases/${encodeURIComponent(params.name.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/aliases'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -84,7 +87,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['bytes', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -93,17 +96,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.node_id != null) {
+      method = 'GET'
       path = `/_cat/allocation/${encodeURIComponent(params.node_id.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/allocation'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -117,7 +123,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -126,17 +132,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'GET'
       path = `/_cat/count/${encodeURIComponent(params.index.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/count'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -150,7 +159,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['bytes', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -159,17 +168,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.fields != null) {
+      method = 'GET'
       path = `/_cat/fielddata/${encodeURIComponent(params.fields.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/fielddata'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -183,7 +195,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['include_timestamp', 'ts', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -192,7 +204,8 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -211,7 +224,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -220,7 +233,8 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -239,7 +253,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['bytes', 'expand_wildcards', 'health', 'include_unloaded_segments', 'pri', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -248,17 +262,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'GET'
       path = `/_cat/indices/${encodeURIComponent(params.index.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/indices'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -272,7 +289,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -281,7 +298,8 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -300,7 +318,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['allow_no_match', 'bytes', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -309,17 +327,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.id != null) {
+      method = 'GET'
       path = `/_cat/ml/data_frame/analytics/${encodeURIComponent(params.id.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/ml/data_frame/analytics'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -333,7 +354,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['allow_no_datafeeds', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -342,17 +363,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.datafeed_id != null) {
+      method = 'GET'
       path = `/_cat/ml/datafeeds/${encodeURIComponent(params.datafeed_id.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/ml/datafeeds'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -366,7 +390,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['allow_no_jobs', 'bytes', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -375,17 +399,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.job_id != null) {
+      method = 'GET'
       path = `/_cat/ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/ml/anomaly_detectors'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -399,7 +426,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['allow_no_match', 'bytes', 'from', 'size', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -408,17 +435,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.model_id != null) {
+      method = 'GET'
       path = `/_cat/ml/trained_models/${encodeURIComponent(params.model_id.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/ml/trained_models'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -432,7 +462,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -441,7 +471,8 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -460,7 +491,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['bytes', 'full_id', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -469,7 +500,8 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -488,7 +520,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -497,7 +529,8 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -516,7 +549,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -525,7 +558,8 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -544,7 +578,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['active_only', 'bytes', 'detailed', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -553,17 +587,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'GET'
       path = `/_cat/recovery/${encodeURIComponent(params.index.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/recovery'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -577,7 +614,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -586,7 +623,8 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -605,7 +643,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['bytes', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -614,17 +652,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'GET'
       path = `/_cat/segments/${encodeURIComponent(params.index.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/segments'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -638,7 +679,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['bytes', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -647,17 +688,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'GET'
       path = `/_cat/shards/${encodeURIComponent(params.index.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/shards'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -671,7 +715,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['ignore_unavailable', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -680,17 +724,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.repository != null) {
+      method = 'GET'
       path = `/_cat/snapshots/${encodeURIComponent(params.repository.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/snapshots'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -704,7 +751,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['actions', 'detailed', 'node_id', 'parent_task', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -713,7 +760,8 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -732,7 +780,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -741,17 +789,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.name != null) {
+      method = 'GET'
       path = `/_cat/templates/${encodeURIComponent(params.name.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/templates'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -765,7 +816,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['size', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -774,17 +825,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.thread_pool_patterns != null) {
+      method = 'GET'
       path = `/_cat/thread_pool/${encodeURIComponent(params.thread_pool_patterns.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/thread_pool'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -798,7 +852,7 @@ export default class Cat {
     const acceptedQuery: string[] = ['allow_no_match', 'from', 'size', 'format', 'h', 'help', 'local', 'master_timeout', 's', 'v', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -807,17 +861,20 @@ export default class Cat {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.transform_id != null) {
+      method = 'GET'
       path = `/_cat/transforms/${encodeURIComponent(params.transform_id.toString())}`
     } else {
+      method = 'GET'
       path = '/_cat/transforms'
     }
     return await this.transport.request({ path, method, querystring, body }, options)

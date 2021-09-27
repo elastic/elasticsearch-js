@@ -45,7 +45,7 @@ export default async function DeleteScriptApi (this: That, params: T.DeleteScrip
   const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  const body: Record<string, any> = params.body ?? {}
+  let body: Record<string, any> = params.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
@@ -54,7 +54,8 @@ export default async function DeleteScriptApi (this: That, params: T.DeleteScrip
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     }

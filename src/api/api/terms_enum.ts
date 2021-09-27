@@ -45,7 +45,7 @@ export default async function TermsEnumApi (this: That, params: T.TermsEnumReque
   const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  const body: Record<string, any> = params.body ?? {}
+  let body: Record<string, any> = params.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
@@ -54,13 +54,14 @@ export default async function TermsEnumApi (this: That, params: T.TermsEnumReque
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     }
   }
 
-  const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+  const method = body != null ? 'POST' : 'GET'
   const path = `/${encodeURIComponent(params.index.toString())}/_terms_enum`
   return await this.transport.request({ path, method, querystring, body }, options)
 }

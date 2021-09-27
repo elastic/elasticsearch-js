@@ -13872,7 +13872,7 @@ export interface ShutdownGetNodePluginsStatus {
 }
 
 export interface ShutdownGetNodeRequest extends RequestBase {
-  node_id: NodeIds
+  node_id?: NodeIds
 }
 
 export interface ShutdownGetNodeResponse {

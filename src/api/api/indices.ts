@@ -51,7 +51,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -60,7 +60,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -79,7 +80,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -88,17 +89,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_analyze`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = '/_analyze'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -112,7 +116,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'fielddata', 'fields', 'ignore_unavailable', 'query', 'request', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -121,17 +125,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'POST'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'POST'
       path = `/${encodeURIComponent(params.index.toString())}/_cache/clear`
     } else {
+      method = 'POST'
       path = '/_cache/clear'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -145,7 +152,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'wait_for_active_shards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -154,7 +161,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -173,7 +181,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout', 'timeout', 'wait_for_active_shards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -182,7 +190,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -201,7 +210,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['include_type_name', 'master_timeout', 'timeout', 'wait_for_active_shards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -210,7 +219,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -229,7 +239,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -238,7 +248,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -257,7 +268,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['expand_wildcards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -266,17 +277,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.name != null) {
+      method = 'GET'
       path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_stats`
     } else {
+      method = 'GET'
       path = '/_data_stream/_stats'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -290,7 +304,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -299,7 +313,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -318,7 +333,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -327,17 +342,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'DELETE'
+    let method = ''
     let path = ''
     if (params.index != null && params.name != null) {
+      method = 'DELETE'
       path = `/${encodeURIComponent(params.index.toString())}/_alias/${encodeURIComponent(params.name.toString())}`
     } else {
+      method = 'DELETE'
       path = `/${encodeURIComponent(params.index.toString())}/_aliases/${encodeURIComponent(params.name.toString())}`
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -351,7 +369,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['expand_wildcards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -360,7 +378,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -379,7 +398,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -388,7 +407,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -407,7 +427,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -416,7 +436,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -435,7 +456,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'flush', 'ignore_unavailable', 'master_timeout', 'timeout', 'run_expensive_tasks', 'wait_for_active_shards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -444,7 +465,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -463,7 +485,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'flat_settings', 'ignore_unavailable', 'include_defaults', 'local', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -472,7 +494,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -491,7 +514,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'local', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -500,17 +523,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'HEAD'
+    let method = ''
     let path = ''
     if (params.index != null && params.name != null) {
+      method = 'HEAD'
       path = `/${encodeURIComponent(params.index.toString())}/_alias/${encodeURIComponent(params.name.toString())}`
     } else {
+      method = 'HEAD'
       path = `/_alias/${encodeURIComponent(params.name.toString())}`
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -524,7 +550,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -533,7 +559,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -552,7 +579,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['flat_settings', 'local', 'master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -561,7 +588,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -580,7 +608,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'local', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -589,7 +617,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -607,7 +636,7 @@ export default class Indices {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -615,7 +644,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -633,7 +663,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'force', 'ignore_unavailable', 'wait_if_ongoing', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -642,17 +672,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_flush`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = '/_flush'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -666,7 +699,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'flush', 'ignore_unavailable', 'max_num_segments', 'only_expunge_deletes', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -675,17 +708,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'POST'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'POST'
       path = `/${encodeURIComponent(params.index.toString())}/_forcemerge`
     } else {
+      method = 'POST'
       path = '/_forcemerge'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -699,7 +735,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'flat_settings', 'ignore_unavailable', 'include_defaults', 'include_type_name', 'local', 'master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -708,7 +744,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -727,7 +764,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'local', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -736,21 +773,26 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null && params.name != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_alias/${encodeURIComponent(params.name.toString())}`
     } else if (params.name != null) {
+      method = 'GET'
       path = `/_alias/${encodeURIComponent(params.name.toString())}`
     } else if (params.index != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_alias`
     } else {
+      method = 'GET'
       path = '/_alias'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -764,7 +806,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['expand_wildcards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -773,17 +815,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.name != null) {
+      method = 'GET'
       path = `/_data_stream/${encodeURIComponent(params.name.toString())}`
     } else {
+      method = 'GET'
       path = '/_data_stream'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -797,7 +842,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'include_defaults', 'include_type_name', 'local', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -806,17 +851,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null && params.fields != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_mapping/field/${encodeURIComponent(params.fields.toString())}`
     } else {
+      method = 'GET'
       path = `/_mapping/field/${encodeURIComponent(params.fields.toString())}`
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -830,7 +878,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['local', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -839,17 +887,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.name != null) {
+      method = 'GET'
       path = `/_index_template/${encodeURIComponent(params.name.toString())}`
     } else {
+      method = 'GET'
       path = '/_index_template'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -863,7 +914,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'include_type_name', 'local', 'master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -872,17 +923,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_mapping`
     } else {
+      method = 'GET'
       path = '/_mapping'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -896,7 +950,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'flat_settings', 'ignore_unavailable', 'include_defaults', 'local', 'master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -905,21 +959,26 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null && params.name != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_settings/${encodeURIComponent(params.name.toString())}`
     } else if (params.index != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_settings`
     } else if (params.name != null) {
+      method = 'GET'
       path = `/_settings/${encodeURIComponent(params.name.toString())}`
     } else {
+      method = 'GET'
       path = '/_settings'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -933,7 +992,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['flat_settings', 'include_type_name', 'local', 'master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -942,17 +1001,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.name != null) {
+      method = 'GET'
       path = `/_template/${encodeURIComponent(params.name.toString())}`
     } else {
+      method = 'GET'
       path = '/_template'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -966,7 +1028,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -975,7 +1037,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -994,7 +1057,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'master_timeout', 'timeout', 'wait_for_active_shards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1003,7 +1066,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1022,7 +1086,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1031,7 +1095,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1050,7 +1115,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1059,17 +1124,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'PUT'
+    let method = ''
     let path = ''
     if (params.index != null && params.name != null) {
+      method = 'PUT'
       path = `/${encodeURIComponent(params.index.toString())}/_alias/${encodeURIComponent(params.name.toString())}`
     } else {
+      method = 'PUT'
       path = `/${encodeURIComponent(params.index.toString())}/_aliases/${encodeURIComponent(params.name.toString())}`
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1083,7 +1151,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1092,7 +1160,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1111,7 +1180,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'include_type_name', 'master_timeout', 'timeout', 'write_index_only', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1120,7 +1189,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1148,17 +1218,19 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
         // @ts-expect-error
         body = params[key]
       }
     }
 
-    const method = 'PUT'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'PUT'
       path = `/${encodeURIComponent(params.index.toString())}/_settings`
     } else {
+      method = 'PUT'
       path = '/_settings'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1172,7 +1244,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['create', 'flat_settings', 'include_type_name', 'master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1181,7 +1253,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1200,7 +1273,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['active_only', 'detailed', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1209,17 +1282,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_recovery`
     } else {
+      method = 'GET'
       path = '/_recovery'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1233,7 +1309,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1242,17 +1318,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_refresh`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = '/_refresh'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1266,7 +1345,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1275,13 +1354,14 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    const method = body != null ? 'POST' : 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_reload_search_analyzers`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
@@ -1294,7 +1374,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['expand_wildcards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1303,7 +1383,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1322,7 +1403,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['dry_run', 'include_type_name', 'master_timeout', 'timeout', 'wait_for_active_shards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1331,17 +1412,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'POST'
+    let method = ''
     let path = ''
     if (params.alias != null && params.new_index != null) {
+      method = 'POST'
       path = `/${encodeURIComponent(params.alias.toString())}/_rollover/${encodeURIComponent(params.new_index.toString())}`
     } else {
+      method = 'POST'
       path = `/${encodeURIComponent(params.alias.toString())}/_rollover`
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1355,7 +1439,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'verbose', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1364,17 +1448,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_segments`
     } else {
+      method = 'GET'
       path = '/_segments'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1388,7 +1475,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'status', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1397,17 +1484,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_shard_stores`
     } else {
+      method = 'GET'
       path = '/_shard_stores'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1421,7 +1511,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'wait_for_active_shards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1430,7 +1520,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1449,7 +1540,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1458,7 +1549,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1486,17 +1578,19 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
         // @ts-expect-error
         body = params[key]
       }
     }
 
-    const method = 'POST'
+    let method = ''
     let path = ''
     if (params.name != null) {
+      method = 'POST'
       path = `/_index_template/_simulate/${encodeURIComponent(params.name.toString())}`
     } else {
+      method = 'POST'
       path = '/_index_template/_simulate'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1510,7 +1604,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'wait_for_active_shards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1519,7 +1613,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1538,7 +1633,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['completion_fields', 'expand_wildcards', 'fielddata_fields', 'fields', 'forbid_closed_indices', 'groups', 'include_segment_file_sizes', 'include_unloaded_segments', 'level', 'types', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1547,21 +1642,26 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null && params.metric != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_stats/${encodeURIComponent(params.metric.toString())}`
     } else if (params.metric != null) {
+      method = 'GET'
       path = `/_stats/${encodeURIComponent(params.metric.toString())}`
     } else if (params.index != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_stats`
     } else {
+      method = 'GET'
       path = '/_stats'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -1575,7 +1675,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1584,7 +1684,8 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -1603,7 +1704,7 @@ export default class Indices {
     const acceptedQuery: string[] = ['allow_no_indices', 'all_shards', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'expand_wildcards', 'explain', 'ignore_unavailable', 'lenient', 'rewrite', 'q', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -1612,17 +1713,20 @@ export default class Indices {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = body != null ? 'POST' : 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_validate/query`
     } else {
+      method = body != null ? 'POST' : 'GET'
       path = '/_validate/query'
     }
     return await this.transport.request({ path, method, querystring, body }, options)

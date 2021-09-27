@@ -51,7 +51,7 @@ export default class Migration {
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -60,17 +60,20 @@ export default class Migration {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_migration/deprecations`
     } else {
+      method = 'GET'
       path = '/_migration/deprecations'
     }
     return await this.transport.request({ path, method, querystring, body }, options)

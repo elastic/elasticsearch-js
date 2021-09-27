@@ -50,7 +50,7 @@ export default class SearchableSnapshots {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -58,16 +58,19 @@ export default class SearchableSnapshots {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.node_id != null) {
+      method = 'GET'
       path = `/_searchable_snapshots/${encodeURIComponent(params.node_id.toString())}/cache/stats`
     } else {
+      method = 'GET'
       path = '/_searchable_snapshots/cache/stats'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -81,7 +84,7 @@ export default class SearchableSnapshots {
     const acceptedQuery: string[] = ['expand_wildcards', 'allow_no_indices', 'ignore_unavailable', 'pretty', 'human', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -90,17 +93,20 @@ export default class SearchableSnapshots {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'POST'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'POST'
       path = `/${encodeURIComponent(params.index.toString())}/_searchable_snapshots/cache/clear`
     } else {
+      method = 'POST'
       path = '/_searchable_snapshots/cache/clear'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -114,7 +120,7 @@ export default class SearchableSnapshots {
     const acceptedQuery: string[] = ['master_timeout', 'wait_for_completion', 'storage', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -123,7 +129,8 @@ export default class SearchableSnapshots {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -142,7 +149,7 @@ export default class SearchableSnapshots {
     const acceptedQuery: string[] = ['level', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -151,17 +158,20 @@ export default class SearchableSnapshots {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.index != null) {
+      method = 'GET'
       path = `/${encodeURIComponent(params.index.toString())}/_searchable_snapshots/stats`
     } else {
+      method = 'GET'
       path = '/_searchable_snapshots/stats'
     }
     return await this.transport.request({ path, method, querystring, body }, options)

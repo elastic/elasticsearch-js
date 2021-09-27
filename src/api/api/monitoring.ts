@@ -60,7 +60,7 @@ export default class Monitoring {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
         // @ts-expect-error
         body = params[key]
       }

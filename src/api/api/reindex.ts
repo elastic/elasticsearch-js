@@ -45,7 +45,7 @@ export default async function ReindexApi (this: That, params?: T.ReindexRequest 
   const acceptedQuery: string[] = ['refresh', 'requests_per_second', 'scroll', 'slices', 'timeout', 'wait_for_active_shards', 'wait_for_completion', 'require_alias', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  const body: Record<string, any> = params?.body ?? {}
+  let body: Record<string, any> = params?.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
@@ -54,7 +54,8 @@ export default async function ReindexApi (this: That, params?: T.ReindexRequest 
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     }

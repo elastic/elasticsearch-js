@@ -54,17 +54,19 @@ export default async function IndexApi<TDocument = unknown> (this: That, params:
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
       // @ts-expect-error
       body = params[key]
     }
   }
 
-  const method = 'PUT'
+  let method = ''
   let path = ''
   if (params.index != null && params.id != null) {
+    method = 'PUT'
     path = `/${encodeURIComponent(params.index.toString())}/_doc/${encodeURIComponent(params.id.toString())}`
   } else {
+    method = 'POST'
     path = `/${encodeURIComponent(params.index.toString())}/_doc`
   }
   return await this.transport.request({ path, method, querystring, body }, options)

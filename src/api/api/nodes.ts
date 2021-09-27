@@ -50,7 +50,7 @@ export default class Nodes {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -58,7 +58,8 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -75,7 +76,7 @@ export default class Nodes {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -83,7 +84,8 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         body[key] = params[key]
       }
     }
@@ -101,7 +103,7 @@ export default class Nodes {
     const acceptedQuery: string[] = ['ignore_idle_threads', 'interval', 'snapshots', 'threads', 'thread_type', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -110,17 +112,20 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.node_id != null) {
+      method = 'GET'
       path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/hot_threads`
     } else {
+      method = 'GET'
       path = '/_nodes/hot_threads'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -134,7 +139,7 @@ export default class Nodes {
     const acceptedQuery: string[] = ['flat_settings', 'master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -143,21 +148,26 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.node_id != null && params.metric != null) {
+      method = 'GET'
       path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/${encodeURIComponent(params.metric.toString())}`
     } else if (params.node_id != null) {
+      method = 'GET'
       path = `/_nodes/${encodeURIComponent(params.node_id.toString())}`
     } else if (params.metric != null) {
+      method = 'GET'
       path = `/_nodes/${encodeURIComponent(params.metric.toString())}`
     } else {
+      method = 'GET'
       path = '/_nodes'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -171,7 +181,7 @@ export default class Nodes {
     const acceptedQuery: string[] = ['timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -180,17 +190,20 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'POST'
+    let method = ''
     let path = ''
     if (params.node_id != null) {
+      method = 'POST'
       path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/reload_secure_settings`
     } else {
+      method = 'POST'
       path = '/_nodes/reload_secure_settings'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -204,7 +217,7 @@ export default class Nodes {
     const acceptedQuery: string[] = ['completion_fields', 'fielddata_fields', 'fields', 'groups', 'include_segment_file_sizes', 'level', 'master_timeout', 'timeout', 'types', 'include_unloaded_segments', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -213,25 +226,32 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.node_id != null && params.metric != null && params.index_metric != null) {
+      method = 'GET'
       path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/stats/${encodeURIComponent(params.metric.toString())}/${encodeURIComponent(params.index_metric.toString())}`
     } else if (params.node_id != null && params.metric != null) {
+      method = 'GET'
       path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/stats/${encodeURIComponent(params.metric.toString())}`
     } else if (params.metric != null && params.index_metric != null) {
+      method = 'GET'
       path = `/_nodes/stats/${encodeURIComponent(params.metric.toString())}/${encodeURIComponent(params.index_metric.toString())}`
     } else if (params.node_id != null) {
+      method = 'GET'
       path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/stats`
     } else if (params.metric != null) {
+      method = 'GET'
       path = `/_nodes/stats/${encodeURIComponent(params.metric.toString())}`
     } else {
+      method = 'GET'
       path = '/_nodes/stats'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -245,7 +265,7 @@ export default class Nodes {
     const acceptedQuery: string[] = ['timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -254,21 +274,26 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'GET'
+    let method = ''
     let path = ''
     if (params.node_id != null && params.metric != null) {
+      method = 'GET'
       path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/usage/${encodeURIComponent(params.metric.toString())}`
     } else if (params.node_id != null) {
+      method = 'GET'
       path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/usage`
     } else if (params.metric != null) {
+      method = 'GET'
       path = `/_nodes/usage/${encodeURIComponent(params.metric.toString())}`
     } else {
+      method = 'GET'
       path = '/_nodes/usage'
     }
     return await this.transport.request({ path, method, querystring, body }, options)

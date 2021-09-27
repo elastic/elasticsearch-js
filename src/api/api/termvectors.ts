@@ -45,7 +45,7 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
   const acceptedQuery: string[] = ['fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'preference', 'realtime', 'routing', 'term_statistics', 'version', 'version_type', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  const body: Record<string, any> = params.body ?? {}
+  let body: Record<string, any> = params.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
@@ -54,17 +54,20 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     }
   }
 
-  const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+  let method = ''
   let path = ''
   if (params.index != null && params.id != null) {
+    method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_termvectors/${encodeURIComponent(params.id.toString())}`
   } else {
+    method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_termvectors`
   }
   return await this.transport.request({ path, method, querystring, body }, options)

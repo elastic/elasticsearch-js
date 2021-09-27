@@ -45,7 +45,7 @@ export default async function UpdateByQueryApi (this: That, params: T.UpdateByQu
   const acceptedQuery: string[] = ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'expand_wildcards', 'from', 'ignore_unavailable', 'lenient', 'pipeline', 'preference', 'refresh', 'request_cache', 'requests_per_second', 'routing', 'scroll', 'scroll_size', 'search_timeout', 'search_type', 'size', 'slices', 'sort', '_source', '_source_excludes', '_source_includes', 'stats', 'terminate_after', 'timeout', 'version', 'version_type', 'wait_for_active_shards', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  const body: Record<string, any> = params.body ?? {}
+  let body: Record<string, any> = params.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
@@ -54,7 +54,8 @@ export default async function UpdateByQueryApi (this: That, params: T.UpdateByQu
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     }

@@ -45,7 +45,7 @@ export default async function SearchApi<TDocument = unknown> (this: That, params
   const acceptedQuery: string[] = ['allow_no_indices', 'allow_partial_search_results', 'analyzer', 'analyze_wildcard', 'batched_reduce_size', 'ccs_minimize_roundtrips', 'default_operator', 'df', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'max_concurrent_shard_requests', 'min_compatible_shard_node', 'preference', 'pre_filter_shard_size', 'request_cache', 'routing', 'scroll', 'search_type', 'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text', 'typed_keys', 'rest_total_hits_as_int', '_source_excludes', '_source_includes', 'q', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  const body: Record<string, any> = params?.body ?? {}
+  let body: Record<string, any> = params?.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
@@ -54,17 +54,20 @@ export default async function SearchApi<TDocument = unknown> (this: That, params
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     }
   }
 
-  const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+  let method = ''
   let path = ''
   if (params.index != null) {
+    method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_search`
   } else {
+    method = body != null ? 'POST' : 'GET'
     path = '/_search'
   }
   return await this.transport.request({ path, method, querystring, body }, options)

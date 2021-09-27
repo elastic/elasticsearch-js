@@ -45,7 +45,7 @@ export default async function UpdateApi<TDocument = unknown, TPartialDocument = 
   const acceptedQuery: string[] = ['if_primary_term', 'if_seq_no', 'lang', 'refresh', 'require_alias', 'retry_on_conflict', 'routing', 'timeout', 'wait_for_active_shards', '_source_excludes', '_source_includes', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  const body: Record<string, any> = params.body ?? {}
+  let body: Record<string, any> = params.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
@@ -54,7 +54,8 @@ export default async function UpdateApi<TDocument = unknown, TPartialDocument = 
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     }

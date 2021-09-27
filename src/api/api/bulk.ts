@@ -54,19 +54,22 @@ export default async function BulkApi<TSource = unknown> (this: That, params: T.
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
       // @ts-expect-error
       body = params[key]
     }
   }
 
-  const method = 'POST'
+  let method = ''
   let path = ''
   if (params.index != null && params.type != null) {
+    method = 'POST'
     path = `/${encodeURIComponent(params.index.toString())}/${encodeURIComponent(params.type.toString())}/_bulk`
   } else if (params.index != null) {
+    method = 'POST'
     path = `/${encodeURIComponent(params.index.toString())}/_bulk`
   } else {
+    method = 'POST'
     path = '/_bulk'
   }
   return await this.transport.request({ path, method, querystring, bulkBody: body }, options)

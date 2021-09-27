@@ -51,7 +51,7 @@ export default class Tasks {
     const acceptedQuery: string[] = ['actions', 'nodes', 'parent_task_id', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -60,17 +60,20 @@ export default class Tasks {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
     }
 
-    const method = 'POST'
+    let method = ''
     let path = ''
     if (params.task_id != null) {
+      method = 'POST'
       path = `/_tasks/${encodeURIComponent(params.task_id.toString())}/_cancel`
     } else {
+      method = 'POST'
       path = '/_tasks/_cancel'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
@@ -84,7 +87,7 @@ export default class Tasks {
     const acceptedQuery: string[] = ['timeout', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params.body ?? {}
+    let body: Record<string, any> = params.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -93,7 +96,8 @@ export default class Tasks {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }
@@ -112,7 +116,7 @@ export default class Tasks {
     const acceptedQuery: string[] = ['actions', 'detailed', 'group_by', 'nodes', 'parent_task_id', 'timeout', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const body: Record<string, any> = params?.body ?? {}
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -121,7 +125,8 @@ export default class Tasks {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
+      } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
       }

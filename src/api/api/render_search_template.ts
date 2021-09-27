@@ -45,7 +45,7 @@ export default async function RenderSearchTemplateApi (this: That, params?: T.Re
   const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  const body: Record<string, any> = params?.body ?? {}
+  let body: Record<string, any> = params?.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
@@ -54,17 +54,20 @@ export default async function RenderSearchTemplateApi (this: That, params?: T.Re
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
+    } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
     }
   }
 
-  const method = Object.keys(body).length > 0 ? 'POST' : 'GET'
+  let method = ''
   let path = ''
   if (params.id != null) {
+    method = body != null ? 'POST' : 'GET'
     path = `/_render/template/${encodeURIComponent(params.id.toString())}`
   } else {
+    method = body != null ? 'POST' : 'GET'
     path = '/_render/template'
   }
   return await this.transport.request({ path, method, querystring, body }, options)
