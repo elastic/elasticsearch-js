@@ -880,8 +880,6 @@ function addDocumentsGetter<TDocument> (result: TransportResult<T.SearchResponse
 function appendFilterPath (filter: string, params: Record<string, any>, force: boolean): void {
   if (params.filter_path !== undefined) {
     params.filter_path += ',' + filter // eslint-disable-line
-  } else if (params.filterPath !== undefined) {
-    params.filterPath += ',' + filter // eslint-disable-line
   } else if (force) {
     params.filter_path = filter
   }
