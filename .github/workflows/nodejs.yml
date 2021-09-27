@@ -32,147 +32,143 @@ jobs:
       run: |
         npm run test:unit
 
-    - name: Acceptance test
-      run: |
-        npm run test:acceptance
+    # - name: Acceptance test
+    #   run: |
+    #     npm run test:acceptance
 
-    - name: Type Definitions
-      run: |
-        npm run test:types
+  # helpers-integration-test:
+  #   name: Helpers integration test
+  #   runs-on: ubuntu-latest
 
-  helpers-integration-test:
-    name: Helpers integration test
-    runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [12.x, 14.x, 16.x]
 
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
+  #   steps:
+  #   - uses: actions/checkout@v2
 
-    steps:
-    - uses: actions/checkout@v2
+  #   - name: Configure sysctl limits
+  #     run: |
+  #       sudo swapoff -a
+  #       sudo sysctl -w vm.swappiness=1
+  #       sudo sysctl -w fs.file-max=262144
+  #       sudo sysctl -w vm.max_map_count=262144
 
-    - name: Configure sysctl limits
-      run: |
-        sudo swapoff -a
-        sudo sysctl -w vm.swappiness=1
-        sudo sysctl -w fs.file-max=262144
-        sudo sysctl -w vm.max_map_count=262144
+  #   - name: Runs Elasticsearch
+  #     uses: elastic/elastic-github-actions/elasticsearch@master
+  #     with:
+  #       stack-version: 8.0.0-SNAPSHOT
 
-    - name: Runs Elasticsearch
-      uses: elastic/elastic-github-actions/elasticsearch@master
-      with:
-        stack-version: 8.0.0-SNAPSHOT
+  #   - name: Use Node.js ${{ matrix.node-version }}
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: ${{ matrix.node-version }}
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+  #   - name: Install
+  #     run: |
+  #       npm install
 
-    - name: Install
-      run: |
-        npm install
+  #   - name: Integration test
+  #     run: |
+  #       npm run test:integration:helpers
 
-    - name: Integration test
-      run: |
-        npm run test:integration:helpers
+  # bundler-support:
+  #   name: Bundler support
+  #   runs-on: ubuntu-latest
 
-  bundler-support:
-    name: Bundler support
-    runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
 
-    steps:
-    - uses: actions/checkout@v2
+  #   - name: Configure sysctl limits
+  #     run: |
+  #       sudo swapoff -a
+  #       sudo sysctl -w vm.swappiness=1
+  #       sudo sysctl -w fs.file-max=262144
+  #       sudo sysctl -w vm.max_map_count=262144
 
-    - name: Configure sysctl limits
-      run: |
-        sudo swapoff -a
-        sudo sysctl -w vm.swappiness=1
-        sudo sysctl -w fs.file-max=262144
-        sudo sysctl -w vm.max_map_count=262144
+  #   - name: Runs Elasticsearch
+  #     uses: elastic/elastic-github-actions/elasticsearch@master
+  #     with:
+  #       stack-version: 8.0.0-SNAPSHOT
 
-    - name: Runs Elasticsearch
-      uses: elastic/elastic-github-actions/elasticsearch@master
-      with:
-        stack-version: 8.0.0-SNAPSHOT
+  #   - name: Use Node.js 14.x
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: 14.x
 
-    - name: Use Node.js 14.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
+  #   - name: Install
+  #     run: |
+  #       npm install
+  #       npm install --prefix test/bundlers/parcel-test
+  #       npm install --prefix test/bundlers/rollup-test
+  #       npm install --prefix test/bundlers/webpack-test
 
-    - name: Install
-      run: |
-        npm install
-        npm install --prefix test/bundlers/parcel-test
-        npm install --prefix test/bundlers/rollup-test
-        npm install --prefix test/bundlers/webpack-test
+  #   - name: Build
+  #     run: |
+  #       npm run build --prefix test/bundlers/parcel-test
+  #       npm run build --prefix test/bundlers/rollup-test
+  #       npm run build --prefix test/bundlers/webpack-test
 
-    - name: Build
-      run: |
-        npm run build --prefix test/bundlers/parcel-test
-        npm run build --prefix test/bundlers/rollup-test
-        npm run build --prefix test/bundlers/webpack-test
+  #   - name: Run bundle
+  #     run: |
+  #       npm start --prefix test/bundlers/parcel-test
+  #       npm start --prefix test/bundlers/rollup-test
+  #       npm start --prefix test/bundlers/webpack-test
 
-    - name: Run bundle
-      run: |
-        npm start --prefix test/bundlers/parcel-test
-        npm start --prefix test/bundlers/rollup-test
-        npm start --prefix test/bundlers/webpack-test
+  # mock-support:
+  #   name: Mock support
+  #   runs-on: ubuntu-latest
 
-  mock-support:
-    name: Mock support
-    runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
 
-    steps:
-    - uses: actions/checkout@v2
+  #   - name: Use Node.js 14.x
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: 14.x
 
-    - name: Use Node.js 14.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
+  #   - name: Install
+  #     run: |
+  #       npm install
+  #       npm install --prefix test/mock
 
-    - name: Install
-      run: |
-        npm install
-        npm install --prefix test/mock
+  #   - name: Run test
+  #     run: |
+  #       npm test --prefix test/mock
 
-    - name: Run test
-      run: |
-        npm test --prefix test/mock
+  # code-coverage:
+  #   name: Code coverage
+  #   runs-on: ubuntu-latest
 
-  code-coverage:
-    name: Code coverage
-    runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [14.x]
 
-    strategy:
-      matrix:
-        node-version: [14.x]
+  #   steps:
+  #   - uses: actions/checkout@v2
 
-    steps:
-    - uses: actions/checkout@v2
+  #   - name: Use Node.js ${{ matrix.node-version }}
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: ${{ matrix.node-version }}
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+  #   - name: Install
+  #     run: |
+  #       npm install
 
-    - name: Install
-      run: |
-        npm install
+  #   - name: Code coverage report
+  #     run: |
+  #       npm run test:coverage-report
 
-    - name: Code coverage report
-      run: |
-        npm run test:coverage-report
+  #   - name: Upload coverage to Codecov
+  #     uses: codecov/codecov-action@v1
+  #     with:
+  #       file: ./coverage.lcov
+  #       fail_ci_if_error: true
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        file: ./coverage.lcov
-        fail_ci_if_error: true
-
-    - name: Code coverage 100%
-      run: |
-        npm run test:coverage-100
+  #   - name: Code coverage 100%
+  #     run: |
+  #       npm run test:coverage-100
 
   license:
     name: License check
