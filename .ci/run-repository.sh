@@ -44,4 +44,4 @@ docker run \
   --name elasticsearch-js \
   --rm \
   elastic/elasticsearch-js \
-  node ${run_script_args} test/integration/index.js
+  npm run build && node ${run_script_args} test/integration/index.js
