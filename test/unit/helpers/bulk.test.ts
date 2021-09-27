@@ -181,7 +181,6 @@ test('bulk index', t => {
       let count = 0
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
-          console.log(params.method, params.path)
           if (params.method === 'GET') {
             t.equal(params.path, '/_all/_refresh')
             return { body: { acknowledged: true } }
@@ -934,12 +933,12 @@ test('bulk update', t => {
     let count = 0
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
-        t.strictEqual(params.path, '/_bulk')
+        t.equal(params.path, '/_bulk')
         t.match(params.headers, { 'content-type': 'application/vnd.elasticsearch+x-ndjson; compatible-with=8' })
         // @ts-expect-error
         const [action, payload] = params.body.split('\n')
-        t.deepEqual(JSON.parse(action), { update: { _index: 'test', _id: count } })
-        t.deepEqual(JSON.parse(payload), { doc: dataset[count++], doc_as_upsert: true })
+        t.same(JSON.parse(action), { update: { _index: 'test', _id: count } })
+        t.same(JSON.parse(payload), { doc: dataset[count++], doc_as_upsert: true })
         return { body: { errors: false, items: [{ update: { result: 'noop' } }] } }
       }
     })
@@ -1341,15 +1340,15 @@ test('Flush interval', t => {
     let count = 0
     const MockConnection = connection.buildMockConnection({
       onRequest (params) {
-        t.strictEqual(params.path, '/_bulk')
+        t.equal(params.path, '/_bulk')
         t.match(params.headers, {
           'content-type': 'application/vnd.elasticsearch+x-ndjson; compatible-with=8',
           'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${transportVersion},hc=${nodeVersion},h=bp`
         })
         // @ts-expect-error
         const [action, payload] = params.body.split('\n')
-        t.deepEqual(JSON.parse(action), { index: { _index: 'test' } })
-        t.deepEqual(JSON.parse(payload), dataset[count++])
+        t.same(JSON.parse(action), { index: { _index: 'test' } })
+        t.same(JSON.parse(payload), dataset[count++])
         return { body: { errors: false, items: [{}] } }
       }
     })
