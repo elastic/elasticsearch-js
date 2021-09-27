@@ -259,6 +259,14 @@ _Default:_ `false`
 |`string` - If configured, verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied fingerprint. Only accepts SHA256 digest fingerprints. +
 _Default:_ `null`
 
+|`maxResponseSize`
+|`number` - When configured, it verifies that the uncompressed response size is lower than the configured number, if it's higher it will abort the request. It cannot be higher than buffer.constants.MAX_STRING_LENTGH +
+_Default:_ `null`
+
+|`maxCompressedResponseSize`
+|`number` - When configured, it verifies that the compressed response size is lower than the configured number, if it's higher it will abort the request. It cannot be higher than buffer.constants.MAX_LENTGH +
+_Default:_ `null`
+
 |===
 
 [discrete]
