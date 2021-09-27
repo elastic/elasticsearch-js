@@ -12,6 +12,7 @@
     "test:coverage-100": "npm run build && tap test/{unit,acceptance}/{*,**/*}.test.ts --coverage --100",
     "test:coverage-report": "npm run build && tap test/{unit,acceptance}/{*,**/*}.test.ts --coverage && nyc report --reporter=text-lcov > coverage.lcov",
     "test:coverage-ui": "npm run build && tap test/{unit,acceptance}/{*,**/*}.test.ts --coverage --coverage-report=html",
+    "test:integration": "npm run build && node test/integration/index.js",
     "lint": "ts-standard src",
     "lint:fix": "ts-standard --fix src",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
@@ -55,11 +56,19 @@
     "@types/split2": "^3.2.1",
     "@types/stoppable": "^1.1.1",
     "@types/tap": "^15.0.5",
+    "cross-zip": "^4.0.0",
+    "fast-deep-equal": "^3.1.3",
     "into-stream": "^6.0.0",
+    "js-yaml": "^4.1.0",
     "license-checker": "^25.0.1",
+    "minimist": "^1.2.5",
+    "ms": "^3.0.0-canary.1",
     "node-abort-controller": "^2.0.0",
+    "node-fetch": "^2.6.2",
+    "ora": "^5.4.1",
     "proxy": "^1.0.2",
     "rimraf": "^3.0.2",
+    "semver": "^7.3.5",
     "split2": "^3.2.2",
     "standard": "^16.0.3",
     "stoppable": "^1.1.0",
@@ -67,10 +76,11 @@
     "ts-node": "^10.1.0",
     "ts-standard": "^10.0.0",
     "typescript": "^4.3.5",
-    "workq": "^3.0.0"
+    "workq": "^3.0.0",
+    "xmlbuilder2": "^3.0.2"
   },
   "dependencies": {
-    "@elastic/transport": "^0.0.4",
+    "@elastic/transport": "^0.0.5",
     "tslib": "^2.3.0"
   },
   "tap": {
