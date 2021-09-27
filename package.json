@@ -52,6 +52,7 @@
     "@types/ms": "^0.7.31",
     "@types/node": "^16.4.1",
     "@types/sinonjs__fake-timers": "^6.0.3",
+    "@types/split2": "^3.2.1",
     "@types/stoppable": "^1.1.1",
     "@types/tap": "^15.0.5",
     "into-stream": "^6.0.0",
@@ -59,6 +60,7 @@
     "node-abort-controller": "^2.0.0",
     "proxy": "^1.0.2",
     "rimraf": "^3.0.2",
+    "split2": "^3.2.2",
     "standard": "^16.0.3",
     "stoppable": "^1.1.0",
     "tap": "^15.0.9",
@@ -68,7 +70,7 @@
     "workq": "^3.0.0"
   },
   "dependencies": {
-    "@elastic/transport": "^0.0.3",
+    "@elastic/transport": "^0.0.4",
     "tslib": "^2.3.0"
   },
   "tap": {
