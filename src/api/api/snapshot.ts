@@ -216,7 +216,7 @@ export default class Snapshot {
   async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetResponse>
   async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedQuery: string[] = ['ignore_unavailable', 'master_timeout', 'verbose', 'index_details', 'human', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedQuery: string[] = ['ignore_unavailable', 'master_timeout', 'verbose', 'index_details', 'human', 'include_repository', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined

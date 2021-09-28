@@ -334,31 +334,6 @@ export interface ExplainResponse<TDocument = unknown> {
   get?: InlineGet<TDocument>
 }
 
-export interface FieldCapsFieldCapabilitiesBodyIndexFilter {
-  range?: FieldCapsFieldCapabilitiesBodyIndexFilterRange
-  match_none?: EmptyObject
-  term?: FieldCapsFieldCapabilitiesBodyIndexFilterTerm
-}
-
-export interface FieldCapsFieldCapabilitiesBodyIndexFilterRange {
-  timestamp: FieldCapsFieldCapabilitiesBodyIndexFilterRangeTimestamp
-}
-
-export interface FieldCapsFieldCapabilitiesBodyIndexFilterRangeTimestamp {
-  gte?: integer
-  gt?: integer
-  lte?: integer
-  lt?: integer
-}
-
-export interface FieldCapsFieldCapabilitiesBodyIndexFilterTerm {
-  versionControl: FieldCapsFieldCapabilitiesBodyIndexFilterTermVersionControl
-}
-
-export interface FieldCapsFieldCapabilitiesBodyIndexFilterTermVersionControl {
-  value: string
-}
-
 export interface FieldCapsFieldCapability {
   aggregatable: boolean
   indices?: Indices
@@ -377,7 +352,8 @@ export interface FieldCapsRequest extends RequestBase {
   fields?: Fields
   ignore_unavailable?: boolean
   include_unmapped?: boolean
-  index_filter?: FieldCapsFieldCapabilitiesBodyIndexFilter
+  index_filter?: QueryDslQueryContainer
+  runtime_mappings?: MappingRuntimeFields
 }
 
 export interface FieldCapsResponse {
@@ -599,7 +575,7 @@ export interface MsearchTemplateRequest extends RequestBase {
 }
 
 export interface MsearchTemplateResponse<TDocument = unknown> {
-  responses: SearchResponse<TDocument>[]
+  responses: (SearchResponse<TDocument> | ErrorResponseBase)[]
   took: long
 }
 
@@ -1866,7 +1842,7 @@ export interface ErrorCause {
 
 export interface ErrorResponseBase {
   error: MainError | string
-  status: integer
+  status?: integer
 }
 
 export type ExpandWildcardOptions = 'all' | 'open' | 'closed' | 'hidden' | 'none'
@@ -7834,6 +7810,14 @@ export interface EnrichPutPolicyRequest extends RequestBase {
 export interface EnrichPutPolicyResponse extends AcknowledgedResponseBase {
 }
 
+export interface EnrichStatsCacheStats {
+  node_id: Id
+  count: integer
+  hits: integer
+  misses: integer
+  evictions: integer
+}
+
 export interface EnrichStatsCoordinatorStats {
   executed_searches_total: long
   node_id: Id
@@ -7853,6 +7837,7 @@ export interface EnrichStatsRequest extends RequestBase {
 export interface EnrichStatsResponse {
   coordinator_stats: EnrichStatsCoordinatorStats[]
   executing_policies: EnrichStatsExecutingPolicy[]
+  cache_stats?: EnrichStatsCacheStats[]
 }
 
 export interface EqlEqlHits<TEvent = unknown> {
@@ -13871,6 +13856,7 @@ export interface SnapshotGetRequest extends RequestBase {
   verbose?: boolean
   index_details?: boolean
   human?: boolean
+  include_repository?: boolean
 }
 
 export interface SnapshotGetResponse {
