@@ -40,4 +40,4 @@ docker run \
   --name elasticsearch-js \
   --rm \
   elastic/elasticsearch-js \
-  npm run test:integration
+  npm run test:integration --unsafe-perm
