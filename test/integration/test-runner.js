@@ -404,6 +404,10 @@ function build (opts = {}) {
       cmd.params.body = [cmd.params.body]
     }
 
+    if (typeof cmd.params.body === 'string' && !isNDJson(cmd.api)) {
+      cmd.params.body = JSON.parse(cmd.params.body)
+    }
+
     const [err, result] = await to(api(cmd.params, options))
     let warnings = result ? result.warnings : null
     const body = result ? result.body : null

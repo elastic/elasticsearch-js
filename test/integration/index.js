@@ -65,9 +65,6 @@ const freeSkips = {
   'search/320_disallow_queries.yml': ['Test disallow expensive queries']
 }
 const platinumBlackList = {
-  // the put_user command breaks the client because username can go
-  // in both path and body
-  'api_key/10_basic.yml': ['*'],
   'analytics/histogram.yml': ['Histogram requires values in increasing order'],
   // this two test cases are broken, we should
   // return on those in the future.
