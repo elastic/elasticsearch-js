@@ -47,7 +47,6 @@ export default async function MsearchApi<TDocument = unknown> (this: That, param
   // @ts-expect-error
   let body: any = params.body ?? undefined
 
-  params = params ?? {}
   for (const key in params) {
     if (acceptedQuery.includes(key)) {
       // @ts-expect-error

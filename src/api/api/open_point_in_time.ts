@@ -47,7 +47,6 @@ export default async function OpenPointInTimeApi (this: That, params: T.OpenPoin
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
 
-  params = params ?? {}
   for (const key in params) {
     if (acceptedQuery.includes(key)) {
       // @ts-expect-error
