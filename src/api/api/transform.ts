@@ -177,7 +177,7 @@ export default class Transform {
   async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformPutTransformResponse, unknown>>
   async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptions): Promise<T.TransformPutTransformResponse>
   async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['transform_id']
+    const acceptedPath: string[] = ['transform_id', 'transform_id']
     const acceptedQuery: string[] = ['defer_validation', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
@@ -264,8 +264,8 @@ export default class Transform {
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformUpdateTransformResponse, unknown>>
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<T.TransformUpdateTransformResponse>
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedPath: string[] = ['transform_id', 'transform_id']
+    const acceptedQuery: string[] = ['defer_validation', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined

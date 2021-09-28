@@ -41,8 +41,8 @@ export default async function GetSourceApi<TDocument = unknown> (this: That, par
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest | TB.GetSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetSourceResponse<TDocument>, unknown>>
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest | TB.GetSourceRequest, options?: TransportRequestOptions): Promise<T.GetSourceResponse<TDocument>>
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest | TB.GetSourceRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = []
-  const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedPath: string[] = ['id', 'index']
+  const acceptedQuery: string[] = ['preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'stored_fields', 'version', 'version_type', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
