@@ -132,7 +132,7 @@ export default class AsyncSearch {
   async submit<TDocument = unknown> (this: That, params?: T.AsyncSearchSubmitRequest | TB.AsyncSearchSubmitRequest, options?: TransportRequestOptions): Promise<T.AsyncSearchSubmitResponse<TDocument>>
   async submit<TDocument = unknown> (this: That, params?: T.AsyncSearchSubmitRequest | TB.AsyncSearchSubmitRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedQuery: string[] = ['batched_reduce_size', 'wait_for_completion_timeout', 'keep_on_completion', 'typed_keys', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
