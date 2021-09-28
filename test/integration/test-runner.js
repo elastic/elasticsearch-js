@@ -381,6 +381,21 @@ function build (opts = {}) {
       process.exit(1)
     }
 
+    if (action.headers) {
+      switch (action.headers['Content-Type'] || action.headers['content-type']) {
+        case 'application/json':
+          delete action.headers['Content-Type']
+          delete action.headers['content-type']
+          action.headers['Content-Type'] = 'application/vnd.elasticsearch+json; compatible-with=8'
+          break
+        case 'application/x-ndjson':
+          delete action.headers['Content-Type']
+          delete action.headers['content-type']
+          action.headers['Content-Type'] = 'application/vnd.elasticsearch+x-ndjson; compatible-with=8'
+          break
+      }
+    }
+
     const options = { ignore: cmd.params.ignore, headers: action.headers, meta: true }
     if (!Array.isArray(options.ignore)) options.ignore = [options.ignore]
     if (cmd.params.ignore) delete cmd.params.ignore
