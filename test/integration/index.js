@@ -45,6 +45,10 @@ const freeSkips = {
   // the v8 client never sends the scroll_id in querystgring,
   // the way the test is structured causes a security exception
   'free/scroll/10_basic.yml': ['Body params override query string'],
+  'free/scroll/11_clear.yml': [
+    'Body params with array param override query string',
+    'Body params with string param scroll id override query string'
+  ],
   // TODO: remove this once 'arbitrary_key' is implemented
   // https://github.com/elastic/elasticsearch/pull/41492
   'indices.split/30_copy_settings.yml': ['*'],
@@ -139,7 +143,7 @@ const platinumBlackList = {
 function runner (opts = {}) {
   const options = { node: opts.node }
   if (opts.isXPack) {
-    options.tls = {
+    options.ssl = {
       ca: readFileSync(join(__dirname, '..', '..', '.ci', 'certs', 'ca.crt'), 'utf8'),
       rejectUnauthorized: false
     }
