@@ -27,6 +27,7 @@ const helper = require('./helper')
 const deepEqual = require('fast-deep-equal')
 const { join } = require('path')
 const { locations } = require('../../scripts/download-artifacts')
+const packageJson = require('../../package.json')
 const { errors } = require('@elastic/transport')
 const { ConfigurationError } = errors
 
@@ -386,12 +387,12 @@ function build (opts = {}) {
         case 'application/json':
           delete action.headers['Content-Type']
           delete action.headers['content-type']
-          action.headers['Content-Type'] = 'application/vnd.elasticsearch+json; compatible-with=8'
+          action.headers['Content-Type'] = `application/vnd.elasticsearch+json; compatible-with=${packageJson.version.split('.')[0]}`
           break
         case 'application/x-ndjson':
           delete action.headers['Content-Type']
           delete action.headers['content-type']
-          action.headers['Content-Type'] = 'application/vnd.elasticsearch+x-ndjson; compatible-with=8'
+          action.headers['Content-Type'] = `application/vnd.elasticsearch+x-ndjson; compatible-with=${packageJson.version.split('.')[0]}`
           break
       }
     }
@@ -802,7 +803,10 @@ function parseDoError (err, spec) {
   }
 
   if (spec === 'param') {
-    return err instanceof ConfigurationError
+    // the new client do not perform runtime checks,
+    // but it relies on typescript informing the user
+    return true
+    // return err instanceof ConfigurationError
   }
 
   return false
