@@ -42,6 +42,9 @@ const MAX_FILE_TIME = 1000 * 30
 const MAX_TEST_TIME = 1000 * 3
 
 const freeSkips = {
+  // the v8 client never sends the scroll_id in querystgring,
+  // the way the test is structured causes a security exception
+  'free/scroll/10_basic.yml': ['Body params override query string'],
   // TODO: remove this once 'arbitrary_key' is implemented
   // https://github.com/elastic/elasticsearch/pull/41492
   'indices.split/30_copy_settings.yml': ['*'],

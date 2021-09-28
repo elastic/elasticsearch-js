@@ -28,8 +28,6 @@ const deepEqual = require('fast-deep-equal')
 const { join } = require('path')
 const { locations } = require('../../scripts/download-artifacts')
 const packageJson = require('../../package.json')
-const { errors } = require('@elastic/transport')
-const { ConfigurationError } = errors
 
 const { delve, to, isXPackTemplate, sleep } = helper
 
