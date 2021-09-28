@@ -725,6 +725,7 @@ function length (val, len) {
  * @returns {object}
  */
 function parseDo (action) {
+  action = JSON.parse(JSON.stringify(action))
   return Object.keys(action).reduce((acc, val) => {
     switch (val) {
       case 'catch':
