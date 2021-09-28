@@ -12,7 +12,7 @@
     "test:coverage-100": "npm run build && tap test/{unit,acceptance}/{*,**/*}.test.ts --coverage --100",
     "test:coverage-report": "npm run build && tap test/{unit,acceptance}/{*,**/*}.test.ts --coverage && nyc report --reporter=text-lcov > coverage.lcov",
     "test:coverage-ui": "npm run build && tap test/{unit,acceptance}/{*,**/*}.test.ts --coverage --coverage-report=html",
-    "test:integration": "npm run build && node test/integration/index.js",
+    "test:integration": "tsc && node test/integration/index.js",
     "lint": "ts-standard src",
     "lint:fix": "ts-standard --fix src",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
