@@ -143,7 +143,7 @@ const platinumBlackList = {
   // the error cause can either be in the yaml test or in the specification
 
   // start should be a string in the yaml test
-  'platinue/ml/delete_job_force.yml': ['Test force delete an open job that is referred by a started datafeed']
+  'platinum/ml/delete_job_force.yml': ['Test force delete an open job that is referred by a started datafeed']
 }
 
 function runner (opts = {}) {
