@@ -144,7 +144,7 @@ const platinumBlackList = {
 
   // start should be a string in the yaml test
   'platinum/ml/delete_job_force.yml': ['Test force delete an open job that is referred by a started datafeed'],
-  'platinum/ml/evaluate_data_frame.yml': ['Test outlier_detection auc_roc']
+  'platinum/ml/evaluate_data_frame.yml': ['*']
 }
 
 function runner (opts = {}) {
