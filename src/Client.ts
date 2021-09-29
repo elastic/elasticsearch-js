@@ -77,7 +77,7 @@ interface NodeOptions {
   }
 }
 
-interface ClientOptions {
+export interface ClientOptions {
   node?: string | string[] | NodeOptions | NodeOptions[]
   nodes?: string | string[] | NodeOptions | NodeOptions[]
   Connection?: typeof BaseConnection

@@ -40,7 +40,6 @@ async function release (opts) {
   packageJson.name = '@elastic/elasticsearch-canary'
   packageJson.version = newCanaryVersion
   packageJson.versionCanary = newCanaryVersion
-  packageJson.types = './api/new.d.ts'
   packageJson.commitHash = execSync('git log -1 --pretty=format:%h').toString()
 
   // update the package.json

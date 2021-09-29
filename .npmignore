@@ -71,6 +71,8 @@ certs
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 
+src
+
 # CANARY-PACKAGE
-api/kibana.d.ts
+lib/api/kibana.*
 # /CANARY-PACKAGE
