@@ -610,7 +610,7 @@ export default class Ml {
   async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptions): Promise<T.MlGetCalendarEventsResponse>
   async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id']
-    const acceptedQuery: string[] = ['job_id', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedQuery: string[] = ['job_id', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string', 'end', 'from', 'size', 'start']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
