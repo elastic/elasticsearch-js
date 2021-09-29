@@ -617,8 +617,8 @@ export default class Indices {
   async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedQuery: string[] = []
+    const acceptedPath: string[] = ['index']
+    const acceptedQuery: string[] = ['fields', 'ignore_unavailable', 'allow_no_indices', 'expand_wildcards']
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 

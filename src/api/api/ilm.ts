@@ -169,7 +169,7 @@ export default class Ilm {
   async migrateToDataTiers (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async migrateToDataTiers (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedQuery: string[] = []
+    const acceptedQuery: string[] = ['dry_run']
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 

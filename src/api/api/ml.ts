@@ -1079,7 +1079,7 @@ export default class Ml {
   async getTrainedModelDeploymentStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async getTrainedModelDeploymentStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async getTrainedModelDeploymentStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
@@ -1177,8 +1177,8 @@ export default class Ml {
   async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedQuery: string[] = []
+    const acceptedPath: string[] = ['model_id']
+    const acceptedQuery: string[] = ['timeout']
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1611,7 +1611,7 @@ export default class Ml {
   async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const acceptedPath: string[] = ['model_id', 'part']
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
@@ -1637,7 +1637,7 @@ export default class Ml {
   async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
@@ -1804,8 +1804,8 @@ export default class Ml {
   async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedQuery: string[] = []
+    const acceptedPath: string[] = ['model_id']
+    const acceptedQuery: string[] = ['timeout', 'wait_for']
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1886,7 +1886,7 @@ export default class Ml {
   async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
@@ -1940,8 +1940,8 @@ export default class Ml {
   async updateDatafeed (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async updateDatafeed (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async updateDatafeed (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedQuery: string[] = []
+    const acceptedPath: string[] = ['datafeed_id']
+    const acceptedQuery: string[] = ['ignore_unavailable', 'allow_no_indices', 'ignore_throttled', 'expand_wildcards']
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 

@@ -75,7 +75,7 @@ export default class Sql {
   async deleteAsync (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async deleteAsync (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async deleteAsync (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
@@ -101,8 +101,8 @@ export default class Sql {
   async getAsync (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async getAsync (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async getAsync (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedQuery: string[] = []
+    const acceptedPath: string[] = ['id']
+    const acceptedQuery: string[] = ['delimiter', 'format', 'keep_alive', 'wait_for_completion_timeout']
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -127,7 +127,7 @@ export default class Sql {
   async getAsyncStatus (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async getAsyncStatus (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async getAsyncStatus (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined

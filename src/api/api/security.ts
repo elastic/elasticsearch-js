@@ -1283,7 +1283,7 @@ export default class Security {
   async samlServiceProviderMetadata (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async samlServiceProviderMetadata (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async samlServiceProviderMetadata (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const acceptedPath: string[] = ['realm_name']
     const acceptedQuery: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined

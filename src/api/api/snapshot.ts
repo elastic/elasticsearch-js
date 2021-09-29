@@ -279,8 +279,8 @@ export default class Snapshot {
   async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
-    const acceptedQuery: string[] = []
+    const acceptedPath: string[] = ['repository']
+    const acceptedQuery: string[] = ['blob_count', 'concurrency', 'read_node_count', 'early_read_node_count', 'seed', 'rare_action_probability', 'max_blob_size', 'max_total_data_size', 'timeout', 'detailed', 'rarely_abort_writes']
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
