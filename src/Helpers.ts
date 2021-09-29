@@ -145,9 +145,10 @@ export default class Helpers {
    * @param {object} options - The client optional configuration for this request.
    * @return {array} The documents that matched the request.
    */
-  async search<TDocument = unknown> (params: T.SearchRequest, options?: TransportRequestOptions): Promise<TDocument[]> {
+  async search<TDocument = unknown> (params: T.SearchRequest, options: TransportRequestOptions = {}): Promise<TDocument[]> {
     appendFilterPath('hits.hits._source', params, true)
-    const result = await this[kClient].search<TDocument>(params, options)
+    options.meta = true
+    const { body: result } = await this[kClient].search<TDocument>(params, options as TransportRequestOptionsWithMeta)
     if (result.hits?.hits != null) {
       return result.hits.hits.map(d => d._source as TDocument)
     }
@@ -223,12 +224,12 @@ export default class Helpers {
       }
 
       for (let i = 0; i <= maxRetries; i++) {
-        // @ts-expect-error
-        response = await this[kClient].scroll({
+        const r = await this[kClient].scroll({
           scroll: params.scroll,
           rest_total_hits_as_int: params.rest_total_hits_as_int,
           scroll_id
-        }, options)
+        }, options as TransportRequestOptionsWithMeta)
+        response = r as TransportResult<T.ScrollResponse<TDocument>, unknown>
         assert(response !== undefined, 'The response is undefined, please file a bug report')
         if (response.statusCode !== 429) break
         await sleep(wait)
@@ -480,11 +481,10 @@ export default class Helpers {
       // This function never returns an error, if the msearch operation fails,
       // the error is dispatched to all search executors.
       function tryMsearch (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[], done: (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[]) => void): void {
-        client.msearch(Object.assign({}, msearchOptions, { body: msearchBody }), reqOptions)
+        client.msearch(Object.assign({}, msearchOptions, { body: msearchBody }), reqOptions as TransportRequestOptionsWithMeta)
           .then(results => {
             const retryBody = []
             const retryCallbacks = []
-            // @ts-expect-error
             const { responses } = results.body
             for (let i = 0, len = responses.length; i < len; i++) {
               const response = responses[i]
@@ -497,7 +497,7 @@ export default class Helpers {
               const result = { ...results, body: response }
               // @ts-expect-error
               addDocumentsGetter(result)
-              if (response.status >= 400) {
+              if (response.status != null && response.status >= 400) {
                 // @ts-expect-error
                 callbacks[i](new ResponseError(result), result)
               } else {
@@ -530,6 +530,7 @@ export default class Helpers {
       reqOptions.headers = reqOptions.headers ?? {}
       reqOptions.headers['x-elastic-client-meta'] = `${this[kMetaHeader] as string},h=bp`
     }
+    reqOptions.meta = true
     const {
       datasource,
       onDocument,
@@ -806,8 +807,9 @@ export default class Helpers {
 
       function tryBulk (bulkBody: string[], callback: (err: Error | null, bulkBody: string[]) => void): void {
         if (shouldAbort) return callback(null, [])
-        client.bulk(Object.assign({}, bulkOptions, { body: bulkBody }), reqOptions)
-          .then(result => {
+        client.bulk(Object.assign({}, bulkOptions, { body: bulkBody }), reqOptions as TransportRequestOptionsWithMeta)
+          .then(response => {
+            const result = response.body
             if (!result.errors) {
               stats.successful += result.items.length
               for (const item of result.items) {
