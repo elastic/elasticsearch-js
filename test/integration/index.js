@@ -131,6 +131,8 @@ const platinumBlackList = {
   'unsigned_long/30_multi_fields.yml': ['*'],
   'unsigned_long/40_different_numeric.yml': ['*'],
   'unsigned_long/50_script_values.yml': ['*'],
+  // the v8 client flattens the body into the parent object
+  'platinum/users/10_basic.yml': ['Test put user with different username in body'],
   // docker issue?
   'watcher/execute_watch/60_http_input.yml': ['*'],
   // the checks are correct, but for some reason the test is failing on js side
