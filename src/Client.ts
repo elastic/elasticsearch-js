@@ -22,7 +22,7 @@ import { URL } from 'url'
 import buffer from 'buffer'
 import {
   Transport,
-  HttpConnection,
+  UndiciConnection,
   WeightedConnectionPool,
   CloudConnectionPool,
   Serializer,
@@ -157,7 +157,7 @@ export default class Client extends API {
     }
 
     const options: Required<ClientOptions> = Object.assign({}, {
-      Connection: HttpConnection,
+      Connection: UndiciConnection,
       Transport: SniffingTransport,
       Serializer,
       ConnectionPool: (opts.cloud != null) ? CloudConnectionPool : WeightedConnectionPool,

@@ -337,17 +337,6 @@ test('Configure opaqueIdPrefix', t => {
   t.end()
 })
 
-test('Disable keep alive agent', t => {
-  const client = new Client({
-    node: 'http://localhost:9200',
-    agent: false
-  })
-
-  t.equal(client.connectionPool._agent, false)
-
-  t.end()
-})
-
 test('name as string', t => {
   const client = new Client({
     node: 'http://localhost:9200',
