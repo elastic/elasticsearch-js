@@ -93,7 +93,7 @@ export interface ClientOptions {
   sniffOnConnectionFault?: boolean
   resurrectStrategy?: 'ping' | 'optimistic' | 'none'
   compression?: boolean
-  ssl?: TlsConnectionOptions
+  tls?: TlsConnectionOptions
   agent?: HttpAgentOptions | UndiciAgentOptions | agentFn | false
   nodeFilter?: nodeFilterFn
   nodeSelector?: nodeSelectorFn
@@ -137,10 +137,10 @@ export default class Client extends API {
       // see https://github.com/elastic/elasticsearch-py/pull/704.
       // So unless the user specifies otherwise, we enable compression.
       if (opts.compression == null) opts.compression = true
-      if (opts.ssl == null ||
-         (opts.ssl != null && opts.ssl.secureProtocol == null)) {
-        opts.ssl = opts.ssl ?? {}
-        opts.ssl.secureProtocol = 'TLSv1_2_method'
+      if (opts.tls == null ||
+         (opts.tls != null && opts.tls.secureProtocol == null)) {
+        opts.tls = opts.tls ?? {}
+        opts.tls.secureProtocol = 'TLSv1_2_method'
       }
     }
 
@@ -170,7 +170,7 @@ export default class Client extends API {
       sniffOnConnectionFault: false,
       resurrectStrategy: 'ping',
       compression: false,
-      ssl: null,
+      tls: null,
       caFingerprint: null,
       agent: null,
       headers: {},
@@ -220,7 +220,7 @@ export default class Client extends API {
       this.connectionPool = new options.ConnectionPool({
         pingTimeout: options.pingTimeout,
         resurrectStrategy: options.resurrectStrategy,
-        ssl: options.ssl,
+        tls: options.tls,
         agent: options.agent,
         proxy: options.proxy,
         Connection: options.Connection,

@@ -297,7 +297,7 @@ test('Elastic Cloud config', t => {
     headers: {
       authorization: 'Basic ' + Buffer.from('elastic:changeme').toString('base64')
     },
-    ssl: { secureProtocol: 'TLSv1_2_method' }
+    tls: { secureProtocol: 'TLSv1_2_method' }
   })
 
   t.end()
@@ -314,14 +314,14 @@ test('Override default Elastic Cloud options', t => {
       password: 'changeme'
     },
     compression: false,
-    ssl: {
+    tls: {
       secureProtocol: 'TLSv1_1_method'
     }
   })
 
   t.ok(client.connectionPool instanceof CloudConnectionPool)
   t.equal(client.transport[symbols.kCompression], false)
-  t.same(client.connectionPool._ssl, { secureProtocol: 'TLSv1_1_method' })
+  t.same(client.connectionPool._tls, { secureProtocol: 'TLSv1_1_method' })
 
   t.end()
 })
