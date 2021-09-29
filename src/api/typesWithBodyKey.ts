@@ -8953,12 +8953,9 @@ export interface IndicesGetIndexTemplateIndexTemplateSummary {
 export interface IndicesGetIndexTemplateRequest extends RequestBase {
   name?: Name
   local?: boolean
-  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
-  body?: {
-    flat_settings?: boolean
-    include_type_name?: boolean
-    master_timeout?: Time
-  }
+  flat_settings?: boolean
+  include_type_name?: boolean
+  master_timeout?: Time
 }
 
 export interface IndicesGetIndexTemplateResponse {
@@ -11421,13 +11418,6 @@ export interface MlGetCalendarEventsRequest extends RequestBase {
   from?: integer
   start?: string
   size?: integer
-  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
-  body?: {
-    end?: DateString
-    from?: integer
-    start?: string
-    size?: integer
-  }
 }
 
 export interface MlGetCalendarEventsResponse {
