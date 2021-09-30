@@ -30,10 +30,6 @@ docker build \
 echo -e "\033[1m>>>>> NPM run test:integration >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
 
 repo=$(realpath $(dirname $(realpath -s $0))/../)
-run_script_args=""
-if [[ "$NODE_JS_VERSION" == "8" ]]; then
-  run_script_args="--harmony-async-iteration"
-fi
 
 docker run \
   --network=${network_name} \
@@ -44,4 +40,4 @@ docker run \
   --name elasticsearch-js \
   --rm \
   elastic/elasticsearch-js \
-  node ${run_script_args} test/integration/index.js
+  npm run test:integration

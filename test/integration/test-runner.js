@@ -27,7 +27,7 @@ const helper = require('./helper')
 const deepEqual = require('fast-deep-equal')
 const { join } = require('path')
 const { locations } = require('../../scripts/download-artifacts')
-const { ConfigurationError } = require('../../lib/errors')
+const packageJson = require('../../package.json')
 
 const { delve, to, isXPackTemplate, sleep } = helper
 
@@ -60,11 +60,11 @@ function build (opts = {}) {
 
     if (isXPack) {
       // wipe rollup jobs
-      const { body: jobsList } = await client.rollup.getJobs({ id: '_all' })
+      const jobsList = await client.rollup.getJobs({ id: '_all' })
       const jobsIds = jobsList.jobs.map(j => j.config.id)
       await helper.runInParallel(
         client, 'rollup.stopJob',
-        jobsIds.map(j => ({ id: j, waitForCompletion: true }))
+        jobsIds.map(j => ({ id: j, wait_for_completion: true }))
       )
       await helper.runInParallel(
         client, 'rollup.deleteJob',
@@ -72,7 +72,7 @@ function build (opts = {}) {
       )
 
       // delete slm policies
-      const { body: policies } = await client.slm.getLifecycle()
+      const policies = await client.slm.getLifecycle()
       await helper.runInParallel(
         client, 'slm.deleteLifecycle',
         Object.keys(policies).map(p => ({ policy_id: p }))
@@ -81,7 +81,7 @@ function build (opts = {}) {
       // remove 'x_pack_rest_user', used in some xpack test
       await client.security.deleteUser({ username: 'x_pack_rest_user' }, { ignore: [404] })
 
-      const { body: searchableSnapshotIndices } = await client.cluster.state({
+      const searchableSnapshotIndices = await client.cluster.state({
         metric: 'metadata',
         filter_path: 'metadata.indices.*.settings.index.store.snapshot'
       })
@@ -95,7 +95,7 @@ function build (opts = {}) {
     }
 
     // clean snapshots
-    const { body: repositories } = await client.snapshot.getRepository()
+    const repositories = await client.snapshot.getRepository()
     for (const repository of Object.keys(repositories)) {
       await client.snapshot.delete({ repository, snapshot: '*' }, { ignore: [404] })
       await client.snapshot.deleteRepository({ repository }, { ignore: [404] })
@@ -110,24 +110,24 @@ function build (opts = {}) {
     await client.indices.delete({ index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden' }, { ignore: [404] })
 
     // delete templates
-    const { body: templates } = await client.cat.templates({ h: 'name' })
+    const templates = await client.cat.templates({ h: 'name' })
     for (const template of templates.split('\n').filter(Boolean)) {
       if (isXPackTemplate(template)) continue
-      const { body } = await client.indices.deleteTemplate({ name: template }, { ignore: [404] })
+      const body = await client.indices.deleteTemplate({ name: template }, { ignore: [404] })
       if (JSON.stringify(body).includes(`index_template [${template}] missing`)) {
         await client.indices.deleteIndexTemplate({ name: template }, { ignore: [404] })
       }
     }
 
     // delete component template
-    const { body } = await client.cluster.getComponentTemplate()
+    const body = await client.cluster.getComponentTemplate()
     const components = body.component_templates.filter(c => !isXPackTemplate(c.name)).map(c => c.name)
     if (components.length > 0) {
       await client.cluster.deleteComponentTemplate({ name: components.join(',') }, { ignore: [404] })
     }
 
     // Remove any cluster setting
-    const { body: settings } = await client.cluster.getSettings()
+    const settings = await client.cluster.getSettings()
     const newSettings = {}
     for (const setting in settings) {
       if (Object.keys(settings[setting]).length === 0) continue
@@ -137,7 +137,7 @@ function build (opts = {}) {
       }
     }
     if (Object.keys(newSettings).length > 0) {
-      await client.cluster.putSettings({ body: newSettings })
+      await client.cluster.putSettings(newSettings)
     }
 
     if (isXPack) {
@@ -147,20 +147,20 @@ function build (opts = {}) {
         'watch-history-ilm-policy', 'ml-size-based-ilm-policy',
         'logs', 'metrics'
       ]
-      const { body: policies } = await client.ilm.getLifecycle()
+      const policies = await client.ilm.getLifecycle()
       for (const policy in policies) {
         if (preserveIlmPolicies.includes(policy)) continue
         await client.ilm.deleteLifecycle({ policy })
       }
 
       // delete autofollow patterns
-      const { body: patterns } = await client.ccr.getAutoFollowPattern()
+      const patterns = await client.ccr.getAutoFollowPattern()
       for (const { name } of patterns.patterns) {
         await client.ccr.deleteAutoFollowPattern({ name })
       }
 
       // delete all tasks
-      const { body: nodesTask } = await client.tasks.list()
+      const nodesTask = await client.tasks.list()
       const tasks = Object.keys(nodesTask.nodes)
         .reduce((acc, node) => {
           const { tasks } = nodesTask.nodes[node]
@@ -172,11 +172,11 @@ function build (opts = {}) {
 
       await helper.runInParallel(
         client, 'tasks.cancel',
-        tasks.map(id => ({ taskId: id }))
+        tasks.map(id => ({ task_id: id }))
       )
     }
 
-    const { body: shutdownNodes } = await client.shutdown.getNode()
+    const shutdownNodes = await client.shutdown.getNode()
     if (shutdownNodes._nodes == null && shutdownNodes.cluster_name == null) {
       for (const node of shutdownNodes.nodes) {
         await client.shutdown.deleteNode({ node_id: node.node_id })
@@ -186,7 +186,7 @@ function build (opts = {}) {
     // wait for pending task before resolving the promise
     await sleep(100)
     while (true) {
-      const { body } = await client.cluster.pendingTasks()
+      const body = await client.cluster.pendingTasks()
       if (body.tasks.length === 0) break
       await sleep(500)
     }
@@ -223,7 +223,8 @@ function build (opts = {}) {
       try {
         await client.security.putUser({
           username: 'x_pack_rest_user',
-          body: { password: 'x-pack-test-password', roles: ['superuser'] }
+          password: 'x-pack-test-password',
+          roles: ['superuser']
         })
       } catch (err) {
         assert.ifError(err, 'should not error: security.putUser')
@@ -379,13 +380,32 @@ function build (opts = {}) {
       process.exit(1)
     }
 
-    const options = { ignore: cmd.params.ignore, headers: action.headers }
+    if (action.headers) {
+      switch (action.headers['Content-Type'] || action.headers['content-type']) {
+        case 'application/json':
+          delete action.headers['Content-Type']
+          delete action.headers['content-type']
+          action.headers['Content-Type'] = `application/vnd.elasticsearch+json; compatible-with=${packageJson.version.split('.')[0]}`
+          break
+        case 'application/x-ndjson':
+          delete action.headers['Content-Type']
+          delete action.headers['content-type']
+          action.headers['Content-Type'] = `application/vnd.elasticsearch+x-ndjson; compatible-with=${packageJson.version.split('.')[0]}`
+          break
+      }
+    }
+
+    const options = { ignore: cmd.params.ignore, headers: action.headers, meta: true }
     if (!Array.isArray(options.ignore)) options.ignore = [options.ignore]
     if (cmd.params.ignore) delete cmd.params.ignore
 
     // ndjson apis should always send the body as an array
     if (isNDJson(cmd.api) && !Array.isArray(cmd.params.body)) {
       cmd.params.body = [cmd.params.body]
+    }
+
+    if (typeof cmd.params.body === 'string' && !isNDJson(cmd.api)) {
+      cmd.params.body = JSON.parse(cmd.params.body)
     }
 
     const [err, result] = await to(api(cmd.params, options))
@@ -707,6 +727,7 @@ function length (val, len) {
  * @returns {object}
  */
 function parseDo (action) {
+  action = JSON.parse(JSON.stringify(action))
   return Object.keys(action).reduce((acc, val) => {
     switch (val) {
       case 'catch':
@@ -723,42 +744,42 @@ function parseDo (action) {
         // eg: put_mapping => putMapping
         acc.method = val.replace(/_([a-z])/g, g => g[1].toUpperCase())
         acc.api = val
-        acc.params = camelify(action[val])
+        acc.params = action[val] // camelify(action[val])
     }
     return acc
   }, {})
 
-  function camelify (obj) {
-    const newObj = {}
+  // function camelify (obj) {
+  //   const newObj = {}
 
-    // TODO: add camelCase support for this fields
-    const doNotCamelify = ['copy_settings']
+  //   // TODO: add camelCase support for this fields
+  //   const doNotCamelify = ['copy_settings']
 
-    for (const key in obj) {
-      const val = obj[key]
-      let newKey = key
-      if (!~doNotCamelify.indexOf(key)) {
-        // if the key starts with `_` we should not camelify the first occurence
-        // eg: _source_include => _sourceInclude
-        newKey = key[0] === '_'
-          ? '_' + key.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
-          : key.replace(/_([a-z])/g, k => k[1].toUpperCase())
-      }
+  //   for (const key in obj) {
+  //     const val = obj[key]
+  //     let newKey = key
+  //     if (!~doNotCamelify.indexOf(key)) {
+  //       // if the key starts with `_` we should not camelify the first occurence
+  //       // eg: _source_include => _sourceInclude
+  //       newKey = key[0] === '_'
+  //         ? '_' + key.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
+  //         : key.replace(/_([a-z])/g, k => k[1].toUpperCase())
+  //     }
 
-      if (
-        val !== null &&
-        typeof val === 'object' &&
-        !Array.isArray(val) &&
-        key !== 'body'
-      ) {
-        newObj[newKey] = camelify(val)
-      } else {
-        newObj[newKey] = val
-      }
-    }
+  //     if (
+  //       val !== null &&
+  //       typeof val === 'object' &&
+  //       !Array.isArray(val) &&
+  //       key !== 'body'
+  //     ) {
+  //       newObj[newKey] = camelify(val)
+  //     } else {
+  //       newObj[newKey] = val
+  //     }
+  //   }
 
-    return newObj
-  }
+  //   return newObj
+  // }
 }
 
 function parseDoError (err, spec) {
@@ -785,7 +806,10 @@ function parseDoError (err, spec) {
   }
 
   if (spec === 'param') {
-    return err instanceof ConfigurationError
+    // the new client do not perform runtime checks,
+    // but it relies on typescript informing the user
+    return true
+    // return err instanceof ConfigurationError
   }
 
   return false
