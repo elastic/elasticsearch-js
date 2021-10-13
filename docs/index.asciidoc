@@ -1,4 +1,4 @@
-= Elasticsearch Node.js client
+= Elasticsearch JavaScript Client
 
 :branch: 7.x
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
