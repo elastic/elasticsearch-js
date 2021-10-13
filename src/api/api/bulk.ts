@@ -54,8 +54,9 @@ export default async function BulkApi<TSource = unknown> (this: That, params: T.
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body') {
+      body = body ?? {}
       // @ts-expect-error
-      body = params[key]
+      body[key] = params[key]
     }
   }
 

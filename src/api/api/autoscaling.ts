@@ -145,8 +145,9 @@ export default class Autoscaling {
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        body = body ?? {}
         // @ts-expect-error
-        body = params[key]
+        body[key] = params[key]
       }
     }
 
