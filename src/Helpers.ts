@@ -841,6 +841,7 @@ export default class Helpers {
                 } else {
                   onDrop({
                     status: responseItem.status,
+                    // @ts-expect-error
                     error: responseItem.error ?? null,
                     operation: serializer.deserialize(bulkBody[indexSlice]),
                     document: operation !== 'delete'
