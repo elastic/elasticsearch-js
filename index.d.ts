@@ -17,7 +17,7 @@
  * under the License.
  */
 
-import { errors } from '@elastic/transport'
 import Client from './lib/Client'
 
-export { Client, errors }
+export * from '@elastic/transport'
+export { Client }
