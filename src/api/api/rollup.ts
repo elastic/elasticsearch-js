@@ -31,8 +31,7 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult,
-  errors
+  TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -50,7 +49,6 @@ export default class Rollup {
   async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -61,17 +59,10 @@ export default class Rollup {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -86,7 +77,6 @@ export default class Rollup {
   async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -98,17 +88,10 @@ export default class Rollup {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -130,7 +113,6 @@ export default class Rollup {
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -142,17 +124,10 @@ export default class Rollup {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -174,7 +149,6 @@ export default class Rollup {
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -185,17 +159,10 @@ export default class Rollup {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -210,7 +177,6 @@ export default class Rollup {
   async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = ['cron', 'groups', 'index_pattern', 'metrics', 'page_size', 'rollup_index']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -221,17 +187,10 @@ export default class Rollup {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -246,7 +205,6 @@ export default class Rollup {
   async rollup (this: That, params: T.RollupRollupRequest | TB.RollupRollupRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'rollup_index']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = ['config']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: any = params.body ?? undefined
@@ -257,16 +215,9 @@ export default class Rollup {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         // @ts-expect-error
         body = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -281,7 +232,6 @@ export default class Rollup {
   async rollupSearch<TDocument = unknown> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'type']
     const acceptedQuery: string[] = ['rest_total_hits_as_int', 'typed_keys', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = ['aggs', 'query', 'size']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -292,17 +242,10 @@ export default class Rollup {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -317,7 +260,6 @@ export default class Rollup {
   async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -328,17 +270,10 @@ export default class Rollup {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -353,7 +288,6 @@ export default class Rollup {
   async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['timeout', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -364,17 +298,10 @@ export default class Rollup {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 

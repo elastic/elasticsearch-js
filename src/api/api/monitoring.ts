@@ -31,8 +31,7 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult,
-  errors
+  TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -50,7 +49,6 @@ export default class Monitoring {
   async bulk<TSource = unknown> (this: That, params: T.MonitoringBulkRequest<TSource> | TB.MonitoringBulkRequest<TSource>, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['type']
     const acceptedQuery: string[] = ['system_id', 'system_api_version', 'interval', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = ['operations']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: any = params.body ?? undefined
@@ -61,16 +59,9 @@ export default class Monitoring {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         // @ts-expect-error
         body = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 

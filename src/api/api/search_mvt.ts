@@ -31,8 +31,7 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult,
-  errors
+  TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -44,7 +43,6 @@ export default async function SearchMvtApi (this: That, params: T.SearchMvtReque
 export default async function SearchMvtApi (this: That, params: T.SearchMvtRequest | TB.SearchMvtRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index', 'field', 'zoom', 'x', 'y']
   const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-  const acceptedBody: string[] = ['aggs', 'exact_bounds', 'extent', 'fields', 'grid_precision', 'grid_type', 'query', 'runtime_mappings', 'size', 'sort']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
@@ -55,17 +53,10 @@ export default async function SearchMvtApi (this: That, params: T.SearchMvtReque
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (acceptedBody.includes(key)) {
-      // @ts-expect-error
-      if (params.body != null) {
-        throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-      }
+    } else if (key !== 'body') {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
-    } else {
-      if (key === 'body') continue
-      throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
     }
   }
 

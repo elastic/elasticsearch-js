@@ -31,8 +31,7 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult,
-  errors
+  TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -44,7 +43,6 @@ export default async function GetApi<TDocument = unknown> (this: That, params: T
 export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest | TB.GetRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
   const acceptedQuery: string[] = ['preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'stored_fields', 'version', 'version_type', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-  const acceptedBody: string[] = []
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
@@ -55,17 +53,10 @@ export default async function GetApi<TDocument = unknown> (this: That, params: T
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (acceptedBody.includes(key)) {
-      // @ts-expect-error
-      if (params.body != null) {
-        throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-      }
+    } else if (key !== 'body') {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
-    } else {
-      if (key === 'body') continue
-      throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
     }
   }
 

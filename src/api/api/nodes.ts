@@ -31,8 +31,7 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult,
-  errors
+  TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -50,7 +49,6 @@ export default class Nodes {
   async clearRepositoriesMeteringArchive (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id', 'max_archive_version']
     const acceptedQuery: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -60,15 +58,9 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -83,7 +75,6 @@ export default class Nodes {
   async getRepositoriesMeteringInfo (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
     const acceptedQuery: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -93,15 +84,9 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -116,7 +101,6 @@ export default class Nodes {
   async hotThreads (this: That, params?: T.NodesHotThreadsRequest | TB.NodesHotThreadsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
     const acceptedQuery: string[] = ['ignore_idle_threads', 'interval', 'snapshots', 'threads', 'thread_type', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -128,17 +112,10 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -160,7 +137,6 @@ export default class Nodes {
   async info (this: That, params?: T.NodesInfoRequest | TB.NodesInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id', 'metric']
     const acceptedQuery: string[] = ['flat_settings', 'master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -172,17 +148,10 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -210,7 +179,6 @@ export default class Nodes {
   async reloadSecureSettings (this: That, params?: T.NodesReloadSecureSettingsRequest | TB.NodesReloadSecureSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
     const acceptedQuery: string[] = ['timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = ['secure_settings_password']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -222,17 +190,10 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -254,7 +215,6 @@ export default class Nodes {
   async stats (this: That, params?: T.NodesStatsRequest | TB.NodesStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id', 'metric', 'index_metric']
     const acceptedQuery: string[] = ['completion_fields', 'fielddata_fields', 'fields', 'groups', 'include_segment_file_sizes', 'level', 'master_timeout', 'timeout', 'types', 'include_unloaded_segments', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -266,17 +226,10 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -310,7 +263,6 @@ export default class Nodes {
   async usage (this: That, params?: T.NodesUsageRequest | TB.NodesUsageRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id', 'metric']
     const acceptedQuery: string[] = ['timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -322,17 +274,10 @@ export default class Nodes {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 

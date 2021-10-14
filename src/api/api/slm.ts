@@ -31,8 +31,7 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult,
-  errors
+  TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -50,7 +49,6 @@ export default class Slm {
   async deleteLifecycle (this: That, params: T.SlmDeleteLifecycleRequest | TB.SlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['policy_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -61,17 +59,10 @@ export default class Slm {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -86,7 +77,6 @@ export default class Slm {
   async executeLifecycle (this: That, params: T.SlmExecuteLifecycleRequest | TB.SlmExecuteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['policy_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -97,17 +87,10 @@ export default class Slm {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -122,7 +105,6 @@ export default class Slm {
   async executeRetention (this: That, params?: T.SlmExecuteRetentionRequest | TB.SlmExecuteRetentionRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -134,17 +116,10 @@ export default class Slm {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -159,7 +134,6 @@ export default class Slm {
   async getLifecycle (this: That, params?: T.SlmGetLifecycleRequest | TB.SlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['policy_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -171,17 +145,10 @@ export default class Slm {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -203,7 +170,6 @@ export default class Slm {
   async getStats (this: That, params?: T.SlmGetStatsRequest | TB.SlmGetStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -215,17 +181,10 @@ export default class Slm {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -240,7 +199,6 @@ export default class Slm {
   async getStatus (this: That, params?: T.SlmGetStatusRequest | TB.SlmGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -252,17 +210,10 @@ export default class Slm {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -277,7 +228,6 @@ export default class Slm {
   async putLifecycle (this: That, params: T.SlmPutLifecycleRequest | TB.SlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['policy_id']
     const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = ['config', 'name', 'repository', 'retention', 'schedule']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -288,17 +238,10 @@ export default class Slm {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -313,7 +256,6 @@ export default class Slm {
   async start (this: That, params?: T.SlmStartRequest | TB.SlmStartRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -325,17 +267,10 @@ export default class Slm {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -350,7 +285,6 @@ export default class Slm {
   async stop (this: That, params?: T.SlmStopRequest | TB.SlmStopRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -362,17 +296,10 @@ export default class Slm {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        if (params.body != null) {
-          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-        }
+      } else if (key !== 'body') {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
-      } else {
-        if (key === 'body') continue
-        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 

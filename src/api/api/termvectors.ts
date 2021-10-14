@@ -31,8 +31,7 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult,
-  errors
+  TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -44,7 +43,6 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
 export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument> | TB.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index', 'id']
   const acceptedQuery: string[] = ['fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'preference', 'realtime', 'routing', 'term_statistics', 'version', 'version_type', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-  const acceptedBody: string[] = ['doc', 'filter', 'per_field_analyzer']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
@@ -55,17 +53,10 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (acceptedBody.includes(key)) {
-      // @ts-expect-error
-      if (params.body != null) {
-        throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-      }
+    } else if (key !== 'body') {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
-    } else {
-      if (key === 'body') continue
-      throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
     }
   }
 

@@ -31,8 +31,7 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult,
-  errors
+  TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -44,7 +43,6 @@ export default async function ReindexApi (this: That, params?: T.ReindexRequest 
 export default async function ReindexApi (this: That, params?: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
   const acceptedQuery: string[] = ['refresh', 'requests_per_second', 'scroll', 'slices', 'timeout', 'wait_for_active_shards', 'wait_for_completion', 'require_alias', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-  const acceptedBody: string[] = ['conflicts', 'dest', 'max_docs', 'script', 'size', 'source']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params?.body ?? undefined
@@ -56,17 +54,10 @@ export default async function ReindexApi (this: That, params?: T.ReindexRequest 
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (acceptedBody.includes(key)) {
-      // @ts-expect-error
-      if (params.body != null) {
-        throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-      }
+    } else if (key !== 'body') {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
-    } else {
-      if (key === 'body') continue
-      throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
     }
   }
 

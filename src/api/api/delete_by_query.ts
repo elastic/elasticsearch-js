@@ -31,8 +31,7 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult,
-  errors
+  TransportResult
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -44,7 +43,6 @@ export default async function DeleteByQueryApi (this: That, params: T.DeleteByQu
 export default async function DeleteByQueryApi (this: That, params: T.DeleteByQueryRequest | TB.DeleteByQueryRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedQuery: string[] = ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'conflicts', 'default_operator', 'df', 'expand_wildcards', 'from', 'ignore_unavailable', 'lenient', 'preference', 'refresh', 'request_cache', 'requests_per_second', 'routing', 'q', 'scroll', 'scroll_size', 'search_timeout', 'search_type', 'size', 'slices', 'sort', '_source', '_source_excludes', '_source_includes', 'stats', 'terminate_after', 'timeout', 'version', 'wait_for_active_shards', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
-  const acceptedBody: string[] = ['max_docs', 'query', 'slice']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
@@ -55,17 +53,10 @@ export default async function DeleteByQueryApi (this: That, params: T.DeleteByQu
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (acceptedBody.includes(key)) {
-      // @ts-expect-error
-      if (params.body != null) {
-        throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
-      }
+    } else if (key !== 'body') {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
-    } else {
-      if (key === 'body') continue
-      throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
     }
   }
 
