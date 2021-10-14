@@ -31,7 +31,8 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult
+  TransportResult,
+  errors
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -49,6 +50,7 @@ export default class Fleet {
   async globalCheckpoints (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const acceptedQuery: string[] = ['wait_for_advance', 'wait_for_index', 'checkpoints', 'timeout']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -58,9 +60,15 @@ export default class Fleet {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 

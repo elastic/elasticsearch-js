@@ -31,7 +31,8 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult
+  TransportResult,
+  errors
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -49,6 +50,7 @@ export default class Security {
   async authenticate (this: That, params?: T.SecurityAuthenticateRequest | TB.SecurityAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -60,10 +62,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -78,6 +87,7 @@ export default class Security {
   async changePassword (this: That, params?: T.SecurityChangePasswordRequest | TB.SecurityChangePasswordRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['password']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -89,10 +99,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -114,6 +131,7 @@ export default class Security {
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ids']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -124,10 +142,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -142,6 +167,7 @@ export default class Security {
   async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest | TB.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['application']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -152,10 +178,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -170,6 +203,7 @@ export default class Security {
   async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest | TB.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['realms']
     const acceptedQuery: string[] = ['usernames', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -180,10 +214,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -198,6 +239,7 @@ export default class Security {
   async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest | TB.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -208,10 +250,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -226,6 +275,7 @@ export default class Security {
   async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest | TB.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service', 'name']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -236,10 +286,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -254,6 +311,7 @@ export default class Security {
   async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest | TB.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['expiration', 'name', 'role_descriptors', 'metadata']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -265,10 +323,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -283,6 +348,7 @@ export default class Security {
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service', 'name']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -293,10 +359,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -318,6 +391,7 @@ export default class Security {
   async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest | TB.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['application', 'name']
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -328,10 +402,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -346,6 +427,7 @@ export default class Security {
   async deleteRole (this: That, params: T.SecurityDeleteRoleRequest | TB.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -356,10 +438,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -374,6 +463,7 @@ export default class Security {
   async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest | TB.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -384,10 +474,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -402,6 +499,7 @@ export default class Security {
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest | TB.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service', 'name']
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -412,10 +510,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -430,6 +535,7 @@ export default class Security {
   async deleteUser (this: That, params: T.SecurityDeleteUserRequest | TB.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -440,10 +546,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -458,6 +571,7 @@ export default class Security {
   async disableUser (this: That, params: T.SecurityDisableUserRequest | TB.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -468,10 +582,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -486,6 +607,7 @@ export default class Security {
   async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -496,10 +618,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -514,6 +643,7 @@ export default class Security {
   async enrollKibana (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -523,9 +653,15 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -540,6 +676,7 @@ export default class Security {
   async enrollNode (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -549,9 +686,15 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -566,6 +709,7 @@ export default class Security {
   async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest | TB.SecurityGetApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['id', 'name', 'owner', 'realm_name', 'username', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -577,10 +721,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -595,6 +746,7 @@ export default class Security {
   async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest | TB.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -606,10 +758,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -624,6 +783,7 @@ export default class Security {
   async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest | TB.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['application', 'name']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -635,10 +795,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -663,6 +830,7 @@ export default class Security {
   async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -674,10 +842,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -699,6 +874,7 @@ export default class Security {
   async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest | TB.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -710,10 +886,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -735,6 +918,7 @@ export default class Security {
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -746,10 +930,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -774,6 +965,7 @@ export default class Security {
   async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest | TB.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -784,10 +976,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -802,6 +1001,7 @@ export default class Security {
   async getToken (this: That, params?: T.SecurityGetTokenRequest | TB.SecurityGetTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['grant_type', 'scope', 'password', 'kerberos_ticket', 'refresh_token', 'username']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -813,10 +1013,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -831,6 +1038,7 @@ export default class Security {
   async getUser (this: That, params?: T.SecurityGetUserRequest | TB.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -842,10 +1050,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -867,6 +1082,7 @@ export default class Security {
   async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest | TB.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['application', 'priviledge', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -878,10 +1094,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -896,6 +1119,7 @@ export default class Security {
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['api_key', 'grant_type', 'access_token', 'username', 'password']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -906,10 +1130,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -924,6 +1155,7 @@ export default class Security {
   async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest | TB.SecurityHasPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['user']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['application', 'cluster', 'index']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -935,10 +1167,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -960,6 +1199,7 @@ export default class Security {
   async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest | TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['id', 'ids', 'name', 'owner', 'realm_name', 'username']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -971,10 +1211,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -989,6 +1236,7 @@ export default class Security {
   async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest | TB.SecurityInvalidateTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['token', 'refresh_token', 'realm_name', 'username']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -1000,10 +1248,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1018,6 +1273,7 @@ export default class Security {
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['privileges']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: any = params.body ?? undefined
@@ -1028,9 +1284,16 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         // @ts-expect-error
         body = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1045,6 +1308,7 @@ export default class Security {
   async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['applications', 'cluster', 'global', 'indices', 'metadata', 'run_as', 'transient_metadata']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1055,10 +1319,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1073,6 +1344,7 @@ export default class Security {
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['enabled', 'metadata', 'roles', 'rules', 'run_as']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1083,10 +1355,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1101,6 +1380,7 @@ export default class Security {
   async putUser (this: That, params: T.SecurityPutUserRequest | TB.SecurityPutUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['refresh', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['username', 'email', 'full_name', 'metadata', 'password', 'password_hash', 'roles', 'enabled']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1111,10 +1391,17 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1129,6 +1416,7 @@ export default class Security {
   async queryApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1138,9 +1426,15 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1155,6 +1449,7 @@ export default class Security {
   async samlAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1164,9 +1459,15 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1181,6 +1482,7 @@ export default class Security {
   async samlCompleteLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1190,9 +1492,15 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1207,6 +1515,7 @@ export default class Security {
   async samlInvalidate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1216,9 +1525,15 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1233,6 +1548,7 @@ export default class Security {
   async samlLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1242,9 +1558,15 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1259,6 +1581,7 @@ export default class Security {
   async samlPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1268,9 +1591,15 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1285,6 +1614,7 @@ export default class Security {
   async samlServiceProviderMetadata (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['realm_name']
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1294,9 +1624,15 @@ export default class Security {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 

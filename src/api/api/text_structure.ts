@@ -31,7 +31,8 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult
+  TransportResult,
+  errors
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -49,6 +50,7 @@ export default class TextStructure {
   async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument> | TB.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['charset', 'column_names', 'delimiter', 'explain', 'format', 'grok_pattern', 'has_header_row', 'line_merge_size_limit', 'lines_to_sample', 'quote', 'should_trim_fields', 'timeout', 'timestamp_field', 'timestamp_format']
+    const acceptedBody: string[] = ['text_files']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: any = params.body ?? undefined
@@ -59,9 +61,16 @@ export default class TextStructure {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         // @ts-expect-error
         body = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 

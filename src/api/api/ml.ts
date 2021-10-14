@@ -31,7 +31,8 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult
+  TransportResult,
+  errors
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -49,6 +50,7 @@ export default class Ml {
   async closeJob (this: That, params: T.MlCloseJobRequest | TB.MlCloseJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['allow_no_match', 'allow_no_jobs', 'force', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -59,10 +61,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -77,6 +86,7 @@ export default class Ml {
   async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest | TB.MlDeleteCalendarRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -87,10 +97,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -105,6 +122,7 @@ export default class Ml {
   async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest | TB.MlDeleteCalendarEventRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id', 'event_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -115,10 +133,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -133,6 +158,7 @@ export default class Ml {
   async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest | TB.MlDeleteCalendarJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id', 'job_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -143,10 +169,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -161,6 +194,7 @@ export default class Ml {
   async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest | TB.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['force', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -171,10 +205,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -189,6 +230,7 @@ export default class Ml {
   async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest | TB.MlDeleteDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedQuery: string[] = ['force', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -199,10 +241,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -217,6 +266,7 @@ export default class Ml {
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['requests_per_second', 'timeout']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -228,10 +278,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -253,6 +310,7 @@ export default class Ml {
   async deleteFilter (this: That, params: T.MlDeleteFilterRequest | TB.MlDeleteFilterRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['filter_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -263,10 +321,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -281,6 +346,7 @@ export default class Ml {
   async deleteForecast (this: That, params: T.MlDeleteForecastRequest | TB.MlDeleteForecastRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'forecast_id']
     const acceptedQuery: string[] = ['allow_no_forecasts', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -291,10 +357,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -316,6 +389,7 @@ export default class Ml {
   async deleteJob (this: That, params: T.MlDeleteJobRequest | TB.MlDeleteJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['force', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -326,10 +400,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -344,6 +425,7 @@ export default class Ml {
   async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest | TB.MlDeleteModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -354,10 +436,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -372,6 +461,7 @@ export default class Ml {
   async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest | TB.MlDeleteTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -382,10 +472,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -400,6 +497,7 @@ export default class Ml {
   async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest | TB.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_alias', 'model_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -410,10 +508,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -428,6 +533,7 @@ export default class Ml {
   async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest | TB.MlEstimateModelMemoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['analysis_config', 'max_bucket_cardinality', 'overall_cardinality']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -439,10 +545,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -457,6 +570,7 @@ export default class Ml {
   async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest | TB.MlEvaluateDataFrameRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['evaluation', 'index', 'query']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -467,10 +581,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -485,6 +606,7 @@ export default class Ml {
   async explainDataFrameAnalytics (this: That, params: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['source', 'dest', 'analysis', 'description', 'model_memory_limit', 'max_num_threads', 'analyzed_fields', 'allow_lazy_start']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -495,10 +617,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -520,6 +649,7 @@ export default class Ml {
   async flushJob (this: That, params: T.MlFlushJobRequest | TB.MlFlushJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['skip_time', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['advance_time', 'calc_interim', 'end', 'start']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -530,10 +660,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -548,6 +685,7 @@ export default class Ml {
   async forecast (this: That, params: T.MlForecastRequest | TB.MlForecastRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['duration', 'expires_in']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -558,10 +696,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -576,6 +721,7 @@ export default class Ml {
   async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'timestamp']
     const acceptedQuery: string[] = ['from', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['anomaly_score', 'desc', 'exclude_interim', 'expand', 'page', 'sort', 'start', 'end']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -586,10 +732,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -611,6 +764,7 @@ export default class Ml {
   async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id']
     const acceptedQuery: string[] = ['job_id', 'end', 'from', 'start', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -621,10 +775,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -639,6 +800,7 @@ export default class Ml {
   async getCalendars (this: That, params?: T.MlGetCalendarsRequest | TB.MlGetCalendarsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id']
     const acceptedQuery: string[] = ['from', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['page']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -650,10 +812,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -675,6 +844,7 @@ export default class Ml {
   async getCategories (this: That, params: T.MlGetCategoriesRequest | TB.MlGetCategoriesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'category_id']
     const acceptedQuery: string[] = ['from', 'size', 'partition_field_value', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['page']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -685,10 +855,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -710,6 +887,7 @@ export default class Ml {
   async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest | TB.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['allow_no_match', 'from', 'size', 'exclude_generated', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -721,10 +899,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -746,6 +931,7 @@ export default class Ml {
   async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest | TB.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['allow_no_match', 'from', 'size', 'verbose', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -757,10 +943,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -782,6 +975,7 @@ export default class Ml {
   async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest | TB.MlGetDatafeedStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedQuery: string[] = ['allow_no_datafeeds', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -793,10 +987,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -818,6 +1019,7 @@ export default class Ml {
   async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest | TB.MlGetDatafeedsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedQuery: string[] = ['allow_no_datafeeds', 'exclude_generated', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -829,10 +1031,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -854,6 +1063,7 @@ export default class Ml {
   async getFilters (this: That, params?: T.MlGetFiltersRequest | TB.MlGetFiltersRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['filter_id']
     const acceptedQuery: string[] = ['from', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -865,10 +1075,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -890,6 +1107,7 @@ export default class Ml {
   async getInfluencers (this: That, params: T.MlGetInfluencersRequest | TB.MlGetInfluencersRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['desc', 'end', 'exclude_interim', 'influencer_score', 'from', 'size', 'sort', 'start', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['page']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -900,10 +1118,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -918,6 +1143,7 @@ export default class Ml {
   async getJobStats (this: That, params?: T.MlGetJobStatsRequest | TB.MlGetJobStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['allow_no_jobs', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -929,10 +1155,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -954,6 +1187,7 @@ export default class Ml {
   async getJobs (this: That, params?: T.MlGetJobsRequest | TB.MlGetJobsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['allow_no_match', 'allow_no_jobs', 'exclude_generated', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -965,10 +1199,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -990,6 +1231,7 @@ export default class Ml {
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
     const acceptedQuery: string[] = ['desc', 'from', 'size', 'sort', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['start', 'end']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1000,10 +1242,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1025,6 +1274,7 @@ export default class Ml {
   async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest | TB.MlGetOverallBucketsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['bucket_span', 'overall_score', 'top_n', 'end', 'start', 'exclude_interim', 'allow_no_match', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['allow_no_jobs']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1035,10 +1285,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1053,6 +1310,7 @@ export default class Ml {
   async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['from', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['desc', 'exclude_interim', 'page', 'record_score', 'sort', 'start', 'end']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1063,10 +1321,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1081,6 +1346,7 @@ export default class Ml {
   async getTrainedModelDeploymentStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1090,9 +1356,15 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1107,6 +1379,7 @@ export default class Ml {
   async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest | TB.MlGetTrainedModelsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = ['allow_no_match', 'decompress_definition', 'exclude_generated', 'from', 'include', 'size', 'tags', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -1118,10 +1391,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1143,6 +1423,7 @@ export default class Ml {
   async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest | TB.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = ['allow_no_match', 'from', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -1154,10 +1435,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1179,6 +1467,7 @@ export default class Ml {
   async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = ['timeout']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1188,9 +1477,15 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1205,6 +1500,7 @@ export default class Ml {
   async info (this: That, params?: T.MlInfoRequest | TB.MlInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -1216,10 +1512,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1234,6 +1537,7 @@ export default class Ml {
   async openJob (this: That, params: T.MlOpenJobRequest | TB.MlOpenJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['timeout']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1244,10 +1548,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1262,6 +1573,7 @@ export default class Ml {
   async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest | TB.MlPostCalendarEventsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['events']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1272,10 +1584,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1290,6 +1609,7 @@ export default class Ml {
   async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData> | TB.MlPostDataRequest<TData>, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['reset_end', 'reset_start', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['data']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: any = params.body ?? undefined
@@ -1300,9 +1620,16 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         // @ts-expect-error
         body = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1317,6 +1644,7 @@ export default class Ml {
   async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest | TB.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['config']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -1328,10 +1656,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1353,6 +1688,7 @@ export default class Ml {
   async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest | TB.MlPreviewDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['job_config', 'datafeed_config']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -1364,10 +1700,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1389,6 +1732,7 @@ export default class Ml {
   async putCalendar (this: That, params: T.MlPutCalendarRequest | TB.MlPutCalendarRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['description']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1399,10 +1743,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1417,6 +1768,7 @@ export default class Ml {
   async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest | TB.MlPutCalendarJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id', 'job_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1427,10 +1779,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1445,6 +1804,7 @@ export default class Ml {
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', 'model_memory_limit', 'source']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1455,10 +1815,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1473,6 +1840,7 @@ export default class Ml {
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1483,10 +1851,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1501,6 +1876,7 @@ export default class Ml {
   async putFilter (this: That, params: T.MlPutFilterRequest | TB.MlPutFilterRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['filter_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['description', 'items']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1511,10 +1887,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1529,6 +1912,7 @@ export default class Ml {
   async putJob (this: That, params: T.MlPutJobRequest | TB.MlPutJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['allow_lazy_open', 'analysis_config', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'daily_model_snapshot_retention_after_days', 'data_description', 'datafeed_config', 'description', 'groups', 'model_plot_config', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_index_name', 'results_retention_days']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1539,10 +1923,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1557,6 +1948,7 @@ export default class Ml {
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['compressed_definition', 'definition', 'description', 'inference_config', 'input', 'metadata', 'tags']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1567,10 +1959,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1585,6 +1984,7 @@ export default class Ml {
   async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest | TB.MlPutTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_alias', 'model_id']
     const acceptedQuery: string[] = ['reassign', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1595,10 +1995,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1613,6 +2020,7 @@ export default class Ml {
   async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id', 'part']
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1622,9 +2030,15 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1639,6 +2053,7 @@ export default class Ml {
   async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1648,9 +2063,15 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1665,6 +2086,7 @@ export default class Ml {
   async resetJob (this: That, params: T.MlResetJobRequest | TB.MlResetJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1675,10 +2097,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1693,6 +2122,7 @@ export default class Ml {
   async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest | TB.MlRevertModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['delete_intervening_results']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1703,10 +2133,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1721,6 +2158,7 @@ export default class Ml {
   async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest | TB.MlSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['enabled', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -1732,10 +2170,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1750,6 +2195,7 @@ export default class Ml {
   async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest | TB.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1760,10 +2206,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1778,6 +2231,7 @@ export default class Ml {
   async startDatafeed (this: That, params: T.MlStartDatafeedRequest | TB.MlStartDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['end', 'start', 'timeout']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1788,10 +2242,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1806,6 +2267,7 @@ export default class Ml {
   async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = ['timeout', 'wait_for']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1815,9 +2277,15 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1832,6 +2300,7 @@ export default class Ml {
   async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest | TB.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['allow_no_match', 'force', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1842,10 +2311,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1860,6 +2336,7 @@ export default class Ml {
   async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedQuery: string[] = ['allow_no_match', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['force', 'timeout']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1870,10 +2347,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1888,6 +2372,7 @@ export default class Ml {
   async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1897,9 +2382,15 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1914,6 +2405,7 @@ export default class Ml {
   async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest | TB.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['description', 'model_memory_limit', 'max_num_threads', 'allow_lazy_start']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1924,10 +2416,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1942,6 +2441,7 @@ export default class Ml {
   async updateDatafeed (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedQuery: string[] = ['ignore_unavailable', 'allow_no_indices', 'ignore_throttled', 'expand_wildcards']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
@@ -1951,9 +2451,15 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1968,6 +2474,7 @@ export default class Ml {
   async updateFilter (this: That, params: T.MlUpdateFilterRequest | TB.MlUpdateFilterRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['filter_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['add_items', 'description', 'remove_items']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1978,10 +2485,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -1996,6 +2510,7 @@ export default class Ml {
   async updateJob (this: That, params: T.MlUpdateJobRequest | TB.MlUpdateJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['allow_lazy_open', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'categorization_filters', 'description', 'model_plot_config', 'daily_model_snapshot_retention_after_days', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_retention_days', 'groups', 'detectors', 'per_partition_categorization']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -2006,10 +2521,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -2024,6 +2546,7 @@ export default class Ml {
   async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest | TB.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['description', 'retain']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -2034,10 +2557,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -2052,6 +2582,7 @@ export default class Ml {
   async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest | TB.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
     const acceptedQuery: string[] = ['wait_for_completion', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -2062,10 +2593,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -2080,6 +2618,7 @@ export default class Ml {
   async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['job_id', 'analysis_config', 'analysis_limits', 'data_description', 'description', 'model_plot', 'model_snapshot_retention_days', 'results_index_name']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
@@ -2091,10 +2630,17 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -2109,6 +2655,7 @@ export default class Ml {
   async validateDetector (this: That, params: T.MlValidateDetectorRequest | TB.MlValidateDetectorRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['detector']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: any = params.body ?? undefined
@@ -2119,9 +2666,16 @@ export default class Ml {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         // @ts-expect-error
         body = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 

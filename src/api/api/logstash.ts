@@ -31,7 +31,8 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult
+  TransportResult,
+  errors
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -49,6 +50,7 @@ export default class Logstash {
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -59,10 +61,17 @@ export default class Logstash {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -77,6 +86,7 @@ export default class Logstash {
   async getPipeline (this: That, params: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -87,10 +97,17 @@ export default class Logstash {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 
@@ -105,6 +122,7 @@ export default class Logstash {
   async putPipeline (this: That, params: T.LogstashPutPipelineRequest | TB.LogstashPutPipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['pipeline']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: any = params.body ?? undefined
@@ -115,9 +133,16 @@ export default class Logstash {
         querystring[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else if (key !== 'body') {
+      } else if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        if (params.body != null) {
+          throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+        }
         // @ts-expect-error
         body = params[key]
+      } else {
+        if (key === 'body') continue
+        throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
       }
     }
 

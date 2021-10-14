@@ -31,7 +31,8 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult
+  TransportResult,
+  errors
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -43,6 +44,7 @@ export default async function IndexApi<TDocument = unknown> (this: That, params:
 export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument> | TB.IndexRequest<TDocument>, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
   const acceptedQuery: string[] = ['if_primary_term', 'if_seq_no', 'op_type', 'pipeline', 'refresh', 'routing', 'timeout', 'version', 'version_type', 'wait_for_active_shards', 'require_alias', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['document']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: any = params.body ?? undefined
@@ -53,9 +55,16 @@ export default async function IndexApi<TDocument = unknown> (this: That, params:
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else if (acceptedBody.includes(key)) {
+      // @ts-expect-error
+      if (params.body != null) {
+        throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+      }
       // @ts-expect-error
       body = params[key]
+    } else {
+      if (key === 'body') continue
+      throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
     }
   }
 

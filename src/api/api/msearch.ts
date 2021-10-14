@@ -31,7 +31,8 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult
+  TransportResult,
+  errors
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -43,6 +44,7 @@ export default async function MsearchApi<TDocument = unknown> (this: That, param
 export default async function MsearchApi<TDocument = unknown> (this: That, params: T.MsearchRequest | TB.MsearchRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedQuery: string[] = ['allow_no_indices', 'ccs_minimize_roundtrips', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'max_concurrent_searches', 'max_concurrent_shard_requests', 'pre_filter_shard_size', 'search_type', 'rest_total_hits_as_int', 'typed_keys', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['searches']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: any = params.body ?? undefined
@@ -53,9 +55,16 @@ export default async function MsearchApi<TDocument = unknown> (this: That, param
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else if (acceptedBody.includes(key)) {
+      // @ts-expect-error
+      if (params.body != null) {
+        throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+      }
       // @ts-expect-error
       body = params[key]
+    } else {
+      if (key === 'body') continue
+      throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
     }
   }
 

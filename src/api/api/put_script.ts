@@ -31,7 +31,8 @@ import {
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
-  TransportResult
+  TransportResult,
+  errors
 } from '@elastic/transport'
 import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
@@ -43,6 +44,7 @@ export default async function PutScriptApi (this: That, params: T.PutScriptReque
 export default async function PutScriptApi (this: That, params: T.PutScriptRequest | TB.PutScriptRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'context']
   const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['script']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
@@ -53,10 +55,17 @@ export default async function PutScriptApi (this: That, params: T.PutScriptReque
       querystring[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else if (key !== 'body') {
+    } else if (acceptedBody.includes(key)) {
+      // @ts-expect-error
+      if (params.body != null) {
+        throw new errors.ConfigurationError(`The parameter '${key}' can't be used when you configure the body parameter. You should either move into the body or avoid using the body key altogether.`)
+      }
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else {
+      if (key === 'body') continue
+      throw new errors.ConfigurationError(`The parameter '${key}' is not supported.`)
     }
   }
 
