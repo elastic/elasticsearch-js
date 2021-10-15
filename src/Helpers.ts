@@ -24,7 +24,7 @@ import assert from 'assert'
 import { promisify } from 'util'
 import { Readable } from 'stream'
 import { errors, TransportResult, TransportRequestOptions, TransportRequestOptionsWithMeta } from '@elastic/transport'
-import Client from './Client'
+import Client from './client'
 import * as T from './api/types'
 
 export interface HelpersOptions {

@@ -35,9 +35,9 @@ import {
 } from '@elastic/transport'
 import * as T from './types'
 import * as TB from './typesWithBodyKey'
-import SniffingTransport from '../SniffingTransport'
-import Helpers from '../Helpers'
-import { ClientOptions } from '../Client'
+import SniffingTransport from '../sniffingTransport'
+import Helpers from '../helpers'
+import { ClientOptions } from '../client'
 
 interface KibanaClient {
   diagnostic: Diagnostic
