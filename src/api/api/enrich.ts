@@ -48,21 +48,22 @@ export default class Enrich {
   async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest | TB.EnrichDeletePolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichDeletePolicyResponse>
   async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest | TB.EnrichDeletePolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -76,21 +77,22 @@ export default class Enrich {
   async executePolicy (this: That, params: T.EnrichExecutePolicyRequest | TB.EnrichExecutePolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichExecutePolicyResponse>
   async executePolicy (this: That, params: T.EnrichExecutePolicyRequest | TB.EnrichExecutePolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedQuery: string[] = ['wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -104,22 +106,23 @@ export default class Enrich {
   async getPolicy (this: That, params?: T.EnrichGetPolicyRequest | TB.EnrichGetPolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichGetPolicyResponse>
   async getPolicy (this: That, params?: T.EnrichGetPolicyRequest | TB.EnrichGetPolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -140,21 +143,22 @@ export default class Enrich {
   async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichPutPolicyResponse>
   async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['geo_match', 'match']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -168,22 +172,23 @@ export default class Enrich {
   async stats (this: That, params?: T.EnrichStatsRequest | TB.EnrichStatsRequest, options?: TransportRequestOptions): Promise<T.EnrichStatsResponse>
   async stats (this: That, params?: T.EnrichStatsRequest | TB.EnrichStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

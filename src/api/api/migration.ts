@@ -48,22 +48,23 @@ export default class Migration {
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest | TB.MigrationDeprecationsRequest, options?: TransportRequestOptions): Promise<T.MigrationDeprecationsResponse>
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest | TB.MigrationDeprecationsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -76,6 +77,60 @@ export default class Migration {
       method = 'GET'
       path = '/_migration/deprecations'
     }
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  async getFeatureUpgradeStatus (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getFeatureUpgradeStatus (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getFeatureUpgradeStatus (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getFeatureUpgradeStatus (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = []
+    const querystring: Record<string, any> = {}
+    let body: Record<string, any> = params?.body ?? undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_migration/system_features'
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  async postFeatureUpgrade (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async postFeatureUpgrade (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async postFeatureUpgrade (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async postFeatureUpgrade (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = []
+    const querystring: Record<string, any> = {}
+    let body: Record<string, any> = params?.body ?? undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_migration/system_features'
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 }

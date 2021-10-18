@@ -48,19 +48,20 @@ export default class SearchableSnapshots {
   async cacheStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async cacheStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
-    const acceptedQuery: string[] = []
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        querystring[key] = params[key]
       }
     }
 
@@ -81,22 +82,23 @@ export default class SearchableSnapshots {
   async clearCache (this: That, params?: T.SearchableSnapshotsClearCacheRequest | TB.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptions): Promise<T.SearchableSnapshotsClearCacheResponse>
   async clearCache (this: That, params?: T.SearchableSnapshotsClearCacheRequest | TB.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedQuery: string[] = ['expand_wildcards', 'allow_no_indices', 'ignore_unavailable', 'pretty', 'human', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -117,21 +119,22 @@ export default class SearchableSnapshots {
   async mount (this: That, params: T.SearchableSnapshotsMountRequest | TB.SearchableSnapshotsMountRequest, options?: TransportRequestOptions): Promise<T.SearchableSnapshotsMountResponse>
   async mount (this: That, params: T.SearchableSnapshotsMountRequest | TB.SearchableSnapshotsMountRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedQuery: string[] = ['master_timeout', 'wait_for_completion', 'storage', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['index', 'renamed_index', 'index_settings', 'ignore_index_settings']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -145,22 +148,23 @@ export default class SearchableSnapshots {
   async stats (this: That, params?: T.SearchableSnapshotsStatsRequest | TB.SearchableSnapshotsStatsRequest, options?: TransportRequestOptions): Promise<T.SearchableSnapshotsStatsResponse>
   async stats (this: That, params?: T.SearchableSnapshotsStatsRequest | TB.SearchableSnapshotsStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedQuery: string[] = ['level', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

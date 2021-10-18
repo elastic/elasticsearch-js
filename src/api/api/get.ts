@@ -42,21 +42,22 @@ export default async function GetApi<TDocument = unknown> (this: That, params: T
 export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest | TB.GetRequest, options?: TransportRequestOptions): Promise<T.GetResponse<TDocument>>
 export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest | TB.GetRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
-  const acceptedQuery: string[] = ['preference', 'realtime', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'stored_fields', 'version', 'version_type', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = []
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

@@ -42,21 +42,22 @@ export default async function ClosePointInTimeApi (this: That, params: T.ClosePo
 export default async function ClosePointInTimeApi (this: That, params: T.ClosePointInTimeRequest | TB.ClosePointInTimeRequest, options?: TransportRequestOptions): Promise<T.ClosePointInTimeResponse>
 export default async function ClosePointInTimeApi (this: That, params: T.ClosePointInTimeRequest | TB.ClosePointInTimeRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
-  const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['id']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

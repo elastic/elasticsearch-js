@@ -42,21 +42,22 @@ export default async function TermsEnumApi (this: That, params: T.TermsEnumReque
 export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest | TB.TermsEnumRequest, options?: TransportRequestOptions): Promise<T.TermsEnumResponse>
 export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest | TB.TermsEnumRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['field', 'size', 'timeout', 'case_insensitive', 'index_filter', 'string', 'search_after']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

@@ -48,21 +48,22 @@ export default class Graph {
   async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptions): Promise<T.GraphExploreResponse>
   async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedQuery: string[] = ['routing', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['connections', 'controls', 'query', 'vertices']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

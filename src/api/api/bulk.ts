@@ -42,20 +42,21 @@ export default async function BulkApi<TSource = unknown> (this: That, params: T.
 export default async function BulkApi<TSource = unknown> (this: That, params: T.BulkRequest<TSource> | TB.BulkRequest<TSource>, options?: TransportRequestOptions): Promise<T.BulkResponse>
 export default async function BulkApi<TSource = unknown> (this: That, params: T.BulkRequest<TSource> | TB.BulkRequest<TSource>, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index', 'type']
-  const acceptedQuery: string[] = ['pipeline', 'refresh', 'routing', '_source', '_source_excludes', '_source_includes', 'timeout', 'type', 'wait_for_active_shards', 'require_alias', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['operations']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: any = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       // @ts-expect-error
       body = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

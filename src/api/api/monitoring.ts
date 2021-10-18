@@ -48,20 +48,21 @@ export default class Monitoring {
   async bulk<TSource = unknown> (this: That, params: T.MonitoringBulkRequest<TSource> | TB.MonitoringBulkRequest<TSource>, options?: TransportRequestOptions): Promise<T.MonitoringBulkResponse>
   async bulk<TSource = unknown> (this: That, params: T.MonitoringBulkRequest<TSource> | TB.MonitoringBulkRequest<TSource>, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['type']
-    const acceptedQuery: string[] = ['system_id', 'system_api_version', 'interval', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['operations']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: any = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         // @ts-expect-error
         body = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

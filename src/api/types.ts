@@ -28,29 +28,21 @@
  */
 export type TODO = Record<string, any>
 
-export interface BulkCreateOperation extends BulkOperation {
+export interface BulkCreateOperation extends BulkWriteOperation {
 }
 
-export interface BulkCreateResponseItem extends BulkResponseItemBase {
+export interface BulkDeleteOperation extends BulkOperationBase {
 }
 
-export interface BulkDeleteOperation extends BulkOperation {
+export interface BulkIndexOperation extends BulkWriteOperation {
 }
 
-export interface BulkDeleteResponseItem extends BulkResponseItemBase {
-}
-
-export interface BulkIndexOperation extends BulkOperation {
-}
-
-export interface BulkIndexResponseItem extends BulkResponseItemBase {
-}
-
-export interface BulkOperation {
+export interface BulkOperationBase {
   _id?: Id
   _index?: IndexName
-  retry_on_conflict?: integer
   routing?: Routing
+  if_primary_term?: long
+  if_seq_no?: SequenceNumber
   version?: VersionNumber
   version_type?: VersionType
 }
@@ -61,6 +53,8 @@ export interface BulkOperationContainer {
   update?: BulkUpdateOperation
   delete?: BulkDeleteOperation
 }
+
+export type BulkOperationType = 'index' | 'create' | 'update' | 'delete'
 
 export interface BulkRequest<TSource = unknown> extends RequestBase {
   index?: IndexName
@@ -79,12 +73,12 @@ export interface BulkRequest<TSource = unknown> extends RequestBase {
 
 export interface BulkResponse {
   errors: boolean
-  items: BulkResponseItemContainer[]
+  items: Record<BulkOperationType, BulkResponseItem>[]
   took: long
   ingest_took?: long
 }
 
-export interface BulkResponseItemBase {
+export interface BulkResponseItem {
   _id?: string | null
   _index: string
   status: integer
@@ -99,17 +93,15 @@ export interface BulkResponseItemBase {
   get?: InlineGet<Record<string, any>>
 }
 
-export interface BulkResponseItemContainer {
-  index?: BulkIndexResponseItem
-  create?: BulkCreateResponseItem
-  update?: BulkUpdateResponseItem
-  delete?: BulkDeleteResponseItem
+export interface BulkUpdateOperation extends BulkOperationBase {
+  require_alias?: boolean
+  retry_on_conflict?: integer
 }
 
-export interface BulkUpdateOperation extends BulkOperation {
-}
-
-export interface BulkUpdateResponseItem extends BulkResponseItemBase {
+export interface BulkWriteOperation extends BulkOperationBase {
+  dynamic_templates?: Record<string, string>
+  pipeline?: string
+  require_alias?: boolean
 }
 
 export interface ClearScrollRequest extends RequestBase {
@@ -589,7 +581,7 @@ export interface MsearchTemplateTemplateItem {
 export interface MtermvectorsOperation {
   _id: Id
   _index?: IndexName
-  doc?: object
+  doc?: any
   fields?: Fields
   field_statistics?: boolean
   filter?: TermvectorsFilter
@@ -1660,7 +1652,7 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
   lang?: string
   refresh?: Refresh
   require_alias?: boolean
-  retry_on_conflict?: long
+  retry_on_conflict?: integer
   routing?: Routing
   timeout?: Time
   wait_for_active_shards?: WaitForActiveShards
@@ -1980,14 +1972,16 @@ export interface IndicesResponseBase extends AcknowledgedResponseBase {
   _shards?: ShardStatistics
 }
 
-export interface InlineGet<TDocument = unknown> {
+export interface InlineGetKeys<TDocument = unknown> {
   fields?: Record<string, any>
   found: boolean
-  _seq_no: SequenceNumber
-  _primary_term: long
+  _seq_no?: SequenceNumber
+  _primary_term?: long
   _routing?: Routing
   _source: TDocument
 }
+export type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument> |
+{ [property: string]: any }
 
 export interface InlineScript extends ScriptBase {
   source: string
@@ -2224,7 +2218,7 @@ export interface SegmentsStats {
   version_map_memory_in_bytes: integer
 }
 
-export type SequenceNumber = integer
+export type SequenceNumber = long
 
 export type Service = string
 
@@ -4943,16 +4937,11 @@ export interface QueryDslTermsQueryKeys extends QueryDslQueryBase {
 export type QueryDslTermsQuery = QueryDslTermsQueryKeys |
 { [property: string]: string[] | long[] | QueryDslTermsLookup }
 
-export interface QueryDslTermsSetFieldQuery {
+export interface QueryDslTermsSetQuery extends QueryDslQueryBase {
   minimum_should_match_field?: Field
   minimum_should_match_script?: Script
   terms: string[]
 }
-
-export interface QueryDslTermsSetQueryKeys extends QueryDslQueryBase {
-}
-export type QueryDslTermsSetQuery = QueryDslTermsSetQueryKeys |
-{ [property: string]: QueryDslTermsSetFieldQuery }
 
 export type QueryDslTextQueryType = 'best_fields' | 'most_fields' | 'cross_fields' | 'phrase' | 'phrase_prefix' | 'bool_prefix'
 
@@ -5036,58 +5025,68 @@ export interface AsyncSearchStatusResponse<TDocument = unknown> extends AsyncSea
 
 export interface AsyncSearchSubmitRequest extends RequestBase {
   index?: Indices
-  batched_reduce_size?: long
   wait_for_completion_timeout?: Time
   keep_on_completion?: boolean
-  typed_keys?: boolean
-  aggs?: Record<string, AggregationsAggregationContainer>
+  keep_alive?: Time
   allow_no_indices?: boolean
   allow_partial_search_results?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
-  collapse?: SearchFieldCollapse
+  batched_reduce_size?: long
+  ccs_minimize_roundtrips?: boolean
   default_operator?: DefaultOperator
   df?: string
   docvalue_fields?: Fields
   expand_wildcards?: ExpandWildcards
   explain?: boolean
-  from?: integer
-  highlight?: SearchHighlight
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
-  indices_boost?: Record<IndexName, double>[]
-  keep_alive?: Time
   lenient?: boolean
   max_concurrent_shard_requests?: long
-  min_score?: double
-  post_filter?: QueryDslQueryContainer
+  min_compatible_shard_node?: VersionString
   preference?: string
-  profile?: boolean
-  pit?: SearchPointInTimeReference
-  query?: QueryDslQueryContainer
+  pre_filter_shard_size?: long
   request_cache?: boolean
-  rescore?: SearchRescore[]
   routing?: Routing
-  script_fields?: Record<string, ScriptField>
-  search_after?: SearchSortResults
+  scroll?: Time
   search_type?: SearchType
-  sequence_number_primary_term?: boolean
-  size?: integer
-  sort?: SearchSort
-  _source?: boolean | SearchSourceFilter
   stats?: string[]
   stored_fields?: Fields
-  suggest?: Record<string, SearchSuggestContainer>
   suggest_field?: Field
   suggest_mode?: SuggestMode
   suggest_size?: long
   suggest_text?: string
   terminate_after?: long
-  timeout?: string
+  timeout?: Time
+  track_total_hits?: boolean | integer
   track_scores?: boolean
-  track_total_hits?: boolean
+  typed_keys?: boolean
+  rest_total_hits_as_int?: boolean
   version?: boolean
+  _source?: boolean | Fields
+  _source_excludes?: Fields
+  _source_includes?: Fields
+  seq_no_primary_term?: boolean
+  q?: string
+  size?: integer
+  from?: integer
+  sort?: string | string[]
+  aggs?: Record<string, AggregationsAggregationContainer>
+  aggregations?: Record<string, AggregationsAggregationContainer>
+  collapse?: SearchFieldCollapse
+  highlight?: SearchHighlight
+  indices_boost?: Record<IndexName, double>[]
+  min_score?: double
+  post_filter?: QueryDslQueryContainer
+  profile?: boolean
+  query?: QueryDslQueryContainer
+  rescore?: SearchRescore | SearchRescore[]
+  script_fields?: Record<string, ScriptField>
+  search_after?: SearchSortResults
+  slice?: SlicedScroll
   fields?: (Field | DateField)[]
+  suggest?: SearchSuggestContainer | Record<string, SearchSuggestContainer>
+  pit?: SearchPointInTimeReference
   runtime_mappings?: MappingRuntimeFields
 }
 
@@ -9525,14 +9524,42 @@ export interface IndicesUnfreezeResponse extends AcknowledgedResponseBase {
   shards_acknowledged: boolean
 }
 
-export interface IndicesUpdateAliasesIndicesUpdateAliasBulk {
-  [key: string]: never
+export interface IndicesUpdateAliasesAction {
+  add?: IndicesUpdateAliasesAddAction
+  remove?: IndicesUpdateAliasesRemoveAction
+  remove_index?: IndicesUpdateAliasesRemoveIndexAction
+}
+
+export interface IndicesUpdateAliasesAddAction {
+  alias?: IndexAlias
+  aliases?: IndexAlias | IndexAlias[]
+  filter?: QueryDslQueryContainer
+  index?: IndexName
+  indices?: Indices
+  index_routing?: Routing
+  is_hidden?: boolean
+  is_write_index?: boolean
+  routing?: Routing
+  search_routing?: Routing
+}
+
+export interface IndicesUpdateAliasesRemoveAction {
+  alias?: IndexAlias
+  aliases?: IndexAlias | IndexAlias[]
+  index?: IndexName
+  indices?: Indices
+  must_exist?: boolean
+}
+
+export interface IndicesUpdateAliasesRemoveIndexAction {
+  index?: IndexName
+  indices?: Indices
 }
 
 export interface IndicesUpdateAliasesRequest extends RequestBase {
   master_timeout?: Time
   timeout?: Time
-  actions?: IndicesUpdateAliasesIndicesUpdateAliasBulk[]
+  actions?: IndicesUpdateAliasesAction[]
 }
 
 export interface IndicesUpdateAliasesResponse extends AcknowledgedResponseBase {
@@ -11220,6 +11247,7 @@ export interface MlForecastRequest extends RequestBase {
   job_id: Id
   duration?: Time
   expires_in?: Time
+  max_model_memory?: string
 }
 
 export interface MlForecastResponse extends AcknowledgedResponseBase {
@@ -15491,6 +15519,10 @@ export interface XpackUsageWatcherWatchTriggerSchedule extends XpackUsageCounter
   _all: XpackUsageCounter
 }
 
+export interface SpecUtilsAdditionalProperty<TKey = unknown, TValue = unknown> {
+  [key: string]: never
+}
+
 export interface SpecUtilsAdditionalProperties<TKey = unknown, TValue = unknown> {
   [key: string]: never
 }
@@ -15501,10 +15533,6 @@ export interface SpecUtilsCommonQueryParameters {
   human?: boolean
   pretty?: boolean
   source_query_string?: string
-}
-
-export interface SpecUtilsAdditionalProperty<TKey = unknown, TValue = unknown> {
-  [key: string]: never
 }
 
 export interface SpecUtilsCommonCatQueryParameters {

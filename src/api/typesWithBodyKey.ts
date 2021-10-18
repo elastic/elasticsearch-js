@@ -28,29 +28,21 @@
  */
 export type TODO = Record<string, any>
 
-export interface BulkCreateOperation extends BulkOperation {
+export interface BulkCreateOperation extends BulkWriteOperation {
 }
 
-export interface BulkCreateResponseItem extends BulkResponseItemBase {
+export interface BulkDeleteOperation extends BulkOperationBase {
 }
 
-export interface BulkDeleteOperation extends BulkOperation {
+export interface BulkIndexOperation extends BulkWriteOperation {
 }
 
-export interface BulkDeleteResponseItem extends BulkResponseItemBase {
-}
-
-export interface BulkIndexOperation extends BulkOperation {
-}
-
-export interface BulkIndexResponseItem extends BulkResponseItemBase {
-}
-
-export interface BulkOperation {
+export interface BulkOperationBase {
   _id?: Id
   _index?: IndexName
-  retry_on_conflict?: integer
   routing?: Routing
+  if_primary_term?: long
+  if_seq_no?: SequenceNumber
   version?: VersionNumber
   version_type?: VersionType
 }
@@ -61,6 +53,8 @@ export interface BulkOperationContainer {
   update?: BulkUpdateOperation
   delete?: BulkDeleteOperation
 }
+
+export type BulkOperationType = 'index' | 'create' | 'update' | 'delete'
 
 export interface BulkRequest<TSource = unknown> extends RequestBase {
   index?: IndexName
@@ -80,12 +74,12 @@ export interface BulkRequest<TSource = unknown> extends RequestBase {
 
 export interface BulkResponse {
   errors: boolean
-  items: BulkResponseItemContainer[]
+  items: Record<BulkOperationType, BulkResponseItem>[]
   took: long
   ingest_took?: long
 }
 
-export interface BulkResponseItemBase {
+export interface BulkResponseItem {
   _id?: string | null
   _index: string
   status: integer
@@ -100,17 +94,15 @@ export interface BulkResponseItemBase {
   get?: InlineGet<Record<string, any>>
 }
 
-export interface BulkResponseItemContainer {
-  index?: BulkIndexResponseItem
-  create?: BulkCreateResponseItem
-  update?: BulkUpdateResponseItem
-  delete?: BulkDeleteResponseItem
+export interface BulkUpdateOperation extends BulkOperationBase {
+  require_alias?: boolean
+  retry_on_conflict?: integer
 }
 
-export interface BulkUpdateOperation extends BulkOperation {
-}
-
-export interface BulkUpdateResponseItem extends BulkResponseItemBase {
+export interface BulkWriteOperation extends BulkOperationBase {
+  dynamic_templates?: Record<string, string>
+  pipeline?: string
+  require_alias?: boolean
 }
 
 export interface ClearScrollRequest extends RequestBase {
@@ -617,7 +609,7 @@ export interface MsearchTemplateTemplateItem {
 export interface MtermvectorsOperation {
   _id: Id
   _index?: IndexName
-  doc?: object
+  doc?: any
   fields?: Fields
   field_statistics?: boolean
   filter?: TermvectorsFilter
@@ -1748,7 +1740,7 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
   lang?: string
   refresh?: Refresh
   require_alias?: boolean
-  retry_on_conflict?: long
+  retry_on_conflict?: integer
   routing?: Routing
   timeout?: Time
   wait_for_active_shards?: WaitForActiveShards
@@ -2076,14 +2068,16 @@ export interface IndicesResponseBase extends AcknowledgedResponseBase {
   _shards?: ShardStatistics
 }
 
-export interface InlineGet<TDocument = unknown> {
+export interface InlineGetKeys<TDocument = unknown> {
   fields?: Record<string, any>
   found: boolean
-  _seq_no: SequenceNumber
-  _primary_term: long
+  _seq_no?: SequenceNumber
+  _primary_term?: long
   _routing?: Routing
   _source: TDocument
 }
+export type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument> |
+{ [property: string]: any }
 
 export interface InlineScript extends ScriptBase {
   source: string
@@ -2320,7 +2314,7 @@ export interface SegmentsStats {
   version_map_memory_in_bytes: integer
 }
 
-export type SequenceNumber = integer
+export type SequenceNumber = long
 
 export type Service = string
 
@@ -5039,16 +5033,11 @@ export interface QueryDslTermsQueryKeys extends QueryDslQueryBase {
 export type QueryDslTermsQuery = QueryDslTermsQueryKeys |
 { [property: string]: string[] | long[] | QueryDslTermsLookup }
 
-export interface QueryDslTermsSetFieldQuery {
+export interface QueryDslTermsSetQuery extends QueryDslQueryBase {
   minimum_should_match_field?: Field
   minimum_should_match_script?: Script
   terms: string[]
 }
-
-export interface QueryDslTermsSetQueryKeys extends QueryDslQueryBase {
-}
-export type QueryDslTermsSetQuery = QueryDslTermsSetQueryKeys |
-{ [property: string]: QueryDslTermsSetFieldQuery }
 
 export type QueryDslTextQueryType = 'best_fields' | 'most_fields' | 'cross_fields' | 'phrase' | 'phrase_prefix' | 'bool_prefix'
 
@@ -5132,61 +5121,85 @@ export interface AsyncSearchStatusResponse<TDocument = unknown> extends AsyncSea
 
 export interface AsyncSearchSubmitRequest extends RequestBase {
   index?: Indices
-  batched_reduce_size?: long
   wait_for_completion_timeout?: Time
   keep_on_completion?: boolean
+  keep_alive?: Time
+  allow_no_indices?: boolean
+  allow_partial_search_results?: boolean
+  analyzer?: string
+  analyze_wildcard?: boolean
+  batched_reduce_size?: long
+  ccs_minimize_roundtrips?: boolean
+  default_operator?: DefaultOperator
+  df?: string
+  docvalue_fields?: Fields
+  expand_wildcards?: ExpandWildcards
+  explain?: boolean
+  ignore_throttled?: boolean
+  ignore_unavailable?: boolean
+  lenient?: boolean
+  max_concurrent_shard_requests?: long
+  min_compatible_shard_node?: VersionString
+  preference?: string
+  pre_filter_shard_size?: long
+  request_cache?: boolean
+  routing?: Routing
+  scroll?: Time
+  search_type?: SearchType
+  stats?: string[]
+  stored_fields?: Fields
+  suggest_field?: Field
+  suggest_mode?: SuggestMode
+  suggest_size?: long
+  suggest_text?: string
+  terminate_after?: long
+  timeout?: Time
+  track_total_hits?: boolean | integer
+  track_scores?: boolean
   typed_keys?: boolean
+  rest_total_hits_as_int?: boolean
+  version?: boolean
+  _source?: boolean | Fields
+  _source_excludes?: Fields
+  _source_includes?: Fields
+  seq_no_primary_term?: boolean
+  q?: string
+  size?: integer
+  from?: integer
+  sort?: string | string[]
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggs?: Record<string, AggregationsAggregationContainer>
-    allow_no_indices?: boolean
-    allow_partial_search_results?: boolean
-    analyzer?: string
-    analyze_wildcard?: boolean
+    aggregations?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
-    default_operator?: DefaultOperator
-    df?: string
-    docvalue_fields?: Fields
-    expand_wildcards?: ExpandWildcards
     explain?: boolean
     from?: integer
     highlight?: SearchHighlight
-    ignore_throttled?: boolean
-    ignore_unavailable?: boolean
+    track_total_hits?: boolean | integer
     indices_boost?: Record<IndexName, double>[]
-    keep_alive?: Time
-    lenient?: boolean
-    max_concurrent_shard_requests?: long
+    docvalue_fields?: SearchDocValueField | (Field | SearchDocValueField)[]
     min_score?: double
     post_filter?: QueryDslQueryContainer
-    preference?: string
     profile?: boolean
-    pit?: SearchPointInTimeReference
     query?: QueryDslQueryContainer
-    request_cache?: boolean
-    rescore?: SearchRescore[]
-    routing?: Routing
+    rescore?: SearchRescore | SearchRescore[]
     script_fields?: Record<string, ScriptField>
     search_after?: SearchSortResults
-    search_type?: SearchType
-    sequence_number_primary_term?: boolean
     size?: integer
+    slice?: SlicedScroll
     sort?: SearchSort
-    _source?: boolean | SearchSourceFilter
-    stats?: string[]
-    stored_fields?: Fields
-    suggest?: Record<string, SearchSuggestContainer>
-    suggest_field?: Field
-    suggest_mode?: SuggestMode
-    suggest_size?: long
-    suggest_text?: string
+    _source?: boolean | Fields | SearchSourceFilter
+    fields?: (Field | DateField)[]
+    suggest?: SearchSuggestContainer | Record<string, SearchSuggestContainer>
     terminate_after?: long
     timeout?: string
     track_scores?: boolean
-    track_total_hits?: boolean
     version?: boolean
-    fields?: (Field | DateField)[]
+    seq_no_primary_term?: boolean
+    stored_fields?: Fields
+    pit?: SearchPointInTimeReference
     runtime_mappings?: MappingRuntimeFields
+    stats?: string[]
   }
 }
 
@@ -9704,8 +9717,36 @@ export interface IndicesUnfreezeResponse extends AcknowledgedResponseBase {
   shards_acknowledged: boolean
 }
 
-export interface IndicesUpdateAliasesIndicesUpdateAliasBulk {
-  [key: string]: never
+export interface IndicesUpdateAliasesAction {
+  add?: IndicesUpdateAliasesAddAction
+  remove?: IndicesUpdateAliasesRemoveAction
+  remove_index?: IndicesUpdateAliasesRemoveIndexAction
+}
+
+export interface IndicesUpdateAliasesAddAction {
+  alias?: IndexAlias
+  aliases?: IndexAlias | IndexAlias[]
+  filter?: QueryDslQueryContainer
+  index?: IndexName
+  indices?: Indices
+  index_routing?: Routing
+  is_hidden?: boolean
+  is_write_index?: boolean
+  routing?: Routing
+  search_routing?: Routing
+}
+
+export interface IndicesUpdateAliasesRemoveAction {
+  alias?: IndexAlias
+  aliases?: IndexAlias | IndexAlias[]
+  index?: IndexName
+  indices?: Indices
+  must_exist?: boolean
+}
+
+export interface IndicesUpdateAliasesRemoveIndexAction {
+  index?: IndexName
+  indices?: Indices
 }
 
 export interface IndicesUpdateAliasesRequest extends RequestBase {
@@ -9713,7 +9754,7 @@ export interface IndicesUpdateAliasesRequest extends RequestBase {
   timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
-    actions?: IndicesUpdateAliasesIndicesUpdateAliasBulk[]
+    actions?: IndicesUpdateAliasesAction[]
   }
 }
 
@@ -11434,6 +11475,7 @@ export interface MlForecastRequest extends RequestBase {
   body?: {
     duration?: Time
     expires_in?: Time
+    max_model_memory?: string
   }
 }
 
@@ -15879,6 +15921,10 @@ export interface XpackUsageWatcherWatchTriggerSchedule extends XpackUsageCounter
   _all: XpackUsageCounter
 }
 
+export interface SpecUtilsAdditionalProperty<TKey = unknown, TValue = unknown> {
+  [key: string]: never
+}
+
 export interface SpecUtilsAdditionalProperties<TKey = unknown, TValue = unknown> {
   [key: string]: never
 }
@@ -15889,10 +15935,6 @@ export interface SpecUtilsCommonQueryParameters {
   human?: boolean
   pretty?: boolean
   source_query_string?: string
-}
-
-export interface SpecUtilsAdditionalProperty<TKey = unknown, TValue = unknown> {
-  [key: string]: never
 }
 
 export interface SpecUtilsCommonCatQueryParameters {

@@ -42,22 +42,23 @@ export default async function ReindexApi (this: That, params?: T.ReindexRequest 
 export default async function ReindexApi (this: That, params?: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptions): Promise<T.ReindexResponse>
 export default async function ReindexApi (this: That, params?: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
-  const acceptedQuery: string[] = ['refresh', 'requests_per_second', 'scroll', 'slices', 'timeout', 'wait_for_active_shards', 'wait_for_completion', 'require_alias', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['conflicts', 'dest', 'max_docs', 'script', 'size', 'source']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params?.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

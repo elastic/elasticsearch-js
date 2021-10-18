@@ -42,22 +42,23 @@ export default async function SearchShardsApi (this: That, params?: T.SearchShar
 export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest | TB.SearchShardsRequest, options?: TransportRequestOptions): Promise<T.SearchShardsResponse>
 export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest | TB.SearchShardsRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedQuery: string[] = ['allow_no_indices', 'expand_wildcards', 'ignore_unavailable', 'local', 'preference', 'routing', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = []
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params?.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

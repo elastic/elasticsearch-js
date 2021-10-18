@@ -48,21 +48,22 @@ export default class Snapshot {
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCleanupRepositoryResponse>
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
-    const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -76,21 +77,22 @@ export default class Snapshot {
   async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptions): Promise<T.SnapshotCloneResponse>
   async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot', 'target_snapshot']
-    const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['indices']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -104,21 +106,22 @@ export default class Snapshot {
   async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateResponse>
   async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedQuery: string[] = ['master_timeout', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['ignore_unavailable', 'include_global_state', 'indices', 'feature_states', 'metadata', 'partial']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -132,21 +135,22 @@ export default class Snapshot {
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateRepositoryResponse>
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedQuery: string[] = ['master_timeout', 'timeout', 'verify', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['repository', 'type', 'settings']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -160,21 +164,22 @@ export default class Snapshot {
   async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteResponse>
   async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedQuery: string[] = ['master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -188,21 +193,22 @@ export default class Snapshot {
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteRepositoryResponse>
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
-    const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -216,21 +222,22 @@ export default class Snapshot {
   async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetResponse>
   async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedQuery: string[] = ['ignore_unavailable', 'master_timeout', 'verbose', 'index_details', 'human', 'include_repository', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -244,22 +251,23 @@ export default class Snapshot {
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetRepositoryResponse>
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
-    const acceptedQuery: string[] = ['local', 'master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -280,19 +288,20 @@ export default class Snapshot {
   async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
-    const acceptedQuery: string[] = ['blob_count', 'concurrency', 'read_node_count', 'early_read_node_count', 'seed', 'rare_action_probability', 'max_blob_size', 'max_total_data_size', 'timeout', 'detailed', 'rarely_abort_writes']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        querystring[key] = params[key]
       }
     }
 
@@ -306,21 +315,22 @@ export default class Snapshot {
   async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<T.SnapshotRestoreResponse>
   async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedQuery: string[] = ['master_timeout', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['ignore_index_settings', 'ignore_unavailable', 'include_aliases', 'include_global_state', 'index_settings', 'indices', 'partial', 'rename_pattern', 'rename_replacement']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -334,22 +344,23 @@ export default class Snapshot {
   async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<T.SnapshotStatusResponse>
   async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedQuery: string[] = ['ignore_unavailable', 'master_timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -373,21 +384,22 @@ export default class Snapshot {
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotVerifyRepositoryResponse>
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
-    const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else {
+        if (key === 'body') continue
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 

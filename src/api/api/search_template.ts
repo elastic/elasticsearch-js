@@ -42,22 +42,23 @@ export default async function SearchTemplateApi<TDocument = unknown> (this: That
 export default async function SearchTemplateApi<TDocument = unknown> (this: That, params?: T.SearchTemplateRequest | TB.SearchTemplateRequest, options?: TransportRequestOptions): Promise<T.SearchTemplateResponse<TDocument>>
 export default async function SearchTemplateApi<TDocument = unknown> (this: That, params?: T.SearchTemplateRequest | TB.SearchTemplateRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedQuery: string[] = ['allow_no_indices', 'ccs_minimize_roundtrips', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'preference', 'routing', 'scroll', 'search_type', 'rest_total_hits_as_int', 'typed_keys', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['id', 'params', 'source']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params?.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

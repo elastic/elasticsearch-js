@@ -42,21 +42,22 @@ export default async function SearchMvtApi (this: That, params: T.SearchMvtReque
 export default async function SearchMvtApi (this: That, params: T.SearchMvtRequest | TB.SearchMvtRequest, options?: TransportRequestOptions): Promise<T.SearchMvtResponse>
 export default async function SearchMvtApi (this: That, params: T.SearchMvtRequest | TB.SearchMvtRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index', 'field', 'zoom', 'x', 'y']
-  const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['aggs', 'fields', 'query', 'runtime_mappings', 'sort']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

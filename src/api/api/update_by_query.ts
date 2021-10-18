@@ -42,21 +42,22 @@ export default async function UpdateByQueryApi (this: That, params: T.UpdateByQu
 export default async function UpdateByQueryApi (this: That, params: T.UpdateByQueryRequest | TB.UpdateByQueryRequest, options?: TransportRequestOptions): Promise<T.UpdateByQueryResponse>
 export default async function UpdateByQueryApi (this: That, params: T.UpdateByQueryRequest | TB.UpdateByQueryRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedQuery: string[] = ['allow_no_indices', 'analyzer', 'analyze_wildcard', 'default_operator', 'df', 'expand_wildcards', 'from', 'ignore_unavailable', 'lenient', 'pipeline', 'preference', 'refresh', 'request_cache', 'requests_per_second', 'routing', 'scroll', 'scroll_size', 'search_timeout', 'search_type', 'size', 'slices', 'sort', '_source', '_source_excludes', '_source_includes', 'stats', 'terminate_after', 'timeout', 'version', 'version_type', 'wait_for_active_shards', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['max_docs', 'query', 'script', 'slice']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

@@ -42,21 +42,22 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
 export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument> | TB.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): Promise<T.TermvectorsResponse>
 export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument> | TB.TermvectorsRequest<TDocument>, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index', 'id']
-  const acceptedQuery: string[] = ['fields', 'field_statistics', 'offsets', 'payloads', 'positions', 'preference', 'realtime', 'routing', 'term_statistics', 'version', 'version_type', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['doc', 'filter', 'per_field_analyzer']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

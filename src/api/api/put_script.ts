@@ -42,21 +42,22 @@ export default async function PutScriptApi (this: That, params: T.PutScriptReque
 export default async function PutScriptApi (this: That, params: T.PutScriptRequest | TB.PutScriptRequest, options?: TransportRequestOptions): Promise<T.PutScriptResponse>
 export default async function PutScriptApi (this: That, params: T.PutScriptRequest | TB.PutScriptRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'context']
-  const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['script']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

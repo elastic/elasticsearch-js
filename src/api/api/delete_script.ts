@@ -42,21 +42,22 @@ export default async function DeleteScriptApi (this: That, params: T.DeleteScrip
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptions): Promise<T.DeleteScriptResponse>
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id']
-  const acceptedQuery: string[] = ['master_timeout', 'timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = []
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

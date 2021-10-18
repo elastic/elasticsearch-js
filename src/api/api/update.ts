@@ -42,21 +42,22 @@ export default async function UpdateApi<TDocument = unknown, TPartialDocument = 
 export default async function UpdateApi<TDocument = unknown, TPartialDocument = unknown, TDocumentR = unknown> (this: That, params: T.UpdateRequest<TDocument, TPartialDocument> | TB.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.UpdateResponse<TDocumentR>>
 export default async function UpdateApi<TDocument = unknown, TPartialDocument = unknown, TDocumentR = unknown> (this: That, params: T.UpdateRequest<TDocument, TPartialDocument> | TB.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index', 'type']
-  const acceptedQuery: string[] = ['if_primary_term', 'if_seq_no', 'lang', 'refresh', 'require_alias', 'retry_on_conflict', 'routing', 'timeout', 'wait_for_active_shards', '_source_excludes', '_source_includes', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['detect_noop', 'doc', 'doc_as_upsert', 'script', 'scripted_upsert', 'upsert']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else {
+      if (key === 'body') continue
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 
