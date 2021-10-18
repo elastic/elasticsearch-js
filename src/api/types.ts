@@ -73,7 +73,7 @@ export interface BulkRequest<TSource = unknown> extends RequestBase {
 
 export interface BulkResponse {
   errors: boolean
-  items: Record<BulkOperationType, BulkResponseItem>[]
+  items: Partial<Record<BulkOperationType, BulkResponseItem>>[]
   took: long
   ingest_took?: long
 }
@@ -3908,7 +3908,7 @@ export interface MappingFieldAliasProperty extends MappingPropertyBase {
 
 export interface MappingFieldMapping {
   full_name: string
-  mapping: Record<string, MappingProperty>
+  mapping: Partial<Record<string, MappingProperty>>
 }
 
 export interface MappingFieldNamesField {
@@ -4679,14 +4679,14 @@ export interface QueryDslQueryBase {
 export interface QueryDslQueryContainer {
   bool?: QueryDslBoolQuery
   boosting?: QueryDslBoostingQuery
-  common?: Record<Field, QueryDslCommonTermsQuery | string>
+  common?: Partial<Record<Field, QueryDslCommonTermsQuery | string>>
   combined_fields?: QueryDslCombinedFieldsQuery
   constant_score?: QueryDslConstantScoreQuery
   dis_max?: QueryDslDisMaxQuery
   distance_feature?: QueryDslDistanceFeatureQuery
   exists?: QueryDslExistsQuery
   function_score?: QueryDslFunctionScoreQuery
-  fuzzy?: Record<Field, QueryDslFuzzyQuery | string | double | boolean>
+  fuzzy?: Partial<Record<Field, QueryDslFuzzyQuery | string | double | boolean>>
   geo_bounding_box?: QueryDslGeoBoundingBoxQuery
   geo_distance?: QueryDslGeoDistanceQuery
   geo_polygon?: QueryDslGeoPolygonQuery
@@ -4694,24 +4694,24 @@ export interface QueryDslQueryContainer {
   has_child?: QueryDslHasChildQuery
   has_parent?: QueryDslHasParentQuery
   ids?: QueryDslIdsQuery
-  intervals?: Record<Field, QueryDslIntervalsQuery>
-  match?: Record<Field, QueryDslMatchQuery | string | float | boolean>
+  intervals?: Partial<Record<Field, QueryDslIntervalsQuery>>
+  match?: Partial<Record<Field, QueryDslMatchQuery | string | float | boolean>>
   match_all?: QueryDslMatchAllQuery
-  match_bool_prefix?: Record<Field, QueryDslMatchBoolPrefixQuery | string>
+  match_bool_prefix?: Partial<Record<Field, QueryDslMatchBoolPrefixQuery | string>>
   match_none?: QueryDslMatchNoneQuery
-  match_phrase?: Record<Field, QueryDslMatchPhraseQuery | string>
-  match_phrase_prefix?: Record<Field, QueryDslMatchPhrasePrefixQuery | string>
+  match_phrase?: Partial<Record<Field, QueryDslMatchPhraseQuery | string>>
+  match_phrase_prefix?: Partial<Record<Field, QueryDslMatchPhrasePrefixQuery | string>>
   more_like_this?: QueryDslMoreLikeThisQuery
   multi_match?: QueryDslMultiMatchQuery
   nested?: QueryDslNestedQuery
   parent_id?: QueryDslParentIdQuery
   percolate?: QueryDslPercolateQuery
   pinned?: QueryDslPinnedQuery
-  prefix?: Record<Field, QueryDslPrefixQuery | string>
+  prefix?: Partial<Record<Field, QueryDslPrefixQuery | string>>
   query_string?: QueryDslQueryStringQuery
-  range?: Record<Field, QueryDslRangeQuery>
+  range?: Partial<Record<Field, QueryDslRangeQuery>>
   rank_feature?: QueryDslRankFeatureQuery
-  regexp?: Record<Field, QueryDslRegexpQuery | string>
+  regexp?: Partial<Record<Field, QueryDslRegexpQuery | string>>
   script?: QueryDslScriptQuery
   script_score?: QueryDslScriptScoreQuery
   shape?: QueryDslShapeQuery
@@ -4723,12 +4723,12 @@ export interface QueryDslQueryContainer {
   span_near?: QueryDslSpanNearQuery
   span_not?: QueryDslSpanNotQuery
   span_or?: QueryDslSpanOrQuery
-  span_term?: Record<Field, QueryDslSpanTermQuery | string>
+  span_term?: Partial<Record<Field, QueryDslSpanTermQuery | string>>
   span_within?: QueryDslSpanWithinQuery
-  term?: Record<Field, QueryDslTermQuery | string | float | boolean>
+  term?: Partial<Record<Field, QueryDslTermQuery | string | float | boolean>>
   terms?: QueryDslTermsQuery
-  terms_set?: Record<Field, QueryDslTermsSetQuery>
-  wildcard?: Record<Field, QueryDslWildcardQuery | string>
+  terms_set?: Partial<Record<Field, QueryDslTermsSetQuery>>
+  wildcard?: Partial<Record<Field, QueryDslWildcardQuery | string>>
   type?: QueryDslTypeQuery
 }
 
@@ -4874,7 +4874,7 @@ export interface QueryDslSpanFirstQuery extends QueryDslQueryBase {
   match: QueryDslSpanQuery
 }
 
-export type QueryDslSpanGapQuery = Record<Field, integer>
+export type QueryDslSpanGapQuery = Partial<Record<Field, integer>>
 
 export interface QueryDslSpanMultiTermQuery extends QueryDslQueryBase {
   match: QueryDslQueryContainer
@@ -4907,7 +4907,7 @@ export interface QueryDslSpanQuery {
   span_near?: QueryDslSpanNearQuery
   span_not?: QueryDslSpanNotQuery
   span_or?: QueryDslSpanOrQuery
-  span_term?: Record<Field, QueryDslSpanTermQuery | string>
+  span_term?: Partial<Record<Field, QueryDslSpanTermQuery | string>>
   span_within?: QueryDslSpanWithinQuery
 }
 
@@ -8830,7 +8830,7 @@ export interface IndicesGetFieldMappingResponse extends DictionaryResponseBase<I
 }
 
 export interface IndicesGetFieldMappingTypeFieldMappings {
-  mappings: Record<Field, MappingFieldMapping>
+  mappings: Partial<Record<Field, MappingFieldMapping>>
 }
 
 export interface IndicesGetIndexTemplateIndexTemplate {
@@ -15271,7 +15271,7 @@ export interface XpackUsageKibanaUrlConfig extends XpackUsageBaseUrlConfig {
 
 export interface XpackUsageMachineLearning extends XpackUsageBase {
   datafeeds: Record<string, XpackUsageDatafeed>
-  jobs: Record<string, MlJob> | Record<string, XpackUsageAllJobs>
+  jobs: Record<string, MlJob> | Partial<Record<string, XpackUsageAllJobs>>
   node_count: integer
   data_frame_analytics_jobs: XpackUsageMlDataFrameAnalyticsJobs
   inference: XpackUsageMlInference
