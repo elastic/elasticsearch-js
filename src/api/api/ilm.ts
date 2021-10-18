@@ -48,17 +48,11 @@ export default class Ilm {
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmDeleteLifecycleResponse>
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['policy']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -77,17 +71,11 @@ export default class Ilm {
   async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest | TB.IlmExplainLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmExplainLifecycleResponse>
   async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest | TB.IlmExplainLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -106,18 +94,12 @@ export default class Ilm {
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmGetLifecycleResponse>
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['policy']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -143,18 +125,12 @@ export default class Ilm {
   async getStatus (this: That, params?: T.IlmGetStatusRequest | TB.IlmGetStatusRequest, options?: TransportRequestOptions): Promise<T.IlmGetStatusResponse>
   async getStatus (this: That, params?: T.IlmGetStatusRequest | TB.IlmGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -173,16 +149,12 @@ export default class Ilm {
   async migrateToDataTiers (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async migrateToDataTiers (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -258,17 +230,11 @@ export default class Ilm {
   async removePolicy (this: That, params: T.IlmRemovePolicyRequest | TB.IlmRemovePolicyRequest, options?: TransportRequestOptions): Promise<T.IlmRemovePolicyResponse>
   async removePolicy (this: That, params: T.IlmRemovePolicyRequest | TB.IlmRemovePolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -287,17 +253,11 @@ export default class Ilm {
   async retry (this: That, params: T.IlmRetryRequest | TB.IlmRetryRequest, options?: TransportRequestOptions): Promise<T.IlmRetryResponse>
   async retry (this: That, params: T.IlmRetryRequest | TB.IlmRetryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -316,18 +276,12 @@ export default class Ilm {
   async start (this: That, params?: T.IlmStartRequest | TB.IlmStartRequest, options?: TransportRequestOptions): Promise<T.IlmStartResponse>
   async start (this: That, params?: T.IlmStartRequest | TB.IlmStartRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -346,18 +300,12 @@ export default class Ilm {
   async stop (this: That, params?: T.IlmStopRequest | TB.IlmStopRequest, options?: TransportRequestOptions): Promise<T.IlmStopResponse>
   async stop (this: That, params?: T.IlmStopRequest | TB.IlmStopRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

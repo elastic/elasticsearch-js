@@ -48,17 +48,11 @@ export default class Watcher {
   async ackWatch (this: That, params: T.WatcherAckWatchRequest | TB.WatcherAckWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherAckWatchResponse>
   async ackWatch (this: That, params: T.WatcherAckWatchRequest | TB.WatcherAckWatchRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['watch_id', 'action_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -84,17 +78,11 @@ export default class Watcher {
   async activateWatch (this: That, params: T.WatcherActivateWatchRequest | TB.WatcherActivateWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherActivateWatchResponse>
   async activateWatch (this: That, params: T.WatcherActivateWatchRequest | TB.WatcherActivateWatchRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['watch_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -113,17 +101,11 @@ export default class Watcher {
   async deactivateWatch (this: That, params: T.WatcherDeactivateWatchRequest | TB.WatcherDeactivateWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherDeactivateWatchResponse>
   async deactivateWatch (this: That, params: T.WatcherDeactivateWatchRequest | TB.WatcherDeactivateWatchRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['watch_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -142,17 +124,11 @@ export default class Watcher {
   async deleteWatch (this: That, params: T.WatcherDeleteWatchRequest | TB.WatcherDeleteWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherDeleteWatchResponse>
   async deleteWatch (this: That, params: T.WatcherDeleteWatchRequest | TB.WatcherDeleteWatchRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -208,17 +184,11 @@ export default class Watcher {
   async getWatch (this: That, params: T.WatcherGetWatchRequest | TB.WatcherGetWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherGetWatchResponse>
   async getWatch (this: That, params: T.WatcherGetWatchRequest | TB.WatcherGetWatchRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -296,18 +266,12 @@ export default class Watcher {
   async start (this: That, params?: T.WatcherStartRequest | TB.WatcherStartRequest, options?: TransportRequestOptions): Promise<T.WatcherStartResponse>
   async start (this: That, params?: T.WatcherStartRequest | TB.WatcherStartRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -326,18 +290,12 @@ export default class Watcher {
   async stats (this: That, params?: T.WatcherStatsRequest | TB.WatcherStatsRequest, options?: TransportRequestOptions): Promise<T.WatcherStatsResponse>
   async stats (this: That, params?: T.WatcherStatsRequest | TB.WatcherStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['metric']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -363,18 +321,12 @@ export default class Watcher {
   async stop (this: That, params?: T.WatcherStopRequest | TB.WatcherStopRequest, options?: TransportRequestOptions): Promise<T.WatcherStopResponse>
   async stop (this: That, params?: T.WatcherStopRequest | TB.WatcherStopRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

@@ -48,17 +48,11 @@ export default class Ml {
   async closeJob (this: That, params: T.MlCloseJobRequest | TB.MlCloseJobRequest, options?: TransportRequestOptions): Promise<T.MlCloseJobResponse>
   async closeJob (this: That, params: T.MlCloseJobRequest | TB.MlCloseJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -77,17 +71,11 @@ export default class Ml {
   async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest | TB.MlDeleteCalendarRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarResponse>
   async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest | TB.MlDeleteCalendarRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -106,17 +94,11 @@ export default class Ml {
   async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest | TB.MlDeleteCalendarEventRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarEventResponse>
   async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest | TB.MlDeleteCalendarEventRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id', 'event_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -135,17 +117,11 @@ export default class Ml {
   async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest | TB.MlDeleteCalendarJobRequest, options?: TransportRequestOptions): Promise<T.MlDeleteCalendarJobResponse>
   async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest | TB.MlDeleteCalendarJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id', 'job_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -164,17 +140,11 @@ export default class Ml {
   async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest | TB.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlDeleteDataFrameAnalyticsResponse>
   async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest | TB.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -193,17 +163,11 @@ export default class Ml {
   async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest | TB.MlDeleteDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlDeleteDatafeedResponse>
   async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest | TB.MlDeleteDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -222,18 +186,12 @@ export default class Ml {
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<T.MlDeleteExpiredDataResponse>
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -259,17 +217,11 @@ export default class Ml {
   async deleteFilter (this: That, params: T.MlDeleteFilterRequest | TB.MlDeleteFilterRequest, options?: TransportRequestOptions): Promise<T.MlDeleteFilterResponse>
   async deleteFilter (this: That, params: T.MlDeleteFilterRequest | TB.MlDeleteFilterRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['filter_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -288,17 +240,11 @@ export default class Ml {
   async deleteForecast (this: That, params: T.MlDeleteForecastRequest | TB.MlDeleteForecastRequest, options?: TransportRequestOptions): Promise<T.MlDeleteForecastResponse>
   async deleteForecast (this: That, params: T.MlDeleteForecastRequest | TB.MlDeleteForecastRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'forecast_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -324,17 +270,11 @@ export default class Ml {
   async deleteJob (this: That, params: T.MlDeleteJobRequest | TB.MlDeleteJobRequest, options?: TransportRequestOptions): Promise<T.MlDeleteJobResponse>
   async deleteJob (this: That, params: T.MlDeleteJobRequest | TB.MlDeleteJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -353,17 +293,11 @@ export default class Ml {
   async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest | TB.MlDeleteModelSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlDeleteModelSnapshotResponse>
   async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest | TB.MlDeleteModelSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -382,17 +316,11 @@ export default class Ml {
   async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest | TB.MlDeleteTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlDeleteTrainedModelResponse>
   async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest | TB.MlDeleteTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -411,17 +339,11 @@ export default class Ml {
   async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest | TB.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<T.MlDeleteTrainedModelAliasResponse>
   async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest | TB.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_alias', 'model_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -629,17 +551,11 @@ export default class Ml {
   async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptions): Promise<T.MlGetCalendarEventsResponse>
   async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -731,18 +647,12 @@ export default class Ml {
   async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest | TB.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlGetDataFrameAnalyticsResponse>
   async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest | TB.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -768,18 +678,12 @@ export default class Ml {
   async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest | TB.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetDataFrameAnalyticsStatsResponse>
   async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest | TB.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -805,18 +709,12 @@ export default class Ml {
   async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest | TB.MlGetDatafeedStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetDatafeedStatsResponse>
   async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest | TB.MlGetDatafeedStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -842,18 +740,12 @@ export default class Ml {
   async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest | TB.MlGetDatafeedsRequest, options?: TransportRequestOptions): Promise<T.MlGetDatafeedsResponse>
   async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest | TB.MlGetDatafeedsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -879,18 +771,12 @@ export default class Ml {
   async getFilters (this: That, params?: T.MlGetFiltersRequest | TB.MlGetFiltersRequest, options?: TransportRequestOptions): Promise<T.MlGetFiltersResponse>
   async getFilters (this: That, params?: T.MlGetFiltersRequest | TB.MlGetFiltersRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['filter_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -945,18 +831,12 @@ export default class Ml {
   async getJobStats (this: That, params?: T.MlGetJobStatsRequest | TB.MlGetJobStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetJobStatsResponse>
   async getJobStats (this: That, params?: T.MlGetJobStatsRequest | TB.MlGetJobStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -982,18 +862,12 @@ export default class Ml {
   async getJobs (this: That, params?: T.MlGetJobsRequest | TB.MlGetJobsRequest, options?: TransportRequestOptions): Promise<T.MlGetJobsResponse>
   async getJobs (this: That, params?: T.MlGetJobsRequest | TB.MlGetJobsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1019,17 +893,11 @@ export default class Ml {
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<T.MlGetModelSnapshotsResponse>
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1113,16 +981,12 @@ export default class Ml {
   async getTrainedModelDeploymentStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async getTrainedModelDeploymentStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1140,18 +1004,12 @@ export default class Ml {
   async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest | TB.MlGetTrainedModelsRequest, options?: TransportRequestOptions): Promise<T.MlGetTrainedModelsResponse>
   async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest | TB.MlGetTrainedModelsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1177,18 +1035,12 @@ export default class Ml {
   async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest | TB.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions): Promise<T.MlGetTrainedModelsStatsResponse>
   async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest | TB.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1214,16 +1066,12 @@ export default class Ml {
   async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1241,18 +1089,12 @@ export default class Ml {
   async info (this: That, params?: T.MlInfoRequest | TB.MlInfoRequest, options?: TransportRequestOptions): Promise<T.MlInfoResponse>
   async info (this: That, params?: T.MlInfoRequest | TB.MlInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1460,17 +1302,11 @@ export default class Ml {
   async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest | TB.MlPutCalendarJobRequest, options?: TransportRequestOptions): Promise<T.MlPutCalendarJobResponse>
   async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest | TB.MlPutCalendarJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id', 'job_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1634,17 +1470,11 @@ export default class Ml {
   async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest | TB.MlPutTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelAliasResponse>
   async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest | TB.MlPutTrainedModelAliasRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_alias', 'model_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1663,16 +1493,12 @@ export default class Ml {
   async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id', 'part']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1690,16 +1516,12 @@ export default class Ml {
   async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1717,17 +1539,11 @@ export default class Ml {
   async resetJob (this: That, params: T.MlResetJobRequest | TB.MlResetJobRequest, options?: TransportRequestOptions): Promise<T.MlResetJobResponse>
   async resetJob (this: That, params: T.MlResetJobRequest | TB.MlResetJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1775,18 +1591,12 @@ export default class Ml {
   async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest | TB.MlSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<T.MlSetUpgradeModeResponse>
   async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest | TB.MlSetUpgradeModeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1805,17 +1615,11 @@ export default class Ml {
   async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest | TB.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlStartDataFrameAnalyticsResponse>
   async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest | TB.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1863,16 +1667,12 @@ export default class Ml {
   async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1890,17 +1690,11 @@ export default class Ml {
   async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest | TB.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlStopDataFrameAnalyticsResponse>
   async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest | TB.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1948,16 +1742,12 @@ export default class Ml {
   async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -2004,16 +1794,12 @@ export default class Ml {
   async updateDatafeed (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async updateDatafeed (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -2118,17 +1904,11 @@ export default class Ml {
   async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest | TB.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptions): Promise<T.MlUpgradeJobSnapshotResponse>
   async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest | TB.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

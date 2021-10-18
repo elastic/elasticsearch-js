@@ -48,18 +48,12 @@ export default class Xpack {
   async info (this: That, params?: T.XpackInfoRequest | TB.XpackInfoRequest, options?: TransportRequestOptions): Promise<T.XpackInfoResponse>
   async info (this: That, params?: T.XpackInfoRequest | TB.XpackInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -78,18 +72,12 @@ export default class Xpack {
   async usage (this: That, params?: T.XpackUsageRequest | TB.XpackUsageRequest, options?: TransportRequestOptions): Promise<T.XpackUsageResponse>
   async usage (this: That, params?: T.XpackUsageRequest | TB.XpackUsageRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

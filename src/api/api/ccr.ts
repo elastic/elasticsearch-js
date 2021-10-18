@@ -48,17 +48,11 @@ export default class Ccr {
   async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest | TB.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrDeleteAutoFollowPatternResponse>
   async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest | TB.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -106,17 +100,11 @@ export default class Ccr {
   async followInfo (this: That, params: T.CcrFollowInfoRequest | TB.CcrFollowInfoRequest, options?: TransportRequestOptions): Promise<T.CcrFollowInfoResponse>
   async followInfo (this: That, params: T.CcrFollowInfoRequest | TB.CcrFollowInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -135,17 +123,11 @@ export default class Ccr {
   async followStats (this: That, params: T.CcrFollowStatsRequest | TB.CcrFollowStatsRequest, options?: TransportRequestOptions): Promise<T.CcrFollowStatsResponse>
   async followStats (this: That, params: T.CcrFollowStatsRequest | TB.CcrFollowStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -193,18 +175,12 @@ export default class Ccr {
   async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest | TB.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrGetAutoFollowPatternResponse>
   async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest | TB.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -230,17 +206,11 @@ export default class Ccr {
   async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest | TB.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrPauseAutoFollowPatternResponse>
   async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest | TB.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -259,17 +229,11 @@ export default class Ccr {
   async pauseFollow (this: That, params: T.CcrPauseFollowRequest | TB.CcrPauseFollowRequest, options?: TransportRequestOptions): Promise<T.CcrPauseFollowResponse>
   async pauseFollow (this: That, params: T.CcrPauseFollowRequest | TB.CcrPauseFollowRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -317,17 +281,11 @@ export default class Ccr {
   async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest | TB.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrResumeAutoFollowPatternResponse>
   async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest | TB.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -375,18 +333,12 @@ export default class Ccr {
   async stats (this: That, params?: T.CcrStatsRequest | TB.CcrStatsRequest, options?: TransportRequestOptions): Promise<T.CcrStatsResponse>
   async stats (this: That, params?: T.CcrStatsRequest | TB.CcrStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -405,17 +357,11 @@ export default class Ccr {
   async unfollow (this: That, params: T.CcrUnfollowRequest | TB.CcrUnfollowRequest, options?: TransportRequestOptions): Promise<T.CcrUnfollowResponse>
   async unfollow (this: That, params: T.CcrUnfollowRequest | TB.CcrUnfollowRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

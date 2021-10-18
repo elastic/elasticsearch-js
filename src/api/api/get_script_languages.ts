@@ -42,18 +42,12 @@ export default async function GetScriptLanguagesApi (this: That, params?: T.GetS
 export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest | TB.GetScriptLanguagesRequest, options?: TransportRequestOptions): Promise<T.GetScriptLanguagesResponse>
 export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest | TB.GetScriptLanguagesRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
-  const acceptedBody: string[] = []
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  let body: Record<string, any> = params?.body ?? undefined
+  const body = undefined
 
   params = params ?? {}
   for (const key in params) {
-    if (acceptedBody.includes(key)) {
-      body = body ?? {}
-      // @ts-expect-error
-      body[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
+    if (acceptedPath.includes(key)) {
       continue
     } else {
       if (key === 'body') continue

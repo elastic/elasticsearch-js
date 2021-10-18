@@ -48,17 +48,11 @@ export default class Indices {
   async addBlock (this: That, params: T.IndicesAddBlockRequest | TB.IndicesAddBlockRequest, options?: TransportRequestOptions): Promise<T.IndicesAddBlockResponse>
   async addBlock (this: That, params: T.IndicesAddBlockRequest | TB.IndicesAddBlockRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'block']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -114,18 +108,12 @@ export default class Indices {
   async clearCache (this: That, params?: T.IndicesClearCacheRequest | TB.IndicesClearCacheRequest, options?: TransportRequestOptions): Promise<T.IndicesClearCacheResponse>
   async clearCache (this: That, params?: T.IndicesClearCacheRequest | TB.IndicesClearCacheRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -180,17 +168,11 @@ export default class Indices {
   async close (this: That, params: T.IndicesCloseRequest | TB.IndicesCloseRequest, options?: TransportRequestOptions): Promise<T.IndicesCloseResponse>
   async close (this: That, params: T.IndicesCloseRequest | TB.IndicesCloseRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -238,17 +220,11 @@ export default class Indices {
   async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest | TB.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesCreateDataStreamResponse>
   async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest | TB.IndicesCreateDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -267,18 +243,12 @@ export default class Indices {
   async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest | TB.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesDataStreamsStatsResponse>
   async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest | TB.IndicesDataStreamsStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -304,17 +274,11 @@ export default class Indices {
   async delete (this: That, params: T.IndicesDeleteRequest | TB.IndicesDeleteRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteResponse>
   async delete (this: That, params: T.IndicesDeleteRequest | TB.IndicesDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -333,17 +297,11 @@ export default class Indices {
   async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest | TB.IndicesDeleteAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteAliasResponse>
   async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest | TB.IndicesDeleteAliasRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -369,17 +327,11 @@ export default class Indices {
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataStreamResponse>
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -398,17 +350,11 @@ export default class Indices {
   async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest | TB.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteIndexTemplateResponse>
   async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest | TB.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -427,17 +373,11 @@ export default class Indices {
   async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest | TB.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteTemplateResponse>
   async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest | TB.IndicesDeleteTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -456,17 +396,11 @@ export default class Indices {
   async diskUsage (this: That, params: T.IndicesDiskUsageRequest | TB.IndicesDiskUsageRequest, options?: TransportRequestOptions): Promise<T.IndicesDiskUsageResponse>
   async diskUsage (this: That, params: T.IndicesDiskUsageRequest | TB.IndicesDiskUsageRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -485,17 +419,11 @@ export default class Indices {
   async exists (this: That, params: T.IndicesExistsRequest | TB.IndicesExistsRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsResponse>
   async exists (this: That, params: T.IndicesExistsRequest | TB.IndicesExistsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -514,17 +442,11 @@ export default class Indices {
   async existsAlias (this: That, params: T.IndicesExistsAliasRequest | TB.IndicesExistsAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsAliasResponse>
   async existsAlias (this: That, params: T.IndicesExistsAliasRequest | TB.IndicesExistsAliasRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name', 'index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -550,17 +472,11 @@ export default class Indices {
   async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest | TB.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsIndexTemplateResponse>
   async existsIndexTemplate (this: That, params: T.IndicesExistsIndexTemplateRequest | TB.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -579,17 +495,11 @@ export default class Indices {
   async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest | TB.IndicesExistsTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsTemplateResponse>
   async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest | TB.IndicesExistsTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -608,17 +518,11 @@ export default class Indices {
   async existsType (this: That, params: T.IndicesExistsTypeRequest | TB.IndicesExistsTypeRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsTypeResponse>
   async existsType (this: That, params: T.IndicesExistsTypeRequest | TB.IndicesExistsTypeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'type']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -637,16 +541,12 @@ export default class Indices {
   async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -664,18 +564,12 @@ export default class Indices {
   async flush (this: That, params?: T.IndicesFlushRequest | TB.IndicesFlushRequest, options?: TransportRequestOptions): Promise<T.IndicesFlushResponse>
   async flush (this: That, params?: T.IndicesFlushRequest | TB.IndicesFlushRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -701,18 +595,12 @@ export default class Indices {
   async forcemerge (this: That, params?: T.IndicesForcemergeRequest | TB.IndicesForcemergeRequest, options?: TransportRequestOptions): Promise<T.IndicesForcemergeResponse>
   async forcemerge (this: That, params?: T.IndicesForcemergeRequest | TB.IndicesForcemergeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -738,17 +626,11 @@ export default class Indices {
   async get (this: That, params: T.IndicesGetRequest | TB.IndicesGetRequest, options?: TransportRequestOptions): Promise<T.IndicesGetResponse>
   async get (this: That, params: T.IndicesGetRequest | TB.IndicesGetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -767,18 +649,12 @@ export default class Indices {
   async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptions): Promise<T.IndicesGetAliasResponse>
   async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name', 'index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -810,18 +686,12 @@ export default class Indices {
   async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest | TB.IndicesGetDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesGetDataStreamResponse>
   async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest | TB.IndicesGetDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -847,17 +717,11 @@ export default class Indices {
   async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest | TB.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesGetFieldMappingResponse>
   async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest | TB.IndicesGetFieldMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['fields', 'index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -883,18 +747,12 @@ export default class Indices {
   async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest | TB.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesGetIndexTemplateResponse>
   async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest | TB.IndicesGetIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -920,18 +778,12 @@ export default class Indices {
   async getMapping (this: That, params?: T.IndicesGetMappingRequest | TB.IndicesGetMappingRequest, options?: TransportRequestOptions): Promise<T.IndicesGetMappingResponse>
   async getMapping (this: That, params?: T.IndicesGetMappingRequest | TB.IndicesGetMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -957,18 +809,12 @@ export default class Indices {
   async getSettings (this: That, params?: T.IndicesGetSettingsRequest | TB.IndicesGetSettingsRequest, options?: TransportRequestOptions): Promise<T.IndicesGetSettingsResponse>
   async getSettings (this: That, params?: T.IndicesGetSettingsRequest | TB.IndicesGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1000,18 +846,12 @@ export default class Indices {
   async getTemplate (this: That, params?: T.IndicesGetTemplateRequest | TB.IndicesGetTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesGetTemplateResponse>
   async getTemplate (this: That, params?: T.IndicesGetTemplateRequest | TB.IndicesGetTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1037,17 +877,11 @@ export default class Indices {
   async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest | TB.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesMigrateToDataStreamResponse>
   async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest | TB.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1066,17 +900,11 @@ export default class Indices {
   async open (this: That, params: T.IndicesOpenRequest | TB.IndicesOpenRequest, options?: TransportRequestOptions): Promise<T.IndicesOpenResponse>
   async open (this: That, params: T.IndicesOpenRequest | TB.IndicesOpenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1095,17 +923,11 @@ export default class Indices {
   async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest | TB.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesPromoteDataStreamResponse>
   async promoteDataStream (this: That, params: T.IndicesPromoteDataStreamRequest | TB.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1282,18 +1104,12 @@ export default class Indices {
   async recovery (this: That, params?: T.IndicesRecoveryRequest | TB.IndicesRecoveryRequest, options?: TransportRequestOptions): Promise<T.IndicesRecoveryResponse>
   async recovery (this: That, params?: T.IndicesRecoveryRequest | TB.IndicesRecoveryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1319,18 +1135,12 @@ export default class Indices {
   async refresh (this: That, params?: T.IndicesRefreshRequest | TB.IndicesRefreshRequest, options?: TransportRequestOptions): Promise<T.IndicesRefreshResponse>
   async refresh (this: That, params?: T.IndicesRefreshRequest | TB.IndicesRefreshRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1356,17 +1166,11 @@ export default class Indices {
   async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest | TB.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptions): Promise<T.IndicesReloadSearchAnalyzersResponse>
   async reloadSearchAnalyzers (this: That, params: T.IndicesReloadSearchAnalyzersRequest | TB.IndicesReloadSearchAnalyzersRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1385,17 +1189,11 @@ export default class Indices {
   async resolveIndex (this: That, params: T.IndicesResolveIndexRequest | TB.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<T.IndicesResolveIndexResponse>
   async resolveIndex (this: That, params: T.IndicesResolveIndexRequest | TB.IndicesResolveIndexRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1450,18 +1248,12 @@ export default class Indices {
   async segments (this: That, params?: T.IndicesSegmentsRequest | TB.IndicesSegmentsRequest, options?: TransportRequestOptions): Promise<T.IndicesSegmentsResponse>
   async segments (this: That, params?: T.IndicesSegmentsRequest | TB.IndicesSegmentsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1487,18 +1279,12 @@ export default class Indices {
   async shardStores (this: That, params?: T.IndicesShardStoresRequest | TB.IndicesShardStoresRequest, options?: TransportRequestOptions): Promise<T.IndicesShardStoresResponse>
   async shardStores (this: That, params?: T.IndicesShardStoresRequest | TB.IndicesShardStoresRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1646,18 +1432,12 @@ export default class Indices {
   async stats (this: That, params?: T.IndicesStatsRequest | TB.IndicesStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesStatsResponse>
   async stats (this: That, params?: T.IndicesStatsRequest | TB.IndicesStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['metric', 'index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

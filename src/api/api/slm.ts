@@ -48,17 +48,11 @@ export default class Slm {
   async deleteLifecycle (this: That, params: T.SlmDeleteLifecycleRequest | TB.SlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<T.SlmDeleteLifecycleResponse>
   async deleteLifecycle (this: That, params: T.SlmDeleteLifecycleRequest | TB.SlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['policy_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -77,17 +71,11 @@ export default class Slm {
   async executeLifecycle (this: That, params: T.SlmExecuteLifecycleRequest | TB.SlmExecuteLifecycleRequest, options?: TransportRequestOptions): Promise<T.SlmExecuteLifecycleResponse>
   async executeLifecycle (this: That, params: T.SlmExecuteLifecycleRequest | TB.SlmExecuteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['policy_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -106,18 +94,12 @@ export default class Slm {
   async executeRetention (this: That, params?: T.SlmExecuteRetentionRequest | TB.SlmExecuteRetentionRequest, options?: TransportRequestOptions): Promise<T.SlmExecuteRetentionResponse>
   async executeRetention (this: That, params?: T.SlmExecuteRetentionRequest | TB.SlmExecuteRetentionRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -136,18 +118,12 @@ export default class Slm {
   async getLifecycle (this: That, params?: T.SlmGetLifecycleRequest | TB.SlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<T.SlmGetLifecycleResponse>
   async getLifecycle (this: That, params?: T.SlmGetLifecycleRequest | TB.SlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['policy_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -173,18 +149,12 @@ export default class Slm {
   async getStats (this: That, params?: T.SlmGetStatsRequest | TB.SlmGetStatsRequest, options?: TransportRequestOptions): Promise<T.SlmGetStatsResponse>
   async getStats (this: That, params?: T.SlmGetStatsRequest | TB.SlmGetStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -203,18 +173,12 @@ export default class Slm {
   async getStatus (this: That, params?: T.SlmGetStatusRequest | TB.SlmGetStatusRequest, options?: TransportRequestOptions): Promise<T.SlmGetStatusResponse>
   async getStatus (this: That, params?: T.SlmGetStatusRequest | TB.SlmGetStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -262,18 +226,12 @@ export default class Slm {
   async start (this: That, params?: T.SlmStartRequest | TB.SlmStartRequest, options?: TransportRequestOptions): Promise<T.SlmStartResponse>
   async start (this: That, params?: T.SlmStartRequest | TB.SlmStartRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -292,18 +250,12 @@ export default class Slm {
   async stop (this: That, params?: T.SlmStopRequest | TB.SlmStopRequest, options?: TransportRequestOptions): Promise<T.SlmStopResponse>
   async stop (this: That, params?: T.SlmStopRequest | TB.SlmStopRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

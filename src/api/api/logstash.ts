@@ -48,17 +48,11 @@ export default class Logstash {
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashDeletePipelineResponse>
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -77,17 +71,11 @@ export default class Logstash {
   async getPipeline (this: That, params: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashGetPipelineResponse>
   async getPipeline (this: That, params: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

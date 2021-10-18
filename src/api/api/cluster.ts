@@ -78,17 +78,11 @@ export default class Cluster {
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest | TB.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptions): Promise<T.ClusterDeleteComponentTemplateResponse>
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest | TB.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -107,18 +101,12 @@ export default class Cluster {
   async deleteVotingConfigExclusions (this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest | TB.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<T.ClusterDeleteVotingConfigExclusionsResponse>
   async deleteVotingConfigExclusions (this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest | TB.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -137,17 +125,11 @@ export default class Cluster {
   async existsComponentTemplate (this: That, params: T.ClusterExistsComponentTemplateRequest | TB.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptions): Promise<T.ClusterExistsComponentTemplateResponse>
   async existsComponentTemplate (this: That, params: T.ClusterExistsComponentTemplateRequest | TB.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -166,18 +148,12 @@ export default class Cluster {
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest | TB.ClusterGetComponentTemplateRequest, options?: TransportRequestOptions): Promise<T.ClusterGetComponentTemplateResponse>
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest | TB.ClusterGetComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -203,18 +179,12 @@ export default class Cluster {
   async getSettings (this: That, params?: T.ClusterGetSettingsRequest | TB.ClusterGetSettingsRequest, options?: TransportRequestOptions): Promise<T.ClusterGetSettingsResponse>
   async getSettings (this: That, params?: T.ClusterGetSettingsRequest | TB.ClusterGetSettingsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -233,18 +203,12 @@ export default class Cluster {
   async health (this: That, params?: T.ClusterHealthRequest | TB.ClusterHealthRequest, options?: TransportRequestOptions): Promise<T.ClusterHealthResponse>
   async health (this: That, params?: T.ClusterHealthRequest | TB.ClusterHealthRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -270,18 +234,12 @@ export default class Cluster {
   async pendingTasks (this: That, params?: T.ClusterPendingTasksRequest | TB.ClusterPendingTasksRequest, options?: TransportRequestOptions): Promise<T.ClusterPendingTasksResponse>
   async pendingTasks (this: That, params?: T.ClusterPendingTasksRequest | TB.ClusterPendingTasksRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -300,18 +258,12 @@ export default class Cluster {
   async postVotingConfigExclusions (this: That, params?: T.ClusterPostVotingConfigExclusionsRequest | TB.ClusterPostVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<T.ClusterPostVotingConfigExclusionsResponse>
   async postVotingConfigExclusions (this: That, params?: T.ClusterPostVotingConfigExclusionsRequest | TB.ClusterPostVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -389,18 +341,12 @@ export default class Cluster {
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest | TB.ClusterRemoteInfoRequest, options?: TransportRequestOptions): Promise<T.ClusterRemoteInfoResponse>
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest | TB.ClusterRemoteInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -449,18 +395,12 @@ export default class Cluster {
   async state (this: That, params?: T.ClusterStateRequest | TB.ClusterStateRequest, options?: TransportRequestOptions): Promise<T.ClusterStateResponse>
   async state (this: That, params?: T.ClusterStateRequest | TB.ClusterStateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['metric', 'index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -489,18 +429,12 @@ export default class Cluster {
   async stats (this: That, params?: T.ClusterStatsRequest | TB.ClusterStatsRequest, options?: TransportRequestOptions): Promise<T.ClusterStatsResponse>
   async stats (this: That, params?: T.ClusterStatsRequest | TB.ClusterStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

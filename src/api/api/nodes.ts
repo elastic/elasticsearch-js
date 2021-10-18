@@ -48,16 +48,12 @@ export default class Nodes {
   async clearRepositoriesMeteringArchive (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async clearRepositoriesMeteringArchive (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id', 'max_archive_version']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -75,16 +71,12 @@ export default class Nodes {
   async getRepositoriesMeteringInfo (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async getRepositoriesMeteringInfo (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -102,18 +94,12 @@ export default class Nodes {
   async hotThreads (this: That, params?: T.NodesHotThreadsRequest | TB.NodesHotThreadsRequest, options?: TransportRequestOptions): Promise<T.NodesHotThreadsResponse>
   async hotThreads (this: That, params?: T.NodesHotThreadsRequest | TB.NodesHotThreadsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -139,18 +125,12 @@ export default class Nodes {
   async info (this: That, params?: T.NodesInfoRequest | TB.NodesInfoRequest, options?: TransportRequestOptions): Promise<T.NodesInfoResponse>
   async info (this: That, params?: T.NodesInfoRequest | TB.NodesInfoRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id', 'metric']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -219,18 +199,12 @@ export default class Nodes {
   async stats (this: That, params?: T.NodesStatsRequest | TB.NodesStatsRequest, options?: TransportRequestOptions): Promise<T.NodesStatsResponse>
   async stats (this: That, params?: T.NodesStatsRequest | TB.NodesStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id', 'metric', 'index_metric']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -268,18 +242,12 @@ export default class Nodes {
   async usage (this: That, params?: T.NodesUsageRequest | TB.NodesUsageRequest, options?: TransportRequestOptions): Promise<T.NodesUsageResponse>
   async usage (this: That, params?: T.NodesUsageRequest | TB.NodesUsageRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id', 'metric']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

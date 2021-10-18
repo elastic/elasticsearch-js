@@ -48,17 +48,11 @@ export default class Snapshot {
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCleanupRepositoryResponse>
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -164,17 +158,11 @@ export default class Snapshot {
   async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteResponse>
   async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -193,17 +181,11 @@ export default class Snapshot {
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteRepositoryResponse>
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -222,17 +204,11 @@ export default class Snapshot {
   async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetResponse>
   async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -251,18 +227,12 @@ export default class Snapshot {
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetRepositoryResponse>
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -288,16 +258,12 @@ export default class Snapshot {
   async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -344,18 +310,12 @@ export default class Snapshot {
   async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<T.SnapshotStatusResponse>
   async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -384,17 +344,11 @@ export default class Snapshot {
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotVerifyRepositoryResponse>
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

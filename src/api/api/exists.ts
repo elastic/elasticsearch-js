@@ -42,17 +42,11 @@ export default async function ExistsApi (this: That, params: T.ExistsRequest | T
 export default async function ExistsApi (this: That, params: T.ExistsRequest | TB.ExistsRequest, options?: TransportRequestOptions): Promise<T.ExistsResponse>
 export default async function ExistsApi (this: That, params: T.ExistsRequest | TB.ExistsRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
-  const acceptedBody: string[] = []
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  const body = undefined
 
   for (const key in params) {
-    if (acceptedBody.includes(key)) {
-      body = body ?? {}
-      // @ts-expect-error
-      body[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
+    if (acceptedPath.includes(key)) {
       continue
     } else {
       if (key === 'body') continue

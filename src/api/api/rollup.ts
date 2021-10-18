@@ -48,17 +48,11 @@ export default class Rollup {
   async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptions): Promise<T.RollupDeleteJobResponse>
   async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -77,18 +71,12 @@ export default class Rollup {
   async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptions): Promise<T.RollupGetJobsResponse>
   async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -114,18 +102,12 @@ export default class Rollup {
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptions): Promise<T.RollupGetRollupCapsResponse>
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -151,17 +133,11 @@ export default class Rollup {
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions): Promise<T.RollupGetRollupIndexCapsResponse>
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -209,16 +185,11 @@ export default class Rollup {
   async rollup (this: That, params: T.RollupRollupRequest | TB.RollupRollupRequest, options?: TransportRequestOptions): Promise<T.RollupRollupResponse>
   async rollup (this: That, params: T.RollupRollupRequest | TB.RollupRollupRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'rollup_index']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        body = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -266,17 +237,11 @@ export default class Rollup {
   async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptions): Promise<T.RollupStartJobResponse>
   async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -295,17 +260,11 @@ export default class Rollup {
   async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptions): Promise<T.RollupStopJobResponse>
   async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

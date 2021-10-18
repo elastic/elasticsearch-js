@@ -42,16 +42,11 @@ export default async function CreateApi<TDocument = unknown> (this: That, params
 export default async function CreateApi<TDocument = unknown> (this: That, params: T.CreateRequest<TDocument> | TB.CreateRequest<TDocument>, options?: TransportRequestOptions): Promise<T.CreateResponse>
 export default async function CreateApi<TDocument = unknown> (this: That, params: T.CreateRequest<TDocument> | TB.CreateRequest<TDocument>, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index', 'type']
-  const acceptedBody: string[] = []
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  let body: any = params.body ?? undefined
+  const body = undefined
 
   for (const key in params) {
-    if (acceptedBody.includes(key)) {
-      // @ts-expect-error
-      body = params[key]
-    } else if (acceptedPath.includes(key)) {
+    if (acceptedPath.includes(key)) {
       continue
     } else {
       if (key === 'body') continue

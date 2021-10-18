@@ -42,18 +42,12 @@ export default async function GetScriptContextApi (this: That, params?: T.GetScr
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptions): Promise<T.GetScriptContextResponse>
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
-  const acceptedBody: string[] = []
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  let body: Record<string, any> = params?.body ?? undefined
+  const body = undefined
 
   params = params ?? {}
   for (const key in params) {
-    if (acceptedBody.includes(key)) {
-      body = body ?? {}
-      // @ts-expect-error
-      body[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
+    if (acceptedPath.includes(key)) {
       continue
     } else {
       if (key === 'body') continue

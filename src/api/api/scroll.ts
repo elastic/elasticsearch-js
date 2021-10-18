@@ -42,17 +42,11 @@ export default async function ScrollApi<TDocument = unknown> (this: That, params
 export default async function ScrollApi<TDocument = unknown> (this: That, params: T.ScrollRequest | TB.ScrollRequest, options?: TransportRequestOptions): Promise<T.ScrollResponse<TDocument>>
 export default async function ScrollApi<TDocument = unknown> (this: That, params: T.ScrollRequest | TB.ScrollRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
-  const acceptedBody: string[] = []
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  const body = undefined
 
   for (const key in params) {
-    if (acceptedBody.includes(key)) {
-      body = body ?? {}
-      // @ts-expect-error
-      body[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
+    if (acceptedPath.includes(key)) {
       continue
     } else {
       if (key === 'body') continue

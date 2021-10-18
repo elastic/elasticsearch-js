@@ -48,17 +48,11 @@ export default class Transform {
   async deleteTransform (this: That, params: T.TransformDeleteTransformRequest | TB.TransformDeleteTransformRequest, options?: TransportRequestOptions): Promise<T.TransformDeleteTransformResponse>
   async deleteTransform (this: That, params: T.TransformDeleteTransformRequest | TB.TransformDeleteTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -77,18 +71,12 @@ export default class Transform {
   async getTransform (this: That, params?: T.TransformGetTransformRequest | TB.TransformGetTransformRequest, options?: TransportRequestOptions): Promise<T.TransformGetTransformResponse>
   async getTransform (this: That, params?: T.TransformGetTransformRequest | TB.TransformGetTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -114,17 +102,11 @@ export default class Transform {
   async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest | TB.TransformGetTransformStatsRequest, options?: TransportRequestOptions): Promise<T.TransformGetTransformStatsResponse>
   async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest | TB.TransformGetTransformStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -180,17 +162,11 @@ export default class Transform {
   async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptions): Promise<T.TransformPutTransformResponse>
   async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id', 'transform_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -209,17 +185,11 @@ export default class Transform {
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptions): Promise<T.TransformStartTransformResponse>
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -238,17 +208,11 @@ export default class Transform {
   async stopTransform (this: That, params: T.TransformStopTransformRequest | TB.TransformStopTransformRequest, options?: TransportRequestOptions): Promise<T.TransformStopTransformResponse>
   async stopTransform (this: That, params: T.TransformStopTransformRequest | TB.TransformStopTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -267,17 +231,11 @@ export default class Transform {
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<T.TransformUpdateTransformResponse>
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id', 'transform_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -296,16 +254,12 @@ export default class Transform {
   async upgradeTransforms (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async upgradeTransforms (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

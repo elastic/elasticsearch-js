@@ -48,18 +48,12 @@ export default class Security {
   async authenticate (this: That, params?: T.SecurityAuthenticateRequest | TB.SecurityAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecurityAuthenticateResponse>
   async authenticate (this: That, params?: T.SecurityAuthenticateRequest | TB.SecurityAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -115,17 +109,11 @@ export default class Security {
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<T.SecurityClearApiKeyCacheResponse>
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ids']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -144,17 +132,11 @@ export default class Security {
   async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest | TB.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedPrivilegesResponse>
   async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest | TB.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['application']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -173,17 +155,11 @@ export default class Security {
   async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest | TB.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedRealmsResponse>
   async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest | TB.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['realms']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -202,17 +178,11 @@ export default class Security {
   async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest | TB.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedRolesResponse>
   async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest | TB.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -231,17 +201,11 @@ export default class Security {
   async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest | TB.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedServiceTokensResponse>
   async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest | TB.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service', 'name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -290,17 +254,11 @@ export default class Security {
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateServiceTokenResponse>
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service', 'name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -326,17 +284,11 @@ export default class Security {
   async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest | TB.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityDeletePrivilegesResponse>
   async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest | TB.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['application', 'name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -355,17 +307,11 @@ export default class Security {
   async deleteRole (this: That, params: T.SecurityDeleteRoleRequest | TB.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteRoleResponse>
   async deleteRole (this: That, params: T.SecurityDeleteRoleRequest | TB.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -384,17 +330,11 @@ export default class Security {
   async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest | TB.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteRoleMappingResponse>
   async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest | TB.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -413,17 +353,11 @@ export default class Security {
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest | TB.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteServiceTokenResponse>
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest | TB.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service', 'name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -442,17 +376,11 @@ export default class Security {
   async deleteUser (this: That, params: T.SecurityDeleteUserRequest | TB.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteUserResponse>
   async deleteUser (this: That, params: T.SecurityDeleteUserRequest | TB.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -471,17 +399,11 @@ export default class Security {
   async disableUser (this: That, params: T.SecurityDisableUserRequest | TB.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<T.SecurityDisableUserResponse>
   async disableUser (this: That, params: T.SecurityDisableUserRequest | TB.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -500,17 +422,11 @@ export default class Security {
   async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<T.SecurityEnableUserResponse>
   async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -529,16 +445,12 @@ export default class Security {
   async enrollKibana (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async enrollKibana (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -556,16 +468,12 @@ export default class Security {
   async enrollNode (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async enrollNode (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -583,18 +491,12 @@ export default class Security {
   async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest | TB.SecurityGetApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityGetApiKeyResponse>
   async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest | TB.SecurityGetApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -613,18 +515,12 @@ export default class Security {
   async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest | TB.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetBuiltinPrivilegesResponse>
   async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest | TB.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -643,18 +539,12 @@ export default class Security {
   async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest | TB.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetPrivilegesResponse>
   async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest | TB.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['application', 'name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -683,18 +573,12 @@ export default class Security {
   async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityGetRoleResponse>
   async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -720,18 +604,12 @@ export default class Security {
   async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest | TB.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityGetRoleMappingResponse>
   async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest | TB.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -757,18 +635,12 @@ export default class Security {
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetServiceAccountsResponse>
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -797,17 +669,11 @@ export default class Security {
   async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest | TB.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetServiceCredentialsResponse>
   async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest | TB.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['namespace', 'service']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -856,18 +722,12 @@ export default class Security {
   async getUser (this: That, params?: T.SecurityGetUserRequest | TB.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserResponse>
   async getUser (this: That, params?: T.SecurityGetUserRequest | TB.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -893,18 +753,12 @@ export default class Security {
   async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest | TB.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserPrivilegesResponse>
   async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest | TB.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1049,16 +903,11 @@ export default class Security {
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityPutPrivilegesResponse>
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        body = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1164,16 +1013,12 @@ export default class Security {
   async queryApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async queryApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1191,16 +1036,12 @@ export default class Security {
   async samlAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async samlAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1218,16 +1059,12 @@ export default class Security {
   async samlCompleteLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async samlCompleteLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1245,16 +1082,12 @@ export default class Security {
   async samlInvalidate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async samlInvalidate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1272,16 +1105,12 @@ export default class Security {
   async samlLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async samlLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1299,16 +1128,12 @@ export default class Security {
   async samlPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async samlPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -1326,16 +1151,12 @@ export default class Security {
   async samlServiceProviderMetadata (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async samlServiceProviderMetadata (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['realm_name']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue

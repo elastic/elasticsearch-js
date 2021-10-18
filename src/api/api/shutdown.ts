@@ -48,17 +48,11 @@ export default class Shutdown {
   async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownDeleteNodeResponse>
   async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -77,18 +71,12 @@ export default class Shutdown {
   async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownGetNodeResponse>
   async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
@@ -114,17 +102,11 @@ export default class Shutdown {
   async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownPutNodeResponse>
   async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
-    const acceptedBody: string[] = []
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else {
         if (key === 'body') continue
