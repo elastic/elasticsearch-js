@@ -88,6 +88,7 @@ function isXPackTemplate (name) {
     case '.deprecation-indexing-mappings':
     case '.deprecation-indexing-settings':
     case 'data-streams-mappings':
+    case '.logs-deprecation.elasticsearch-default':
       return true
   }
   return false
