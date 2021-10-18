@@ -194,7 +194,6 @@ export default class Helpers {
     }
     assert(response !== undefined, 'The response is undefined, please file a bug report')
     if (response.statusCode === 429) {
-      // @ts-expect-error
       throw new ResponseError(response)
     }
 
@@ -235,7 +234,6 @@ export default class Helpers {
         await sleep(wait)
       }
       if (response.statusCode === 429) {
-        // @ts-expect-error
         throw new ResponseError(response)
       }
     }
@@ -498,7 +496,6 @@ export default class Helpers {
               // @ts-expect-error
               addDocumentsGetter(result)
               if (response.status != null && response.status >= 400) {
-                // @ts-expect-error
                 callbacks[i](new ResponseError(result), result)
               } else {
                 callbacks[i](null, result)
