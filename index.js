@@ -19,7 +19,35 @@
 
 'use strict'
 
-const { errors } = require('@elastic/transport')
-const { default: Client } = require('./lib/Client')
+const {
+    Diagnostic,
+    Transport,
+    WeightedConnectionPool,
+    ClusterConnectionPool,
+    BaseConnectionPool,
+    CloudConnectionPool,
+    BaseConnection,
+    HttpConnection,
+    UndiciConnection,
+    Serializer,
+    errors,
+    events
+} = require('@elastic/transport')
 
-module.exports = { Client, errors }
+const { default: Client } = require('./lib/client')
+
+module.exports = { 
+    Client,
+    Diagnostic,
+    Transport,
+    WeightedConnectionPool,
+    ClusterConnectionPool,
+    BaseConnectionPool,
+    CloudConnectionPool,
+    BaseConnection,
+    HttpConnection,
+    UndiciConnection,
+    Serializer,
+    errors,
+    events
+}

@@ -43,8 +43,8 @@ import {
   Context
 } from '@elastic/transport/lib/types'
 import BaseConnection, { prepareHeaders } from '@elastic/transport/lib/connection/BaseConnection'
-import SniffingTransport from './SniffingTransport'
-import Helpers from './Helpers'
+import SniffingTransport from './sniffingTransport'
+import Helpers from './helpers'
 import API from './api'
 
 const kChild = Symbol('elasticsearchjs-child')
