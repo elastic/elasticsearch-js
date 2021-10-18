@@ -21,3 +21,4 @@ import Client from './lib/client'
 
 export * from '@elastic/transport'
 export { Client }
+export type { ClientOptions, NodeOptions } from './lib/client'
