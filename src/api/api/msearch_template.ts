@@ -53,8 +53,7 @@ export default async function MsearchTemplateApi<TDocument = unknown> (this: Tha
       body = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
-      if (key === 'body') continue
+    } else if (key !== 'body') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

@@ -59,8 +59,7 @@ export default class TextStructure {
         body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

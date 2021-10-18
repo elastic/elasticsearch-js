@@ -55,8 +55,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -85,8 +84,7 @@ export default class Security {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -115,8 +113,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -138,8 +135,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -161,8 +157,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -184,8 +179,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -207,8 +201,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -237,8 +230,7 @@ export default class Security {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -260,8 +252,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -290,8 +281,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -313,8 +303,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -336,8 +325,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -359,8 +347,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -382,8 +369,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -405,8 +391,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -428,8 +413,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -452,8 +436,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         querystring[key] = params[key]
       }
     }
@@ -475,8 +458,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         querystring[key] = params[key]
       }
     }
@@ -498,8 +480,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -522,8 +503,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -546,8 +526,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -580,8 +559,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -611,8 +589,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -642,8 +619,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -675,8 +651,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -705,8 +680,7 @@ export default class Security {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -729,8 +703,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -760,8 +733,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -789,8 +761,7 @@ export default class Security {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -819,8 +790,7 @@ export default class Security {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -856,8 +826,7 @@ export default class Security {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -886,8 +855,7 @@ export default class Security {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -903,14 +871,18 @@ export default class Security {
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityPutPrivilegesResponse>
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['privileges']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    let body: any = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -938,8 +910,7 @@ export default class Security {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -967,8 +938,7 @@ export default class Security {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -996,8 +966,7 @@ export default class Security {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -1020,8 +989,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         querystring[key] = params[key]
       }
     }
@@ -1043,8 +1011,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         querystring[key] = params[key]
       }
     }
@@ -1066,8 +1033,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         querystring[key] = params[key]
       }
     }
@@ -1089,8 +1055,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         querystring[key] = params[key]
       }
     }
@@ -1112,8 +1077,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         querystring[key] = params[key]
       }
     }
@@ -1135,8 +1099,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         querystring[key] = params[key]
       }
     }
@@ -1158,8 +1121,7 @@ export default class Security {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         querystring[key] = params[key]
       }
     }

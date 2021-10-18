@@ -54,8 +54,7 @@ export default async function UpdateByQueryApi (this: That, params: T.UpdateByQu
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
-      if (key === 'body') continue
+    } else if (key !== 'body') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

@@ -54,8 +54,7 @@ export default class Enrich {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -77,8 +76,7 @@ export default class Enrich {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -101,8 +99,7 @@ export default class Enrich {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -137,8 +134,7 @@ export default class Enrich {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -161,8 +157,7 @@ export default class Enrich {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

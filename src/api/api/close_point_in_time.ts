@@ -54,8 +54,7 @@ export default async function ClosePointInTimeApi (this: That, params: T.ClosePo
       body[key] = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
-    } else {
-      if (key === 'body') continue
+    } else if (key !== 'body') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

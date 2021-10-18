@@ -42,14 +42,18 @@ export default async function IndexApi<TDocument = unknown> (this: That, params:
 export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument> | TB.IndexRequest<TDocument>, options?: TransportRequestOptions): Promise<T.IndexResponse>
 export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument> | TB.IndexRequest<TDocument>, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
+  const acceptedBody: string[] = ['document']
   const querystring: Record<string, any> = {}
-  const body = undefined
+  // @ts-expect-error
+  let body: any = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedPath.includes(key)) {
+    if (acceptedBody.includes(key)) {
+      // @ts-expect-error
+      body = params[key]
+    } else if (acceptedPath.includes(key)) {
       continue
-    } else {
-      if (key === 'body') continue
+    } else if (key !== 'body') {
       // @ts-expect-error
       querystring[key] = params[key]
     }

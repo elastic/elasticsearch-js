@@ -54,8 +54,7 @@ export default class Rollup {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -78,8 +77,7 @@ export default class Rollup {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -109,8 +107,7 @@ export default class Rollup {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -139,8 +136,7 @@ export default class Rollup {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -168,8 +164,7 @@ export default class Rollup {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -185,14 +180,18 @@ export default class Rollup {
   async rollup (this: That, params: T.RollupRollupRequest | TB.RollupRollupRequest, options?: TransportRequestOptions): Promise<T.RollupRollupResponse>
   async rollup (this: That, params: T.RollupRollupRequest | TB.RollupRollupRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'rollup_index']
+    const acceptedBody: string[] = ['config']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    let body: any = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -220,8 +219,7 @@ export default class Rollup {
         body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -243,8 +241,7 @@ export default class Rollup {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }
@@ -266,8 +263,7 @@ export default class Rollup {
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
-      } else {
-        if (key === 'body') continue
+      } else if (key !== 'body') {
         // @ts-expect-error
         querystring[key] = params[key]
       }

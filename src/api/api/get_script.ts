@@ -48,8 +48,7 @@ export default async function GetScriptApi (this: That, params: T.GetScriptReque
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
-    } else {
-      if (key === 'body') continue
+    } else if (key !== 'body') {
       // @ts-expect-error
       querystring[key] = params[key]
     }
