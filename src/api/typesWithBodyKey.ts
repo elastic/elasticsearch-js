@@ -4045,7 +4045,7 @@ export interface MappingGenericProperty extends MappingDocValuesPropertyBase {
   type: string
 }
 
-export type MappingGeoOrientation = 'right' | 'left'
+export type MappingGeoOrientation = 'right' | 'RIGHT' | 'counterclockwise' | 'ccw' | 'left' | 'LEFT' | 'clockwise' | 'cw'
 
 export interface MappingGeoPointProperty extends MappingDocValuesPropertyBase {
   ignore_malformed?: boolean
