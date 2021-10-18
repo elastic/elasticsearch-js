@@ -42,22 +42,22 @@ export default async function SearchApi<TDocument = unknown> (this: That, params
 export default async function SearchApi<TDocument = unknown> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptions): Promise<T.SearchResponse<TDocument>>
 export default async function SearchApi<TDocument = unknown> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedQuery: string[] = ['allow_no_indices', 'allow_partial_search_results', 'analyzer', 'analyze_wildcard', 'batched_reduce_size', 'ccs_minimize_roundtrips', 'default_operator', 'df', 'expand_wildcards', 'ignore_throttled', 'ignore_unavailable', 'lenient', 'max_concurrent_shard_requests', 'min_compatible_shard_node', 'preference', 'pre_filter_shard_size', 'request_cache', 'routing', 'scroll', 'search_type', 'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text', 'typed_keys', 'rest_total_hits_as_int', '_source_excludes', '_source_includes', 'q', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['aggs', 'aggregations', 'collapse', 'highlight', 'indices_boost', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'slice', 'fields', 'suggest', 'pit', 'runtime_mappings']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params?.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else if (key !== 'body') {
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

@@ -821,6 +821,7 @@ export default class Helpers {
             for (let i = 0, len = items.length; i < len; i++) {
               const action = items[i]
               const operation = Object.keys(action)[0]
+              // @ts-expect-error
               const responseItem = action[operation as keyof T.BulkResponseItemContainer]
               assert(responseItem !== undefined, 'The responseItem is undefined, please file a bug report')
               const indexSlice = operation !== 'delete' ? i * 2 : i
@@ -838,7 +839,6 @@ export default class Helpers {
                 } else {
                   onDrop({
                     status: responseItem.status,
-                    // @ts-expect-error
                     error: responseItem.error ?? null,
                     operation: serializer.deserialize(bulkBody[indexSlice]),
                     document: operation !== 'delete'

@@ -42,21 +42,15 @@ export default async function DeleteApi (this: That, params: T.DeleteRequest | T
 export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptions): Promise<T.DeleteResponse>
 export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index', 'type']
-  const acceptedQuery: string[] = ['if_primary_term', 'if_seq_no', 'refresh', 'routing', 'timeout', 'version', 'version_type', 'wait_for_active_shards', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  const body = undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
+    if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body') {
-      body = body ?? {}
       // @ts-expect-error
-      body[key] = params[key]
+      querystring[key] = params[key]
     }
   }
 

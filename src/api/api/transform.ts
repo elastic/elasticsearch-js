@@ -48,21 +48,15 @@ export default class Transform {
   async deleteTransform (this: That, params: T.TransformDeleteTransformRequest | TB.TransformDeleteTransformRequest, options?: TransportRequestOptions): Promise<T.TransformDeleteTransformResponse>
   async deleteTransform (this: That, params: T.TransformDeleteTransformRequest | TB.TransformDeleteTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedQuery: string[] = ['force', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
@@ -76,22 +70,16 @@ export default class Transform {
   async getTransform (this: That, params?: T.TransformGetTransformRequest | TB.TransformGetTransformRequest, options?: TransportRequestOptions): Promise<T.TransformGetTransformResponse>
   async getTransform (this: That, params?: T.TransformGetTransformRequest | TB.TransformGetTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedQuery: string[] = ['allow_no_match', 'from', 'size', 'exclude_generated', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
@@ -112,21 +100,15 @@ export default class Transform {
   async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest | TB.TransformGetTransformStatsRequest, options?: TransportRequestOptions): Promise<T.TransformGetTransformStatsResponse>
   async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest | TB.TransformGetTransformStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedQuery: string[] = ['allow_no_match', 'from', 'size', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
@@ -140,22 +122,22 @@ export default class Transform {
   async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest | TB.TransformPreviewTransformRequest, options?: TransportRequestOptions): Promise<T.TransformPreviewTransformResponse<TTransform>>
   async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest | TB.TransformPreviewTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['dest', 'description', 'frequency', 'pivot', 'source', 'settings', 'sync', 'retention_policy', 'latest']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -176,21 +158,15 @@ export default class Transform {
   async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptions): Promise<T.TransformPutTransformResponse>
   async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id', 'transform_id']
-    const acceptedQuery: string[] = ['defer_validation', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
@@ -204,21 +180,15 @@ export default class Transform {
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptions): Promise<T.TransformStartTransformResponse>
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedQuery: string[] = ['timeout', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
@@ -232,21 +202,15 @@ export default class Transform {
   async stopTransform (this: That, params: T.TransformStopTransformRequest | TB.TransformStopTransformRequest, options?: TransportRequestOptions): Promise<T.TransformStopTransformResponse>
   async stopTransform (this: That, params: T.TransformStopTransformRequest | TB.TransformStopTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedQuery: string[] = ['allow_no_match', 'force', 'timeout', 'wait_for_checkpoint', 'wait_for_completion', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
@@ -260,26 +224,42 @@ export default class Transform {
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<T.TransformUpdateTransformResponse>
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id', 'transform_id']
-    const acceptedQuery: string[] = ['defer_validation', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
     const method = 'POST'
     const path = `/_transform/${encodeURIComponent(params.transform_id.toString())}/_update`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  async upgradeTransforms (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async upgradeTransforms (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async upgradeTransforms (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async upgradeTransforms (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_transform/_upgrade'
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 }

@@ -42,22 +42,22 @@ export default async function ClearScrollApi (this: That, params?: T.ClearScroll
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest | TB.ClearScrollRequest, options?: TransportRequestOptions): Promise<T.ClearScrollResponse>
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest | TB.ClearScrollRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
-  const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['scroll_id']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params?.body ?? undefined
 
   params = params ?? {}
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else if (key !== 'body') {
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 

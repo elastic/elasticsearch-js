@@ -48,22 +48,16 @@ export default class License {
   async delete (this: That, params?: T.LicenseDeleteRequest | TB.LicenseDeleteRequest, options?: TransportRequestOptions): Promise<T.LicenseDeleteResponse>
   async delete (this: That, params?: T.LicenseDeleteRequest | TB.LicenseDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
@@ -77,22 +71,16 @@ export default class License {
   async get (this: That, params?: T.LicenseGetRequest | TB.LicenseGetRequest, options?: TransportRequestOptions): Promise<T.LicenseGetResponse>
   async get (this: That, params?: T.LicenseGetRequest | TB.LicenseGetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedQuery: string[] = ['accept_enterprise', 'local', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
@@ -106,22 +94,16 @@ export default class License {
   async getBasicStatus (this: That, params?: T.LicenseGetBasicStatusRequest | TB.LicenseGetBasicStatusRequest, options?: TransportRequestOptions): Promise<T.LicenseGetBasicStatusResponse>
   async getBasicStatus (this: That, params?: T.LicenseGetBasicStatusRequest | TB.LicenseGetBasicStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
@@ -135,22 +117,16 @@ export default class License {
   async getTrialStatus (this: That, params?: T.LicenseGetTrialStatusRequest | TB.LicenseGetTrialStatusRequest, options?: TransportRequestOptions): Promise<T.LicenseGetTrialStatusResponse>
   async getTrialStatus (this: That, params?: T.LicenseGetTrialStatusRequest | TB.LicenseGetTrialStatusRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedQuery: string[] = ['error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
@@ -164,22 +140,22 @@ export default class License {
   async post (this: That, params?: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptions): Promise<T.LicensePostResponse>
   async post (this: That, params?: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedQuery: string[] = ['acknowledge', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+    const acceptedBody: string[] = ['license', 'licenses']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
+      if (acceptedBody.includes(key)) {
         body = body ?? {}
         // @ts-expect-error
         body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
       }
     }
 
@@ -193,22 +169,16 @@ export default class License {
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest | TB.LicensePostStartBasicRequest, options?: TransportRequestOptions): Promise<T.LicensePostStartBasicResponse>
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest | TB.LicensePostStartBasicRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedQuery: string[] = ['acknowledge', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
@@ -222,22 +192,16 @@ export default class License {
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest | TB.LicensePostStartTrialRequest, options?: TransportRequestOptions): Promise<T.LicensePostStartTrialResponse>
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest | TB.LicensePostStartTrialRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedQuery: string[] = ['acknowledge', 'type_query_string', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 

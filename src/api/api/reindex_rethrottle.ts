@@ -42,21 +42,15 @@ export default async function ReindexRethrottleApi (this: That, params: T.Reinde
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest | TB.ReindexRethrottleRequest, options?: TransportRequestOptions): Promise<T.ReindexRethrottleResponse>
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest | TB.ReindexRethrottleRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['task_id']
-  const acceptedQuery: string[] = ['requests_per_second', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  const body = undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
+    if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body') {
-      body = body ?? {}
       // @ts-expect-error
-      body[key] = params[key]
+      querystring[key] = params[key]
     }
   }
 
