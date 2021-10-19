@@ -164,7 +164,7 @@ interface KibanaClient {
   getScript: <TContext = unknown>(params: T.GetScriptRequest| TB.GetScriptRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetScriptResponse, TContext>>
   getScriptContext: <TContext = unknown>(params?: T.GetScriptContextRequest| TB.GetScriptContextRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetScriptContextResponse, TContext>>
   getScriptLanguages: <TContext = unknown>(params?: T.GetScriptLanguagesRequest| TB.GetScriptLanguagesRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetScriptLanguagesResponse, TContext>>
-  getSource: <TDocument = unknown, TContext = unknown>(params?: T.GetSourceRequest| TB.GetSourceRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetSourceResponse<TDocument>, TContext>>
+  getSource: <TDocument = unknown, TContext = unknown>(params: T.GetSourceRequest| TB.GetSourceRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetSourceResponse<TDocument>, TContext>>
   graph: {
     explore: <TContext = unknown>(params: T.GraphExploreRequest| TB.GraphExploreRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GraphExploreResponse, TContext>>
   }
