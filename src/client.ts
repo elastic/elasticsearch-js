@@ -63,7 +63,7 @@ if (transportVersion.includes('-')) {
 }
 const nodeVersion = process.versions.node
 
-interface NodeOptions {
+export interface NodeOptions {
   url: URL
   id?: string
   agent?: HttpAgentOptions | UndiciAgentOptions
