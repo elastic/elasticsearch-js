@@ -1,6 +1,6 @@
 = Elasticsearch Node.js client
 
-:branch: 7.x
+:branch: 7.16
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 
 include::introduction.asciidoc[]
