@@ -864,6 +864,28 @@ export default class Indices {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async modifyDataStream (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async modifyDataStream (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async modifyDataStream (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async modifyDataStream (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_data_stream/_modify'
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async open (this: That, params: T.IndicesOpenRequest | TB.IndicesOpenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesOpenResponse>
   async open (this: That, params: T.IndicesOpenRequest | TB.IndicesOpenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesOpenResponse, unknown>>
   async open (this: That, params: T.IndicesOpenRequest | TB.IndicesOpenRequest, options?: TransportRequestOptions): Promise<T.IndicesOpenResponse>

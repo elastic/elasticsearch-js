@@ -159,6 +159,8 @@ interface KibanaClient {
   fieldCaps: <TContext = unknown>(params?: T.FieldCapsRequest| TB.FieldCapsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.FieldCapsResponse, TContext>>
   fleet: {
     globalCheckpoints: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    msearch: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    search: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
   }
   get: <TDocument = unknown, TContext = unknown>(params: T.GetRequest| TB.GetRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetResponse<TDocument>, TContext>>
   getScript: <TContext = unknown>(params: T.GetScriptRequest| TB.GetScriptRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetScriptResponse, TContext>>
@@ -215,6 +217,7 @@ interface KibanaClient {
     getSettings: <TContext = unknown>(params?: T.IndicesGetSettingsRequest| TB.IndicesGetSettingsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesGetSettingsResponse, TContext>>
     getTemplate: <TContext = unknown>(params?: T.IndicesGetTemplateRequest| TB.IndicesGetTemplateRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesGetTemplateResponse, TContext>>
     migrateToDataStream: <TContext = unknown>(params: T.IndicesMigrateToDataStreamRequest| TB.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesMigrateToDataStreamResponse, TContext>>
+    modifyDataStream: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     open: <TContext = unknown>(params: T.IndicesOpenRequest| TB.IndicesOpenRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesOpenResponse, TContext>>
     promoteDataStream: <TContext = unknown>(params: T.IndicesPromoteDataStreamRequest| TB.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesPromoteDataStreamResponse, TContext>>
     putAlias: <TContext = unknown>(params: T.IndicesPutAliasRequest| TB.IndicesPutAliasRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesPutAliasResponse, TContext>>
@@ -247,6 +250,7 @@ interface KibanaClient {
     putPipeline: <TContext = unknown>(params: T.IngestPutPipelineRequest| TB.IngestPutPipelineRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IngestPutPipelineResponse, TContext>>
     simulate: <TContext = unknown>(params?: T.IngestSimulateRequest| TB.IngestSimulateRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IngestSimulateResponse, TContext>>
   }
+  knnSearch: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
   license: {
     delete: <TContext = unknown>(params?: T.LicenseDeleteRequest| TB.LicenseDeleteRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.LicenseDeleteResponse, TContext>>
     get: <TContext = unknown>(params?: T.LicenseGetRequest| TB.LicenseGetRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.LicenseGetResponse, TContext>>
