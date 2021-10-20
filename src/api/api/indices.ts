@@ -599,6 +599,28 @@ export default class Indices {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async freeze (this: That, params: T.IndicesFreezeRequest | TB.IndicesFreezeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesFreezeResponse>
+  async freeze (this: That, params: T.IndicesFreezeRequest | TB.IndicesFreezeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesFreezeResponse, unknown>>
+  async freeze (this: That, params: T.IndicesFreezeRequest | TB.IndicesFreezeRequest, options?: TransportRequestOptions): Promise<T.IndicesFreezeResponse>
+  async freeze (this: That, params: T.IndicesFreezeRequest | TB.IndicesFreezeRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['index']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/${encodeURIComponent(params.index.toString())}/_freeze`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async get (this: That, params: T.IndicesGetRequest | TB.IndicesGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetResponse>
   async get (this: That, params: T.IndicesGetRequest | TB.IndicesGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetResponse, unknown>>
   async get (this: That, params: T.IndicesGetRequest | TB.IndicesGetRequest, options?: TransportRequestOptions): Promise<T.IndicesGetResponse>
@@ -1433,6 +1455,28 @@ export default class Indices {
       method = 'GET'
       path = '/_stats'
     }
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  async unfreeze (this: That, params: T.IndicesUnfreezeRequest | TB.IndicesUnfreezeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUnfreezeResponse>
+  async unfreeze (this: That, params: T.IndicesUnfreezeRequest | TB.IndicesUnfreezeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesUnfreezeResponse, unknown>>
+  async unfreeze (this: That, params: T.IndicesUnfreezeRequest | TB.IndicesUnfreezeRequest, options?: TransportRequestOptions): Promise<T.IndicesUnfreezeResponse>
+  async unfreeze (this: That, params: T.IndicesUnfreezeRequest | TB.IndicesUnfreezeRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['index']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/${encodeURIComponent(params.index.toString())}/_unfreeze`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
