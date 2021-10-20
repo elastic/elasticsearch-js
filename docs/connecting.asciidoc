@@ -67,6 +67,7 @@ authentication by passing the `apiKey` parameter via the `auth` option. The
 values that you can obtain from the 
 {ref-7x}/security-api-create-api-key.html[create api key endpoint].
 
+
 NOTE: If you provide both basic authentication credentials and the ApiKey 
 configuration, the ApiKey takes precedence.
 
