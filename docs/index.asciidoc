@@ -21,3 +21,5 @@ include::examples/index.asciidoc[]
 include::helpers.asciidoc[]
 include::changelog.asciidoc[]
 include::redirects.asciidoc[]
+
+:branch: 7.x
