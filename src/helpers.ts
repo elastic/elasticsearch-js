@@ -24,7 +24,7 @@ import assert from 'assert'
 import { promisify } from 'util'
 import { Readable } from 'stream'
 import { errors, TransportResult, TransportRequestOptions, TransportRequestOptionsWithMeta } from '@elastic/transport'
-import Client from './Client'
+import Client from './client'
 import * as T from './api/types'
 
 export interface HelpersOptions {
@@ -194,7 +194,6 @@ export default class Helpers {
     }
     assert(response !== undefined, 'The response is undefined, please file a bug report')
     if (response.statusCode === 429) {
-      // @ts-expect-error
       throw new ResponseError(response)
     }
 
@@ -235,7 +234,6 @@ export default class Helpers {
         await sleep(wait)
       }
       if (response.statusCode === 429) {
-        // @ts-expect-error
         throw new ResponseError(response)
       }
     }
@@ -498,7 +496,6 @@ export default class Helpers {
               // @ts-expect-error
               addDocumentsGetter(result)
               if (response.status != null && response.status >= 400) {
-                // @ts-expect-error
                 callbacks[i](new ResponseError(result), result)
               } else {
                 callbacks[i](null, result)
@@ -824,6 +821,7 @@ export default class Helpers {
             for (let i = 0, len = items.length; i < len; i++) {
               const action = items[i]
               const operation = Object.keys(action)[0]
+              // @ts-expect-error
               const responseItem = action[operation as keyof T.BulkResponseItemContainer]
               assert(responseItem !== undefined, 'The responseItem is undefined, please file a bug report')
               const indexSlice = operation !== 'delete' ? i * 2 : i

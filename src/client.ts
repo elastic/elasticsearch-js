@@ -43,8 +43,8 @@ import {
   Context
 } from '@elastic/transport/lib/types'
 import BaseConnection, { prepareHeaders } from '@elastic/transport/lib/connection/BaseConnection'
-import SniffingTransport from './SniffingTransport'
-import Helpers from './Helpers'
+import SniffingTransport from './sniffingTransport'
+import Helpers from './helpers'
 import API from './api'
 
 const kChild = Symbol('elasticsearchjs-child')
@@ -63,7 +63,7 @@ if (transportVersion.includes('-')) {
 }
 const nodeVersion = process.versions.node
 
-interface NodeOptions {
+export interface NodeOptions {
   url: URL
   id?: string
   agent?: HttpAgentOptions | UndiciAgentOptions

@@ -297,7 +297,7 @@ test('Scroll search documents', async t => {
         t.equal(params.querystring, 'filter_path=hits.hits._source%2C_scroll_id&scroll=1m')
       } else {
         if (params.method !== 'DELETE') {
-          t.equal(params.body, '{"scroll":"1m","scroll_id":"id"}')
+          t.equal(params.querystring, 'scroll=1m&scroll_id=id')
         }
       }
       return {
@@ -381,7 +381,7 @@ test('Fix querystring for scroll search', async t => {
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       if (count === 0) {
-        t.equal(params.querystring, 'scroll=1m')
+        t.equal(params.querystring, 'size=1&scroll=1m')
       } else {
         if (params.method !== 'DELETE') {
           if (params.method === 'POST') {

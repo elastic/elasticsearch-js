@@ -30,20 +30,23 @@ import {
   Serializer,
   Diagnostic,
   BaseConnectionPool,
+  TransportRequestParams,
   TransportRequestOptions,
   TransportResult
 } from '@elastic/transport'
 import * as T from './types'
 import * as TB from './typesWithBodyKey'
-import SniffingTransport from '../SniffingTransport'
-import Helpers from '../Helpers'
-import { ClientOptions } from '../Client'
+import SniffingTransport from '../sniffingTransport'
+import Helpers from '../helpers'
+import { ClientOptions } from '../client'
 
 interface KibanaClient {
   diagnostic: Diagnostic
   name: string | symbol
   connectionPool: BaseConnectionPool
-  transport: SniffingTransport
+  transport: Omit<SniffingTransport, 'request'> & {
+    request: <TResponse = unknown, TContext = any>(params: TransportRequestParams, options?: TransportRequestOptions) => Promise<TransportResult<TResponse, TContext>>
+  }
   serializer: Serializer
   helpers: Helpers
   child: (opts?: ClientOptions) => KibanaClient
@@ -129,16 +132,6 @@ interface KibanaClient {
     importDanglingIndex: <TContext = unknown>(params: T.DanglingIndicesImportDanglingIndexRequest| TB.DanglingIndicesImportDanglingIndexRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.DanglingIndicesImportDanglingIndexResponse, TContext>>
     listDanglingIndices: <TContext = unknown>(params?: T.DanglingIndicesListDanglingIndicesRequest| TB.DanglingIndicesListDanglingIndicesRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.DanglingIndicesListDanglingIndicesResponse, TContext>>
   }
-  dataFrameTransformDeprecated: {
-    deleteTransform: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
-    getTransform: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
-    getTransformStats: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
-    previewTransform: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
-    putTransform: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
-    startTransform: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
-    stopTransform: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
-    updateTransform: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
-  }
   delete: <TContext = unknown>(params: T.DeleteRequest| TB.DeleteRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.DeleteResponse, TContext>>
   deleteByQuery: <TContext = unknown>(params: T.DeleteByQueryRequest| TB.DeleteByQueryRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.DeleteByQueryResponse, TContext>>
   deleteByQueryRethrottle: <TContext = unknown>(params: T.DeleteByQueryRethrottleRequest| TB.DeleteByQueryRethrottleRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.DeleteByQueryRethrottleResponse, TContext>>
@@ -166,12 +159,14 @@ interface KibanaClient {
   fieldCaps: <TContext = unknown>(params?: T.FieldCapsRequest| TB.FieldCapsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.FieldCapsResponse, TContext>>
   fleet: {
     globalCheckpoints: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    msearch: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    search: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
   }
   get: <TDocument = unknown, TContext = unknown>(params: T.GetRequest| TB.GetRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetResponse<TDocument>, TContext>>
   getScript: <TContext = unknown>(params: T.GetScriptRequest| TB.GetScriptRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetScriptResponse, TContext>>
   getScriptContext: <TContext = unknown>(params?: T.GetScriptContextRequest| TB.GetScriptContextRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetScriptContextResponse, TContext>>
   getScriptLanguages: <TContext = unknown>(params?: T.GetScriptLanguagesRequest| TB.GetScriptLanguagesRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetScriptLanguagesResponse, TContext>>
-  getSource: <TDocument = unknown, TContext = unknown>(params?: T.GetSourceRequest| TB.GetSourceRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetSourceResponse<TDocument>, TContext>>
+  getSource: <TDocument = unknown, TContext = unknown>(params: T.GetSourceRequest| TB.GetSourceRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetSourceResponse<TDocument>, TContext>>
   graph: {
     explore: <TContext = unknown>(params: T.GraphExploreRequest| TB.GraphExploreRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GraphExploreResponse, TContext>>
   }
@@ -222,6 +217,7 @@ interface KibanaClient {
     getSettings: <TContext = unknown>(params?: T.IndicesGetSettingsRequest| TB.IndicesGetSettingsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesGetSettingsResponse, TContext>>
     getTemplate: <TContext = unknown>(params?: T.IndicesGetTemplateRequest| TB.IndicesGetTemplateRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesGetTemplateResponse, TContext>>
     migrateToDataStream: <TContext = unknown>(params: T.IndicesMigrateToDataStreamRequest| TB.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesMigrateToDataStreamResponse, TContext>>
+    modifyDataStream: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     open: <TContext = unknown>(params: T.IndicesOpenRequest| TB.IndicesOpenRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesOpenResponse, TContext>>
     promoteDataStream: <TContext = unknown>(params: T.IndicesPromoteDataStreamRequest| TB.IndicesPromoteDataStreamRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesPromoteDataStreamResponse, TContext>>
     putAlias: <TContext = unknown>(params: T.IndicesPutAliasRequest| TB.IndicesPutAliasRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesPutAliasResponse, TContext>>
@@ -254,6 +250,7 @@ interface KibanaClient {
     putPipeline: <TContext = unknown>(params: T.IngestPutPipelineRequest| TB.IngestPutPipelineRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IngestPutPipelineResponse, TContext>>
     simulate: <TContext = unknown>(params?: T.IngestSimulateRequest| TB.IngestSimulateRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IngestSimulateResponse, TContext>>
   }
+  knnSearch: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
   license: {
     delete: <TContext = unknown>(params?: T.LicenseDeleteRequest| TB.LicenseDeleteRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.LicenseDeleteResponse, TContext>>
     get: <TContext = unknown>(params?: T.LicenseGetRequest| TB.LicenseGetRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.LicenseGetResponse, TContext>>
@@ -271,6 +268,8 @@ interface KibanaClient {
   mget: <TDocument = unknown, TContext = unknown>(params?: T.MgetRequest| TB.MgetRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MgetResponse<TDocument>, TContext>>
   migration: {
     deprecations: <TContext = unknown>(params?: T.MigrationDeprecationsRequest| TB.MigrationDeprecationsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MigrationDeprecationsResponse, TContext>>
+    getFeatureUpgradeStatus: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    postFeatureUpgrade: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
   }
   ml: {
     closeJob: <TContext = unknown>(params: T.MlCloseJobRequest| TB.MlCloseJobRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlCloseJobResponse, TContext>>
@@ -493,7 +492,8 @@ interface KibanaClient {
     putTransform: <TContext = unknown>(params: T.TransformPutTransformRequest| TB.TransformPutTransformRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.TransformPutTransformResponse, TContext>>
     startTransform: <TContext = unknown>(params: T.TransformStartTransformRequest| TB.TransformStartTransformRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.TransformStartTransformResponse, TContext>>
     stopTransform: <TContext = unknown>(params: T.TransformStopTransformRequest| TB.TransformStopTransformRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.TransformStopTransformResponse, TContext>>
-    updateTransform: <TContext = unknown>(params?: T.TransformUpdateTransformRequest| TB.TransformUpdateTransformRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.TransformUpdateTransformResponse, TContext>>
+    updateTransform: <TContext = unknown>(params: T.TransformUpdateTransformRequest| TB.TransformUpdateTransformRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.TransformUpdateTransformResponse, TContext>>
+    upgradeTransforms: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
   }
   update: <TDocumentR = unknown, TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.UpdateRequest<TDocument, TPartialDocument>| TB.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions) => Promise<TransportResult<T.UpdateResponse<TDocumentR>, TContext>>
   updateByQuery: <TContext = unknown>(params: T.UpdateByQueryRequest| TB.UpdateByQueryRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.UpdateByQueryResponse, TContext>>

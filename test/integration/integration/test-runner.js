@@ -103,7 +103,7 @@ function build (opts = {}) {
 
     if (isXPack) {
       // clean data streams
-      await client.indices.deleteDataStream({ name: '*' })
+      await client.indices.deleteDataStream({ name: '*', expand_wildcards: 'all' })
     }
 
     // clean all indices

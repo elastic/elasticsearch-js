@@ -42,20 +42,20 @@ export default async function MsearchTemplateApi<TDocument = unknown> (this: Tha
 export default async function MsearchTemplateApi<TDocument = unknown> (this: That, params: T.MsearchTemplateRequest | TB.MsearchTemplateRequest, options?: TransportRequestOptions): Promise<T.MsearchTemplateResponse<TDocument>>
 export default async function MsearchTemplateApi<TDocument = unknown> (this: That, params: T.MsearchTemplateRequest | TB.MsearchTemplateRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedQuery: string[] = ['ccs_minimize_roundtrips', 'max_concurrent_searches', 'search_type', 'rest_total_hits_as_int', 'typed_keys', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['search_templates']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: any = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
+    if (acceptedBody.includes(key)) {
       // @ts-expect-error
-      querystring[key] = params[key]
+      body = params[key]
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body') {
       // @ts-expect-error
-      body = params[key]
+      querystring[key] = params[key]
     }
   }
 

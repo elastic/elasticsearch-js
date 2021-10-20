@@ -17,7 +17,8 @@
  * under the License.
  */
 
-import { errors } from '@elastic/transport'
-import Client from './lib/Client'
+import Client from './lib/client'
 
-export { Client, errors }
+export * from '@elastic/transport'
+export { Client }
+export type { ClientOptions, NodeOptions } from './lib/client'

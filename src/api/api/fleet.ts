@@ -48,24 +48,71 @@ export default class Fleet {
   async globalCheckpoints (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
   async globalCheckpoints (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedQuery: string[] = ['wait_for_advance', 'wait_for_index', 'checkpoints', 'timeout']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> = params?.body ?? undefined
+    const body = undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedQuery.includes(key)) {
-        querystring[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        body = body ?? {}
-        body[key] = params[key]
+        querystring[key] = params[key]
       }
     }
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_fleet/global_checkpoints`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  async msearch (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async msearch (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async msearch (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async msearch (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['index']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.index != null) {
+      method = body != null ? 'POST' : 'GET'
+      path = `/${encodeURIComponent(params.index.toString())}/_fleet/_msearch`
+    } else {
+      method = body != null ? 'POST' : 'GET'
+      path = '/_fleet/_msearch'
+    }
+    return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+  }
+
+  async search (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async search (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async search (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async search (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['index']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = body != null ? 'POST' : 'GET'
+    const path = `/${encodeURIComponent(params.index.toString())}/_fleet/_search`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 }

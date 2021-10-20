@@ -42,21 +42,21 @@ export default async function ExplainApi<TDocument = unknown> (this: That, param
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest | TB.ExplainRequest, options?: TransportRequestOptions): Promise<T.ExplainResponse<TDocument>>
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest | TB.ExplainRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index']
-  const acceptedQuery: string[] = ['analyzer', 'analyze_wildcard', 'default_operator', 'df', 'lenient', 'preference', 'routing', '_source', '_source_excludes', '_source_includes', 'stored_fields', 'q', 'error_trace', 'filter_path', 'human', 'pretty', 'source_query_string']
+  const acceptedBody: string[] = ['query']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined
 
   for (const key in params) {
-    if (acceptedQuery.includes(key)) {
-      // @ts-expect-error
-      querystring[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
-      continue
-    } else if (key !== 'body') {
+    if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
       body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
+      continue
+    } else if (key !== 'body') {
+      // @ts-expect-error
+      querystring[key] = params[key]
     }
   }
 
