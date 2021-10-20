@@ -15,7 +15,7 @@ const client = new Client({ node: 'http://localhost:9200' })
 async function run () {
   await client.index({
     index: 'game-of-thrones',
-    body: {
+    document: {
       character: 'Ned Stark',
       quote: 'Winter is coming.'
     }
@@ -24,7 +24,7 @@ async function run () {
   await client.index({
     index: 'game-of-thrones',
     refresh: true,
-    body: {
+    document: {
       character: 'Arya Stark',
       quote: 'A girl is Arya Stark of Winterfell. And I\'m going home.'
     }
@@ -33,27 +33,23 @@ async function run () {
   await client.updateByQuery({
     index: 'game-of-thrones',
     refresh: true,
-    body: {
-      script: {
-        lang: 'painless',
-        source: 'ctx._source["house"] = "stark"'
-      },
-      query: {
-        match: {
-          character: 'stark'
-        }
+    script: {
+      lang: 'painless',
+      source: 'ctx._source["house"] = "stark"'
+    },
+    query: {
+      match: {
+        character: 'stark'
       }
     }
   })
 
-  const { body } = await client.search({
+  const result = await client.search({
     index: 'game-of-thrones',
-    body: {
-      query: { match_all: {} }
-    }
+    query: { match_all: {} }
   })
 
-  console.log(body.hits.hits)
+  console.log(result.hits.hits)
 }
 
 run().catch(console.log)

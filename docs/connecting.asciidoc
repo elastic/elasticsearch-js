@@ -32,7 +32,7 @@ the `auth` option.
 
 NOTE: When connecting to Elastic Cloud, the client will automatically enable 
 both request and response compression by default, since it yields significant 
-throughput improvements. Moreover, the client will also set the ssl option 
+throughput improvements. Moreover, the client will also set the tls option 
 `secureProtocol` to `TLSv1_2_method` unless specified otherwise. You can still 
 override this option by configuring them.
 
@@ -151,13 +151,13 @@ const client = new Client({
 
 
 [discrete]
-[[auth-ssl]]
-==== SSL configuration
+[[auth-tls]]
+==== TLS configuration
 
 Without any additional configuration you can specify `https://` node urls, and 
 the certificates used to sign these requests will be verified. To turn off 
-certificate verification, you must specify an `ssl` object in the top level 
-config and set `rejectUnauthorized: false`. The default `ssl` values are the 
+certificate verification, you must specify an `tls` object in the top level 
+config and set `rejectUnauthorized: false`. The default `tls` values are the 
 same that Node.js's https://nodejs.org/api/tls.html#tls_tls_connect_options_callback[`tls.connect()`] 
 uses.
 
@@ -170,7 +170,7 @@ const client = new Client({
     username: 'elastic',
     password: 'changeme'
   },
-  ssl: {
+  tls: {
     ca: fs.readFileSync('./cacert.pem'),
     rejectUnauthorized: false
   }
@@ -193,7 +193,7 @@ const client = new Client({
   auth: { ... },
   // the fingerprint (SHA256) of the CA certificate that is used to sign the certificate that the Elasticsearch node presents for TLS.
   caFingerprint: '20:0D:CA:FA:76:...',
-  ssl: {
+  tls: {
     // might be required if it's a self-signed certificate
     rejectUnauthorized: false
   }
@@ -214,31 +214,32 @@ and every method exposes the same signature.
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
-// promise API
 const result = await client.search({
   index: 'my-index',
-  body: {
-    query: {
-      match: { hello: 'world' }
-    }
+  query: {
+    match: { hello: 'world' }
   }
-})
-
-// callback API
-client.search({
-  index: 'my-index',
-  body: {
-    query: {
-      match: { hello: 'world' }
-    }
-  }
-}, (err, result) => {
-  if (err) console.log(err)
 })
 ----
 
-The returned value of every API call is designed as follows:
+The returned value of every API call is the response body from {es}.
+If you need to access additonal metadata, such as the status code or headers,
+you must specify `meta: true` in the request options:
 
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+const result = await client.search({
+  index: 'my-index',
+  query: {
+    match: { hello: 'world' }
+  }
+}, { meta: true })
+----
+
+In this case, the result will be: 
 [source,ts]
 ----
 {
@@ -252,44 +253,10 @@ The returned value of every API call is designed as follows:
 
 NOTE: The body is a boolean value when you use `HEAD` APIs.
 
-The above value is returned even if there is an error during the execution of
-the request, this means that you can safely use the
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment[destructuring assignment].
-
-The `meta` key contains all the information about the request, such as attempt,
-options, and the connection that has been used.
-
-[source,js]
-----
-// promise API
-const { body } = await client.search({
-  index: 'my-index',
-  body: {
-    query: {
-      match: { hello: 'world' }
-    }
-  }
-})
-
-// callback API
-client.search({
-  index: 'my-index',
-  body: {
-    query: {
-      match: { hello: 'world' }
-    }
-  }
-}, (err, { body }) => {
-  if (err) console.log(err)
-})
-----
-
-
 [discrete]
 ==== Aborting a request
 
-If needed, you can abort a running request by calling the `request.abort()` 
-method returned by the API.
+If needed, you can abort a running request by using the `AbortController` standard.
 
 CAUTION: If you abort a request, the request will fail with a 
 `RequestAbortedError`.
@@ -297,50 +264,20 @@ CAUTION: If you abort a request, the request will fail with a
 
 [source,js]
 ----
-const request = client.search({
+const AbortController = require('node-abort-controller')
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({ node: 'http://localhost:9200' })
+
+const abortController = new AbortController()
+setImmediate(() => abortController.abort())
+
+const result = await client.search({
   index: 'my-index',
-  body: {
-    query: {
-      match: { hello: 'world' }
-    }
+  query: {
+    match: { hello: 'world' }
   }
-}, {
-  ignore: [404],
-  maxRetries: 3
-}, (err, result) => {
-  if (err) {
-    console.log(err) // RequestAbortedError
-  } else {
-    console.log(result)
-  }
-})
-
-request.abort()
+}, { signal: abortController.signal })
 ----
-
-The same behavior is valid for the promise style API as well.
-
-[source,js]
-----
-const request = client.search({
-  index: 'my-index',
-  body: {
-    query: {
-      match: { hello: 'world' }
-    }
-  }
-}, {
-  ignore: [404],
-  maxRetries: 3
-})
-
-request
-  .then(result => console.log(result))
-  .catch(err => console.log(err)) // RequestAbortedError
-
-request.abort()
-----
-
 
 [discrete]
 ==== Request specific options
@@ -349,7 +286,6 @@ If needed you can pass request specific options in a second object:
 
 [source,js]
 ----
-// promise API
 const result = await client.search({
   index: 'my-index',
   body: {
@@ -360,21 +296,6 @@ const result = await client.search({
 }, {
   ignore: [404],
   maxRetries: 3
-})
-
-// callback API
-client.search({
-  index: 'my-index',
-  body: {
-    query: {
-      match: { hello: 'world' }
-    }
-  }
-}, {
-  ignore: [404],
-  maxRetries: 3
-}, (err, { body }) => {
-  if (err) console.log(err)
 })
 ----
 
@@ -425,6 +346,10 @@ _Default:_ `null`
 
 |`maxCompressedResponseSize`
 |`number` - When configured, it verifies that the compressed response size is lower than the configured number, if it's higher it will abort the request. It cannot be higher than buffer.constants.MAX_LENTGH +
+_Default:_ `null`
+
+|`signal`
+|`AbortSignal` - The AbortSignal instance to allow request abortion. +
 _Default:_ `null`
 
 |===

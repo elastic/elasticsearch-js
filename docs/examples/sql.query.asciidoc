@@ -22,7 +22,7 @@ const client = new Client({ node: 'http://localhost:9200' })
 async function run () {
   await client.index({
     index: 'game-of-thrones',
-    body: {
+    document: {
       character: 'Ned Stark',
       quote: 'Winter is coming.',
       house: 'stark'
@@ -31,7 +31,7 @@ async function run () {
 
   await client.index({
     index: 'game-of-thrones',
-    body: {
+    document: {
       character: 'Arya Stark',
       quote: 'A girl is Arya Stark of Winterfell. And I\'m going home.',
       house: 'stark'
@@ -41,25 +41,23 @@ async function run () {
   await client.index({
     index: 'game-of-thrones',
     refresh: true,
-    body: {
+    document: {
       character: 'Tyrion Lannister',
       quote: 'A Lannister always pays his debts.',
       house: 'lannister'
     }
   })
 
-  const { body } = await client.sql.query({
-    body: {
-      query: "SELECT * FROM \"game-of-thrones\" WHERE house='stark'"
-    }
+  const result = await client.sql.query({
+    query: "SELECT * FROM \"game-of-thrones\" WHERE house='stark'"
   })
 
-  console.log(body)
+  console.log(result)
 
-  const data = body.rows.map(row => {
+  const data = result.rows.map(row => {
     const obj = {}
     for (let i = 0; i < row.length; i++) {
-      obj[body.columns[i].name] = row[i]
+      obj[result.columns[i].name] = row[i]
     }
     return obj
   })

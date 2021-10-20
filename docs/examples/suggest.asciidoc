@@ -15,9 +15,9 @@ const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
 async function run () {
-  const { body: bulkResponse } = await client.bulk({
+  const bulkResponse = await client.bulk({
     refresh: true,
-    body: [
+    operations: [
       { index: { _index: 'game-of-thrones' } },
       {
         character: 'Ned Stark',
@@ -43,22 +43,20 @@ async function run () {
     process.exit(1)
   }
 
-  const { body } = await client.search({
+  const result = await client.search({
     index: 'game-of-thrones',
-    body: {
-      query: {
-        match: { quote: 'witner' }
-      },
-      suggest: {
-        gotsuggest: {
-          text: 'witner',
-          term: { field: 'quote' }
-        }
+    query: {
+      match: { quote: 'winter' }
+    },
+    suggest: {
+      gotsuggest: {
+        text: 'winter',
+        term: { field: 'quote' }
       }
     }
   })
 
-  console.log(body)
+  console.log(result)
 }
 
 run().catch(console.log)

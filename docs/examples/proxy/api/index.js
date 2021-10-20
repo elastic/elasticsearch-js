@@ -56,11 +56,12 @@ module.exports = async (req, res) => {
     const response = await client.index({
       index: INDEX,
       id: req.query.id,
-      body: req.body
+      document: req.body
     }, {
       headers: {
         Authorization: `ApiKey ${token}`
-      }
+      },
+      meta: true
     })
 
     res.status(response.statusCode)

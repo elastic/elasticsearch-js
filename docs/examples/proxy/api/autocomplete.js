@@ -70,17 +70,15 @@ module.exports = async (req, res) => {
       // expose you to the risk that a malicious user
       // could overload your cluster by crafting
       // expensive queries.
-      body: {
-        _source: ['id', 'url', 'name'], // the fields you want to show in the autocompletion
-        size: 0,
-        // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters-completion.html
-        suggest: {
-          suggestions: {
-            prefix: req.query.q,
-            completion: {
-              field: 'suggest',
-              size: 5
-            }
+      _source: ['id', 'url', 'name'], // the fields you want to show in the autocompletion
+      size: 0,
+      // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters-completion.html
+      suggest: {
+        suggestions: {
+          prefix: req.query.q,
+          completion: {
+            field: 'suggest',
+            size: 5
           }
         }
       }
@@ -93,7 +91,7 @@ module.exports = async (req, res) => {
     // It might be useful to configure http control caching headers
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
     // res.setHeader('stale-while-revalidate', '30')
-    res.json(response.body)
+    res.json(response)
   } catch (err) {
     res.status(err.statusCode || 500)
     res.json({
