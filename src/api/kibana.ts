@@ -164,7 +164,7 @@ interface KibanaClient {
   getScript: <TContext = unknown>(params: T.GetScriptRequest| TB.GetScriptRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetScriptResponse, TContext>>
   getScriptContext: <TContext = unknown>(params?: T.GetScriptContextRequest| TB.GetScriptContextRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetScriptContextResponse, TContext>>
   getScriptLanguages: <TContext = unknown>(params?: T.GetScriptLanguagesRequest| TB.GetScriptLanguagesRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetScriptLanguagesResponse, TContext>>
-  getSource: <TDocument = unknown, TContext = unknown>(params?: T.GetSourceRequest| TB.GetSourceRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetSourceResponse<TDocument>, TContext>>
+  getSource: <TDocument = unknown, TContext = unknown>(params: T.GetSourceRequest| TB.GetSourceRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GetSourceResponse<TDocument>, TContext>>
   graph: {
     explore: <TContext = unknown>(params: T.GraphExploreRequest| TB.GraphExploreRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.GraphExploreResponse, TContext>>
   }
@@ -488,7 +488,7 @@ interface KibanaClient {
     putTransform: <TContext = unknown>(params: T.TransformPutTransformRequest| TB.TransformPutTransformRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.TransformPutTransformResponse, TContext>>
     startTransform: <TContext = unknown>(params: T.TransformStartTransformRequest| TB.TransformStartTransformRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.TransformStartTransformResponse, TContext>>
     stopTransform: <TContext = unknown>(params: T.TransformStopTransformRequest| TB.TransformStopTransformRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.TransformStopTransformResponse, TContext>>
-    updateTransform: <TContext = unknown>(params?: T.TransformUpdateTransformRequest| TB.TransformUpdateTransformRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.TransformUpdateTransformResponse, TContext>>
+    updateTransform: <TContext = unknown>(params: T.TransformUpdateTransformRequest| TB.TransformUpdateTransformRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.TransformUpdateTransformResponse, TContext>>
     upgradeTransforms: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
   }
   update: <TDocumentR = unknown, TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.UpdateRequest<TDocument, TPartialDocument>| TB.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions) => Promise<TransportResult<T.UpdateResponse<TDocumentR>, TContext>>

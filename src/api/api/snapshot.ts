@@ -47,7 +47,7 @@ export default class Snapshot {
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCleanupRepositoryResponse, unknown>>
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCleanupRepositoryResponse>
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['repository']
+    const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
@@ -61,7 +61,7 @@ export default class Snapshot {
     }
 
     const method = 'POST'
-    const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/_cleanup`
+    const path = `/_snapshot/${encodeURIComponent(params.name.toString())}/_cleanup`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
@@ -125,7 +125,7 @@ export default class Snapshot {
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateRepositoryResponse, unknown>>
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateRepositoryResponse>
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['repository', 'type', 'settings']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
@@ -145,7 +145,7 @@ export default class Snapshot {
     }
 
     const method = 'PUT'
-    const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}`
+    const path = `/_snapshot/${encodeURIComponent(params.name.toString())}`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
@@ -175,7 +175,7 @@ export default class Snapshot {
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteRepositoryResponse, unknown>>
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotDeleteRepositoryResponse>
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['repository']
+    const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
@@ -189,7 +189,7 @@ export default class Snapshot {
     }
 
     const method = 'DELETE'
-    const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}`
+    const path = `/_snapshot/${encodeURIComponent(params.name.toString())}`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
@@ -219,7 +219,7 @@ export default class Snapshot {
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetRepositoryResponse, unknown>>
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotGetRepositoryResponse>
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['repository']
+    const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
@@ -235,9 +235,9 @@ export default class Snapshot {
 
     let method = ''
     let path = ''
-    if (params.repository != null) {
+    if (params.name != null) {
       method = 'GET'
-      path = `/_snapshot/${encodeURIComponent(params.repository.toString())}`
+      path = `/_snapshot/${encodeURIComponent(params.name.toString())}`
     } else {
       method = 'GET'
       path = '/_snapshot'
@@ -332,7 +332,7 @@ export default class Snapshot {
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotVerifyRepositoryResponse, unknown>>
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotVerifyRepositoryResponse>
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['repository']
+    const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
@@ -346,7 +346,7 @@ export default class Snapshot {
     }
 
     const method = 'POST'
-    const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/_verify`
+    const path = `/_snapshot/${encodeURIComponent(params.name.toString())}/_verify`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 }

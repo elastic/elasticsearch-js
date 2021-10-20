@@ -428,7 +428,19 @@ export interface GetScriptLanguagesResponse {
   types_allowed: string[]
 }
 
-export interface GetSourceRequest extends GetRequest {
+export interface GetSourceRequest {
+  id: Id
+  index: IndexName
+  preference?: string
+  realtime?: boolean
+  refresh?: boolean
+  routing?: Routing
+  _source?: boolean | Fields
+  _source_excludes?: Fields
+  _source_includes?: Fields
+  stored_fields?: Fields
+  version?: VersionNumber
+  version_type?: VersionType
 }
 
 export type GetSourceResponse<TDocument = unknown> = TDocument
@@ -803,6 +815,7 @@ export interface ReindexSource {
   slice?: SlicedScroll
   sort?: SearchSort
   _source?: Fields
+  runtime_mappings?: MappingRuntimeFields
 }
 
 export interface ReindexRethrottleReindexNode extends SpecUtilsBaseNode {
@@ -873,7 +886,7 @@ export interface ScriptsPainlessExecuteResponse<TResult = unknown> {
 }
 
 export interface ScrollRequest extends RequestBase {
-  scroll_id?: Id
+  scroll_id?: ScrollId
   scroll?: Time
   rest_total_hits_as_int?: boolean
 }
@@ -1847,7 +1860,6 @@ export interface ElasticsearchVersionInfo {
 }
 
 export interface EmptyObject {
-  [key: string]: never
 }
 
 export type EpochMillis = string | long
@@ -1857,7 +1869,7 @@ export interface ErrorCauseKeys {
   reason: string
   stack_trace?: string
   caused_by?: ErrorCause | string
-  root_cause: (ErrorCause | string)[]
+  root_cause?: (ErrorCause | string)[]
   suppressed?: (ErrorCause | string)[]
 }
 export type ErrorCause = ErrorCauseKeys |
@@ -2285,7 +2297,6 @@ export type TimeZone = string
 export type Timestamp = string
 
 export interface Transform {
-  [key: string]: never
 }
 
 export interface TransformContainer {
@@ -2347,6 +2358,8 @@ export interface WriteResponseBase {
   forced_refresh?: boolean
 }
 
+export type byte = number
+
 export type double = number
 
 export type float = number
@@ -2354,6 +2367,8 @@ export type float = number
 export type integer = number
 
 export type long = number
+
+export type short = number
 
 export type uint = number
 
@@ -2964,7 +2979,6 @@ export interface AggregationsParentAggregation extends AggregationsBucketAggrega
 }
 
 export interface AggregationsPercentageScoreHeuristic {
-  [key: string]: never
 }
 
 export interface AggregationsPercentileItem {
@@ -3825,6 +3839,11 @@ export interface MappingBooleanProperty extends MappingDocValuesPropertyBase {
   type: 'boolean'
 }
 
+export interface MappingByteNumberProperty extends MappingStandardNumberProperty {
+  type: 'byte'
+  null_value?: byte
+}
+
 export interface MappingCompletionProperty extends MappingDocValuesPropertyBase {
   analyzer?: string
   contexts?: MappingSuggestContext[]
@@ -3885,6 +3904,11 @@ export interface MappingDocValuesPropertyBase extends MappingCorePropertyBase {
   doc_values?: boolean
 }
 
+export interface MappingDoubleNumberProperty extends MappingStandardNumberProperty {
+  type: 'double'
+  null_value?: double
+}
+
 export interface MappingDoubleRangeProperty extends MappingRangePropertyBase {
   type: 'double_range'
 }
@@ -3908,7 +3932,7 @@ export interface MappingFieldAliasProperty extends MappingPropertyBase {
 
 export interface MappingFieldMapping {
   full_name: string
-  mapping: Partial<Record<string, MappingProperty>>
+  mapping: Partial<Record<Field, MappingProperty>>
 }
 
 export interface MappingFieldNamesField {
@@ -3928,6 +3952,11 @@ export interface MappingFlattenedProperty extends MappingPropertyBase {
   similarity?: string
   split_queries_on_whitespace?: boolean
   type: 'flattened'
+}
+
+export interface MappingFloatNumberProperty extends MappingStandardNumberProperty {
+  type: 'float'
+  null_value?: float
 }
 
 export interface MappingFloatRangeProperty extends MappingRangePropertyBase {
@@ -3969,6 +3998,11 @@ export interface MappingGeoShapeProperty extends MappingDocValuesPropertyBase {
 
 export type MappingGeoStrategy = 'recursive' | 'term'
 
+export interface MappingHalfFloatNumberProperty extends MappingStandardNumberProperty {
+  type: 'half_float'
+  null_value?: float
+}
+
 export interface MappingHistogramProperty extends MappingPropertyBase {
   ignore_malformed?: boolean
   type: 'histogram'
@@ -3979,6 +4013,11 @@ export interface MappingIndexField {
 }
 
 export type MappingIndexOptions = 'docs' | 'freqs' | 'positions' | 'offsets'
+
+export interface MappingIntegerNumberProperty extends MappingStandardNumberProperty {
+  type: 'integer'
+  null_value?: integer
+}
 
 export interface MappingIntegerRangeProperty extends MappingRangePropertyBase {
   type: 'integer_range'
@@ -4013,6 +4052,11 @@ export interface MappingKeywordProperty extends MappingDocValuesPropertyBase {
   type: 'keyword'
 }
 
+export interface MappingLongNumberProperty extends MappingStandardNumberProperty {
+  type: 'long'
+  null_value?: long
+}
+
 export interface MappingLongRangeProperty extends MappingRangePropertyBase {
   type: 'long_range'
 }
@@ -4030,23 +4074,19 @@ export interface MappingNestedProperty extends MappingCorePropertyBase {
   type: 'nested'
 }
 
-export interface MappingNumberProperty extends MappingDocValuesPropertyBase {
-  boost?: double
-  coerce?: boolean
-  fielddata?: IndicesNumericFielddata
-  ignore_malformed?: boolean
-  index?: boolean
-  null_value?: double
-  scaling_factor?: double
-  type: MappingNumberType
-}
+export type MappingNumberProperty = MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingDoubleNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingShortNumberProperty | MappingByteNumberProperty | MappingUnsignedLongNumberProperty | MappingScaledFloatNumberProperty
 
-export type MappingNumberType = 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer' | 'long' | 'short' | 'byte' | 'unsigned_long'
+export interface MappingNumberPropertyBase extends MappingDocValuesPropertyBase {
+  index?: boolean
+  ignore_malformed?: boolean
+}
 
 export interface MappingObjectProperty extends MappingCorePropertyBase {
   enabled?: boolean
   type?: 'object'
 }
+
+export type MappingOnScriptError = 'fail' | 'continue'
 
 export interface MappingPercolatorProperty extends MappingPropertyBase {
   type: 'percolator'
@@ -4102,6 +4142,13 @@ export type MappingRuntimeFieldType = 'boolean' | 'date' | 'double' | 'geo_point
 
 export type MappingRuntimeFields = Record<Field, MappingRuntimeField>
 
+export interface MappingScaledFloatNumberProperty extends MappingNumberPropertyBase {
+  type: 'scaled_float'
+  coerce?: boolean
+  null_value?: double
+  scaling_factor?: double
+}
+
 export interface MappingSearchAsYouTypeProperty extends MappingCorePropertyBase {
   analyzer?: string
   index?: boolean
@@ -4122,6 +4169,11 @@ export interface MappingShapeProperty extends MappingDocValuesPropertyBase {
   type: 'shape'
 }
 
+export interface MappingShortNumberProperty extends MappingStandardNumberProperty {
+  type: 'short'
+  null_value?: short
+}
+
 export interface MappingSizeField {
   enabled: boolean
 }
@@ -4132,6 +4184,12 @@ export interface MappingSourceField {
   enabled?: boolean
   excludes?: string[]
   includes?: string[]
+}
+
+export interface MappingStandardNumberProperty extends MappingNumberPropertyBase {
+  coerce?: boolean
+  script?: Script
+  on_script_error?: MappingOnScriptError
 }
 
 export interface MappingSuggestContext {
@@ -4191,6 +4249,11 @@ export interface MappingTypeMapping {
   _source?: MappingSourceField
   runtime?: Record<string, MappingRuntimeField>
   enabled?: boolean
+}
+
+export interface MappingUnsignedLongNumberProperty extends MappingNumberPropertyBase {
+  type: 'unsigned_long'
+  null_value?: ulong
 }
 
 export interface MappingVersionProperty extends MappingDocValuesPropertyBase {
@@ -4774,11 +4837,9 @@ export interface QueryDslRangeQueryBase extends QueryDslQueryBase {
 export type QueryDslRangeRelation = 'within' | 'contains' | 'intersects'
 
 export interface QueryDslRankFeatureFunction {
-  [key: string]: never
 }
 
 export interface QueryDslRankFeatureFunctionLinear {
-  [key: string]: never
 }
 
 export interface QueryDslRankFeatureFunctionLogarithm {
@@ -7370,6 +7431,7 @@ export interface ClusterHealthShardHealthStats {
 }
 
 export interface ClusterPendingTasksPendingTask {
+  executing: boolean
   insert_order: integer
   priority: string
   source: string
@@ -8053,7 +8115,6 @@ export interface GraphExploreResponse {
 }
 
 export interface IlmAction {
-  [key: string]: never
 }
 
 export interface IlmPhase {
@@ -8075,7 +8136,7 @@ export interface IlmPolicy {
 }
 
 export interface IlmDeleteLifecycleRequest extends RequestBase {
-  policy: Name
+  name: Name
 }
 
 export interface IlmDeleteLifecycleResponse extends AcknowledgedResponseBase {
@@ -8130,7 +8191,7 @@ export interface IlmGetLifecycleLifecycle {
 }
 
 export interface IlmGetLifecycleRequest extends RequestBase {
-  policy?: Name
+  name?: Name
 }
 
 export interface IlmGetLifecycleResponse extends DictionaryResponseBase<string, IlmGetLifecycleLifecycle> {
@@ -8159,7 +8220,8 @@ export interface IlmMoveToStepStepKey {
 }
 
 export interface IlmPutLifecycleRequest extends RequestBase {
-  policy: Name
+  name: Name
+  policy?: IlmPolicy
 }
 
 export interface IlmPutLifecycleResponse extends AcknowledgedResponseBase {
@@ -12101,9 +12163,6 @@ export interface NodesDataPathStats {
 export interface NodesExtendedMemoryStats extends NodesMemoryStats {
   free_percent: integer
   used_percent: integer
-  total_in_bytes: integer
-  free_in_bytes: integer
-  used_in_bytes: integer
 }
 
 export interface NodesFileSystem {
@@ -13865,7 +13924,7 @@ export interface SnapshotCleanupRepositoryCleanupRepositoryResults {
 }
 
 export interface SnapshotCleanupRepositoryRequest extends RequestBase {
-  repository: Name
+  name: Name
   master_timeout?: Time
   timeout?: Time
 }
@@ -13905,10 +13964,11 @@ export interface SnapshotCreateResponse {
 }
 
 export interface SnapshotCreateRepositoryRequest extends RequestBase {
-  repository: Name
+  name: Name
   master_timeout?: Time
   timeout?: Time
   verify?: boolean
+  repository?: SnapshotRepository
   type: string
   settings: SnapshotRepositorySettings
 }
@@ -13926,7 +13986,7 @@ export interface SnapshotDeleteResponse extends AcknowledgedResponseBase {
 }
 
 export interface SnapshotDeleteRepositoryRequest extends RequestBase {
-  repository: Names
+  name: Names
   master_timeout?: Time
   timeout?: Time
 }
@@ -13959,7 +14019,7 @@ export interface SnapshotGetSnapshotResponseItem {
 }
 
 export interface SnapshotGetRepositoryRequest extends RequestBase {
-  repository?: Names
+  name?: Names
   local?: boolean
   master_timeout?: Time
 }
@@ -14009,7 +14069,7 @@ export interface SnapshotVerifyRepositoryCompactNodeInfo {
 }
 
 export interface SnapshotVerifyRepositoryRequest extends RequestBase {
-  repository: Name
+  name: Name
   master_timeout?: Time
   timeout?: Time
 }
@@ -14382,9 +14442,18 @@ export interface TransformPreviewTransformResponse<TTransform = unknown> {
   preview: TTransform[]
 }
 
-export interface TransformPutTransformRequest extends TransformPreviewTransformRequest {
+export interface TransformPutTransformRequest extends RequestBase {
   transform_id: Id
   defer_validation?: boolean
+  dest: ReindexDestination
+  description?: string
+  frequency?: Time
+  pivot?: TransformPivot
+  source: ReindexSource
+  settings?: TransformSettings
+  sync?: TransformSyncContainer
+  retention_policy?: TransformRetentionPolicyContainer
+  latest?: TransformLatest
 }
 
 export interface TransformPutTransformResponse extends AcknowledgedResponseBase {
@@ -14410,7 +14479,16 @@ export interface TransformStopTransformRequest extends RequestBase {
 export interface TransformStopTransformResponse extends AcknowledgedResponseBase {
 }
 
-export interface TransformUpdateTransformRequest extends TransformPutTransformRequest {
+export interface TransformUpdateTransformRequest extends RequestBase {
+  transform_id: Id
+  defer_validation?: boolean
+  dest?: ReindexDestination
+  description?: string
+  frequency?: Time
+  source?: ReindexSource
+  settings?: TransformSettings
+  sync?: TransformSyncContainer
+  retention_policy?: TransformRetentionPolicyContainer
 }
 
 export interface TransformUpdateTransformResponse {
@@ -14479,7 +14557,6 @@ export interface WatcherActivationStatus {
 }
 
 export interface WatcherAlwaysCondition {
-  [key: string]: never
 }
 
 export interface WatcherArrayCompareCondition {
@@ -14683,7 +14760,6 @@ export interface WatcherLoggingResult {
 export type WatcherMonth = 'january' | 'february' | 'march' | 'april' | 'may' | 'june' | 'july' | 'august' | 'september' | 'october' | 'november' | 'december'
 
 export interface WatcherNeverCondition {
-  [key: string]: never
 }
 
 export interface WatcherPagerDutyActionEventResult {
@@ -15520,11 +15596,9 @@ export interface XpackUsageWatcherWatchTriggerSchedule extends XpackUsageCounter
 }
 
 export interface SpecUtilsAdditionalProperty<TKey = unknown, TValue = unknown> {
-  [key: string]: never
 }
 
 export interface SpecUtilsAdditionalProperties<TKey = unknown, TValue = unknown> {
-  [key: string]: never
 }
 
 export interface SpecUtilsCommonQueryParameters {
@@ -15546,5 +15620,4 @@ export interface SpecUtilsCommonCatQueryParameters {
 }
 
 export interface SpecUtilsOverloadOf<TDefinition = unknown> {
-  [key: string]: never
 }

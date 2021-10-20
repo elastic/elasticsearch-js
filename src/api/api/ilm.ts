@@ -47,7 +47,7 @@ export default class Ilm {
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmDeleteLifecycleResponse, unknown>>
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmDeleteLifecycleResponse>
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['policy']
+    const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
@@ -61,7 +61,7 @@ export default class Ilm {
     }
 
     const method = 'DELETE'
-    const path = `/_ilm/policy/${encodeURIComponent(params.policy.toString())}`
+    const path = `/_ilm/policy/${encodeURIComponent(params.name.toString())}`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
@@ -91,7 +91,7 @@ export default class Ilm {
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmGetLifecycleResponse, unknown>>
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmGetLifecycleResponse>
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['policy']
+    const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
@@ -107,9 +107,9 @@ export default class Ilm {
 
     let method = ''
     let path = ''
-    if (params.policy != null) {
+    if (params.name != null) {
       method = 'GET'
-      path = `/_ilm/policy/${encodeURIComponent(params.policy.toString())}`
+      path = `/_ilm/policy/${encodeURIComponent(params.name.toString())}`
     } else {
       method = 'GET'
       path = '/_ilm/policy'
@@ -194,7 +194,7 @@ export default class Ilm {
   async putLifecycle (this: That, params: T.IlmPutLifecycleRequest | TB.IlmPutLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IlmPutLifecycleResponse, unknown>>
   async putLifecycle (this: That, params: T.IlmPutLifecycleRequest | TB.IlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<T.IlmPutLifecycleResponse>
   async putLifecycle (this: That, params: T.IlmPutLifecycleRequest | TB.IlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = []
+    const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['policy']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
@@ -214,7 +214,7 @@ export default class Ilm {
     }
 
     const method = 'PUT'
-    const path = `/_ilm/policy/${encodeURIComponent(params.policy.toString())}`
+    const path = `/_ilm/policy/${encodeURIComponent(params.name.toString())}`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
