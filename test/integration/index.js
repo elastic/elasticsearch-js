@@ -155,7 +155,7 @@ const platinumBlackList = {
 
 function runner (opts = {}) {
   const options = { node: opts.node }
-  if (opts.node.startsWith('https://')) {
+  if (opts.node.isXPack) {
     options.tls = {
       ca: readFileSync(join(__dirname, '..', '..', '.ci', 'certs', 'ca.crt'), 'utf8'),
       rejectUnauthorized: false
@@ -357,7 +357,7 @@ function generateJunitXmlReport (junit, suite) {
 }
 
 if (require.main === module) {
-  const node = process.env.TEST_ES_SERVER || 'https://elastic:changeme@localhost:9200'
+  const node = process.env.TEST_ES_SERVER || 'http://elastic:changeme@localhost:9200'
   const opts = {
     node,
     isXPack: process.env.TEST_SUITE !== 'free'
