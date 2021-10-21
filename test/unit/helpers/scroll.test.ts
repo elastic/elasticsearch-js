@@ -381,7 +381,7 @@ test('Fix querystring for scroll search', async t => {
   const MockConnection = connection.buildMockConnection({
     onRequest (params) {
       if (count === 0) {
-        t.equal(params.querystring, 'size=1&scroll=1m')
+        t.equal(params.querystring, 'scroll=1m')
       } else {
         if (params.method !== 'DELETE') {
           if (params.method === 'POST') {
