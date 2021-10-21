@@ -154,7 +154,7 @@ const platinumBlackList = {
 
 function runner (opts = {}) {
   const options = { node: opts.node }
-  if (opts.isXPack) {
+  if (opts.node.startsWith('https://')) {
     options.tls = {
       ca: readFileSync(join(__dirname, '..', '..', '.ci', 'certs', 'ca.crt'), 'utf8'),
       rejectUnauthorized: false
