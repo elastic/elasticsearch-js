@@ -29,7 +29,7 @@ const { join } = require('path')
 const { locations } = require('../../scripts/download-artifacts')
 const packageJson = require('../../package.json')
 
-const { delve, to, isXPackTemplate, sleep } = helper
+const { delve, to, isXPackTemplate, sleep, updateParams } = helper
 
 const supportedFeatures = [
   'gtelte',
@@ -98,7 +98,7 @@ function build (opts = {}) {
     const repositories = await client.snapshot.getRepository()
     for (const repository of Object.keys(repositories)) {
       await client.snapshot.delete({ repository, snapshot: '*' }, { ignore: [404] })
-      await client.snapshot.deleteRepository({ repository }, { ignore: [404] })
+      await client.snapshot.deleteRepository({ name: repository }, { ignore: [404] })
     }
 
     if (isXPack) {
@@ -107,16 +107,30 @@ function build (opts = {}) {
     }
 
     // clean all indices
-    await client.indices.delete({
-      index: [
-        '*',
-        '-.ds-ilm-history-*',
-        '-.ds-.logs-deprecation.elasticsearch-default-*'
-      ],
-      expand_wildcards: 'open,closed,hidden'
-    }, {
-      ignore: [404]
-    })
+    try {
+      await client.indices.delete({
+        index: [
+          '*',
+          '-.ds-ilm-history-*'
+        ],
+        expand_wildcards: 'open,closed,hidden'
+      }, {
+        ignore: [404]
+      })
+    } catch (err) {
+      // randomly we can't delete .ds-.logs-deprecation.elasticsearch-default-*
+      // so let's skip it until we figure out the reason
+      await client.indices.delete({
+        index: [
+          '*',
+          '-.ds-ilm-history-*',
+          '-.ds-.logs-deprecation.elasticsearch-default-*'
+        ],
+        expand_wildcards: 'open,closed,hidden'
+      }, {
+        ignore: [404]
+      })
+    }
 
     // delete templates
     const templates = await client.cat.templates({ h: 'name' })
@@ -159,7 +173,7 @@ function build (opts = {}) {
       const policies = await client.ilm.getLifecycle()
       for (const policy in policies) {
         if (preserveIlmPolicies.includes(policy)) continue
-        await client.ilm.deleteLifecycle({ policy })
+        await client.ilm.deleteLifecycle({ name: policy })
       }
 
       // delete autofollow patterns
@@ -380,7 +394,7 @@ function build (opts = {}) {
    * @returns {Promise}
    */
   async function doAction (action, stats) {
-    const cmd = parseDo(action)
+    const cmd = await updateParams(parseDo(action))
     let api
     try {
       api = delve(client, cmd.method).bind(client)
@@ -638,7 +652,7 @@ function match (val1, val2, action) {
       .replace(/\s/g, '')
       .slice(1, -1)
     // 'm' adds the support for multiline regex
-    assert.ok(new RegExp(regStr, 'm').test(val1), `should match pattern provided: ${val2}, action: ${JSON.stringify(action)}`)
+    assert.ok(new RegExp(regStr, 'm').test(val1), `should match pattern provided: ${val2}, but got: ${val1}`)
     // tap.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}, action: ${JSON.stringify(action)}`)
   // everything else
   } else {
