@@ -42,7 +42,7 @@ export default async function UpdateApi<TDocument = unknown, TPartialDocument = 
 export default async function UpdateApi<TDocument = unknown, TPartialDocument = unknown, TDocumentR = unknown> (this: That, params: T.UpdateRequest<TDocument, TPartialDocument> | TB.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.UpdateResponse<TDocumentR>>
 export default async function UpdateApi<TDocument = unknown, TPartialDocument = unknown, TDocumentR = unknown> (this: That, params: T.UpdateRequest<TDocument, TPartialDocument> | TB.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['id', 'index', 'type']
-  const acceptedBody: string[] = ['detect_noop', 'doc', 'doc_as_upsert', 'script', 'scripted_upsert', 'upsert']
+  const acceptedBody: string[] = ['detect_noop', 'doc', 'doc_as_upsert', 'script', 'scripted_upsert', '_source', 'upsert']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params.body ?? undefined

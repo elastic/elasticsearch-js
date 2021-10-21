@@ -1082,7 +1082,7 @@ export default class Indices {
   async putTemplate (this: That, params: T.IndicesPutTemplateRequest | TB.IndicesPutTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesPutTemplateResponse>
   async putTemplate (this: That, params: T.IndicesPutTemplateRequest | TB.IndicesPutTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['aliases', 'index_patterns', 'mappings', 'settings', 'version']
+    const acceptedBody: string[] = ['aliases', 'index_patterns', 'mappings', 'order', 'settings', 'version']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined

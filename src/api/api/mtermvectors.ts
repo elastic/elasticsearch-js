@@ -42,7 +42,7 @@ export default async function MtermvectorsApi (this: That, params?: T.Mtermvecto
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptions): Promise<T.MtermvectorsResponse>
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['docs']
+  const acceptedBody: string[] = ['docs', 'ids']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   let body: Record<string, any> = params?.body ?? undefined

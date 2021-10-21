@@ -497,7 +497,7 @@ export default class Ml {
   async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<T.MlGetBucketsResponse>
   async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'timestamp']
-    const acceptedBody: string[] = ['anomaly_score', 'expand', 'page']
+    const acceptedBody: string[] = ['anomaly_score', 'desc', 'exclude_interim', 'expand', 'page', 'sort', 'start', 'end']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -920,7 +920,7 @@ export default class Ml {
   async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptions): Promise<T.MlGetRecordsResponse>
   async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['desc', 'page', 'record_score', 'sort']
+    const acceptedBody: string[] = ['desc', 'exclude_interim', 'page', 'record_score', 'sort', 'start', 'end']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1581,7 +1581,7 @@ export default class Ml {
   async startDatafeed (this: That, params: T.MlStartDatafeedRequest | TB.MlStartDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlStartDatafeedResponse>
   async startDatafeed (this: That, params: T.MlStartDatafeedRequest | TB.MlStartDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['end', 'timeout']
+    const acceptedBody: string[] = ['end', 'start', 'timeout']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined
@@ -1653,7 +1653,7 @@ export default class Ml {
   async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlStopDatafeedResponse>
   async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['timeout']
+    const acceptedBody: string[] = ['force', 'timeout']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params.body ?? undefined

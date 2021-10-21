@@ -114,7 +114,7 @@ export default class AsyncSearch {
   async submit<TDocument = unknown> (this: That, params?: T.AsyncSearchSubmitRequest | TB.AsyncSearchSubmitRequest, options?: TransportRequestOptions): Promise<T.AsyncSearchSubmitResponse<TDocument>>
   async submit<TDocument = unknown> (this: That, params?: T.AsyncSearchSubmitRequest | TB.AsyncSearchSubmitRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['aggs', 'aggregations', 'collapse', 'highlight', 'indices_boost', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'slice', 'fields', 'suggest', 'pit', 'runtime_mappings']
+    const acceptedBody: string[] = ['aggs', 'aggregations', 'collapse', 'explain', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: Record<string, any> = params?.body ?? undefined
