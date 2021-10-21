@@ -103,11 +103,20 @@ function build (opts = {}) {
 
     if (isXPack) {
       // clean data streams
-      await client.indices.deleteDataStream({ name: '*' })
+      await client.indices.deleteDataStream({ name: '*', expand_wildcards: 'all' })
     }
 
     // clean all indices
-    await client.indices.delete({ index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden' }, { ignore: [404] })
+    await client.indices.delete({
+      index: [
+        '*',
+        '-.ds-ilm-history-*',
+        '-.ds-.logs-deprecation.elasticsearch-default-*'
+      ],
+      expand_wildcards: 'open,closed,hidden'
+    }, {
+      ignore: [404]
+    })
 
     // delete templates
     const templates = await client.cat.templates({ h: 'name' })

@@ -49,6 +49,7 @@ const freeSkips = {
     'Body params with array param override query string',
     'Body params with string param scroll id override query string'
   ],
+  'free/cat.allocation/10_basic.yml': ['*'],
   // TODO: remove this once 'arbitrary_key' is implemented
   // https://github.com/elastic/elasticsearch/pull/41492
   'indices.split/30_copy_settings.yml': ['*'],
@@ -356,7 +357,7 @@ function generateJunitXmlReport (junit, suite) {
 }
 
 if (require.main === module) {
-  const node = process.env.TEST_ES_SERVER || 'http://elastic:changeme@localhost:9200'
+  const node = process.env.TEST_ES_SERVER || 'https://elastic:changeme@localhost:9200'
   const opts = {
     node,
     isXPack: process.env.TEST_SUITE !== 'free'
