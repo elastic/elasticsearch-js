@@ -1,7 +1,7 @@
 {
   "name": "@elastic/elasticsearch",
   "version": "8.0.0-alpha.2",
-  "versionCanary": "8.0.0-canary.29",
+  "versionCanary": "8.0.0-canary.30",
   "description": "The official Elasticsearch client for Node.js",
   "main": "index.js",
   "types": "index.d.ts",
