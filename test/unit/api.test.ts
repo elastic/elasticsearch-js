@@ -136,12 +136,10 @@ test('Api with body key and keyed body', async t => {
 })
 
 test('Using the body key should not mutate the body', async t => {
-  t.plan(2)
+  t.plan(1)
 
   const Connection = connection.buildMockConnection({
     onRequest (opts) {
-      // @ts-expect-error
-      t.same(JSON.parse(opts.body), { query: { match_all: {} } })
       return {
         statusCode: 200,
         body: { took: 42 }
