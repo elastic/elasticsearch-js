@@ -180,12 +180,18 @@ export default class Ml {
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<T.MlDeleteExpiredDataResponse>
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
+    const acceptedBody: string[] = ['requests_per_second', 'timeout']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    let body: Record<string, any> = params?.body ?? undefined
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
         // @ts-expect-error
@@ -863,11 +869,17 @@ export default class Ml {
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<T.MlGetModelSnapshotsResponse>
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
+    const acceptedBody: string[] = ['start', 'end']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    let body: Record<string, any> = params.body ?? undefined
 
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
         // @ts-expect-error
