@@ -44,8 +44,15 @@ export default async function ExplainApi<TDocument = unknown> (this: That, param
   const acceptedPath: string[] = ['id', 'index']
   const acceptedBody: string[] = ['query']
   const querystring: Record<string, any> = {}
+  let body: Record<string, any> | string
   // @ts-expect-error
-  let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+  if (typeof params?.body === 'string') {
+    // @ts-expect-error
+    body = params.body
+  } else {
+    // @ts-expect-error
+    body = params.body != null ? { ...params.body } : undefined
+  }
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {
