@@ -116,8 +116,15 @@ export default class Eql {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['query', 'case_sensitive', 'event_category_field', 'tiebreaker_field', 'timestamp_field', 'fetch_size', 'filter', 'keep_alive', 'keep_on_completion', 'wait_for_completion_timeout', 'size', 'fields', 'result_position']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {

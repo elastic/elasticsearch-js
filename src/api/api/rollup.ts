@@ -154,8 +154,15 @@ export default class Rollup {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['cron', 'groups', 'index_pattern', 'metrics', 'page_size', 'rollup_index']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -209,8 +216,15 @@ export default class Rollup {
     const acceptedPath: string[] = ['index', 'type']
     const acceptedBody: string[] = ['aggs', 'query', 'size']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {

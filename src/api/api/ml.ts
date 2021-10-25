@@ -182,8 +182,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['requests_per_second', 'timeout']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params?.body != null ? { ...params.body } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
@@ -357,8 +364,15 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['analysis_config', 'max_bucket_cardinality', 'overall_cardinality']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params?.body != null ? { ...params.body } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
@@ -386,8 +400,15 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['evaluation', 'index', 'query']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -414,8 +435,15 @@ export default class Ml {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['source', 'dest', 'analysis', 'description', 'model_memory_limit', 'max_num_threads', 'analyzed_fields', 'allow_lazy_start']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -449,8 +477,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['advance_time', 'calc_interim', 'end', 'start']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -477,8 +512,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['duration', 'expires_in', 'max_model_memory']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -505,8 +547,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id', 'timestamp']
     const acceptedBody: string[] = ['anomaly_score', 'desc', 'exclude_interim', 'expand', 'page', 'sort', 'start', 'end']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -562,8 +611,15 @@ export default class Ml {
     const acceptedPath: string[] = ['calendar_id']
     const acceptedBody: string[] = ['page']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params?.body != null ? { ...params.body } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
@@ -598,8 +654,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id', 'category_id']
     const acceptedBody: string[] = ['page']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -783,8 +846,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['page']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -871,8 +941,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
     const acceptedBody: string[] = ['start', 'end']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -906,8 +983,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['allow_no_jobs']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -934,8 +1018,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['desc', 'exclude_interim', 'page', 'record_score', 'sort', 'start', 'end']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1089,8 +1180,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['timeout']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1117,8 +1215,15 @@ export default class Ml {
     const acceptedPath: string[] = ['calendar_id']
     const acceptedBody: string[] = ['events']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1172,8 +1277,15 @@ export default class Ml {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['config']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params?.body != null ? { ...params.body } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
@@ -1208,8 +1320,15 @@ export default class Ml {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedBody: string[] = ['job_config', 'datafeed_config']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params?.body != null ? { ...params.body } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
@@ -1244,8 +1363,15 @@ export default class Ml {
     const acceptedPath: string[] = ['calendar_id']
     const acceptedBody: string[] = ['description']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1294,8 +1420,15 @@ export default class Ml {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', 'model_memory_limit', 'source']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1322,8 +1455,15 @@ export default class Ml {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1350,8 +1490,15 @@ export default class Ml {
     const acceptedPath: string[] = ['filter_id']
     const acceptedBody: string[] = ['description', 'items']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1378,8 +1525,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['allow_lazy_open', 'analysis_config', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'daily_model_snapshot_retention_after_days', 'data_description', 'datafeed_config', 'description', 'groups', 'model_plot_config', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_index_name', 'results_retention_days']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1406,8 +1560,15 @@ export default class Ml {
     const acceptedPath: string[] = ['model_id']
     const acceptedBody: string[] = ['compressed_definition', 'definition', 'description', 'inference_config', 'input', 'metadata', 'tags']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1522,8 +1683,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
     const acceptedBody: string[] = ['delete_intervening_results']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1595,8 +1763,15 @@ export default class Ml {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedBody: string[] = ['end', 'start', 'timeout']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1667,8 +1842,15 @@ export default class Ml {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedBody: string[] = ['force', 'timeout']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1717,8 +1899,15 @@ export default class Ml {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['description', 'model_memory_limit', 'max_num_threads', 'allow_lazy_start']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1767,8 +1956,15 @@ export default class Ml {
     const acceptedPath: string[] = ['filter_id']
     const acceptedBody: string[] = ['add_items', 'description', 'remove_items']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1795,8 +1991,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['allow_lazy_open', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'categorization_filters', 'description', 'model_plot_config', 'daily_model_snapshot_retention_after_days', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_retention_days', 'groups', 'detectors', 'per_partition_categorization']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1823,8 +2026,15 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
     const acceptedBody: string[] = ['description', 'retain']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1873,8 +2083,15 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['job_id', 'analysis_config', 'analysis_limits', 'data_description', 'description', 'model_plot', 'model_snapshot_retention_days', 'results_index_name']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params?.body != null ? { ...params.body } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {

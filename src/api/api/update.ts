@@ -44,8 +44,15 @@ export default async function UpdateApi<TDocument = unknown, TPartialDocument = 
   const acceptedPath: string[] = ['id', 'index', 'type']
   const acceptedBody: string[] = ['detect_noop', 'doc', 'doc_as_upsert', 'script', 'scripted_upsert', '_source', 'upsert']
   const querystring: Record<string, any> = {}
+  let body: Record<string, any> | string
   // @ts-expect-error
-  let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
+  if (typeof params?.body === 'string') {
+    // @ts-expect-error
+    body = params.body
+  } else {
+    // @ts-expect-error
+    body = params.body != null ? { ...params.body } : undefined
+  }
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {

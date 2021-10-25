@@ -44,8 +44,15 @@ export default async function SearchApi<TDocument = unknown> (this: That, params
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['aggs', 'aggregations', 'collapse', 'explain', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats']
   const querystring: Record<string, any> = {}
+  let body: Record<string, any> | string
   // @ts-expect-error
-  let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
+  if (typeof params?.body === 'string') {
+    // @ts-expect-error
+    body = params.body
+  } else {
+    // @ts-expect-error
+    body = params?.body != null ? { ...params.body } : undefined
+  }
 
   params = params ?? {}
   for (const key in params) {
