@@ -1,7 +1,7 @@
 {
   "name": "@elastic/elasticsearch",
-  "version": "8.0.0-alpha.1",
-  "versionCanary": "8.0.0-canary.28",
+  "version": "8.0.0-alpha.2",
+  "versionCanary": "8.0.0-canary.31",
   "description": "The official Elasticsearch client for Node.js",
   "main": "index.js",
   "types": "index.d.ts",
@@ -80,7 +80,7 @@
     "xmlbuilder2": "^3.0.2"
   },
   "dependencies": {
-    "@elastic/transport": "^0.0.10",
+    "@elastic/transport": "^0.0.13",
     "tslib": "^2.3.0"
   },
   "tap": {

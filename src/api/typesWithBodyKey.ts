@@ -8436,7 +8436,7 @@ export interface IndicesDataStream {
   hidden?: boolean
 }
 
-export type IndicesDataStreamHealthStatus = 'green' | 'yellow' | 'red'
+export type IndicesDataStreamHealthStatus = 'green' | 'GREEN' | 'yellow' | 'YELLOW' | 'red' | 'RED'
 
 export interface IndicesFielddataFrequencyFilter {
   max: double
