@@ -107,30 +107,15 @@ function build (opts = {}) {
     }
 
     // clean all indices
-    try {
-      await client.indices.delete({
-        index: [
-          '*',
-          '-.ds-ilm-history-*'
-        ],
-        expand_wildcards: 'open,closed,hidden'
-      }, {
-        ignore: [404]
-      })
-    } catch (err) {
-      // randomly we can't delete .ds-.logs-deprecation.elasticsearch-default-*
-      // so let's skip it until we figure out the reason
-      await client.indices.delete({
-        index: [
-          '*',
-          '-.ds-ilm-history-*',
-          '-.ds-.logs-deprecation.elasticsearch-default-*'
-        ],
-        expand_wildcards: 'open,closed,hidden'
-      }, {
-        ignore: [404]
-      })
-    }
+    await client.indices.delete({
+      index: [
+        '*',
+        '-.ds-ilm-history-*'
+      ],
+      expand_wildcards: 'open,closed,hidden'
+    }, {
+      ignore: [404]
+    })
 
     // delete templates
     const templates = await client.cat.templates({ h: 'name' })
