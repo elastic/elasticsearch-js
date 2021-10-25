@@ -63,7 +63,8 @@ const freeSkips = {
   'search.aggregation/240_max_buckets.yml': ['*'],
   // the yaml runner assumes that null means "does not exists",
   // while null is a valid json value, so the check will fail
-  'search/320_disallow_queries.yml': ['Test disallow expensive queries']
+  'search/320_disallow_queries.yml': ['Test disallow expensive queries'],
+  'free/tsdb/90_unsupported_operations.yml': ['noop update']
 }
 const platinumBlackList = {
   'analytics/histogram.yml': ['Histogram requires values in increasing order'],
