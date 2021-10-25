@@ -58,6 +58,12 @@ function build (opts = {}) {
     response = null
     stash.clear()
 
+    await client.cluster.health({
+      wait_for_no_initializing_shards: true,
+      timeout: '70s',
+      level: 'shards'
+    })
+
     if (isXPack) {
       // wipe rollup jobs
       const jobsList = await client.rollup.getJobs({ id: '_all' })
