@@ -45,7 +45,7 @@ export default async function UpdateByQueryApi (this: That, params: T.UpdateByQu
   const acceptedBody: string[] = ['max_docs', 'query', 'script', 'slice', 'conflicts']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {

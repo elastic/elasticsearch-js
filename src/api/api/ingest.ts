@@ -149,7 +149,7 @@ export default class Ingest {
     const acceptedBody: string[] = ['_meta', 'description', 'on_failure', 'processors', 'version']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -177,7 +177,7 @@ export default class Ingest {
     const acceptedBody: string[] = ['docs', 'pipeline']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {

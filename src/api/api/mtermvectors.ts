@@ -45,7 +45,7 @@ export default async function MtermvectorsApi (this: That, params?: T.Mtermvecto
   const acceptedBody: string[] = ['docs', 'ids']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: Record<string, any> = params?.body ?? undefined
+  let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
   params = params ?? {}
   for (const key in params) {

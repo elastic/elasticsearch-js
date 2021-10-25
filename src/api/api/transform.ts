@@ -125,7 +125,7 @@ export default class Transform {
     const acceptedBody: string[] = ['dest', 'description', 'frequency', 'pivot', 'source', 'settings', 'sync', 'retention_policy', 'latest']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -161,7 +161,7 @@ export default class Transform {
     const acceptedBody: string[] = ['dest', 'description', 'frequency', 'pivot', 'source', 'settings', 'sync', 'retention_policy', 'latest']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -233,7 +233,7 @@ export default class Transform {
     const acceptedBody: string[] = ['dest', 'description', 'frequency', 'source', 'settings', 'sync', 'retention_policy']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {

@@ -51,7 +51,7 @@ export default class Sql {
     const acceptedBody: string[] = ['cursor']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -145,7 +145,7 @@ export default class Sql {
     const acceptedBody: string[] = ['columnar', 'cursor', 'fetch_size', 'filter', 'query', 'request_timeout', 'page_timeout', 'time_zone', 'field_multi_value_leniency']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -174,7 +174,7 @@ export default class Sql {
     const acceptedBody: string[] = ['fetch_size', 'filter', 'query', 'time_zone']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {

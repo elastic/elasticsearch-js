@@ -73,7 +73,7 @@ export default class Snapshot {
     const acceptedBody: string[] = ['indices']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -101,7 +101,7 @@ export default class Snapshot {
     const acceptedBody: string[] = ['ignore_unavailable', 'include_global_state', 'indices', 'feature_states', 'metadata', 'partial']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -129,7 +129,7 @@ export default class Snapshot {
     const acceptedBody: string[] = ['repository', 'type', 'settings']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -275,7 +275,7 @@ export default class Snapshot {
     const acceptedBody: string[] = ['ignore_index_settings', 'ignore_unavailable', 'include_aliases', 'include_global_state', 'index_settings', 'indices', 'partial', 'rename_pattern', 'rename_replacement']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {

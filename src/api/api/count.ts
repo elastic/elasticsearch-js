@@ -45,7 +45,7 @@ export default async function CountApi (this: That, params?: T.CountRequest | TB
   const acceptedBody: string[] = ['query']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: Record<string, any> = params?.body ?? undefined
+  let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
   params = params ?? {}
   for (const key in params) {

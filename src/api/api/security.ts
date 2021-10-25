@@ -74,7 +74,7 @@ export default class Security {
     const acceptedBody: string[] = ['password']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -220,7 +220,7 @@ export default class Security {
     const acceptedBody: string[] = ['expiration', 'name', 'role_descriptors', 'metadata']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -670,7 +670,7 @@ export default class Security {
     const acceptedBody: string[] = ['grant_type', 'scope', 'password', 'kerberos_ticket', 'refresh_token', 'username']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -752,7 +752,7 @@ export default class Security {
     const acceptedBody: string[] = ['api_key', 'grant_type', 'access_token', 'username', 'password']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -780,7 +780,7 @@ export default class Security {
     const acceptedBody: string[] = ['application', 'cluster', 'index']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -816,7 +816,7 @@ export default class Security {
     const acceptedBody: string[] = ['id', 'ids', 'name', 'owner', 'realm_name', 'username']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -845,7 +845,7 @@ export default class Security {
     const acceptedBody: string[] = ['token', 'refresh_token', 'realm_name', 'username']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -901,7 +901,7 @@ export default class Security {
     const acceptedBody: string[] = ['applications', 'cluster', 'global', 'indices', 'metadata', 'run_as', 'transient_metadata']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -929,7 +929,7 @@ export default class Security {
     const acceptedBody: string[] = ['enabled', 'metadata', 'roles', 'rules', 'run_as']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -957,7 +957,7 @@ export default class Security {
     const acceptedBody: string[] = ['username', 'email', 'full_name', 'metadata', 'password', 'password_hash', 'roles', 'enabled']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {

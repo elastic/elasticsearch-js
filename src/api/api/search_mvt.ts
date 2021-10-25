@@ -45,7 +45,7 @@ export default async function SearchMvtApi (this: That, params: T.SearchMvtReque
   const acceptedBody: string[] = ['aggs', 'exact_bounds', 'extent', 'fields', 'grid_precision', 'grid_type', 'query', 'runtime_mappings', 'size', 'sort']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {

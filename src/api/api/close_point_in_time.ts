@@ -45,7 +45,7 @@ export default async function ClosePointInTimeApi (this: That, params: T.ClosePo
   const acceptedBody: string[] = ['id']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {

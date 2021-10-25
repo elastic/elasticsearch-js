@@ -110,7 +110,7 @@ export default class SearchableSnapshots {
     const acceptedBody: string[] = ['index', 'renamed_index', 'index_settings', 'ignore_index_settings']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
