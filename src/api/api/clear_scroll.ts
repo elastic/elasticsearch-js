@@ -45,7 +45,7 @@ export default async function ClearScrollApi (this: That, params?: T.ClearScroll
   const acceptedBody: string[] = ['scroll_id']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: Record<string, any> = params?.body ?? undefined
+  let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
   params = params ?? {}
   for (const key in params) {

@@ -45,7 +45,7 @@ export default async function RankEvalApi (this: That, params: T.RankEvalRequest
   const acceptedBody: string[] = ['requests', 'metric']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {

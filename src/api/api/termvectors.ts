@@ -45,7 +45,7 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
   const acceptedBody: string[] = ['doc', 'filter', 'per_field_analyzer']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {

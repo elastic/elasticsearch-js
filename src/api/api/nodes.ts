@@ -161,7 +161,7 @@ export default class Nodes {
     const acceptedBody: string[] = ['secure_settings_password']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {

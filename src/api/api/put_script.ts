@@ -45,7 +45,7 @@ export default async function PutScriptApi (this: That, params: T.PutScriptReque
   const acceptedBody: string[] = ['script']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {

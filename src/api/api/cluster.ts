@@ -51,7 +51,7 @@ export default class Cluster {
     const acceptedBody: string[] = ['current_node', 'index', 'primary', 'shard']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -276,7 +276,7 @@ export default class Cluster {
     const acceptedBody: string[] = ['template', 'aliases', 'mappings', 'settings', 'version', '_meta']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    let body: Record<string, any> = params.body != null ? { ...params.body } : undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -304,7 +304,7 @@ export default class Cluster {
     const acceptedBody: string[] = ['persistent', 'transient']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {
@@ -356,7 +356,7 @@ export default class Cluster {
     const acceptedBody: string[] = ['commands']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    let body: Record<string, any> = params?.body != null ? { ...params.body } : undefined
 
     params = params ?? {}
     for (const key in params) {
