@@ -297,7 +297,7 @@ test('Scroll search documents', async t => {
         t.equal(params.querystring, 'filter_path=hits.hits._source%2C_scroll_id&scroll=1m')
       } else {
         if (params.method !== 'DELETE') {
-          t.equal(params.querystring, 'scroll=1m&scroll_id=id')
+          t.equal(params.body, '{"scroll":"1m","scroll_id":"id"}')
         }
       }
       return {
