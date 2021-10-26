@@ -222,7 +222,7 @@ function generateApiDoc (spec) {
     doc += `link:${documentationUrl}[Documentation] +\n`
   }
   if (codeExamples.includes(name)) {
-    doc += `{jsclient}/${name.replace(/\./g, '_')}_examples.html[Code Example] +\n`
+    doc += `<<${name.replace(/\./g, '_')}_examples,Code Example>> +\n`
   }
 
   if (params.length !== 0) {
