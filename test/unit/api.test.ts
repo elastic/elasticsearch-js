@@ -195,3 +195,57 @@ test('Using the body key with a string value', async t => {
     t.fail(err)
   }
 })
+
+test('search sort with column should be sent in the querystring', async t => {
+  t.plan(2)
+
+  const Connection = connection.buildMockConnection({
+    onRequest (opts) {
+      t.equal(opts.querystring, 'sort=foo%3Aasc')
+      // @ts-expect-error
+      t.same(JSON.parse(opts.body), { query: { match_all: {} } })
+      return {
+        statusCode: 200,
+        body: { took: 42 }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection
+  })
+
+  await client.search({
+    index: 'test',
+    sort: 'foo:asc',
+    body: { query: { match_all: {} } }
+  })
+})
+
+test('search sort without column should be sent in the body', async t => {
+  t.plan(2)
+
+  const Connection = connection.buildMockConnection({
+    onRequest (opts) {
+      t.equal(opts.querystring, '')
+      // @ts-expect-error
+      t.same(JSON.parse(opts.body), { query: { match_all: {} }, sort: 'foo' })
+      return {
+        statusCode: 200,
+        body: { took: 42 }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection
+  })
+
+  await client.search({
+    index: 'test',
+    sort: 'foo',
+    body: { query: { match_all: {} } }
+  })
+})
