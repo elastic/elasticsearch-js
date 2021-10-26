@@ -118,8 +118,7 @@ export default class Autoscaling {
     const acceptedBody: string[] = ['policy']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const userBody: any = params?.body
-    let body: any = userBody ?? undefined
+    let body: any = params?.body ?? undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
