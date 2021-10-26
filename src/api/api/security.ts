@@ -73,14 +73,13 @@ export default class Security {
     const acceptedPath: string[] = ['username']
     const acceptedBody: string[] = ['password']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -226,14 +225,13 @@ export default class Security {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['expiration', 'name', 'role_descriptors', 'metadata']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -683,14 +681,13 @@ export default class Security {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['grant_type', 'scope', 'password', 'kerberos_ticket', 'refresh_token', 'username']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -772,14 +769,13 @@ export default class Security {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['api_key', 'grant_type', 'access_token', 'username', 'password']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -807,14 +803,13 @@ export default class Security {
     const acceptedPath: string[] = ['user']
     const acceptedBody: string[] = ['application', 'cluster', 'index']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -850,14 +845,13 @@ export default class Security {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['id', 'ids', 'name', 'owner', 'realm_name', 'username']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -886,14 +880,13 @@ export default class Security {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['token', 'refresh_token', 'realm_name', 'username']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -923,7 +916,8 @@ export default class Security {
     const acceptedBody: string[] = ['privileges']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: any = params.body ?? undefined
+    const userBody: any = params?.body
+    let body: any = userBody ?? undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -949,14 +943,13 @@ export default class Security {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['applications', 'cluster', 'global', 'indices', 'metadata', 'run_as', 'transient_metadata']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -984,14 +977,13 @@ export default class Security {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['enabled', 'metadata', 'roles', 'rules', 'run_as']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1019,14 +1011,13 @@ export default class Security {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['username', 'email', 'full_name', 'metadata', 'password', 'password_hash', 'roles', 'enabled']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {

@@ -109,14 +109,13 @@ export default class SearchableSnapshots {
     const acceptedPath: string[] = ['repository', 'snapshot']
     const acceptedBody: string[] = ['index', 'renamed_index', 'index_settings', 'ignore_index_settings']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
