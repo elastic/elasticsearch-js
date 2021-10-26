@@ -1087,7 +1087,7 @@ export default class Indices {
     const acceptedBody: string[] = ['settings']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: any = params?.body ?? undefined
+    let body: any = params.body ?? undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -1428,7 +1428,7 @@ export default class Indices {
     const acceptedBody: string[] = ['template']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: any = params?.body ?? undefined
+    let body: any = params.body ?? undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {

@@ -51,7 +51,7 @@ export default class TextStructure {
     const acceptedBody: string[] = ['text_files']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: any = params?.body ?? undefined
+    let body: any = params.body ?? undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {

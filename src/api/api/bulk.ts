@@ -45,7 +45,7 @@ export default async function BulkApi<TSource = unknown> (this: That, params: T.
   const acceptedBody: string[] = ['operations']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: any = params?.body ?? undefined
+  let body: any = params.body ?? undefined
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {
