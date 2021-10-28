@@ -134,3 +134,64 @@ test('Api with body key and keyed body', async t => {
 
   t.equal(response.result, 'created')
 })
+
+test('Using the body key should not mutate the body', async t => {
+  t.plan(2)
+
+  const Connection = connection.buildMockConnection({
+    onRequest (opts) {
+      // @ts-expect-error
+      t.same(JSON.parse(opts.body), { query: { match_all: {} }, sort: 'foo' })
+      return {
+        statusCode: 200,
+        body: { took: 42 }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection
+  })
+
+  const body = { query: { match_all: {} } }
+  await client.search({
+    index: 'test',
+    sort: 'foo',
+    body
+  })
+
+  t.same(body, { query: { match_all: {} } })
+})
+
+test('Using the body key with a string value', async t => {
+  t.plan(2)
+
+  const Connection = connection.buildMockConnection({
+    onRequest (opts) {
+      // @ts-expect-error
+      t.same(JSON.parse(opts.body), { query: { match_all: {} } })
+      return {
+        statusCode: 200,
+        body: { took: 42 }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection
+  })
+
+  try {
+    const body = { query: { match_all: {} } }
+    await client.search({
+      index: 'test',
+      // @ts-expect-error
+      body: JSON.stringify(body)
+    })
+    t.pass('ok!')
+  } catch (err: any) {
+    t.fail(err)
+  }
+})

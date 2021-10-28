@@ -1865,7 +1865,7 @@ export interface EmptyObject {
 export type EpochMillis = string | long
 
 export interface ErrorCauseKeys {
-  type?: string
+  type: string
   reason: string
   stack_trace?: string
   caused_by?: ErrorCause

@@ -44,8 +44,15 @@ export default async function ReindexApi (this: That, params?: T.ReindexRequest 
   const acceptedPath: string[] = []
   const acceptedBody: string[] = ['conflicts', 'dest', 'max_docs', 'script', 'size', 'source']
   const querystring: Record<string, any> = {}
+  let body: Record<string, any> | string
   // @ts-expect-error
-  let body: Record<string, any> = params?.body ?? undefined
+  if (typeof params?.body === 'string') {
+    // @ts-expect-error
+    body = params.body
+  } else {
+    // @ts-expect-error
+    body = params?.body != null ? { ...params.body } : undefined
+  }
 
   params = params ?? {}
   for (const key in params) {

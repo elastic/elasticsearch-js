@@ -44,8 +44,15 @@ export default async function ScrollApi<TDocument = unknown> (this: That, params
   const acceptedPath: string[] = []
   const acceptedBody: string[] = ['scroll', 'scroll_id']
   const querystring: Record<string, any> = {}
+  let body: Record<string, any> | string
   // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  if (typeof params?.body === 'string') {
+    // @ts-expect-error
+    body = params.body
+  } else {
+    // @ts-expect-error
+    body = params.body != null ? { ...params.body } : undefined
+  }
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {

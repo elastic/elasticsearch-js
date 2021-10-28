@@ -50,8 +50,15 @@ export default class Cluster {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['current_node', 'index', 'primary', 'shard']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params?.body != null ? { ...params.body } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
@@ -275,8 +282,15 @@ export default class Cluster {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['template', 'aliases', 'mappings', 'settings', 'version', '_meta']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params.body ?? undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params.body != null ? { ...params.body } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
@@ -303,8 +317,15 @@ export default class Cluster {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['persistent', 'transient']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params?.body != null ? { ...params.body } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
@@ -355,8 +376,15 @@ export default class Cluster {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['commands']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params?.body != null ? { ...params.body } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {

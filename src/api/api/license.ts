@@ -142,8 +142,15 @@ export default class License {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['license', 'licenses']
     const querystring: Record<string, any> = {}
+    let body: Record<string, any> | string
     // @ts-expect-error
-    let body: Record<string, any> = params?.body ?? undefined
+    if (typeof params?.body === 'string') {
+      // @ts-expect-error
+      body = params.body
+    } else {
+      // @ts-expect-error
+      body = params?.body != null ? { ...params.body } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
