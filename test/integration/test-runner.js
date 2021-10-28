@@ -759,6 +759,9 @@ function parseDo (action) {
         acc.method = val.replace(/_([a-z])/g, g => g[1].toUpperCase())
         acc.api = val
         acc.params = action[val] // camelify(action[val])
+        if (typeof acc.params.body === 'string') {
+          acc.params.body = JSON.parse(acc.params.body)
+        }
     }
     return acc
   }, {})

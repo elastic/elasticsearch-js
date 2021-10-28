@@ -67,6 +67,7 @@ const freeSkips = {
   'free/tsdb/90_unsupported_operations.yml': ['noop update']
 }
 const platinumBlackList = {
+  'api_key/20_query.yml': ['*'],
   'analytics/histogram.yml': ['Histogram requires values in increasing order'],
   // this two test cases are broken, we should
   // return on those in the future.
