@@ -65,6 +65,9 @@ function isXPackTemplate (name) {
   if (name.startsWith('.transform-')) {
     return true
   }
+  if (name.startsWith('.deprecation-')) {
+    return true
+  }
   switch (name) {
     case '.watches':
     case 'logstash-index-template':
@@ -84,9 +87,6 @@ function isXPackTemplate (name) {
     case 'synthetics-settings':
     case 'synthetics-mappings':
     case '.snapshot-blob-cache':
-    case '.deprecation-indexing-template':
-    case '.deprecation-indexing-mappings':
-    case '.deprecation-indexing-settings':
     case 'data-streams-mappings':
       return true
   }

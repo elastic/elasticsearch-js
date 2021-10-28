@@ -339,7 +339,7 @@ if (require.main === module) {
   const node = process.env.TEST_ES_SERVER || 'http://localhost:9200'
   const opts = {
     node,
-    isXPack: node.indexOf('@') > -1
+    isXPack: process.env.TEST_SUITE !== 'free'
   }
   runner(opts)
 }
