@@ -23,8 +23,8 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['wait_for_advance', 'wait_for_index', 'checkpoints', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
-const snakeCase = { waitForAdvance: 'wait_for_advance', waitForIndex: 'wait_for_index', errorTrace: 'error_trace', filterPath: 'filter_path' }
+const acceptedQuerystring = ['wait_for_advance', 'wait_for_index', 'checkpoints', 'timeout', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'wait_for_checkpoints', 'wait_for_checkpoints_timeout', 'allow_partial_search_results']
+const snakeCase = { waitForAdvance: 'wait_for_advance', waitForIndex: 'wait_for_index', errorTrace: 'error_trace', filterPath: 'filter_path', waitForCheckpoints: 'wait_for_checkpoints', waitForCheckpointsTimeout: 'wait_for_checkpoints_timeout', allowPartialSearchResults: 'allow_partial_search_results' }
 
 function FleetApi (transport, ConfigurationError) {
   this.transport = transport
@@ -52,6 +52,65 @@ FleetApi.prototype.globalCheckpoints = function fleetGlobalCheckpointsApi (param
     method,
     path,
     body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+FleetApi.prototype.msearch = function fleetMsearchApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.body == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
+  }
+
+  let { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if ((index) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + encodeURIComponent(index) + '/' + '_fleet' + '/' + '_msearch'
+  } else {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + '_fleet' + '/' + '_msearch'
+  }
+
+  // build request object
+  const request = {
+    method,
+    path,
+    bulkBody: body,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+FleetApi.prototype.search = function fleetSearchApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.index == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: index')
+    return handleError(err, callback)
+  }
+
+  let { method, body, index, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = body == null ? 'GET' : 'POST'
+  path = '/' + encodeURIComponent(index) + '/' + '_fleet' + '/' + '_search'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
     querystring
   }
 

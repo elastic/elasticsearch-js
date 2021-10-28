@@ -23,8 +23,8 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['force', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'from', 'size', 'allow_no_match', 'exclude_generated', 'defer_validation', 'timeout', 'wait_for_completion', 'wait_for_checkpoint']
-const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', allowNoMatch: 'allow_no_match', excludeGenerated: 'exclude_generated', deferValidation: 'defer_validation', waitForCompletion: 'wait_for_completion', waitForCheckpoint: 'wait_for_checkpoint' }
+const acceptedQuerystring = ['force', 'pretty', 'human', 'error_trace', 'source', 'filter_path', 'from', 'size', 'allow_no_match', 'exclude_generated', 'defer_validation', 'timeout', 'wait_for_completion', 'wait_for_checkpoint', 'dry_run']
+const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', allowNoMatch: 'allow_no_match', excludeGenerated: 'exclude_generated', deferValidation: 'defer_validation', waitForCompletion: 'wait_for_completion', waitForCheckpoint: 'wait_for_checkpoint', dryRun: 'dry_run' }
 
 function TransformApi (transport, ConfigurationError) {
   this.transport = transport
@@ -114,18 +114,17 @@ TransformApi.prototype.getTransformStats = function transformGetTransformStatsAp
 TransformApi.prototype.previewTransform = function transformPreviewTransformApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
-  // check required parameters
-  if (params.body == null) {
-    const err = new this[kConfigurationError]('Missing required parameter: body')
-    return handleError(err, callback)
-  }
-
-  let { method, body, ...querystring } = params
+  let { method, body, transformId, transform_id, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   let path = ''
-  if (method == null) method = 'POST'
-  path = '/' + '_transform' + '/' + '_preview'
+  if ((transform_id || transformId) != null) {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + '_transform' + '/' + encodeURIComponent(transform_id || transformId) + '/' + '_preview'
+  } else {
+    if (method == null) method = body == null ? 'GET' : 'POST'
+    path = '/' + '_transform' + '/' + '_preview'
+  }
 
   // build request object
   const request = {
@@ -254,6 +253,27 @@ TransformApi.prototype.updateTransform = function transformUpdateTransformApi (p
   return this.transport.request(request, options, callback)
 }
 
+TransformApi.prototype.upgradeTransforms = function transformUpgradeTransformsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_transform' + '/' + '_upgrade'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 Object.defineProperties(TransformApi.prototype, {
   delete_transform: { get () { return this.deleteTransform } },
   get_transform: { get () { return this.getTransform } },
@@ -262,7 +282,8 @@ Object.defineProperties(TransformApi.prototype, {
   put_transform: { get () { return this.putTransform } },
   start_transform: { get () { return this.startTransform } },
   stop_transform: { get () { return this.stopTransform } },
-  update_transform: { get () { return this.updateTransform } }
+  update_transform: { get () { return this.updateTransform } },
+  upgrade_transforms: { get () { return this.upgradeTransforms } }
 })
 
 module.exports = TransformApi

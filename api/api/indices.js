@@ -1005,6 +1005,33 @@ IndicesApi.prototype.migrateToDataStream = function indicesMigrateToDataStreamAp
   return this.transport.request(request, options, callback)
 }
 
+IndicesApi.prototype.modifyDataStream = function indicesModifyDataStreamApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.body == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: body')
+    return handleError(err, callback)
+  }
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_data_stream' + '/' + '_modify'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 IndicesApi.prototype.open = function indicesOpenApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1735,6 +1762,7 @@ Object.defineProperties(IndicesApi.prototype, {
   get_template: { get () { return this.getTemplate } },
   get_upgrade: { get () { return this.getUpgrade } },
   migrate_to_data_stream: { get () { return this.migrateToDataStream } },
+  modify_data_stream: { get () { return this.modifyDataStream } },
   promote_data_stream: { get () { return this.promoteDataStream } },
   put_alias: { get () { return this.putAlias } },
   put_index_template: { get () { return this.putIndexTemplate } },
