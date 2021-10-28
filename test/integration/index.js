@@ -88,6 +88,7 @@ const platinumBlackList = {
   'ml/preview_datafeed.yml': ['*'],
   // Investigate why is failing
   'ml/inference_crud.yml': ['*'],
+  'ml/categorization_agg.yml': ['Test categorization aggregation with poor settings'],
   // investigate why this is failing
   'monitoring/bulk/10_basic.yml': ['*'],
   'monitoring/bulk/20_privileges.yml': ['*'],
