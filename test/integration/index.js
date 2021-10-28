@@ -336,7 +336,7 @@ function generateJunitXmlReport (junit, suite) {
 }
 
 if (require.main === module) {
-  const node = process.env.TEST_ES_SERVER || 'http://localhost:9200'
+  const node = process.env.TEST_ES_SERVER || 'http://elastic:changeme@localhost:9200'
   const opts = {
     node,
     isXPack: process.env.TEST_SUITE !== 'free'
