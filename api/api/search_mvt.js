@@ -23,8 +23,8 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['exact_bounds', 'extent', 'grid_precision', 'grid_type', 'size', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
-const snakeCase = { exactBounds: 'exact_bounds', gridPrecision: 'grid_precision', gridType: 'grid_type', errorTrace: 'error_trace', filterPath: 'filter_path' }
+const acceptedQuerystring = ['exact_bounds', 'extent', 'grid_precision', 'grid_type', 'size', 'track_total_hits', 'pretty', 'human', 'error_trace', 'source', 'filter_path']
+const snakeCase = { exactBounds: 'exact_bounds', gridPrecision: 'grid_precision', gridType: 'grid_type', trackTotalHits: 'track_total_hits', errorTrace: 'error_trace', filterPath: 'filter_path' }
 
 function searchMvtApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)

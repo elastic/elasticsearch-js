@@ -57,4 +57,51 @@ MigrationApi.prototype.deprecations = function migrationDeprecationsApi (params,
   return this.transport.request(request, options, callback)
 }
 
+MigrationApi.prototype.getFeatureUpgradeStatus = function migrationGetFeatureUpgradeStatusApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'GET'
+  path = '/' + '_migration' + '/' + 'system_features'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+MigrationApi.prototype.postFeatureUpgrade = function migrationPostFeatureUpgradeApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  let { method, body, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'POST'
+  path = '/' + '_migration' + '/' + 'system_features'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: body || '',
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
+Object.defineProperties(MigrationApi.prototype, {
+  get_feature_upgrade_status: { get () { return this.getFeatureUpgradeStatus } },
+  post_feature_upgrade: { get () { return this.postFeatureUpgrade } }
+})
+
 module.exports = MigrationApi
