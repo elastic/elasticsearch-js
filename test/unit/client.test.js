@@ -23,7 +23,7 @@ const { test } = require('tap')
 const { URL } = require('url')
 const buffer = require('buffer')
 const intoStream = require('into-stream')
-const { ConnectionPool, Transport, Connection, errors } = require('../../index')
+const { ConnectionPool, Transport, Connection, errors, Client: ProductClient } = require('../../index')
 const { CloudConnectionPool } = require('../../lib/pool')
 const { Client, buildServer, connection } = require('../utils')
 const { buildMockConnection } = connection
@@ -1858,5 +1858,132 @@ test('Error body that is not a json', t => {
     t.equal(err.body, '<html><body>error!</body></html>')
     t.equal(err.message, '<html><body>error!</body></html>')
     t.equal(err.statusCode, 400)
+  })
+})
+
+test('Issue #1521 with promises', async t => {
+  t.plan(1)
+
+  const delay = () => new Promise(resolve => setTimeout(resolve, 10))
+
+  const MockConnection = buildMockConnection({
+    onRequest (params) {
+      return {
+        statusCode: 200,
+        headers: {
+          'x-elastic-product': 'Elasticsearch'
+        },
+        body: {
+          name: '1ef419078577',
+          cluster_name: 'docker-cluster',
+          cluster_uuid: 'cQ5pAMvRRTyEzObH4L5mTA',
+          version: {
+            number: '8.0.0-SNAPSHOT',
+            build_flavor: 'default',
+            build_type: 'docker',
+            build_hash: '5fb4c050958a6b0b6a70a6fb3e616d0e390eaac3',
+            build_date: '2021-07-10T01:45:02.136546168Z',
+            build_snapshot: true,
+            lucene_version: '8.9.0',
+            minimum_wire_compatibility_version: '7.15.0',
+            minimum_index_compatibility_version: '7.0.0'
+          },
+          tagline: 'You Know, for Search'
+        }
+      }
+    }
+  })
+
+  class MyTransport extends Transport {
+    request (params, options = {}, callback) {
+      if (typeof options === 'function') {
+        callback = options
+        options = {}
+      }
+
+      if (typeof callback === 'undefined') {
+        return delay()
+          .then(() => super.request(params, options))
+      }
+
+      // Callback support
+      delay()
+        .then(() => super.request(params, options, callback))
+    }
+  }
+
+  const client = new ProductClient({
+    node: 'http://localhost:9200',
+    Transport: MyTransport,
+    Connection: MockConnection
+  })
+
+  try {
+    await client.search({})
+    t.pass('ok')
+  } catch (err) {
+    t.fail(err)
+  }
+})
+
+test('Issue #1521 with callbacks', t => {
+  t.plan(1)
+
+  const delay = () => new Promise(resolve => setTimeout(resolve, 10))
+
+  const MockConnection = buildMockConnection({
+    onRequest (params) {
+      return {
+        statusCode: 200,
+        headers: {
+          'x-elastic-product': 'Elasticsearch'
+        },
+        body: {
+          name: '1ef419078577',
+          cluster_name: 'docker-cluster',
+          cluster_uuid: 'cQ5pAMvRRTyEzObH4L5mTA',
+          version: {
+            number: '8.0.0-SNAPSHOT',
+            build_flavor: 'default',
+            build_type: 'docker',
+            build_hash: '5fb4c050958a6b0b6a70a6fb3e616d0e390eaac3',
+            build_date: '2021-07-10T01:45:02.136546168Z',
+            build_snapshot: true,
+            lucene_version: '8.9.0',
+            minimum_wire_compatibility_version: '7.15.0',
+            minimum_index_compatibility_version: '7.0.0'
+          },
+          tagline: 'You Know, for Search'
+        }
+      }
+    }
+  })
+
+  class MyTransport extends Transport {
+    request (params, options = {}, callback) {
+      if (typeof options === 'function') {
+        callback = options
+        options = {}
+      }
+
+      if (typeof callback === 'undefined') {
+        return delay()
+          .then(() => super.request(params, options))
+      }
+
+      // Callback support
+      delay()
+        .then(() => super.request(params, options, callback))
+    }
+  }
+
+  const client = new ProductClient({
+    node: 'http://localhost:9200',
+    Transport: MyTransport,
+    Connection: MockConnection
+  })
+
+  client.search({}, (err, result) => {
+    t.error(err)
   })
 })
