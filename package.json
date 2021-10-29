@@ -8,7 +8,7 @@
       "require": "./index.js",
       "import": "./index.mjs"
     },
-    "./": "./"
+    "./*": "./*"
   },
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
   "version": "7.16.0",
