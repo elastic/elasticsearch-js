@@ -23,7 +23,7 @@
 /* eslint no-unused-vars: 0 */
 
 const { handleError, snakeCaseKeys, normalizeArguments, kConfigurationError } = require('../utils')
-const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'interval', 'snapshots', 'threads', 'ignore_idle_threads', 'type', 'timeout', 'flat_settings', 'completion_fields', 'fielddata_fields', 'fields', 'groups', 'level', 'types', 'include_segment_file_sizes', 'include_unloaded_segments']
+const acceptedQuerystring = ['pretty', 'human', 'error_trace', 'source', 'filter_path', 'interval', 'snapshots', 'threads', 'ignore_idle_threads', 'type', 'sort', 'timeout', 'flat_settings', 'completion_fields', 'fielddata_fields', 'fields', 'groups', 'level', 'types', 'include_segment_file_sizes', 'include_unloaded_segments']
 const snakeCase = { errorTrace: 'error_trace', filterPath: 'filter_path', ignoreIdleThreads: 'ignore_idle_threads', flatSettings: 'flat_settings', completionFields: 'completion_fields', fielddataFields: 'fielddata_fields', includeSegmentFileSizes: 'include_segment_file_sizes', includeUnloadedSegments: 'include_unloaded_segments' }
 
 function NodesApi (transport, ConfigurationError) {
