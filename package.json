@@ -9,7 +9,7 @@
       "import": "./index.mjs",
       "types": "./index.d.ts"
     },
-    "./*": "./*"
+    "./*": "./*.js"
   },
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
   "version": "7.16.0",
