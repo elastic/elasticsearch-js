@@ -208,10 +208,10 @@ export default class Rollup {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async rollupSearch<TDocument = unknown, TAggregation = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupRollupSearchResponse<TDocument, TAggregation>>
-  async rollupSearch<TDocument = unknown, TAggregation = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupRollupSearchResponse<TDocument, TAggregation>, unknown>>
-  async rollupSearch<TDocument = unknown, TAggregation = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<T.RollupRollupSearchResponse<TDocument, TAggregation>>
-  async rollupSearch<TDocument = unknown, TAggregation = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<any> {
+  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
+  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupRollupSearchResponse<TDocument, TAggregations>, unknown>>
+  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
+  async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'type']
     const acceptedBody: string[] = ['aggregations', 'query', 'size']
     const querystring: Record<string, any> = {}
