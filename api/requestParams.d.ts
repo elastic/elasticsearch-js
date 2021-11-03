@@ -2066,7 +2066,8 @@ export interface NodesHotThreads extends Generic {
   snapshots?: number;
   threads?: number;
   ignore_idle_threads?: boolean;
-  type?: 'cpu' | 'wait' | 'block';
+  type?: 'cpu' | 'wait' | 'block' | 'mem';
+  sort?: 'cpu' | 'total';
   timeout?: string;
 }
 

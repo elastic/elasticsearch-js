@@ -8520,7 +8520,8 @@ client.nodes.hotThreads({
   snapshots: number,
   threads: number,
   ignore_idle_threads: boolean,
-  type: 'cpu' | 'wait' | 'block',
+  type: 'cpu' | 'wait' | 'block' | 'mem',
+  sort: 'cpu' | 'total',
   timeout: string
 })
 ----
@@ -8543,7 +8544,10 @@ link:{ref}/cluster-nodes-hot-threads.html[Documentation] +
 |`boolean` - Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
 
 |`type`
-|`'cpu' \| 'wait' \| 'block'` - The type to sample (default: cpu)
+|`'cpu' \| 'wait' \| 'block' \| 'mem'` - The type to sample (default: cpu)
+
+|`sort`
+|`'cpu' \| 'total'` - The sort order for 'cpu' type (default: total)
 
 |`timeout`
 |`string` - Explicit operation timeout

@@ -73,10 +73,10 @@ FleetApi.prototype.msearch = function fleetMsearchApi (params, options, callback
   let path = ''
   if ((index) != null) {
     if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_fleet' + '/' + '_msearch'
+    path = '/' + encodeURIComponent(index) + '/' + '_fleet' + '/' + '_fleet_msearch'
   } else {
     if (method == null) method = body == null ? 'GET' : 'POST'
-    path = '/' + '_fleet' + '/' + '_msearch'
+    path = '/' + '_fleet' + '/' + '_fleet_msearch'
   }
 
   // build request object
@@ -104,7 +104,7 @@ FleetApi.prototype.search = function fleetSearchApi (params, options, callback) 
 
   let path = ''
   if (method == null) method = body == null ? 'GET' : 'POST'
-  path = '/' + encodeURIComponent(index) + '/' + '_fleet' + '/' + '_search'
+  path = '/' + encodeURIComponent(index) + '/' + '_fleet' + '/' + '_fleet_search'
 
   // build request object
   const request = {
