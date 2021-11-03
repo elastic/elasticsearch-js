@@ -86,10 +86,10 @@ export default class Fleet {
     let path = ''
     if (params.index != null) {
       method = body != null ? 'POST' : 'GET'
-      path = `/${encodeURIComponent(params.index.toString())}/_fleet/_msearch`
+      path = `/${encodeURIComponent(params.index.toString())}/_fleet/_fleet_msearch`
     } else {
       method = body != null ? 'POST' : 'GET'
-      path = '/_fleet/_msearch'
+      path = '/_fleet/_fleet_msearch'
     }
     return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
   }
@@ -112,7 +112,7 @@ export default class Fleet {
     }
 
     const method = body != null ? 'POST' : 'GET'
-    const path = `/${encodeURIComponent(params.index.toString())}/_fleet/_search`
+    const path = `/${encodeURIComponent(params.index.toString())}/_fleet/_fleet_search`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 }

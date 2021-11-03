@@ -145,14 +145,13 @@ export default class Watcher {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['action_modes', 'alternative_input', 'ignore_condition', 'record_execution', 'simulated_actions', 'trigger_data', 'watch']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -210,14 +209,13 @@ export default class Watcher {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['actions', 'condition', 'input', 'metadata', 'throttle_period', 'transform', 'trigger']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -245,14 +243,13 @@ export default class Watcher {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['from', 'size', 'query', 'sort', 'search_after']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}

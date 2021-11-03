@@ -207,7 +207,6 @@ interface KibanaClient {
     fieldUsageStats: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     flush: <TContext = unknown>(params?: T.IndicesFlushRequest| TB.IndicesFlushRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesFlushResponse, TContext>>
     forcemerge: <TContext = unknown>(params?: T.IndicesForcemergeRequest| TB.IndicesForcemergeRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesForcemergeResponse, TContext>>
-    freeze: <TContext = unknown>(params: T.IndicesFreezeRequest| TB.IndicesFreezeRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesFreezeResponse, TContext>>
     get: <TContext = unknown>(params: T.IndicesGetRequest| TB.IndicesGetRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesGetResponse, TContext>>
     getAlias: <TContext = unknown>(params?: T.IndicesGetAliasRequest| TB.IndicesGetAliasRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesGetAliasResponse, TContext>>
     getDataStream: <TContext = unknown>(params?: T.IndicesGetDataStreamRequest| TB.IndicesGetDataStreamRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesGetDataStreamResponse, TContext>>
@@ -250,7 +249,7 @@ interface KibanaClient {
     putPipeline: <TContext = unknown>(params: T.IngestPutPipelineRequest| TB.IngestPutPipelineRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IngestPutPipelineResponse, TContext>>
     simulate: <TContext = unknown>(params?: T.IngestSimulateRequest| TB.IngestSimulateRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IngestSimulateResponse, TContext>>
   }
-  knnSearch: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+  knnSearch: <TDocument = unknown, TContext = unknown>(params: T.KnnSearchRequest| TB.KnnSearchRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.KnnSearchResponse<TDocument>, TContext>>
   license: {
     delete: <TContext = unknown>(params?: T.LicenseDeleteRequest| TB.LicenseDeleteRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.LicenseDeleteResponse, TContext>>
     get: <TContext = unknown>(params?: T.LicenseGetRequest| TB.LicenseGetRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.LicenseGetResponse, TContext>>

@@ -44,14 +44,13 @@ export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequ
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['index_filter', 'runtime_mappings']
   const querystring: Record<string, any> = {}
-  let body: Record<string, any> | string
   // @ts-expect-error
-  if (typeof params?.body === 'string') {
-    // @ts-expect-error
-    body = params.body
+  const userBody: any = params?.body
+  let body: Record<string, any> | string
+  if (typeof userBody === 'string') {
+    body = userBody
   } else {
-    // @ts-expect-error
-    body = params?.body != null ? { ...params.body } : undefined
+    body = userBody != null ? { ...userBody } : undefined
   }
 
   params = params ?? {}
