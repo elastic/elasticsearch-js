@@ -345,8 +345,8 @@ interface KibanaClient {
   monitoring: {
     bulk: <TSource = unknown, TContext = unknown>(params: T.MonitoringBulkRequest<TSource>| TB.MonitoringBulkRequest<TSource>, options?: TransportRequestOptions) => Promise<TransportResult<T.MonitoringBulkResponse, TContext>>
   }
-  msearch: <TDocument = unknown, TContext = unknown>(params?: T.MsearchRequest| TB.MsearchRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MsearchResponse<TDocument>, TContext>>
-  msearchTemplate: <TDocument = unknown, TContext = unknown>(params?: T.MsearchTemplateRequest| TB.MsearchTemplateRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MsearchTemplateResponse<TDocument>, TContext>>
+  msearch: <TDocument = unknown, TAggregation = unknown, TContext = unknown>(params?: T.MsearchRequest| TB.MsearchRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MsearchResponse<TDocument, TAggregation>, TContext>>
+  msearchTemplate: <TDocument = unknown, TAggregation = unknown, TContext = unknown>(params?: T.MsearchTemplateRequest| TB.MsearchTemplateRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MsearchTemplateResponse<TDocument, TAggregation>, TContext>>
   mtermvectors: <TContext = unknown>(params?: T.MtermvectorsRequest| TB.MtermvectorsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MtermvectorsResponse, TContext>>
   nodes: {
     clearRepositoriesMeteringArchive: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
@@ -371,13 +371,13 @@ interface KibanaClient {
     getRollupIndexCaps: <TContext = unknown>(params: T.RollupGetRollupIndexCapsRequest| TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.RollupGetRollupIndexCapsResponse, TContext>>
     putJob: <TContext = unknown>(params: T.RollupPutJobRequest| TB.RollupPutJobRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.RollupPutJobResponse, TContext>>
     rollup: <TContext = unknown>(params: T.RollupRollupRequest| TB.RollupRollupRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.RollupRollupResponse, TContext>>
-    rollupSearch: <TDocument = unknown, TContext = unknown>(params: T.RollupRollupSearchRequest| TB.RollupRollupSearchRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.RollupRollupSearchResponse<TDocument>, TContext>>
+    rollupSearch: <TDocument = unknown, TAggregation = unknown, TContext = unknown>(params: T.RollupRollupSearchRequest| TB.RollupRollupSearchRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.RollupRollupSearchResponse<TDocument, TAggregation>, TContext>>
     startJob: <TContext = unknown>(params: T.RollupStartJobRequest| TB.RollupStartJobRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.RollupStartJobResponse, TContext>>
     stopJob: <TContext = unknown>(params: T.RollupStopJobRequest| TB.RollupStopJobRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.RollupStopJobResponse, TContext>>
   }
   scriptsPainlessExecute: <TResult = unknown, TContext = unknown>(params?: T.ScriptsPainlessExecuteRequest| TB.ScriptsPainlessExecuteRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.ScriptsPainlessExecuteResponse<TResult>, TContext>>
-  scroll: <TDocument = unknown, TContext = unknown>(params?: T.ScrollRequest| TB.ScrollRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.ScrollResponse<TDocument>, TContext>>
-  search: <TDocument = unknown, TContext = unknown>(params?: T.SearchRequest| TB.SearchRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SearchResponse<TDocument>, TContext>>
+  scroll: <TDocument = unknown, TAggregation = unknown, TContext = unknown>(params?: T.ScrollRequest| TB.ScrollRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.ScrollResponse<TDocument, TAggregation>, TContext>>
+  search: <TDocument = unknown, TAggregation = unknown, TContext = unknown>(params?: T.SearchRequest| TB.SearchRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SearchResponse<TDocument, TAggregation>, TContext>>
   searchMvt: <TContext = unknown>(params: T.SearchMvtRequest| TB.SearchMvtRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SearchMvtResponse, TContext>>
   searchShards: <TContext = unknown>(params?: T.SearchShardsRequest| TB.SearchShardsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SearchShardsResponse, TContext>>
   searchTemplate: <TDocument = unknown, TContext = unknown>(params?: T.SearchTemplateRequest| TB.SearchTemplateRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SearchTemplateResponse<TDocument>, TContext>>

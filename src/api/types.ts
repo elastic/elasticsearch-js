@@ -587,12 +587,12 @@ export interface MsearchRequest extends RequestBase {
   searches?: (MsearchHeader | MsearchBody)[]
 }
 
-export interface MsearchResponse<TDocument = unknown> {
+export interface MsearchResponse<TDocument = unknown, TAggregation = Record<AggregateName, AggregationsAggregate>> {
   took: long
-  responses: (MsearchSearchResult<TDocument> | ErrorResponseBase)[]
+  responses: (MsearchSearchResult<TDocument, TAggregation> | ErrorResponseBase)[]
 }
 
-export interface MsearchSearchResult<TDocument = unknown> extends SearchResponse<TDocument> {
+export interface MsearchSearchResult<TDocument = unknown, TAggregation = Record<AggregateName, AggregationsAggregate>> extends SearchResponse<TDocument, TAggregation> {
   status: integer
 }
 
@@ -606,8 +606,8 @@ export interface MsearchTemplateRequest extends RequestBase {
   search_templates?: MsearchTemplateTemplateItem[]
 }
 
-export interface MsearchTemplateResponse<TDocument = unknown> {
-  responses: (SearchResponse<TDocument> | ErrorResponseBase)[]
+export interface MsearchTemplateResponse<TDocument = unknown, TAggregation = Record<AggregateName, AggregationsAggregate>> {
+  responses: (SearchResponse<TDocument, TAggregation> | ErrorResponseBase)[]
   took: long
 }
 
@@ -919,7 +919,7 @@ export interface ScrollRequest extends RequestBase {
   rest_total_hits_as_int?: boolean
 }
 
-export interface ScrollResponse<TDocument = unknown> extends SearchResponse<TDocument> {
+export interface ScrollResponse<TDocument = unknown, TAggregation = Record<AggregateName, AggregationsAggregate>> extends SearchResponse<TDocument, TAggregation> {
 }
 
 export interface SearchRequest extends RequestBase {
@@ -986,12 +986,12 @@ export interface SearchRequest extends RequestBase {
   runtime_mappings?: MappingRuntimeFields
 }
 
-export interface SearchResponse<TDocument = unknown> {
+export interface SearchResponse<TDocument = unknown, TAggregation = Record<AggregateName, AggregationsAggregate>> {
   took: long
   timed_out: boolean
   _shards: ShardStatistics
   hits: SearchHitsMetadata<TDocument>
-  aggregations?: Record<AggregateName, AggregationsAggregate>
+  aggregations?: TAggregation
   _clusters?: ClusterStatistics
   documents?: TDocument[]
   fields?: Record<string, any>
@@ -5183,8 +5183,8 @@ export interface QueryDslWildcardQuery extends QueryDslQueryBase {
 
 export type QueryDslZeroTermsQuery = 'all' | 'none'
 
-export interface AsyncSearchAsyncSearch<TDocument = unknown> {
-  aggregations?: Record<AggregateName, AggregationsAggregate>
+export interface AsyncSearchAsyncSearch<TDocument = unknown, TAggregation = Record<AggregateName, AggregationsAggregate>> {
+  aggregations?: TAggregation
   _clusters?: ClusterStatistics
   fields?: Record<string, any>
   hits: SearchHitsMetadata<TDocument>
@@ -5200,8 +5200,8 @@ export interface AsyncSearchAsyncSearch<TDocument = unknown> {
   took: long
 }
 
-export interface AsyncSearchAsyncSearchDocumentResponseBase<TDocument = unknown> extends AsyncSearchAsyncSearchResponseBase {
-  response: AsyncSearchAsyncSearch<TDocument>
+export interface AsyncSearchAsyncSearchDocumentResponseBase<TDocument = unknown, TAggregation = Record<AggregateName, AggregationsAggregate>> extends AsyncSearchAsyncSearchResponseBase {
+  response: AsyncSearchAsyncSearch<TDocument, TAggregation>
 }
 
 export interface AsyncSearchAsyncSearchResponseBase {
@@ -13094,13 +13094,13 @@ export interface RollupRollupSearchRequest extends RequestBase {
   size?: integer
 }
 
-export interface RollupRollupSearchResponse<TDocument = unknown> {
+export interface RollupRollupSearchResponse<TDocument = unknown, TAggregation = Record<AggregateName, AggregationsAggregate>> {
   took: long
   timed_out: boolean
   terminated_early?: boolean
   _shards: ShardStatistics
   hits: SearchHitsMetadata<TDocument>
-  aggregations?: Record<AggregateName, AggregationsAggregate>
+  aggregations?: TAggregation
 }
 
 export interface RollupStartJobRequest extends RequestBase {

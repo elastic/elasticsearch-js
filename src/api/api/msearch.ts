@@ -37,10 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
-export default async function MsearchApi<TDocument = unknown> (this: That, params: T.MsearchRequest | TB.MsearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MsearchResponse<TDocument>>
-export default async function MsearchApi<TDocument = unknown> (this: That, params: T.MsearchRequest | TB.MsearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MsearchResponse<TDocument>, unknown>>
-export default async function MsearchApi<TDocument = unknown> (this: That, params: T.MsearchRequest | TB.MsearchRequest, options?: TransportRequestOptions): Promise<T.MsearchResponse<TDocument>>
-export default async function MsearchApi<TDocument = unknown> (this: That, params: T.MsearchRequest | TB.MsearchRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function MsearchApi<TDocument = unknown, TAggregation = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchRequest | TB.MsearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MsearchResponse<TDocument, TAggregation>>
+export default async function MsearchApi<TDocument = unknown, TAggregation = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchRequest | TB.MsearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MsearchResponse<TDocument, TAggregation>, unknown>>
+export default async function MsearchApi<TDocument = unknown, TAggregation = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchRequest | TB.MsearchRequest, options?: TransportRequestOptions): Promise<T.MsearchResponse<TDocument, TAggregation>>
+export default async function MsearchApi<TDocument = unknown, TAggregation = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchRequest | TB.MsearchRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['searches']
   const querystring: Record<string, any> = {}
