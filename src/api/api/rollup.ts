@@ -213,7 +213,7 @@ export default class Rollup {
   async rollupSearch<TDocument = unknown> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<T.RollupRollupSearchResponse<TDocument>>
   async rollupSearch<TDocument = unknown> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index', 'type']
-    const acceptedBody: string[] = ['aggregations', 'query', 'size']
+    const acceptedBody: string[] = ['aggregations', 'aggs', 'query', 'size']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
