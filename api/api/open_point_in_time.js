@@ -34,6 +34,10 @@ function openPointInTimeApi (params, options, callback) {
     const err = new this[kConfigurationError]('Missing required parameter: index')
     return handleError(err, callback)
   }
+  if (params.keep_alive == null && params.keepAlive == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: keep_alive or keepAlive')
+    return handleError(err, callback)
+  }
 
   let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
