@@ -2112,8 +2112,7 @@ client.cluster.health({
   wait_for_events: 'immediate' | 'urgent' | 'high' | 'normal' | 'low' | 'languid',
   wait_for_no_relocating_shards: boolean,
   wait_for_no_initializing_shards: boolean,
-  wait_for_status: 'green' | 'yellow' | 'red',
-  return_200_for_cluster_health_timeout: boolean
+  wait_for_status: 'green' | 'yellow' | 'red'
 })
 ----
 link:{ref}/cluster-health.html[Documentation] +
@@ -2156,9 +2155,6 @@ _Default:_ `cluster`
 
 |`wait_for_status` or `waitForStatus`
 |`'green' \| 'yellow' \| 'red'` - Wait until cluster is in a specific state
-
-|`return_200_for_cluster_health_timeout` or `return_200ForClusterHealthTimeout`
-|`boolean` - Whether to return HTTP 200 instead of 408 in case of a cluster health timeout from the server side
 
 |===
 
@@ -2697,9 +2693,6 @@ client.deleteByQuery({
   size: number,
   max_docs: number,
   sort: string | string[],
-  _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
   terminate_after: number,
   stats: string | string[],
   version: boolean,
@@ -2782,15 +2775,6 @@ _Default:_ `open`
 
 |`sort`
 |`string \| string[]` - A comma-separated list of <field>:<direction> pairs
-
-|`_source`
-|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
-
-|`_source_excludes` or `_sourceExcludes`
-|`string \| string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_includes` or `_sourceIncludes`
-|`string \| string[]` - A list of fields to extract and return from the _source field
 
 |`terminate_after` or `terminateAfter`
 |`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
@@ -6850,7 +6834,8 @@ client.ml.forecast({
   job_id: string,
   duration: string,
   expires_in: string,
-  max_model_memory: string
+  max_model_memory: string,
+  body: object
 })
 ----
 link:{ref}/ml-forecast.html[Documentation] +
@@ -6867,6 +6852,9 @@ link:{ref}/ml-forecast.html[Documentation] +
 
 |`max_model_memory` or `maxModelMemory`
 |`string` - The max memory able to be used by the forecast. Default is 20mb.
+
+|`body`
+|`object` - Query parameters can be specified in the body
 
 |===
 
@@ -7556,7 +7544,8 @@ link:{ref}/get-ml-info.html[Documentation] +
 [source,ts]
 ----
 client.ml.openJob({
-  job_id: string
+  job_id: string,
+  body: object
 })
 ----
 link:{ref}/ml-open-job.html[Documentation] +
@@ -7564,6 +7553,9 @@ link:{ref}/ml-open-job.html[Documentation] +
 |===
 |`job_id` or `jobId`
 |`string` - The ID of the job to open
+
+|`body`
+|`object` - Query parameters can be specified in the body
 
 |===
 
@@ -11461,7 +11453,8 @@ _Default:_ `25s`
 ----
 client.transform.deleteTransform({
   transform_id: string,
-  force: boolean
+  force: boolean,
+  timeout: string
 })
 ----
 link:{ref}/delete-transform.html[Documentation] +
@@ -11472,6 +11465,9 @@ link:{ref}/delete-transform.html[Documentation] +
 
 |`force`
 |`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
+
+|`timeout`
+|`string` - Controls the time to wait for the transform deletion
 
 |===
 
@@ -11544,6 +11540,7 @@ link:{ref}/get-transform-stats.html[Documentation] +
 ----
 client.transform.previewTransform({
   transform_id: string,
+  timeout: string,
   body: object
 })
 ----
@@ -11552,6 +11549,9 @@ link:{ref}/preview-transform.html[Documentation] +
 |===
 |`transform_id` or `transformId`
 |`string` - The id of the transform to preview.
+
+|`timeout`
+|`string` - Controls the time to wait for the preview
 
 |`body`
 |`object` - The definition for the transform to preview
@@ -11566,6 +11566,7 @@ link:{ref}/preview-transform.html[Documentation] +
 client.transform.putTransform({
   transform_id: string,
   defer_validation: boolean,
+  timeout: string,
   body: object
 })
 ----
@@ -11577,6 +11578,9 @@ link:{ref}/put-transform.html[Documentation] +
 
 |`defer_validation` or `deferValidation`
 |`boolean` - If validations should be deferred until transform starts, defaults to false.
+
+|`timeout`
+|`string` - Controls the time to wait for the transform to start
 
 |`body`
 |`object` - The transform definition
@@ -11649,6 +11653,7 @@ link:{ref}/stop-transform.html[Documentation] +
 client.transform.updateTransform({
   transform_id: string,
   defer_validation: boolean,
+  timeout: string,
   body: object
 })
 ----
@@ -11661,6 +11666,9 @@ link:{ref}/update-transform.html[Documentation] +
 |`defer_validation` or `deferValidation`
 |`boolean` - If validations should be deferred until transform starts, defaults to false.
 
+|`timeout`
+|`string` - Controls the time to wait for the update
+
 |`body`
 |`object` - The update transform definition
 
@@ -11672,7 +11680,8 @@ link:{ref}/update-transform.html[Documentation] +
 [source,ts]
 ----
 client.transform.upgradeTransforms({
-  dry_run: boolean
+  dry_run: boolean,
+  timeout: string
 })
 ----
 link:{ref}/upgrade-transforms.html[Documentation] +
@@ -11680,6 +11689,9 @@ link:{ref}/upgrade-transforms.html[Documentation] +
 |===
 |`dry_run` or `dryRun`
 |`boolean` - Whether to only check for updates but don't execute
+
+|`timeout`
+|`string` - Controls the time to wait for the upgrade
 
 |===
 
@@ -11791,9 +11803,6 @@ client.updateByQuery({
   size: number,
   max_docs: number,
   sort: string | string[],
-  _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
   terminate_after: number,
   stats: string | string[],
   version: boolean,
@@ -11881,15 +11890,6 @@ _Default:_ `open`
 
 |`sort`
 |`string \| string[]` - A comma-separated list of <field>:<direction> pairs
-
-|`_source`
-|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
-
-|`_source_excludes` or `_sourceExcludes`
-|`string \| string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_includes` or `_sourceIncludes`
-|`string \| string[]` - A list of fields to extract and return from the _source field
 
 |`terminate_after` or `terminateAfter`
 |`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
