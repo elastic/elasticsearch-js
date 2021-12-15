@@ -2,6 +2,28 @@
 == Release notes
 
 [discrete]
+=== 7.16.0
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v7.16`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/7.16/release-notes-7.16.0.html[here].
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Fixed "Cannot read property 'then' of null" https://github.com/elastic/elasticsearch-js/pull/1594[#1594]
+
+[discrete]
+===== Fixed export field deprecation log https://github.com/elastic/elasticsearch-js/pull/1593#[#1593]
+
+
+[discrete]
 === 7.15.0
 
 [discrete]
