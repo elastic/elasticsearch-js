@@ -41,7 +41,7 @@ export default async function ExistsSourceApi (this: That, params: T.ExistsSourc
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest | TB.ExistsSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExistsSourceResponse, unknown>>
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest | TB.ExistsSourceRequest, options?: TransportRequestOptions): Promise<T.ExistsSourceResponse>
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest | TB.ExistsSourceRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['id', 'index', 'type']
+  const acceptedPath: string[] = ['id', 'index']
   const querystring: Record<string, any> = {}
   const body = undefined
 
