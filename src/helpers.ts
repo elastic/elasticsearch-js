@@ -520,7 +520,7 @@ export default class Helpers {
    * @param {object} reqOptions - The client optional configuration for this request.
    * @return {object} The possible operations to run with the datasource.
    */
-  bulk<TDocument = unknown> (options: BulkHelperOptions, reqOptions: TransportRequestOptions = {}): BulkHelper<TDocument> {
+  bulk<TDocument = unknown> (options: BulkHelperOptions<TDocument>, reqOptions: TransportRequestOptions = {}): BulkHelper<TDocument> {
     const client = this[kClient]
     const { serializer } = client
     if (this[kMetaHeader] !== null) {
@@ -790,6 +790,7 @@ export default class Helpers {
               status: 429,
               error: null,
               operation: serializer.deserialize(bulkBody[i]),
+              // @ts-expect-error
               document: operation !== 'delete'
                 ? serializer.deserialize(bulkBody[i + 1])
                 /* istanbul ignore next */
@@ -841,6 +842,7 @@ export default class Helpers {
                     status: responseItem.status,
                     error: responseItem.error ?? null,
                     operation: serializer.deserialize(bulkBody[indexSlice]),
+                    // @ts-expect-error
                     document: operation !== 'delete'
                       ? serializer.deserialize(bulkBody[indexSlice + 1])
                       : null,
