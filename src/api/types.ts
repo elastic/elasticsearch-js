@@ -5245,7 +5245,7 @@ export interface QueryDslQueryContainer {
   terms?: QueryDslTermsQuery
   terms_set?: Partial<Record<Field, QueryDslTermsSetQuery>>
   wildcard?: Partial<Record<Field, QueryDslWildcardQuery | string>>
-  wrapper: QueryDslWrapperQuery
+  wrapper?: QueryDslWrapperQuery
   type?: QueryDslTypeQuery
 }
 
