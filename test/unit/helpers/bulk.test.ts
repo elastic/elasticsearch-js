@@ -42,6 +42,11 @@ const dataset = [
   { user: 'tyrion', age: 39 }
 ]
 
+interface Document {
+  user: string
+  age: number
+}
+
 test('bulk index', t => {
   t.test('datasource as array', t => {
     t.test('Should perform a bulk request', async t => {
@@ -65,11 +70,12 @@ test('bulk index', t => {
         node: 'http://localhost:9200',
         Connection: MockConnection
       })
-      const result = await client.helpers.bulk({
+      const result = await client.helpers.bulk<Document>({
         datasource: dataset.slice(),
         flushBytes: 1,
         concurrency: 1,
         onDocument (doc) {
+          t.type(doc.user, 'string') // testing that doc is type of Document
           return {
             index: { _index: 'test' }
           }

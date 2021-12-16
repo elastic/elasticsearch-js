@@ -71,7 +71,7 @@ export default class Security {
   async changePassword (this: That, params?: T.SecurityChangePasswordRequest | TB.SecurityChangePasswordRequest, options?: TransportRequestOptions): Promise<T.SecurityChangePasswordResponse>
   async changePassword (this: That, params?: T.SecurityChangePasswordRequest | TB.SecurityChangePasswordRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['username']
-    const acceptedBody: string[] = ['password']
+    const acceptedBody: string[] = ['password', 'password_hash']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

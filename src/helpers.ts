@@ -52,7 +52,7 @@ export interface MsearchHelperOptions extends T.MsearchRequest {
 
 export interface MsearchHelper extends Promise<void> {
   stop: (error?: Error | null) => void
-  search: <TDocument = unknown>(header: T.MsearchHeader, body: T.MsearchBody) => Promise<MsearchHelperResponse<TDocument>>
+  search: <TDocument = unknown>(header: T.MsearchMultisearchHeader, body: T.MsearchMultisearchBody) => Promise<MsearchHelperResponse<TDocument>>
 }
 
 export interface MsearchHelperResponse<TDocument> {
@@ -316,7 +316,7 @@ export default class Helpers {
       // TODO: support abort a single search?
       // NOTE: the validation checks are synchronous and the callback/promise will
       //       be resolved in the same tick. We might want to fix this in the future.
-      search<TDocument = unknown> (header: T.MsearchHeader, body: T.MsearchBody): Promise<MsearchHelperResponse<TDocument>> {
+      search<TDocument = unknown> (header: T.MsearchMultisearchHeader, body: T.MsearchMultisearchBody): Promise<MsearchHelperResponse<TDocument>> {
         if (stopReading) {
           const error = stopError === null
             ? new ConfigurationError('The msearch processor has been stopped')
@@ -351,7 +351,7 @@ export default class Helpers {
 
     async function iterate (): Promise<void> {
       const { semaphore, finish } = buildSemaphore()
-      const msearchBody: Array<T.MsearchHeader | T.MsearchBody> = []
+      const msearchBody: Array<T.MsearchMultisearchHeader | T.MsearchMultisearchBody> = []
       const callbacks: any[] = []
       let loadedOperations = 0
       timeoutRef = setTimeout(onFlushTimeout, flushInterval) // eslint-disable-line
@@ -441,7 +441,7 @@ export default class Helpers {
         }
       }
 
-      function send (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[]): void {
+      function send (msearchBody: Array<T.MsearchMultisearchHeader | T.MsearchMultisearchBody>, callbacks: any[]): void {
         /* istanbul ignore if */
         if (running > concurrency) {
           throw new Error('Max concurrency reached')
@@ -459,7 +459,7 @@ export default class Helpers {
       }
     }
 
-    function msearchOperation (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[], done: () => void): void {
+    function msearchOperation (msearchBody: Array<T.MsearchMultisearchHeader | T.MsearchMultisearchBody>, callbacks: any[], done: () => void): void {
       let retryCount = retries
 
       // Instead of going full on async-await, which would make the code easier to read,
@@ -467,7 +467,7 @@ export default class Helpers {
       // This because every time we use async await, V8 will create multiple promises
       // behind the scenes, making the code slightly slower.
       tryMsearch(msearchBody, callbacks, retrySearch)
-      function retrySearch (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[]): void {
+      function retrySearch (msearchBody: Array<T.MsearchMultisearchHeader | T.MsearchMultisearchBody>, callbacks: any[]): void {
         if (msearchBody.length > 0 && retryCount > 0) {
           retryCount -= 1
           setTimeout(tryMsearch, wait, msearchBody, callbacks, retrySearch)
@@ -479,7 +479,7 @@ export default class Helpers {
 
       // This function never returns an error, if the msearch operation fails,
       // the error is dispatched to all search executors.
-      function tryMsearch (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[], done: (msearchBody: Array<T.MsearchHeader | T.MsearchBody>, callbacks: any[]) => void): void {
+      function tryMsearch (msearchBody: Array<T.MsearchMultisearchHeader | T.MsearchMultisearchBody>, callbacks: any[], done: (msearchBody: Array<T.MsearchMultisearchHeader | T.MsearchMultisearchBody>, callbacks: any[]) => void): void {
         client.msearch(Object.assign({}, msearchOptions, { body: msearchBody }), reqOptions as TransportRequestOptionsWithMeta)
           .then(results => {
             const retryBody = []
@@ -521,7 +521,7 @@ export default class Helpers {
    * @param {object} reqOptions - The client optional configuration for this request.
    * @return {object} The possible operations to run with the datasource.
    */
-  bulk<TDocument = unknown> (options: BulkHelperOptions, reqOptions: TransportRequestOptions = {}): BulkHelper<TDocument> {
+  bulk<TDocument = unknown> (options: BulkHelperOptions<TDocument>, reqOptions: TransportRequestOptions = {}): BulkHelper<TDocument> {
     const client = this[kClient]
     const { serializer } = client
     if (this[kMetaHeader] !== null) {
@@ -791,6 +791,7 @@ export default class Helpers {
               status: 429,
               error: null,
               operation: serializer.deserialize(bulkBody[i]),
+              // @ts-expect-error
               document: operation !== 'delete'
                 ? serializer.deserialize(bulkBody[i + 1])
                 /* istanbul ignore next */
@@ -842,6 +843,7 @@ export default class Helpers {
                     status: responseItem.status,
                     error: responseItem.error ?? null,
                     operation: serializer.deserialize(bulkBody[indexSlice]),
+                    // @ts-expect-error
                     document: operation !== 'delete'
                       ? serializer.deserialize(bulkBody[indexSlice + 1])
                       : null,

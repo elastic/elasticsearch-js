@@ -158,7 +158,7 @@ interface KibanaClient {
   }
   fieldCaps: <TContext = unknown>(params?: T.FieldCapsRequest| TB.FieldCapsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.FieldCapsResponse, TContext>>
   fleet: {
-    globalCheckpoints: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    globalCheckpoints: <TContext = unknown>(params: T.FleetGlobalCheckpointsRequest| TB.FleetGlobalCheckpointsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.FleetGlobalCheckpointsResponse, TContext>>
     msearch: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     search: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
   }
@@ -304,7 +304,6 @@ interface KibanaClient {
     getModelSnapshots: <TContext = unknown>(params: T.MlGetModelSnapshotsRequest| TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlGetModelSnapshotsResponse, TContext>>
     getOverallBuckets: <TContext = unknown>(params: T.MlGetOverallBucketsRequest| TB.MlGetOverallBucketsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlGetOverallBucketsResponse, TContext>>
     getRecords: <TContext = unknown>(params: T.MlGetRecordsRequest| TB.MlGetRecordsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlGetRecordsResponse, TContext>>
-    getTrainedModelDeploymentStats: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     getTrainedModels: <TContext = unknown>(params?: T.MlGetTrainedModelsRequest| TB.MlGetTrainedModelsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlGetTrainedModelsResponse, TContext>>
     getTrainedModelsStats: <TContext = unknown>(params?: T.MlGetTrainedModelsStatsRequest| TB.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlGetTrainedModelsStatsResponse, TContext>>
     inferTrainedModelDeployment: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
@@ -334,7 +333,7 @@ interface KibanaClient {
     stopDatafeed: <TContext = unknown>(params: T.MlStopDatafeedRequest| TB.MlStopDatafeedRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlStopDatafeedResponse, TContext>>
     stopTrainedModelDeployment: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     updateDataFrameAnalytics: <TContext = unknown>(params: T.MlUpdateDataFrameAnalyticsRequest| TB.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlUpdateDataFrameAnalyticsResponse, TContext>>
-    updateDatafeed: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    updateDatafeed: <TContext = unknown>(params: T.MlUpdateDatafeedRequest| TB.MlUpdateDatafeedRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlUpdateDatafeedResponse, TContext>>
     updateFilter: <TContext = unknown>(params: T.MlUpdateFilterRequest| TB.MlUpdateFilterRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlUpdateFilterResponse, TContext>>
     updateJob: <TContext = unknown>(params: T.MlUpdateJobRequest| TB.MlUpdateJobRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlUpdateJobResponse, TContext>>
     updateModelSnapshot: <TContext = unknown>(params: T.MlUpdateModelSnapshotRequest| TB.MlUpdateModelSnapshotRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlUpdateModelSnapshotResponse, TContext>>
