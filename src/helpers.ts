@@ -37,7 +37,7 @@ export interface ScrollSearchOptions extends TransportRequestOptions {
   wait?: number
 }
 
-export interface ScrollSearchResponse<TDocument> extends TransportResult<T.SearchResponse<TDocument>, unknown> {
+export interface ScrollSearchResponse<TDocument, TAggregations> extends TransportResult<T.SearchResponse<TDocument, TAggregations>, unknown> {
   clear: () => Promise<void>
   documents: TDocument[]
 }
@@ -170,7 +170,7 @@ export default class Helpers {
    * @param {object} options - The client optional configuration for this request.
    * @return {iterator} the async iterator
    */
-  async * scrollSearch<TDocument = unknown> (params: T.SearchRequest, options: ScrollSearchOptions = {}): AsyncIterable<ScrollSearchResponse<TDocument>> {
+  async * scrollSearch<TDocument = unknown, TAggregations = unknown> (params: T.SearchRequest, options: ScrollSearchOptions = {}): AsyncIterable<ScrollSearchResponse<TDocument, TAggregations>> {
     options.meta = true
     if (this[kMetaHeader] !== null) {
       options.headers = options.headers ?? {}
@@ -186,9 +186,9 @@ export default class Helpers {
     params.scroll = params.scroll ?? '1m'
     appendFilterPath('_scroll_id', params, false)
 
-    let response: TransportResult<T.SearchResponse<TDocument>, unknown> | undefined
+    let response: TransportResult<T.SearchResponse<TDocument, TAggregations>, unknown> | undefined
     for (let i = 0; i <= maxRetries; i++) {
-      response = await this[kClient].search<TDocument>(params, options as TransportRequestOptionsWithMeta)
+      response = await this[kClient].search<TDocument, TAggregations>(params, options as TransportRequestOptionsWithMeta)
       if (response.statusCode !== 429) break
       await sleep(wait)
     }
@@ -213,7 +213,7 @@ export default class Helpers {
       scroll_id = response.body._scroll_id
       // @ts-expect-error
       response.clear = clear
-      addDocumentsGetter<TDocument>(response)
+      addDocumentsGetter<TDocument, TAggregations>(response)
 
       // @ts-expect-error
       yield response
@@ -228,7 +228,8 @@ export default class Helpers {
           rest_total_hits_as_int: params.rest_total_hits_as_int,
           scroll_id
         }, options as TransportRequestOptionsWithMeta)
-        response = r as TransportResult<T.ScrollResponse<TDocument>, unknown>
+        // @ts-expect-error
+        response = r as TransportResult<T.ScrollResponse<TDocument, TAggregations>, unknown>
         assert(response !== undefined, 'The response is undefined, please file a bug report')
         if (response.statusCode !== 429) break
         await sleep(wait)
@@ -866,7 +867,7 @@ export default class Helpers {
 
 // Using a getter will improve the overall performances of the code,
 // as we will reed the documents only if needed.
-function addDocumentsGetter<TDocument> (result: TransportResult<T.SearchResponse<TDocument>, unknown>): void {
+function addDocumentsGetter<TDocument, TAggregations> (result: TransportResult<T.SearchResponse<TDocument, TAggregations>, unknown>): void {
   Object.defineProperty(result, 'documents', {
     get () {
       if (this.body.hits?.hits != null) {
