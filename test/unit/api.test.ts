@@ -20,6 +20,7 @@
 import { test } from 'tap'
 import { connection } from '../utils'
 import { Client } from '../..'
+import * as T from '../../lib/api/types'
 
 test('Api without body key and top level body', async t => {
   t.plan(2)
@@ -195,3 +196,107 @@ test('Using the body key with a string value', async t => {
     t.fail(err)
   }
 })
+
+test('With generic document', async t => {
+  t.plan(1)
+
+  interface Doc {
+    foo: string
+  }
+
+  const Connection = connection.buildMockConnection({
+    onRequest (opts) {
+      return {
+        statusCode: 200,
+        body: {
+          took: 42,
+          hits: {
+            hits: [{
+              _source: { foo: 'bar' }
+            }]
+          },
+          aggregations: {
+            unique: {
+              buckets: [{ key: 'bar' }]
+            }
+          }
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection
+  })
+
+  const response = await client.search<Doc>({
+    index: 'test',
+    allow_no_indices: true,
+    query: { match_all: {} },
+    aggregations: {
+      unique: {
+        terms: {
+          field: 'foo'
+        }
+      }
+    }
+  })
+
+  t.equal(response.hits.hits[0]._source?.foo, 'bar')
+})
+
+test('With generic document and aggregation', async t => {
+  t.plan(2)
+
+  interface Doc {
+    foo: string
+  }
+
+  interface Aggregations {
+    unique: T.AggregationsTermsAggregateBase<{ key: string }>
+  }
+
+  const Connection = connection.buildMockConnection({
+    onRequest (opts) {
+      return {
+        statusCode: 200,
+        body: {
+          took: 42,
+          hits: {
+            hits: [{
+              _source: { foo: 'bar' }
+            }]
+          },
+          aggregations: {
+            unique: {
+              buckets: [{ key: 'bar' }]
+            }
+          }
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection
+  })
+
+  const response = await client.search<Doc, Aggregations>({
+    index: 'test',
+    allow_no_indices: true,
+    query: { match_all: {} },
+    aggregations: {
+      unique: {
+        terms: {
+          field: 'foo'
+        }
+      }
+    }
+  })
+
+  t.equal(response.hits.hits[0]._source?.foo, 'bar')
+  t.ok(Array.isArray(response.aggregations?.unique.buckets))
+})
+
