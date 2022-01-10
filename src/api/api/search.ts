@@ -37,21 +37,20 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
-export default async function SearchApi<TDocument = unknown> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchResponse<TDocument>>
-export default async function SearchApi<TDocument = unknown> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchResponse<TDocument>, unknown>>
-export default async function SearchApi<TDocument = unknown> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptions): Promise<T.SearchResponse<TDocument>>
-export default async function SearchApi<TDocument = unknown> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchResponse<TDocument, TAggregations>>
+export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchResponse<TDocument, TAggregations>, unknown>>
+export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptions): Promise<T.SearchResponse<TDocument, TAggregations>>
+export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['aggs', 'aggregations', 'collapse', 'explain', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats']
+  const acceptedBody: string[] = ['aggregations', 'aggs', 'collapse', 'explain', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats']
   const querystring: Record<string, any> = {}
-  let body: Record<string, any> | string
   // @ts-expect-error
-  if (typeof params?.body === 'string') {
-    // @ts-expect-error
-    body = params.body
+  const userBody: any = params?.body
+  let body: Record<string, any> | string
+  if (typeof userBody === 'string') {
+    body = userBody
   } else {
-    // @ts-expect-error
-    body = params?.body != null ? { ...params.body } : undefined
+    body = userBody != null ? { ...userBody } : undefined
   }
 
   params = params ?? {}
@@ -59,7 +58,12 @@ export default async function SearchApi<TDocument = unknown> (this: That, params
     if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
-      body[key] = params[key]
+      if (key === 'sort' && typeof params[key] === 'string' && params[key].includes(':')) {
+        querystring[key] = params[key]
+      } else {
+        // @ts-expect-error
+        body[key] = params[key]
+      }
     } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body') {

@@ -48,11 +48,23 @@ export default class Ml {
   async closeJob (this: That, params: T.MlCloseJobRequest | TB.MlCloseJobRequest, options?: TransportRequestOptions): Promise<T.MlCloseJobResponse>
   async closeJob (this: That, params: T.MlCloseJobRequest | TB.MlCloseJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
+    const acceptedBody: string[] = ['allow_no_match', 'force', 'timeout']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
         // @ts-expect-error
@@ -182,14 +194,13 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['requests_per_second', 'timeout']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -364,14 +375,13 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['analysis_config', 'max_bucket_cardinality', 'overall_cardinality']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -400,14 +410,13 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['evaluation', 'index', 'query']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -428,23 +437,23 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async explainDataFrameAnalytics (this: That, params: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlExplainDataFrameAnalyticsResponse>
-  async explainDataFrameAnalytics (this: That, params: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlExplainDataFrameAnalyticsResponse, unknown>>
-  async explainDataFrameAnalytics (this: That, params: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlExplainDataFrameAnalyticsResponse>
-  async explainDataFrameAnalytics (this: That, params: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
+  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlExplainDataFrameAnalyticsResponse>
+  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlExplainDataFrameAnalyticsResponse, unknown>>
+  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlExplainDataFrameAnalyticsResponse>
+  async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['source', 'dest', 'analysis', 'description', 'model_memory_limit', 'max_num_threads', 'analyzed_fields', 'allow_lazy_start']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
+    params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         body = body ?? {}
@@ -475,16 +484,15 @@ export default class Ml {
   async flushJob (this: That, params: T.MlFlushJobRequest | TB.MlFlushJobRequest, options?: TransportRequestOptions): Promise<T.MlFlushJobResponse>
   async flushJob (this: That, params: T.MlFlushJobRequest | TB.MlFlushJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['advance_time', 'calc_interim', 'end', 'start']
+    const acceptedBody: string[] = ['advance_time', 'calc_interim', 'end', 'skip_time', 'start']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -512,14 +520,13 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['duration', 'expires_in', 'max_model_memory']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -545,16 +552,15 @@ export default class Ml {
   async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<T.MlGetBucketsResponse>
   async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'timestamp']
-    const acceptedBody: string[] = ['anomaly_score', 'desc', 'exclude_interim', 'expand', 'page', 'sort', 'start', 'end']
+    const acceptedBody: string[] = ['anomaly_score', 'desc', 'end', 'exclude_interim', 'expand', 'page', 'sort', 'start']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -611,14 +617,13 @@ export default class Ml {
     const acceptedPath: string[] = ['calendar_id']
     const acceptedBody: string[] = ['page']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -654,14 +659,13 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id', 'category_id']
     const acceptedBody: string[] = ['page']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -846,14 +850,13 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['page']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -934,21 +937,42 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async getModelSnapshotUpgradeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getModelSnapshotUpgradeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getModelSnapshotUpgradeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getModelSnapshotUpgradeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['job_id', 'snapshot_id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/model_snapshots/${encodeURIComponent(params.snapshot_id.toString())}/_upgrade/_stats`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotsResponse>
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetModelSnapshotsResponse, unknown>>
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<T.MlGetModelSnapshotsResponse>
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
-    const acceptedBody: string[] = ['start', 'end']
+    const acceptedBody: string[] = ['desc', 'end', 'page', 'sort', 'start']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -981,16 +1005,15 @@ export default class Ml {
   async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest | TB.MlGetOverallBucketsRequest, options?: TransportRequestOptions): Promise<T.MlGetOverallBucketsResponse>
   async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest | TB.MlGetOverallBucketsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['allow_no_jobs']
+    const acceptedBody: string[] = ['allow_no_match', 'bucket_span', 'end', 'exclude_interim', 'overall_score', 'start', 'top_n']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1016,16 +1039,15 @@ export default class Ml {
   async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptions): Promise<T.MlGetRecordsResponse>
   async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['desc', 'exclude_interim', 'page', 'record_score', 'sort', 'start', 'end']
+    const acceptedBody: string[] = ['desc', 'end', 'exclude_interim', 'page', 'record_score', 'sort', 'start']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1043,28 +1065,6 @@ export default class Ml {
 
     const method = body != null ? 'POST' : 'GET'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/records`
-    return await this.transport.request({ path, method, querystring, body }, options)
-  }
-
-  async getTrainedModelDeploymentStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getTrainedModelDeploymentStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getTrainedModelDeploymentStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getTrainedModelDeploymentStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['model_id']
-    const querystring: Record<string, any> = {}
-    const body = undefined
-
-    params = params ?? {}
-    for (const key in params) {
-      if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'GET'
-    const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/deployment/_stats`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
@@ -1128,19 +1128,31 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInferTrainedModelDeploymentResponse>
+  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInferTrainedModelDeploymentResponse, unknown>>
+  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlInferTrainedModelDeploymentResponse>
+  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
+    const acceptedBody: string[] = ['docs']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1180,14 +1192,13 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['timeout']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1215,14 +1226,13 @@ export default class Ml {
     const acceptedPath: string[] = ['calendar_id']
     const acceptedBody: string[] = ['events']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1277,14 +1287,13 @@ export default class Ml {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['config']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -1318,16 +1327,15 @@ export default class Ml {
   async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest | TB.MlPreviewDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlPreviewDatafeedResponse<TDocument>>
   async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest | TB.MlPreviewDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['job_config', 'datafeed_config']
+    const acceptedBody: string[] = ['datafeed_config', 'job_config']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -1361,16 +1369,15 @@ export default class Ml {
   async putCalendar (this: That, params: T.MlPutCalendarRequest | TB.MlPutCalendarRequest, options?: TransportRequestOptions): Promise<T.MlPutCalendarResponse>
   async putCalendar (this: That, params: T.MlPutCalendarRequest | TB.MlPutCalendarRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['calendar_id']
-    const acceptedBody: string[] = ['description']
+    const acceptedBody: string[] = ['job_ids', 'description']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1420,14 +1427,13 @@ export default class Ml {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', 'model_memory_limit', 'source']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1453,16 +1459,15 @@ export default class Ml {
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlPutDatafeedResponse>
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size']
+    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1490,14 +1495,13 @@ export default class Ml {
     const acceptedPath: string[] = ['filter_id']
     const acceptedBody: string[] = ['description', 'items']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1525,14 +1529,13 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['allow_lazy_open', 'analysis_config', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'daily_model_snapshot_retention_after_days', 'data_description', 'datafeed_config', 'description', 'groups', 'model_plot_config', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_index_name', 'results_retention_days']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1558,16 +1561,15 @@ export default class Ml {
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelResponse>
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['compressed_definition', 'definition', 'description', 'inference_config', 'input', 'metadata', 'tags']
+    const acceptedBody: string[] = ['compressed_definition', 'definition', 'description', 'inference_config', 'input', 'metadata', 'model_type', 'tags']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1610,19 +1612,31 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelDefinitionPartResponse>
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelDefinitionPartResponse, unknown>>
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelDefinitionPartResponse>
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id', 'part']
+    const acceptedBody: string[] = ['definition', 'total_definition_length', 'total_parts']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1632,19 +1646,31 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelVocabularyResponse>
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelVocabularyResponse, unknown>>
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelVocabularyResponse>
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
+    const acceptedBody: string[] = ['vocabulary']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1683,14 +1709,13 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
     const acceptedBody: string[] = ['delete_intervening_results']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1763,14 +1788,13 @@ export default class Ml {
     const acceptedPath: string[] = ['datafeed_id']
     const acceptedBody: string[] = ['end', 'start', 'timeout']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1791,19 +1815,19 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartTrainedModelDeploymentResponse>
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartTrainedModelDeploymentResponse, unknown>>
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStartTrainedModelDeploymentResponse>
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1840,16 +1864,15 @@ export default class Ml {
   async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlStopDatafeedResponse>
   async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['force', 'timeout']
+    const acceptedBody: string[] = ['allow_no_match', 'force', 'timeout']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1870,19 +1893,19 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopTrainedModelDeploymentResponse>
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopTrainedModelDeploymentResponse, unknown>>
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStopTrainedModelDeploymentResponse>
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1899,14 +1922,13 @@ export default class Ml {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['description', 'model_memory_limit', 'max_num_threads', 'allow_lazy_start']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1927,19 +1949,31 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async updateDatafeed (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async updateDatafeed (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async updateDatafeed (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async updateDatafeed (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDatafeedResponse>
+  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateDatafeedResponse, unknown>>
+  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlUpdateDatafeedResponse>
+  async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
+    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1956,14 +1990,13 @@ export default class Ml {
     const acceptedPath: string[] = ['filter_id']
     const acceptedBody: string[] = ['add_items', 'description', 'remove_items']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1991,14 +2024,13 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id']
     const acceptedBody: string[] = ['allow_lazy_open', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'categorization_filters', 'description', 'model_plot_config', 'daily_model_snapshot_retention_after_days', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_retention_days', 'groups', 'detectors', 'per_partition_categorization']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -2026,14 +2058,13 @@ export default class Ml {
     const acceptedPath: string[] = ['job_id', 'snapshot_id']
     const acceptedBody: string[] = ['description', 'retain']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -2083,14 +2114,13 @@ export default class Ml {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['job_id', 'analysis_config', 'analysis_limits', 'data_description', 'description', 'model_plot', 'model_snapshot_retention_days', 'results_index_name']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}

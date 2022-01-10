@@ -72,14 +72,13 @@ export default class Indices {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['analyzer', 'attributes', 'char_filter', 'explain', 'field', 'filter', 'normalizer', 'text', 'tokenizer']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -145,14 +144,13 @@ export default class Indices {
     const acceptedPath: string[] = ['index', 'target']
     const acceptedBody: string[] = ['aliases', 'settings']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -202,14 +200,13 @@ export default class Indices {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['aliases', 'mappings', 'settings']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -516,28 +513,6 @@ export default class Indices {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async existsType (this: That, params: T.IndicesExistsTypeRequest | TB.IndicesExistsTypeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsTypeResponse>
-  async existsType (this: That, params: T.IndicesExistsTypeRequest | TB.IndicesExistsTypeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsTypeResponse, unknown>>
-  async existsType (this: That, params: T.IndicesExistsTypeRequest | TB.IndicesExistsTypeRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsTypeResponse>
-  async existsType (this: That, params: T.IndicesExistsTypeRequest | TB.IndicesExistsTypeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'type']
-    const querystring: Record<string, any> = {}
-    const body = undefined
-
-    for (const key in params) {
-      if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'HEAD'
-    const path = `/${encodeURIComponent(params.index.toString())}/_mapping/${encodeURIComponent(params.type.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
-  }
-
   async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
@@ -617,28 +592,6 @@ export default class Indices {
       method = 'POST'
       path = '/_forcemerge'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
-  }
-
-  async freeze (this: That, params: T.IndicesFreezeRequest | TB.IndicesFreezeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesFreezeResponse>
-  async freeze (this: That, params: T.IndicesFreezeRequest | TB.IndicesFreezeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesFreezeResponse, unknown>>
-  async freeze (this: That, params: T.IndicesFreezeRequest | TB.IndicesFreezeRequest, options?: TransportRequestOptions): Promise<T.IndicesFreezeResponse>
-  async freeze (this: That, params: T.IndicesFreezeRequest | TB.IndicesFreezeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index']
-    const querystring: Record<string, any> = {}
-    const body = undefined
-
-    for (const key in params) {
-      if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'POST'
-    const path = `/${encodeURIComponent(params.index.toString())}/_freeze`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
@@ -980,14 +933,13 @@ export default class Indices {
     const acceptedPath: string[] = ['index', 'name']
     const acceptedBody: string[] = ['filter', 'index_routing', 'is_write_index', 'routing', 'search_routing']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1022,14 +974,13 @@ export default class Indices {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1057,14 +1008,13 @@ export default class Indices {
     const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['date_detection', 'dynamic', 'dynamic_date_formats', 'dynamic_templates', '_field_names', '_meta', 'numeric_detection', 'properties', '_routing', '_source', 'runtime']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1126,14 +1076,13 @@ export default class Indices {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['aliases', 'index_patterns', 'mappings', 'order', 'settings', 'version']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1265,14 +1214,13 @@ export default class Indices {
     const acceptedPath: string[] = ['alias', 'new_index']
     const acceptedBody: string[] = ['aliases', 'conditions', 'mappings', 'settings']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1367,14 +1315,13 @@ export default class Indices {
     const acceptedPath: string[] = ['index', 'target']
     const acceptedBody: string[] = ['aliases', 'settings']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1400,16 +1347,15 @@ export default class Indices {
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest | TB.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateIndexTemplateResponse>
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest | TB.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['index_patterns', 'composed_of', 'overlapping', 'template']
+    const acceptedBody: string[] = ['allow_auto_create', 'index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1471,14 +1417,13 @@ export default class Indices {
     const acceptedPath: string[] = ['index', 'target']
     const acceptedBody: string[] = ['aliases', 'settings']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -1564,14 +1509,13 @@ export default class Indices {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['actions']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}
@@ -1597,17 +1541,16 @@ export default class Indices {
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesValidateQueryResponse, unknown>>
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<T.IndicesValidateQueryResponse>
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'type']
+    const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['query']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}

@@ -24,7 +24,9 @@ import {
   ConnectionRequestParams,
   ConnectionRequestOptions,
   ConnectionRequestResponse,
-  errors
+  errors,
+  ConnectionRequestOptionsAsStream,
+  ConnectionRequestResponseAsStream
 } from '@elastic/transport'
 const {
   ConnectionError,
@@ -32,7 +34,9 @@ const {
 } = errors
 
 export class MockConnection extends BaseConnection {
-  request (params: ConnectionRequestParams, options: ConnectionRequestOptions): Promise<ConnectionRequestResponse> {
+  async request (params: ConnectionRequestParams, options: ConnectionRequestOptions): Promise<ConnectionRequestResponse>
+  async request (params: ConnectionRequestParams, options: ConnectionRequestOptionsAsStream): Promise<ConnectionRequestResponseAsStream>
+  async request (params: ConnectionRequestParams, options: any): Promise<any> {
     return new Promise((resolve, reject) => {
       const body = JSON.stringify({ hello: 'world' })
       const statusCode = setStatusCode(params.path)
@@ -49,7 +53,9 @@ export class MockConnection extends BaseConnection {
 }
 
 export class MockConnectionTimeout extends BaseConnection {
-  request (params: ConnectionRequestParams, options: ConnectionRequestOptions): Promise<ConnectionRequestResponse> {
+  async request (params: ConnectionRequestParams, options: ConnectionRequestOptions): Promise<ConnectionRequestResponse>
+  async request (params: ConnectionRequestParams, options: ConnectionRequestOptionsAsStream): Promise<ConnectionRequestResponseAsStream>
+  async request (params: ConnectionRequestParams, options: any): Promise<any> {
     return new Promise((resolve, reject) => {
       process.nextTick(reject, new TimeoutError('Request timed out'))
     })
@@ -57,7 +63,9 @@ export class MockConnectionTimeout extends BaseConnection {
 }
 
 export class MockConnectionError extends BaseConnection {
-  request (params: ConnectionRequestParams, options: ConnectionRequestOptions): Promise<ConnectionRequestResponse> {
+  async request (params: ConnectionRequestParams, options: ConnectionRequestOptions): Promise<ConnectionRequestResponse>
+  async request (params: ConnectionRequestParams, options: ConnectionRequestOptionsAsStream): Promise<ConnectionRequestResponseAsStream>
+  async request (params: ConnectionRequestParams, options: any): Promise<any> {
     return new Promise((resolve, reject) => {
       process.nextTick(reject, new ConnectionError('kaboom'))
     })
@@ -65,7 +73,9 @@ export class MockConnectionError extends BaseConnection {
 }
 
 export class MockConnectionSniff extends BaseConnection {
-  request (params: ConnectionRequestParams, options: ConnectionRequestOptions): Promise<ConnectionRequestResponse> {
+  async request (params: ConnectionRequestParams, options: ConnectionRequestOptions): Promise<ConnectionRequestResponse>
+  async request (params: ConnectionRequestParams, options: ConnectionRequestOptionsAsStream): Promise<ConnectionRequestResponseAsStream>
+  async request (params: ConnectionRequestParams, options: any): Promise<any> {
     return new Promise((resolve, reject) => {
       const sniffResult = {
         nodes: {
@@ -106,7 +116,9 @@ export function buildMockConnection (opts: onRequestMock) {
   assert(opts.onRequest, 'Missing required onRequest option')
 
   class MockConnection extends BaseConnection {
-    request (params: ConnectionRequestParams, options: ConnectionRequestOptions): Promise<ConnectionRequestResponse> {
+    async request (params: ConnectionRequestParams, options: ConnectionRequestOptions): Promise<ConnectionRequestResponse>
+    async request (params: ConnectionRequestParams, options: ConnectionRequestOptionsAsStream): Promise<ConnectionRequestResponseAsStream>
+    async request (params: ConnectionRequestParams, options: any): Promise<any> {
       return new Promise((resolve, reject) => {
         params.headers = { ...this.headers, ...params.headers }
         let { body, statusCode, headers } = opts.onRequest(params)

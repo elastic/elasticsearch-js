@@ -148,14 +148,13 @@ export default class Ingest {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['_meta', 'description', 'on_failure', 'processors', 'version']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -183,14 +182,13 @@ export default class Ingest {
     const acceptedPath: string[] = ['id']
     const acceptedBody: string[] = ['docs', 'pipeline']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params?.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     params = params ?? {}

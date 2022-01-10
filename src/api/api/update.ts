@@ -41,17 +41,16 @@ export default async function UpdateApi<TDocument = unknown, TPartialDocument = 
 export default async function UpdateApi<TDocument = unknown, TPartialDocument = unknown, TDocumentR = unknown> (this: That, params: T.UpdateRequest<TDocument, TPartialDocument> | TB.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.UpdateResponse<TDocumentR>, unknown>>
 export default async function UpdateApi<TDocument = unknown, TPartialDocument = unknown, TDocumentR = unknown> (this: That, params: T.UpdateRequest<TDocument, TPartialDocument> | TB.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.UpdateResponse<TDocumentR>>
 export default async function UpdateApi<TDocument = unknown, TPartialDocument = unknown, TDocumentR = unknown> (this: That, params: T.UpdateRequest<TDocument, TPartialDocument> | TB.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['id', 'index', 'type']
+  const acceptedPath: string[] = ['id', 'index']
   const acceptedBody: string[] = ['detect_noop', 'doc', 'doc_as_upsert', 'script', 'scripted_upsert', '_source', 'upsert']
   const querystring: Record<string, any> = {}
-  let body: Record<string, any> | string
   // @ts-expect-error
-  if (typeof params?.body === 'string') {
-    // @ts-expect-error
-    body = params.body
+  const userBody: any = params?.body
+  let body: Record<string, any> | string
+  if (typeof userBody === 'string') {
+    body = userBody
   } else {
-    // @ts-expect-error
-    body = params.body != null ? { ...params.body } : undefined
+    body = userBody != null ? { ...userBody } : undefined
   }
 
   for (const key in params) {

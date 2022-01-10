@@ -44,14 +44,13 @@ export default async function TermsEnumApi (this: That, params: T.TermsEnumReque
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['field', 'size', 'timeout', 'case_insensitive', 'index_filter', 'string', 'search_after']
   const querystring: Record<string, any> = {}
-  let body: Record<string, any> | string
   // @ts-expect-error
-  if (typeof params?.body === 'string') {
-    // @ts-expect-error
-    body = params.body
+  const userBody: any = params?.body
+  let body: Record<string, any> | string
+  if (typeof userBody === 'string') {
+    body = userBody
   } else {
-    // @ts-expect-error
-    body = params.body != null ? { ...params.body } : undefined
+    body = userBody != null ? { ...userBody } : undefined
   }
 
   for (const key in params) {

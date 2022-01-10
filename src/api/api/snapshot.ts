@@ -72,14 +72,13 @@ export default class Snapshot {
     const acceptedPath: string[] = ['repository', 'snapshot', 'target_snapshot']
     const acceptedBody: string[] = ['indices']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -107,14 +106,13 @@ export default class Snapshot {
     const acceptedPath: string[] = ['repository', 'snapshot']
     const acceptedBody: string[] = ['ignore_unavailable', 'include_global_state', 'indices', 'feature_states', 'metadata', 'partial']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -142,14 +140,13 @@ export default class Snapshot {
     const acceptedPath: string[] = ['name']
     const acceptedBody: string[] = ['repository', 'type', 'settings']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
@@ -295,14 +292,13 @@ export default class Snapshot {
     const acceptedPath: string[] = ['repository', 'snapshot']
     const acceptedBody: string[] = ['ignore_index_settings', 'ignore_unavailable', 'include_aliases', 'include_global_state', 'index_settings', 'indices', 'partial', 'rename_pattern', 'rename_replacement']
     const querystring: Record<string, any> = {}
-    let body: Record<string, any> | string
     // @ts-expect-error
-    if (typeof params?.body === 'string') {
-      // @ts-expect-error
-      body = params.body
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
     } else {
-      // @ts-expect-error
-      body = params.body != null ? { ...params.body } : undefined
+      body = userBody != null ? { ...userBody } : undefined
     }
 
     for (const key in params) {
