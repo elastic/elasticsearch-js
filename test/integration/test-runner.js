@@ -634,13 +634,8 @@ function match (val1, val2, action) {
     val2.startsWith('/') && (val2.endsWith('/\n') || val2.endsWith('/'))
   ) {
     const regStr = val2
-      // match all comments within a "regexp" match arg
-      .replace(/([\S\s]?)#[^\n]*\n/g, (match, prevChar) => {
-        return prevChar === '\\' ? match : `${prevChar}\n`
-      })
-      // remove all whitespace from the expression, all meaningful
-      // whitespace is represented with \s
-      .replace(/\s/g, '')
+      .replace(/(^|[^\\])#.*/g, '$1')
+      .replace(/(^|[^\\])\s+/g, '$1')
       .slice(1, -1)
     // 'm' adds the support for multiline regex
     assert.ok(new RegExp(regStr, 'm').test(val1), `should match pattern provided: ${val2}, but got: ${val1}`)
