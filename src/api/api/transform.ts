@@ -264,7 +264,7 @@ export default class Transform {
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<T.TransformUpdateTransformResponse>
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['transform_id']
-    const acceptedBody: string[] = ['dest', 'description', 'frequency', 'source', 'settings', 'sync', 'retention_policy']
+    const acceptedBody: string[] = ['dest', 'description', 'frequency', '_meta', 'source', 'settings', 'sync', 'retention_policy']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

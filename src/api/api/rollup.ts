@@ -152,7 +152,7 @@ export default class Rollup {
   async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptions): Promise<T.RollupPutJobResponse>
   async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['cron', 'groups', 'index_pattern', 'metrics', 'page_size', 'rollup_index']
+    const acceptedBody: string[] = ['cron', 'groups', 'index_pattern', 'metrics', 'page_size', 'rollup_index', 'timeout', 'headers']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

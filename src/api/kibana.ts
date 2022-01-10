@@ -423,7 +423,7 @@ interface KibanaClient {
     putRole: <TContext = unknown>(params: T.SecurityPutRoleRequest| TB.SecurityPutRoleRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityPutRoleResponse, TContext>>
     putRoleMapping: <TContext = unknown>(params: T.SecurityPutRoleMappingRequest| TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityPutRoleMappingResponse, TContext>>
     putUser: <TContext = unknown>(params: T.SecurityPutUserRequest| TB.SecurityPutUserRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityPutUserResponse, TContext>>
-    queryApiKeys: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    queryApiKeys: <TContext = unknown>(params?: T.SecurityQueryApiKeysRequest| TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityQueryApiKeysResponse, TContext>>
     samlAuthenticate: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     samlCompleteLogout: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     samlInvalidate: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
