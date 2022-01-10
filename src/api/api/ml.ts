@@ -1425,7 +1425,7 @@ export default class Ml {
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlPutDataFrameAnalyticsResponse>
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', 'model_memory_limit', 'source']
+    const acceptedBody: string[] = ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', 'model_memory_limit', 'source', 'headers', 'version']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1459,7 +1459,7 @@ export default class Ml {
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlPutDatafeedResponse>
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size']
+    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'headers']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1561,7 +1561,7 @@ export default class Ml {
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelResponse>
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['compressed_definition', 'definition', 'description', 'inference_config', 'input', 'metadata', 'model_type', 'tags']
+    const acceptedBody: string[] = ['compressed_definition', 'definition', 'description', 'inference_config', 'input', 'metadata', 'model_type', 'model_size_bytes', 'tags']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -2112,7 +2112,7 @@ export default class Ml {
   async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptions): Promise<T.MlValidateResponse>
   async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['job_id', 'analysis_config', 'analysis_limits', 'data_description', 'description', 'model_plot', 'model_snapshot_retention_days', 'results_index_name']
+    const acceptedBody: string[] = ['job_id', 'analysis_config', 'analysis_limits', 'data_description', 'description', 'model_plot', 'model_snapshot_id', 'model_snapshot_retention_days', 'results_index_name']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

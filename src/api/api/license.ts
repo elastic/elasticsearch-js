@@ -135,10 +135,10 @@ export default class License {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async post (this: That, params?: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostResponse>
-  async post (this: That, params?: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostResponse, unknown>>
-  async post (this: That, params?: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptions): Promise<T.LicensePostResponse>
-  async post (this: That, params?: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptions): Promise<any> {
+  async post (this: That, params: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostResponse>
+  async post (this: That, params: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LicensePostResponse, unknown>>
+  async post (this: That, params: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptions): Promise<T.LicensePostResponse>
+  async post (this: That, params: T.LicensePostRequest | TB.LicensePostRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const acceptedBody: string[] = ['license', 'licenses']
     const querystring: Record<string, any> = {}
@@ -151,7 +151,6 @@ export default class License {
       body = userBody != null ? { ...userBody } : undefined
     }
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         body = body ?? {}
