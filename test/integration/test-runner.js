@@ -760,7 +760,9 @@ function parseDo (action) {
         acc.api = val
         acc.params = action[val] // camelify(action[val])
         if (typeof acc.params.body === 'string') {
-          acc.params.body = JSON.parse(acc.params.body)
+          try {
+            acc.params.body = JSON.parse(acc.params.body)
+          } catch (err) {}
         }
     }
     return acc
