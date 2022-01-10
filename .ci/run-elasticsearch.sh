@@ -7,7 +7,7 @@
 # Export the TEST_SUITE variable, eg. 'free' or 'platinum' defaults to 'free'.
 # Export the NUMBER_OF_NODES variable to start more than 1 node
 
-# Version 1.6.0
+# Version 1.6.1
 # - Initial version of the run-elasticsearch.sh script
 # - Deleting the volume should not dependent on the container still running
 # - Fixed `ES_JAVA_OPTS` config
@@ -20,6 +20,7 @@
 # - Added ingest.geoip.downloader.enabled=false as it causes false positives in testing
 # - Moved ELASTIC_PASSWORD and xpack.security.enabled to the base arguments for "Security On by default"
 # - Use https only when TEST_SUITE is "platinum", when "free" use http
+# - Set xpack.security.enabled=false for "free" and xpack.security.enabled=true for "platinum"
 
 script_path=$(dirname $(realpath -s $0))
 source $script_path/functions/imports.sh
@@ -34,7 +35,6 @@ cluster_name=${moniker}${suffix}
 declare -a volumes
 environment=($(cat <<-END
   --env ELASTIC_PASSWORD=$elastic_password
-  --env xpack.security.enabled=true
   --env node.name=$es_node_name
   --env cluster.name=$cluster_name
   --env cluster.initial_master_nodes=$master_node_name
@@ -51,6 +51,7 @@ END
 ))
 if [[ "$TEST_SUITE" == "platinum" ]]; then
   environment+=($(cat <<-END
+    --env xpack.security.enabled=true
     --env xpack.license.self_generated.type=trial
     --env xpack.security.http.ssl.enabled=true
     --env xpack.security.http.ssl.verification_mode=certificate
@@ -72,6 +73,7 @@ END
 ))
 else
   environment+=($(cat <<-END
+    --env xpack.security.enabled=false
     --env xpack.security.http.ssl.enabled=false
 END
 ))
