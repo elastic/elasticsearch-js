@@ -119,8 +119,8 @@ async function updateParams (cmd) {
   assert(type != null)
 
   const pathParams = type.path.reduce((acc, val) => {
-    if (val.identifier != null) {
-      acc[val.name] = val.identifier
+    if (val.codegenName != null) {
+      acc[val.name] = val.codegenName
     }
     return acc
   }, {})

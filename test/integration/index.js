@@ -50,6 +50,7 @@ const freeSkips = {
     'Body params with string param scroll id override query string'
   ],
   'free/cat.allocation/10_basic.yml': ['*'],
+  'free/cat.snapshots/10_basic.yml': ['Test cat snapshots output'],
   // TODO: remove this once 'arbitrary_key' is implemented
   // https://github.com/elastic/elasticsearch/pull/41492
   'indices.split/30_copy_settings.yml': ['*'],
