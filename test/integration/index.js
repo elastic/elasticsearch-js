@@ -100,6 +100,8 @@ const platinumBlackList = {
   'ml/bucket_correlation_agg.yml': ['Test correlation bucket agg simple'],
   // start should be a string
   'ml/jobs_get_result_overall_buckets.yml': ['Test overall buckets given epoch start and end params'],
+  // this can't happen with the client
+  'ml/start_data_frame_analytics.yml': ['Test start with inconsistent body/param ids'],
   'ml/preview_datafeed.yml': ['*'],
   // Investigate why is failing
   'ml/inference_crud.yml': ['*'],
