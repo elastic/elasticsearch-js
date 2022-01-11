@@ -29,6 +29,7 @@ const { join, sep } = require('path')
 const yaml = require('js-yaml')
 const ms = require('ms')
 const { Client } = require('../../index')
+const { kProductCheck } = require('@elastic/transport/lib/symbols')
 const build = require('./test-runner')
 const { sleep } = require('./helper')
 const createJunitReporter = require('./reporter')
@@ -165,6 +166,8 @@ function runner (opts = {}) {
     }
   }
   const client = new Client(options)
+  // TODO: remove the following line once https://github.com/elastic/elasticsearch/issues/82358 is fixed
+  client.transport[kProductCheck] = null
   log('Loading yaml suite')
   start({ client, isXPack: opts.isXPack })
     .catch(err => {
