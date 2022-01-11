@@ -464,6 +464,7 @@ function build (opts = {}) {
 
     if (action.catch) {
       stats.assertions += 1
+      assert.ok(err, `Expecting an error, but instead got ${JSON.stringify(err)}, the response was ${JSON.stringify(result)}`)
       assert.ok(
         parseDoError(err, action.catch),
         `the error should be: ${action.catch}`
