@@ -102,6 +102,7 @@ const platinumBlackList = {
   'ml/jobs_get_result_overall_buckets.yml': ['Test overall buckets given epoch start and end params'],
   // this can't happen with the client
   'ml/start_data_frame_analytics.yml': ['Test start with inconsistent body/param ids'],
+  'ml/stop_data_frame_analytics.yml': ['Test stop with inconsistent body/param ids'],
   'ml/preview_datafeed.yml': ['*'],
   // Investigate why is failing
   'ml/inference_crud.yml': ['*'],
