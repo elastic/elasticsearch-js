@@ -60,6 +60,7 @@ import indexApi from './api/index'
 import IndicesApi from './api/indices'
 import infoApi from './api/info'
 import IngestApi from './api/ingest'
+import knnSearchApi from './api/knn_search'
 import LicenseApi from './api/license'
 import LogstashApi from './api/logstash'
 import mgetApi from './api/mget'
@@ -138,6 +139,7 @@ export default interface API {
   indices: IndicesApi
   info: typeof infoApi
   ingest: IngestApi
+  knnSearch: typeof knnSearchApi
   license: LicenseApi
   logstash: LogstashApi
   mget: typeof mgetApi
@@ -306,6 +308,7 @@ API.prototype.getScriptLanguages = getScriptLanguagesApi
 API.prototype.getSource = getSourceApi
 API.prototype.index = indexApi
 API.prototype.info = infoApi
+API.prototype.knnSearch = knnSearchApi
 API.prototype.mget = mgetApi
 API.prototype.msearch = msearchApi
 API.prototype.msearchTemplate = msearchTemplateApi

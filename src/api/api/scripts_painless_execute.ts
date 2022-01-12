@@ -45,7 +45,13 @@ export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this
   const acceptedBody: string[] = ['context', 'context_setup', 'script']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: Record<string, any> = params?.body ?? undefined
+  const userBody: any = params?.body
+  let body: Record<string, any> | string
+  if (typeof userBody === 'string') {
+    body = userBody
+  } else {
+    body = userBody != null ? { ...userBody } : undefined
+  }
 
   params = params ?? {}
   for (const key in params) {

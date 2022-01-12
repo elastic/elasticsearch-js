@@ -42,10 +42,16 @@ export default async function UpdateByQueryApi (this: That, params: T.UpdateByQu
 export default async function UpdateByQueryApi (this: That, params: T.UpdateByQueryRequest | TB.UpdateByQueryRequest, options?: TransportRequestOptions): Promise<T.UpdateByQueryResponse>
 export default async function UpdateByQueryApi (this: That, params: T.UpdateByQueryRequest | TB.UpdateByQueryRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['max_docs', 'query', 'script', 'slice']
+  const acceptedBody: string[] = ['max_docs', 'query', 'script', 'slice', 'conflicts']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
-  let body: Record<string, any> = params.body ?? undefined
+  const userBody: any = params?.body
+  let body: Record<string, any> | string
+  if (typeof userBody === 'string') {
+    body = userBody
+  } else {
+    body = userBody != null ? { ...userBody } : undefined
+  }
 
   for (const key in params) {
     if (acceptedBody.includes(key)) {

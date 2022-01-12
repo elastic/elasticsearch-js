@@ -19,6 +19,9 @@
 
 'use strict'
 
+const assert = require('assert')
+const fetch = require('node-fetch')
+
 function runInParallel (client, operation, options, clientOptions) {
   if (options.length === 0) return Promise.resolve()
   const operations = options.map(opts => {
@@ -65,6 +68,9 @@ function isXPackTemplate (name) {
   if (name.startsWith('.transform-')) {
     return true
   }
+  if (name.startsWith('.deprecation-')) {
+    return true
+  }
   switch (name) {
     case '.watches':
     case 'logstash-index-template':
@@ -84,14 +90,49 @@ function isXPackTemplate (name) {
     case 'synthetics-settings':
     case 'synthetics-mappings':
     case '.snapshot-blob-cache':
-    case '.deprecation-indexing-template':
-    case '.deprecation-indexing-mappings':
-    case '.deprecation-indexing-settings':
     case 'data-streams-mappings':
-    case '.logs-deprecation.elasticsearch-default':
       return true
   }
   return false
 }
 
-module.exports = { runInParallel, delve, to, sleep, isXPackTemplate }
+async function getSpec () {
+  const response = await fetch('https://raw.githubusercontent.com/elastic/elasticsearch-specification/main/output/schema/schema.json')
+  return await response.json()
+}
+
+let spec = null
+
+// some keys for the path used in the yaml test are not support in the client
+// for example: snapshot.createRepository({ repository }) will not work.
+// This code changes the params to the appropriate name, in the example above,
+// "repository" will be renamed to "name"
+async function updateParams (cmd) {
+  if (spec == null) {
+    spec = await getSpec()
+  }
+  const endpoint = spec.endpoints.find(endpoint => endpoint.name === cmd.api)
+  assert(endpoint != null)
+  if (endpoint.request == null) return cmd
+
+  const type = spec.types.find(type => type.name.name === endpoint.request.name && type.name.namespace === endpoint.request.namespace)
+  assert(type != null)
+
+  const pathParams = type.path.reduce((acc, val) => {
+    if (val.codegenName != null) {
+      acc[val.name] = val.codegenName
+    }
+    return acc
+  }, {})
+
+  for (const key in cmd.params) {
+    if (pathParams[key] != null) {
+      cmd.params[pathParams[key]] = cmd.params[key]
+      delete cmd.params[key]
+    }
+  }
+
+  return cmd
+}
+
+module.exports = { runInParallel, delve, to, sleep, isXPackTemplate, updateParams }
