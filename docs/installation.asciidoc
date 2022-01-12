@@ -70,8 +70,8 @@ Elasticsearch language clients are only backwards compatible with default distri
 |{es} Version
 |Client Version
 
-|`master`
-|`master`
+|`main`
+|`main`
 
 |`7.x`
 |`7.x`

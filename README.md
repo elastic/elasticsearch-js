@@ -2,15 +2,9 @@
 
 # Elasticsearch Node.js client
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)  [![Build Status](https://clients-ci.elastic.co/buildStatus/icon?job=elastic%2Belasticsearch-js%2Bmaster)](https://clients-ci.elastic.co/view/Javascript/job/elastic+elasticsearch-js+master/)  [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js)  [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)  [![Build Status](https://clients-ci.elastic.co/buildStatus/icon?job=elastic%2Belasticsearch-js%2Bmain)](https://clients-ci.elastic.co/view/Javascript/job/elastic+elasticsearch-js+main/)  [![Node CI](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml/badge.svg)](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml)  [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js)  [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
 
 The official Node.js client for Elasticsearch.
-
----
-
-**Note:** In the past months we have worked on the new Elasticsearch Node.js client and you can use it by following the instructions below. If you're going to use the legacy one or report an issue, however, please check out [elastic/elasticsearch-js-legacy](https://github.com/elastic/elasticsearch-js-legacy).
-
----
 
 ## Features
 - One-to-one mapping with REST API.
@@ -59,7 +53,7 @@ Elasticsearch language clients are only backwards compatible with default distri
 
 | Elasticsearch Version | Client Version |
 | --------------------- |----------------|
-| `master`              | `master`       |
+| `main`                | `main`         |
 | `7.x`                 | `7.x`          |
 | `6.x`                 | `6.x`          |
 | `5.x`                 | `5.x`          |
