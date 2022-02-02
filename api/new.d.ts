@@ -117,9 +117,9 @@ declare class Client {
     putAutoscalingPolicy<TContext = unknown>(params: T.AutoscalingPutAutoscalingPolicyRequest, callback: callbackFn<T.AutoscalingPutAutoscalingPolicyResponse, TContext>): TransportRequestCallback
     putAutoscalingPolicy<TContext = unknown>(params: T.AutoscalingPutAutoscalingPolicyRequest, options: TransportRequestOptions, callback: callbackFn<T.AutoscalingPutAutoscalingPolicyResponse, TContext>): TransportRequestCallback
   }
-  bulk<TSource = unknown, TContext = unknown>(params: T.BulkRequest<TSource>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.BulkResponse, TContext>>
-  bulk<TSource = unknown, TContext = unknown>(params: T.BulkRequest<TSource>, callback: callbackFn<T.BulkResponse, TContext>): TransportRequestCallback
-  bulk<TSource = unknown, TContext = unknown>(params: T.BulkRequest<TSource>, options: TransportRequestOptions, callback: callbackFn<T.BulkResponse, TContext>): TransportRequestCallback
+  bulk<TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.BulkResponse, TContext>>
+  bulk<TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.BulkRequest<TDocument, TPartialDocument>, callback: callbackFn<T.BulkResponse, TContext>): TransportRequestCallback
+  bulk<TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.BulkRequest<TDocument, TPartialDocument>, options: TransportRequestOptions, callback: callbackFn<T.BulkResponse, TContext>): TransportRequestCallback
   cat: {
     aliases<TContext = unknown>(params?: T.CatAliasesRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.CatAliasesResponse, TContext>>
     aliases<TContext = unknown>(callback: callbackFn<T.CatAliasesResponse, TContext>): TransportRequestCallback
@@ -454,10 +454,9 @@ declare class Client {
   fieldCaps<TContext = unknown>(params: T.FieldCapsRequest, callback: callbackFn<T.FieldCapsResponse, TContext>): TransportRequestCallback
   fieldCaps<TContext = unknown>(params: T.FieldCapsRequest, options: TransportRequestOptions, callback: callbackFn<T.FieldCapsResponse, TContext>): TransportRequestCallback
   fleet: {
-    globalCheckpoints<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    globalCheckpoints<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    globalCheckpoints<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    globalCheckpoints<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    globalCheckpoints<TContext = unknown>(params: T.FleetGlobalCheckpointsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.FleetGlobalCheckpointsResponse, TContext>>
+    globalCheckpoints<TContext = unknown>(params: T.FleetGlobalCheckpointsRequest, callback: callbackFn<T.FleetGlobalCheckpointsResponse, TContext>): TransportRequestCallback
+    globalCheckpoints<TContext = unknown>(params: T.FleetGlobalCheckpointsRequest, options: TransportRequestOptions, callback: callbackFn<T.FleetGlobalCheckpointsResponse, TContext>): TransportRequestCallback
     msearch<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
     msearch<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
     msearch<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
@@ -504,10 +503,10 @@ declare class Client {
     getStatus<TContext = unknown>(callback: callbackFn<T.IlmGetStatusResponse, TContext>): TransportRequestCallback
     getStatus<TContext = unknown>(params: T.IlmGetStatusRequest, callback: callbackFn<T.IlmGetStatusResponse, TContext>): TransportRequestCallback
     getStatus<TContext = unknown>(params: T.IlmGetStatusRequest, options: TransportRequestOptions, callback: callbackFn<T.IlmGetStatusResponse, TContext>): TransportRequestCallback
-    migrateToDataTiers<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    migrateToDataTiers<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    migrateToDataTiers<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    migrateToDataTiers<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    migrateToDataTiers<TContext = unknown>(params?: T.IlmMigrateToDataTiersRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmMigrateToDataTiersResponse, TContext>>
+    migrateToDataTiers<TContext = unknown>(callback: callbackFn<T.IlmMigrateToDataTiersResponse, TContext>): TransportRequestCallback
+    migrateToDataTiers<TContext = unknown>(params: T.IlmMigrateToDataTiersRequest, callback: callbackFn<T.IlmMigrateToDataTiersResponse, TContext>): TransportRequestCallback
+    migrateToDataTiers<TContext = unknown>(params: T.IlmMigrateToDataTiersRequest, options: TransportRequestOptions, callback: callbackFn<T.IlmMigrateToDataTiersResponse, TContext>): TransportRequestCallback
     moveToStep<TContext = unknown>(params: T.IlmMoveToStepRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.IlmMoveToStepResponse, TContext>>
     moveToStep<TContext = unknown>(params: T.IlmMoveToStepRequest, callback: callbackFn<T.IlmMoveToStepResponse, TContext>): TransportRequestCallback
     moveToStep<TContext = unknown>(params: T.IlmMoveToStepRequest, options: TransportRequestOptions, callback: callbackFn<T.IlmMoveToStepResponse, TContext>): TransportRequestCallback
@@ -927,6 +926,10 @@ declare class Client {
     getJobs<TContext = unknown>(callback: callbackFn<T.MlGetJobsResponse, TContext>): TransportRequestCallback
     getJobs<TContext = unknown>(params: T.MlGetJobsRequest, callback: callbackFn<T.MlGetJobsResponse, TContext>): TransportRequestCallback
     getJobs<TContext = unknown>(params: T.MlGetJobsRequest, options: TransportRequestOptions, callback: callbackFn<T.MlGetJobsResponse, TContext>): TransportRequestCallback
+    getModelSnapshotUpgradeStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
+    getModelSnapshotUpgradeStats<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    getModelSnapshotUpgradeStats<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    getModelSnapshotUpgradeStats<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
     getModelSnapshots<TContext = unknown>(params: T.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlGetModelSnapshotsResponse, TContext>>
     getModelSnapshots<TContext = unknown>(params: T.MlGetModelSnapshotsRequest, callback: callbackFn<T.MlGetModelSnapshotsResponse, TContext>): TransportRequestCallback
     getModelSnapshots<TContext = unknown>(params: T.MlGetModelSnapshotsRequest, options: TransportRequestOptions, callback: callbackFn<T.MlGetModelSnapshotsResponse, TContext>): TransportRequestCallback
@@ -1014,10 +1017,9 @@ declare class Client {
     updateDataFrameAnalytics<TContext = unknown>(params: T.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateDataFrameAnalyticsResponse, TContext>>
     updateDataFrameAnalytics<TContext = unknown>(params: T.MlUpdateDataFrameAnalyticsRequest, callback: callbackFn<T.MlUpdateDataFrameAnalyticsResponse, TContext>): TransportRequestCallback
     updateDataFrameAnalytics<TContext = unknown>(params: T.MlUpdateDataFrameAnalyticsRequest, options: TransportRequestOptions, callback: callbackFn<T.MlUpdateDataFrameAnalyticsResponse, TContext>): TransportRequestCallback
-    updateDatafeed<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    updateDatafeed<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    updateDatafeed<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    updateDatafeed<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    updateDatafeed<TContext = unknown>(params: T.MlUpdateDatafeedRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateDatafeedResponse, TContext>>
+    updateDatafeed<TContext = unknown>(params: T.MlUpdateDatafeedRequest, callback: callbackFn<T.MlUpdateDatafeedResponse, TContext>): TransportRequestCallback
+    updateDatafeed<TContext = unknown>(params: T.MlUpdateDatafeedRequest, options: TransportRequestOptions, callback: callbackFn<T.MlUpdateDatafeedResponse, TContext>): TransportRequestCallback
     updateFilter<TContext = unknown>(params: T.MlUpdateFilterRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MlUpdateFilterResponse, TContext>>
     updateFilter<TContext = unknown>(params: T.MlUpdateFilterRequest, callback: callbackFn<T.MlUpdateFilterResponse, TContext>): TransportRequestCallback
     updateFilter<TContext = unknown>(params: T.MlUpdateFilterRequest, options: TransportRequestOptions, callback: callbackFn<T.MlUpdateFilterResponse, TContext>): TransportRequestCallback
@@ -1040,9 +1042,9 @@ declare class Client {
     validateDetector<TContext = unknown>(params: T.MlValidateDetectorRequest, options: TransportRequestOptions, callback: callbackFn<T.MlValidateDetectorResponse, TContext>): TransportRequestCallback
   }
   monitoring: {
-    bulk<TSource = unknown, TContext = unknown>(params: T.MonitoringBulkRequest<TSource>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MonitoringBulkResponse, TContext>>
-    bulk<TSource = unknown, TContext = unknown>(params: T.MonitoringBulkRequest<TSource>, callback: callbackFn<T.MonitoringBulkResponse, TContext>): TransportRequestCallback
-    bulk<TSource = unknown, TContext = unknown>(params: T.MonitoringBulkRequest<TSource>, options: TransportRequestOptions, callback: callbackFn<T.MonitoringBulkResponse, TContext>): TransportRequestCallback
+    bulk<TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MonitoringBulkResponse, TContext>>
+    bulk<TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.MonitoringBulkRequest<TDocument, TPartialDocument>, callback: callbackFn<T.MonitoringBulkResponse, TContext>): TransportRequestCallback
+    bulk<TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.MonitoringBulkRequest<TDocument, TPartialDocument>, options: TransportRequestOptions, callback: callbackFn<T.MonitoringBulkResponse, TContext>): TransportRequestCallback
   }
   msearch<TDocument = unknown, TContext = unknown>(params?: T.MsearchRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.MsearchResponse<TDocument>, TContext>>
   msearch<TDocument = unknown, TContext = unknown>(callback: callbackFn<T.MsearchResponse<TDocument>, TContext>): TransportRequestCallback
@@ -1165,10 +1167,10 @@ declare class Client {
   searchTemplate<TDocument = unknown, TContext = unknown>(params: T.SearchTemplateRequest, callback: callbackFn<T.SearchTemplateResponse<TDocument>, TContext>): TransportRequestCallback
   searchTemplate<TDocument = unknown, TContext = unknown>(params: T.SearchTemplateRequest, options: TransportRequestOptions, callback: callbackFn<T.SearchTemplateResponse<TDocument>, TContext>): TransportRequestCallback
   searchableSnapshots: {
-    cacheStats<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    cacheStats<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    cacheStats<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    cacheStats<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    cacheStats<TContext = unknown>(params?: T.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SearchableSnapshotsCacheStatsResponse, TContext>>
+    cacheStats<TContext = unknown>(callback: callbackFn<T.SearchableSnapshotsCacheStatsResponse, TContext>): TransportRequestCallback
+    cacheStats<TContext = unknown>(params: T.SearchableSnapshotsCacheStatsRequest, callback: callbackFn<T.SearchableSnapshotsCacheStatsResponse, TContext>): TransportRequestCallback
+    cacheStats<TContext = unknown>(params: T.SearchableSnapshotsCacheStatsRequest, options: TransportRequestOptions, callback: callbackFn<T.SearchableSnapshotsCacheStatsResponse, TContext>): TransportRequestCallback
     clearCache<TContext = unknown>(params?: T.SearchableSnapshotsClearCacheRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.SearchableSnapshotsClearCacheResponse, TContext>>
     clearCache<TContext = unknown>(callback: callbackFn<T.SearchableSnapshotsClearCacheResponse, TContext>): TransportRequestCallback
     clearCache<TContext = unknown>(params: T.SearchableSnapshotsClearCacheRequest, callback: callbackFn<T.SearchableSnapshotsClearCacheResponse, TContext>): TransportRequestCallback
@@ -1505,10 +1507,10 @@ declare class Client {
     updateTransform<TContext = unknown>(params: T.TransformUpdateTransformRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TransformUpdateTransformResponse, TContext>>
     updateTransform<TContext = unknown>(params: T.TransformUpdateTransformRequest, callback: callbackFn<T.TransformUpdateTransformResponse, TContext>): TransportRequestCallback
     updateTransform<TContext = unknown>(params: T.TransformUpdateTransformRequest, options: TransportRequestOptions, callback: callbackFn<T.TransformUpdateTransformResponse, TContext>): TransportRequestCallback
-    upgradeTransforms<TContext = unknown>(params?: TODO, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TODO, TContext>>
-    upgradeTransforms<TContext = unknown>(callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    upgradeTransforms<TContext = unknown>(params: TODO, callback: callbackFn<TODO, TContext>): TransportRequestCallback
-    upgradeTransforms<TContext = unknown>(params: TODO, options: TransportRequestOptions, callback: callbackFn<TODO, TContext>): TransportRequestCallback
+    upgradeTransforms<TContext = unknown>(params?: T.TransformUpgradeTransformsRequest, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.TransformUpgradeTransformsResponse, TContext>>
+    upgradeTransforms<TContext = unknown>(callback: callbackFn<T.TransformUpgradeTransformsResponse, TContext>): TransportRequestCallback
+    upgradeTransforms<TContext = unknown>(params: T.TransformUpgradeTransformsRequest, callback: callbackFn<T.TransformUpgradeTransformsResponse, TContext>): TransportRequestCallback
+    upgradeTransforms<TContext = unknown>(params: T.TransformUpgradeTransformsRequest, options: TransportRequestOptions, callback: callbackFn<T.TransformUpgradeTransformsResponse, TContext>): TransportRequestCallback
   }
   update<TDocumentR = unknown, TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.UpdateRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<T.UpdateResponse<TDocumentR>, TContext>>
   update<TDocumentR = unknown, TDocument = unknown, TPartialDocument = unknown, TContext = unknown>(params: T.UpdateRequest<TDocument, TPartialDocument>, callback: callbackFn<T.UpdateResponse<TDocumentR>, TContext>): TransportRequestCallback

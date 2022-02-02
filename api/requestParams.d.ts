@@ -1767,6 +1767,12 @@ export interface MlGetJobs extends Generic {
   exclude_generated?: boolean;
 }
 
+export interface MlGetModelSnapshotUpgradeStats extends Generic {
+  job_id: string;
+  snapshot_id: string;
+  allow_no_match?: boolean;
+}
+
 export interface MlGetModelSnapshots<T = RequestBody> extends Generic {
   job_id: string;
   snapshot_id?: string;
