@@ -7287,6 +7287,31 @@ WARNING: This parameter has been deprecated.
 |===
 
 [discrete]
+=== ml.getModelSnapshotUpgradeStats
+
+[source,ts]
+----
+client.ml.getModelSnapshotUpgradeStats({
+  job_id: string,
+  snapshot_id: string,
+  allow_no_match: boolean
+})
+----
+link:{ref}/ml-get-job-model-snapshot-upgrade-stats.html[Documentation] +
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job. May be a wildcard, comma separated list or `_all`.
+
+|`snapshot_id` or `snapshotId`
+|`string` - The ID of the snapshot. May be a wildcard, comma separated list or `_all`.
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs or no snapshots. (This includes the `_all` string.)
+
+|===
+
+[discrete]
 === ml.getModelSnapshots
 
 [source,ts]

@@ -931,6 +931,43 @@ MlApi.prototype.getJobs = function mlGetJobsApi (params, options, callback) {
   return this.transport.request(request, options, callback)
 }
 
+MlApi.prototype.getModelSnapshotUpgradeStats = function mlGetModelSnapshotUpgradeStatsApi (params, options, callback) {
+  ;[params, options, callback] = normalizeArguments(params, options, callback)
+
+  // check required parameters
+  if (params.job_id == null && params.jobId == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: job_id or jobId')
+    return handleError(err, callback)
+  }
+  if (params.snapshot_id == null && params.snapshotId == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: snapshot_id or snapshotId')
+    return handleError(err, callback)
+  }
+
+  // check required url components
+  if ((params.snapshot_id != null || params.snapshotId != null) && ((params.job_id == null && params.jobId == null))) {
+    const err = new this[kConfigurationError]('Missing required parameter of the url: job_id')
+    return handleError(err, callback)
+  }
+
+  let { method, body, jobId, job_id, snapshotId, snapshot_id, ...querystring } = params
+  querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
+
+  let path = ''
+  if (method == null) method = 'GET'
+  path = '/' + '_ml' + '/' + 'anomaly_detectors' + '/' + encodeURIComponent(job_id || jobId) + '/' + 'model_snapshots' + '/' + encodeURIComponent(snapshot_id || snapshotId) + '/' + '_upgrade' + '/' + '_stats'
+
+  // build request object
+  const request = {
+    method,
+    path,
+    body: null,
+    querystring
+  }
+
+  return this.transport.request(request, options, callback)
+}
+
 MlApi.prototype.getModelSnapshots = function mlGetModelSnapshotsApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
@@ -1973,6 +2010,7 @@ Object.defineProperties(MlApi.prototype, {
   get_influencers: { get () { return this.getInfluencers } },
   get_job_stats: { get () { return this.getJobStats } },
   get_jobs: { get () { return this.getJobs } },
+  get_model_snapshot_upgrade_stats: { get () { return this.getModelSnapshotUpgradeStats } },
   get_model_snapshots: { get () { return this.getModelSnapshots } },
   get_overall_buckets: { get () { return this.getOverallBuckets } },
   get_records: { get () { return this.getRecords } },
