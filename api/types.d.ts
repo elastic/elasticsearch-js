@@ -6337,7 +6337,6 @@ export interface CatMlDataFrameAnalyticsRequest extends CatCatRequestBase {
   allow_no_match?: boolean
   bytes?: Bytes
   h?: CatCatDfaColumns
-  s?: CatCatDfaColumns
   time?: Time
 }
 
@@ -6385,7 +6384,6 @@ export interface CatMlDatafeedsRequest extends CatCatRequestBase {
   format?: string
   h?: CatCatDatafeedColumns
   help?: boolean
-  s?: CatCatDatafeedColumns
   time?: TimeUnit
   v?: boolean
 }
@@ -6577,7 +6575,6 @@ export interface CatMlJobsRequest extends CatCatRequestBase {
   format?: string
   h?: CatCatAnonalyDetectorColumns
   help?: boolean
-  s?: CatCatAnonalyDetectorColumns
   time?: TimeUnit
   v?: boolean
 }
@@ -7483,7 +7480,6 @@ export interface CatTransformsRequest extends CatCatRequestBase {
   allow_no_match?: boolean
   from?: integer
   h?: CatCatTransformColumns
-  s?: CatCatTransformColumns
   time?: Time
   size?: integer
 }
