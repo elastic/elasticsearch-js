@@ -356,21 +356,24 @@ export default class Helpers {
       let loadedOperations = 0
       timeoutRef = setTimeout(onFlushTimeout, flushInterval) // eslint-disable-line
 
-      for await (const operation of operationsStream) {
-        timeoutRef.refresh()
-        loadedOperations += 1
-        msearchBody.push(operation[0], operation[1])
-        callbacks.push(operation[2])
-        if (loadedOperations >= operations) {
-          const send = await semaphore()
-          send(msearchBody.slice(), callbacks.slice())
-          msearchBody.length = 0
-          callbacks.length = 0
-          loadedOperations = 0
+      try {
+        for await (const operation of operationsStream) {
+          timeoutRef.refresh()
+          loadedOperations += 1
+          msearchBody.push(operation[0], operation[1])
+          callbacks.push(operation[2])
+          if (loadedOperations >= operations) {
+            const send = await semaphore()
+            send(msearchBody.slice(), callbacks.slice())
+            msearchBody.length = 0
+            callbacks.length = 0
+            loadedOperations = 0
+          }
         }
+      } finally {
+        clearTimeout(timeoutRef)
       }
 
-      clearTimeout(timeoutRef)
       // In some cases the previos http call does not have finished,
       // or we didn't reach the flush bytes threshold, so we force one last operation.
       if (loadedOperations > 0) {
