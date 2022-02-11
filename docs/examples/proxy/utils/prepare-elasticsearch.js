@@ -43,21 +43,19 @@ async function generateApiKeys (opts) {
     }
   })
 
-  const { body } = await client.security.createApiKey({
-    body: {
-      name: 'elasticsearch-proxy',
-      role_descriptors: {
-        'elasticsearch-proxy-users': {
-          index: [{
-            names: indexNames,
-            privileges
-          }]
-        }
+  const result = await client.security.createApiKey({
+    name: 'elasticsearch-proxy',
+    role_descriptors: {
+      'elasticsearch-proxy-users': {
+        index: [{
+          names: indexNames,
+          privileges
+        }]
       }
     }
   })
 
-  return Buffer.from(`${body.id}:${body.api_key}`).toString('base64')
+  return Buffer.from(`${result.id}:${result.api_key}`).toString('base64')
 }
 
 generateApiKeys()

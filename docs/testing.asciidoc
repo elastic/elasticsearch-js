@@ -72,7 +72,7 @@ mock.add({
   return { status: 'ok' }
 })
 
-client.info(console.log)
+client.info().then(console.log, console.log)
 ----
 
 As you can see it works closely with the client itself, once you have created a 
@@ -129,8 +129,8 @@ mock.add({
   return { count: 42 }
 })
 
-client.count({ index: 'foo' }, console.log) // => { count: 42 }
-client.count({ index: 'bar' }, console.log) // => { count: 42 }
+client.count({ index: 'foo' }).then(console.log, console.log) // => { count: 42 }
+client.count({ index: 'bar' }).then(console.log, console.log) // => { count: 42 }
 ----
 
 And wildcards are supported as well.
