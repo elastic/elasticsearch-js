@@ -45,9 +45,9 @@ is performed here, this means that if you want to swap the default HTTP client
 
 [source,js]
 ----
-const { Client, Connection } = require('@elastic/elasticsearch')
+const { Client, BaseConnection } = require('@elastic/elasticsearch')
 
-class MyConnection extends Connection {
+class MyConnection extends BaseConnection {
   request (params, callback) {
     // your code
   }

@@ -8,5 +8,4 @@ section, you can see the possible options that you can use to configure it.
 * <<basic-config>>
 * <<advanced-config>>
 * <<child>>
-* <<extend>>
 * <<client-testing>>
