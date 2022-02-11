@@ -29,6 +29,7 @@ const { join, sep } = require('path')
 const yaml = require('js-yaml')
 const ms = require('ms')
 const { Client } = require('../../index')
+const { kProductCheck } = require('@elastic/transport/lib/symbols')
 const build = require('./test-runner')
 const { sleep } = require('./helper')
 const createJunitReporter = require('./reporter')
@@ -49,6 +50,8 @@ const freeSkips = {
     'Body params with array param override query string',
     'Body params with string param scroll id override query string'
   ],
+  'free/cat.allocation/10_basic.yml': ['*'],
+  'free/cat.snapshots/10_basic.yml': ['Test cat snapshots output'],
   // TODO: remove this once 'arbitrary_key' is implemented
   // https://github.com/elastic/elasticsearch/pull/41492
   'indices.split/30_copy_settings.yml': ['*'],
@@ -62,9 +65,11 @@ const freeSkips = {
   'search.aggregation/240_max_buckets.yml': ['*'],
   // the yaml runner assumes that null means "does not exists",
   // while null is a valid json value, so the check will fail
-  'search/320_disallow_queries.yml': ['Test disallow expensive queries']
+  'search/320_disallow_queries.yml': ['Test disallow expensive queries'],
+  'free/tsdb/90_unsupported_operations.yml': ['noop update']
 }
 const platinumBlackList = {
+  'api_key/20_query.yml': ['*'],
   'analytics/histogram.yml': ['Histogram requires values in increasing order'],
   // this two test cases are broken, we should
   // return on those in the future.
@@ -93,9 +98,15 @@ const platinumBlackList = {
   // The cleanup fails with a index not found when retrieving the jobs
   'ml/get_datafeed_stats.yml': ['Test get datafeed stats when total_search_time_ms mapping is missing'],
   'ml/bucket_correlation_agg.yml': ['Test correlation bucket agg simple'],
+  // start should be a string
+  'ml/jobs_get_result_overall_buckets.yml': ['Test overall buckets given epoch start and end params'],
+  // this can't happen with the client
+  'ml/start_data_frame_analytics.yml': ['Test start with inconsistent body/param ids'],
+  'ml/stop_data_frame_analytics.yml': ['Test stop with inconsistent body/param ids'],
   'ml/preview_datafeed.yml': ['*'],
   // Investigate why is failing
   'ml/inference_crud.yml': ['*'],
+  'ml/categorization_agg.yml': ['Test categorization aggregation with poor settings'],
   // investigate why this is failing
   'monitoring/bulk/10_basic.yml': ['*'],
   'monitoring/bulk/20_privileges.yml': ['*'],
@@ -161,6 +172,8 @@ function runner (opts = {}) {
     }
   }
   const client = new Client(options)
+  // TODO: remove the following line once https://github.com/elastic/elasticsearch/issues/82358 is fixed
+  client.transport[kProductCheck] = null
   log('Loading yaml suite')
   start({ client, isXPack: opts.isXPack })
     .catch(err => {

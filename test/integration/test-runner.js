@@ -29,7 +29,7 @@ const { join } = require('path')
 const { locations } = require('../../scripts/download-artifacts')
 const packageJson = require('../../package.json')
 
-const { delve, to, isXPackTemplate, sleep } = helper
+const { delve, to, isXPackTemplate, sleep, updateParams } = helper
 
 const supportedFeatures = [
   'gtelte',
@@ -57,6 +57,12 @@ function build (opts = {}) {
   async function cleanup (isXPack) {
     response = null
     stash.clear()
+
+    await client.cluster.health({
+      wait_for_no_initializing_shards: true,
+      timeout: '70s',
+      level: 'shards'
+    })
 
     if (isXPack) {
       // wipe rollup jobs
@@ -98,16 +104,24 @@ function build (opts = {}) {
     const repositories = await client.snapshot.getRepository()
     for (const repository of Object.keys(repositories)) {
       await client.snapshot.delete({ repository, snapshot: '*' }, { ignore: [404] })
-      await client.snapshot.deleteRepository({ repository }, { ignore: [404] })
+      await client.snapshot.deleteRepository({ name: repository }, { ignore: [404] })
     }
 
     if (isXPack) {
       // clean data streams
-      await client.indices.deleteDataStream({ name: '*' })
+      await client.indices.deleteDataStream({ name: '*', expand_wildcards: 'all' })
     }
 
     // clean all indices
-    await client.indices.delete({ index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden' }, { ignore: [404] })
+    await client.indices.delete({
+      index: [
+        '*',
+        '-.ds-ilm-history-*'
+      ],
+      expand_wildcards: 'open,closed,hidden'
+    }, {
+      ignore: [404]
+    })
 
     // delete templates
     const templates = await client.cat.templates({ h: 'name' })
@@ -150,7 +164,7 @@ function build (opts = {}) {
       const policies = await client.ilm.getLifecycle()
       for (const policy in policies) {
         if (preserveIlmPolicies.includes(policy)) continue
-        await client.ilm.deleteLifecycle({ policy })
+        await client.ilm.deleteLifecycle({ name: policy })
       }
 
       // delete autofollow patterns
@@ -371,7 +385,7 @@ function build (opts = {}) {
    * @returns {Promise}
    */
   async function doAction (action, stats) {
-    const cmd = parseDo(action)
+    const cmd = await updateParams(parseDo(action))
     let api
     try {
       api = delve(client, cmd.method).bind(client)
@@ -450,6 +464,7 @@ function build (opts = {}) {
 
     if (action.catch) {
       stats.assertions += 1
+      assert.ok(err, `Expecting an error, but instead got ${JSON.stringify(err)}, the response was ${JSON.stringify(result)}`)
       assert.ok(
         parseDoError(err, action.catch),
         `the error should be: ${action.catch}`
@@ -620,16 +635,11 @@ function match (val1, val2, action) {
     val2.startsWith('/') && (val2.endsWith('/\n') || val2.endsWith('/'))
   ) {
     const regStr = val2
-      // match all comments within a "regexp" match arg
-      .replace(/([\S\s]?)#[^\n]*\n/g, (match, prevChar) => {
-        return prevChar === '\\' ? match : `${prevChar}\n`
-      })
-      // remove all whitespace from the expression, all meaningful
-      // whitespace is represented with \s
-      .replace(/\s/g, '')
+      .replace(/(^|[^\\])#.*/g, '$1')
+      .replace(/(^|[^\\])\s+/g, '$1')
       .slice(1, -1)
     // 'm' adds the support for multiline regex
-    assert.ok(new RegExp(regStr, 'm').test(val1), `should match pattern provided: ${val2}, action: ${JSON.stringify(action)}`)
+    assert.ok(new RegExp(regStr, 'm').test(val1), `should match pattern provided: ${val2}, but got: ${val1}`)
     // tap.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}, action: ${JSON.stringify(action)}`)
   // everything else
   } else {
@@ -745,6 +755,11 @@ function parseDo (action) {
         acc.method = val.replace(/_([a-z])/g, g => g[1].toUpperCase())
         acc.api = val
         acc.params = action[val] // camelify(action[val])
+        if (typeof acc.params.body === 'string') {
+          try {
+            acc.params.body = JSON.parse(acc.params.body)
+          } catch (err) {}
+        }
     }
     return acc
   }, {})
