@@ -56,6 +56,10 @@ of `^7.10.0`).
 |`10.x`
 |April 2021
 |`7.12` (mid 2021)
+
+|`12.x`
+|April 2022
+|`8.2` (early 2022)
 |===
 
 [discrete]
@@ -70,8 +74,8 @@ Elasticsearch language clients are only backwards compatible with default distri
 |{es} Version
 |Client Version
 
-|`master`
-|`master`
+|`8.x`
+|`8.x`
 
 |`7.x`
 |`7.x`

@@ -51,6 +51,7 @@ of `^7.10.0`).
 | --------------- |------------------| ---------------------- |
 | `8.x`           | `December 2019`  | `7.11` (early 2021)    |
 | `10.x`          | `April 2021`      | `7.12` (mid 2021)     |
+| `12.x`          | `April 2022`      | `8.2` (early 2022)     |
 
 ### Compatibility
 
@@ -59,7 +60,7 @@ Elasticsearch language clients are only backwards compatible with default distri
 
 | Elasticsearch Version | Client Version |
 | --------------------- |----------------|
-| `master`              | `master`       |
+| `8.x`                 | `8.x`          |
 | `7.x`                 | `7.x`          |
 | `6.x`                 | `6.x`          |
 | `5.x`                 | `5.x`          |
@@ -80,11 +81,9 @@ We recommend that you write a lightweight proxy that uses this client instead, y
 - [Usage](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-connecting.html#client-usage)
 - [Client configuration](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-configuration.html)
 - [API reference](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference.html)
-- [Breaking changes coming from the old client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/breaking-changes.html)
 - [Authentication](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-connecting.html#authentication)
 - [Observability](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/observability.html)
 - [Creating a child client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/child.html)
-- [Extend the client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/extend.html)
 - [Client helpers](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-helpers.html)
 - [Typescript support](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html)
 - [Testing](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-testing.html)
@@ -92,48 +91,6 @@ We recommend that you write a lightweight proxy that uses this client instead, y
 
 ## Quick start
 
-First of all, require the client and initialize it:
-```js
-const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
-```
-
-You can use both the callback-style API and the promise-style API, both behave the same way.
-```js
-// promise API
-const result = await client.search({
-  index: 'my-index',
-  body: {
-    query: {
-      match: { hello: 'world' }
-    }
-  }
-})
-
-// callback API
-client.search({
-  index: 'my-index',
-  body: {
-    query: {
-      match: { hello: 'world' }
-    }
-  }
-}, (err, result) => {
-  if (err) console.log(err)
-})
-```
-The returned value of **every** API call is formed as follows:
-```ts
-{
-  body: object | boolean
-  statusCode: number
-  headers: object
-  warnings: [string]
-  meta: object
-}
-```
-
-Let's see a complete example!
 ```js
 'use strict'
 
@@ -144,8 +101,7 @@ async function run () {
   // Let's start by indexing some data
   await client.index({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
-    body: {
+    document: {
       character: 'Ned Stark',
       quote: 'Winter is coming.'
     }
@@ -153,8 +109,7 @@ async function run () {
 
   await client.index({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
-    body: {
+    document: {
       character: 'Daenerys Targaryen',
       quote: 'I am the blood of the dragon.'
     }
@@ -162,8 +117,7 @@ async function run () {
 
   await client.index({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
-    body: {
+    document: {
       character: 'Tyrion Lannister',
       quote: 'A mind needs books like a sword needs a whetstone.'
     }
@@ -174,17 +128,14 @@ async function run () {
   await client.indices.refresh({ index: 'game-of-thrones' })
 
   // Let's search!
-  const { body } = await client.search({
+  const result= await client.search({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using Elasticsearch ≤ 6
-    body: {
-      query: {
-        match: { quote: 'winter' }
-      }
+    query: {
+      match: { quote: 'winter' }
     }
   })
 
-  console.log(body.hits.hits)
+  console.log(result.hits.hits)
 }
 
 run().catch(console.log)
@@ -217,13 +168,13 @@ const { Client: Client7 } = require('es7')
 const client6 = new Client6({ node: 'http://localhost:9200' })
 const client7 = new Client7({ node: 'http://localhost:9201' })
 
-client6.info(console.log)
-client7.info(console.log)
+client6.info().then(console.log, console.log)
+client7.info().then(console.log, console.log)
 ```
 
-Finally, if you want to install the client for the next version of Elasticsearch *(the one that lives in Elasticsearch’s master branch)*, you can use the following command:
+Finally, if you want to install the client for the next version of Elasticsearch *(the one that lives in Elasticsearch’s main branch)*, you can use the following command:
 ```sh
-npm install esmaster@github:elastic/elasticsearch-js
+npm install esmain@github:elastic/elasticsearch-js
 ```
 
 ## License

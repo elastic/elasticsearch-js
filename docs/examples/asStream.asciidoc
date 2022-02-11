@@ -12,9 +12,9 @@ const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
 async function run () {
-  const { body: bulkResponse } = await client.bulk({
+  const bulkResponse = await client.bulk({
     refresh: true,
-    body: [
+    operations: [
       // operation to perform
       { index: { _index: 'game-of-thrones' } },
       // the document to index
@@ -43,13 +43,11 @@ async function run () {
   }
 
   // Let's search!
-  const { body } = await client.search({
+  const result = await client.search({
     index: 'game-of-thrones',
-    body: {
-      query: {
-        match: {
-          quote: 'winter'
-        }
+    query: {
+      match: {
+        quote: 'winter'
       }
     }
   }, {
@@ -59,17 +57,17 @@ async function run () {
   // stream async iteration, available in Node.js ≥ 10
   let payload = ''
   body.setEncoding('utf8')
-  for await (const chunk of body) {
+  for await (const chunk of result) {
     payload += chunk
   }
   console.log(JSON.parse(payload))
 
   // classic stream callback style
   let payload = ''
-  body.setEncoding('utf8')
-  body.on('data', chunk => { payload += chunk })
-  body.on('error', console.log)
-  body.on('end', () => {
+  result.setEncoding('utf8')
+  result.on('data', chunk => { payload += chunk })
+  result.on('error', console.log)
+  result.on('end', () => {
     console.log(JSON.parse(payload))
   })
 }
@@ -91,9 +89,10 @@ const fastify = require('fastify')()
 fastify.post('/search/:index', async (req, reply) => {
   const { body, statusCode, headers } = await client.search({
     index: req.params.index,
-    body: req.body
+    ...req.body
   }, {
-    asStream: true
+    asStream: true,
+    meta: true
   })
 
   reply.code(statusCode).headers(headers)

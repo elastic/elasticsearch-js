@@ -19,7 +19,7 @@ const client = new Client({
 async function run () {
   await client.indices.create({
     index: 'tweets',
-    body: {
+    operations: {
       mappings: {
         properties: {
           id: { type: 'integer' },
@@ -58,9 +58,9 @@ async function run () {
     date: new Date()
   }]
 
-  const body = dataset.flatMap(doc => [{ index: { _index: 'tweets' } }, doc])
+  const operations = dataset.flatMap(doc => [{ index: { _index: 'tweets' } }, doc])
 
-  const { body: bulkResponse } = await client.bulk({ refresh: true, body })
+  const bulkResponse = await client.bulk({ refresh: true, operations })
 
   if (bulkResponse.errors) {
     const erroredDocuments = []
@@ -84,7 +84,7 @@ async function run () {
     console.log(erroredDocuments)
   }
 
-  const { body: count } = await client.count({ index: 'tweets' })
+  const count = await client.count({ index: 'tweets' })
   console.log(count)
 }
 
