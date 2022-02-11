@@ -60,10 +60,8 @@ module.exports = async (req, res) => {
       // expose you to the risk that a malicious user
       // could overload your cluster by crafting
       // expensive queries.
-      body: {
-        query: {
-          match: { field: req.body.text }
-        }
+      query: {
+        match: { field: req.body.text }
       }
     }, {
       headers: {
@@ -74,7 +72,7 @@ module.exports = async (req, res) => {
     // It might be useful to configure http control caching headers
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
     // res.setHeader('stale-while-revalidate', '30')
-    res.json(response.body)
+    res.json(response)
   } catch (err) {
     res.status(err.statusCode || 500)
     res.json({

@@ -16,18 +16,18 @@ async function run () {
   await client.index({
     index: 'game-of-thrones',
     id: '1',
-    body: {
+    document: {
       character: 'Ned Stark',
       quote: 'Winter is coming.'
     }
   })
 
-  const { body } = await client.exists({
+  const exists = await client.exists({
     index: 'game-of-thrones',
     id: 1
   })
 
-  console.log(body) // true
+  console.log(exists) // true
 }
 
 run().catch(console.log)

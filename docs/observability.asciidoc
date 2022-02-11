@@ -2,7 +2,7 @@
 === Observability
 
 The client does not provide a default logger, but instead it offers an event 
-emitter interfaces to hook into internal events, such as `request` and 
+emitter interface to hook into internal events, such as `request` and 
 `response`.
 
 Correlating those events can be hard, especially if your applications have a 
@@ -36,7 +36,7 @@ const logger = require('my-logger')()
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
-client.on('response', (err, result) => {
+client.diagnostic.on('response', (err, result) => {
   if (err) {
     logger.error(err)
   } else {
@@ -53,7 +53,7 @@ The client emits the following events:
 a|Emitted before starting serialization and compression. If you want to measure this phase duration, you should measure the time elapsed between this event and `request`.
 [source,js]
 ----
-client.on('serialization', (err, result) => {
+client.diagnostic.on('serialization', (err, result) => {
   console.log(err, result)
 })
 ----
@@ -62,7 +62,7 @@ client.on('serialization', (err, result) => {
 a|Emitted before sending the actual request to {es} _(emitted multiple times in case of retries)_.
 [source,js]
 ----
-client.on('request', (err, result) => {
+client.diagnostic.on('request', (err, result) => {
   console.log(err, result)
 })
 ----
@@ -71,7 +71,7 @@ client.on('request', (err, result) => {
 a|Emitted before starting deserialization and decompression. If you want to measure this phase duration, you should measure the time elapsed between this event and `response`. _(This event might not be emitted in certain situations)_.
 [source,js]
 ----
-client.on('deserialization', (err, result) => {
+client.diagnostic.on('deserialization', (err, result) => {
   console.log(err, result)
 })
 ----
@@ -80,7 +80,7 @@ client.on('deserialization', (err, result) => {
 a|Emitted once {es} response has been received and parsed.
 [source,js]
 ----
-client.on('response', (err, result) => {
+client.diagnostic.on('response', (err, result) => {
   console.log(err, result)
 })
 ----
@@ -89,7 +89,7 @@ client.on('response', (err, result) => {
 a|Emitted when the client ends a sniffing request.
 [source,js]
 ----
-client.on('sniff', (err, result) => {
+client.diagnostic.on('sniff', (err, result) => {
   console.log(err, result)
 })
 ----
@@ -98,7 +98,7 @@ client.on('sniff', (err, result) => {
 a|Emitted if the client is able to resurrect a dead node.
 [source,js]
 ----
-client.on('resurrect', (err, result) => {
+client.diagnostic.on('resurrect', (err, result) => {
   console.log(err, result)
 })
 ----
@@ -185,14 +185,14 @@ handle this problem.
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
-client.on('request', (err, result) => {
+client.diagnostic.on('request', (err, result) => {
   const { id } = result.meta.request
   if (err) {
     console.log({ error: err, reqId: id })
   }
 })
 
-client.on('response', (err, result) => {
+client.diagnostic.on('response', (err, result) => {
   const { id } = result.meta.request
   if (err) {
     console.log({ error: err, reqId: id })
@@ -201,10 +201,8 @@ client.on('response', (err, result) => {
 
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
-}, (err, result) => {
-  if (err) console.log(err)
-})
+  query: { match_all: {} }
+}).then(console.log, console.log)
 ----
 
 
@@ -232,12 +230,10 @@ You can also specify a custom id per request:
 ----
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  query: { match_all: {} }
 }, {
   id: 'custom-id'
-}, (err, result) => {
-  if (err) console.log(err)
-})
+}).then(console.log, console.log)
 ----
 
 
@@ -252,7 +248,7 @@ can do that via the `context` option of a request:
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
-client.on('request', (err, result) => {
+client.diagnostic.on('request', (err, result) => {
   const { id } = result.meta.request
   const { context } = result.meta
   if (err) {
@@ -260,7 +256,7 @@ client.on('request', (err, result) => {
   }
 })
 
-client.on('response', (err, result) => {
+client.diagnostic.on('response', (err, result) => {
   const { id } = result.meta.request
   const { winter } = result.meta.context
   if (err) {
@@ -270,12 +266,10 @@ client.on('response', (err, result) => {
 
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  query: { match_all: {} }
 }, {
   context: { winter: 'is coming' }
-}, (err, result) => {
-  if (err) console.log(err)
-})
+}).then(console.log, console.log)
 ----
 
 The context object can also be configured as a global option in the client
@@ -290,7 +284,7 @@ const client = new Client({
   context: { winter: 'is coming' }
 })
 
-client.on('request', (err, result) => {
+client.diagnostic.on('request', (err, result) => {
   const { id } = result.meta.request
   const { context } = result.meta
   if (err) {
@@ -298,7 +292,7 @@ client.on('request', (err, result) => {
   }
 })
 
-client.on('response', (err, result) => {
+client.diagnostic.on('response', (err, result) => {
   const { id } = result.meta.request
   const { winter } = result.meta.context
   if (err) {
@@ -308,12 +302,10 @@ client.on('response', (err, result) => {
 
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
+  query: { match_all: {} }
 }, {
   context: { winter: 'has come' }
-}, (err, result) => {
-  if (err) console.log(err)
-})
+}).then(console.log, console.log)
 ----
 
 
@@ -339,7 +331,7 @@ const child = client.child({
 
 console.log(client.name, child.name)
 
-client.on('request', (err, result) => {
+client.diagnostic.on('request', (err, result) => {
   const { id } = result.meta.request
   const { name } = result.meta
   if (err) {
@@ -347,7 +339,7 @@ client.on('request', (err, result) => {
   }
 })
 
-client.on('response', (err, result) => {
+client.diagnostic.on('response', (err, result) => {
   const { id } = result.meta.request
   const { name } = result.meta
   if (err) {
@@ -357,17 +349,13 @@ client.on('response', (err, result) => {
 
 client.search({
   index: 'my-index',
-  body: { foo: 'bar' }
-}, (err, result) => {
-  if (err) console.log(err)
-})
+  query: { match_all: {} }
+}).then(console.log, console.log)
 
 child.search({
   index: 'my-index',
-  body: { foo: 'bar' }
-}, (err, result) => {
-  if (err) console.log(err)
-})
+  query: { match_all: {} }
+}).then(console.log, console.log)
 ----
 
 
@@ -397,9 +385,7 @@ client.search({
   body: { foo: 'bar' }
 }, {
   opaqueId: 'my-search'
-}, (err, result) => {
-  if (err) console.log(err)
-})
+}).then(console.log, console.log)
 ----
 
 Sometimes it may be useful to prefix all the `X-Opaque-Id` headers with a 
@@ -421,8 +407,6 @@ client.search({
   body: { foo: 'bar' }
 }, {
   opaqueId: 'my-search'
-}, (err, result) => {
-  if (err) console.log(err)
-})
+}).then(console.log, console.log)
 ----
 

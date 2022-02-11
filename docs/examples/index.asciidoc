@@ -17,7 +17,6 @@ Following you can find some examples on how to use the client.
 * Executing a <<search_examples,search>> request;
 * I need <<suggest_examples,suggestions>>;
 * How to use the <<transport_request_examples,transport.request>> method;
-* How to use <<typescript_examples,TypeScript>>;
 
 include::asStream.asciidoc[]
 include::bulk.asciidoc[]
@@ -29,7 +28,6 @@ include::scroll.asciidoc[]
 include::search.asciidoc[]
 include::suggest.asciidoc[]
 include::transport.request.asciidoc[]
-include::typescript.asciidoc[]
 include::sql.query.asciidoc[]
 include::update.asciidoc[]
 include::update_by_query.asciidoc[]
