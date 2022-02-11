@@ -513,32 +513,10 @@ export default class Indices {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async existsType (this: That, params: T.IndicesExistsTypeRequest | TB.IndicesExistsTypeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsTypeResponse>
-  async existsType (this: That, params: T.IndicesExistsTypeRequest | TB.IndicesExistsTypeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsTypeResponse, unknown>>
-  async existsType (this: That, params: T.IndicesExistsTypeRequest | TB.IndicesExistsTypeRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsTypeResponse>
-  async existsType (this: That, params: T.IndicesExistsTypeRequest | TB.IndicesExistsTypeRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'type']
-    const querystring: Record<string, any> = {}
-    const body = undefined
-
-    for (const key in params) {
-      if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'HEAD'
-    const path = `/${encodeURIComponent(params.index.toString())}/_mapping/${encodeURIComponent(params.type.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
-  }
-
-  async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async fieldUsageStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async fieldUsageStats (this: That, params?: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesFieldUsageStatsResponse>
+  async fieldUsageStats (this: That, params?: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesFieldUsageStatsResponse, unknown>>
+  async fieldUsageStats (this: That, params?: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesFieldUsageStatsResponse>
+  async fieldUsageStats (this: That, params?: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -548,6 +526,7 @@ export default class Indices {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1563,7 +1542,7 @@ export default class Indices {
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesValidateQueryResponse, unknown>>
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<T.IndicesValidateQueryResponse>
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'type']
+    const acceptedPath: string[] = ['index']
     const acceptedBody: string[] = ['query']
     const querystring: Record<string, any> = {}
     // @ts-expect-error

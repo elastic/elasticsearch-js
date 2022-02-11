@@ -43,10 +43,10 @@ export default class SearchableSnapshots {
     this.transport = transport
   }
 
-  async cacheStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async cacheStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async cacheStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async cacheStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async cacheStats (this: That, params?: T.SearchableSnapshotsCacheStatsRequest | TB.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchableSnapshotsCacheStatsResponse>
+  async cacheStats (this: That, params?: T.SearchableSnapshotsCacheStatsRequest | TB.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchableSnapshotsCacheStatsResponse, unknown>>
+  async cacheStats (this: That, params?: T.SearchableSnapshotsCacheStatsRequest | TB.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptions): Promise<T.SearchableSnapshotsCacheStatsResponse>
+  async cacheStats (this: That, params?: T.SearchableSnapshotsCacheStatsRequest | TB.SearchableSnapshotsCacheStatsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['node_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -56,6 +56,7 @@ export default class SearchableSnapshots {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }

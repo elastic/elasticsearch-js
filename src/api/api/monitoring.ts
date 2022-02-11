@@ -43,10 +43,10 @@ export default class Monitoring {
     this.transport = transport
   }
 
-  async bulk<TSource = unknown> (this: That, params: T.MonitoringBulkRequest<TSource> | TB.MonitoringBulkRequest<TSource>, options?: TransportRequestOptionsWithOutMeta): Promise<T.MonitoringBulkResponse>
-  async bulk<TSource = unknown> (this: That, params: T.MonitoringBulkRequest<TSource> | TB.MonitoringBulkRequest<TSource>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MonitoringBulkResponse, unknown>>
-  async bulk<TSource = unknown> (this: That, params: T.MonitoringBulkRequest<TSource> | TB.MonitoringBulkRequest<TSource>, options?: TransportRequestOptions): Promise<T.MonitoringBulkResponse>
-  async bulk<TSource = unknown> (this: That, params: T.MonitoringBulkRequest<TSource> | TB.MonitoringBulkRequest<TSource>, options?: TransportRequestOptions): Promise<any> {
+  async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.MonitoringBulkResponse>
+  async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MonitoringBulkResponse, unknown>>
+  async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.MonitoringBulkResponse>
+  async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['type']
     const acceptedBody: string[] = ['operations']
     const querystring: Record<string, any> = {}

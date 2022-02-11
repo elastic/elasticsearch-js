@@ -937,6 +937,28 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async getModelSnapshotUpgradeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getModelSnapshotUpgradeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getModelSnapshotUpgradeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getModelSnapshotUpgradeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['job_id', 'snapshot_id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/model_snapshots/${encodeURIComponent(params.snapshot_id.toString())}/_upgrade/_stats`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotsResponse>
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetModelSnapshotsResponse, unknown>>
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions): Promise<T.MlGetModelSnapshotsResponse>
@@ -1106,19 +1128,31 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async inferTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInferTrainedModelDeploymentResponse>
+  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInferTrainedModelDeploymentResponse, unknown>>
+  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlInferTrainedModelDeploymentResponse>
+  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
+    const acceptedBody: string[] = ['docs']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1391,7 +1425,7 @@ export default class Ml {
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<T.MlPutDataFrameAnalyticsResponse>
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', 'model_memory_limit', 'source']
+    const acceptedBody: string[] = ['allow_lazy_start', 'analysis', 'analyzed_fields', 'description', 'dest', 'max_num_threads', 'model_memory_limit', 'source', 'headers', 'version']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1425,7 +1459,7 @@ export default class Ml {
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlPutDatafeedResponse>
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size']
+    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size', 'headers']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1527,7 +1561,7 @@ export default class Ml {
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelResponse>
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['compressed_definition', 'definition', 'description', 'inference_config', 'input', 'metadata', 'model_type', 'tags']
+    const acceptedBody: string[] = ['compressed_definition', 'definition', 'description', 'inference_config', 'input', 'metadata', 'model_type', 'model_size_bytes', 'tags']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1578,19 +1612,31 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putTrainedModelDefinitionPart (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelDefinitionPartResponse>
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelDefinitionPartResponse, unknown>>
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelDefinitionPartResponse>
+  async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id', 'part']
+    const acceptedBody: string[] = ['definition', 'total_definition_length', 'total_parts']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1600,19 +1646,31 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putTrainedModelVocabulary (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelVocabularyResponse>
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelVocabularyResponse, unknown>>
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelVocabularyResponse>
+  async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
+    const acceptedBody: string[] = ['vocabulary']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1757,19 +1815,19 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async startTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartTrainedModelDeploymentResponse>
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartTrainedModelDeploymentResponse, unknown>>
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStartTrainedModelDeploymentResponse>
+  async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1835,19 +1893,19 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async stopTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopTrainedModelDeploymentResponse>
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopTrainedModelDeploymentResponse, unknown>>
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlStopTrainedModelDeploymentResponse>
+  async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -2054,7 +2112,7 @@ export default class Ml {
   async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptions): Promise<T.MlValidateResponse>
   async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['job_id', 'analysis_config', 'analysis_limits', 'data_description', 'description', 'model_plot', 'model_snapshot_retention_days', 'results_index_name']
+    const acceptedBody: string[] = ['job_id', 'analysis_config', 'analysis_limits', 'data_description', 'description', 'model_plot', 'model_snapshot_id', 'model_snapshot_retention_days', 'results_index_name']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

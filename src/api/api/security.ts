@@ -436,10 +436,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async enrollKibana (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async enrollKibana (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async enrollKibana (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async enrollKibana (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollKibanaResponse>
+  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnrollKibanaResponse, unknown>>
+  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptions): Promise<T.SecurityEnrollKibanaResponse>
+  async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -449,6 +449,7 @@ export default class Security {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -458,10 +459,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async enrollNode (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async enrollNode (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async enrollNode (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async enrollNode (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollNodeResponse>
+  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnrollNodeResponse, unknown>>
+  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptions): Promise<T.SecurityEnrollNodeResponse>
+  async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -471,6 +472,7 @@ export default class Security {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1037,19 +1039,32 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async queryApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async queryApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async queryApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async queryApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryApiKeysResponse>
+  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryApiKeysResponse, unknown>>
+  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryApiKeysResponse>
+  async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['query', 'from', 'sort', 'size', 'search_after']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1059,19 +1074,31 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async samlAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async samlAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async samlAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async samlAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlAuthenticateResponse>
+  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlAuthenticateResponse, unknown>>
+  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlAuthenticateResponse>
+  async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['content', 'ids', 'realm']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1081,19 +1108,31 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async samlCompleteLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async samlCompleteLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async samlCompleteLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async samlCompleteLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlCompleteLogoutResponse>
+  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlCompleteLogoutResponse, unknown>>
+  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlCompleteLogoutResponse>
+  async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['realm', 'ids', 'query_string', 'content']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1103,19 +1142,31 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async samlInvalidate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async samlInvalidate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async samlInvalidate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async samlInvalidate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlInvalidateResponse>
+  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlInvalidateResponse, unknown>>
+  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlInvalidateResponse>
+  async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['acs', 'query_string', 'realm']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1125,19 +1176,31 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async samlLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async samlLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async samlLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async samlLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlLogoutResponse>
+  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlLogoutResponse, unknown>>
+  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlLogoutResponse>
+  async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['token', 'refresh_token']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1147,19 +1210,32 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async samlPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async samlPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async samlPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async samlPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlPrepareAuthenticationResponse>
+  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlPrepareAuthenticationResponse, unknown>>
+  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlPrepareAuthenticationResponse>
+  async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['acs', 'realm', 'relay_state']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
     params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -1169,19 +1245,19 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async samlServiceProviderMetadata (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async samlServiceProviderMetadata (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async samlServiceProviderMetadata (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async samlServiceProviderMetadata (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlServiceProviderMetadataResponse>
+  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlServiceProviderMetadataResponse, unknown>>
+  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlServiceProviderMetadataResponse>
+  async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['realm_name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
