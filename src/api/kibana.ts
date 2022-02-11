@@ -203,7 +203,7 @@ interface KibanaClient {
     existsAlias: <TContext = unknown>(params: T.IndicesExistsAliasRequest| TB.IndicesExistsAliasRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesExistsAliasResponse, TContext>>
     existsIndexTemplate: <TContext = unknown>(params: T.IndicesExistsIndexTemplateRequest| TB.IndicesExistsIndexTemplateRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesExistsIndexTemplateResponse, TContext>>
     existsTemplate: <TContext = unknown>(params: T.IndicesExistsTemplateRequest| TB.IndicesExistsTemplateRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesExistsTemplateResponse, TContext>>
-    fieldUsageStats: <TContext = unknown>(params?: T.IndicesFieldUsageStatsRequest| TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesFieldUsageStatsResponse, TContext>>
+    fieldUsageStats: <TContext = unknown>(params: T.IndicesFieldUsageStatsRequest| TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesFieldUsageStatsResponse, TContext>>
     flush: <TContext = unknown>(params?: T.IndicesFlushRequest| TB.IndicesFlushRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesFlushResponse, TContext>>
     forcemerge: <TContext = unknown>(params?: T.IndicesForcemergeRequest| TB.IndicesForcemergeRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesForcemergeResponse, TContext>>
     get: <TContext = unknown>(params: T.IndicesGetRequest| TB.IndicesGetRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.IndicesGetResponse, TContext>>

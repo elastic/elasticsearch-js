@@ -9841,7 +9841,7 @@ export interface IndicesFieldUsageStatsInvertedIndex {
 }
 
 export interface IndicesFieldUsageStatsRequest extends RequestBase {
-  index?: Indices
+  index: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
