@@ -26,6 +26,7 @@
 // DO NOT MODIFY IT BY HAND. Instead, modify the source open api file,
 // and elastic/elastic-client-generator-js to regenerate this file again.
 
+import InternalApi from './api/_internal'
 import AsyncSearchApi from './api/async_search'
 import AutoscalingApi from './api/autoscaling'
 import bulkApi from './api/bulk'
@@ -105,6 +106,7 @@ import XpackApi from './api/xpack'
 
 export default interface API {
   new(): API
+  Internal: InternalApi
   asyncSearch: AsyncSearchApi
   autoscaling: AutoscalingApi
   bulk: typeof bulkApi
@@ -183,6 +185,7 @@ export default interface API {
   xpack: XpackApi
 }
 
+const kInternal = Symbol('Internal')
 const kAsyncSearch = Symbol('AsyncSearch')
 const kAutoscaling = Symbol('Autoscaling')
 const kCat = Symbol('Cat')
@@ -218,6 +221,7 @@ const kWatcher = Symbol('Watcher')
 const kXpack = Symbol('Xpack')
 
 export default class API {
+  [kInternal]: symbol | null
   [kAsyncSearch]: symbol | null
   [kAutoscaling]: symbol | null
   [kCat]: symbol | null
@@ -252,6 +256,7 @@ export default class API {
   [kWatcher]: symbol | null
   [kXpack]: symbol | null
   constructor () {
+    this[kInternal] = null
     this[kAsyncSearch] = null
     this[kAutoscaling] = null
     this[kCat] = null
@@ -333,6 +338,9 @@ API.prototype.updateByQuery = updateByQueryApi
 API.prototype.updateByQueryRethrottle = updateByQueryRethrottleApi
 
 Object.defineProperties(API.prototype, {
+  Internal: {
+    get () { return this[kInternal] === null ? (this[kInternal] = new InternalApi(this.transport)) : this[kInternal] }
+  },
   asyncSearch: {
     get () { return this[kAsyncSearch] === null ? (this[kAsyncSearch] = new AsyncSearchApi(this.transport)) : this[kAsyncSearch] }
   },
