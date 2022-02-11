@@ -4,9 +4,6 @@
 This is the official Node.js client for {es}. This page gives a quick overview 
 about the features of the client.
 
-Refer to <<breaking-changes,this page>> for breaking changes coming from the old 
-client.
-
 
 [discrete]
 === Features
@@ -23,59 +20,6 @@ client.
 [discrete]
 === Quick start
 
-First of all, require, then initialize the client:
-
-[source,js]
-----
-const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
-----
-
-
-You can use both the callback API and the promise API, both behave the same way.
-
-[source,js]
-----
-// promise API
-const result = await client.search({
-  index: 'my-index',
-  body: {
-    query: {
-      match: { hello: 'world' }
-    }
-  }
-})
-
-// callback API
-client.search({
-  index: 'my-index',
-  body: {
-    query: {
-      match: { hello: 'world' }
-    }
-  }
-}, (err, result) => {
-  if (err) console.log(err)
-})
-----
-
-
-The returned value of **every** API call is formed as follows:
-
-[source,ts]
-----
-{
-  body: object | boolean
-  statusCode: number
-  headers: object
-  warnings: [string]
-  meta: object
-}
-----
-
-
-Let's see a complete example!
-
 [source,js]
 ----
 'use strict'
@@ -87,8 +31,7 @@ async function run () {
   // Let's start by indexing some data
   await client.index({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using {es} ≤ 6
-    body: {
+    document: {
       character: 'Ned Stark',
       quote: 'Winter is coming.'
     }
@@ -96,8 +39,7 @@ async function run () {
 
   await client.index({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using {es} ≤ 6
-    body: {
+    document: {
       character: 'Daenerys Targaryen',
       quote: 'I am the blood of the dragon.'
     }
@@ -105,29 +47,25 @@ async function run () {
 
   await client.index({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using {es} ≤ 6
-    body: {
+    document: {
       character: 'Tyrion Lannister',
       quote: 'A mind needs books like a sword needs a whetstone.'
     }
   })
 
-  // We need to force an index refresh at this point, otherwise we will not
+  // here we are forcing an index refresh, otherwise we will not
   // get any result in the consequent search
   await client.indices.refresh({ index: 'game-of-thrones' })
 
   // Let's search!
-  const { body } = await client.search({
+  const result= await client.search({
     index: 'game-of-thrones',
-    // type: '_doc', // uncomment this line if you are using {es} ≤ 6
-    body: {
-      query: {
-        match: { quote: 'winter' }
-      }
+    query: {
+      match: { quote: 'winter' }
     }
   })
 
-  console.log(body.hits.hits)
+  console.log(result.hits.hits)
 }
 
 run().catch(console.log)
@@ -181,20 +119,17 @@ const { Client: Client7 } = require('es7')
 const client6 = new Client6({ node: 'http://localhost:9200' })
 const client7 = new Client7({ node: 'http://localhost:9201' })
 
-client6.info(console.log)
-client7.info(console.log)
+client6.info().then(console.log, console.log)
+client7.info().then(console.log, console.log)
 ----
 
 
 Finally, if you want to install the client for the next version of {es} (the one
-that lives in the {es} master branch), use the following command:
+that lives in the {es} main branch), use the following command:
 
 [source,sh]
 ----
-npm install esmaster@github:elastic/elasticsearch-js
+npm install esmain@github:elastic/elasticsearch-js
 ----
-WARNING: This command installs the master branch of the client which is not
+WARNING: This command installs the main branch of the client which is not
 considered stable.
-
-
-include::breaking-changes.asciidoc[]

@@ -4,274 +4,73 @@
 The client offers a first-class support for TypeScript, shipping a complete set
 of type definitions of Elasticsearch's API surface.
 
-
-NOTE: If you are using TypeScript you need to use _snake_case_ style to define 
-the API parameters instead of _camelCase_. 
-
-Currently the client exposes two type definitions, the legacy one, which is the default
-and the new one, which will be the default in the next major.
-We strongly recommend to migrate to the new one as soon as possible, as the new types
-are offering a vastly improved developer experience and guarantee you that your code
-will always be in sync with the latest Elasticsearch features.
-
-[discrete]
-==== New type definitions
-
-The new type definition is more advanced compared to the legacy one. In the legacy
-type definitions you were expected to configure via generics both request and response
-bodies. The new type definitions comes with a complete type definition for every
-Elasticsearch endpoint.
-
-For example:
-
-[source,ts]
-----
-// legacy definitions
-const response = await client.search<SearchResponse<Source>, SearchBody>({
-  index: 'test',
-  body: {
-  query: {
-      match: { foo: 'bar' }
-    }
-  }
-})
-
-// new definitions
-const response = await client.search<Source>({
-  index: 'test',
-  body: {
-  query: {
-      match: { foo: 'bar' }
-    }
-  }
-})
-----
-
 The types are not 100% complete yet. Some APIs are missing (the newest ones, e.g. EQL),
 and others may contain some errors, but we are continuously pushing fixes & improvements.
 
 [discrete]
-==== Request & Response types
-
-Once you migrate to the new types, those are automatically integrated into the Elasticsearch client, you will get them out of the box.
-If everything works, meaning that you won’t get compiler errors, you are good to go!
-The types are already correct, and there is nothing more to do.
-
-If a type is incorrect, you should add a comment `// @ts-expect-error @elastic/elasticsearch`
-telling TypeScript that you are aware of the warning and you would like to temporarily suppress it.
-In this way, your code will compile until the type is fixed, and when it happens, you’ll only need to remove the
-`// @ts-expect-error @elastic/elasticsearch` comment (TypeScript will let you know when it is time).
-Finally, if the type you need is missing, you’ll see that the client method returns (or defines as a parameter)
-a `TODO` type, which accepts any object.
-
-Open an issue in the client repository letting us know if you encounter any problem!
-
-If needed you can import the request and response types.
-
-[source,ts]
-----
-import { Client, estypes } from '@elastic/elasticsearch'
-import type { Client as NewTypes } from '@elastic/elasticsearch/api/new'
-
-// @ts-expect-error @elastic/elasticsearch
-const client: NewTypes = new Client({
-  node: 'http://localhost:9200'
-})
-
-interface Source {
-  foo: string
-}
-
-const request: estypes.IndexRequest<Source> = {
-  index: 'test',
-  body: { foo: 'bar' }
-}
-
-await client.index(request)
-----
-
-[discrete]
-===== How to migrate to the new type definitions
-
-Since the new type definitions can be considered a breaking change we couldn't add the directly to the client.
-Following you will find a snippet that shows you how to override the default types with the new ones.
+==== Example
 
 [source,ts]
 ----
 import { Client } from '@elastic/elasticsearch'
-import type { Client as NewTypes } from '@elastic/elasticsearch/api/new'
-
-// @ts-expect-error @elastic/elasticsearch
-const client: NewTypes = new Client({
-  node: 'http://localhost:9200'
-})
-
-interface Source {
-  foo: string
-}
-
-// try the new code completion when building a query!
-const response = await client.search<Source>({
-  index: 'test',
-  body: {
-    query: {
-      match_all: {}
-    }
-  }
-})
-
-// try the new code completion when traversing a response!
-const results = response.body.hits.hits.map(hit => hit._source)
-// results type will be `Source[]`
-console.log(results)
-----
-
-[discrete]
-==== Legacy type definitions
-
-By default event API uses 
-https://www.typescriptlang.org/docs/handbook/generics.html[generics] to specify 
-the requests and response bodies and the `meta.context`. Currently, we can't 
-provide those definitions, but we are working to improve this situation.
-
-You can find a partial definition of the request types by importing 
-`RequestParams`, which is used by default in the client and accepts a body (when 
-needed) as a generic to provide a better specification.
-
-The body defaults to `RequestBody` and `RequestNDBody`, which are defined as 
-follows:
-
-[source,ts]
-----
-type RequestBody<T = Record<string, any>>  = T | string | Buffer | ReadableStream
-type RequestNDBody<T = Record<string, any>[]>  = T | string | string[] | Buffer | ReadableStream
-----
-
-You can specify the response and request body in each API as follows:
-
-[source,ts]
-----
-const response = await client.search<ResponseBody, RequestBody, Context>({
-  index: 'test',
-  body: {
-    query: {
-      match: { foo: 'bar' }
-    }
-  }
-})
-
-console.log(response.body)
-----
-
-You don't have to specify all the generics, but the order must be respected.
-
-
-[discrete]
-===== A complete example
-
-[source,ts]
-----
-import {
-  Client,
-  // Object that contains the type definitions of every API method
-  RequestParams,
-  // Interface of the generic API response
-  ApiResponse,
-} from '@elastic/elasticsearch'
 
 const client = new Client({ node: 'http://localhost:9200' })
 
-// Define the type of the body for the Search request
-interface SearchBody {
-  query: {
-    match: { foo: string }
-  }
-}
-
-// Complete definition of the Search response
-interface ShardsResponse {
-  total: number;
-  successful: number;
-  failed: number;
-  skipped: number;
-}
-
-interface Explanation {
-  value: number;
-  description: string;
-  details: Explanation[];
-}
-
-interface SearchResponse<T> {
-  took: number;
-  timed_out: boolean;
-  _scroll_id?: string;
-  _shards: ShardsResponse;
-  hits: {
-    total: number;
-    max_score: number;
-    hits: Array<{
-      _index: string;
-      _type: string;
-      _id: string;
-      _score: number;
-      _source: T;
-      _version?: number;
-      _explanation?: Explanation;
-      fields?: any;
-      highlight?: any;
-      inner_hits?: any;
-      matched_queries?: string[];
-      sort?: string[];
-    }>;
-  };
-  aggregations?: any;
-}
-
-// Define the interface of the source object
-interface Source {
-  foo: string
+interface Document {
+  character: string
+  quote: string
 }
 
 async function run () {
-  // All of the examples below are valid code, by default,
-  // the request body will be `RequestBody` and response will be `Record<string, any>`.
-  let response = await client.search({
-    index: 'test',
-    body: {
-      query: {
-        match: { foo: 'bar' }
-      }
+  // Let's start by indexing some data
+  await client.index({
+    index: 'game-of-thrones',
+    document: {
+      character: 'Ned Stark',
+      quote: 'Winter is coming.'
     }
   })
-  // body here is `ResponseBody`
-  console.log(response.body)
 
-  // The first generic is the response body
-  response = await client.search<SearchResponse<Source>>({
-    index: 'test',
-    // Here the body must follow the `RequestBody` interface
-    body: {
-      query: {
-        match: { foo: 'bar' }
-      }
+  await client.index({
+    index: 'game-of-thrones',
+    document: {
+      character: 'Daenerys Targaryen',
+      quote: 'I am the blood of the dragon.'
     }
   })
-  // body here is `SearchResponse<Source>`
-  console.log(response.body)
 
-  response = await client.search<SearchResponse<Source>, SearchBody>({
-    index: 'test',
-    // Here the body must follow the `SearchBody` interface
-    body: {
-      query: {
-        match: { foo: 'bar' }
-      }
+  await client.index({
+    index: 'game-of-thrones',
+    document: {
+      character: 'Tyrion Lannister',
+      quote: 'A mind needs books like a sword needs a whetstone.'
     }
   })
-  // body here is `SearchResponse<Source>`
-  console.log(response.body)
+
+  // here we are forcing an index refresh, otherwise we will not
+  // get any result in the consequent search
+  await client.indices.refresh({ index: 'game-of-thrones' })
+
+  // Let's search!
+  const result= await client.search<Document>({
+    index: 'game-of-thrones',
+    query: {
+      match: { quote: 'winter' }
+    }
+  })
+
+  console.log(result.hits.hits)
 }
 
 run().catch(console.log)
+----
+
+[discrete]
+==== Request & Response types
+
+You can import the full TypeScript requests & responses defintions as it follows:
+
+[source,ts]
+----
+import { estypes } from '@elastic/elasticsearch'
 ----

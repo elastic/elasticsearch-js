@@ -11,9 +11,9 @@ const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 
 async function run () {
-  const { body: bulkResponse } = await client.bulk({
+  const bulkResponse = await client.bulk({
     refresh: true,
-    body: [
+    operations: [
       // operation to perform
       { index: { _index: 'game-of-thrones' } },
       // the document to index
@@ -42,7 +42,7 @@ async function run () {
   }
 
   // Let's search!
-  const { body } = await client.search({
+  const result = await client.search({
     index: 'game-of-thrones',
     body: {
       query: {
@@ -55,7 +55,7 @@ async function run () {
     ignore: [404]
   })
 
-  console.log(body) // ResponseError
+  console.log(result) // ResponseError
 }
 
 run().catch(console.log)

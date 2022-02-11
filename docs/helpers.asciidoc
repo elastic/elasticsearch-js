@@ -341,23 +341,12 @@ const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: 'http://localhost:9200' })
 const m = client.helpers.msearch()
 
-// promise style API
 m.search(
     { index: 'stackoverflow' },
     { query: { match: { title: 'javascript' } } }
   )
   .then(result => console.log(result.body)) // or result.documents
   .catch(err => console.error(err))
-
-// callback style API
-m.search(
-  { index: 'stackoverflow' },
-  { query: { match: { title: 'ruby' } } },
-  (err, result) => {
-    if (err) console.error(err)
-    console.log(result.body)) // or result.documents
-  }
-)
 ----
 
 To create a new instance of the multi search (msearch) helper, you should access 
@@ -474,11 +463,9 @@ the query string.
 ----
 const documents = await client.helpers.search({
   index: 'stackoverflow',
-  body: {
-    query: {
-      match: {
-        title: 'javascript'
-      }
+  query: {
+    match: {
+      title: 'javascript'
     }
   }
 })
@@ -505,11 +492,9 @@ the `429` error and uses the `maxRetries` option of the client.
 ----
 const scrollSearch = client.helpers.scrollSearch({
   index: 'stackoverflow',
-  body: {
-    query: {
-      match: {
-        title: 'javascript'
-      }
+  query: {
+    match: {
+      title: 'javascript'
     }
   }
 })
@@ -564,11 +549,9 @@ automatically adds `filter_path=hits.hits._source` to the query string.
 ----
 const scrollSearch = client.helpers.scrollDocuments({
   index: 'stackoverflow',
-  body: {
-    query: {
-      match: {
-        title: 'javascript'
-      }
+  query: {
+    match: {
+      title: 'javascript'
     }
   }
 })

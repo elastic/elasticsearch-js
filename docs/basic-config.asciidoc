@@ -32,7 +32,7 @@ Or it can be an object (or an array of objects) that represents the node:
 ----
 node: {
   url: new URL('http://localhost:9200'),
-  ssl: 'ssl options',
+  tls: 'tls options',
   agent: 'http agent options',
   id: 'custom node id',
   headers: { 'custom': 'headers' }
@@ -118,8 +118,8 @@ _Default:_ `false`
 _Options:_ `'gzip'`, `false` +
 _Default:_ `false`
 
-|`ssl`
-|`http.SecureContextOptions` - ssl https://nodejs.org/api/tls.html[configuraton]. +
+|`tls`
+|`http.SecureContextOptions` - tls https://nodejs.org/api/tls.html[configuraton]. +
 _Default:_ `null`
 
 |`proxy`
@@ -268,23 +268,3 @@ _Default:_ `null`
 _Default:_ `null`
 
 |===
-
-[discrete]
-==== Performances considerations
-
-By default, the client will protection you against prototype poisoning attacks.
-Read https://web.archive.org/web/20200319091159/https://hueniverse.com/square-brackets-are-the-enemy-ff5b9fd8a3e8?gi=184a27ee2a08[this article] to learn more.
-If needed you can disable prototype poisoning protection entirely or one of the two checks.
-Read the `secure-json-parse` https://github.com/fastify/secure-json-parse[documentation] to learn more.
-
-While it's good to be safe, you should know that security always comes with a cost.
-With big enough payloads, this security check could causea drop in the overall performances,
-which might be a problem for your application.
-If you know you can trust the data stored in Elasticsearch, you can safely disable this check.
-
-[source,js]
-----
-const client = new Client({
-  disablePrototypePoisoningProtection: true
-})
-----
