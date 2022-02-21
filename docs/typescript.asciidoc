@@ -68,7 +68,7 @@ run().catch(console.log)
 [discrete]
 ==== Request & Response types
 
-You can import the full TypeScript requests & responses defintions as it follows:
+You can import the full TypeScript requests & responses definitions as it follows:
 
 [source,ts]
 ----
