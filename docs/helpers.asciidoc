@@ -96,7 +96,7 @@ const b = client.helpers.bulk({
 ----
 
 |`flushBytes`
-a|The size of the bulk body in bytes to reach before to send it. Default of 5MB. +
+a|The size of the bulk body in bytes to reach before sending it. Default of 5MB. +
 _Default:_ `5000000`
 [source,js]
 ----
