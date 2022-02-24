@@ -920,7 +920,7 @@ export interface ScrollRequest extends RequestBase {
   rest_total_hits_as_int?: boolean
 }
 
-export type ScrollResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument>
+export type ScrollResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
 
 export interface SearchRequest extends RequestBase {
   index?: Indices
@@ -986,14 +986,14 @@ export interface SearchRequest extends RequestBase {
   runtime_mappings?: MappingRuntimeFields
 }
 
-export type SearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument>
+export type SearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
 
-export interface SearchResponseBody<TDocument = unknown> {
+export interface SearchResponseBody<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> {
   took: long
   timed_out: boolean
   _shards: ShardStatistics
   hits: SearchHitsMetadata<TDocument>
-  aggregations?: Record<AggregateName, AggregationsAggregate>
+  aggregations?: TAggregations
   _clusters?: ClusterStatistics
   fields?: Record<string, any>
   max_score?: double
