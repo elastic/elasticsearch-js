@@ -72,7 +72,3 @@ CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 
 src
-
-# CANARY-PACKAGE
-lib/api/kibana.*
-# /CANARY-PACKAGE
