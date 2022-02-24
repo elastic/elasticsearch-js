@@ -574,7 +574,7 @@ export interface MgetResponse<TDocument = unknown> {
 
 export type MgetResponseItem<TDocument = unknown> = GetGetResult<TDocument> | MgetMultiGetError
 
-export interface MsearchMultiSearchItem<TDocument = unknown> extends SearchResponse<TDocument> {
+export interface MsearchMultiSearchItem<TDocument = unknown> extends SearchResponseBody<TDocument> {
   status?: integer
 }
 
@@ -975,8 +975,7 @@ export interface ScrollRequest extends RequestBase {
   }
 }
 
-export interface ScrollResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> extends SearchResponse<TDocument, TAggregations> {
-}
+export type ScrollResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument>
 
 export interface SearchRequest extends RequestBase {
   index?: Indices
@@ -1059,12 +1058,14 @@ export interface SearchRequest extends RequestBase {
   }
 }
 
-export interface SearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> {
+export type SearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument>
+
+export interface SearchResponseBody<TDocument = unknown> {
   took: long
   timed_out: boolean
   _shards: ShardStatistics
   hits: SearchHitsMetadata<TDocument>
-  aggregations?: TAggregations
+  aggregations?: Record<AggregateName, AggregationsAggregate>
   _clusters?: ClusterStatistics
   fields?: Record<string, any>
   max_score?: double
@@ -5927,6 +5928,10 @@ export type CatCatDfaColumns = CatCatDfaColumn | CatCatDfaColumn[]
 export interface CatCatRequestBase extends RequestBase, SpecUtilsCommonCatQueryParameters {
 }
 
+export type CatCatTrainedModelsColumn = 'create_time' | 'ct' | 'created_by' | 'c' | 'createdBy' | 'data_frame_analytics_id' | 'df' | 'dataFrameAnalytics' | 'description' | 'd' | 'heap_size' | 'hs' | 'modelHeapSize' | 'id' | 'ingest.count' | 'ic' | 'ingestCount' | 'ingest.current' | 'icurr' | 'ingestCurrent' | 'ingest.failed' | 'if' | 'ingestFailed' | 'ingest.pipelines' | 'ip' | 'ingestPipelines' | 'ingest.time' | 'it' | 'ingestTime' | 'license' | 'l' | 'operations' | 'o' | 'modelOperations' | 'version' | 'v'
+
+export type CatCatTrainedModelsColumns = CatCatTrainedModelsColumn | CatCatTrainedModelsColumn[]
+
 export type CatCatTransformColumn = 'changes_last_detection_time' | 'cldt' | 'checkpoint' | 'cp' | 'checkpoint_duration_time_exp_avg' | 'cdtea' | 'checkpointTimeExpAvg' | 'checkpoint_progress' | 'c' | 'checkpointProgress' | 'create_time' | 'ct' | 'createTime' | 'delete_time' | 'dtime' | 'description' | 'd' | 'dest_index' | 'di' | 'destIndex' | 'documents_deleted' | 'docd' | 'documents_indexed' | 'doci' | 'docs_per_second' | 'dps' | 'documents_processed' | 'docp' | 'frequency' | 'f' | 'id' | 'index_failure' | 'if' | 'index_time' | 'itime' | 'index_total' | 'it' | 'indexed_documents_exp_avg' | 'idea' | 'last_search_time' | 'lst' | 'lastSearchTime' | 'max_page_search_size' | 'mpsz' | 'pages_processed' | 'pp' | 'pipeline' | 'p' | 'processed_documents_exp_avg' | 'pdea' | 'processing_time' | 'pt' | 'reason' | 'r' | 'search_failure' | 'sf' | 'search_time' | 'stime' | 'search_total' | 'st' | 'source_index' | 'si' | 'sourceIndex' | 'state' | 's' | 'transform_type' | 'tt' | 'trigger_count' | 'tc' | 'version' | 'v'
 
 export type CatCatTransformColumns = CatCatTransformColumn | CatCatTransformColumn[]
@@ -6700,6 +6705,8 @@ export interface CatMlTrainedModelsRequest extends CatCatRequestBase {
   model_id?: Id
   allow_no_match?: boolean
   bytes?: Bytes
+  h?: CatCatTrainedModelsColumns
+  s?: CatCatTrainedModelsColumns
   from?: integer
   size?: integer
 }
@@ -9410,6 +9417,28 @@ export interface IndicesIndexState {
   data_stream?: DataStreamName
 }
 
+export interface IndicesIndexTemplate {
+  index_patterns: Names
+  composed_of: Name[]
+  template?: IndicesIndexTemplateSummary
+  version?: VersionNumber
+  priority?: long
+  _meta?: Metadata
+  allow_auto_create?: boolean
+  data_stream?: IndicesIndexTemplateDataStreamConfiguration
+}
+
+export interface IndicesIndexTemplateDataStreamConfiguration {
+  hidden?: boolean
+  allow_custom_routing?: boolean
+}
+
+export interface IndicesIndexTemplateSummary {
+  aliases?: Record<IndexName, IndicesAlias>
+  mappings?: MappingTypeMapping
+  settings?: IndicesIndexSettings
+}
+
 export interface IndicesIndexVersioning {
   created: VersionString
   created_string?: VersionString
@@ -9977,26 +10006,9 @@ export interface IndicesGetFieldMappingTypeFieldMappings {
   mappings: Partial<Record<Field, MappingFieldMapping>>
 }
 
-export interface IndicesGetIndexTemplateIndexTemplate {
-  index_patterns: Name[]
-  composed_of: Name[]
-  template?: IndicesGetIndexTemplateIndexTemplateSummary
-  version?: VersionNumber
-  priority?: long
-  _meta?: Metadata
-  allow_auto_create?: boolean
-  data_stream?: Record<string, any>
-}
-
 export interface IndicesGetIndexTemplateIndexTemplateItem {
   name: Name
-  index_template: IndicesGetIndexTemplateIndexTemplate
-}
-
-export interface IndicesGetIndexTemplateIndexTemplateSummary {
-  aliases?: Record<IndexName, IndicesAlias>
-  mappings?: MappingTypeMapping
-  settings?: Record<string, any>
+  index_template: IndicesIndexTemplate
 }
 
 export interface IndicesGetIndexTemplateRequest extends RequestBase {
@@ -10514,18 +10526,18 @@ export interface IndicesSimulateTemplateRequest extends RequestBase {
   create?: boolean
   master_timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, use 'template' instead. */
-  body?: IndicesGetIndexTemplateIndexTemplate
+  body?: IndicesIndexTemplate
 }
 
 export interface IndicesSimulateTemplateResponse {
+  overlapping?: IndicesSimulateTemplateOverlapping[]
   template: IndicesSimulateTemplateTemplate
 }
 
 export interface IndicesSimulateTemplateTemplate {
   aliases: Record<IndexName, IndicesAlias>
   mappings: MappingTypeMapping
-  settings: Record<string, any>
-  overlapping: IndicesSimulateTemplateOverlapping[]
+  settings: IndicesIndexSettings
 }
 
 export interface IndicesSplitRequest extends RequestBase {
@@ -12126,10 +12138,10 @@ export interface MlModelSizeStats {
 export interface MlModelSnapshot {
   description?: string
   job_id: Id
-  latest_record_time_stamp: integer
-  latest_result_time_stamp: integer
+  latest_record_time_stamp?: integer
+  latest_result_time_stamp?: integer
   min_version: VersionString
-  model_size_stats: MlModelSizeStats
+  model_size_stats?: MlModelSizeStats
   retain: boolean
   snapshot_doc_count: long
   snapshot_id: Id
@@ -12378,7 +12390,7 @@ export interface MlDeleteCalendarEventResponse extends AcknowledgedResponseBase 
 
 export interface MlDeleteCalendarJobRequest extends RequestBase {
   calendar_id: Id
-  job_id: Id
+  job_id: Ids
 }
 
 export interface MlDeleteCalendarJobResponse {
@@ -12765,7 +12777,7 @@ export interface MlGetDatafeedsResponse {
 }
 
 export interface MlGetFiltersRequest extends RequestBase {
-  filter_id?: Id
+  filter_id?: Ids
   from?: integer
   size?: integer
 }
@@ -12911,7 +12923,7 @@ export interface MlGetTrainedModelsResponse {
 }
 
 export interface MlGetTrainedModelsStatsRequest extends RequestBase {
-  model_id?: Id
+  model_id?: Ids
   allow_no_match?: boolean
   from?: integer
   size?: integer
@@ -14107,7 +14119,6 @@ export interface NodesClearRepositoriesMeteringArchiveRequest extends RequestBas
 }
 
 export interface NodesClearRepositoriesMeteringArchiveResponse extends NodesNodesResponseBase {
-  _nodes: NodeStatistics
   cluster_name: Name
   nodes: Record<string, NodesRepositoryMeteringInformation>
 }
@@ -14117,7 +14128,6 @@ export interface NodesGetRepositoriesMeteringInfoRequest extends RequestBase {
 }
 
 export interface NodesGetRepositoriesMeteringInfoResponse extends NodesNodesResponseBase {
-  _nodes: NodeStatistics
   cluster_name: Name
   nodes: Record<string, NodesRepositoryMeteringInformation>
 }
@@ -16422,7 +16432,7 @@ export interface TransformDeleteTransformResponse extends AcknowledgedResponseBa
 }
 
 export interface TransformGetTransformRequest extends RequestBase {
-  transform_id?: Name
+  transform_id?: Names
   allow_no_match?: boolean
   from?: integer
   size?: integer
@@ -16740,6 +16750,7 @@ export interface WatcherDataEmailAttachment {
 export type WatcherDay = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
 
 export interface WatcherEmail {
+  id?: Id
   bcc?: string[]
   body?: WatcherEmailBody
   cc?: string[]

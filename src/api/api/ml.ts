@@ -937,6 +937,35 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async getMemoryStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getMemoryStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getMemoryStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getMemoryStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['node_id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.node_id != null) {
+      method = 'GET'
+      path = `/_ml/memory/${encodeURIComponent(params.node_id.toString())}/_stats`
+    } else {
+      method = 'GET'
+      path = '/_ml/memory/_stats'
+    }
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async getModelSnapshotUpgradeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async getModelSnapshotUpgradeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async getModelSnapshotUpgradeStats (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>

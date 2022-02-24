@@ -306,6 +306,7 @@ interface KibanaClient {
     getInfluencers: <TContext = unknown>(params: T.MlGetInfluencersRequest| TB.MlGetInfluencersRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlGetInfluencersResponse, TContext>>
     getJobStats: <TContext = unknown>(params?: T.MlGetJobStatsRequest| TB.MlGetJobStatsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlGetJobStatsResponse, TContext>>
     getJobs: <TContext = unknown>(params?: T.MlGetJobsRequest| TB.MlGetJobsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlGetJobsResponse, TContext>>
+    getMemoryStats: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     getModelSnapshotUpgradeStats: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     getModelSnapshots: <TContext = unknown>(params: T.MlGetModelSnapshotsRequest| TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlGetModelSnapshotsResponse, TContext>>
     getOverallBuckets: <TContext = unknown>(params: T.MlGetOverallBucketsRequest| TB.MlGetOverallBucketsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.MlGetOverallBucketsResponse, TContext>>
@@ -427,6 +428,9 @@ interface KibanaClient {
     hasPrivileges: <TContext = unknown>(params?: T.SecurityHasPrivilegesRequest| TB.SecurityHasPrivilegesRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityHasPrivilegesResponse, TContext>>
     invalidateApiKey: <TContext = unknown>(params?: T.SecurityInvalidateApiKeyRequest| TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityInvalidateApiKeyResponse, TContext>>
     invalidateToken: <TContext = unknown>(params?: T.SecurityInvalidateTokenRequest| TB.SecurityInvalidateTokenRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityInvalidateTokenResponse, TContext>>
+    oidcAuthenticate: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    oidcLogout: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    oidcPrepareAuthentication: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     putPrivileges: <TContext = unknown>(params?: T.SecurityPutPrivilegesRequest| TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityPutPrivilegesResponse, TContext>>
     putRole: <TContext = unknown>(params: T.SecurityPutRoleRequest| TB.SecurityPutRoleRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityPutRoleResponse, TContext>>
     putRoleMapping: <TContext = unknown>(params: T.SecurityPutRoleMappingRequest| TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityPutRoleMappingResponse, TContext>>
