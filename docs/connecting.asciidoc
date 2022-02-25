@@ -13,7 +13,7 @@ This page contains the information you need to connect and use the Client with
 * <<client-error-handling, Handling errors>>
 * <<product-check, Automatic product check>>
 
-[[auth-reference]]
+[[authentication]]
 [discrete]
 === Authentication
 
