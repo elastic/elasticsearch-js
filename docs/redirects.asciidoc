@@ -1,0 +1,17 @@
+["appendix",role="exclude",id="redirects"]
+= Deleted pages
+
+The following pages have moved or been deleted.
+
+[role="exclude",id="auth-reference"]
+== Authentication
+
+This page has moved. See <<client-connecting>>.
+
+[role="exclude",id="breaking-changes"]
+== Breaking changes
+
+For information about migrating from the legacy elasticsearch.js client to the
+new Elasticsearch JavaScript client, refer to the
+https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.17/breaking-changes.html[7.17
+JavaScript client migration guide].
