@@ -173,4 +173,4 @@ npm install esmain@github:elastic/elasticsearch-js
 
 ## License
 
-This software is licensed under the [Apache 2 license](./LICENSE).
+This software is licensed under the [Apache License 2.0](./LICENSE).
