@@ -6,14 +6,14 @@ This page contains the information you need to connect and use the Client with
 
 **On this page**
 
-* <<auth-reference, Authentication options>>
+* <<authentication, Authentication options>>
 * <<client-usage, Using the client>>
 * <<client-faas-env, Using the Client in a Function-as-a-Service Environment>>
 * <<client-connect-proxy, Connecting through a proxy>>
 * <<client-error-handling, Handling errors>>
 * <<product-check, Automatic product check>>
 
-[[auth-reference]]
+[[authentication]]
 [discrete]
 === Authentication
 
