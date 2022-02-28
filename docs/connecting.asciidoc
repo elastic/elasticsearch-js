@@ -157,11 +157,9 @@ const client = new Client({
 
 Without any additional configuration you can specify `https://` node urls, and 
 the certificates used to sign these requests will be verified. To turn off 
-certificate verification, you must specify an `ssl` object in the top level 
-config and set `rejectUnauthorized: false`. The default `ssl` values are the 
-same that Node.js's 
-https://nodejs.org/api/tls.html#tls_tls_connect_options_callback[`tls.connect()`] 
-uses.
+certificate verification, you must specify an `tls` object in the top level 
+config and set `rejectUnauthorized: false`. The default `tls` values are the 
+same that https://github.com/nodejs/undici[undici] uses.
 
 [source,js]
 ----
@@ -172,7 +170,7 @@ const client = new Client({
     username: 'elastic',
     password: 'changeme'
   },
-  ssl: {
+  tls: {
     ca: fs.readFileSync('./cacert.pem'),
     rejectUnauthorized: false
   }
@@ -195,7 +193,7 @@ const client = new Client({
   auth: { ... },
   // the fingerprint (SHA256) of the CA certificate that is used to sign the certificate that the Elasticsearch node presents for TLS.
   caFingerprint: '20:0D:CA:FA:76:...',
-  ssl: {
+  tls: {
     // might be required if it's a self-signed certificate
     rejectUnauthorized: false
   }
