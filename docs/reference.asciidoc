@@ -25,7 +25,7 @@
 ////////
 == API Reference
 
-==== bulk
+=== bulk
 Allows to perform multiple index/update/delete operations in a single request.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html[Endpoint documentation]
@@ -34,7 +34,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html[En
 client.bulk(...)
 ----
 
-==== clear_scroll
+=== clear_scroll
 Explicitly clears the search context for a scroll.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-scroll-api.html[Endpoint documentation]
@@ -43,7 +43,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-scroll-api.
 client.clearScroll(...)
 ----
 
-==== close_point_in_time
+=== close_point_in_time
 Close a point in time
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api.html[Endpoint documentation]
@@ -52,7 +52,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api
 client.closePointInTime(...)
 ----
 
-==== count
+=== count
 Returns number of documents matching a query.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html[Endpoint documentation]
@@ -61,7 +61,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
 client.count(...)
 ----
 
-==== create
+=== create
 Creates a new document in the index.
 
 Returns a 409 response when a document with a same ID already exists in the index.
@@ -72,7 +72,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html[
 client.create(...)
 ----
 
-==== delete
+=== delete
 Removes a document from the index.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html[Endpoint documentation]
@@ -81,7 +81,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html[
 client.delete(...)
 ----
 
-==== delete_by_query
+=== delete_by_query
 Deletes documents matching the provided query.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html[Endpoint documentation]
@@ -90,7 +90,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-qu
 client.deleteByQuery(...)
 ----
 
-==== delete_by_query_rethrottle
+=== delete_by_query_rethrottle
 Changes the number of requests per second for a particular Delete By Query operation.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html[Endpoint documentation]
@@ -99,7 +99,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-q
 client.deleteByQueryRethrottle(...)
 ----
 
-==== delete_script
+=== delete_script
 Deletes a script.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html[Endpoint documentation]
@@ -108,7 +108,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting
 client.deleteScript(...)
 ----
 
-==== exists
+=== exists
 Returns information about whether a document exists in an index.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[Endpoint documentation]
@@ -117,7 +117,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[End
 client.exists(...)
 ----
 
-==== exists_source
+=== exists_source
 Returns information about whether a document source exists in an index.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[Endpoint documentation]
@@ -126,7 +126,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[End
 client.existsSource(...)
 ----
 
-==== explain
+=== explain
 Returns information about why a specific matches (or doesn't match) a query.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html[Endpoint documentation]
@@ -135,7 +135,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.ht
 client.explain(...)
 ----
 
-==== field_caps
+=== field_caps
 Returns the information about the capabilities of fields among multiple indices.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html[Endpoint documentation]
@@ -144,7 +144,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps
 client.fieldCaps(...)
 ----
 
-==== get
+=== get
 Returns a document.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[Endpoint documentation]
@@ -153,7 +153,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[End
 client.get(...)
 ----
 
-==== get_script
+=== get_script
 Returns a script.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html[Endpoint documentation]
@@ -162,7 +162,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting
 client.getScript(...)
 ----
 
-==== get_script_context
+=== get_script_context
 Returns all script contexts.
 
 https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html[Endpoint documentation]
@@ -171,7 +171,7 @@ https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.
 client.getScriptContext(...)
 ----
 
-==== get_script_languages
+=== get_script_languages
 Returns available script types, languages and contexts
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html[Endpoint documentation]
@@ -180,7 +180,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting
 client.getScriptLanguages(...)
 ----
 
-==== get_source
+=== get_source
 Returns the source of a document.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[Endpoint documentation]
@@ -189,7 +189,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[End
 client.getSource(...)
 ----
 
-==== index
+=== index
 Creates or updates a document in an index.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html[Endpoint documentation]
@@ -198,7 +198,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html[
 client.index(...)
 ----
 
-==== info
+=== info
 Returns basic information about the cluster.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html[Endpoint documentation]
@@ -207,7 +207,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html[Endpo
 client.info(...)
 ----
 
-==== knn_search
+=== knn_search
 Performs a kNN search.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html[Endpoint documentation]
@@ -216,7 +216,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.htm
 client.knnSearch(...)
 ----
 
-==== mget
+=== mget
 Allows to get multiple documents in one request.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html[Endpoint documentation]
@@ -225,7 +225,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.ht
 client.mget(...)
 ----
 
-==== msearch
+=== msearch
 Allows to execute several search operations in one request.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html[Endpoint documentation]
@@ -234,7 +234,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-sear
 client.msearch(...)
 ----
 
-==== msearch_template
+=== msearch_template
 Allows to execute several search template operations in one request.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html[Endpoint documentation]
@@ -243,7 +243,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-sea
 client.msearchTemplate(...)
 ----
 
-==== mtermvectors
+=== mtermvectors
 Returns multiple termvectors in one request.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html[Endpoint documentation]
@@ -252,7 +252,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termve
 client.mtermvectors(...)
 ----
 
-==== open_point_in_time
+=== open_point_in_time
 Open a point in time that can be used in subsequent searches
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api.html[Endpoint documentation]
@@ -261,7 +261,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api
 client.openPointInTime(...)
 ----
 
-==== ping
+=== ping
 Returns whether the cluster is running.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html[Endpoint documentation]
@@ -270,7 +270,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html[Endpo
 client.ping(...)
 ----
 
-==== put_script
+=== put_script
 Creates or updates a script.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html[Endpoint documentation]
@@ -279,7 +279,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting
 client.putScript(...)
 ----
 
-==== rank_eval
+=== rank_eval
 Allows to evaluate the quality of ranked search results over a set of typical search queries
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.html[Endpoint documentation]
@@ -288,7 +288,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.
 client.rankEval(...)
 ----
 
-==== reindex
+=== reindex
 Allows to copy documents from one index to another, optionally filtering the source
 documents by a query, changing the destination index settings, or fetching the
 documents from a remote cluster.
@@ -299,7 +299,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
 client.reindex(...)
 ----
 
-==== reindex_rethrottle
+=== reindex_rethrottle
 Changes the number of requests per second for a particular Reindex operation.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html[Endpoint documentation]
@@ -308,7 +308,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
 client.reindexRethrottle(...)
 ----
 
-==== render_search_template
+=== render_search_template
 Allows to use the Mustache language to pre-render a search definition.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/render-search-template-api.html[Endpoint documentation]
@@ -317,7 +317,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/render-search-te
 client.renderSearchTemplate(...)
 ----
 
-==== scripts_painless_execute
+=== scripts_painless_execute
 Allows an arbitrary script to be executed and a result to be returned
 
 https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Endpoint documentation]
@@ -326,7 +326,7 @@ https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-a
 client.scriptsPainlessExecute(...)
 ----
 
-==== scroll
+=== scroll
 Allows to retrieve a large numbers of results from a single search request.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll[Endpoint documentation]
@@ -335,7 +335,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-bo
 client.scroll(...)
 ----
 
-==== search
+=== search
 Returns results matching a query.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html[Endpoint documentation]
@@ -344,7 +344,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.htm
 client.search(...)
 ----
 
-==== search_mvt
+=== search_mvt
 Searches a vector tile for geospatial values. Returns results as a binary Mapbox vector tile.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/search-vector-tile-api.html[Endpoint documentation]
@@ -353,7 +353,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-vector-til
 client.searchMvt(...)
 ----
 
-==== search_shards
+=== search_shards
 Returns information about the indices and shards that a search request would be executed against.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html[Endpoint documentation]
@@ -362,7 +362,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.htm
 client.searchShards(...)
 ----
 
-==== search_template
+=== search_template
 Allows to use the Mustache language to pre-render a search definition.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html[Endpoint documentation]
@@ -371,7 +371,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.
 client.searchTemplate(...)
 ----
 
-==== terms_enum
+=== terms_enum
 The terms enum API  can be used to discover terms in the index that begin with the provided string. It is designed for low-latency look-ups used in auto-complete scenarios.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/search-terms-enum.html[Endpoint documentation]
@@ -380,7 +380,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/search-terms-enu
 client.termsEnum(...)
 ----
 
-==== termvectors
+=== termvectors
 Returns information and statistics about terms in the fields of a particular document.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html[Endpoint documentation]
@@ -389,7 +389,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.
 client.termvectors(...)
 ----
 
-==== update
+=== update
 Updates a document with a script or partial document.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html[Endpoint documentation]
@@ -398,7 +398,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html[
 client.update(...)
 ----
 
-==== update_by_query
+=== update_by_query
 Performs an update on every document in the index without changing the source,
 for example to pick up a mapping change.
 
@@ -408,7 +408,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-qu
 client.updateByQuery(...)
 ----
 
-==== update_by_query_rethrottle
+=== update_by_query_rethrottle
 Changes the number of requests per second for a particular Update By Query operation.
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html[Endpoint documentation]
