@@ -25,6 +25,7 @@
 ////////
 == API Reference
 
+[discrete]
 === bulk
 Allows to perform multiple index/update/delete operations in a single request.
 
@@ -34,6 +35,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html[En
 client.bulk(...)
 ----
 
+[discrete]
 === clear_scroll
 Explicitly clears the search context for a scroll.
 
@@ -43,6 +45,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-scroll-api.
 client.clearScroll(...)
 ----
 
+[discrete]
 === close_point_in_time
 Close a point in time
 
@@ -52,6 +55,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api
 client.closePointInTime(...)
 ----
 
+[discrete]
 === count
 Returns number of documents matching a query.
 
@@ -61,6 +65,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
 client.count(...)
 ----
 
+[discrete]
 === create
 Creates a new document in the index.
 
@@ -72,6 +77,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html[
 client.create(...)
 ----
 
+[discrete]
 === delete
 Removes a document from the index.
 
@@ -81,6 +87,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html[
 client.delete(...)
 ----
 
+[discrete]
 === delete_by_query
 Deletes documents matching the provided query.
 
@@ -90,6 +97,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-qu
 client.deleteByQuery(...)
 ----
 
+[discrete]
 === delete_by_query_rethrottle
 Changes the number of requests per second for a particular Delete By Query operation.
 
@@ -99,6 +107,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-q
 client.deleteByQueryRethrottle(...)
 ----
 
+[discrete]
 === delete_script
 Deletes a script.
 
@@ -108,6 +117,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting
 client.deleteScript(...)
 ----
 
+[discrete]
 === exists
 Returns information about whether a document exists in an index.
 
@@ -117,6 +127,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[End
 client.exists(...)
 ----
 
+[discrete]
 === exists_source
 Returns information about whether a document source exists in an index.
 
@@ -126,6 +137,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[End
 client.existsSource(...)
 ----
 
+[discrete]
 === explain
 Returns information about why a specific matches (or doesn't match) a query.
 
@@ -135,6 +147,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.ht
 client.explain(...)
 ----
 
+[discrete]
 === field_caps
 Returns the information about the capabilities of fields among multiple indices.
 
@@ -144,6 +157,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps
 client.fieldCaps(...)
 ----
 
+[discrete]
 === get
 Returns a document.
 
@@ -153,6 +167,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[End
 client.get(...)
 ----
 
+[discrete]
 === get_script
 Returns a script.
 
@@ -162,6 +177,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting
 client.getScript(...)
 ----
 
+[discrete]
 === get_script_context
 Returns all script contexts.
 
@@ -171,6 +187,7 @@ https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.
 client.getScriptContext(...)
 ----
 
+[discrete]
 === get_script_languages
 Returns available script types, languages and contexts
 
@@ -180,6 +197,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting
 client.getScriptLanguages(...)
 ----
 
+[discrete]
 === get_source
 Returns the source of a document.
 
@@ -189,6 +207,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[End
 client.getSource(...)
 ----
 
+[discrete]
 === index
 Creates or updates a document in an index.
 
@@ -198,6 +217,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html[
 client.index(...)
 ----
 
+[discrete]
 === info
 Returns basic information about the cluster.
 
@@ -207,6 +227,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html[Endpo
 client.info(...)
 ----
 
+[discrete]
 === knn_search
 Performs a kNN search.
 
@@ -216,6 +237,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.htm
 client.knnSearch(...)
 ----
 
+[discrete]
 === mget
 Allows to get multiple documents in one request.
 
@@ -225,6 +247,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.ht
 client.mget(...)
 ----
 
+[discrete]
 === msearch
 Allows to execute several search operations in one request.
 
@@ -234,6 +257,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-sear
 client.msearch(...)
 ----
 
+[discrete]
 === msearch_template
 Allows to execute several search template operations in one request.
 
@@ -243,6 +267,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-sea
 client.msearchTemplate(...)
 ----
 
+[discrete]
 === mtermvectors
 Returns multiple termvectors in one request.
 
@@ -252,6 +277,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termve
 client.mtermvectors(...)
 ----
 
+[discrete]
 === open_point_in_time
 Open a point in time that can be used in subsequent searches
 
@@ -261,6 +287,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api
 client.openPointInTime(...)
 ----
 
+[discrete]
 === ping
 Returns whether the cluster is running.
 
@@ -270,6 +297,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html[Endpo
 client.ping(...)
 ----
 
+[discrete]
 === put_script
 Creates or updates a script.
 
@@ -279,6 +307,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting
 client.putScript(...)
 ----
 
+[discrete]
 === rank_eval
 Allows to evaluate the quality of ranked search results over a set of typical search queries
 
@@ -288,6 +317,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.
 client.rankEval(...)
 ----
 
+[discrete]
 === reindex
 Allows to copy documents from one index to another, optionally filtering the source
 documents by a query, changing the destination index settings, or fetching the
@@ -299,6 +329,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
 client.reindex(...)
 ----
 
+[discrete]
 === reindex_rethrottle
 Changes the number of requests per second for a particular Reindex operation.
 
@@ -308,6 +339,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
 client.reindexRethrottle(...)
 ----
 
+[discrete]
 === render_search_template
 Allows to use the Mustache language to pre-render a search definition.
 
@@ -317,6 +349,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/render-search-te
 client.renderSearchTemplate(...)
 ----
 
+[discrete]
 === scripts_painless_execute
 Allows an arbitrary script to be executed and a result to be returned
 
@@ -326,6 +359,7 @@ https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-a
 client.scriptsPainlessExecute(...)
 ----
 
+[discrete]
 === scroll
 Allows to retrieve a large numbers of results from a single search request.
 
@@ -335,6 +369,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-bo
 client.scroll(...)
 ----
 
+[discrete]
 === search
 Returns results matching a query.
 
@@ -344,6 +379,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.htm
 client.search(...)
 ----
 
+[discrete]
 === search_mvt
 Searches a vector tile for geospatial values. Returns results as a binary Mapbox vector tile.
 
@@ -353,6 +389,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-vector-til
 client.searchMvt(...)
 ----
 
+[discrete]
 === search_shards
 Returns information about the indices and shards that a search request would be executed against.
 
@@ -362,6 +399,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.htm
 client.searchShards(...)
 ----
 
+[discrete]
 === search_template
 Allows to use the Mustache language to pre-render a search definition.
 
@@ -371,6 +409,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.
 client.searchTemplate(...)
 ----
 
+[discrete]
 === terms_enum
 The terms enum API  can be used to discover terms in the index that begin with the provided string. It is designed for low-latency look-ups used in auto-complete scenarios.
 
@@ -380,6 +419,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/search-terms-enu
 client.termsEnum(...)
 ----
 
+[discrete]
 === termvectors
 Returns information and statistics about terms in the fields of a particular document.
 
@@ -389,6 +429,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.
 client.termvectors(...)
 ----
 
+[discrete]
 === update
 Updates a document with a script or partial document.
 
@@ -398,6 +439,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html[
 client.update(...)
 ----
 
+[discrete]
 === update_by_query
 Performs an update on every document in the index without changing the source,
 for example to pick up a mapping change.
@@ -408,6 +450,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-qu
 client.updateByQuery(...)
 ----
 
+[discrete]
 === update_by_query_rethrottle
 Changes the number of requests per second for a particular Update By Query operation.
 
@@ -417,7 +460,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-q
 client.updateByQueryRethrottle(...)
 ----
 
+[discrete]
 === async_search
+[discrete]
 ==== delete
 Deletes an async search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
 
@@ -427,6 +472,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html
 client.asyncSearch.delete(...)
 ----
 
+[discrete]
 ==== get
 Retrieves the results of a previously submitted async search request given its ID.
 
@@ -436,6 +482,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html
 client.asyncSearch.get(...)
 ----
 
+[discrete]
 ==== status
 Retrieves the status of a previously submitted async search request given its ID.
 
@@ -445,6 +492,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html
 client.asyncSearch.status(...)
 ----
 
+[discrete]
 ==== submit
 Executes a search request asynchronously.
 
@@ -454,7 +502,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html
 client.asyncSearch.submit(...)
 ----
 
+[discrete]
 === cat
+[discrete]
 ==== aliases
 Shows information about currently configured aliases to indices including filter and routing infos.
 
@@ -464,6 +514,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html[En
 client.cat.aliases(...)
 ----
 
+[discrete]
 ==== allocation
 Provides a snapshot of how many shards are allocated to each data node and how much disk space they are using.
 
@@ -473,6 +524,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.ht
 client.cat.allocation(...)
 ----
 
+[discrete]
 ==== count
 Provides quick access to the document count of the entire cluster, or individual indices.
 
@@ -482,6 +534,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html[En
 client.cat.count(...)
 ----
 
+[discrete]
 ==== fielddata
 Shows how much heap memory is currently being used by fielddata on every data node in the cluster.
 
@@ -491,6 +544,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.htm
 client.cat.fielddata(...)
 ----
 
+[discrete]
 ==== health
 Returns a concise representation of the cluster health.
 
@@ -500,6 +554,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html[E
 client.cat.health(...)
 ----
 
+[discrete]
 ==== help
 Returns help for the Cat APIs.
 
@@ -509,6 +564,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html[Endpoint
 client.cat.help(...)
 ----
 
+[discrete]
 ==== indices
 Returns information about indices: number of primaries and replicas, document counts, disk size, ...
 
@@ -518,6 +574,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html[
 client.cat.indices(...)
 ----
 
+[discrete]
 ==== master
 Returns information about the master node.
 
@@ -527,6 +584,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-master.html[E
 client.cat.master(...)
 ----
 
+[discrete]
 ==== ml_data_frame_analytics
 Gets configuration and usage information about data frame analytics jobs.
 
@@ -536,6 +594,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-dfanalytics.h
 client.cat.mlDataFrameAnalytics(...)
 ----
 
+[discrete]
 ==== ml_datafeeds
 Gets configuration and usage information about datafeeds.
 
@@ -545,6 +604,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-datafeeds.htm
 client.cat.mlDatafeeds(...)
 ----
 
+[discrete]
 ==== ml_jobs
 Gets configuration and usage information about anomaly detection jobs.
 
@@ -554,6 +614,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-anomaly-detec
 client.cat.mlJobs(...)
 ----
 
+[discrete]
 ==== ml_trained_models
 Gets configuration and usage information about inference trained models.
 
@@ -563,6 +624,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-trained-model
 client.cat.mlTrainedModels(...)
 ----
 
+[discrete]
 ==== nodeattrs
 Returns information about custom node attributes.
 
@@ -572,6 +634,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.htm
 client.cat.nodeattrs(...)
 ----
 
+[discrete]
 ==== nodes
 Returns basic statistics about performance of cluster nodes.
 
@@ -581,6 +644,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html[En
 client.cat.nodes(...)
 ----
 
+[discrete]
 ==== pending_tasks
 Returns a concise representation of the cluster pending tasks.
 
@@ -590,6 +654,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks
 client.cat.pendingTasks(...)
 ----
 
+[discrete]
 ==== plugins
 Returns information about installed plugins across nodes node.
 
@@ -599,6 +664,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html[
 client.cat.plugins(...)
 ----
 
+[discrete]
 ==== recovery
 Returns information about index shard recoveries, both on-going completed.
 
@@ -608,6 +674,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html
 client.cat.recovery(...)
 ----
 
+[discrete]
 ==== repositories
 Returns information about snapshot repositories registered in the cluster.
 
@@ -617,6 +684,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.
 client.cat.repositories(...)
 ----
 
+[discrete]
 ==== segments
 Provides low-level information about the segments in the shards of an index.
 
@@ -626,6 +694,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html
 client.cat.segments(...)
 ----
 
+[discrete]
 ==== shards
 Provides a detailed view of shard allocation on nodes.
 
@@ -635,6 +704,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-shards.html[E
 client.cat.shards(...)
 ----
 
+[discrete]
 ==== snapshots
 Returns all snapshots in a specific repository.
 
@@ -644,6 +714,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.htm
 client.cat.snapshots(...)
 ----
 
+[discrete]
 ==== tasks
 Returns information about the tasks currently executing on one or more nodes in the cluster.
 
@@ -653,6 +724,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoi
 client.cat.tasks(...)
 ----
 
+[discrete]
 ==== templates
 Returns information about existing templates.
 
@@ -662,6 +734,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.htm
 client.cat.templates(...)
 ----
 
+[discrete]
 ==== thread_pool
 Returns cluster-wide thread pool statistics per node.
 By default the active, queue and rejected statistics are returned for all thread pools.
@@ -672,6 +745,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.h
 client.cat.threadPool(...)
 ----
 
+[discrete]
 ==== transforms
 Gets configuration and usage information about transforms.
 
@@ -681,7 +755,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-transforms.ht
 client.cat.transforms(...)
 ----
 
+[discrete]
 === ccr
+[discrete]
 ==== delete_auto_follow_pattern
 Deletes auto-follow patterns.
 
@@ -691,6 +767,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-delete-auto-f
 client.ccr.deleteAutoFollowPattern(...)
 ----
 
+[discrete]
 ==== follow
 Creates a new follower index configured to follow the referenced leader index.
 
@@ -700,6 +777,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-put-follow.ht
 client.ccr.follow(...)
 ----
 
+[discrete]
 ==== follow_info
 Retrieves information about all follower indices, including parameters and status for each follower index
 
@@ -709,6 +787,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-follow-in
 client.ccr.followInfo(...)
 ----
 
+[discrete]
 ==== follow_stats
 Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
 
@@ -718,6 +797,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-follow-st
 client.ccr.followStats(...)
 ----
 
+[discrete]
 ==== forget_follower
 Removes the follower retention leases from the leader.
 
@@ -727,6 +807,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-forget-f
 client.ccr.forgetFollower(...)
 ----
 
+[discrete]
 ==== get_auto_follow_pattern
 Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
 
@@ -736,6 +817,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-auto-foll
 client.ccr.getAutoFollowPattern(...)
 ----
 
+[discrete]
 ==== pause_auto_follow_pattern
 Pauses an auto-follow pattern
 
@@ -745,6 +827,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-pause-auto-fo
 client.ccr.pauseAutoFollowPattern(...)
 ----
 
+[discrete]
 ==== pause_follow
 Pauses a follower index. The follower index will not fetch any additional operations from the leader index.
 
@@ -754,6 +837,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-pause-fo
 client.ccr.pauseFollow(...)
 ----
 
+[discrete]
 ==== put_auto_follow_pattern
 Creates a new named collection of auto-follow patterns against a specified remote cluster. Newly created indices on the remote cluster matching any of the specified patterns will be automatically configured as follower indices.
 
@@ -763,6 +847,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-put-auto-foll
 client.ccr.putAutoFollowPattern(...)
 ----
 
+[discrete]
 ==== resume_auto_follow_pattern
 Resumes an auto-follow pattern that has been paused
 
@@ -772,6 +857,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-resume-auto-f
 client.ccr.resumeAutoFollowPattern(...)
 ----
 
+[discrete]
 ==== resume_follow
 Resumes a follower index that has been paused
 
@@ -781,6 +867,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-resume-f
 client.ccr.resumeFollow(...)
 ----
 
+[discrete]
 ==== stats
 Gets all stats related to cross-cluster replication.
 
@@ -790,6 +877,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-stats.htm
 client.ccr.stats(...)
 ----
 
+[discrete]
 ==== unfollow
 Stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication.
 
@@ -799,7 +887,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-unfollow
 client.ccr.unfollow(...)
 ----
 
+[discrete]
 === cluster
+[discrete]
 ==== allocation_explain
 Provides explanations for shard allocations in the cluster.
 
@@ -809,6 +899,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocatio
 client.cluster.allocationExplain(...)
 ----
 
+[discrete]
 ==== delete_component_template
 Deletes a component template
 
@@ -818,6 +909,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component
 client.cluster.deleteComponentTemplate(...)
 ----
 
+[discrete]
 ==== delete_voting_config_exclusions
 Clears cluster voting config exclusions.
 
@@ -827,6 +919,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/voting-config-exc
 client.cluster.deleteVotingConfigExclusions(...)
 ----
 
+[discrete]
 ==== exists_component_template
 Returns information about whether a particular component template exist
 
@@ -836,6 +929,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component
 client.cluster.existsComponentTemplate(...)
 ----
 
+[discrete]
 ==== get_component_template
 Returns one or more component templates
 
@@ -845,6 +939,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component
 client.cluster.getComponentTemplate(...)
 ----
 
+[discrete]
 ==== get_settings
 Returns cluster settings.
 
@@ -854,6 +949,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-get-setti
 client.cluster.getSettings(...)
 ----
 
+[discrete]
 ==== health
 Returns basic information about the health of the cluster.
 
@@ -863,6 +959,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.ht
 client.cluster.health(...)
 ----
 
+[discrete]
 ==== pending_tasks
 Returns a list of any cluster-level changes (e.g. create index, update mapping,
 allocate or fail shard) which have not yet been executed.
@@ -873,6 +970,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.h
 client.cluster.pendingTasks(...)
 ----
 
+[discrete]
 ==== post_voting_config_exclusions
 Updates the cluster voting config exclusions by node ids or node names.
 
@@ -882,6 +980,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/voting-config-exc
 client.cluster.postVotingConfigExclusions(...)
 ----
 
+[discrete]
 ==== put_component_template
 Creates or updates a component template
 
@@ -891,6 +990,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component
 client.cluster.putComponentTemplate(...)
 ----
 
+[discrete]
 ==== put_settings
 Updates the cluster settings.
 
@@ -900,6 +1000,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-se
 client.cluster.putSettings(...)
 ----
 
+[discrete]
 ==== remote_info
 Returns the information about configured remote clusters.
 
@@ -909,6 +1010,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-in
 client.cluster.remoteInfo(...)
 ----
 
+[discrete]
 ==== reroute
 Allows to manually change the allocation of individual shards in the cluster.
 
@@ -918,6 +1020,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.h
 client.cluster.reroute(...)
 ----
 
+[discrete]
 ==== state
 Returns a comprehensive information about the state of the cluster.
 
@@ -927,6 +1030,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.htm
 client.cluster.state(...)
 ----
 
+[discrete]
 ==== stats
 Returns high-level overview of cluster statistics.
 
@@ -936,7 +1040,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.htm
 client.cluster.stats(...)
 ----
 
+[discrete]
 === dangling_indices
+[discrete]
 ==== delete_dangling_index
 Deletes the specified dangling index
 
@@ -946,6 +1052,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-d
 client.danglingIndices.deleteDanglingIndex(...)
 ----
 
+[discrete]
 ==== import_dangling_index
 Imports the specified dangling index
 
@@ -955,6 +1062,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-d
 client.danglingIndices.importDanglingIndex(...)
 ----
 
+[discrete]
 ==== list_dangling_indices
 Returns all dangling indices.
 
@@ -964,7 +1072,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-d
 client.danglingIndices.listDanglingIndices(...)
 ----
 
+[discrete]
 === enrich
+[discrete]
 ==== delete_policy
 Deletes an existing enrich policy and its enrich index.
 
@@ -974,6 +1084,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-enrich-po
 client.enrich.deletePolicy(...)
 ----
 
+[discrete]
 ==== execute_policy
 Creates the enrich index for an existing enrich policy.
 
@@ -983,6 +1094,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/execute-enrich-p
 client.enrich.executePolicy(...)
 ----
 
+[discrete]
 ==== get_policy
 Gets information about an enrich policy.
 
@@ -992,6 +1104,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-enrich-polic
 client.enrich.getPolicy(...)
 ----
 
+[discrete]
 ==== put_policy
 Creates a new enrich policy.
 
@@ -1001,6 +1114,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/put-enrich-polic
 client.enrich.putPolicy(...)
 ----
 
+[discrete]
 ==== stats
 Gets enrich coordinator statistics and information about enrich policies that are currently executing.
 
@@ -1010,7 +1124,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/enrich-stats-api
 client.enrich.stats(...)
 ----
 
+[discrete]
 === eql
+[discrete]
 ==== delete
 Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
 
@@ -1020,6 +1136,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.h
 client.eql.delete(...)
 ----
 
+[discrete]
 ==== get
 Returns async results from previously executed Event Query Language (EQL) search
 
@@ -1029,6 +1146,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.h
 client.eql.get(...)
 ----
 
+[discrete]
 ==== get_status
 Returns the status of a previously submitted async or stored Event Query Language (EQL) search
 
@@ -1038,6 +1156,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.h
 client.eql.getStatus(...)
 ----
 
+[discrete]
 ==== search
 Returns results matching a query expressed in Event Query Language (EQL)
 
@@ -1047,7 +1166,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.h
 client.eql.search(...)
 ----
 
+[discrete]
 === features
+[discrete]
 ==== get_features
 Gets a list of features which can be included in snapshots using the feature_states field when creating a snapshot
 
@@ -1057,6 +1178,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/get-features-api.
 client.features.getFeatures(...)
 ----
 
+[discrete]
 ==== reset_features
 Resets the internal state of features, usually by deleting system indices
 
@@ -1066,7 +1188,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.features.resetFeatures(...)
 ----
 
+[discrete]
 === fleet
+[discrete]
 ==== global_checkpoints
 Returns the current global checkpoints for an index. This API is design for internal use by the fleet server project.
 
@@ -1076,6 +1200,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-global-check
 client.fleet.globalCheckpoints(...)
 ----
 
+[discrete]
 ==== msearch
 Multi Search API where the search will only be executed after specified checkpoints are available due to a refresh. This API is designed for internal use by the fleet server project.
 [source,ts]
@@ -1083,6 +1208,7 @@ Multi Search API where the search will only be executed after specified checkpoi
 client.fleet.msearch(...)
 ----
 
+[discrete]
 ==== search
 Search API where the search will only be executed after specified checkpoints are available due to a refresh. This API is designed for internal use by the fleet server project.
 [source,ts]
@@ -1090,7 +1216,9 @@ Search API where the search will only be executed after specified checkpoints ar
 client.fleet.search(...)
 ----
 
+[discrete]
 === graph
+[discrete]
 ==== explore
 Explore extracted and summarized information about the documents and terms in an index.
 
@@ -1100,7 +1228,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-ap
 client.graph.explore(...)
 ----
 
+[discrete]
 === ilm
+[discrete]
 ==== delete_lifecycle
 Deletes the specified lifecycle policy definition. A currently used policy cannot be deleted.
 
@@ -1110,6 +1240,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifec
 client.ilm.deleteLifecycle(...)
 ----
 
+[discrete]
 ==== explain_lifecycle
 Retrieves information about the index's current lifecycle state, such as the currently executing phase, action, and step.
 
@@ -1119,6 +1250,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-life
 client.ilm.explainLifecycle(...)
 ----
 
+[discrete]
 ==== get_lifecycle
 Returns the specified policy definition. Includes the policy version and last modified date.
 
@@ -1128,6 +1260,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-lifecycl
 client.ilm.getLifecycle(...)
 ----
 
+[discrete]
 ==== get_status
 Retrieves the current index lifecycle management (ILM) status.
 
@@ -1137,6 +1270,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.h
 client.ilm.getStatus(...)
 ----
 
+[discrete]
 ==== migrate_to_data_tiers
 Migrates the indices and ILM policies away from custom node attribute allocation routing to data tiers routing
 
@@ -1146,6 +1280,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-migrate-to-d
 client.ilm.migrateToDataTiers(...)
 ----
 
+[discrete]
 ==== move_to_step
 Manually moves an index into the specified step and executes that step.
 
@@ -1155,6 +1290,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-move-to-step
 client.ilm.moveToStep(...)
 ----
 
+[discrete]
 ==== put_lifecycle
 Creates a lifecycle policy
 
@@ -1164,6 +1300,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycl
 client.ilm.putLifecycle(...)
 ----
 
+[discrete]
 ==== remove_policy
 Removes the assigned lifecycle policy and stops managing the specified index
 
@@ -1173,6 +1310,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-remove-polic
 client.ilm.removePolicy(...)
 ----
 
+[discrete]
 ==== retry
 Retries executing the policy for an index that is in the ERROR step.
 
@@ -1182,6 +1320,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-retry-policy
 client.ilm.retry(...)
 ----
 
+[discrete]
 ==== start
 Start the index lifecycle management (ILM) plugin.
 
@@ -1191,6 +1330,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html[E
 client.ilm.start(...)
 ----
 
+[discrete]
 ==== stop
 Halts all lifecycle management operations and stops the index lifecycle management (ILM) plugin
 
@@ -1200,7 +1340,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-stop.html[En
 client.ilm.stop(...)
 ----
 
+[discrete]
 === indices
+[discrete]
 ==== add_block
 Adds a block to an index.
 
@@ -1210,6 +1352,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-blo
 client.indices.addBlock(...)
 ----
 
+[discrete]
 ==== analyze
 Performs the analysis process on a text and return the tokens breakdown of the text.
 
@@ -1219,6 +1362,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.h
 client.indices.analyze(...)
 ----
 
+[discrete]
 ==== clear_cache
 Clears all or specific caches for one or more indices.
 
@@ -1228,6 +1372,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcach
 client.indices.clearCache(...)
 ----
 
+[discrete]
 ==== clone
 Clones an index
 
@@ -1237,6 +1382,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clone-ind
 client.indices.clone(...)
 ----
 
+[discrete]
 ==== close
 Closes an index.
 
@@ -1246,6 +1392,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-clos
 client.indices.close(...)
 ----
 
+[discrete]
 ==== create
 Creates an index with optional settings and mappings.
 
@@ -1255,6 +1402,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-in
 client.indices.create(...)
 ----
 
+[discrete]
 ==== create_data_stream
 Creates a data stream
 
@@ -1264,6 +1412,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
 client.indices.createDataStream(...)
 ----
 
+[discrete]
 ==== data_streams_stats
 Provides statistics on operations happening in a data stream.
 
@@ -1273,6 +1422,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
 client.indices.dataStreamsStats(...)
 ----
 
+[discrete]
 ==== delete
 Deletes an index.
 
@@ -1282,6 +1432,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-in
 client.indices.delete(...)
 ----
 
+[discrete]
 ==== delete_alias
 Deletes an alias.
 
@@ -1291,6 +1442,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.h
 client.indices.deleteAlias(...)
 ----
 
+[discrete]
 ==== delete_data_stream
 Deletes a data stream.
 
@@ -1300,6 +1452,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
 client.indices.deleteDataStream(...)
 ----
 
+[discrete]
 ==== delete_index_template
 Deletes an index template.
 
@@ -1309,6 +1462,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates
 client.indices.deleteIndexTemplate(...)
 ----
 
+[discrete]
 ==== delete_template
 Deletes an index template.
 
@@ -1318,6 +1472,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates
 client.indices.deleteTemplate(...)
 ----
 
+[discrete]
 ==== disk_usage
 Analyzes the disk usage of each field of an index or data stream
 
@@ -1327,6 +1482,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-disk-usag
 client.indices.diskUsage(...)
 ----
 
+[discrete]
 ==== exists
 Returns information about whether a particular index exists.
 
@@ -1336,6 +1492,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.ht
 client.indices.exists(...)
 ----
 
+[discrete]
 ==== exists_alias
 Returns information about whether a particular alias exists.
 
@@ -1345,6 +1502,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.h
 client.indices.existsAlias(...)
 ----
 
+[discrete]
 ==== exists_index_template
 Returns information about whether a particular index template exists.
 
@@ -1354,6 +1512,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates
 client.indices.existsIndexTemplate(...)
 ----
 
+[discrete]
 ==== exists_template
 Returns information about whether a particular index template exists.
 
@@ -1363,6 +1522,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates
 client.indices.existsTemplate(...)
 ----
 
+[discrete]
 ==== field_usage_stats
 Returns the field usage stats for each field of an index
 
@@ -1372,6 +1532,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/field-usage-stats
 client.indices.fieldUsageStats(...)
 ----
 
+[discrete]
 ==== flush
 Performs the flush operation on one or more indices.
 
@@ -1381,6 +1542,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.htm
 client.indices.flush(...)
 ----
 
+[discrete]
 ==== forcemerge
 Performs the force merge operation on one or more indices.
 
@@ -1390,6 +1552,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerg
 client.indices.forcemerge(...)
 ----
 
+[discrete]
 ==== get
 Returns information about one or more indices.
 
@@ -1399,6 +1562,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index
 client.indices.get(...)
 ----
 
+[discrete]
 ==== get_alias
 Returns an alias.
 
@@ -1408,6 +1572,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.h
 client.indices.getAlias(...)
 ----
 
+[discrete]
 ==== get_data_stream
 Returns data streams.
 
@@ -1417,6 +1582,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
 client.indices.getDataStream(...)
 ----
 
+[discrete]
 ==== get_field_mapping
 Returns mapping for one or more fields.
 
@@ -1426,6 +1592,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field
 client.indices.getFieldMapping(...)
 ----
 
+[discrete]
 ==== get_index_template
 Returns an index template.
 
@@ -1435,6 +1602,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates
 client.indices.getIndexTemplate(...)
 ----
 
+[discrete]
 ==== get_mapping
 Returns mappings for one or more indices.
 
@@ -1444,6 +1612,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mappi
 client.indices.getMapping(...)
 ----
 
+[discrete]
 ==== get_settings
 Returns settings for one or more indices.
 
@@ -1453,6 +1622,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-setti
 client.indices.getSettings(...)
 ----
 
+[discrete]
 ==== get_template
 Returns an index template.
 
@@ -1462,6 +1632,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates
 client.indices.getTemplate(...)
 ----
 
+[discrete]
 ==== migrate_to_data_stream
 Migrates an alias to a data stream
 
@@ -1471,6 +1642,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
 client.indices.migrateToDataStream(...)
 ----
 
+[discrete]
 ==== modify_data_stream
 Modifies a data stream
 
@@ -1480,6 +1652,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
 client.indices.modifyDataStream(...)
 ----
 
+[discrete]
 ==== open
 Opens an index.
 
@@ -1489,6 +1662,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-clos
 client.indices.open(...)
 ----
 
+[discrete]
 ==== promote_data_stream
 Promotes a data stream from a replicated data stream managed by CCR to a regular data stream
 
@@ -1498,6 +1672,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
 client.indices.promoteDataStream(...)
 ----
 
+[discrete]
 ==== put_alias
 Creates or updates an alias.
 
@@ -1507,6 +1682,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.h
 client.indices.putAlias(...)
 ----
 
+[discrete]
 ==== put_index_template
 Creates or updates an index template.
 
@@ -1516,6 +1692,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates
 client.indices.putIndexTemplate(...)
 ----
 
+[discrete]
 ==== put_mapping
 Updates the index mappings.
 
@@ -1525,6 +1702,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mappi
 client.indices.putMapping(...)
 ----
 
+[discrete]
 ==== put_settings
 Updates the index settings.
 
@@ -1534,6 +1712,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-se
 client.indices.putSettings(...)
 ----
 
+[discrete]
 ==== put_template
 Creates or updates an index template.
 
@@ -1543,6 +1722,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates
 client.indices.putTemplate(...)
 ----
 
+[discrete]
 ==== recovery
 Returns information about ongoing index shard recoveries.
 
@@ -1552,6 +1732,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.
 client.indices.recovery(...)
 ----
 
+[discrete]
 ==== refresh
 Performs the refresh operation in one or more indices.
 
@@ -1561,6 +1742,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.h
 client.indices.refresh(...)
 ----
 
+[discrete]
 ==== reload_search_analyzers
 Reloads an index's search analyzers and their resources.
 
@@ -1570,6 +1752,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-reload-an
 client.indices.reloadSearchAnalyzers(...)
 ----
 
+[discrete]
 ==== resolve_index
 Returns information about any matching indices, aliases, and data streams
 
@@ -1579,6 +1762,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-i
 client.indices.resolveIndex(...)
 ----
 
+[discrete]
 ==== rollover
 Updates an alias to point to a new index when the existing index
 is considered to be too large or too old.
@@ -1589,6 +1773,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-
 client.indices.rollover(...)
 ----
 
+[discrete]
 ==== segments
 Provides low-level information about segments in a Lucene index.
 
@@ -1598,6 +1783,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.
 client.indices.segments(...)
 ----
 
+[discrete]
 ==== shard_stores
 Provides store information for shard copies of indices.
 
@@ -1607,6 +1793,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-st
 client.indices.shardStores(...)
 ----
 
+[discrete]
 ==== shrink
 Allow to shrink an existing index into a new index with fewer primary shards.
 
@@ -1616,6 +1803,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-in
 client.indices.shrink(...)
 ----
 
+[discrete]
 ==== simulate_index_template
 Simulate matching the given index name against the index templates in the system
 
@@ -1625,6 +1813,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates
 client.indices.simulateIndexTemplate(...)
 ----
 
+[discrete]
 ==== simulate_template
 Simulate resolving the given template name or body
 
@@ -1634,6 +1823,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates
 client.indices.simulateTemplate(...)
 ----
 
+[discrete]
 ==== split
 Allows you to split an existing index into a new index with more primary shards.
 
@@ -1643,6 +1833,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-split-ind
 client.indices.split(...)
 ----
 
+[discrete]
 ==== stats
 Provides statistics on operations happening in an index.
 
@@ -1652,6 +1843,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.htm
 client.indices.stats(...)
 ----
 
+[discrete]
 ==== unfreeze
 Unfreezes an index. When a frozen index is unfrozen, the index goes through the normal recovery process and becomes writeable again.
 
@@ -1661,6 +1853,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/unfreeze-index-a
 client.indices.unfreeze(...)
 ----
 
+[discrete]
 ==== update_aliases
 Updates index aliases.
 
@@ -1670,6 +1863,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.h
 client.indices.updateAliases(...)
 ----
 
+[discrete]
 ==== validate_query
 Allows a user to validate a potentially expensive query without executing it.
 
@@ -1679,7 +1873,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.h
 client.indices.validateQuery(...)
 ----
 
+[discrete]
 === ingest
+[discrete]
 ==== delete_pipeline
 Deletes a pipeline.
 
@@ -1689,6 +1885,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-pipeline-a
 client.ingest.deletePipeline(...)
 ----
 
+[discrete]
 ==== geo_ip_stats
 Returns statistical information about geoip databases
 
@@ -1698,6 +1895,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/geoip-stats-api.h
 client.ingest.geoIpStats(...)
 ----
 
+[discrete]
 ==== get_pipeline
 Returns a pipeline.
 
@@ -1707,6 +1905,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/get-pipeline-api.
 client.ingest.getPipeline(...)
 ----
 
+[discrete]
 ==== processor_grok
 Returns a list of the built-in patterns.
 
@@ -1716,6 +1915,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/grok-processor.ht
 client.ingest.processorGrok(...)
 ----
 
+[discrete]
 ==== put_pipeline
 Creates or updates a pipeline.
 
@@ -1725,6 +1925,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/put-pipeline-api.
 client.ingest.putPipeline(...)
 ----
 
+[discrete]
 ==== simulate
 Allows to simulate a pipeline with example documents.
 
@@ -1734,7 +1935,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline
 client.ingest.simulate(...)
 ----
 
+[discrete]
 === license
+[discrete]
 ==== delete
 Deletes licensing information for the cluster
 
@@ -1744,6 +1947,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-license.ht
 client.license.delete(...)
 ----
 
+[discrete]
 ==== get
 Retrieves licensing information for the cluster
 
@@ -1753,6 +1957,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html[
 client.license.get(...)
 ----
 
+[discrete]
 ==== get_basic_status
 Retrieves information about the status of the basic license.
 
@@ -1762,6 +1967,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/get-basic-status.
 client.license.getBasicStatus(...)
 ----
 
+[discrete]
 ==== get_trial_status
 Retrieves information about the status of the trial license.
 
@@ -1771,6 +1977,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trial-status.
 client.license.getTrialStatus(...)
 ----
 
+[discrete]
 ==== post
 Updates the license for the cluster.
 
@@ -1780,6 +1987,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/update-license.ht
 client.license.post(...)
 ----
 
+[discrete]
 ==== post_start_basic
 Starts an indefinite basic license.
 
@@ -1789,6 +1997,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/start-basic.html[
 client.license.postStartBasic(...)
 ----
 
+[discrete]
 ==== post_start_trial
 starts a limited time trial license.
 
@@ -1798,7 +2007,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html[
 client.license.postStartTrial(...)
 ----
 
+[discrete]
 === logstash
+[discrete]
 ==== delete_pipeline
 Deletes Logstash Pipelines used by Central Management
 
@@ -1808,6 +2019,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-del
 client.logstash.deletePipeline(...)
 ----
 
+[discrete]
 ==== get_pipeline
 Retrieves Logstash Pipelines used by Central Management
 
@@ -1817,6 +2029,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-get
 client.logstash.getPipeline(...)
 ----
 
+[discrete]
 ==== put_pipeline
 Adds and updates Logstash Pipelines used for Central Management
 
@@ -1826,7 +2039,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-put
 client.logstash.putPipeline(...)
 ----
 
+[discrete]
 === migration
+[discrete]
 ==== deprecations
 Retrieves information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
 
@@ -1836,6 +2051,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-de
 client.migration.deprecations(...)
 ----
 
+[discrete]
 ==== get_feature_upgrade_status
 Find out whether system features need to be upgraded or not
 
@@ -1845,6 +2061,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-fe
 client.migration.getFeatureUpgradeStatus(...)
 ----
 
+[discrete]
 ==== post_feature_upgrade
 Begin upgrades for system features
 
@@ -1854,7 +2071,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-fe
 client.migration.postFeatureUpgrade(...)
 ----
 
+[discrete]
 === ml
+[discrete]
 ==== close_job
 Closes one or more anomaly detection jobs. A job can be opened and closed multiple times throughout its lifecycle.
 
@@ -1864,6 +2083,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-close-job.html
 client.ml.closeJob(...)
 ----
 
+[discrete]
 ==== delete_calendar
 Deletes a calendar.
 
@@ -1873,6 +2093,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calenda
 client.ml.deleteCalendar(...)
 ----
 
+[discrete]
 ==== delete_calendar_event
 Deletes scheduled events from a calendar.
 
@@ -1882,6 +2103,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calenda
 client.ml.deleteCalendarEvent(...)
 ----
 
+[discrete]
 ==== delete_calendar_job
 Deletes anomaly detection jobs from a calendar.
 
@@ -1891,6 +2113,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calenda
 client.ml.deleteCalendarJob(...)
 ----
 
+[discrete]
 ==== delete_data_frame_analytics
 Deletes an existing data frame analytics job.
 
@@ -1900,6 +2123,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-dfanalytic
 client.ml.deleteDataFrameAnalytics(...)
 ----
 
+[discrete]
 ==== delete_datafeed
 Deletes an existing datafeed.
 
@@ -1909,6 +2133,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-datafee
 client.ml.deleteDatafeed(...)
 ----
 
+[discrete]
 ==== delete_expired_data
 Deletes expired and unused machine learning data.
 
@@ -1918,6 +2143,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-expire
 client.ml.deleteExpiredData(...)
 ----
 
+[discrete]
 ==== delete_filter
 Deletes a filter.
 
@@ -1927,6 +2153,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-filter
 client.ml.deleteFilter(...)
 ----
 
+[discrete]
 ==== delete_forecast
 Deletes forecasts from a machine learning job.
 
@@ -1936,6 +2163,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-foreca
 client.ml.deleteForecast(...)
 ----
 
+[discrete]
 ==== delete_job
 Deletes an existing anomaly detection job.
 
@@ -1945,6 +2173,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.ht
 client.ml.deleteJob(...)
 ----
 
+[discrete]
 ==== delete_model_snapshot
 Deletes an existing model snapshot.
 
@@ -1954,6 +2183,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapsh
 client.ml.deleteModelSnapshot(...)
 ----
 
+[discrete]
 ==== delete_trained_model
 Deletes an existing trained inference model that is currently not referenced by an ingest pipeline.
 
@@ -1963,6 +2193,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-trained-m
 client.ml.deleteTrainedModel(...)
 ----
 
+[discrete]
 ==== delete_trained_model_alias
 Deletes a model alias that refers to the trained model
 
@@ -1972,6 +2203,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-trained-m
 client.ml.deleteTrainedModelAlias(...)
 ----
 
+[discrete]
 ==== estimate_model_memory
 Estimates the model memory
 
@@ -1981,6 +2213,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-apis.html[End
 client.ml.estimateModelMemory(...)
 ----
 
+[discrete]
 ==== evaluate_data_frame
 Evaluates the data frame analytics for an annotated index.
 
@@ -1990,6 +2223,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/evaluate-dfanaly
 client.ml.evaluateDataFrame(...)
 ----
 
+[discrete]
 ==== explain_data_frame_analytics
 Explains a data frame analytics config.
 
@@ -1999,6 +2233,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/explain-dfanalyti
 client.ml.explainDataFrameAnalytics(...)
 ----
 
+[discrete]
 ==== flush_job
 Forces any buffered data to be processed by the job.
 
@@ -2008,6 +2243,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.htm
 client.ml.flushJob(...)
 ----
 
+[discrete]
 ==== forecast
 Predicts the future behavior of a time series by using its historical behavior.
 
@@ -2017,6 +2253,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-forecast.html
 client.ml.forecast(...)
 ----
 
+[discrete]
 ==== get_buckets
 Retrieves anomaly detection job results for one or more buckets.
 
@@ -2026,6 +2263,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.ht
 client.ml.getBuckets(...)
 ----
 
+[discrete]
 ==== get_calendar_events
 Retrieves information about the scheduled events in calendars.
 
@@ -2035,6 +2273,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar-
 client.ml.getCalendarEvents(...)
 ----
 
+[discrete]
 ==== get_calendars
 Retrieves configuration information for calendars.
 
@@ -2044,6 +2283,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar.
 client.ml.getCalendars(...)
 ----
 
+[discrete]
 ==== get_categories
 Retrieves anomaly detection job results for one or more categories.
 
@@ -2053,6 +2293,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.
 client.ml.getCategories(...)
 ----
 
+[discrete]
 ==== get_data_frame_analytics
 Retrieves configuration information for data frame analytics jobs.
 
@@ -2062,6 +2303,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics.
 client.ml.getDataFrameAnalytics(...)
 ----
 
+[discrete]
 ==== get_data_frame_analytics_stats
 Retrieves usage information for data frame analytics jobs.
 
@@ -2071,6 +2313,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics-
 client.ml.getDataFrameAnalyticsStats(...)
 ----
 
+[discrete]
 ==== get_datafeed_stats
 Retrieves usage information for datafeeds.
 
@@ -2080,6 +2323,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-
 client.ml.getDatafeedStats(...)
 ----
 
+[discrete]
 ==== get_datafeeds
 Retrieves configuration information for datafeeds.
 
@@ -2089,6 +2333,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.
 client.ml.getDatafeeds(...)
 ----
 
+[discrete]
 ==== get_filters
 Retrieves filters.
 
@@ -2098,6 +2343,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-filter.ht
 client.ml.getFilters(...)
 ----
 
+[discrete]
 ==== get_influencers
 Retrieves anomaly detection job results for one or more influencers.
 
@@ -2107,6 +2353,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influence
 client.ml.getInfluencers(...)
 ----
 
+[discrete]
 ==== get_job_stats
 Retrieves usage information for anomaly detection jobs.
 
@@ -2116,6 +2363,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats
 client.ml.getJobStats(...)
 ----
 
+[discrete]
 ==== get_jobs
 Retrieves configuration information for anomaly detection jobs.
 
@@ -2125,6 +2373,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html[
 client.ml.getJobs(...)
 ----
 
+[discrete]
 ==== get_memory_stats
 Returns information on how ML is using memory.
 [source,ts]
@@ -2132,6 +2381,7 @@ Returns information on how ML is using memory.
 client.ml.getMemoryStats(...)
 ----
 
+[discrete]
 ==== get_model_snapshot_upgrade_stats
 Gets stats for anomaly detection job model snapshot upgrades that are in progress.
 
@@ -2141,6 +2391,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-model
 client.ml.getModelSnapshotUpgradeStats(...)
 ----
 
+[discrete]
 ==== get_model_snapshots
 Retrieves information about model snapshots.
 
@@ -2150,6 +2401,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.
 client.ml.getModelSnapshots(...)
 ----
 
+[discrete]
 ==== get_overall_buckets
 Retrieves overall bucket results that summarize the bucket results of multiple anomaly detection jobs.
 
@@ -2159,6 +2411,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-b
 client.ml.getOverallBuckets(...)
 ----
 
+[discrete]
 ==== get_records
 Retrieves anomaly records for an anomaly detection job.
 
@@ -2168,6 +2421,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.ht
 client.ml.getRecords(...)
 ----
 
+[discrete]
 ==== get_trained_models
 Retrieves configuration information for a trained inference model.
 
@@ -2177,6 +2431,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-trained-mode
 client.ml.getTrainedModels(...)
 ----
 
+[discrete]
 ==== get_trained_models_stats
 Retrieves usage information for trained inference models.
 
@@ -2186,6 +2441,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-trained-mode
 client.ml.getTrainedModelsStats(...)
 ----
 
+[discrete]
 ==== infer_trained_model_deployment
 Evaluate a trained model.
 
@@ -2195,6 +2451,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-mod
 client.ml.inferTrainedModelDeployment(...)
 ----
 
+[discrete]
 ==== info
 Returns defaults and limits used by machine learning.
 
@@ -2204,6 +2461,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-info.html
 client.ml.info(...)
 ----
 
+[discrete]
 ==== open_job
 Opens one or more anomaly detection jobs.
 
@@ -2213,6 +2471,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
 client.ml.openJob(...)
 ----
 
+[discrete]
 ==== post_calendar_events
 Posts scheduled events in a calendar.
 
@@ -2222,6 +2481,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-calendar
 client.ml.postCalendarEvents(...)
 ----
 
+[discrete]
 ==== post_data
 Sends data to an anomaly detection job for analysis.
 
@@ -2231,6 +2491,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.htm
 client.ml.postData(...)
 ----
 
+[discrete]
 ==== preview_data_frame_analytics
 Previews that will be analyzed given a data frame analytics config.
 
@@ -2240,6 +2501,7 @@ http://www.elastic.co/guide/en/elasticsearch/reference/current/preview-dfanalyti
 client.ml.previewDataFrameAnalytics(...)
 ----
 
+[discrete]
 ==== preview_datafeed
 Previews a datafeed.
 
@@ -2249,6 +2511,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-dataf
 client.ml.previewDatafeed(...)
 ----
 
+[discrete]
 ==== put_calendar
 Instantiates a calendar.
 
@@ -2258,6 +2521,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar.
 client.ml.putCalendar(...)
 ----
 
+[discrete]
 ==== put_calendar_job
 Adds an anomaly detection job to a calendar.
 
@@ -2267,6 +2531,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar-
 client.ml.putCalendarJob(...)
 ----
 
+[discrete]
 ==== put_data_frame_analytics
 Instantiates a data frame analytics job.
 
@@ -2276,6 +2541,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/put-dfanalytics.h
 client.ml.putDataFrameAnalytics(...)
 ----
 
+[discrete]
 ==== put_datafeed
 Instantiates a datafeed.
 
@@ -2285,6 +2551,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.
 client.ml.putDatafeed(...)
 ----
 
+[discrete]
 ==== put_filter
 Instantiates a filter.
 
@@ -2294,6 +2561,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-filter.ht
 client.ml.putFilter(...)
 ----
 
+[discrete]
 ==== put_job
 Instantiates an anomaly detection job.
 
@@ -2303,6 +2571,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html[
 client.ml.putJob(...)
 ----
 
+[discrete]
 ==== put_trained_model
 Creates an inference trained model.
 
@@ -2312,6 +2581,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-mode
 client.ml.putTrainedModel(...)
 ----
 
+[discrete]
 ==== put_trained_model_alias
 Creates a new model alias (or reassigns an existing one) to refer to the trained model
 
@@ -2321,6 +2591,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-mode
 client.ml.putTrainedModelAlias(...)
 ----
 
+[discrete]
 ==== put_trained_model_definition_part
 Creates part of a trained model definition
 
@@ -2330,6 +2601,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-mode
 client.ml.putTrainedModelDefinitionPart(...)
 ----
 
+[discrete]
 ==== put_trained_model_vocabulary
 Creates a trained model vocabulary
 
@@ -2339,6 +2611,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-mode
 client.ml.putTrainedModelVocabulary(...)
 ----
 
+[discrete]
 ==== reset_job
 Resets an existing anomaly detection job.
 
@@ -2348,6 +2621,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-reset-job.htm
 client.ml.resetJob(...)
 ----
 
+[discrete]
 ==== revert_model_snapshot
 Reverts to a specific snapshot.
 
@@ -2357,6 +2631,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapsh
 client.ml.revertModelSnapshot(...)
 ----
 
+[discrete]
 ==== set_upgrade_mode
 Sets a cluster wide upgrade_mode setting that prepares machine learning indices for an upgrade.
 
@@ -2366,6 +2641,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-m
 client.ml.setUpgradeMode(...)
 ----
 
+[discrete]
 ==== start_data_frame_analytics
 Starts a data frame analytics job.
 
@@ -2375,6 +2651,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/start-dfanalytic
 client.ml.startDataFrameAnalytics(...)
 ----
 
+[discrete]
 ==== start_datafeed
 Starts one or more datafeeds.
 
@@ -2384,6 +2661,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafee
 client.ml.startDatafeed(...)
 ----
 
+[discrete]
 ==== start_trained_model_deployment
 Start a trained model deployment.
 
@@ -2393,6 +2671,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trained-mod
 client.ml.startTrainedModelDeployment(...)
 ----
 
+[discrete]
 ==== stop_data_frame_analytics
 Stops one or more data frame analytics jobs.
 
@@ -2402,6 +2681,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-dfanalytics
 client.ml.stopDataFrameAnalytics(...)
 ----
 
+[discrete]
 ==== stop_datafeed
 Stops one or more datafeeds.
 
@@ -2411,6 +2691,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed
 client.ml.stopDatafeed(...)
 ----
 
+[discrete]
 ==== stop_trained_model_deployment
 Stop a trained model deployment.
 
@@ -2420,6 +2701,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/stop-trained-mode
 client.ml.stopTrainedModelDeployment(...)
 ----
 
+[discrete]
 ==== update_data_frame_analytics
 Updates certain properties of a data frame analytics job.
 
@@ -2429,6 +2711,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/update-dfanalyti
 client.ml.updateDataFrameAnalytics(...)
 ----
 
+[discrete]
 ==== update_datafeed
 Updates certain properties of a datafeed.
 
@@ -2438,6 +2721,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafe
 client.ml.updateDatafeed(...)
 ----
 
+[discrete]
 ==== update_filter
 Updates the description of a filter, adds items, or removes items.
 
@@ -2447,6 +2731,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-filter
 client.ml.updateFilter(...)
 ----
 
+[discrete]
 ==== update_job
 Updates certain properties of an anomaly detection job.
 
@@ -2456,6 +2741,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.ht
 client.ml.updateJob(...)
 ----
 
+[discrete]
 ==== update_model_snapshot
 Updates certain properties of a snapshot.
 
@@ -2465,6 +2751,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapsh
 client.ml.updateModelSnapshot(...)
 ----
 
+[discrete]
 ==== upgrade_job_snapshot
 Upgrades a given job snapshot to the current major version.
 
@@ -2474,7 +2761,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-upgrade-job-m
 client.ml.upgradeJobSnapshot(...)
 ----
 
+[discrete]
 === nodes
+[discrete]
 ==== clear_repositories_metering_archive
 Removes the archived repositories metering information present in the cluster.
 
@@ -2484,6 +2773,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-repositori
 client.nodes.clearRepositoriesMeteringArchive(...)
 ----
 
+[discrete]
 ==== get_repositories_metering_info
 Returns cluster repositories metering information.
 
@@ -2493,6 +2783,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-repositories
 client.nodes.getRepositoriesMeteringInfo(...)
 ----
 
+[discrete]
 ==== hot_threads
 Returns information about hot threads on each node in the cluster.
 
@@ -2502,6 +2793,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot
 client.nodes.hotThreads(...)
 ----
 
+[discrete]
 ==== info
 Returns information about nodes in the cluster.
 
@@ -2511,6 +2803,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-inf
 client.nodes.info(...)
 ----
 
+[discrete]
 ==== reload_secure_settings
 Reloads secure settings.
 
@@ -2520,6 +2813,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.h
 client.nodes.reloadSecureSettings(...)
 ----
 
+[discrete]
 ==== stats
 Returns statistical information about nodes in the cluster.
 
@@ -2529,6 +2823,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-sta
 client.nodes.stats(...)
 ----
 
+[discrete]
 ==== usage
 Returns low-level information about REST actions usage on nodes.
 
@@ -2538,7 +2833,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usa
 client.nodes.usage(...)
 ----
 
+[discrete]
 === rollup
+[discrete]
 ==== delete_job
 Deletes an existing rollup job.
 
@@ -2548,6 +2845,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-delete-job
 client.rollup.deleteJob(...)
 ----
 
+[discrete]
 ==== get_jobs
 Retrieves the configuration, stats, and status of rollup jobs.
 
@@ -2557,6 +2855,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-job.ht
 client.rollup.getJobs(...)
 ----
 
+[discrete]
 ==== get_rollup_caps
 Returns the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
 
@@ -2566,6 +2865,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-rollup
 client.rollup.getRollupCaps(...)
 ----
 
+[discrete]
 ==== get_rollup_index_caps
 Returns the rollup capabilities of all jobs inside of a rollup index (e.g. the index where rollup data is stored).
 
@@ -2575,6 +2875,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-rollup
 client.rollup.getRollupIndexCaps(...)
 ----
 
+[discrete]
 ==== put_job
 Creates a rollup job.
 
@@ -2584,6 +2885,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-put-job.ht
 client.rollup.putJob(...)
 ----
 
+[discrete]
 ==== rollup
 Rollup an index
 
@@ -2593,6 +2895,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/xpack-rollup.htm
 client.rollup.rollup(...)
 ----
 
+[discrete]
 ==== rollup_search
 Enables searching rolled-up data using the standard query DSL.
 
@@ -2602,6 +2905,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-search.htm
 client.rollup.rollupSearch(...)
 ----
 
+[discrete]
 ==== start_job
 Starts an existing, stopped rollup job.
 
@@ -2611,6 +2915,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-start-job.
 client.rollup.startJob(...)
 ----
 
+[discrete]
 ==== stop_job
 Stops an existing, started rollup job.
 
@@ -2620,7 +2925,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-stop-job.h
 client.rollup.stopJob(...)
 ----
 
+[discrete]
 === searchable_snapshots
+[discrete]
 ==== cache_stats
 Retrieve node-level cache statistics about searchable snapshots.
 
@@ -2630,6 +2937,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapsh
 client.searchableSnapshots.cacheStats(...)
 ----
 
+[discrete]
 ==== clear_cache
 Clear the cache of searchable snapshots.
 
@@ -2639,6 +2947,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapsh
 client.searchableSnapshots.clearCache(...)
 ----
 
+[discrete]
 ==== mount
 Mount a snapshot as a searchable index.
 
@@ -2648,6 +2957,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapsh
 client.searchableSnapshots.mount(...)
 ----
 
+[discrete]
 ==== stats
 Retrieve shard-level statistics about searchable snapshots.
 
@@ -2657,7 +2967,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapsh
 client.searchableSnapshots.stats(...)
 ----
 
+[discrete]
 === security
+[discrete]
 ==== activate_user_profile
 Creates or updates the user profile on behalf of another user.
 [source,ts]
@@ -2665,6 +2977,7 @@ Creates or updates the user profile on behalf of another user.
 client.security.activateUserProfile(...)
 ----
 
+[discrete]
 ==== authenticate
 Enables authentication as a user and retrieve information about the authenticated user.
 
@@ -2674,6 +2987,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-aut
 client.security.authenticate(...)
 ----
 
+[discrete]
 ==== change_password
 Changes the passwords of users in the native realm and built-in users.
 
@@ -2683,6 +2997,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cha
 client.security.changePassword(...)
 ----
 
+[discrete]
 ==== clear_api_key_cache
 Clear a subset or all entries from the API key cache.
 
@@ -2692,6 +3007,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cle
 client.security.clearApiKeyCache(...)
 ----
 
+[discrete]
 ==== clear_cached_privileges
 Evicts application privileges from the native application privileges cache.
 
@@ -2701,6 +3017,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cle
 client.security.clearCachedPrivileges(...)
 ----
 
+[discrete]
 ==== clear_cached_realms
 Evicts users from the user cache. Can completely clear the cache or evict specific users.
 
@@ -2710,6 +3027,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cle
 client.security.clearCachedRealms(...)
 ----
 
+[discrete]
 ==== clear_cached_roles
 Evicts roles from the native role cache.
 
@@ -2719,6 +3037,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cle
 client.security.clearCachedRoles(...)
 ----
 
+[discrete]
 ==== clear_cached_service_tokens
 Evicts tokens from the service account token caches.
 
@@ -2728,6 +3047,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cle
 client.security.clearCachedServiceTokens(...)
 ----
 
+[discrete]
 ==== create_api_key
 Creates an API key for access without requiring basic authentication.
 
@@ -2737,6 +3057,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cre
 client.security.createApiKey(...)
 ----
 
+[discrete]
 ==== create_service_token
 Creates a service account token for access without requiring basic authentication.
 
@@ -2746,6 +3067,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-cre
 client.security.createServiceToken(...)
 ----
 
+[discrete]
 ==== delete_privileges
 Removes application privileges.
 
@@ -2755,6 +3077,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-del
 client.security.deletePrivileges(...)
 ----
 
+[discrete]
 ==== delete_role
 Removes roles in the native realm.
 
@@ -2764,6 +3087,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-del
 client.security.deleteRole(...)
 ----
 
+[discrete]
 ==== delete_role_mapping
 Removes role mappings.
 
@@ -2773,6 +3097,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-del
 client.security.deleteRoleMapping(...)
 ----
 
+[discrete]
 ==== delete_service_token
 Deletes a service account token.
 
@@ -2782,6 +3107,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-del
 client.security.deleteServiceToken(...)
 ----
 
+[discrete]
 ==== delete_user
 Deletes users from the native realm.
 
@@ -2791,6 +3117,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-del
 client.security.deleteUser(...)
 ----
 
+[discrete]
 ==== disable_user
 Disables users in the native realm.
 
@@ -2800,6 +3127,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-dis
 client.security.disableUser(...)
 ----
 
+[discrete]
 ==== enable_user
 Enables users in the native realm.
 
@@ -2809,6 +3137,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ena
 client.security.enableUser(...)
 ----
 
+[discrete]
 ==== enroll_kibana
 Allows a kibana instance to configure itself to communicate with a secured elasticsearch cluster.
 
@@ -2818,6 +3147,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-kiba
 client.security.enrollKibana(...)
 ----
 
+[discrete]
 ==== enroll_node
 Allows a new node to enroll to an existing cluster with security enabled.
 
@@ -2827,6 +3157,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-node
 client.security.enrollNode(...)
 ----
 
+[discrete]
 ==== get_api_key
 Retrieves information for one or more API keys.
 
@@ -2836,6 +3167,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 client.security.getApiKey(...)
 ----
 
+[discrete]
 ==== get_builtin_privileges
 Retrieves the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
 
@@ -2845,6 +3177,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 client.security.getBuiltinPrivileges(...)
 ----
 
+[discrete]
 ==== get_privileges
 Retrieves application privileges.
 
@@ -2854,6 +3187,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 client.security.getPrivileges(...)
 ----
 
+[discrete]
 ==== get_role
 Retrieves roles in the native realm.
 
@@ -2863,6 +3197,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 client.security.getRole(...)
 ----
 
+[discrete]
 ==== get_role_mapping
 Retrieves role mappings.
 
@@ -2872,6 +3207,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 client.security.getRoleMapping(...)
 ----
 
+[discrete]
 ==== get_service_accounts
 Retrieves information about service accounts.
 
@@ -2881,6 +3217,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 client.security.getServiceAccounts(...)
 ----
 
+[discrete]
 ==== get_service_credentials
 Retrieves information of all service credentials for a service account.
 
@@ -2890,6 +3227,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 client.security.getServiceCredentials(...)
 ----
 
+[discrete]
 ==== get_token
 Creates a bearer token for access without requiring basic authentication.
 
@@ -2899,6 +3237,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 client.security.getToken(...)
 ----
 
+[discrete]
 ==== get_user
 Retrieves information about users in the native realm and built-in users.
 
@@ -2908,6 +3247,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 client.security.getUser(...)
 ----
 
+[discrete]
 ==== get_user_privileges
 Retrieves security privileges for the logged in user.
 
@@ -2917,6 +3257,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 client.security.getUserPrivileges(...)
 ----
 
+[discrete]
 ==== get_user_profile
 Retrieves user profile for the given unique ID.
 [source,ts]
@@ -2924,6 +3265,7 @@ Retrieves user profile for the given unique ID.
 client.security.getUserProfile(...)
 ----
 
+[discrete]
 ==== grant_api_key
 Creates an API key on behalf of another user.
 
@@ -2933,6 +3275,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-gra
 client.security.grantApiKey(...)
 ----
 
+[discrete]
 ==== has_privileges
 Determines whether the specified user has a specified list of privileges.
 
@@ -2942,6 +3285,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has
 client.security.hasPrivileges(...)
 ----
 
+[discrete]
 ==== invalidate_api_key
 Invalidates one or more API keys.
 
@@ -2951,6 +3295,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-inv
 client.security.invalidateApiKey(...)
 ----
 
+[discrete]
 ==== invalidate_token
 Invalidates one or more access tokens or refresh tokens.
 
@@ -2960,6 +3305,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-inv
 client.security.invalidateToken(...)
 ----
 
+[discrete]
 ==== oidc_authenticate
 Exchanges an OpenID Connection authentication response message for an Elasticsearch access token and refresh token pair
 
@@ -2969,6 +3315,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-oid
 client.security.oidcAuthenticate(...)
 ----
 
+[discrete]
 ==== oidc_logout
 Invalidates a refresh token and access token that was generated from the OpenID Connect Authenticate API
 
@@ -2978,6 +3325,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-oid
 client.security.oidcLogout(...)
 ----
 
+[discrete]
 ==== oidc_prepare_authentication
 Creates an OAuth 2.0 authentication request as a URL string
 
@@ -2987,6 +3335,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-oid
 client.security.oidcPrepareAuthentication(...)
 ----
 
+[discrete]
 ==== put_privileges
 Adds or updates application privileges.
 
@@ -2996,6 +3345,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put
 client.security.putPrivileges(...)
 ----
 
+[discrete]
 ==== put_role
 Adds and updates roles in the native realm.
 
@@ -3005,6 +3355,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put
 client.security.putRole(...)
 ----
 
+[discrete]
 ==== put_role_mapping
 Creates and updates role mappings.
 
@@ -3014,6 +3365,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put
 client.security.putRoleMapping(...)
 ----
 
+[discrete]
 ==== put_user
 Adds and updates users in the native realm. These users are commonly referred to as native users.
 
@@ -3023,6 +3375,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put
 client.security.putUser(...)
 ----
 
+[discrete]
 ==== query_api_keys
 Retrieves information for API keys using a subset of query DSL
 
@@ -3032,6 +3385,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-que
 client.security.queryApiKeys(...)
 ----
 
+[discrete]
 ==== saml_authenticate
 Exchanges a SAML Response message for an Elasticsearch access token and refresh token pair
 
@@ -3041,6 +3395,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-sam
 client.security.samlAuthenticate(...)
 ----
 
+[discrete]
 ==== saml_complete_logout
 Verifies the logout response sent from the SAML IdP
 
@@ -3050,6 +3405,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-sam
 client.security.samlCompleteLogout(...)
 ----
 
+[discrete]
 ==== saml_invalidate
 Consumes a SAML LogoutRequest
 
@@ -3059,6 +3415,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-sam
 client.security.samlInvalidate(...)
 ----
 
+[discrete]
 ==== saml_logout
 Invalidates an access token and a refresh token that were generated via the SAML Authenticate API
 
@@ -3068,6 +3425,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-sam
 client.security.samlLogout(...)
 ----
 
+[discrete]
 ==== saml_prepare_authentication
 Creates a SAML authentication request
 
@@ -3077,6 +3435,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-sam
 client.security.samlPrepareAuthentication(...)
 ----
 
+[discrete]
 ==== saml_service_provider_metadata
 Generates SAML metadata for the Elastic stack SAML 2.0 Service Provider
 
@@ -3086,6 +3445,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-sam
 client.security.samlServiceProviderMetadata(...)
 ----
 
+[discrete]
 ==== update_user_profile_data
 Update application specific data for the user profile of the given unique ID.
 [source,ts]
@@ -3093,7 +3453,9 @@ Update application specific data for the user profile of the given unique ID.
 client.security.updateUserProfileData(...)
 ----
 
+[discrete]
 === slm
+[discrete]
 ==== delete_lifecycle
 Deletes an existing snapshot lifecycle policy.
 
@@ -3103,6 +3465,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete-p
 client.slm.deleteLifecycle(...)
 ----
 
+[discrete]
 ==== execute_lifecycle
 Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.
 
@@ -3112,6 +3475,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-
 client.slm.executeLifecycle(...)
 ----
 
+[discrete]
 ==== execute_retention
 Deletes any snapshots that are expired according to the policy's retention rules.
 
@@ -3121,6 +3485,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-
 client.slm.executeRetention(...)
 ----
 
+[discrete]
 ==== get_lifecycle
 Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
 
@@ -3130,6 +3495,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-poli
 client.slm.getLifecycle(...)
 ----
 
+[discrete]
 ==== get_stats
 Returns global and policy-level statistics about actions taken by snapshot lifecycle management.
 
@@ -3139,6 +3505,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/slm-api-get-stats
 client.slm.getStats(...)
 ----
 
+[discrete]
 ==== get_status
 Retrieves the status of snapshot lifecycle management (SLM).
 
@@ -3148,6 +3515,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-stat
 client.slm.getStatus(...)
 ----
 
+[discrete]
 ==== put_lifecycle
 Creates or updates a snapshot lifecycle policy.
 
@@ -3157,6 +3525,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-put-poli
 client.slm.putLifecycle(...)
 ----
 
+[discrete]
 ==== start
 Turns on snapshot lifecycle management (SLM).
 
@@ -3166,6 +3535,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-start.ht
 client.slm.start(...)
 ----
 
+[discrete]
 ==== stop
 Turns off snapshot lifecycle management (SLM).
 
@@ -3175,7 +3545,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-stop.htm
 client.slm.stop(...)
 ----
 
+[discrete]
 === snapshot
+[discrete]
 ==== cleanup_repository
 Removes stale data from repository.
 
@@ -3185,6 +3557,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/clean-up-snapshot
 client.snapshot.cleanupRepository(...)
 ----
 
+[discrete]
 ==== clone
 Clones indices from one snapshot into another snapshot in the same repository.
 
@@ -3194,6 +3567,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.snapshot.clone(...)
 ----
 
+[discrete]
 ==== create
 Creates a snapshot in a repository.
 
@@ -3203,6 +3577,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.snapshot.create(...)
 ----
 
+[discrete]
 ==== create_repository
 Creates a repository.
 
@@ -3212,6 +3587,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.snapshot.createRepository(...)
 ----
 
+[discrete]
 ==== delete
 Deletes one or more snapshots.
 
@@ -3221,6 +3597,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.snapshot.delete(...)
 ----
 
+[discrete]
 ==== delete_repository
 Deletes a repository.
 
@@ -3230,6 +3607,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.snapshot.deleteRepository(...)
 ----
 
+[discrete]
 ==== get
 Returns information about a snapshot.
 
@@ -3239,6 +3617,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.snapshot.get(...)
 ----
 
+[discrete]
 ==== get_repository
 Returns information about a repository.
 
@@ -3248,6 +3627,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.snapshot.getRepository(...)
 ----
 
+[discrete]
 ==== repository_analyze
 Analyzes a repository for correctness and performance
 
@@ -3257,6 +3637,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.snapshot.repositoryAnalyze(...)
 ----
 
+[discrete]
 ==== restore
 Restores a snapshot.
 
@@ -3266,6 +3647,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.snapshot.restore(...)
 ----
 
+[discrete]
 ==== status
 Returns information about the status of a snapshot.
 
@@ -3275,6 +3657,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.snapshot.status(...)
 ----
 
+[discrete]
 ==== verify_repository
 Verifies a repository.
 
@@ -3284,7 +3667,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots
 client.snapshot.verifyRepository(...)
 ----
 
+[discrete]
 === sql
+[discrete]
 ==== clear_cursor
 Clears the SQL cursor
 
@@ -3294,6 +3679,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-sql-cursor
 client.sql.clearCursor(...)
 ----
 
+[discrete]
 ==== delete_async
 Deletes an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it.
 
@@ -3303,6 +3689,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-async-sql-
 client.sql.deleteAsync(...)
 ----
 
+[discrete]
 ==== get_async
 Returns the current status and available results for an async SQL search or stored synchronous SQL search
 
@@ -3312,6 +3699,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-sql-sea
 client.sql.getAsync(...)
 ----
 
+[discrete]
 ==== get_async_status
 Returns the current status of an async SQL search or a stored synchronous SQL search
 
@@ -3321,6 +3709,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-sql-sea
 client.sql.getAsyncStatus(...)
 ----
 
+[discrete]
 ==== query
 Executes a SQL request
 
@@ -3330,6 +3719,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-search-api.h
 client.sql.query(...)
 ----
 
+[discrete]
 ==== translate
 Translates SQL into Elasticsearch queries
 
@@ -3339,7 +3729,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate-ap
 client.sql.translate(...)
 ----
 
+[discrete]
 === ssl
+[discrete]
 ==== certificates
 Retrieves information about the X.509 certificates used to encrypt communications in the cluster.
 
@@ -3349,7 +3741,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl
 client.ssl.certificates(...)
 ----
 
+[discrete]
 === tasks
+[discrete]
 ==== cancel
 Cancels a task, if it can be cancelled through an API.
 
@@ -3359,6 +3753,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoi
 client.tasks.cancel(...)
 ----
 
+[discrete]
 ==== get
 Returns information about a task.
 
@@ -3368,6 +3763,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoi
 client.tasks.get(...)
 ----
 
+[discrete]
 ==== list
 Returns a list of tasks.
 
@@ -3377,7 +3773,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoi
 client.tasks.list(...)
 ----
 
+[discrete]
 === text_structure
+[discrete]
 ==== find_structure
 Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
 
@@ -3387,7 +3785,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/find-structure.h
 client.textStructure.findStructure(...)
 ----
 
+[discrete]
 === transform
+[discrete]
 ==== delete_transform
 Deletes an existing transform.
 
@@ -3397,6 +3797,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform
 client.transform.deleteTransform(...)
 ----
 
+[discrete]
 ==== get_transform
 Retrieves configuration information for transforms.
 
@@ -3406,6 +3807,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform.ht
 client.transform.getTransform(...)
 ----
 
+[discrete]
 ==== get_transform_stats
 Retrieves usage information for transforms.
 
@@ -3415,6 +3817,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform-st
 client.transform.getTransformStats(...)
 ----
 
+[discrete]
 ==== preview_transform
 Previews a transform.
 
@@ -3424,6 +3827,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transfor
 client.transform.previewTransform(...)
 ----
 
+[discrete]
 ==== put_transform
 Instantiates a transform.
 
@@ -3433,6 +3837,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/put-transform.ht
 client.transform.putTransform(...)
 ----
 
+[discrete]
 ==== reset_transform
 Resets an existing transform.
 [source,ts]
@@ -3440,6 +3845,7 @@ Resets an existing transform.
 client.transform.resetTransform(...)
 ----
 
+[discrete]
 ==== start_transform
 Starts one or more transforms.
 
@@ -3449,6 +3855,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/start-transform.
 client.transform.startTransform(...)
 ----
 
+[discrete]
 ==== stop_transform
 Stops one or more transforms.
 
@@ -3458,6 +3865,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-transform.h
 client.transform.stopTransform(...)
 ----
 
+[discrete]
 ==== update_transform
 Updates certain properties of a transform.
 
@@ -3467,6 +3875,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/update-transform
 client.transform.updateTransform(...)
 ----
 
+[discrete]
 ==== upgrade_transforms
 Upgrades all transforms.
 
@@ -3476,7 +3885,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/upgrade-transfor
 client.transform.upgradeTransforms(...)
 ----
 
+[discrete]
 === watcher
+[discrete]
 ==== ack_watch
 Acknowledges a watch, manually throttling the execution of the watch's actions.
 
@@ -3486,6 +3897,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-
 client.watcher.ackWatch(...)
 ----
 
+[discrete]
 ==== activate_watch
 Activates a currently inactive watch.
 
@@ -3495,6 +3907,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-acti
 client.watcher.activateWatch(...)
 ----
 
+[discrete]
 ==== deactivate_watch
 Deactivates a currently active watch.
 
@@ -3504,6 +3917,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-deac
 client.watcher.deactivateWatch(...)
 ----
 
+[discrete]
 ==== delete_watch
 Removes a watch from Watcher.
 
@@ -3513,6 +3927,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-dele
 client.watcher.deleteWatch(...)
 ----
 
+[discrete]
 ==== execute_watch
 Forces the execution of a stored watch.
 
@@ -3522,6 +3937,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-exec
 client.watcher.executeWatch(...)
 ----
 
+[discrete]
 ==== get_watch
 Retrieves a watch by its ID.
 
@@ -3531,6 +3947,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-
 client.watcher.getWatch(...)
 ----
 
+[discrete]
 ==== put_watch
 Creates a new watch, or updates an existing one.
 
@@ -3540,6 +3957,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-
 client.watcher.putWatch(...)
 ----
 
+[discrete]
 ==== query_watches
 Retrieves stored watches.
 
@@ -3549,6 +3967,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-quer
 client.watcher.queryWatches(...)
 ----
 
+[discrete]
 ==== start
 Starts Watcher if it is not already running.
 
@@ -3558,6 +3977,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-star
 client.watcher.start(...)
 ----
 
+[discrete]
 ==== stats
 Retrieves the current Watcher metrics.
 
@@ -3567,6 +3987,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stat
 client.watcher.stats(...)
 ----
 
+[discrete]
 ==== stop
 Stops Watcher if it is running.
 
@@ -3576,7 +3997,9 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop
 client.watcher.stop(...)
 ----
 
+[discrete]
 === xpack
+[discrete]
 ==== info
 Retrieves information about the installed X-Pack features.
 
@@ -3586,6 +4009,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html[En
 client.xpack.info(...)
 ----
 
+[discrete]
 ==== usage
 Retrieves usage information about the installed X-Pack features.
 
