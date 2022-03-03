@@ -305,3 +305,22 @@ If you are already passing the basic auth options in the `auth` configuration, t
 ===== Calling `client.close` will reject new requests
 
 Once you call `client.close` every new request after that will be rejected with a `NoLivingConnectionsError`. In-flight requests will be executed normally unless an in-flight request requires a retry, in which case it will be rejected.
+
+[discrete]
+===== Parameters rename
+
+- `ilm.delete_lifecycle`: `policy` parameter has been renamed to `name`
+- `ilm.get_lifecycle`: `policy` parameter has been renamed to `name`
+- `ilm.put_lifecycle`: `policy` parameter has been renamed to `name`
+- `snapshot.cleanup_repository`: `repository` parameter has been renamed to `name`
+- `snapshot.create_repository`: `repository` parameter has been renamed to `name`
+- `snapshot.delete_repository`: `repository` parameter has been renamed to `name`
+- `snapshot.get_repository`: `repository` parameter has been renamed to `name`
+- `snapshot.verify_repository`: `repository` parameter has been renamed to `name`
+
+[discrete]
+===== Removal of snake_cased methods
+
+The v7 client provided snake_cased methods, such as `client.delete_by_query`. This is no longer supported, now only camelCased method are present.
+So `client.delete_by_query` can be accessed with `client.deleteByQuery`
+
