@@ -18,7 +18,8 @@
  */
 
 import Client from './lib/client'
+import SniffingTransport from './lib/sniffingTransport'
 
 export * from '@elastic/transport'
-export { Client }
+export { Client, SniffingTransport }
 export type { ClientOptions, NodeOptions } from './lib/client'
