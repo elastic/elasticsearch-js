@@ -37,10 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
-export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FieldCapsResponse>
-export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FieldCapsResponse, unknown>>
-export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptions): Promise<T.FieldCapsResponse>
-export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function FieldCapsApi (this: That, params: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FieldCapsResponse>
+export default async function FieldCapsApi (this: That, params: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FieldCapsResponse, unknown>>
+export default async function FieldCapsApi (this: That, params: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptions): Promise<T.FieldCapsResponse>
+export default async function FieldCapsApi (this: That, params: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
   const acceptedBody: string[] = ['index_filter', 'runtime_mappings']
   const querystring: Record<string, any> = {}
@@ -53,7 +53,6 @@ export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequ
     body = userBody != null ? { ...userBody } : undefined
   }
 
-  params = params ?? {}
   for (const key in params) {
     if (acceptedBody.includes(key)) {
       body = body ?? {}

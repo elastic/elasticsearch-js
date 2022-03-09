@@ -59,7 +59,7 @@ interface KibanaClient {
   asyncSearch: {
     delete: <TContext = unknown>(params: T.AsyncSearchDeleteRequest| TB.AsyncSearchDeleteRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.AsyncSearchDeleteResponse, TContext>>
     get: <TDocument = unknown, TContext = unknown>(params: T.AsyncSearchGetRequest| TB.AsyncSearchGetRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.AsyncSearchGetResponse<TDocument>, TContext>>
-    status: <TDocument = unknown, TContext = unknown>(params: T.AsyncSearchStatusRequest| TB.AsyncSearchStatusRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.AsyncSearchStatusResponse<TDocument>, TContext>>
+    status: <TContext = unknown>(params: T.AsyncSearchStatusRequest| TB.AsyncSearchStatusRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.AsyncSearchStatusResponse, TContext>>
     submit: <TDocument = unknown, TContext = unknown>(params?: T.AsyncSearchSubmitRequest| TB.AsyncSearchSubmitRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.AsyncSearchSubmitResponse<TDocument>, TContext>>
   }
   autoscaling: {
@@ -161,7 +161,7 @@ interface KibanaClient {
     getFeatures: <TContext = unknown>(params?: T.FeaturesGetFeaturesRequest| TB.FeaturesGetFeaturesRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.FeaturesGetFeaturesResponse, TContext>>
     resetFeatures: <TContext = unknown>(params?: T.FeaturesResetFeaturesRequest| TB.FeaturesResetFeaturesRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.FeaturesResetFeaturesResponse, TContext>>
   }
-  fieldCaps: <TContext = unknown>(params?: T.FieldCapsRequest| TB.FieldCapsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.FieldCapsResponse, TContext>>
+  fieldCaps: <TContext = unknown>(params: T.FieldCapsRequest| TB.FieldCapsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.FieldCapsResponse, TContext>>
   fleet: {
     globalCheckpoints: <TContext = unknown>(params: T.FleetGlobalCheckpointsRequest| TB.FleetGlobalCheckpointsRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.FleetGlobalCheckpointsResponse, TContext>>
     msearch: <TDocument = unknown, TContext = unknown>(params: T.FleetMsearchRequest| TB.FleetMsearchRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.FleetMsearchResponse<TDocument>, TContext>>
@@ -424,6 +424,9 @@ interface KibanaClient {
     hasPrivileges: <TContext = unknown>(params?: T.SecurityHasPrivilegesRequest| TB.SecurityHasPrivilegesRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityHasPrivilegesResponse, TContext>>
     invalidateApiKey: <TContext = unknown>(params?: T.SecurityInvalidateApiKeyRequest| TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityInvalidateApiKeyResponse, TContext>>
     invalidateToken: <TContext = unknown>(params?: T.SecurityInvalidateTokenRequest| TB.SecurityInvalidateTokenRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityInvalidateTokenResponse, TContext>>
+    oidcAuthenticate: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    oidcLogout: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
+    oidcPrepareAuthentication: <TContext = unknown>(params?: T.TODO, options?: TransportRequestOptions) => Promise<TransportResult<T.TODO, unknown>>
     putPrivileges: <TContext = unknown>(params?: T.SecurityPutPrivilegesRequest| TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityPutPrivilegesResponse, TContext>>
     putRole: <TContext = unknown>(params: T.SecurityPutRoleRequest| TB.SecurityPutRoleRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityPutRoleResponse, TContext>>
     putRoleMapping: <TContext = unknown>(params: T.SecurityPutRoleMappingRequest| TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptions) => Promise<TransportResult<T.SecurityPutRoleMappingResponse, TContext>>
