@@ -2,12 +2,41 @@
 == Release notes
 
 [discrete]
-=== 8.0.0
+=== 8.1.0
 
 [discrete]
 ==== Features
 
 [discrete]
+===== Support for Elasticsearch `v8.1`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.1/release-notes-8.1.0.html[here].
+
+[discrete]
+===== Export SniffingTransport https://github.com/elastic/elasticsearch-js/pull/1653[#1653]
+
+Now the client exports the SniffingTransport class.
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Cleanup abort listener https://github.com/elastic/elastic-transport-js/pull/42[transport/#42]
+
+The legacy http client was not cleaning up the abort listener, which could cause a memory leak.
+
+[discrete]
+===== Improve undici performances https://github.com/elastic/elastic-transport-js/pull/41[transport/#41]
+
+Improve the stream body collection and keep alive timeout.
+
+[discrete]
+=== 8.0.0
+
+[discrete]
+==== Features
+
 [discrete]
 ===== Support for Elasticsearch `v8.0`
 
