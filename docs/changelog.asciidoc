@@ -22,6 +22,11 @@ Now the client exports the SniffingTransport class.
 ==== Fixes
 
 [discrete]
+===== Fix onFlushTimeout timer not being cleared when upstream errors https://github.com/elastic/elasticsearch-js/pull/1616[#1616]
+
+Fixes a memory leak caused by an error in the upstream dataset of the bulk helper.
+
+[discrete]
 ===== Cleanup abort listener https://github.com/elastic/elastic-transport-js/pull/42[transport/#42]
 
 The legacy http client was not cleaning up the abort listener, which could cause a memory leak.
