@@ -186,15 +186,15 @@ export default class Client extends API {
       maxCompressedResponseSize: null
     }, opts)
 
-    if (options.caFingerprint !== null && isHttpConnection(opts.node ?? opts.nodes)) {
+    if (options.caFingerprint != null && isHttpConnection(opts.node ?? opts.nodes)) {
       throw new errors.ConfigurationError('You can\'t configure the caFingerprint with a http connection')
     }
 
-    if (options.maxResponseSize !== null && options.maxResponseSize > buffer.constants.MAX_STRING_LENGTH) {
+    if (options.maxResponseSize != null && options.maxResponseSize > buffer.constants.MAX_STRING_LENGTH) {
       throw new errors.ConfigurationError(`The maxResponseSize cannot be bigger than ${buffer.constants.MAX_STRING_LENGTH}`)
     }
 
-    if (options.maxCompressedResponseSize !== null && options.maxCompressedResponseSize > buffer.constants.MAX_LENGTH) {
+    if (options.maxCompressedResponseSize != null && options.maxCompressedResponseSize > buffer.constants.MAX_LENGTH) {
       throw new errors.ConfigurationError(`The maxCompressedResponseSize cannot be bigger than ${buffer.constants.MAX_LENGTH}`)
     }
 
