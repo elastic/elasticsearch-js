@@ -42,7 +42,7 @@ export default async function KnnSearchApi<TDocument = unknown> (this: That, par
 export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest | TB.KnnSearchRequest, options?: TransportRequestOptions): Promise<T.KnnSearchResponse<TDocument>>
 export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest | TB.KnnSearchRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['_source', 'docvalue_fields', 'stored_fields', 'fields', 'knn']
+  const acceptedBody: string[] = ['_source', 'docvalue_fields', 'stored_fields', 'fields', 'filter', 'knn']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   const userBody: any = params?.body

@@ -436,6 +436,28 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async disableUserProfile (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async disableUserProfile (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async disableUserProfile (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async disableUserProfile (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['uid']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_security/profile/${encodeURIComponent(params.uid.toString())}/_disable`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnableUserResponse>
   async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnableUserResponse, unknown>>
   async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<T.SecurityEnableUserResponse>
@@ -455,6 +477,28 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/user/${encodeURIComponent(params.username.toString())}/_enable`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  async enableUserProfile (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async enableUserProfile (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async enableUserProfile (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async enableUserProfile (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['uid']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_security/profile/${encodeURIComponent(params.uid.toString())}/_enable`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
@@ -1377,6 +1421,28 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async searchUserProfiles (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async searchUserProfiles (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async searchUserProfiles (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async searchUserProfiles (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = body != null ? 'POST' : 'GET'
+    const path = '/_security/profile/_search'
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async updateUserProfileData (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async updateUserProfileData (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async updateUserProfileData (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
@@ -1394,8 +1460,8 @@ export default class Security {
       }
     }
 
-    const method = 'POST'
-    const path = `/_security/profile/_data/${encodeURIComponent(params.uid.toString())}`
+    const method = 'PUT'
+    const path = `/_security/profile/${encodeURIComponent(params.uid.toString())}/_data`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 }

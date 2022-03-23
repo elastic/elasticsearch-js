@@ -37,10 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
-export default async function ReindexApi (this: That, params?: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ReindexResponse>
-export default async function ReindexApi (this: That, params?: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ReindexResponse, unknown>>
-export default async function ReindexApi (this: That, params?: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptions): Promise<T.ReindexResponse>
-export default async function ReindexApi (this: That, params?: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptions): Promise<any> {
+export default async function ReindexApi (this: That, params: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ReindexResponse>
+export default async function ReindexApi (this: That, params: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ReindexResponse, unknown>>
+export default async function ReindexApi (this: That, params: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptions): Promise<T.ReindexResponse>
+export default async function ReindexApi (this: That, params: T.ReindexRequest | TB.ReindexRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = []
   const acceptedBody: string[] = ['conflicts', 'dest', 'max_docs', 'script', 'size', 'source']
   const querystring: Record<string, any> = {}
@@ -53,7 +53,6 @@ export default async function ReindexApi (this: That, params?: T.ReindexRequest 
     body = userBody != null ? { ...userBody } : undefined
   }
 
-  params = params ?? {}
   for (const key in params) {
     if (acceptedBody.includes(key)) {
       body = body ?? {}

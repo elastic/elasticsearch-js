@@ -525,6 +525,14 @@ client.cat.allocation(...)
 ----
 
 [discrete]
+==== component_templates
+Returns information about existing component_templates templates.
+[source,ts]
+----
+client.cat.componentTemplates(...)
+----
+
+[discrete]
 ==== count
 Provides quick access to the document count of the entire cluster, or individual indices.
 
@@ -3128,6 +3136,16 @@ client.security.disableUser(...)
 ----
 
 [discrete]
+==== disable_user_profile
+Disables a user profile so it's not visible in user profile searches.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-disable-user-profile.html[Endpoint documentation]
+[source,ts]
+----
+client.security.disableUserProfile(...)
+----
+
+[discrete]
 ==== enable_user
 Enables users in the native realm.
 
@@ -3135,6 +3153,16 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ena
 [source,ts]
 ----
 client.security.enableUser(...)
+----
+
+[discrete]
+==== enable_user_profile
+Enables a user profile so it's visible in user profile searches.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-enable-user-profile.html[Endpoint documentation]
+[source,ts]
+----
+client.security.enableUserProfile(...)
 ----
 
 [discrete]
@@ -3443,6 +3471,16 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-sam
 [source,ts]
 ----
 client.security.samlServiceProviderMetadata(...)
+----
+
+[discrete]
+==== search_user_profiles
+Searches for user profiles that match specified criteria.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-search-user-profile.html[Endpoint documentation]
+[source,ts]
+----
+client.security.searchUserProfiles(...)
 ----
 
 [discrete]
@@ -3840,6 +3878,8 @@ client.transform.putTransform(...)
 [discrete]
 ==== reset_transform
 Resets an existing transform.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/reset-transform.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.resetTransform(...)
