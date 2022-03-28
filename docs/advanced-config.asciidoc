@@ -30,7 +30,9 @@ class MyConnectionPool extends ConnectionPool {
 }
 
 const client = new Client({
-    ConnectionPool: MyConnectionPool
+  ConnectionPool: MyConnectionPool,
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
 })
 ----
 
@@ -54,7 +56,9 @@ class MyConnection extends BaseConnection {
 }
 
 const client = new Client({
-  Connection: MyConnection
+  Connection: MyConnection,
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
 })
 ----
 
@@ -81,7 +85,9 @@ class MySerializer extends Serializer {
 }
 
 const client = new Client({
-  Serializer: MySerializer
+  Serializer: MySerializer,
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
 })
 ----
 
