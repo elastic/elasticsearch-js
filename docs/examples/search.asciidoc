@@ -12,7 +12,10 @@ https://www.elastic.co/guide/en/elasticsearch/reference/6.6/search-request-body.
 'use strict'
 
 const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
 
 async function run () {
   // Let's start by indexing some data
