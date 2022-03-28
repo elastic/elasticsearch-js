@@ -13,7 +13,8 @@ NOTE: Did you know that we provide an helper for sending bulk request? You can f
 require('array.prototype.flatmap').shim()
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
-  node: 'http://localhost:9200'
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
 })
 
 async function run () {
