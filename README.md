@@ -95,7 +95,10 @@ We recommend that you write a lightweight proxy that uses this client instead, y
 'use strict'
 
 const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
 
 async function run () {
   // Let's start by indexing some data
@@ -165,8 +168,14 @@ You will require the packages from your code by using the alias you have defined
 const { Client: Client6 } = require('es6')
 const { Client: Client7 } = require('es7')
 
-const client6 = new Client6({ node: 'http://localhost:9200' })
-const client7 = new Client7({ node: 'http://localhost:9201' })
+const client6 = new Client6({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
+const client7 = new Client7({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
 
 client6.info().then(console.log, console.log)
 client7.info().then(console.log, console.log)
