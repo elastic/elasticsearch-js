@@ -75,7 +75,7 @@ below in the output from {es} (you may have to scroll up if it's been a while):
 
 [source,sh]
 ----
-----------------------------------------------------------------
+
 -> Elasticsearch security features have been automatically configured!
 -> Authentication is enabled and cluster connections are encrypted.
 
@@ -85,7 +85,7 @@ below in the output from {es} (you may have to scroll up if it's been a while):
 ->  HTTP CA certificate SHA-256 fingerprint:
   a52dd93511e8c6045e21f16654b77c9ee0f34aea26d9f40320b531c474676228
 ...
-----------------------------------------------------------------
+
 ----
 
 Depending on the circumstances there are two options for verifying the HTTPS 
