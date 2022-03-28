@@ -61,7 +61,8 @@ const Mock = require('@elastic/elasticsearch-mock')
 
 const mock = new Mock()
 const client = new Client({
-  node: 'http://localhost:9200',
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' },
   Connection: mock.getConnection()
 })
 

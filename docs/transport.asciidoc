@@ -6,7 +6,8 @@ errors, it also handles sniffing.
 
 [source,js]
 ----
-const { Client, Transport } = require('@elastic/elasticsearch')
+const { Client } = require('@elastic/elasticsearch')
+const { Transport } = require('@elastic/transport')
 
 class MyTransport extends Transport {
   request (params, options, callback) {
