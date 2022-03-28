@@ -34,7 +34,10 @@ response and error that is happening during the use of the client.
 ----
 const logger = require('my-logger')()
 const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
 
 client.diagnostic.on('response', (err, result) => {
   if (err) {
@@ -183,7 +186,10 @@ handle this problem.
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
 
 client.diagnostic.on('request', (err, result) => {
   const { id } = result.meta.request
@@ -213,7 +219,8 @@ By default the id is an incremental integer, but you can configure it with the
 ----
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
-  node: 'http://localhost:9200',
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' },
   // it takes two parameters, the request parameters and options
   generateRequestId: function (params, options) {
     // your id generation logic
@@ -246,7 +253,10 @@ can do that via the `context` option of a request:
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
 
 client.diagnostic.on('request', (err, result) => {
   const { id } = result.meta.request
@@ -280,7 +290,8 @@ merged, and the API level object will take precedence.
 ----
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
-  node: 'http://localhost:9200',
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' },
   context: { winter: 'is coming' }
 })
 
@@ -321,7 +332,8 @@ options help you in this regard.
 ----
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
-  node: 'http://localhost:9200',
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' },
   name: 'parent-client' // default to 'elasticsearch-js'
 })
 
@@ -377,7 +389,8 @@ resulting header will be `{ 'X-Opaque-Id': 'my-search' }`.
 ----
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
-  node: 'http://localhost:9200'
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
 })
 
 client.search({
@@ -398,7 +411,8 @@ doing this, the client offers a top-level configuration option:
 ----
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
-  node: 'http://localhost:9200',
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' },
   opaqueIdPrefix: 'proxy-client::'
 })
 

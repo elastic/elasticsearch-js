@@ -46,7 +46,7 @@ to know more.
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
   cloud: {
-    id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==',
+    id: '<cloud-id>'
   },
   auth: {
     username: 'elastic',
@@ -55,6 +55,152 @@ const client = new Client({
 })
 ----
 
+[discrete]
+[[connect-self-managed-new]]
+=== Connecting to a self-managed cluster
+
+By default {es} will start with security features like authentication and TLS 
+enabled. To connect to the {es} cluster you'll need to configure the Node.js {es} 
+client to use HTTPS with the generated CA certificate in order to make requests 
+successfully.
+
+If you're just getting started with {es} we recommend reading the documentation 
+on https://www.elastic.co/guide/en/elasticsearch/reference/current/settings.html[configuring] 
+and 
+https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html[starting {es}] 
+to ensure your cluster is running as expected.
+
+When you start {es} for the first time you'll see a distinct block like the one 
+below in the output from {es} (you may have to scroll up if it's been a while):
+
+[source,sh]
+----
+----------------------------------------------------------------
+-> Elasticsearch security features have been automatically configured!
+-> Authentication is enabled and cluster connections are encrypted.
+
+->  Password for the elastic user (reset with `bin/elasticsearch-reset-password -u elastic`):
+  lhQpLELkjkrawaBoaz0Q
+
+->  HTTP CA certificate SHA-256 fingerprint:
+  a52dd93511e8c6045e21f16654b77c9ee0f34aea26d9f40320b531c474676228
+...
+----------------------------------------------------------------
+----
+
+Depending on the circumstances there are two options for verifying the HTTPS 
+connection, either verifying with the CA certificate itself or via the HTTP CA 
+certificate fingerprint.
+
+[discrete]
+[[auth-tls]]
+==== TLS configuration
+
+The generated root CA certificate can be found in the `certs` directory in your 
+{es} config location (`$ES_CONF_PATH/certs/http_ca.crt`). If you're running {es} 
+in Docker there is 
+https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html[additional documentation for retrieving the CA certificate].
+
+Without any additional configuration you can specify `https://` node urls, and 
+the certificates used to sign these requests will be verified. To turn off 
+certificate verification, you must specify an `tls` object in the top level 
+config and set `rejectUnauthorized: false`. The default `tls` values are the 
+same that Node.js's https://nodejs.org/api/tls.html#tls_tls_connect_options_callback[`tls.connect()`] 
+uses.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://localhost:9200',
+  auth: {
+    username: 'elastic',
+    password: 'changeme'
+  },
+  tls: {
+    ca: fs.readFileSync('./http_ca.crt'),
+    rejectUnauthorized: false
+  }
+})
+----
+
+[discrete]
+[[auth-ca-fingerprint]]
+==== CA fingerprint
+
+You can configure the client to only trust certificates that are signed by a specific CA certificate
+(CA certificate pinning) by providing a `caFingerprint` option.
+This will verify that the fingerprint of the CA certificate that has signed
+the certificate of the server matches the supplied value.
+You must configure a SHA256 digest.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://example.com'
+  auth: { ... },
+  // the fingerprint (SHA256) of the CA certificate that is used to sign
+  // the certificate that the Elasticsearch node presents for TLS.
+  caFingerprint: '20:0D:CA:FA:76:...',
+  tls: {
+    // might be required if it's a self-signed certificate
+    rejectUnauthorized: false
+  }
+})
+----
+
+The certificate fingerprint can be calculated using `openssl x509` with the 
+certificate file:
+
+[source,sh]
+----
+openssl x509 -fingerprint -sha256 -noout -in /path/to/http_ca.crt
+----
+
+If you don't have access to the generated CA file from {es} you can use the 
+following script to output the root CA fingerprint of the {es} instance with 
+`openssl s_client`:
+
+[source,sh]
+----
+# Replace the values of 'localhost' and '9200' to the
+# corresponding host and port values for the cluster.
+openssl s_client -connect localhost:9200 -servername localhost -showcerts </dev/null 2>/dev/null \
+  | openssl x509 -fingerprint -sha256 -noout -in /dev/stdin
+----
+
+The output of `openssl x509` will look something like this:
+
+[source,sh]
+----
+SHA256 Fingerprint=A5:2D:D9:35:11:E8:C6:04:5E:21:F1:66:54:B7:7C:9E:E0:F3:4A:EA:26:D9:F4:03:20:B5:31:C4:74:67:62:28
+----
+
+
+[discrete]
+[[connect-no-security]]
+=== Connecting without security enabled
+
+WARNING: Running {es} without security enabled is not recommended.
+
+If your cluster is configured with 
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html[security explicitly disabled] 
+then you can connect via HTTP:
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'http://example.com'
+})
+----
+
+[discrete]
+[[auth-strategies]]
+=== Authentication strategies
+
+Following you can find all the supported authentication strategies.
 
 [discrete]
 [[auth-apikey]]
@@ -151,57 +297,6 @@ const client = new Client({
 
 
 [discrete]
-[[auth-tls]]
-==== TLS configuration
-
-Without any additional configuration you can specify `https://` node urls, and 
-the certificates used to sign these requests will be verified. To turn off 
-certificate verification, you must specify an `tls` object in the top level 
-config and set `rejectUnauthorized: false`. The default `tls` values are the 
-same that Node.js's https://nodejs.org/api/tls.html#tls_tls_connect_options_callback[`tls.connect()`] 
-uses.
-
-[source,js]
-----
-const { Client } = require('@elastic/elasticsearch')
-const client = new Client({
-  node: 'https://localhost:9200',
-  auth: {
-    username: 'elastic',
-    password: 'changeme'
-  },
-  tls: {
-    ca: fs.readFileSync('./cacert.pem'),
-    rejectUnauthorized: false
-  }
-})
-----
-
-[discrete]
-[[auth-ca-fingerprint]]
-==== CA fingerprint
-
-You can configure the client to only trust certificates that are signed by a specific CA certificate ( CA certificate pinning ) by providing a `caFingerprint` option. This will verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied value.
-a `caFingerprint` option, which will verify the supplied certificate authority fingerprint.
-You must configure a SHA256 digest.
-
-[source,js]
-----
-const { Client } = require('@elastic/elasticsearch')
-const client = new Client({
-  node: 'https://example.com'
-  auth: { ... },
-  // the fingerprint (SHA256) of the CA certificate that is used to sign the certificate that the Elasticsearch node presents for TLS.
-  caFingerprint: '20:0D:CA:FA:76:...',
-  tls: {
-    // might be required if it's a self-signed certificate
-    rejectUnauthorized: false
-  }
-})
-----
-
-
-[discrete]
 [[client-usage]]
 === Usage
 
@@ -212,7 +307,10 @@ and every method exposes the same signature.
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
 
 const result = await client.search({
   index: 'my-index',
@@ -229,7 +327,10 @@ you must specify `meta: true` in the request options:
 [source,js]
 ----
 const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
 
 const result = await client.search({
   index: 'my-index',
@@ -266,7 +367,10 @@ CAUTION: If you abort a request, the request will fail with a
 ----
 const AbortController = require('node-abort-controller')
 const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
 
 const abortController = new AbortController()
 setImmediate(() => abortController.abort())

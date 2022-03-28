@@ -26,7 +26,10 @@ NOTE: Did you know that we provide an helper for sending scroll requests? You ca
 'use strict'
 
 const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
 
 async function run () {
   const allQuotes = []
@@ -118,7 +121,10 @@ async iteration!
 'use strict'
 
 const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://localhost:9200' })
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' }
+})
 
 // Scroll utility
 async function * scrollSearch (params) {
