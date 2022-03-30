@@ -120,15 +120,15 @@ class Client extends ESAPI {
         maxCompressedResponseSize: null
       }, opts)
 
-    if (options.maxResponseSize !== null && options.maxResponseSize > buffer.constants.MAX_STRING_LENGTH) {
+    if (options.maxResponseSize != null && options.maxResponseSize > buffer.constants.MAX_STRING_LENGTH) {
       throw new ConfigurationError(`The maxResponseSize cannot be bigger than ${buffer.constants.MAX_STRING_LENGTH}`)
     }
 
-    if (options.maxCompressedResponseSize !== null && options.maxCompressedResponseSize > buffer.constants.MAX_LENGTH) {
+    if (options.maxCompressedResponseSize != null && options.maxCompressedResponseSize > buffer.constants.MAX_LENGTH) {
       throw new ConfigurationError(`The maxCompressedResponseSize cannot be bigger than ${buffer.constants.MAX_LENGTH}`)
     }
 
-    if (options.caFingerprint !== null && isHttpConnection(opts.node || opts.nodes)) {
+    if (options.caFingerprint != null && isHttpConnection(opts.node || opts.nodes)) {
       throw new ConfigurationError('You can\'t configure the caFingerprint with a http connection')
     }
 
