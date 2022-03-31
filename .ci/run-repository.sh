@@ -9,7 +9,7 @@ script_path=$(dirname $(realpath -s $0))
 source $script_path/functions/imports.sh
 set -euo pipefail
 
-NODE_JS_VERSION=${NODE_JS_VERSION-12}
+NODE_JS_VERSION=${NODE_JS_VERSION-16}
 ELASTICSEARCH_URL=${ELASTICSEARCH_URL-"$elasticsearch_url"}
 elasticsearch_container=${elasticsearch_container-}
 

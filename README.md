@@ -22,7 +22,7 @@ npm install @elastic/elasticsearch
 
 ### Node.js support
 
-NOTE: The minimum supported version of Node.js is `v12`.
+NOTE: The minimum supported version of Node.js is `v14`.
 
 The client versioning follows the Elastic Stack versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
@@ -44,8 +44,9 @@ of `^7.10.0`).
 | Node.js Version | Node.js EOL date | End of support         |
 | --------------- |------------------| ---------------------- |
 | `8.x`           | `December 2019`  | `7.11` (early 2021)    |
-| `10.x`          | `April 2021`      | `7.12` (mid 2021)     |
-| `12.x`          | `April 2022`      | `8.2` (early 2022)     |
+| `10.x`          | `April 2021`     | `7.12` (mid 2021)      |
+| `12.x`          | `April 2022`     | `8.2` (early 2022)     |
+| `14.x`          | `April 2023`     | `8.8` (early 2023)     |
 
 ### Compatibility
 
