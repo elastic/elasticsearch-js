@@ -3,9 +3,9 @@ STACK_VERSION:
   - 8.3.0-SNAPSHOT
 
 NODE_JS_VERSION:
+  - 17
   - 16
   - 14
-  - 12
 
 TEST_SUITE:
   - free
