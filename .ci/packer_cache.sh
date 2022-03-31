@@ -2,9 +2,9 @@
 
 source /usr/local/bin/bash_standard_lib.sh
 
-DOCKER_IMAGES="node:16-alpine
+DOCKER_IMAGES="node:17-alpine
+node:16-alpine
 node:14-alpine
-node:12-alpine
 "
 
 for di in ${DOCKER_IMAGES}
