@@ -20,7 +20,7 @@ const client = new Client({
 async function run () {
   await client.indices.create({
     index: 'tweets',
-    operations: {
+    body: {
       mappings: {
         properties: {
           id: { type: 'integer' },
