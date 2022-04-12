@@ -51,5 +51,6 @@ Paste the results here:
 
 - *node version*: 6,8,10
 - `@elastic/elasticsearch` *version*: >=7.0.0
+- *typescript version*: 4.x (if applicable)
 - *os*: Mac, Windows, Linux
 - *any other relevant information*
