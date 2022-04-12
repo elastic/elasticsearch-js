@@ -7,6 +7,10 @@ of type definitions of Elasticsearch's API surface.
 The types are not 100% complete yet. Some APIs are missing (the newest ones, e.g. EQL),
 and others may contain some errors, but we are continuously pushing fixes & improvements.
 
+NOTE: The client is developed against the https://www.npmjs.com/package/typescript?activeTab=versions[latest]
+version of TypeScript. Furthermore, unless you have set `skipLibCheck` to `true`,
+you should configure `esModuleInterop` to `true`.
+
 [discrete]
 ==== Example
 
@@ -76,4 +80,11 @@ You can import the full TypeScript requests & responses definitions as it follow
 [source,ts]
 ----
 import { estypes } from '@elastic/elasticsearch'
+----
+
+If you need the legacy definitions with the body, you can do the following:
+
+[source,ts]
+----
+import { estypesWithBody } from '@elastic/elasticsearch'
 ----
