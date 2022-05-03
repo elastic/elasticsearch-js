@@ -2,6 +2,55 @@
 == Release notes
 
 [discrete]
+=== 8.2.0
+
+[discrete]
+==== Breaking changes
+
+[discrete]
+===== Drop Node.js v12 https://github.com/elastic/elasticsearch-js/pull/1670[#1670]
+
+According to our https://github.com/elastic/elasticsearch-js#nodejs-support[Node.js support matrix].
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v8.2`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.2/release-notes-8.2.0.html[here].
+
+[discrete]
+===== More lenient parameter checks https://github.com/elastic/elasticsearch-js/pull/1662[#1662]
+
+When creating a new client, an `undefined` `caFingerprint` no longer trigger an error for a http connection.
+
+[discrete]
+===== Update TypeScript docs and export estypes https://github.com/elastic/elasticsearch-js/pull/1675[#1675]
+
+You can import the full TypeScript requests & responses definitions as it follows:
+[source,ts]
+----
+import { estypes } from '@elastic/elasticsearch'
+----
+
+If you need the legacy definitions with the body, you can do the following:
+
+[source,ts]
+----
+import { estypesWithBody } from '@elastic/elasticsearch'
+----
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Updated hpagent to the latest version https://github.com/elastic/elastic-transport-js/pull/49[transport/#49]
+
+You can fing the related changes https://github.com/delvedor/hpagent/releases/tag/v1.0.0[here].
+
+[discrete]
 === 8.1.0
 
 [discrete]
