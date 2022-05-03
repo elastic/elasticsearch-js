@@ -3,7 +3,7 @@ STACK_VERSION:
   - 8.3.0-SNAPSHOT
 
 NODE_JS_VERSION:
-  - 17
+  - 18
   - 16
   - 14
 
