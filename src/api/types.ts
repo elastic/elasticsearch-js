@@ -5634,7 +5634,7 @@ export interface AsyncSearchGetRequest extends RequestBase {
   wait_for_completion_timeout?: Time
 }
 
-export type AsyncSearchGetResponse<TDocument = unknown> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, AsyncSearchTAggregations>
+export type AsyncSearchGetResponse<TDocument = unknown, AsyncSearchTAggregations = unknown> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, AsyncSearchTAggregations>
 
 export interface AsyncSearchStatusRequest extends RequestBase {
   id: Id
@@ -5714,7 +5714,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   runtime_mappings?: MappingRuntimeFields
 }
 
-export type AsyncSearchSubmitResponse<TDocument = unknown> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, AsyncSearchTAggregations>
+export type AsyncSearchSubmitResponse<TDocument = unknown, AsyncSearchTAggregations = unknown> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, AsyncSearchTAggregations>
 
 export interface AutoscalingAutoscalingPolicy {
   roles: string[]
