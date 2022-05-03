@@ -1163,7 +1163,7 @@ export default class Ml {
   async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlInferTrainedModelDeploymentResponse>
   async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['docs']
+    const acceptedBody: string[] = ['docs', 'inference_config']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1307,7 +1307,7 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_data`
-    return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+    return await this.transport.request({ path, method, querystring, body }, options)
   }
 
   async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest | TB.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDataFrameAnalyticsResponse>

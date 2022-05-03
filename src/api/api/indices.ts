@@ -860,19 +860,31 @@ export default class Indices {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async modifyDataStream (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async modifyDataStream (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async modifyDataStream (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async modifyDataStream (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest | TB.IndicesModifyDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesModifyDataStreamResponse>
+  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest | TB.IndicesModifyDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesModifyDataStreamResponse, unknown>>
+  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest | TB.IndicesModifyDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesModifyDataStreamResponse>
+  async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest | TB.IndicesModifyDataStreamRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['actions']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }

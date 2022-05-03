@@ -67,6 +67,6 @@ export default class TextStructure {
 
     const method = 'POST'
     const path = '/_text_structure/find_structure'
-    return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+    return await this.transport.request({ path, method, querystring, body }, options)
   }
 }

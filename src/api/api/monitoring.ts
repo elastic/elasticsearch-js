@@ -67,6 +67,6 @@ export default class Monitoring {
 
     const method = 'POST'
     const path = '/_monitoring/bulk'
-    return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+    return await this.transport.request({ path, method, querystring, body }, options)
   }
 }
