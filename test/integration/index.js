@@ -45,6 +45,8 @@ const MAX_TEST_TIME = 1000 * 3
 const freeSkips = {
   // not supported yet
   '/free/cluster.desired_nodes/10_basic.yml': ['*'],
+  '/free/health/30_feature.yml': ['*'],
+  '/free/health/40_useractions.yml': ['*'],
   // the v8 client never sends the scroll_id in querystgring,
   // the way the test is structured causes a security exception
   'free/scroll/10_basic.yml': ['Body params override query string'],
@@ -73,6 +75,7 @@ const freeSkips = {
 const platinumBlackList = {
   'api_key/10_basic.yml': ['Test get api key'],
   'api_key/20_query.yml': ['*'],
+  'api_key/11_invalidation.yml': ['Test invalidate api key by realm name'],
   'analytics/histogram.yml': ['Histogram requires values in increasing order'],
   // this two test cases are broken, we should
   // return on those in the future.
