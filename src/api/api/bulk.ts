@@ -68,5 +68,5 @@ export default async function BulkApi<TDocument = unknown, TPartialDocument = un
     method = 'POST'
     path = '/_bulk'
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
 }
