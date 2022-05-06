@@ -194,7 +194,7 @@ function build (opts = {}) {
       const jobsIds = jobsList.jobs.map(j => j.job_id)
       await helper.runInParallel(
         client, 'ml.deleteJob',
-        jobsIds.map(j => ({ id: j, force: true }))
+        jobsIds.map(j => ({ job_id: j, force: true }))
       )
 
       const dataFrame = await client.ml.getDataFrameAnalytics()
