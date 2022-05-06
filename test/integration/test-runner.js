@@ -222,7 +222,7 @@ function build (opts = {}) {
 
       // cleanup transforms
       const transforms = await client.transform.getTransform()
-      const transformsId = transforms.transform.map(t => t.id)
+      const transformsId = transforms.transforms.map(t => t.id)
       await helper.runInParallel(
         client, 'transform.deleteTransform',
         transformsId.map(t => ({ transform_id: t, force: true }))
