@@ -92,7 +92,6 @@ const platinumBlackList = {
   'text_structure/find_structure.yml': ['*'],
   // https://github.com/elastic/elasticsearch/pull/39400
   'ml/jobs_crud.yml': ['Test put job with id that is already taken'],
-  'ml/calendar_crud.yml': ['Test PageParams'],
   // object keys must me strings, and `0.0.toString()` is `0`
   'ml/evaluate_data_frame.yml': [
     'Test binary_soft_classifition precision',
