@@ -128,6 +128,7 @@ const platinumBlackList = {
   'service_accounts/10_basic.yml': ['*'],
   // we are setting two certificates in the docker config
   'ssl/10_basic.yml': ['*'],
+  'token/10_basic.yml': ['*'],
   // very likely, the index template has not been loaded yet.
   // we should run a indices.existsTemplate, but the name of the
   // template may vary during time.
