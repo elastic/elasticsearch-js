@@ -43,6 +43,10 @@ const MAX_FILE_TIME = 1000 * 30
 const MAX_TEST_TIME = 1000 * 3
 
 const freeSkips = {
+  // not supported yet
+  '/free/cluster.desired_nodes/10_basic.yml': ['*'],
+  '/free/health/30_feature.yml': ['*'],
+  '/free/health/40_useractions.yml': ['*'],
   // the v8 client never sends the scroll_id in querystgring,
   // the way the test is structured causes a security exception
   'free/scroll/10_basic.yml': ['Body params override query string'],
@@ -63,13 +67,17 @@ const freeSkips = {
   // the expected error is returning a 503,
   // which triggers a retry and the node to be marked as dead
   'search.aggregation/240_max_buckets.yml': ['*'],
+  // long values and json do not play nicely together
+  'search.aggregation/40_range.yml': ['Min and max long range bounds'],
   // the yaml runner assumes that null means "does not exists",
   // while null is a valid json value, so the check will fail
   'search/320_disallow_queries.yml': ['Test disallow expensive queries'],
   'free/tsdb/90_unsupported_operations.yml': ['noop update']
 }
 const platinumBlackList = {
+  'api_key/10_basic.yml': ['Test get api key'],
   'api_key/20_query.yml': ['*'],
+  'api_key/11_invalidation.yml': ['Test invalidate api key by realm name'],
   'analytics/histogram.yml': ['Histogram requires values in increasing order'],
   // this two test cases are broken, we should
   // return on those in the future.
@@ -107,6 +115,7 @@ const platinumBlackList = {
   // Investigate why is failing
   'ml/inference_crud.yml': ['*'],
   'ml/categorization_agg.yml': ['Test categorization aggregation with poor settings'],
+  'ml/filter_crud.yml': ['*'],
   // investigate why this is failing
   'monitoring/bulk/10_basic.yml': ['*'],
   'monitoring/bulk/20_privileges.yml': ['*'],
@@ -119,6 +128,8 @@ const platinumBlackList = {
   'service_accounts/10_basic.yml': ['*'],
   // we are setting two certificates in the docker config
   'ssl/10_basic.yml': ['*'],
+  'token/10_basic.yml': ['*'],
+  'token/11_invalidation.yml': ['*'],
   // very likely, the index template has not been loaded yet.
   // we should run a indices.existsTemplate, but the name of the
   // template may vary during time.

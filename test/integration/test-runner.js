@@ -188,6 +188,45 @@ function build (opts = {}) {
         client, 'tasks.cancel',
         tasks.map(id => ({ task_id: id }))
       )
+
+      // cleanup ml
+      const jobsList = await client.ml.getJobs()
+      const jobsIds = jobsList.jobs.map(j => j.job_id)
+      await helper.runInParallel(
+        client, 'ml.deleteJob',
+        jobsIds.map(j => ({ job_id: j, force: true }))
+      )
+
+      const dataFrame = await client.ml.getDataFrameAnalytics()
+      const dataFrameIds = dataFrame.data_frame_analytics.map(d => d.id)
+      await helper.runInParallel(
+        client, 'ml.deleteDataFrameAnalytics',
+        dataFrameIds.map(d => ({ id: d, force: true }))
+      )
+
+      const calendars = await client.ml.getCalendars()
+      const calendarsId = calendars.calendars.map(c => c.calendar_id)
+      await helper.runInParallel(
+        client, 'ml.deleteCalendar',
+        calendarsId.map(c => ({ calendar_id: c }))
+      )
+
+      const training = await client.ml.getTrainedModels()
+      const trainingId = training.trained_model_configs
+        .filter(t => t.created_by !== '_xpack')
+        .map(t => t.model_id)
+      await helper.runInParallel(
+        client, 'ml.deleteTrainedModel',
+        trainingId.map(t => ({ model_id: t, force: true }))
+      )
+
+      // cleanup transforms
+      const transforms = await client.transform.getTransform()
+      const transformsId = transforms.transforms.map(t => t.id)
+      await helper.runInParallel(
+        client, 'transform.deleteTransform',
+        transformsId.map(t => ({ transform_id: t, force: true }))
+      )
     }
 
     const shutdownNodes = await client.shutdown.getNode()
