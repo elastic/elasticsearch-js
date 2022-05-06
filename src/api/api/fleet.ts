@@ -96,7 +96,7 @@ export default class Fleet {
       method = body != null ? 'POST' : 'GET'
       path = '/_fleet/_fleet_msearch'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
   }
 
   async search<TDocument = unknown> (this: That, params: T.FleetSearchRequest | TB.FleetSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetSearchResponse<TDocument>>

@@ -68,5 +68,5 @@ export default async function MsearchApi<TDocument = unknown, TAggregations = Re
     method = body != null ? 'POST' : 'GET'
     path = '/_msearch'
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
 }
