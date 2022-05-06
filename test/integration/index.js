@@ -43,6 +43,8 @@ const MAX_FILE_TIME = 1000 * 30
 const MAX_TEST_TIME = 1000 * 3
 
 const freeSkips = {
+  // not supported yet
+  '/free/cluster.desired_nodes/10_basic.yml': ['*'],
   // the v8 client never sends the scroll_id in querystgring,
   // the way the test is structured causes a security exception
   'free/scroll/10_basic.yml': ['Body params override query string'],
@@ -69,6 +71,7 @@ const freeSkips = {
   'free/tsdb/90_unsupported_operations.yml': ['noop update']
 }
 const platinumBlackList = {
+  'api_key/10_basic.yml': ['Test get api key'],
   'api_key/20_query.yml': ['*'],
   'analytics/histogram.yml': ['Histogram requires values in increasing order'],
   // this two test cases are broken, we should
