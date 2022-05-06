@@ -67,6 +67,8 @@ const freeSkips = {
   // the expected error is returning a 503,
   // which triggers a retry and the node to be marked as dead
   'search.aggregation/240_max_buckets.yml': ['*'],
+  // long values and json do not play nicely together
+  'search.aggregation/40_range.yml': ['Min and max long range bounds'],
   // the yaml runner assumes that null means "does not exists",
   // while null is a valid json value, so the check will fail
   'search/320_disallow_queries.yml': ['Test disallow expensive queries'],
@@ -90,6 +92,7 @@ const platinumBlackList = {
   'text_structure/find_structure.yml': ['*'],
   // https://github.com/elastic/elasticsearch/pull/39400
   'ml/jobs_crud.yml': ['Test put job with id that is already taken'],
+  'ml/calendar_crud.yml': ['Test PageParams'],
   // object keys must me strings, and `0.0.toString()` is `0`
   'ml/evaluate_data_frame.yml': [
     'Test binary_soft_classifition precision',
