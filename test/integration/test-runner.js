@@ -208,7 +208,7 @@ function build (opts = {}) {
       const calendarsId = calendars.calendars.map(c => c.calendar_id)
       await helper.runInParallel(
         client, 'ml.deleteCalendar',
-        calendarsId.map(c => ({ calendar_id: c, force: true }))
+        calendarsId.map(c => ({ calendar_id: c }))
       )
 
       const training = await client.ml.getTrainedModels()
