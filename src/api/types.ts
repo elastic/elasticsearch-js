@@ -913,9 +913,9 @@ export interface ScriptsPainlessExecuteResponse<TResult = unknown> {
 }
 
 export interface ScrollRequest extends RequestBase {
+  scroll_id?: ScrollId
   rest_total_hits_as_int?: boolean
   scroll?: Time
-  scroll_id: ScrollId
 }
 
 export type ScrollResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
@@ -8969,6 +8969,7 @@ export interface IlmMoveToStepStepKey {
 }
 
 export interface IlmPutLifecycleRequest extends RequestBase {
+  name: Name
   master_timeout?: Time
   timeout?: Time
   policy?: IlmPolicy
@@ -15340,8 +15341,8 @@ export interface SecurityPutRoleMappingResponse {
 }
 
 export interface SecurityPutUserRequest extends RequestBase {
+  username: Username
   refresh?: Refresh
-  username?: Username
   email?: string | null
   full_name?: string | null
   metadata?: Metadata
@@ -15807,6 +15808,7 @@ export interface SnapshotCreateResponse {
 }
 
 export interface SnapshotCreateRepositoryRequest extends RequestBase {
+  name: Name
   master_timeout?: Time
   timeout?: Time
   verify?: boolean

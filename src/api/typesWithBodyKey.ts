@@ -114,6 +114,7 @@ export interface BulkWriteOperation extends BulkOperationBase {
 }
 
 export interface ClearScrollRequest extends RequestBase {
+  scroll_id?: Ids
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     scroll_id?: Ids
@@ -960,6 +961,7 @@ export interface ScriptsPainlessExecuteResponse<TResult = unknown> {
 }
 
 export interface ScrollRequest extends RequestBase {
+  scroll_id?: ScrollId
   rest_total_hits_as_int?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
@@ -9087,6 +9089,7 @@ export interface IlmMoveToStepStepKey {
 }
 
 export interface IlmPutLifecycleRequest extends RequestBase {
+  name: Name
   master_timeout?: Time
   timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
@@ -15670,6 +15673,7 @@ export interface SecurityPutRoleMappingResponse {
 }
 
 export interface SecurityPutUserRequest extends RequestBase {
+  username: Username
   refresh?: Refresh
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
@@ -16173,6 +16177,7 @@ export interface SnapshotCreateResponse {
 }
 
 export interface SnapshotCreateRepositoryRequest extends RequestBase {
+  name: Name
   master_timeout?: Time
   timeout?: Time
   verify?: boolean
