@@ -114,7 +114,6 @@ export interface BulkWriteOperation extends BulkOperationBase {
 }
 
 export interface ClearScrollRequest extends RequestBase {
-  scroll_id?: Ids
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     scroll_id?: Ids
@@ -208,7 +207,6 @@ export interface DeleteByQueryRequest extends RequestBase {
   from?: long
   ignore_unavailable?: boolean
   lenient?: boolean
-  max_docs?: long
   preference?: string
   refresh?: boolean
   request_cache?: boolean
@@ -667,7 +665,6 @@ export interface MtermvectorsOperation {
 
 export interface MtermvectorsRequest extends RequestBase {
   index?: IndexName
-  ids?: Id[]
   fields?: Fields
   field_statistics?: boolean
   offsets?: boolean
@@ -963,8 +960,6 @@ export interface ScriptsPainlessExecuteResponse<TResult = unknown> {
 }
 
 export interface ScrollRequest extends RequestBase {
-  scroll_id?: ScrollId
-  scroll?: Time
   rest_total_hits_as_int?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
@@ -985,9 +980,7 @@ export interface SearchRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
-  docvalue_fields?: Fields
   expand_wildcards?: ExpandWildcards
-  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
@@ -999,27 +992,15 @@ export interface SearchRequest extends RequestBase {
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
-  stats?: string[]
-  stored_fields?: Fields
   suggest_field?: Field
   suggest_mode?: SuggestMode
   suggest_size?: long
   suggest_text?: string
-  terminate_after?: long
-  timeout?: Time
-  track_total_hits?: SearchTrackHits
-  track_scores?: boolean
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
-  version?: boolean
-  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
-  seq_no_primary_term?: boolean
   q?: string
-  size?: integer
-  from?: integer
-  sort?: string | string[]
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
@@ -1556,11 +1537,6 @@ export interface SearchMvtRequest extends RequestBase {
   zoom: SearchMvtZoomLevel
   x: SearchMvtCoordinate
   y: SearchMvtCoordinate
-  exact_bounds?: boolean
-  extent?: integer
-  grid_precision?: integer
-  grid_type?: SearchMvtGridType
-  size?: integer
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggs?: Record<string, AggregationsAggregationContainer>
@@ -1611,11 +1587,9 @@ export interface SearchTemplateRequest extends RequestBase {
   allow_no_indices?: boolean
   ccs_minimize_roundtrips?: boolean
   expand_wildcards?: ExpandWildcards
-  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   preference?: string
-  profile?: boolean
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
@@ -1747,7 +1721,6 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
   routing?: Routing
   timeout?: Time
   wait_for_active_shards?: WaitForActiveShards
-  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
@@ -1773,14 +1746,12 @@ export interface UpdateByQueryRequest extends RequestBase {
   allow_no_indices?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
-  conflicts?: Conflicts
   default_operator?: QueryDslOperator
   df?: string
   expand_wildcards?: ExpandWildcards
   from?: long
   ignore_unavailable?: boolean
   lenient?: boolean
-  max_docs?: long
   pipeline?: string
   preference?: string
   refresh?: boolean
@@ -5760,9 +5731,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
-  docvalue_fields?: Fields
   expand_wildcards?: ExpandWildcards
-  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
@@ -5774,27 +5743,15 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
-  stats?: string[]
-  stored_fields?: Fields
   suggest_field?: Field
   suggest_mode?: SuggestMode
   suggest_size?: long
   suggest_text?: string
-  terminate_after?: long
-  timeout?: Time
-  track_total_hits?: SearchTrackHits
-  track_scores?: boolean
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
-  version?: boolean
-  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
-  seq_no_primary_term?: boolean
   q?: string
-  size?: integer
-  from?: integer
-  sort?: string | string[]
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
@@ -8752,9 +8709,6 @@ export interface EqlSearchRequest extends RequestBase {
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
-  keep_alive?: Time
-  keep_on_completion?: boolean
-  wait_for_completion_timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     query: string
@@ -8844,9 +8798,7 @@ export interface FleetSearchRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
-  docvalue_fields?: Fields
   expand_wildcards?: ExpandWildcards
-  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
@@ -8858,27 +8810,15 @@ export interface FleetSearchRequest extends RequestBase {
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
-  stats?: string[]
-  stored_fields?: Fields
   suggest_field?: Field
   suggest_mode?: SuggestMode
   suggest_size?: long
   suggest_text?: string
-  terminate_after?: long
-  timeout?: Time
-  track_total_hits?: SearchTrackHits
-  track_scores?: boolean
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
-  version?: boolean
-  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
-  seq_no_primary_term?: boolean
   q?: string
-  size?: integer
-  from?: integer
-  sort?: string | string[]
   wait_for_checkpoints?: FleetCheckpoint[]
   allow_partial_search_results?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
@@ -9147,7 +9087,6 @@ export interface IlmMoveToStepStepKey {
 }
 
 export interface IlmPutLifecycleRequest extends RequestBase {
-  name: Name
   master_timeout?: Time
   timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
@@ -9243,7 +9182,7 @@ export interface IndicesFielddataFrequencyFilter {
   min_segment_size: integer
 }
 
-export type IndicesIndexCheckOnStartup = boolean | 'false' | 'checksum' | 'true'
+export type IndicesIndexCheckOnStartup = boolean | 'true' | 'false' | 'checksum'
 
 export interface IndicesIndexRouting {
   allocation?: IndicesIndexRoutingAllocation
@@ -10228,7 +10167,6 @@ export interface IndicesPutTemplateRequest extends RequestBase {
   flat_settings?: boolean
   master_timeout?: Time
   timeout?: Time
-  order?: integer
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aliases?: Record<IndexName, IndicesAlias>
@@ -12547,9 +12485,6 @@ export interface MlZeroShotClassificationInferenceUpdateOptions {
 
 export interface MlCloseJobRequest extends RequestBase {
   job_id: Id
-  allow_no_match?: boolean
-  force?: boolean
-  timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     allow_no_match?: boolean
@@ -12603,8 +12538,6 @@ export type MlDeleteDatafeedResponse = AcknowledgedResponseBase
 
 export interface MlDeleteExpiredDataRequest extends RequestBase {
   job_id?: Id
-  requests_per_second?: float
-  timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     requests_per_second?: float
@@ -12789,11 +12722,6 @@ export interface MlExplainDataFrameAnalyticsResponse {
 
 export interface MlFlushJobRequest extends RequestBase {
   job_id: Id
-  advance_time?: DateString
-  calc_interim?: boolean
-  end?: DateString
-  skip_time?: EpochMillis
-  start?: DateString
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     advance_time?: DateString
@@ -12811,9 +12739,6 @@ export interface MlFlushJobResponse {
 
 export interface MlForecastRequest extends RequestBase {
   job_id: Id
-  duration?: Time
-  expires_in?: Time
-  max_model_memory?: string
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     duration?: Time
@@ -12830,15 +12755,8 @@ export interface MlForecastResponse {
 export interface MlGetBucketsRequest extends RequestBase {
   job_id: Id
   timestamp?: Timestamp
-  anomaly_score?: double
-  desc?: boolean
-  end?: DateString
-  exclude_interim?: boolean
-  expand?: boolean
   from?: integer
   size?: integer
-  sort?: Field
-  start?: DateString
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     anomaly_score?: double
@@ -13065,12 +12983,8 @@ export interface MlGetMemoryStatsResponse {
 export interface MlGetModelSnapshotsRequest extends RequestBase {
   job_id: Id
   snapshot_id?: Id
-  desc?: boolean
-  end?: Time
   from?: integer
   size?: integer
-  sort?: Field
-  start?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     desc?: boolean
@@ -13088,13 +13002,6 @@ export interface MlGetModelSnapshotsResponse {
 
 export interface MlGetOverallBucketsRequest extends RequestBase {
   job_id: Id
-  allow_no_match?: boolean
-  bucket_span?: Time
-  end?: Time
-  exclude_interim?: boolean
-  overall_score?: double | string
-  start?: Time
-  top_n?: integer
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     allow_no_match?: boolean
@@ -13114,14 +13021,8 @@ export interface MlGetOverallBucketsResponse {
 
 export interface MlGetRecordsRequest extends RequestBase {
   job_id: Id
-  desc?: boolean
-  end?: DateString
-  exclude_interim?: boolean
   from?: integer
-  record_score?: double
   size?: integer
-  sort?: Field
-  start?: DateString
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     desc?: boolean
@@ -13227,7 +13128,6 @@ export interface MlInfoResponse {
 
 export interface MlOpenJobRequest extends RequestBase {
   job_id: Id
-  timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     timeout?: Time
@@ -13607,7 +13507,6 @@ export type MlResetJobResponse = AcknowledgedResponseBase
 export interface MlRevertModelSnapshotRequest extends RequestBase {
   job_id: Id
   snapshot_id: Id
-  delete_intervening_results?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     delete_intervening_results?: boolean
@@ -13637,9 +13536,6 @@ export interface MlStartDataFrameAnalyticsResponse {
 
 export interface MlStartDatafeedRequest extends RequestBase {
   datafeed_id: Id
-  end?: Time
-  start?: Time
-  timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     end?: Time
@@ -13679,9 +13575,6 @@ export interface MlStopDataFrameAnalyticsResponse {
 
 export interface MlStopDatafeedRequest extends RequestBase {
   datafeed_id: Id
-  allow_no_match?: boolean
-  force?: boolean
-  timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     allow_no_match?: boolean
@@ -15669,7 +15562,7 @@ export interface SecurityHasPrivilegesIndexPrivilegesCheck {
 export type SecurityHasPrivilegesPrivileges = Record<string, boolean>
 
 export interface SecurityHasPrivilegesRequest extends RequestBase {
-  user?: Name | null
+  user?: Name
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     application?: SecurityHasPrivilegesApplicationPrivilegesCheck[]
@@ -15777,7 +15670,6 @@ export interface SecurityPutRoleMappingResponse {
 }
 
 export interface SecurityPutUserRequest extends RequestBase {
-  username: Username
   refresh?: Refresh
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
@@ -16281,7 +16173,6 @@ export interface SnapshotCreateResponse {
 }
 
 export interface SnapshotCreateRepositoryRequest extends RequestBase {
-  name: Name
   master_timeout?: Time
   timeout?: Time
   verify?: boolean
