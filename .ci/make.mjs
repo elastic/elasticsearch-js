@@ -85,6 +85,13 @@ async function bump (args) {
     JSON.stringify(packageJson, null, 2),
     'utf8'
   )
+
+  const testMatrix = await readFile(join(import.meta.url, 'test-matrix.yml'), 'utf8')
+  await writeFile(
+    join(import.meta.url, 'test-matrix.yml'),
+    testMatrix.replace(/STACK_VERSION:\s+\- "[0-9]+[0-9\.]*[0-9](?:\-SNAPSHOT)?"/, `STACK_VERSION:\n  - "${cleanVersion}-SNAPSHOT"`), // eslint-disable-line
+    'utf8'
+  )
 }
 
 // this command can only be executed locally for now
