@@ -45,16 +45,17 @@ switch (argv.task) {
 async function release (args) {
   assert(args.length === 2, 'Release task expects two parameters')
   let [version, outputFolder] = args
-  const packageJson = JSON.parse(await readFile(
-    join(import.meta.url, '..', 'package.json'),
-    'utf8'
-  ))
 
   if (process.env.WORKFLOW === 'snapshot' && !version.endsWith('SNAPSHOT')) {
     version = `${version}-SNAPSHOT`
   }
 
   await bump([version])
+
+  const packageJson = JSON.parse(await readFile(
+    join(import.meta.url, '..', 'package.json'),
+    'utf8'
+  ))
 
   await $`npm run build`
   await $`npm pack`
@@ -64,7 +65,7 @@ async function release (args) {
 }
 
 async function bump (args) {
-  assert(args.length === 2, 'Bump task expects one parameter')
+  assert(args.length === 1, 'Bump task expects one parameter')
   const [version] = args
   const packageJson = JSON.parse(await readFile(
     join(import.meta.url, '..', 'package.json'),
