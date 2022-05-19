@@ -26,6 +26,7 @@
 
 script_path=$(dirname "$(realpath -s "$0")")
 repo=$(realpath "$script_path/../")
+generator=$(realpath "$script_path/../../elastic-client-generator-js")
 
 # shellcheck disable=SC1090
 CMD=$1
@@ -39,7 +40,6 @@ set -euo pipefail
 
 product="elastic/elasticsearch-js"
 output_folder=".ci/output"
-codegen_folder=".ci/output"
 OUTPUT_DIR="$repo/${output_folder}"
 REPO_BINDING="${OUTPUT_DIR}:/sln/${output_folder}"
 mkdir -p "$OUTPUT_DIR"
@@ -76,7 +76,7 @@ case $CMD in
         echo -e "\033[36;1mTARGET: codegen API v$VERSION\033[0m"
         TASK=codegen
         # VERSION is BRANCH here for now
-        TASK_ARGS=("$VERSION" "$codegen_folder")
+        TASK_ARGS=("$VERSION")
         ;;
     docsgen)
         if [ -v $VERSION ]; then
@@ -132,6 +132,7 @@ echo -e "\033[34;1mINFO: running $product container\033[0m"
 
 docker run \
   --volume $repo:/usr/src/app \
+  --volume $generator:/usr/src/elastic-client-generator-js \
   --volume /usr/src/app/node_modules \
   --env "WORKFLOW=${WORKFLOW}" \
   --name make-elasticsearch-js \
@@ -162,7 +163,12 @@ if [[ "$CMD" == "bump" ]]; then
 fi
 
 if [[ "$CMD" == "codegen" ]]; then
-    echo "TODO"
+  if [ -n "$(git status --porcelain)" ]; then 
+		echo -e "\033[32;1mTARGET: successfully generated client v$VERSION\033[0m"
+  else 
+		echo -e "\033[31;1mTARGET: failed generating client v$VERSION\033[0m"
+    exit 1
+  fi
 fi
 
 if [[ "$CMD" == "docsgen" ]]; then
