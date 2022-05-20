@@ -196,7 +196,6 @@ export interface DeleteByQueryRequest extends RequestBase {
   from?: long
   ignore_unavailable?: boolean
   lenient?: boolean
-  max_docs?: long
   preference?: string
   refresh?: boolean
   request_cache?: boolean
@@ -215,6 +214,7 @@ export interface DeleteByQueryRequest extends RequestBase {
   version?: boolean
   wait_for_active_shards?: WaitForActiveShards
   wait_for_completion?: boolean
+  max_docs?: long
   query?: QueryDslQueryContainer
   slice?: SlicedScroll
 }
@@ -636,7 +636,6 @@ export interface MtermvectorsOperation {
 
 export interface MtermvectorsRequest extends RequestBase {
   index?: IndexName
-  ids?: Id[]
   fields?: Fields
   field_statistics?: boolean
   offsets?: boolean
@@ -649,6 +648,7 @@ export interface MtermvectorsRequest extends RequestBase {
   version?: VersionNumber
   version_type?: VersionType
   docs?: MtermvectorsOperation[]
+  ids?: Id[]
 }
 
 export interface MtermvectorsResponse {
@@ -914,8 +914,8 @@ export interface ScriptsPainlessExecuteResponse<TResult = unknown> {
 
 export interface ScrollRequest extends RequestBase {
   scroll_id?: ScrollId
-  scroll?: Time
   rest_total_hits_as_int?: boolean
+  scroll?: Time
 }
 
 export type ScrollResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
@@ -930,9 +930,7 @@ export interface SearchRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
-  docvalue_fields?: Fields
   expand_wildcards?: ExpandWildcards
-  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
@@ -944,32 +942,24 @@ export interface SearchRequest extends RequestBase {
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
-  stats?: string[]
-  stored_fields?: Fields
   suggest_field?: Field
   suggest_mode?: SuggestMode
   suggest_size?: long
   suggest_text?: string
-  terminate_after?: long
-  timeout?: Time
-  track_total_hits?: SearchTrackHits
-  track_scores?: boolean
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
-  version?: boolean
-  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
-  seq_no_primary_term?: boolean
   q?: string
-  size?: integer
-  from?: integer
-  sort?: string | string[]
   aggregations?: Record<string, AggregationsAggregationContainer>
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
+  explain?: boolean
+  from?: integer
   highlight?: SearchHighlight
+  track_total_hits?: SearchTrackHits
   indices_boost?: Record<IndexName, double>[]
+  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
   min_score?: double
   post_filter?: QueryDslQueryContainer
   profile?: boolean
@@ -977,11 +967,21 @@ export interface SearchRequest extends RequestBase {
   rescore?: SearchRescore | SearchRescore[]
   script_fields?: Record<string, ScriptField>
   search_after?: SortResults
+  size?: integer
   slice?: SlicedScroll
+  sort?: Sort
+  _source?: SearchSourceConfig
   fields?: (QueryDslFieldAndFormat | Field)[]
   suggest?: SearchSuggester
+  terminate_after?: long
+  timeout?: string
+  track_scores?: boolean
+  version?: boolean
+  seq_no_primary_term?: boolean
+  stored_fields?: Fields
   pit?: SearchPointInTimeReference
   runtime_mappings?: MappingRuntimeFields
+  stats?: string[]
 }
 
 export type SearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
@@ -1484,15 +1484,15 @@ export interface SearchMvtRequest extends RequestBase {
   zoom: SearchMvtZoomLevel
   x: SearchMvtCoordinate
   y: SearchMvtCoordinate
+  aggs?: Record<string, AggregationsAggregationContainer>
   exact_bounds?: boolean
   extent?: integer
+  fields?: Fields
   grid_precision?: integer
   grid_type?: SearchMvtGridType
-  size?: integer
-  aggs?: Record<string, AggregationsAggregationContainer>
-  fields?: Fields
   query?: QueryDslQueryContainer
   runtime_mappings?: MappingRuntimeFields
+  size?: integer
   sort?: Sort
   track_total_hits?: SearchTrackHits
 }
@@ -1531,18 +1531,18 @@ export interface SearchTemplateRequest extends RequestBase {
   allow_no_indices?: boolean
   ccs_minimize_roundtrips?: boolean
   expand_wildcards?: ExpandWildcards
-  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   preference?: string
-  profile?: boolean
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
+  explain?: boolean
   id?: Id
   params?: Record<string, any>
+  profile?: boolean
   source?: string
 }
 
@@ -1656,7 +1656,6 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
   routing?: Routing
   timeout?: Time
   wait_for_active_shards?: WaitForActiveShards
-  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
   detect_noop?: boolean
@@ -1664,6 +1663,7 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
   doc_as_upsert?: boolean
   script?: Script
   scripted_upsert?: boolean
+  _source?: SearchSourceConfig
   upsert?: TDocument
 }
 
@@ -1678,14 +1678,12 @@ export interface UpdateByQueryRequest extends RequestBase {
   allow_no_indices?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
-  conflicts?: Conflicts
   default_operator?: QueryDslOperator
   df?: string
   expand_wildcards?: ExpandWildcards
   from?: long
   ignore_unavailable?: boolean
   lenient?: boolean
-  max_docs?: long
   pipeline?: string
   preference?: string
   refresh?: boolean
@@ -1705,9 +1703,11 @@ export interface UpdateByQueryRequest extends RequestBase {
   version_type?: boolean
   wait_for_active_shards?: WaitForActiveShards
   wait_for_completion?: boolean
+  max_docs?: long
   query?: QueryDslQueryContainer
   script?: Script
   slice?: SlicedScroll
+  conflicts?: Conflicts
 }
 
 export interface UpdateByQueryResponse {
@@ -5660,9 +5660,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
-  docvalue_fields?: Fields
   expand_wildcards?: ExpandWildcards
-  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
@@ -5674,32 +5672,24 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
-  stats?: string[]
-  stored_fields?: Fields
   suggest_field?: Field
   suggest_mode?: SuggestMode
   suggest_size?: long
   suggest_text?: string
-  terminate_after?: long
-  timeout?: Time
-  track_total_hits?: SearchTrackHits
-  track_scores?: boolean
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
-  version?: boolean
-  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
-  seq_no_primary_term?: boolean
   q?: string
-  size?: integer
-  from?: integer
-  sort?: string | string[]
   aggregations?: Record<string, AggregationsAggregationContainer>
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
+  explain?: boolean
+  from?: integer
   highlight?: SearchHighlight
+  track_total_hits?: SearchTrackHits
   indices_boost?: Record<IndexName, double>[]
+  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
   min_score?: double
   post_filter?: QueryDslQueryContainer
   profile?: boolean
@@ -5707,11 +5697,21 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   rescore?: SearchRescore | SearchRescore[]
   script_fields?: Record<string, ScriptField>
   search_after?: SortResults
+  size?: integer
   slice?: SlicedScroll
+  sort?: Sort
+  _source?: SearchSourceConfig
   fields?: (QueryDslFieldAndFormat | Field)[]
   suggest?: SearchSuggester
+  terminate_after?: long
+  timeout?: string
+  track_scores?: boolean
+  version?: boolean
+  seq_no_primary_term?: boolean
+  stored_fields?: Fields
   pit?: SearchPointInTimeReference
   runtime_mappings?: MappingRuntimeFields
+  stats?: string[]
 }
 
 export type AsyncSearchSubmitResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, TAggregations>
@@ -8607,9 +8607,6 @@ export interface EqlSearchRequest extends RequestBase {
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
-  keep_alive?: Time
-  keep_on_completion?: boolean
-  wait_for_completion_timeout?: Time
   query: string
   case_sensitive?: boolean
   event_category_field?: Field
@@ -8617,6 +8614,9 @@ export interface EqlSearchRequest extends RequestBase {
   timestamp_field?: Field
   fetch_size?: uint
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  keep_alive?: Time
+  keep_on_completion?: boolean
+  wait_for_completion_timeout?: Time
   size?: uint
   fields?: QueryDslFieldAndFormat | Field | (QueryDslFieldAndFormat | Field)[]
   result_position?: EqlSearchResultPosition
@@ -8692,9 +8692,7 @@ export interface FleetSearchRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
-  docvalue_fields?: Fields
   expand_wildcards?: ExpandWildcards
-  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
@@ -8706,34 +8704,26 @@ export interface FleetSearchRequest extends RequestBase {
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
-  stats?: string[]
-  stored_fields?: Fields
   suggest_field?: Field
   suggest_mode?: SuggestMode
   suggest_size?: long
   suggest_text?: string
-  terminate_after?: long
-  timeout?: Time
-  track_total_hits?: SearchTrackHits
-  track_scores?: boolean
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
-  version?: boolean
-  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
-  seq_no_primary_term?: boolean
   q?: string
-  size?: integer
-  from?: integer
-  sort?: string | string[]
   wait_for_checkpoints?: FleetCheckpoint[]
   allow_partial_search_results?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
+  explain?: boolean
+  from?: integer
   highlight?: SearchHighlight
+  track_total_hits?: SearchTrackHits
   indices_boost?: Record<IndexName, double>[]
+  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
   min_score?: double
   post_filter?: QueryDslQueryContainer
   profile?: boolean
@@ -8741,11 +8731,21 @@ export interface FleetSearchRequest extends RequestBase {
   rescore?: SearchRescore | SearchRescore[]
   script_fields?: Record<string, ScriptField>
   search_after?: SortResults
+  size?: integer
   slice?: SlicedScroll
+  sort?: Sort
+  _source?: SearchSourceConfig
   fields?: (QueryDslFieldAndFormat | Field)[]
   suggest?: SearchSuggester
+  terminate_after?: long
+  timeout?: string
+  track_scores?: boolean
+  version?: boolean
+  seq_no_primary_term?: boolean
+  stored_fields?: Fields
   pit?: SearchPointInTimeReference
   runtime_mappings?: MappingRuntimeFields
+  stats?: string[]
 }
 
 export interface FleetSearchResponse<TDocument = unknown> {
@@ -9062,7 +9062,7 @@ export interface IndicesFielddataFrequencyFilter {
   min_segment_size: integer
 }
 
-export type IndicesIndexCheckOnStartup = boolean | 'false' | 'checksum' | 'true'
+export type IndicesIndexCheckOnStartup = boolean | 'true' | 'false' | 'checksum'
 
 export interface IndicesIndexRouting {
   allocation?: IndicesIndexRoutingAllocation
@@ -10025,10 +10025,10 @@ export interface IndicesPutTemplateRequest extends RequestBase {
   flat_settings?: boolean
   master_timeout?: Time
   timeout?: Time
-  order?: integer
   aliases?: Record<IndexName, IndicesAlias>
   index_patterns?: string | string[]
   mappings?: MappingTypeMapping
+  order?: integer
   settings?: Record<string, any>
   version?: VersionNumber
 }
@@ -12560,16 +12560,16 @@ export interface MlForecastResponse {
 export interface MlGetBucketsRequest extends RequestBase {
   job_id: Id
   timestamp?: Timestamp
+  from?: integer
+  size?: integer
   anomaly_score?: double
   desc?: boolean
   end?: DateString
   exclude_interim?: boolean
   expand?: boolean
-  from?: integer
-  size?: integer
+  page?: MlPage
   sort?: Field
   start?: DateString
-  page?: MlPage
 }
 
 export interface MlGetBucketsResponse {
@@ -12776,13 +12776,13 @@ export interface MlGetMemoryStatsResponse {
 export interface MlGetModelSnapshotsRequest extends RequestBase {
   job_id: Id
   snapshot_id?: Id
-  desc?: boolean
-  end?: Time
   from?: integer
   size?: integer
+  desc?: boolean
+  end?: Time
+  page?: MlPage
   sort?: Field
   start?: Time
-  page?: MlPage
 }
 
 export interface MlGetModelSnapshotsResponse {
@@ -12808,15 +12808,15 @@ export interface MlGetOverallBucketsResponse {
 
 export interface MlGetRecordsRequest extends RequestBase {
   job_id: Id
+  from?: integer
+  size?: integer
   desc?: boolean
   end?: DateString
   exclude_interim?: boolean
-  from?: integer
+  page?: MlPage
   record_score?: double
-  size?: integer
   sort?: Field
   start?: DateString
-  page?: MlPage
 }
 
 export interface MlGetRecordsResponse {
@@ -15249,7 +15249,7 @@ export interface SecurityHasPrivilegesIndexPrivilegesCheck {
 export type SecurityHasPrivilegesPrivileges = Record<string, boolean>
 
 export interface SecurityHasPrivilegesRequest extends RequestBase {
-  user?: Name | null
+  user?: Name
   application?: SecurityHasPrivilegesApplicationPrivilegesCheck[]
   cluster?: SecurityClusterPrivilege[]
   index?: SecurityHasPrivilegesIndexPrivilegesCheck[]
