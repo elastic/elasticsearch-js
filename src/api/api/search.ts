@@ -58,8 +58,7 @@ export default async function SearchApi<TDocument = unknown, TAggregations = Rec
     if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
-      if (key === 'sort' && typeof params[key] === 'string' && params[key].includes(':')) { // eslint-disable-line
-        // @ts-expect-error
+      if (key === 'sort' && typeof params[key] === 'string' && params[key].includes(':')) {
         querystring[key] = params[key]
       } else {
         // @ts-expect-error

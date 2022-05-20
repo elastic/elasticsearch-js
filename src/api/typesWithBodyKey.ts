@@ -208,6 +208,7 @@ export interface DeleteByQueryRequest extends RequestBase {
   from?: long
   ignore_unavailable?: boolean
   lenient?: boolean
+  max_docs?: long
   preference?: string
   refresh?: boolean
   request_cache?: boolean
@@ -584,10 +585,21 @@ export interface MsearchMultisearchBody {
   aggregations?: Record<string, AggregationsAggregationContainer>
   aggs?: Record<string, AggregationsAggregationContainer>
   query?: QueryDslQueryContainer
+  explain?: boolean
+  stored_fields?: Fields
+  docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
   from?: integer
   size?: integer
-  pit?: SearchPointInTimeReference
+  sort?: Sort
+  _source?: SearchSourceConfig
+  terminate_after?: long
+  stats?: string[]
+  timeout?: string
+  track_scores?: boolean
   track_total_hits?: SearchTrackHits
+  version?: boolean
+  seq_no_primary_term?: boolean
+  pit?: SearchPointInTimeReference
   suggest?: SearchSuggester
 }
 
@@ -600,6 +612,9 @@ export interface MsearchMultisearchHeader {
   request_cache?: boolean
   routing?: string
   search_type?: SearchType
+  ccs_minimize_roundtrips?: boolean
+  allow_partial_search_results?: boolean
+  ignore_throttled?: boolean
 }
 
 export interface MsearchRequest extends RequestBase {
@@ -666,6 +681,7 @@ export interface MtermvectorsOperation {
 
 export interface MtermvectorsRequest extends RequestBase {
   index?: IndexName
+  ids?: Id[]
   fields?: Fields
   field_statistics?: boolean
   offsets?: boolean
@@ -962,6 +978,7 @@ export interface ScriptsPainlessExecuteResponse<TResult = unknown> {
 
 export interface ScrollRequest extends RequestBase {
   scroll_id?: ScrollId
+  scroll?: Time
   rest_total_hits_as_int?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
@@ -982,7 +999,9 @@ export interface SearchRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
+  docvalue_fields?: Fields
   expand_wildcards?: ExpandWildcards
+  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
@@ -994,15 +1013,27 @@ export interface SearchRequest extends RequestBase {
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
+  stats?: string[]
+  stored_fields?: Fields
   suggest_field?: Field
   suggest_mode?: SuggestMode
   suggest_size?: long
   suggest_text?: string
+  terminate_after?: long
+  timeout?: Time
+  track_total_hits?: SearchTrackHits
+  track_scores?: boolean
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
+  version?: boolean
+  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
+  seq_no_primary_term?: boolean
   q?: string
+  size?: integer
+  from?: integer
+  sort?: string | string[]
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
@@ -1539,6 +1570,11 @@ export interface SearchMvtRequest extends RequestBase {
   zoom: SearchMvtZoomLevel
   x: SearchMvtCoordinate
   y: SearchMvtCoordinate
+  exact_bounds?: boolean
+  extent?: integer
+  grid_precision?: integer
+  grid_type?: SearchMvtGridType
+  size?: integer
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggs?: Record<string, AggregationsAggregationContainer>
@@ -1589,9 +1625,11 @@ export interface SearchTemplateRequest extends RequestBase {
   allow_no_indices?: boolean
   ccs_minimize_roundtrips?: boolean
   expand_wildcards?: ExpandWildcards
+  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   preference?: string
+  profile?: boolean
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
@@ -1723,6 +1761,7 @@ export interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> 
   routing?: Routing
   timeout?: Time
   wait_for_active_shards?: WaitForActiveShards
+  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
@@ -1748,12 +1787,14 @@ export interface UpdateByQueryRequest extends RequestBase {
   allow_no_indices?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
+  conflicts?: Conflicts
   default_operator?: QueryDslOperator
   df?: string
   expand_wildcards?: ExpandWildcards
   from?: long
   ignore_unavailable?: boolean
   lenient?: boolean
+  max_docs?: long
   pipeline?: string
   preference?: string
   refresh?: boolean
@@ -4749,7 +4790,6 @@ export type MappingProperty = MappingFlattenedProperty | MappingJoinProperty | M
 export interface MappingPropertyBase {
   local_metadata?: Metadata
   meta?: Record<string, string>
-  name?: PropertyName
   properties?: Record<PropertyName, MappingProperty>
   ignore_above?: integer
   dynamic?: MappingDynamicMapping
@@ -5733,7 +5773,9 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
+  docvalue_fields?: Fields
   expand_wildcards?: ExpandWildcards
+  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
@@ -5745,15 +5787,27 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
+  stats?: string[]
+  stored_fields?: Fields
   suggest_field?: Field
   suggest_mode?: SuggestMode
   suggest_size?: long
   suggest_text?: string
+  terminate_after?: long
+  timeout?: Time
+  track_total_hits?: SearchTrackHits
+  track_scores?: boolean
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
+  version?: boolean
+  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
+  seq_no_primary_term?: boolean
   q?: string
+  size?: integer
+  from?: integer
+  sort?: string | string[]
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
@@ -5932,6 +5986,22 @@ export interface CatAllocationRequest extends CatCatRequestBase {
 }
 
 export type CatAllocationResponse = CatAllocationAllocationRecord[]
+
+export interface CatComponentTemplatesComponentTemplate {
+  name: string
+  version: string
+  alias_count: string
+  mapping_count: string
+  settings_count: string
+  metadata_count: string
+  included_in: string
+}
+
+export interface CatComponentTemplatesRequest extends CatCatRequestBase {
+  name?: string
+}
+
+export type CatComponentTemplatesResponse = CatComponentTemplatesComponentTemplate[]
 
 export interface CatCountCountRecord {
   epoch?: EpochMillis
@@ -8711,6 +8781,9 @@ export interface EqlSearchRequest extends RequestBase {
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
+  keep_alive?: Time
+  keep_on_completion?: boolean
+  wait_for_completion_timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     query: string
@@ -8800,7 +8873,9 @@ export interface FleetSearchRequest extends RequestBase {
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
+  docvalue_fields?: Fields
   expand_wildcards?: ExpandWildcards
+  explain?: boolean
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
@@ -8812,15 +8887,27 @@ export interface FleetSearchRequest extends RequestBase {
   routing?: Routing
   scroll?: Time
   search_type?: SearchType
+  stats?: string[]
+  stored_fields?: Fields
   suggest_field?: Field
   suggest_mode?: SuggestMode
   suggest_size?: long
   suggest_text?: string
+  terminate_after?: long
+  timeout?: Time
+  track_total_hits?: SearchTrackHits
+  track_scores?: boolean
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
+  version?: boolean
+  _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields
+  seq_no_primary_term?: boolean
   q?: string
+  size?: integer
+  from?: integer
+  sort?: string | string[]
   wait_for_checkpoints?: FleetCheckpoint[]
   allow_partial_search_results?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
@@ -10170,6 +10257,7 @@ export interface IndicesPutTemplateRequest extends RequestBase {
   flat_settings?: boolean
   master_timeout?: Time
   timeout?: Time
+  order?: integer
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aliases?: Record<IndexName, IndicesAlias>
@@ -12488,6 +12576,9 @@ export interface MlZeroShotClassificationInferenceUpdateOptions {
 
 export interface MlCloseJobRequest extends RequestBase {
   job_id: Id
+  allow_no_match?: boolean
+  force?: boolean
+  timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     allow_no_match?: boolean
@@ -12541,6 +12632,8 @@ export type MlDeleteDatafeedResponse = AcknowledgedResponseBase
 
 export interface MlDeleteExpiredDataRequest extends RequestBase {
   job_id?: Id
+  requests_per_second?: float
+  timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     requests_per_second?: float
@@ -12725,6 +12818,11 @@ export interface MlExplainDataFrameAnalyticsResponse {
 
 export interface MlFlushJobRequest extends RequestBase {
   job_id: Id
+  advance_time?: DateString
+  calc_interim?: boolean
+  end?: DateString
+  skip_time?: EpochMillis
+  start?: DateString
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     advance_time?: DateString
@@ -12742,6 +12840,9 @@ export interface MlFlushJobResponse {
 
 export interface MlForecastRequest extends RequestBase {
   job_id: Id
+  duration?: Time
+  expires_in?: Time
+  max_model_memory?: string
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     duration?: Time
@@ -12758,8 +12859,15 @@ export interface MlForecastResponse {
 export interface MlGetBucketsRequest extends RequestBase {
   job_id: Id
   timestamp?: Timestamp
+  anomaly_score?: double
+  desc?: boolean
+  end?: DateString
+  exclude_interim?: boolean
+  expand?: boolean
   from?: integer
   size?: integer
+  sort?: Field
+  start?: DateString
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     anomaly_score?: double
@@ -12986,8 +13094,12 @@ export interface MlGetMemoryStatsResponse {
 export interface MlGetModelSnapshotsRequest extends RequestBase {
   job_id: Id
   snapshot_id?: Id
+  desc?: boolean
+  end?: Time
   from?: integer
   size?: integer
+  sort?: Field
+  start?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     desc?: boolean
@@ -13005,6 +13117,13 @@ export interface MlGetModelSnapshotsResponse {
 
 export interface MlGetOverallBucketsRequest extends RequestBase {
   job_id: Id
+  allow_no_match?: boolean
+  bucket_span?: Time
+  end?: Time
+  exclude_interim?: boolean
+  overall_score?: double | string
+  start?: Time
+  top_n?: integer
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     allow_no_match?: boolean
@@ -13024,8 +13143,14 @@ export interface MlGetOverallBucketsResponse {
 
 export interface MlGetRecordsRequest extends RequestBase {
   job_id: Id
+  desc?: boolean
+  end?: DateString
+  exclude_interim?: boolean
   from?: integer
+  record_score?: double
   size?: integer
+  sort?: Field
+  start?: DateString
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     desc?: boolean
@@ -13131,6 +13256,7 @@ export interface MlInfoResponse {
 
 export interface MlOpenJobRequest extends RequestBase {
   job_id: Id
+  timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     timeout?: Time
@@ -13510,6 +13636,7 @@ export type MlResetJobResponse = AcknowledgedResponseBase
 export interface MlRevertModelSnapshotRequest extends RequestBase {
   job_id: Id
   snapshot_id: Id
+  delete_intervening_results?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     delete_intervening_results?: boolean
@@ -13539,6 +13666,9 @@ export interface MlStartDataFrameAnalyticsResponse {
 
 export interface MlStartDatafeedRequest extends RequestBase {
   datafeed_id: Id
+  end?: Time
+  start?: Time
+  timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     end?: Time
@@ -13578,6 +13708,9 @@ export interface MlStopDataFrameAnalyticsResponse {
 
 export interface MlStopDatafeedRequest extends RequestBase {
   datafeed_id: Id
+  allow_no_match?: boolean
+  force?: boolean
+  timeout?: Time
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     allow_no_match?: boolean
@@ -15822,8 +15955,12 @@ export interface SecurityUpdateUserProfileDataRequest extends RequestBase {
 
 export type SecurityUpdateUserProfileDataResponse = AcknowledgedResponseBase
 
+export type ShutdownType = 'restart' | 'remove' | 'replace'
+
 export interface ShutdownDeleteNodeRequest extends RequestBase {
   node_id: NodeId
+  master_timeout?: TimeUnit
+  timeout?: TimeUnit
 }
 
 export type ShutdownDeleteNodeResponse = AcknowledgedResponseBase
@@ -15849,6 +15986,8 @@ export interface ShutdownGetNodePluginsStatus {
 
 export interface ShutdownGetNodeRequest extends RequestBase {
   node_id?: NodeIds
+  master_timeout?: TimeUnit
+  timeout?: TimeUnit
 }
 
 export interface ShutdownGetNodeResponse {
@@ -15865,6 +16004,15 @@ export type ShutdownGetNodeShutdownType = 'remove' | 'restart'
 
 export interface ShutdownPutNodeRequest extends RequestBase {
   node_id: NodeId
+  master_timeout?: TimeUnit
+  timeout?: TimeUnit
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    type: ShutdownType
+    reason: string
+    allocation_delay?: string
+    target_node_name?: string
+  }
 }
 
 export type ShutdownPutNodeResponse = AcknowledgedResponseBase
