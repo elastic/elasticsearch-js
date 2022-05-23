@@ -2384,6 +2384,8 @@ client.ml.getJobs(...)
 [discrete]
 ==== get_memory_stats
 Returns information on how ML is using memory.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-memory.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getMemoryStats(...)
@@ -2450,13 +2452,13 @@ client.ml.getTrainedModelsStats(...)
 ----
 
 [discrete]
-==== infer_trained_model_deployment
+==== infer_trained_model
 Evaluate a trained model.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-model-deployment.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-model.html[Endpoint documentation]
 [source,ts]
 ----
-client.ml.inferTrainedModelDeployment(...)
+client.ml.inferTrainedModel(...)
 ----
 
 [discrete]
@@ -2980,6 +2982,8 @@ client.searchableSnapshots.stats(...)
 [discrete]
 ==== activate_user_profile
 Creates or updates the user profile on behalf of another user.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-activate-user-profile.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.activateUserProfile(...)
@@ -3288,6 +3292,8 @@ client.security.getUserPrivileges(...)
 [discrete]
 ==== get_user_profile
 Retrieves user profile for the given unique ID.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-profile.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getUserProfile(...)
@@ -3474,18 +3480,20 @@ client.security.samlServiceProviderMetadata(...)
 ----
 
 [discrete]
-==== search_user_profiles
-Searches for user profiles that match specified criteria.
+==== suggest_user_profiles
+Get suggestions for user profiles that match specified search criteria.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-search-user-profile.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-suggest-user-profile.html[Endpoint documentation]
 [source,ts]
 ----
-client.security.searchUserProfiles(...)
+client.security.suggestUserProfiles(...)
 ----
 
 [discrete]
 ==== update_user_profile_data
 Update application specific data for the user profile of the given unique ID.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-update-user-profile-data.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.updateUserProfileData(...)

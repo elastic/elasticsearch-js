@@ -104,8 +104,18 @@ export default class Internal {
       }
     }
 
-    const method = 'GET'
-    const path = '/_internal/_health'
+    let method = ''
+    let path = ''
+    if (params.component != null && params.feature != null) {
+      method = 'GET'
+      path = `/_internal/_health/${encodeURIComponent(params.component.toString())}/${encodeURIComponent(params.feature.toString())}`
+    } else if (params.component != null) {
+      method = 'GET'
+      path = `/_internal/_health/${encodeURIComponent(params.component.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_internal/_health'
+    }
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 

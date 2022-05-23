@@ -122,7 +122,7 @@ export default class Enrich {
   async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptions): Promise<T.EnrichPutPolicyResponse>
   async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['geo_match', 'match']
+    const acceptedBody: string[] = ['geo_match', 'match', 'range']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

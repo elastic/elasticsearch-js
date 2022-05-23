@@ -1158,12 +1158,12 @@ export default class Ml {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInferTrainedModelDeploymentResponse>
-  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInferTrainedModelDeploymentResponse, unknown>>
-  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlInferTrainedModelDeploymentResponse>
-  async inferTrainedModelDeployment (this: That, params: T.MlInferTrainedModelDeploymentRequest | TB.MlInferTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
+  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest | TB.MlInferTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInferTrainedModelResponse>
+  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest | TB.MlInferTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInferTrainedModelResponse, unknown>>
+  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest | TB.MlInferTrainedModelRequest, options?: TransportRequestOptions): Promise<T.MlInferTrainedModelResponse>
+  async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest | TB.MlInferTrainedModelRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['docs']
+    const acceptedBody: string[] = ['docs', 'inference_config']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1188,7 +1188,7 @@ export default class Ml {
     }
 
     const method = 'POST'
-    const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/deployment/_infer`
+    const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/_infer`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
