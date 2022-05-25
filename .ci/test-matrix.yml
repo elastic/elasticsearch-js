@@ -1,6 +1,6 @@
 ---
 STACK_VERSION:
-  - "7.17.4-SNAPSHOT"
+  - "7.17.5-SNAPSHOT"
 
 NODE_JS_VERSION:
   - 16
