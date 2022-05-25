@@ -2,6 +2,35 @@
 == Release notes
 
 [discrete]
+=== 8.2.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Support for Elasticsearch `v8.2.1`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.2/release-notes-8.2.1.html[here].
+
+[discrete]
+===== Fix ndjson APIs https://github.com/elastic/elasticsearch-js/pull/1688[#1688]
+
+The previous release contained a bug that broken ndjson APIs.
+We have released `v8.2.0-patch.1` to address this.
+This fix is the same as the one we have released and we storngly recommend upgrading to this version.
+
+[discrete]
+===== Fix node shutdown apis https://github.com/elastic/elasticsearch-js/pull/1697[#1697]
+
+The shutdown APIs wheren't complete, this fix completes them.
+
+[discrete]
+==== Types: move query keys to body https://github.com/elastic/elasticsearch-js/pull/1693[#1693]
+
+The types definitions where wrongly representing the types of fields present in both query and body.
+
+[discrete]
 === 8.2.0
 
 [discrete]
