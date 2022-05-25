@@ -19,6 +19,7 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/promise-function-async */
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 
 import assert from 'assert'
 import { promisify } from 'util'
