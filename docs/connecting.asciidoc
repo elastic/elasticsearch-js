@@ -553,7 +553,7 @@ Basic authentication is supported as well:
 ----
 const client = new Client({
   node: 'http://localhost:9200',
-  proxy: 'http:user:pwd@//localhost:8080'
+  proxy: 'http://user:pwd@localhost:8080'
 })
 ----
 
