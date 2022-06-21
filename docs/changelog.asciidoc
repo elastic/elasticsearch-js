@@ -18,7 +18,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/8.2/release-notes-8.2.1.
 
 The previous release contained a bug that broken ndjson APIs.
 We have released `v8.2.0-patch.1` to address this.
-This fix is the same as the one we have released and we storngly recommend upgrading to this version.
+This fix is the same as the one we have released and we strongly recommend upgrading to this version.
 
 [discrete]
 ===== Fix node shutdown apis https://github.com/elastic/elasticsearch-js/pull/1697[#1697]
