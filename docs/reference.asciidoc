@@ -2983,7 +2983,7 @@ client.searchableSnapshots.stats(...)
 ==== activate_user_profile
 Creates or updates the user profile on behalf of another user.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-activate-user-profile.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-activate-user-profile.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.activateUserProfile(...)
@@ -3293,7 +3293,7 @@ client.security.getUserPrivileges(...)
 ==== get_user_profile
 Retrieves user profile for the given unique ID.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-profile.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-user-profile.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getUserProfile(...)
@@ -3493,7 +3493,7 @@ client.security.suggestUserProfiles(...)
 ==== update_user_profile_data
 Update application specific data for the user profile of the given unique ID.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-update-user-profile-data.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-update-user-profile-data.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.updateUserProfileData(...)
