@@ -1,6 +1,6 @@
 ---
 STACK_VERSION:
-  - "8.3.0-SNAPSHOT"
+  - "8.3.1-SNAPSHOT"
 
 NODE_JS_VERSION:
   - 18
