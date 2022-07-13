@@ -74,11 +74,11 @@ export interface BulkStats {
   aborted: boolean
 }
 
-interface IndexAction {
+interface IndexActionOperation {
   index: T.BulkIndexOperation
 }
 
-interface CreateAction {
+interface CreateActionOperation {
   create: T.BulkCreateOperation
 }
 
@@ -90,7 +90,9 @@ interface DeleteAction {
   delete: T.BulkDeleteOperation
 }
 
-type UpdateAction = [UpdateActionOperation, Record<string, any>]
+type CreateAction = CreateActionOperation | [CreateActionOperation, unknown]
+type IndexAction = IndexActionOperation | [IndexActionOperation, unknown]
+type UpdateAction = [UpdateActionOperation, T.BulkUpdateAction]
 type Action = IndexAction | CreateAction | UpdateAction | DeleteAction
 
 export interface OnDropDocument<TDocument = unknown> {
@@ -619,22 +621,21 @@ export default class Helpers {
       for await (const chunk of datasource) {
         if (shouldAbort) break
         timeoutRef.refresh()
-        const action = onDocument(chunk)
-        const operation = Array.isArray(action)
-          ? Object.keys(action[0])[0]
-          : Object.keys(action)[0]
+        const result = onDocument(chunk)
+        const [action, payload] = Array.isArray(result) ? result : [result, chunk]
+        const operation = Object.keys(action)[0]
         if (operation === 'index' || operation === 'create') {
           actionBody = serializer.serialize(action)
-          payloadBody = typeof chunk === 'string' ? chunk : serializer.serialize(chunk)
+          payloadBody = typeof payload === 'string'
+            ? payload
+            : serializer.serialize(payload)
           chunkBytes += Buffer.byteLength(actionBody) + Buffer.byteLength(payloadBody)
           bulkBody.push(actionBody, payloadBody)
         } else if (operation === 'update') {
-          // @ts-expect-error in case of update action is an array
-          actionBody = serializer.serialize(action[0])
+          actionBody = serializer.serialize(action)
           payloadBody = typeof chunk === 'string'
             ? `{"doc":${chunk}}`
-            // @ts-expect-error in case of update action is an array
-            : serializer.serialize({ doc: chunk, ...action[1] })
+            : serializer.serialize({ doc: chunk, ...payload })
           chunkBytes += Buffer.byteLength(actionBody) + Buffer.byteLength(payloadBody)
           bulkBody.push(actionBody, payloadBody)
         } else if (operation === 'delete') {
