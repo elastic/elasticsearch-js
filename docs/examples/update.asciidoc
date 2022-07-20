@@ -19,6 +19,7 @@ async function run () {
   await client.index({
     index: 'game-of-thrones',
     id: '1',
+    type: '_doc'
     document: {
       character: 'Ned Stark',
       quote: 'Winter is coming.',
@@ -29,6 +30,7 @@ async function run () {
   await client.update({
     index: 'game-of-thrones',
     id: '1',
+    type: '_doc'
     script: {
       lang: 'painless',
       source: 'ctx._source.times++'
@@ -41,6 +43,7 @@ async function run () {
   const document = await client.get({
     index: 'game-of-thrones',
     id: '1'
+    type: '_doc'
   })
 
   console.log(document)
@@ -66,6 +69,7 @@ async function run () {
   await client.index({
     index: 'game-of-thrones',
     id: '1',
+    type: '_doc'
     document: {
       character: 'Ned Stark',
       quote: 'Winter is coming.',
@@ -76,6 +80,7 @@ async function run () {
   await client.update({
     index: 'game-of-thrones',
     id: '1',
+    type: '_doc'
     doc: {
       isAlive: false
     }
@@ -84,6 +89,7 @@ async function run () {
   const document = await client.get({
     index: 'game-of-thrones',
     id: '1'
+    type: '_doc'
   })
 
   console.log(document)
