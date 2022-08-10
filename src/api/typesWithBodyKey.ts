@@ -5429,7 +5429,7 @@ export interface QueryDslQueryContainer {
   dis_max?: QueryDslDisMaxQuery
   distance_feature?: QueryDslDistanceFeatureQuery
   exists?: QueryDslExistsQuery
-  function_score?: QueryDslFunctionScoreQuery
+  function_score?: QueryDslFunctionScoreQuery | QueryDslFunctionScoreContainer
   fuzzy?: Partial<Record<Field, QueryDslFuzzyQuery | string | double | boolean>>
   geo_bounding_box?: QueryDslGeoBoundingBoxQuery
   geo_distance?: QueryDslGeoDistanceQuery
