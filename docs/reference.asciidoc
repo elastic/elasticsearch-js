@@ -29,7 +29,7 @@
 === bulk
 Allows to perform multiple index/update/delete operations in a single request.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/docs-bulk.html[Endpoint documentation]
 [source,ts]
 ----
 client.bulk(...)
@@ -39,7 +39,7 @@ client.bulk(...)
 === clear_scroll
 Explicitly clears the search context for a scroll.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-scroll-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/clear-scroll-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.clearScroll(...)
@@ -49,7 +49,7 @@ client.clearScroll(...)
 === close_point_in_time
 Close a point in time
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/point-in-time-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.closePointInTime(...)
@@ -281,7 +281,7 @@ client.mtermvectors(...)
 === open_point_in_time
 Open a point in time that can be used in subsequent searches
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/point-in-time-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.openPointInTime(...)
@@ -466,7 +466,7 @@ client.updateByQueryRethrottle(...)
 ==== delete
 Deletes an async search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/async-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.asyncSearch.delete(...)
@@ -476,7 +476,7 @@ client.asyncSearch.delete(...)
 ==== get
 Retrieves the results of a previously submitted async search request given its ID.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/async-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.asyncSearch.get(...)
@@ -486,7 +486,7 @@ client.asyncSearch.get(...)
 ==== status
 Retrieves the status of a previously submitted async search request given its ID.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/async-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.asyncSearch.status(...)
@@ -496,7 +496,7 @@ client.asyncSearch.status(...)
 ==== submit
 Executes a search request asynchronously.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/async-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.asyncSearch.submit(...)
@@ -508,7 +508,7 @@ client.asyncSearch.submit(...)
 ==== aliases
 Shows information about currently configured aliases to indices including filter and routing infos.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-alias.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.aliases(...)
@@ -518,7 +518,7 @@ client.cat.aliases(...)
 ==== allocation
 Provides a snapshot of how many shards are allocated to each data node and how much disk space they are using.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-allocation.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.allocation(...)
@@ -536,7 +536,7 @@ client.cat.componentTemplates(...)
 ==== count
 Provides quick access to the document count of the entire cluster, or individual indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-count.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.count(...)
@@ -546,7 +546,7 @@ client.cat.count(...)
 ==== fielddata
 Shows how much heap memory is currently being used by fielddata on every data node in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-fielddata.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.fielddata(...)
@@ -556,7 +556,7 @@ client.cat.fielddata(...)
 ==== health
 Returns a concise representation of the cluster health.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-health.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.health(...)
@@ -566,7 +566,7 @@ client.cat.health(...)
 ==== help
 Returns help for the Cat APIs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.help(...)
@@ -576,7 +576,7 @@ client.cat.help(...)
 ==== indices
 Returns information about indices: number of primaries and replicas, document counts, disk size, ...
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-indices.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.indices(...)
@@ -586,7 +586,7 @@ client.cat.indices(...)
 ==== master
 Returns information about the master node.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-master.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-master.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.master(...)
@@ -596,7 +596,7 @@ client.cat.master(...)
 ==== ml_data_frame_analytics
 Gets configuration and usage information about data frame analytics jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.mlDataFrameAnalytics(...)
@@ -606,7 +606,7 @@ client.cat.mlDataFrameAnalytics(...)
 ==== ml_datafeeds
 Gets configuration and usage information about datafeeds.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-datafeeds.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-datafeeds.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.mlDatafeeds(...)
@@ -616,7 +616,7 @@ client.cat.mlDatafeeds(...)
 ==== ml_jobs
 Gets configuration and usage information about anomaly detection jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-anomaly-detectors.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-anomaly-detectors.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.mlJobs(...)
@@ -626,7 +626,7 @@ client.cat.mlJobs(...)
 ==== ml_trained_models
 Gets configuration and usage information about inference trained models.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-trained-model.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-trained-model.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.mlTrainedModels(...)
@@ -636,7 +636,7 @@ client.cat.mlTrainedModels(...)
 ==== nodeattrs
 Returns information about custom node attributes.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-nodeattrs.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.nodeattrs(...)
@@ -646,7 +646,7 @@ client.cat.nodeattrs(...)
 ==== nodes
 Returns basic statistics about performance of cluster nodes.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-nodes.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.nodes(...)
@@ -656,7 +656,7 @@ client.cat.nodes(...)
 ==== pending_tasks
 Returns a concise representation of the cluster pending tasks.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-pending-tasks.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.pendingTasks(...)
@@ -666,7 +666,7 @@ client.cat.pendingTasks(...)
 ==== plugins
 Returns information about installed plugins across nodes node.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-plugins.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.plugins(...)
@@ -676,7 +676,7 @@ client.cat.plugins(...)
 ==== recovery
 Returns information about index shard recoveries, both on-going completed.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-recovery.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.recovery(...)
@@ -686,7 +686,7 @@ client.cat.recovery(...)
 ==== repositories
 Returns information about snapshot repositories registered in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-repositories.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.repositories(...)
@@ -696,7 +696,7 @@ client.cat.repositories(...)
 ==== segments
 Provides low-level information about the segments in the shards of an index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-segments.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.segments(...)
@@ -706,7 +706,7 @@ client.cat.segments(...)
 ==== shards
 Provides a detailed view of shard allocation on nodes.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-shards.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-shards.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.shards(...)
@@ -716,7 +716,7 @@ client.cat.shards(...)
 ==== snapshots
 Returns all snapshots in a specific repository.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.snapshots(...)
@@ -726,7 +726,7 @@ client.cat.snapshots(...)
 ==== tasks
 Returns information about the tasks currently executing on one or more nodes in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/tasks.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.tasks(...)
@@ -736,7 +736,7 @@ client.cat.tasks(...)
 ==== templates
 Returns information about existing templates.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.templates(...)
@@ -747,7 +747,7 @@ client.cat.templates(...)
 Returns cluster-wide thread pool statistics per node.
 By default the active, queue and rejected statistics are returned for all thread pools.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-thread-pool.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.threadPool(...)
@@ -757,7 +757,7 @@ client.cat.threadPool(...)
 ==== transforms
 Gets configuration and usage information about transforms.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-transforms.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-transforms.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.transforms(...)
@@ -769,7 +769,7 @@ client.cat.transforms(...)
 ==== delete_auto_follow_pattern
 Deletes auto-follow patterns.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-delete-auto-follow-pattern.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-delete-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.deleteAutoFollowPattern(...)
@@ -779,7 +779,7 @@ client.ccr.deleteAutoFollowPattern(...)
 ==== follow
 Creates a new follower index configured to follow the referenced leader index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-put-follow.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-put-follow.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.follow(...)
@@ -789,7 +789,7 @@ client.ccr.follow(...)
 ==== follow_info
 Retrieves information about all follower indices, including parameters and status for each follower index
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-follow-info.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-get-follow-info.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.followInfo(...)
@@ -799,7 +799,7 @@ client.ccr.followInfo(...)
 ==== follow_stats
 Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-follow-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-get-follow-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.followStats(...)
@@ -809,7 +809,7 @@ client.ccr.followStats(...)
 ==== forget_follower
 Removes the follower retention leases from the leader.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-forget-follower.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-post-forget-follower.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.forgetFollower(...)
@@ -819,7 +819,7 @@ client.ccr.forgetFollower(...)
 ==== get_auto_follow_pattern
 Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-auto-follow-pattern.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-get-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.getAutoFollowPattern(...)
@@ -829,7 +829,7 @@ client.ccr.getAutoFollowPattern(...)
 ==== pause_auto_follow_pattern
 Pauses an auto-follow pattern
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-pause-auto-follow-pattern.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-pause-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.pauseAutoFollowPattern(...)
@@ -839,7 +839,7 @@ client.ccr.pauseAutoFollowPattern(...)
 ==== pause_follow
 Pauses a follower index. The follower index will not fetch any additional operations from the leader index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-pause-follow.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-post-pause-follow.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.pauseFollow(...)
@@ -849,7 +849,7 @@ client.ccr.pauseFollow(...)
 ==== put_auto_follow_pattern
 Creates a new named collection of auto-follow patterns against a specified remote cluster. Newly created indices on the remote cluster matching any of the specified patterns will be automatically configured as follower indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-put-auto-follow-pattern.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-put-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.putAutoFollowPattern(...)
@@ -859,7 +859,7 @@ client.ccr.putAutoFollowPattern(...)
 ==== resume_auto_follow_pattern
 Resumes an auto-follow pattern that has been paused
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-resume-auto-follow-pattern.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-resume-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.resumeAutoFollowPattern(...)
@@ -869,7 +869,7 @@ client.ccr.resumeAutoFollowPattern(...)
 ==== resume_follow
 Resumes a follower index that has been paused
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-resume-follow.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-post-resume-follow.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.resumeFollow(...)
@@ -879,7 +879,7 @@ client.ccr.resumeFollow(...)
 ==== stats
 Gets all stats related to cross-cluster replication.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-get-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.stats(...)
@@ -889,7 +889,7 @@ client.ccr.stats(...)
 ==== unfollow
 Stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-unfollow.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ccr-post-unfollow.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.unfollow(...)
@@ -901,7 +901,7 @@ client.ccr.unfollow(...)
 ==== allocation_explain
 Provides explanations for shard allocations in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation-explain.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-allocation-explain.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.allocationExplain(...)
@@ -911,7 +911,7 @@ client.cluster.allocationExplain(...)
 ==== delete_component_template
 Deletes a component template
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/indices-component-template.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.deleteComponentTemplate(...)
@@ -921,7 +921,7 @@ client.cluster.deleteComponentTemplate(...)
 ==== delete_voting_config_exclusions
 Clears cluster voting config exclusions.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/voting-config-exclusions.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/voting-config-exclusions.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.deleteVotingConfigExclusions(...)
@@ -931,7 +931,7 @@ client.cluster.deleteVotingConfigExclusions(...)
 ==== exists_component_template
 Returns information about whether a particular component template exist
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/indices-component-template.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.existsComponentTemplate(...)
@@ -941,7 +941,7 @@ client.cluster.existsComponentTemplate(...)
 ==== get_component_template
 Returns one or more component templates
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/indices-component-template.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.getComponentTemplate(...)
@@ -951,7 +951,7 @@ client.cluster.getComponentTemplate(...)
 ==== get_settings
 Returns cluster settings.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-get-settings.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-get-settings.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.getSettings(...)
@@ -961,7 +961,7 @@ client.cluster.getSettings(...)
 ==== health
 Returns basic information about the health of the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-health.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.health(...)
@@ -972,7 +972,7 @@ client.cluster.health(...)
 Returns a list of any cluster-level changes (e.g. create index, update mapping,
 allocate or fail shard) which have not yet been executed.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-pending.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.pendingTasks(...)
@@ -982,7 +982,7 @@ client.cluster.pendingTasks(...)
 ==== post_voting_config_exclusions
 Updates the cluster voting config exclusions by node ids or node names.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/voting-config-exclusions.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/voting-config-exclusions.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.postVotingConfigExclusions(...)
@@ -992,7 +992,7 @@ client.cluster.postVotingConfigExclusions(...)
 ==== put_component_template
 Creates or updates a component template
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/indices-component-template.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.putComponentTemplate(...)
@@ -1002,7 +1002,7 @@ client.cluster.putComponentTemplate(...)
 ==== put_settings
 Updates the cluster settings.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-update-settings.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.putSettings(...)
@@ -1012,7 +1012,7 @@ client.cluster.putSettings(...)
 ==== remote_info
 Returns the information about configured remote clusters.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-remote-info.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.remoteInfo(...)
@@ -1022,7 +1022,7 @@ client.cluster.remoteInfo(...)
 ==== reroute
 Allows to manually change the allocation of individual shards in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-reroute.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.reroute(...)
@@ -1032,7 +1032,7 @@ client.cluster.reroute(...)
 ==== state
 Returns a comprehensive information about the state of the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-state.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.state(...)
@@ -1042,7 +1042,7 @@ client.cluster.state(...)
 ==== stats
 Returns high-level overview of cluster statistics.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.stats(...)
@@ -2085,7 +2085,7 @@ client.migration.postFeatureUpgrade(...)
 ==== close_job
 Closes one or more anomaly detection jobs. A job can be opened and closed multiple times throughout its lifecycle.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-close-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ml-close-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.closeJob(...)
@@ -2095,7 +2095,7 @@ client.ml.closeJob(...)
 ==== delete_calendar
 Deletes a calendar.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ml-delete-calendar.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteCalendar(...)
@@ -2105,7 +2105,7 @@ client.ml.deleteCalendar(...)
 ==== delete_calendar_event
 Deletes scheduled events from a calendar.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar-event.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ml-delete-calendar-event.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteCalendarEvent(...)
@@ -2115,7 +2115,7 @@ client.ml.deleteCalendarEvent(...)
 ==== delete_calendar_job
 Deletes anomaly detection jobs from a calendar.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ml-delete-calendar-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteCalendarJob(...)
@@ -2125,7 +2125,7 @@ client.ml.deleteCalendarJob(...)
 ==== delete_data_frame_analytics
 Deletes an existing data frame analytics job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/delete-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteDataFrameAnalytics(...)
@@ -2135,7 +2135,7 @@ client.ml.deleteDataFrameAnalytics(...)
 ==== delete_datafeed
 Deletes an existing datafeed.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-datafeed.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ml-delete-datafeed.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteDatafeed(...)
@@ -2545,7 +2545,7 @@ client.ml.putCalendarJob(...)
 ==== put_data_frame_analytics
 Instantiates a data frame analytics job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/put-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/put-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.putDataFrameAnalytics(...)
@@ -2797,7 +2797,7 @@ client.nodes.getRepositoriesMeteringInfo(...)
 ==== hot_threads
 Returns information about hot threads on each node in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-nodes-hot-threads.html[Endpoint documentation]
 [source,ts]
 ----
 client.nodes.hotThreads(...)
@@ -2807,7 +2807,7 @@ client.nodes.hotThreads(...)
 ==== info
 Returns information about nodes in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-nodes-info.html[Endpoint documentation]
 [source,ts]
 ----
 client.nodes.info(...)
@@ -2827,7 +2827,7 @@ client.nodes.reloadSecureSettings(...)
 ==== stats
 Returns statistical information about nodes in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-nodes-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.nodes.stats(...)
@@ -2837,7 +2837,7 @@ client.nodes.stats(...)
 ==== usage
 Returns low-level information about REST actions usage on nodes.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usage.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cluster-nodes-usage.html[Endpoint documentation]
 [source,ts]
 ----
 client.nodes.usage(...)
@@ -2979,16 +2979,6 @@ client.searchableSnapshots.stats(...)
 
 [discrete]
 === security
-[discrete]
-==== activate_user_profile
-Creates or updates the user profile on behalf of another user.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-activate-user-profile.html[Endpoint documentation]
-[source,ts]
-----
-client.security.activateUserProfile(...)
-----
-
 [discrete]
 ==== authenticate
 Enables authentication as a user and retrieve information about the authenticated user.
@@ -3140,16 +3130,6 @@ client.security.disableUser(...)
 ----
 
 [discrete]
-==== disable_user_profile
-Disables a user profile so it's not visible in user profile searches.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-disable-user-profile.html[Endpoint documentation]
-[source,ts]
-----
-client.security.disableUserProfile(...)
-----
-
-[discrete]
 ==== enable_user
 Enables users in the native realm.
 
@@ -3157,16 +3137,6 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ena
 [source,ts]
 ----
 client.security.enableUser(...)
-----
-
-[discrete]
-==== enable_user_profile
-Enables a user profile so it's visible in user profile searches.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-enable-user-profile.html[Endpoint documentation]
-[source,ts]
-----
-client.security.enableUserProfile(...)
 ----
 
 [discrete]
@@ -3287,16 +3257,6 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 [source,ts]
 ----
 client.security.getUserPrivileges(...)
-----
-
-[discrete]
-==== get_user_profile
-Retrieves user profile for the given unique ID.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-user-profile.html[Endpoint documentation]
-[source,ts]
-----
-client.security.getUserProfile(...)
 ----
 
 [discrete]
@@ -3480,23 +3440,11 @@ client.security.samlServiceProviderMetadata(...)
 ----
 
 [discrete]
-==== suggest_user_profiles
-Get suggestions for user profiles that match specified search criteria.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-suggest-user-profile.html[Endpoint documentation]
+==== update_api_key
+Updates attributes of an existing API key.
 [source,ts]
 ----
-client.security.suggestUserProfiles(...)
-----
-
-[discrete]
-==== update_user_profile_data
-Update application specific data for the user profile of the given unique ID.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-update-user-profile-data.html[Endpoint documentation]
-[source,ts]
-----
-client.security.updateUserProfileData(...)
+client.security.updateApiKey(...)
 ----
 
 [discrete]
@@ -3793,7 +3741,7 @@ client.ssl.certificates(...)
 ==== cancel
 Cancels a task, if it can be cancelled through an API.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/tasks.html[Endpoint documentation]
 [source,ts]
 ----
 client.tasks.cancel(...)
@@ -3803,7 +3751,7 @@ client.tasks.cancel(...)
 ==== get
 Returns information about a task.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/tasks.html[Endpoint documentation]
 [source,ts]
 ----
 client.tasks.get(...)
@@ -3813,7 +3761,7 @@ client.tasks.get(...)
 ==== list
 Returns a list of tasks.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/tasks.html[Endpoint documentation]
 [source,ts]
 ----
 client.tasks.list(...)
