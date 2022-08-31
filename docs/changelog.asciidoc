@@ -2,6 +2,15 @@
 == Release notes
 
 [discrete]
+=== 8.4.0
+
+[discrete]
+===== Support for Elasticsearch `v8.4.0`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.4/release-notes-8.4.0.html[here].
+
+[discrete]
 === 8.2.1
 
 [discrete]
