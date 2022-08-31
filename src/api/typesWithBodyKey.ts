@@ -588,6 +588,7 @@ export interface MsearchMultisearchBody {
   collapse?: SearchFieldCollapse
   query?: QueryDslQueryContainer
   explain?: boolean
+  ext?: Record<string, any>
   stored_fields?: Fields
   docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
   knn?: KnnQuery
@@ -1041,6 +1042,7 @@ export interface SearchRequest extends RequestBase {
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
+    ext?: Record<string, any>
     from?: integer
     highlight?: SearchHighlight
     track_total_hits?: SearchTrackHits
@@ -1949,7 +1951,7 @@ export type EpochTime<Unit = unknown> = Unit
 
 export interface ErrorCauseKeys {
   type: string
-  reason: string
+  reason?: string
   stack_trace?: string
   caused_by?: ErrorCause
   root_cause?: ErrorCause[]
@@ -3027,7 +3029,7 @@ export interface AggregationsFormattableMetricAggregation extends AggregationsMe
 export type AggregationsGapPolicy = 'skip' | 'insert_zeros'
 
 export interface AggregationsGeoBoundsAggregate extends AggregationsAggregateBase {
-  bounds: GeoBounds
+  bounds?: GeoBounds
 }
 
 export interface AggregationsGeoBoundsAggregation extends AggregationsMetricAggregationBase {
@@ -4026,17 +4028,18 @@ export type AnalysisIcuCollationStrength = 'primary' | 'secondary' | 'tertiary' 
 
 export interface AnalysisIcuCollationTokenFilter extends AnalysisTokenFilterBase {
   type: 'icu_collation'
-  alternate: AnalysisIcuCollationAlternate
-  caseFirst: AnalysisIcuCollationCaseFirst
-  caseLevel: boolean
-  country: string
-  decomposition: AnalysisIcuCollationDecomposition
-  hiraganaQuaternaryMode: boolean
-  language: string
-  numeric: boolean
-  strength: AnalysisIcuCollationStrength
+  alternate?: AnalysisIcuCollationAlternate
+  caseFirst?: AnalysisIcuCollationCaseFirst
+  caseLevel?: boolean
+  country?: string
+  decomposition?: AnalysisIcuCollationDecomposition
+  hiraganaQuaternaryMode?: boolean
+  language?: string
+  numeric?: boolean
+  rules?: string
+  strength?: AnalysisIcuCollationStrength
   variableTop?: string
-  variant: string
+  variant?: string
 }
 
 export interface AnalysisIcuFoldingTokenFilter extends AnalysisTokenFilterBase {
@@ -4858,7 +4861,7 @@ export interface MappingRuntimeField {
 
 export type MappingRuntimeFieldType = 'boolean' | 'date' | 'double' | 'geo_point' | 'ip' | 'keyword' | 'long'
 
-export type MappingRuntimeFields = Record<Field, MappingRuntimeField | MappingRuntimeField[]>
+export type MappingRuntimeFields = Record<Field, MappingRuntimeField>
 
 export interface MappingScaledFloatNumberProperty extends MappingNumberPropertyBase {
   type: 'scaled_float'
@@ -5828,6 +5831,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
+    ext?: Record<string, any>
     from?: integer
     highlight?: SearchHighlight
     track_total_hits?: SearchTrackHits
@@ -7968,7 +7972,7 @@ export interface ClusterComponentTemplateNode {
 export interface ClusterComponentTemplateSummary {
   _meta?: Metadata
   version?: VersionNumber
-  settings: Record<IndexName, IndicesIndexSettings>
+  settings?: Record<IndexName, IndicesIndexSettings>
   mappings?: MappingTypeMapping
   aliases?: Record<string, IndicesAliasDefinition>
 }
@@ -8922,6 +8926,7 @@ export interface FleetSearchRequest extends RequestBase {
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
+    ext?: Record<string, any>
     from?: integer
     highlight?: SearchHighlight
     track_total_hits?: SearchTrackHits
@@ -9452,8 +9457,7 @@ export interface IndicesIndexTemplateSummary {
 }
 
 export interface IndicesIndexVersioning {
-  created: VersionString
-  created_string?: VersionString
+  created?: VersionString
 }
 
 export interface IndicesIndexingPressure {
@@ -15694,7 +15698,7 @@ export interface SecurityGetTokenResponse {
   expires_in: long
   scope?: string
   type: string
-  refresh_token: string
+  refresh_token?: string
   kerberos_authentication_response_token?: string
   authentication: SecurityGetTokenAuthenticatedUser
 }
