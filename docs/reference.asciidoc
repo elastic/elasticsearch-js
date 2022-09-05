@@ -2082,6 +2082,16 @@ client.migration.postFeatureUpgrade(...)
 [discrete]
 === ml
 [discrete]
+==== clear_trained_model_deployment_cache
+Clear the cached results from a trained model deployment
+
+https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-trained-model-deployment-cache.html[Endpoint documentation]
+[source,ts]
+----
+client.ml.clearTrainedModelDeploymentCache(...)
+----
+
+[discrete]
 ==== close_job
 Closes one or more anomaly detection jobs. A job can be opened and closed multiple times throughout its lifecycle.
 
@@ -2980,16 +2990,6 @@ client.searchableSnapshots.stats(...)
 [discrete]
 === security
 [discrete]
-==== activate_user_profile
-Creates or updates the user profile on behalf of another user.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-activate-user-profile.html[Endpoint documentation]
-[source,ts]
-----
-client.security.activateUserProfile(...)
-----
-
-[discrete]
 ==== authenticate
 Enables authentication as a user and retrieve information about the authenticated user.
 
@@ -2997,6 +2997,14 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-aut
 [source,ts]
 ----
 client.security.authenticate(...)
+----
+
+[discrete]
+==== bulk_update_api_keys
+Updates the attributes of multiple existing API keys.
+[source,ts]
+----
+client.security.bulkUpdateApiKeys(...)
 ----
 
 [discrete]
@@ -3140,16 +3148,6 @@ client.security.disableUser(...)
 ----
 
 [discrete]
-==== disable_user_profile
-Disables a user profile so it's not visible in user profile searches.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-disable-user-profile.html[Endpoint documentation]
-[source,ts]
-----
-client.security.disableUserProfile(...)
-----
-
-[discrete]
 ==== enable_user
 Enables users in the native realm.
 
@@ -3157,16 +3155,6 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ena
 [source,ts]
 ----
 client.security.enableUser(...)
-----
-
-[discrete]
-==== enable_user_profile
-Enables a user profile so it's visible in user profile searches.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-enable-user-profile.html[Endpoint documentation]
-[source,ts]
-----
-client.security.enableUserProfile(...)
 ----
 
 [discrete]
@@ -3287,16 +3275,6 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get
 [source,ts]
 ----
 client.security.getUserPrivileges(...)
-----
-
-[discrete]
-==== get_user_profile
-Retrieves user profile for the given unique ID.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-user-profile.html[Endpoint documentation]
-[source,ts]
-----
-client.security.getUserProfile(...)
 ----
 
 [discrete]
@@ -3480,23 +3458,11 @@ client.security.samlServiceProviderMetadata(...)
 ----
 
 [discrete]
-==== suggest_user_profiles
-Get suggestions for user profiles that match specified search criteria.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-suggest-user-profile.html[Endpoint documentation]
+==== update_api_key
+Updates attributes of an existing API key.
 [source,ts]
 ----
-client.security.suggestUserProfiles(...)
-----
-
-[discrete]
-==== update_user_profile_data
-Update application specific data for the user profile of the given unique ID.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-update-user-profile-data.html[Endpoint documentation]
-[source,ts]
-----
-client.security.updateUserProfileData(...)
+client.security.updateApiKey(...)
 ----
 
 [discrete]

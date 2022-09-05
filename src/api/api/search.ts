@@ -42,7 +42,7 @@ export default async function SearchApi<TDocument = unknown, TAggregations = Rec
 export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptions): Promise<T.SearchResponse<TDocument, TAggregations>>
 export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['aggregations', 'aggs', 'collapse', 'explain', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats']
+  const acceptedBody: string[] = ['aggregations', 'aggs', 'collapse', 'explain', 'from', 'highlight', 'track_total_hits', 'indices_boost', 'docvalue_fields', 'knn', 'min_score', 'post_filter', 'profile', 'query', 'rescore', 'script_fields', 'search_after', 'size', 'slice', 'sort', '_source', 'fields', 'suggest', 'terminate_after', 'timeout', 'track_scores', 'version', 'seq_no_primary_term', 'stored_fields', 'pit', 'runtime_mappings', 'stats']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   const userBody: any = params?.body
@@ -58,7 +58,8 @@ export default async function SearchApi<TDocument = unknown, TAggregations = Rec
     if (acceptedBody.includes(key)) {
       body = body ?? {}
       // @ts-expect-error
-      if (key === 'sort' && typeof params[key] === 'string' && params[key].includes(':')) {
+      if (key === 'sort' && typeof params[key] === 'string' && params[key].includes(':')) { // eslint-disable-line
+        // @ts-expect-error
         querystring[key] = params[key]
       } else {
         // @ts-expect-error
