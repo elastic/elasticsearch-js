@@ -418,6 +418,33 @@ export default class Indices {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async downsample (this: That, params: T.IndicesDownsampleRequest | TB.IndicesDownsampleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDownsampleResponse>
+  async downsample (this: That, params: T.IndicesDownsampleRequest | TB.IndicesDownsampleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDownsampleResponse, unknown>>
+  async downsample (this: That, params: T.IndicesDownsampleRequest | TB.IndicesDownsampleRequest, options?: TransportRequestOptions): Promise<T.IndicesDownsampleResponse>
+  async downsample (this: That, params: T.IndicesDownsampleRequest | TB.IndicesDownsampleRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['index', 'target_index']
+    const acceptedBody: string[] = ['config']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    let body: any = params.body ?? undefined
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        // @ts-expect-error
+        body = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/${encodeURIComponent(params.index.toString())}/_downsample/${encodeURIComponent(params.target_index.toString())}`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async exists (this: That, params: T.IndicesExistsRequest | TB.IndicesExistsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsResponse>
   async exists (this: That, params: T.IndicesExistsRequest | TB.IndicesExistsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExistsResponse, unknown>>
   async exists (this: That, params: T.IndicesExistsRequest | TB.IndicesExistsRequest, options?: TransportRequestOptions): Promise<T.IndicesExistsResponse>
