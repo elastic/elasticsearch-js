@@ -29,7 +29,7 @@
 === bulk
 Allows to perform multiple index/update/delete operations in a single request.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-bulk.html[Endpoint documentation]
 [source,ts]
 ----
 client.bulk(...)
@@ -39,7 +39,7 @@ client.bulk(...)
 === clear_scroll
 Explicitly clears the search context for a scroll.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-scroll-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/clear-scroll-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.clearScroll(...)
@@ -49,7 +49,7 @@ client.clearScroll(...)
 === close_point_in_time
 Close a point in time
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/point-in-time-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.closePointInTime(...)
@@ -59,7 +59,7 @@ client.closePointInTime(...)
 === count
 Returns number of documents matching a query.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-count.html[Endpoint documentation]
 [source,ts]
 ----
 client.count(...)
@@ -71,7 +71,7 @@ Creates a new document in the index.
 
 Returns a 409 response when a document with a same ID already exists in the index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-index_.html[Endpoint documentation]
 [source,ts]
 ----
 client.create(...)
@@ -81,7 +81,7 @@ client.create(...)
 === delete
 Removes a document from the index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-delete.html[Endpoint documentation]
 [source,ts]
 ----
 client.delete(...)
@@ -91,7 +91,7 @@ client.delete(...)
 === delete_by_query
 Deletes documents matching the provided query.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-delete-by-query.html[Endpoint documentation]
 [source,ts]
 ----
 client.deleteByQuery(...)
@@ -101,7 +101,7 @@ client.deleteByQuery(...)
 === delete_by_query_rethrottle
 Changes the number of requests per second for a particular Delete By Query operation.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-delete-by-query.html[Endpoint documentation]
 [source,ts]
 ----
 client.deleteByQueryRethrottle(...)
@@ -111,7 +111,7 @@ client.deleteByQueryRethrottle(...)
 === delete_script
 Deletes a script.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-scripting.html[Endpoint documentation]
 [source,ts]
 ----
 client.deleteScript(...)
@@ -121,7 +121,7 @@ client.deleteScript(...)
 === exists
 Returns information about whether a document exists in an index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-get.html[Endpoint documentation]
 [source,ts]
 ----
 client.exists(...)
@@ -131,7 +131,7 @@ client.exists(...)
 === exists_source
 Returns information about whether a document source exists in an index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-get.html[Endpoint documentation]
 [source,ts]
 ----
 client.existsSource(...)
@@ -141,7 +141,7 @@ client.existsSource(...)
 === explain
 Returns information about why a specific matches (or doesn't match) a query.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-explain.html[Endpoint documentation]
 [source,ts]
 ----
 client.explain(...)
@@ -151,7 +151,7 @@ client.explain(...)
 === field_caps
 Returns the information about the capabilities of fields among multiple indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-field-caps.html[Endpoint documentation]
 [source,ts]
 ----
 client.fieldCaps(...)
@@ -161,7 +161,7 @@ client.fieldCaps(...)
 === get
 Returns a document.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-get.html[Endpoint documentation]
 [source,ts]
 ----
 client.get(...)
@@ -171,7 +171,7 @@ client.get(...)
 === get_script
 Returns a script.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-scripting.html[Endpoint documentation]
 [source,ts]
 ----
 client.getScript(...)
@@ -181,7 +181,7 @@ client.getScript(...)
 === get_script_context
 Returns all script contexts.
 
-https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/painless/8.5/painless-contexts.html[Endpoint documentation]
 [source,ts]
 ----
 client.getScriptContext(...)
@@ -191,7 +191,7 @@ client.getScriptContext(...)
 === get_script_languages
 Returns available script types, languages and contexts
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-scripting.html[Endpoint documentation]
 [source,ts]
 ----
 client.getScriptLanguages(...)
@@ -201,7 +201,7 @@ client.getScriptLanguages(...)
 === get_source
 Returns the source of a document.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-get.html[Endpoint documentation]
 [source,ts]
 ----
 client.getSource(...)
@@ -211,7 +211,7 @@ client.getSource(...)
 === index
 Creates or updates a document in an index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-index_.html[Endpoint documentation]
 [source,ts]
 ----
 client.index(...)
@@ -221,7 +221,7 @@ client.index(...)
 === info
 Returns basic information about the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/index.html[Endpoint documentation]
 [source,ts]
 ----
 client.info(...)
@@ -231,7 +231,7 @@ client.info(...)
 === knn_search
 Performs a kNN search.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.knnSearch(...)
@@ -241,7 +241,7 @@ client.knnSearch(...)
 === mget
 Allows to get multiple documents in one request.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-multi-get.html[Endpoint documentation]
 [source,ts]
 ----
 client.mget(...)
@@ -251,7 +251,7 @@ client.mget(...)
 === msearch
 Allows to execute several search operations in one request.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-multi-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.msearch(...)
@@ -261,7 +261,7 @@ client.msearch(...)
 === msearch_template
 Allows to execute several search template operations in one request.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-multi-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.msearchTemplate(...)
@@ -271,7 +271,7 @@ client.msearchTemplate(...)
 === mtermvectors
 Returns multiple termvectors in one request.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-multi-termvectors.html[Endpoint documentation]
 [source,ts]
 ----
 client.mtermvectors(...)
@@ -281,7 +281,7 @@ client.mtermvectors(...)
 === open_point_in_time
 Open a point in time that can be used in subsequent searches
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/point-in-time-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.openPointInTime(...)
@@ -291,7 +291,7 @@ client.openPointInTime(...)
 === ping
 Returns whether the cluster is running.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/index.html[Endpoint documentation]
 [source,ts]
 ----
 client.ping(...)
@@ -301,7 +301,7 @@ client.ping(...)
 === put_script
 Creates or updates a script.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-scripting.html[Endpoint documentation]
 [source,ts]
 ----
 client.putScript(...)
@@ -311,7 +311,7 @@ client.putScript(...)
 === rank_eval
 Allows to evaluate the quality of ranked search results over a set of typical search queries
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-rank-eval.html[Endpoint documentation]
 [source,ts]
 ----
 client.rankEval(...)
@@ -323,7 +323,7 @@ Allows to copy documents from one index to another, optionally filtering the sou
 documents by a query, changing the destination index settings, or fetching the
 documents from a remote cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-reindex.html[Endpoint documentation]
 [source,ts]
 ----
 client.reindex(...)
@@ -333,7 +333,7 @@ client.reindex(...)
 === reindex_rethrottle
 Changes the number of requests per second for a particular Reindex operation.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-reindex.html[Endpoint documentation]
 [source,ts]
 ----
 client.reindexRethrottle(...)
@@ -343,7 +343,7 @@ client.reindexRethrottle(...)
 === render_search_template
 Allows to use the Mustache language to pre-render a search definition.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/render-search-template-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/render-search-template-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.renderSearchTemplate(...)
@@ -353,7 +353,7 @@ client.renderSearchTemplate(...)
 === scripts_painless_execute
 Allows an arbitrary script to be executed and a result to be returned
 
-https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/painless/8.5/painless-execute-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.scriptsPainlessExecute(...)
@@ -363,7 +363,7 @@ client.scriptsPainlessExecute(...)
 === scroll
 Allows to retrieve a large numbers of results from a single search request.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-request-body.html#request-body-search-scroll[Endpoint documentation]
 [source,ts]
 ----
 client.scroll(...)
@@ -373,7 +373,7 @@ client.scroll(...)
 === search
 Returns results matching a query.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.search(...)
@@ -383,7 +383,7 @@ client.search(...)
 === search_mvt
 Searches a vector tile for geospatial values. Returns results as a binary Mapbox vector tile.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-vector-tile-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-vector-tile-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchMvt(...)
@@ -393,7 +393,7 @@ client.searchMvt(...)
 === search_shards
 Returns information about the indices and shards that a search request would be executed against.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-shards.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchShards(...)
@@ -403,7 +403,7 @@ client.searchShards(...)
 === search_template
 Allows to use the Mustache language to pre-render a search definition.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-template.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchTemplate(...)
@@ -413,7 +413,7 @@ client.searchTemplate(...)
 === terms_enum
 The terms enum API  can be used to discover terms in the index that begin with the provided string. It is designed for low-latency look-ups used in auto-complete scenarios.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/search-terms-enum.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-terms-enum.html[Endpoint documentation]
 [source,ts]
 ----
 client.termsEnum(...)
@@ -423,7 +423,7 @@ client.termsEnum(...)
 === termvectors
 Returns information and statistics about terms in the fields of a particular document.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-termvectors.html[Endpoint documentation]
 [source,ts]
 ----
 client.termvectors(...)
@@ -433,7 +433,7 @@ client.termvectors(...)
 === update
 Updates a document with a script or partial document.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-update.html[Endpoint documentation]
 [source,ts]
 ----
 client.update(...)
@@ -444,7 +444,7 @@ client.update(...)
 Performs an update on every document in the index without changing the source,
 for example to pick up a mapping change.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-update-by-query.html[Endpoint documentation]
 [source,ts]
 ----
 client.updateByQuery(...)
@@ -454,7 +454,7 @@ client.updateByQuery(...)
 === update_by_query_rethrottle
 Changes the number of requests per second for a particular Update By Query operation.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-update-by-query.html[Endpoint documentation]
 [source,ts]
 ----
 client.updateByQueryRethrottle(...)
@@ -466,7 +466,7 @@ client.updateByQueryRethrottle(...)
 ==== delete
 Deletes an async search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/async-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.asyncSearch.delete(...)
@@ -476,7 +476,7 @@ client.asyncSearch.delete(...)
 ==== get
 Retrieves the results of a previously submitted async search request given its ID.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/async-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.asyncSearch.get(...)
@@ -486,7 +486,7 @@ client.asyncSearch.get(...)
 ==== status
 Retrieves the status of a previously submitted async search request given its ID.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/async-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.asyncSearch.status(...)
@@ -496,7 +496,7 @@ client.asyncSearch.status(...)
 ==== submit
 Executes a search request asynchronously.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/async-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.asyncSearch.submit(...)
@@ -508,7 +508,7 @@ client.asyncSearch.submit(...)
 ==== aliases
 Shows information about currently configured aliases to indices including filter and routing infos.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-alias.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.aliases(...)
@@ -518,7 +518,7 @@ client.cat.aliases(...)
 ==== allocation
 Provides a snapshot of how many shards are allocated to each data node and how much disk space they are using.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-allocation.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.allocation(...)
@@ -527,6 +527,8 @@ client.cat.allocation(...)
 [discrete]
 ==== component_templates
 Returns information about existing component_templates templates.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-compoentn-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.componentTemplates(...)
@@ -536,7 +538,7 @@ client.cat.componentTemplates(...)
 ==== count
 Provides quick access to the document count of the entire cluster, or individual indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-count.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.count(...)
@@ -546,7 +548,7 @@ client.cat.count(...)
 ==== fielddata
 Shows how much heap memory is currently being used by fielddata on every data node in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-fielddata.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.fielddata(...)
@@ -556,7 +558,7 @@ client.cat.fielddata(...)
 ==== health
 Returns a concise representation of the cluster health.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-health.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.health(...)
@@ -566,7 +568,7 @@ client.cat.health(...)
 ==== help
 Returns help for the Cat APIs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.help(...)
@@ -576,7 +578,7 @@ client.cat.help(...)
 ==== indices
 Returns information about indices: number of primaries and replicas, document counts, disk size, ...
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-indices.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.indices(...)
@@ -586,7 +588,7 @@ client.cat.indices(...)
 ==== master
 Returns information about the master node.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-master.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-8.5.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.master(...)
@@ -596,7 +598,7 @@ client.cat.master(...)
 ==== ml_data_frame_analytics
 Gets configuration and usage information about data frame analytics jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.mlDataFrameAnalytics(...)
@@ -606,7 +608,7 @@ client.cat.mlDataFrameAnalytics(...)
 ==== ml_datafeeds
 Gets configuration and usage information about datafeeds.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-datafeeds.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-datafeeds.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.mlDatafeeds(...)
@@ -616,7 +618,7 @@ client.cat.mlDatafeeds(...)
 ==== ml_jobs
 Gets configuration and usage information about anomaly detection jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-anomaly-detectors.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-anomaly-detectors.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.mlJobs(...)
@@ -626,7 +628,7 @@ client.cat.mlJobs(...)
 ==== ml_trained_models
 Gets configuration and usage information about inference trained models.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-trained-model.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-trained-model.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.mlTrainedModels(...)
@@ -636,7 +638,7 @@ client.cat.mlTrainedModels(...)
 ==== nodeattrs
 Returns information about custom node attributes.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-nodeattrs.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.nodeattrs(...)
@@ -646,7 +648,7 @@ client.cat.nodeattrs(...)
 ==== nodes
 Returns basic statistics about performance of cluster nodes.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-nodes.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.nodes(...)
@@ -656,7 +658,7 @@ client.cat.nodes(...)
 ==== pending_tasks
 Returns a concise representation of the cluster pending tasks.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-pending-tasks.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.pendingTasks(...)
@@ -666,7 +668,7 @@ client.cat.pendingTasks(...)
 ==== plugins
 Returns information about installed plugins across nodes node.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-plugins.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.plugins(...)
@@ -676,7 +678,7 @@ client.cat.plugins(...)
 ==== recovery
 Returns information about index shard recoveries, both on-going completed.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-recovery.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.recovery(...)
@@ -686,7 +688,7 @@ client.cat.recovery(...)
 ==== repositories
 Returns information about snapshot repositories registered in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-repositories.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.repositories(...)
@@ -696,7 +698,7 @@ client.cat.repositories(...)
 ==== segments
 Provides low-level information about the segments in the shards of an index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-segments.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.segments(...)
@@ -706,7 +708,7 @@ client.cat.segments(...)
 ==== shards
 Provides a detailed view of shard allocation on nodes.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-shards.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-shards.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.shards(...)
@@ -716,7 +718,7 @@ client.cat.shards(...)
 ==== snapshots
 Returns all snapshots in a specific repository.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.snapshots(...)
@@ -726,7 +728,7 @@ client.cat.snapshots(...)
 ==== tasks
 Returns information about the tasks currently executing on one or more nodes in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/tasks.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.tasks(...)
@@ -736,7 +738,7 @@ client.cat.tasks(...)
 ==== templates
 Returns information about existing templates.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.templates(...)
@@ -747,7 +749,7 @@ client.cat.templates(...)
 Returns cluster-wide thread pool statistics per node.
 By default the active, queue and rejected statistics are returned for all thread pools.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-thread-pool.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.threadPool(...)
@@ -757,7 +759,7 @@ client.cat.threadPool(...)
 ==== transforms
 Gets configuration and usage information about transforms.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-transforms.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-transforms.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.transforms(...)
@@ -769,7 +771,7 @@ client.cat.transforms(...)
 ==== delete_auto_follow_pattern
 Deletes auto-follow patterns.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-delete-auto-follow-pattern.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-delete-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.deleteAutoFollowPattern(...)
@@ -779,7 +781,7 @@ client.ccr.deleteAutoFollowPattern(...)
 ==== follow
 Creates a new follower index configured to follow the referenced leader index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-put-follow.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-put-follow.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.follow(...)
@@ -789,7 +791,7 @@ client.ccr.follow(...)
 ==== follow_info
 Retrieves information about all follower indices, including parameters and status for each follower index
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-follow-info.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-get-follow-info.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.followInfo(...)
@@ -799,7 +801,7 @@ client.ccr.followInfo(...)
 ==== follow_stats
 Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-follow-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-get-follow-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.followStats(...)
@@ -809,7 +811,7 @@ client.ccr.followStats(...)
 ==== forget_follower
 Removes the follower retention leases from the leader.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-forget-follower.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-post-forget-follower.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.forgetFollower(...)
@@ -819,7 +821,7 @@ client.ccr.forgetFollower(...)
 ==== get_auto_follow_pattern
 Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-auto-follow-pattern.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-get-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.getAutoFollowPattern(...)
@@ -829,7 +831,7 @@ client.ccr.getAutoFollowPattern(...)
 ==== pause_auto_follow_pattern
 Pauses an auto-follow pattern
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-pause-auto-follow-pattern.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-pause-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.pauseAutoFollowPattern(...)
@@ -839,7 +841,7 @@ client.ccr.pauseAutoFollowPattern(...)
 ==== pause_follow
 Pauses a follower index. The follower index will not fetch any additional operations from the leader index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-pause-follow.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-post-pause-follow.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.pauseFollow(...)
@@ -849,7 +851,7 @@ client.ccr.pauseFollow(...)
 ==== put_auto_follow_pattern
 Creates a new named collection of auto-follow patterns against a specified remote cluster. Newly created indices on the remote cluster matching any of the specified patterns will be automatically configured as follower indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-put-auto-follow-pattern.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-put-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.putAutoFollowPattern(...)
@@ -859,7 +861,7 @@ client.ccr.putAutoFollowPattern(...)
 ==== resume_auto_follow_pattern
 Resumes an auto-follow pattern that has been paused
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-resume-auto-follow-pattern.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-resume-auto-follow-pattern.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.resumeAutoFollowPattern(...)
@@ -869,7 +871,7 @@ client.ccr.resumeAutoFollowPattern(...)
 ==== resume_follow
 Resumes a follower index that has been paused
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-resume-follow.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-post-resume-follow.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.resumeFollow(...)
@@ -879,7 +881,7 @@ client.ccr.resumeFollow(...)
 ==== stats
 Gets all stats related to cross-cluster replication.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-get-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-get-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.stats(...)
@@ -889,7 +891,7 @@ client.ccr.stats(...)
 ==== unfollow
 Stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ccr-post-unfollow.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ccr-post-unfollow.html[Endpoint documentation]
 [source,ts]
 ----
 client.ccr.unfollow(...)
@@ -901,7 +903,7 @@ client.ccr.unfollow(...)
 ==== allocation_explain
 Provides explanations for shard allocations in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation-explain.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-allocation-explain.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.allocationExplain(...)
@@ -911,7 +913,7 @@ client.cluster.allocationExplain(...)
 ==== delete_component_template
 Deletes a component template
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-component-template.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.deleteComponentTemplate(...)
@@ -921,7 +923,7 @@ client.cluster.deleteComponentTemplate(...)
 ==== delete_voting_config_exclusions
 Clears cluster voting config exclusions.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/voting-config-exclusions.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/voting-config-exclusions.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.deleteVotingConfigExclusions(...)
@@ -931,7 +933,7 @@ client.cluster.deleteVotingConfigExclusions(...)
 ==== exists_component_template
 Returns information about whether a particular component template exist
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-component-template.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.existsComponentTemplate(...)
@@ -941,7 +943,7 @@ client.cluster.existsComponentTemplate(...)
 ==== get_component_template
 Returns one or more component templates
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-component-template.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.getComponentTemplate(...)
@@ -951,7 +953,7 @@ client.cluster.getComponentTemplate(...)
 ==== get_settings
 Returns cluster settings.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-get-settings.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-get-settings.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.getSettings(...)
@@ -961,7 +963,7 @@ client.cluster.getSettings(...)
 ==== health
 Returns basic information about the health of the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-health.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.health(...)
@@ -972,7 +974,7 @@ client.cluster.health(...)
 Returns a list of any cluster-level changes (e.g. create index, update mapping,
 allocate or fail shard) which have not yet been executed.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-pending.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.pendingTasks(...)
@@ -982,7 +984,7 @@ client.cluster.pendingTasks(...)
 ==== post_voting_config_exclusions
 Updates the cluster voting config exclusions by node ids or node names.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/voting-config-exclusions.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/voting-config-exclusions.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.postVotingConfigExclusions(...)
@@ -992,7 +994,7 @@ client.cluster.postVotingConfigExclusions(...)
 ==== put_component_template
 Creates or updates a component template
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-component-template.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.putComponentTemplate(...)
@@ -1002,7 +1004,7 @@ client.cluster.putComponentTemplate(...)
 ==== put_settings
 Updates the cluster settings.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-update-settings.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.putSettings(...)
@@ -1012,7 +1014,7 @@ client.cluster.putSettings(...)
 ==== remote_info
 Returns the information about configured remote clusters.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-remote-info.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.remoteInfo(...)
@@ -1022,7 +1024,7 @@ client.cluster.remoteInfo(...)
 ==== reroute
 Allows to manually change the allocation of individual shards in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-reroute.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.reroute(...)
@@ -1032,7 +1034,7 @@ client.cluster.reroute(...)
 ==== state
 Returns a comprehensive information about the state of the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-state.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.state(...)
@@ -1042,7 +1044,7 @@ client.cluster.state(...)
 ==== stats
 Returns high-level overview of cluster statistics.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.cluster.stats(...)
@@ -1054,7 +1056,7 @@ client.cluster.stats(...)
 ==== delete_dangling_index
 Deletes the specified dangling index
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-dangling-indices.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-gateway-dangling-indices.html[Endpoint documentation]
 [source,ts]
 ----
 client.danglingIndices.deleteDanglingIndex(...)
@@ -1064,7 +1066,7 @@ client.danglingIndices.deleteDanglingIndex(...)
 ==== import_dangling_index
 Imports the specified dangling index
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-dangling-indices.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-gateway-dangling-indices.html[Endpoint documentation]
 [source,ts]
 ----
 client.danglingIndices.importDanglingIndex(...)
@@ -1074,7 +1076,7 @@ client.danglingIndices.importDanglingIndex(...)
 ==== list_dangling_indices
 Returns all dangling indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-dangling-indices.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-gateway-dangling-indices.html[Endpoint documentation]
 [source,ts]
 ----
 client.danglingIndices.listDanglingIndices(...)
@@ -1086,7 +1088,7 @@ client.danglingIndices.listDanglingIndices(...)
 ==== delete_policy
 Deletes an existing enrich policy and its enrich index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-enrich-policy-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/delete-enrich-policy-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.enrich.deletePolicy(...)
@@ -1096,7 +1098,7 @@ client.enrich.deletePolicy(...)
 ==== execute_policy
 Creates the enrich index for an existing enrich policy.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/execute-enrich-policy-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/execute-enrich-policy-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.enrich.executePolicy(...)
@@ -1106,7 +1108,7 @@ client.enrich.executePolicy(...)
 ==== get_policy
 Gets information about an enrich policy.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-enrich-policy-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-enrich-policy-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.enrich.getPolicy(...)
@@ -1116,7 +1118,7 @@ client.enrich.getPolicy(...)
 ==== put_policy
 Creates a new enrich policy.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/put-enrich-policy-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/put-enrich-policy-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.enrich.putPolicy(...)
@@ -1126,7 +1128,7 @@ client.enrich.putPolicy(...)
 ==== stats
 Gets enrich coordinator statistics and information about enrich policies that are currently executing.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/enrich-stats-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/enrich-stats-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.enrich.stats(...)
@@ -1138,7 +1140,7 @@ client.enrich.stats(...)
 ==== delete
 Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/eql-search-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.eql.delete(...)
@@ -1148,7 +1150,7 @@ client.eql.delete(...)
 ==== get
 Returns async results from previously executed Event Query Language (EQL) search
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/eql-search-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.eql.get(...)
@@ -1158,7 +1160,7 @@ client.eql.get(...)
 ==== get_status
 Returns the status of a previously submitted async or stored Event Query Language (EQL) search
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/eql-search-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.eql.getStatus(...)
@@ -1168,7 +1170,7 @@ client.eql.getStatus(...)
 ==== search
 Returns results matching a query expressed in Event Query Language (EQL)
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/eql-search-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.eql.search(...)
@@ -1180,7 +1182,7 @@ client.eql.search(...)
 ==== get_features
 Gets a list of features which can be included in snapshots using the feature_states field when creating a snapshot
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/get-features-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-features-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.features.getFeatures(...)
@@ -1190,7 +1192,7 @@ client.features.getFeatures(...)
 ==== reset_features
 Resets the internal state of features, usually by deleting system indices
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.features.resetFeatures(...)
@@ -1202,7 +1204,7 @@ client.features.resetFeatures(...)
 ==== global_checkpoints
 Returns the current global checkpoints for an index. This API is design for internal use by the fleet server project.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-global-checkpoints.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-global-checkpoints.html[Endpoint documentation]
 [source,ts]
 ----
 client.fleet.globalCheckpoints(...)
@@ -1230,7 +1232,7 @@ client.fleet.search(...)
 ==== explore
 Explore extracted and summarized information about the documents and terms in an index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/graph-explore-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.graph.explore(...)
@@ -1242,7 +1244,7 @@ client.graph.explore(...)
 ==== delete_lifecycle
 Deletes the specified lifecycle policy definition. A currently used policy cannot be deleted.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-delete-lifecycle.html[Endpoint documentation]
 [source,ts]
 ----
 client.ilm.deleteLifecycle(...)
@@ -1252,7 +1254,7 @@ client.ilm.deleteLifecycle(...)
 ==== explain_lifecycle
 Retrieves information about the index's current lifecycle state, such as the currently executing phase, action, and step.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-explain-lifecycle.html[Endpoint documentation]
 [source,ts]
 ----
 client.ilm.explainLifecycle(...)
@@ -1262,7 +1264,7 @@ client.ilm.explainLifecycle(...)
 ==== get_lifecycle
 Returns the specified policy definition. Includes the policy version and last modified date.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-lifecycle.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-get-lifecycle.html[Endpoint documentation]
 [source,ts]
 ----
 client.ilm.getLifecycle(...)
@@ -1272,7 +1274,7 @@ client.ilm.getLifecycle(...)
 ==== get_status
 Retrieves the current index lifecycle management (ILM) status.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-get-status.html[Endpoint documentation]
 [source,ts]
 ----
 client.ilm.getStatus(...)
@@ -1282,7 +1284,7 @@ client.ilm.getStatus(...)
 ==== migrate_to_data_tiers
 Migrates the indices and ILM policies away from custom node attribute allocation routing to data tiers routing
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-migrate-to-data-tiers.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-migrate-to-data-tiers.html[Endpoint documentation]
 [source,ts]
 ----
 client.ilm.migrateToDataTiers(...)
@@ -1292,7 +1294,7 @@ client.ilm.migrateToDataTiers(...)
 ==== move_to_step
 Manually moves an index into the specified step and executes that step.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-move-to-step.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-move-to-step.html[Endpoint documentation]
 [source,ts]
 ----
 client.ilm.moveToStep(...)
@@ -1302,7 +1304,7 @@ client.ilm.moveToStep(...)
 ==== put_lifecycle
 Creates a lifecycle policy
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-put-lifecycle.html[Endpoint documentation]
 [source,ts]
 ----
 client.ilm.putLifecycle(...)
@@ -1312,7 +1314,7 @@ client.ilm.putLifecycle(...)
 ==== remove_policy
 Removes the assigned lifecycle policy and stops managing the specified index
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-remove-policy.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-remove-policy.html[Endpoint documentation]
 [source,ts]
 ----
 client.ilm.removePolicy(...)
@@ -1322,7 +1324,7 @@ client.ilm.removePolicy(...)
 ==== retry
 Retries executing the policy for an index that is in the ERROR step.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-retry-policy.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-retry-policy.html[Endpoint documentation]
 [source,ts]
 ----
 client.ilm.retry(...)
@@ -1332,7 +1334,7 @@ client.ilm.retry(...)
 ==== start
 Start the index lifecycle management (ILM) plugin.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-start.html[Endpoint documentation]
 [source,ts]
 ----
 client.ilm.start(...)
@@ -1342,7 +1344,7 @@ client.ilm.start(...)
 ==== stop
 Halts all lifecycle management operations and stops the index lifecycle management (ILM) plugin
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-stop.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-stop.html[Endpoint documentation]
 [source,ts]
 ----
 client.ilm.stop(...)
@@ -1354,7 +1356,7 @@ client.ilm.stop(...)
 ==== add_block
 Adds a block to an index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-blocks.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/index-modules-blocks.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.addBlock(...)
@@ -1364,7 +1366,7 @@ client.indices.addBlock(...)
 ==== analyze
 Performs the analysis process on a text and return the tokens breakdown of the text.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-analyze.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.analyze(...)
@@ -1374,7 +1376,7 @@ client.indices.analyze(...)
 ==== clear_cache
 Clears all or specific caches for one or more indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-clearcache.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.clearCache(...)
@@ -1384,7 +1386,7 @@ client.indices.clearCache(...)
 ==== clone
 Clones an index
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clone-index.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-clone-index.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.clone(...)
@@ -1394,7 +1396,7 @@ client.indices.clone(...)
 ==== close
 Closes an index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-open-close.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.close(...)
@@ -1404,7 +1406,7 @@ client.indices.close(...)
 ==== create
 Creates an index with optional settings and mappings.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-create-index.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.create(...)
@@ -1414,7 +1416,7 @@ client.indices.create(...)
 ==== create_data_stream
 Creates a data stream
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/data-streams.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.createDataStream(...)
@@ -1424,7 +1426,7 @@ client.indices.createDataStream(...)
 ==== data_streams_stats
 Provides statistics on operations happening in a data stream.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/data-streams.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.dataStreamsStats(...)
@@ -1434,7 +1436,7 @@ client.indices.dataStreamsStats(...)
 ==== delete
 Deletes an index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-delete-index.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.delete(...)
@@ -1444,7 +1446,7 @@ client.indices.delete(...)
 ==== delete_alias
 Deletes an alias.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-aliases.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.deleteAlias(...)
@@ -1454,7 +1456,7 @@ client.indices.deleteAlias(...)
 ==== delete_data_stream
 Deletes a data stream.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/data-streams.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.deleteDataStream(...)
@@ -1464,7 +1466,7 @@ client.indices.deleteDataStream(...)
 ==== delete_index_template
 Deletes an index template.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.deleteIndexTemplate(...)
@@ -1474,7 +1476,7 @@ client.indices.deleteIndexTemplate(...)
 ==== delete_template
 Deletes an index template.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.deleteTemplate(...)
@@ -1484,17 +1486,27 @@ client.indices.deleteTemplate(...)
 ==== disk_usage
 Analyzes the disk usage of each field of an index or data stream
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-disk-usage.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-disk-usage.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.diskUsage(...)
 ----
 
 [discrete]
+==== downsample
+Downsample an index
+
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/xpack-rollup.html[Endpoint documentation]
+[source,ts]
+----
+client.indices.downsample(...)
+----
+
+[discrete]
 ==== exists
 Returns information about whether a particular index exists.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-exists.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.exists(...)
@@ -1504,7 +1516,7 @@ client.indices.exists(...)
 ==== exists_alias
 Returns information about whether a particular alias exists.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-aliases.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.existsAlias(...)
@@ -1514,7 +1526,7 @@ client.indices.existsAlias(...)
 ==== exists_index_template
 Returns information about whether a particular index template exists.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.existsIndexTemplate(...)
@@ -1524,7 +1536,7 @@ client.indices.existsIndexTemplate(...)
 ==== exists_template
 Returns information about whether a particular index template exists.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.existsTemplate(...)
@@ -1534,7 +1546,7 @@ client.indices.existsTemplate(...)
 ==== field_usage_stats
 Returns the field usage stats for each field of an index
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/field-usage-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/field-usage-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.fieldUsageStats(...)
@@ -1544,7 +1556,7 @@ client.indices.fieldUsageStats(...)
 ==== flush
 Performs the flush operation on one or more indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-flush.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.flush(...)
@@ -1554,7 +1566,7 @@ client.indices.flush(...)
 ==== forcemerge
 Performs the force merge operation on one or more indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-forcemerge.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.forcemerge(...)
@@ -1564,7 +1576,7 @@ client.indices.forcemerge(...)
 ==== get
 Returns information about one or more indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-get-index.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.get(...)
@@ -1574,7 +1586,7 @@ client.indices.get(...)
 ==== get_alias
 Returns an alias.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-aliases.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.getAlias(...)
@@ -1584,7 +1596,7 @@ client.indices.getAlias(...)
 ==== get_data_stream
 Returns data streams.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/data-streams.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.getDataStream(...)
@@ -1594,7 +1606,7 @@ client.indices.getDataStream(...)
 ==== get_field_mapping
 Returns mapping for one or more fields.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-get-field-mapping.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.getFieldMapping(...)
@@ -1604,7 +1616,7 @@ client.indices.getFieldMapping(...)
 ==== get_index_template
 Returns an index template.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.getIndexTemplate(...)
@@ -1614,7 +1626,7 @@ client.indices.getIndexTemplate(...)
 ==== get_mapping
 Returns mappings for one or more indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-get-mapping.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.getMapping(...)
@@ -1624,7 +1636,7 @@ client.indices.getMapping(...)
 ==== get_settings
 Returns settings for one or more indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-settings.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-get-settings.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.getSettings(...)
@@ -1634,7 +1646,7 @@ client.indices.getSettings(...)
 ==== get_template
 Returns an index template.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.getTemplate(...)
@@ -1644,7 +1656,7 @@ client.indices.getTemplate(...)
 ==== migrate_to_data_stream
 Migrates an alias to a data stream
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/data-streams.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.migrateToDataStream(...)
@@ -1654,7 +1666,7 @@ client.indices.migrateToDataStream(...)
 ==== modify_data_stream
 Modifies a data stream
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/data-streams.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.modifyDataStream(...)
@@ -1664,7 +1676,7 @@ client.indices.modifyDataStream(...)
 ==== open
 Opens an index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-open-close.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.open(...)
@@ -1674,7 +1686,7 @@ client.indices.open(...)
 ==== promote_data_stream
 Promotes a data stream from a replicated data stream managed by CCR to a regular data stream
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/data-streams.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.promoteDataStream(...)
@@ -1684,7 +1696,7 @@ client.indices.promoteDataStream(...)
 ==== put_alias
 Creates or updates an alias.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-aliases.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.putAlias(...)
@@ -1694,7 +1706,7 @@ client.indices.putAlias(...)
 ==== put_index_template
 Creates or updates an index template.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.putIndexTemplate(...)
@@ -1704,7 +1716,7 @@ client.indices.putIndexTemplate(...)
 ==== put_mapping
 Updates the index mappings.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-put-mapping.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.putMapping(...)
@@ -1714,7 +1726,7 @@ client.indices.putMapping(...)
 ==== put_settings
 Updates the index settings.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-update-settings.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.putSettings(...)
@@ -1724,7 +1736,7 @@ client.indices.putSettings(...)
 ==== put_template
 Creates or updates an index template.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.putTemplate(...)
@@ -1734,7 +1746,7 @@ client.indices.putTemplate(...)
 ==== recovery
 Returns information about ongoing index shard recoveries.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-recovery.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.recovery(...)
@@ -1744,7 +1756,7 @@ client.indices.recovery(...)
 ==== refresh
 Performs the refresh operation in one or more indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-refresh.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.refresh(...)
@@ -1754,7 +1766,7 @@ client.indices.refresh(...)
 ==== reload_search_analyzers
 Reloads an index's search analyzers and their resources.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-reload-analyzers.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-reload-analyzers.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.reloadSearchAnalyzers(...)
@@ -1764,7 +1776,7 @@ client.indices.reloadSearchAnalyzers(...)
 ==== resolve_index
 Returns information about any matching indices, aliases, and data streams
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-index-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-resolve-index-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.resolveIndex(...)
@@ -1775,7 +1787,7 @@ client.indices.resolveIndex(...)
 Updates an alias to point to a new index when the existing index
 is considered to be too large or too old.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-rollover-index.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.rollover(...)
@@ -1785,7 +1797,7 @@ client.indices.rollover(...)
 ==== segments
 Provides low-level information about segments in a Lucene index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-segments.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.segments(...)
@@ -1795,7 +1807,7 @@ client.indices.segments(...)
 ==== shard_stores
 Provides store information for shard copies of indices.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-stores.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-shards-stores.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.shardStores(...)
@@ -1805,7 +1817,7 @@ client.indices.shardStores(...)
 ==== shrink
 Allow to shrink an existing index into a new index with fewer primary shards.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-index.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-shrink-index.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.shrink(...)
@@ -1815,7 +1827,7 @@ client.indices.shrink(...)
 ==== simulate_index_template
 Simulate matching the given index name against the index templates in the system
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.simulateIndexTemplate(...)
@@ -1825,7 +1837,7 @@ client.indices.simulateIndexTemplate(...)
 ==== simulate_template
 Simulate resolving the given template name or body
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.simulateTemplate(...)
@@ -1835,7 +1847,7 @@ client.indices.simulateTemplate(...)
 ==== split
 Allows you to split an existing index into a new index with more primary shards.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-split-index.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-split-index.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.split(...)
@@ -1845,7 +1857,7 @@ client.indices.split(...)
 ==== stats
 Provides statistics on operations happening in an index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.stats(...)
@@ -1855,7 +1867,7 @@ client.indices.stats(...)
 ==== unfreeze
 Unfreezes an index. When a frozen index is unfrozen, the index goes through the normal recovery process and becomes writeable again.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/unfreeze-index-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/unfreeze-index-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.unfreeze(...)
@@ -1865,7 +1877,7 @@ client.indices.unfreeze(...)
 ==== update_aliases
 Updates index aliases.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/indices-aliases.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.updateAliases(...)
@@ -1875,7 +1887,7 @@ client.indices.updateAliases(...)
 ==== validate_query
 Allows a user to validate a potentially expensive query without executing it.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/search-validate.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.validateQuery(...)
@@ -1887,7 +1899,7 @@ client.indices.validateQuery(...)
 ==== delete_pipeline
 Deletes a pipeline.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-pipeline-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/delete-pipeline-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.deletePipeline(...)
@@ -1897,7 +1909,7 @@ client.ingest.deletePipeline(...)
 ==== geo_ip_stats
 Returns statistical information about geoip databases
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/geoip-stats-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/geoip-stats-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.geoIpStats(...)
@@ -1907,7 +1919,7 @@ client.ingest.geoIpStats(...)
 ==== get_pipeline
 Returns a pipeline.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/get-pipeline-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-pipeline-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.getPipeline(...)
@@ -1917,7 +1929,7 @@ client.ingest.getPipeline(...)
 ==== processor_grok
 Returns a list of the built-in patterns.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/grok-processor.html#grok-processor-rest-get[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/grok-processor.html#grok-processor-rest-get[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.processorGrok(...)
@@ -1927,7 +1939,7 @@ client.ingest.processorGrok(...)
 ==== put_pipeline
 Creates or updates a pipeline.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/put-pipeline-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/put-pipeline-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.putPipeline(...)
@@ -1937,7 +1949,7 @@ client.ingest.putPipeline(...)
 ==== simulate
 Allows to simulate a pipeline with example documents.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/simulate-pipeline-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.simulate(...)
@@ -1949,7 +1961,7 @@ client.ingest.simulate(...)
 ==== delete
 Deletes licensing information for the cluster
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-license.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/delete-license.html[Endpoint documentation]
 [source,ts]
 ----
 client.license.delete(...)
@@ -1959,7 +1971,7 @@ client.license.delete(...)
 ==== get
 Retrieves licensing information for the cluster
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-license.html[Endpoint documentation]
 [source,ts]
 ----
 client.license.get(...)
@@ -1969,7 +1981,7 @@ client.license.get(...)
 ==== get_basic_status
 Retrieves information about the status of the basic license.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/get-basic-status.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-basic-status.html[Endpoint documentation]
 [source,ts]
 ----
 client.license.getBasicStatus(...)
@@ -1979,7 +1991,7 @@ client.license.getBasicStatus(...)
 ==== get_trial_status
 Retrieves information about the status of the trial license.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trial-status.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-trial-status.html[Endpoint documentation]
 [source,ts]
 ----
 client.license.getTrialStatus(...)
@@ -1989,7 +2001,7 @@ client.license.getTrialStatus(...)
 ==== post
 Updates the license for the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/update-license.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/update-license.html[Endpoint documentation]
 [source,ts]
 ----
 client.license.post(...)
@@ -1999,7 +2011,7 @@ client.license.post(...)
 ==== post_start_basic
 Starts an indefinite basic license.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/start-basic.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/start-basic.html[Endpoint documentation]
 [source,ts]
 ----
 client.license.postStartBasic(...)
@@ -2009,7 +2021,7 @@ client.license.postStartBasic(...)
 ==== post_start_trial
 starts a limited time trial license.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/start-trial.html[Endpoint documentation]
 [source,ts]
 ----
 client.license.postStartTrial(...)
@@ -2021,7 +2033,7 @@ client.license.postStartTrial(...)
 ==== delete_pipeline
 Deletes Logstash Pipelines used by Central Management
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-delete-pipeline.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/logstash-api-delete-pipeline.html[Endpoint documentation]
 [source,ts]
 ----
 client.logstash.deletePipeline(...)
@@ -2031,7 +2043,7 @@ client.logstash.deletePipeline(...)
 ==== get_pipeline
 Retrieves Logstash Pipelines used by Central Management
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-get-pipeline.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/logstash-api-get-pipeline.html[Endpoint documentation]
 [source,ts]
 ----
 client.logstash.getPipeline(...)
@@ -2041,7 +2053,7 @@ client.logstash.getPipeline(...)
 ==== put_pipeline
 Adds and updates Logstash Pipelines used for Central Management
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-put-pipeline.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/logstash-api-put-pipeline.html[Endpoint documentation]
 [source,ts]
 ----
 client.logstash.putPipeline(...)
@@ -2053,7 +2065,7 @@ client.logstash.putPipeline(...)
 ==== deprecations
 Retrieves information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-deprecation.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/migration-api-deprecation.html[Endpoint documentation]
 [source,ts]
 ----
 client.migration.deprecations(...)
@@ -2063,7 +2075,7 @@ client.migration.deprecations(...)
 ==== get_feature_upgrade_status
 Find out whether system features need to be upgraded or not
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-feature-upgrade.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/migration-api-feature-upgrade.html[Endpoint documentation]
 [source,ts]
 ----
 client.migration.getFeatureUpgradeStatus(...)
@@ -2073,7 +2085,7 @@ client.migration.getFeatureUpgradeStatus(...)
 ==== post_feature_upgrade
 Begin upgrades for system features
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-feature-upgrade.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/migration-api-feature-upgrade.html[Endpoint documentation]
 [source,ts]
 ----
 client.migration.postFeatureUpgrade(...)
@@ -2085,7 +2097,7 @@ client.migration.postFeatureUpgrade(...)
 ==== clear_trained_model_deployment_cache
 Clear the cached results from a trained model deployment
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-trained-model-deployment-cache.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/clear-trained-model-deployment-cache.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.clearTrainedModelDeploymentCache(...)
@@ -2095,7 +2107,7 @@ client.ml.clearTrainedModelDeploymentCache(...)
 ==== close_job
 Closes one or more anomaly detection jobs. A job can be opened and closed multiple times throughout its lifecycle.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-close-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-close-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.closeJob(...)
@@ -2105,7 +2117,7 @@ client.ml.closeJob(...)
 ==== delete_calendar
 Deletes a calendar.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-delete-calendar.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteCalendar(...)
@@ -2115,7 +2127,7 @@ client.ml.deleteCalendar(...)
 ==== delete_calendar_event
 Deletes scheduled events from a calendar.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar-event.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-delete-calendar-event.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteCalendarEvent(...)
@@ -2125,7 +2137,7 @@ client.ml.deleteCalendarEvent(...)
 ==== delete_calendar_job
 Deletes anomaly detection jobs from a calendar.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-delete-calendar-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteCalendarJob(...)
@@ -2135,7 +2147,7 @@ client.ml.deleteCalendarJob(...)
 ==== delete_data_frame_analytics
 Deletes an existing data frame analytics job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/delete-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteDataFrameAnalytics(...)
@@ -2145,7 +2157,7 @@ client.ml.deleteDataFrameAnalytics(...)
 ==== delete_datafeed
 Deletes an existing datafeed.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-datafeed.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-delete-datafeed.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteDatafeed(...)
@@ -2155,7 +2167,7 @@ client.ml.deleteDatafeed(...)
 ==== delete_expired_data
 Deletes expired and unused machine learning data.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-expired-data.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-delete-expired-data.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteExpiredData(...)
@@ -2165,7 +2177,7 @@ client.ml.deleteExpiredData(...)
 ==== delete_filter
 Deletes a filter.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-filter.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-delete-filter.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteFilter(...)
@@ -2175,7 +2187,7 @@ client.ml.deleteFilter(...)
 ==== delete_forecast
 Deletes forecasts from a machine learning job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-delete-forecast.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteForecast(...)
@@ -2185,7 +2197,7 @@ client.ml.deleteForecast(...)
 ==== delete_job
 Deletes an existing anomaly detection job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-delete-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteJob(...)
@@ -2195,7 +2207,7 @@ client.ml.deleteJob(...)
 ==== delete_model_snapshot
 Deletes an existing model snapshot.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-delete-snapshot.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteModelSnapshot(...)
@@ -2205,7 +2217,7 @@ client.ml.deleteModelSnapshot(...)
 ==== delete_trained_model
 Deletes an existing trained inference model that is currently not referenced by an ingest pipeline.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-trained-models.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/delete-trained-models.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteTrainedModel(...)
@@ -2215,7 +2227,7 @@ client.ml.deleteTrainedModel(...)
 ==== delete_trained_model_alias
 Deletes a model alias that refers to the trained model
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-trained-models-aliases.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/delete-trained-models-aliases.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.deleteTrainedModelAlias(...)
@@ -2225,7 +2237,7 @@ client.ml.deleteTrainedModelAlias(...)
 ==== estimate_model_memory
 Estimates the model memory
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-apis.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-apis.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.estimateModelMemory(...)
@@ -2235,7 +2247,7 @@ client.ml.estimateModelMemory(...)
 ==== evaluate_data_frame
 Evaluates the data frame analytics for an annotated index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/evaluate-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/evaluate-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.evaluateDataFrame(...)
@@ -2245,7 +2257,7 @@ client.ml.evaluateDataFrame(...)
 ==== explain_data_frame_analytics
 Explains a data frame analytics config.
 
-http://www.elastic.co/guide/en/elasticsearch/reference/current/explain-dfanalytics.html[Endpoint documentation]
+http://www.elastic.co/guide/en/elasticsearch/reference/8.5/explain-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.explainDataFrameAnalytics(...)
@@ -2255,7 +2267,7 @@ client.ml.explainDataFrameAnalytics(...)
 ==== flush_job
 Forces any buffered data to be processed by the job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-flush-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.flushJob(...)
@@ -2265,7 +2277,7 @@ client.ml.flushJob(...)
 ==== forecast
 Predicts the future behavior of a time series by using its historical behavior.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-forecast.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-forecast.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.forecast(...)
@@ -2275,7 +2287,7 @@ client.ml.forecast(...)
 ==== get_buckets
 Retrieves anomaly detection job results for one or more buckets.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-bucket.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getBuckets(...)
@@ -2285,7 +2297,7 @@ client.ml.getBuckets(...)
 ==== get_calendar_events
 Retrieves information about the scheduled events in calendars.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar-event.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-calendar-event.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getCalendarEvents(...)
@@ -2295,7 +2307,7 @@ client.ml.getCalendarEvents(...)
 ==== get_calendars
 Retrieves configuration information for calendars.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-calendar.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getCalendars(...)
@@ -2305,7 +2317,7 @@ client.ml.getCalendars(...)
 ==== get_categories
 Retrieves anomaly detection job results for one or more categories.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-category.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getCategories(...)
@@ -2315,7 +2327,7 @@ client.ml.getCategories(...)
 ==== get_data_frame_analytics
 Retrieves configuration information for data frame analytics jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getDataFrameAnalytics(...)
@@ -2325,7 +2337,7 @@ client.ml.getDataFrameAnalytics(...)
 ==== get_data_frame_analytics_stats
 Retrieves usage information for data frame analytics jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-dfanalytics-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getDataFrameAnalyticsStats(...)
@@ -2335,7 +2347,7 @@ client.ml.getDataFrameAnalyticsStats(...)
 ==== get_datafeed_stats
 Retrieves usage information for datafeeds.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-datafeed-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getDatafeedStats(...)
@@ -2345,7 +2357,7 @@ client.ml.getDatafeedStats(...)
 ==== get_datafeeds
 Retrieves configuration information for datafeeds.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-datafeed.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getDatafeeds(...)
@@ -2355,7 +2367,7 @@ client.ml.getDatafeeds(...)
 ==== get_filters
 Retrieves filters.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-filter.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-filter.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getFilters(...)
@@ -2365,7 +2377,7 @@ client.ml.getFilters(...)
 ==== get_influencers
 Retrieves anomaly detection job results for one or more influencers.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-influencer.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getInfluencers(...)
@@ -2375,7 +2387,7 @@ client.ml.getInfluencers(...)
 ==== get_job_stats
 Retrieves usage information for anomaly detection jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-job-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getJobStats(...)
@@ -2385,7 +2397,7 @@ client.ml.getJobStats(...)
 ==== get_jobs
 Retrieves configuration information for anomaly detection jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getJobs(...)
@@ -2395,7 +2407,7 @@ client.ml.getJobs(...)
 ==== get_memory_stats
 Returns information on how ML is using memory.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-memory.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-ml-memory.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getMemoryStats(...)
@@ -2405,7 +2417,7 @@ client.ml.getMemoryStats(...)
 ==== get_model_snapshot_upgrade_stats
 Gets stats for anomaly detection job model snapshot upgrades that are in progress.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-model-snapshot-upgrade-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-job-model-snapshot-upgrade-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getModelSnapshotUpgradeStats(...)
@@ -2415,7 +2427,7 @@ client.ml.getModelSnapshotUpgradeStats(...)
 ==== get_model_snapshots
 Retrieves information about model snapshots.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-snapshot.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getModelSnapshots(...)
@@ -2425,7 +2437,7 @@ client.ml.getModelSnapshots(...)
 ==== get_overall_buckets
 Retrieves overall bucket results that summarize the bucket results of multiple anomaly detection jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-buckets.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-overall-buckets.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getOverallBuckets(...)
@@ -2435,7 +2447,7 @@ client.ml.getOverallBuckets(...)
 ==== get_records
 Retrieves anomaly records for an anomaly detection job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-record.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getRecords(...)
@@ -2445,7 +2457,7 @@ client.ml.getRecords(...)
 ==== get_trained_models
 Retrieves configuration information for a trained inference model.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-trained-models.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-trained-models.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getTrainedModels(...)
@@ -2455,7 +2467,7 @@ client.ml.getTrainedModels(...)
 ==== get_trained_models_stats
 Retrieves usage information for trained inference models.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-trained-models-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-trained-models-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.getTrainedModelsStats(...)
@@ -2465,7 +2477,7 @@ client.ml.getTrainedModelsStats(...)
 ==== infer_trained_model
 Evaluate a trained model.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-model.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/infer-trained-model.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.inferTrainedModel(...)
@@ -2475,7 +2487,7 @@ client.ml.inferTrainedModel(...)
 ==== info
 Returns defaults and limits used by machine learning.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-info.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-ml-info.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.info(...)
@@ -2485,7 +2497,7 @@ client.ml.info(...)
 ==== open_job
 Opens one or more anomaly detection jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-open-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.openJob(...)
@@ -2495,7 +2507,7 @@ client.ml.openJob(...)
 ==== post_calendar_events
 Posts scheduled events in a calendar.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-calendar-event.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-post-calendar-event.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.postCalendarEvents(...)
@@ -2505,7 +2517,7 @@ client.ml.postCalendarEvents(...)
 ==== post_data
 Sends data to an anomaly detection job for analysis.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-post-data.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.postData(...)
@@ -2515,7 +2527,7 @@ client.ml.postData(...)
 ==== preview_data_frame_analytics
 Previews that will be analyzed given a data frame analytics config.
 
-http://www.elastic.co/guide/en/elasticsearch/reference/current/preview-dfanalytics.html[Endpoint documentation]
+http://www.elastic.co/guide/en/elasticsearch/reference/8.5/preview-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.previewDataFrameAnalytics(...)
@@ -2525,7 +2537,7 @@ client.ml.previewDataFrameAnalytics(...)
 ==== preview_datafeed
 Previews a datafeed.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafeed.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-preview-datafeed.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.previewDatafeed(...)
@@ -2535,7 +2547,7 @@ client.ml.previewDatafeed(...)
 ==== put_calendar
 Instantiates a calendar.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-put-calendar.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.putCalendar(...)
@@ -2545,7 +2557,7 @@ client.ml.putCalendar(...)
 ==== put_calendar_job
 Adds an anomaly detection job to a calendar.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-put-calendar-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.putCalendarJob(...)
@@ -2555,7 +2567,7 @@ client.ml.putCalendarJob(...)
 ==== put_data_frame_analytics
 Instantiates a data frame analytics job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/put-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/put-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.putDataFrameAnalytics(...)
@@ -2565,7 +2577,7 @@ client.ml.putDataFrameAnalytics(...)
 ==== put_datafeed
 Instantiates a datafeed.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-put-datafeed.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.putDatafeed(...)
@@ -2575,7 +2587,7 @@ client.ml.putDatafeed(...)
 ==== put_filter
 Instantiates a filter.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-filter.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-put-filter.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.putFilter(...)
@@ -2585,7 +2597,7 @@ client.ml.putFilter(...)
 ==== put_job
 Instantiates an anomaly detection job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-put-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.putJob(...)
@@ -2595,7 +2607,7 @@ client.ml.putJob(...)
 ==== put_trained_model
 Creates an inference trained model.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-models.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/put-trained-models.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.putTrainedModel(...)
@@ -2605,7 +2617,7 @@ client.ml.putTrainedModel(...)
 ==== put_trained_model_alias
 Creates a new model alias (or reassigns an existing one) to refer to the trained model
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-models-aliases.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/put-trained-models-aliases.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.putTrainedModelAlias(...)
@@ -2615,7 +2627,7 @@ client.ml.putTrainedModelAlias(...)
 ==== put_trained_model_definition_part
 Creates part of a trained model definition
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-model-definition-part.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/put-trained-model-definition-part.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.putTrainedModelDefinitionPart(...)
@@ -2625,7 +2637,7 @@ client.ml.putTrainedModelDefinitionPart(...)
 ==== put_trained_model_vocabulary
 Creates a trained model vocabulary
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-model-vocabulary.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/put-trained-model-vocabulary.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.putTrainedModelVocabulary(...)
@@ -2635,7 +2647,7 @@ client.ml.putTrainedModelVocabulary(...)
 ==== reset_job
 Resets an existing anomaly detection job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-reset-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-reset-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.resetJob(...)
@@ -2645,7 +2657,7 @@ client.ml.resetJob(...)
 ==== revert_model_snapshot
 Reverts to a specific snapshot.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-revert-snapshot.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.revertModelSnapshot(...)
@@ -2655,7 +2667,7 @@ client.ml.revertModelSnapshot(...)
 ==== set_upgrade_mode
 Sets a cluster wide upgrade_mode setting that prepares machine learning indices for an upgrade.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-set-upgrade-mode.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.setUpgradeMode(...)
@@ -2665,7 +2677,7 @@ client.ml.setUpgradeMode(...)
 ==== start_data_frame_analytics
 Starts a data frame analytics job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/start-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/start-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.startDataFrameAnalytics(...)
@@ -2675,7 +2687,7 @@ client.ml.startDataFrameAnalytics(...)
 ==== start_datafeed
 Starts one or more datafeeds.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-start-datafeed.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.startDatafeed(...)
@@ -2685,7 +2697,7 @@ client.ml.startDatafeed(...)
 ==== start_trained_model_deployment
 Start a trained model deployment.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trained-model-deployment.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/start-trained-model-deployment.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.startTrainedModelDeployment(...)
@@ -2695,7 +2707,7 @@ client.ml.startTrainedModelDeployment(...)
 ==== stop_data_frame_analytics
 Stops one or more data frame analytics jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/stop-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.stopDataFrameAnalytics(...)
@@ -2705,7 +2717,7 @@ client.ml.stopDataFrameAnalytics(...)
 ==== stop_datafeed
 Stops one or more datafeeds.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-stop-datafeed.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.stopDatafeed(...)
@@ -2715,7 +2727,7 @@ client.ml.stopDatafeed(...)
 ==== stop_trained_model_deployment
 Stop a trained model deployment.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/stop-trained-model-deployment.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/stop-trained-model-deployment.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.stopTrainedModelDeployment(...)
@@ -2725,7 +2737,7 @@ client.ml.stopTrainedModelDeployment(...)
 ==== update_data_frame_analytics
 Updates certain properties of a data frame analytics job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/update-dfanalytics.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/update-dfanalytics.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.updateDataFrameAnalytics(...)
@@ -2735,7 +2747,7 @@ client.ml.updateDataFrameAnalytics(...)
 ==== update_datafeed
 Updates certain properties of a datafeed.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-update-datafeed.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.updateDatafeed(...)
@@ -2745,7 +2757,7 @@ client.ml.updateDatafeed(...)
 ==== update_filter
 Updates the description of a filter, adds items, or removes items.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-filter.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-update-filter.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.updateFilter(...)
@@ -2755,7 +2767,7 @@ client.ml.updateFilter(...)
 ==== update_job
 Updates certain properties of an anomaly detection job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-update-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.updateJob(...)
@@ -2765,7 +2777,7 @@ client.ml.updateJob(...)
 ==== update_model_snapshot
 Updates certain properties of a snapshot.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapshot.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-update-snapshot.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.updateModelSnapshot(...)
@@ -2775,7 +2787,7 @@ client.ml.updateModelSnapshot(...)
 ==== upgrade_job_snapshot
 Upgrades a given job snapshot to the current major version.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-upgrade-job-model-snapshot.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-upgrade-job-model-snapshot.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.upgradeJobSnapshot(...)
@@ -2787,7 +2799,7 @@ client.ml.upgradeJobSnapshot(...)
 ==== clear_repositories_metering_archive
 Removes the archived repositories metering information present in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-repositories-metering-archive-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/clear-repositories-metering-archive-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.nodes.clearRepositoriesMeteringArchive(...)
@@ -2797,7 +2809,7 @@ client.nodes.clearRepositoriesMeteringArchive(...)
 ==== get_repositories_metering_info
 Returns cluster repositories metering information.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-repositories-metering-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-repositories-metering-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.nodes.getRepositoriesMeteringInfo(...)
@@ -2807,7 +2819,7 @@ client.nodes.getRepositoriesMeteringInfo(...)
 ==== hot_threads
 Returns information about hot threads on each node in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-nodes-hot-threads.html[Endpoint documentation]
 [source,ts]
 ----
 client.nodes.hotThreads(...)
@@ -2817,7 +2829,7 @@ client.nodes.hotThreads(...)
 ==== info
 Returns information about nodes in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-nodes-info.html[Endpoint documentation]
 [source,ts]
 ----
 client.nodes.info(...)
@@ -2827,7 +2839,7 @@ client.nodes.info(...)
 ==== reload_secure_settings
 Reloads secure settings.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/secure-settings.html#reloadable-secure-settings[Endpoint documentation]
 [source,ts]
 ----
 client.nodes.reloadSecureSettings(...)
@@ -2837,7 +2849,7 @@ client.nodes.reloadSecureSettings(...)
 ==== stats
 Returns statistical information about nodes in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-nodes-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.nodes.stats(...)
@@ -2847,7 +2859,7 @@ client.nodes.stats(...)
 ==== usage
 Returns low-level information about REST actions usage on nodes.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usage.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cluster-nodes-usage.html[Endpoint documentation]
 [source,ts]
 ----
 client.nodes.usage(...)
@@ -2859,7 +2871,7 @@ client.nodes.usage(...)
 ==== delete_job
 Deletes an existing rollup job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-delete-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/rollup-delete-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.rollup.deleteJob(...)
@@ -2869,7 +2881,7 @@ client.rollup.deleteJob(...)
 ==== get_jobs
 Retrieves the configuration, stats, and status of rollup jobs.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/rollup-get-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.rollup.getJobs(...)
@@ -2879,7 +2891,7 @@ client.rollup.getJobs(...)
 ==== get_rollup_caps
 Returns the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-rollup-caps.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/rollup-get-rollup-caps.html[Endpoint documentation]
 [source,ts]
 ----
 client.rollup.getRollupCaps(...)
@@ -2889,7 +2901,7 @@ client.rollup.getRollupCaps(...)
 ==== get_rollup_index_caps
 Returns the rollup capabilities of all jobs inside of a rollup index (e.g. the index where rollup data is stored).
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-rollup-index-caps.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/rollup-get-rollup-index-caps.html[Endpoint documentation]
 [source,ts]
 ----
 client.rollup.getRollupIndexCaps(...)
@@ -2899,27 +2911,17 @@ client.rollup.getRollupIndexCaps(...)
 ==== put_job
 Creates a rollup job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-put-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/rollup-put-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.rollup.putJob(...)
 ----
 
 [discrete]
-==== rollup
-Rollup an index
-
-https://www.elastic.co/guide/en/elasticsearch/reference/current/xpack-rollup.html[Endpoint documentation]
-[source,ts]
-----
-client.rollup.rollup(...)
-----
-
-[discrete]
 ==== rollup_search
 Enables searching rolled-up data using the standard query DSL.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-search.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/rollup-search.html[Endpoint documentation]
 [source,ts]
 ----
 client.rollup.rollupSearch(...)
@@ -2929,7 +2931,7 @@ client.rollup.rollupSearch(...)
 ==== start_job
 Starts an existing, stopped rollup job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-start-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/rollup-start-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.rollup.startJob(...)
@@ -2939,7 +2941,7 @@ client.rollup.startJob(...)
 ==== stop_job
 Stops an existing, started rollup job.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-stop-job.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/rollup-stop-job.html[Endpoint documentation]
 [source,ts]
 ----
 client.rollup.stopJob(...)
@@ -2951,7 +2953,7 @@ client.rollup.stopJob(...)
 ==== cache_stats
 Retrieve node-level cache statistics about searchable snapshots.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-apis.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/searchable-snapshots-apis.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchableSnapshots.cacheStats(...)
@@ -2961,7 +2963,7 @@ client.searchableSnapshots.cacheStats(...)
 ==== clear_cache
 Clear the cache of searchable snapshots.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-apis.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/searchable-snapshots-apis.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchableSnapshots.clearCache(...)
@@ -2971,7 +2973,7 @@ client.searchableSnapshots.clearCache(...)
 ==== mount
 Mount a snapshot as a searchable index.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-mount-snapshot.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/searchable-snapshots-api-mount-snapshot.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchableSnapshots.mount(...)
@@ -2981,7 +2983,7 @@ client.searchableSnapshots.mount(...)
 ==== stats
 Retrieve shard-level statistics about searchable snapshots.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-apis.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/searchable-snapshots-apis.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchableSnapshots.stats(...)
@@ -2993,7 +2995,7 @@ client.searchableSnapshots.stats(...)
 ==== authenticate
 Enables authentication as a user and retrieve information about the authenticated user.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-authenticate.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.authenticate(...)
@@ -3002,6 +3004,8 @@ client.security.authenticate(...)
 [discrete]
 ==== bulk_update_api_keys
 Updates the attributes of multiple existing API keys.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-bulk-update-api-keys.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.bulkUpdateApiKeys(...)
@@ -3011,7 +3015,7 @@ client.security.bulkUpdateApiKeys(...)
 ==== change_password
 Changes the passwords of users in the native realm and built-in users.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-change-password.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.changePassword(...)
@@ -3021,7 +3025,7 @@ client.security.changePassword(...)
 ==== clear_api_key_cache
 Clear a subset or all entries from the API key cache.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-api-key-cache.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-clear-api-key-cache.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.clearApiKeyCache(...)
@@ -3031,7 +3035,7 @@ client.security.clearApiKeyCache(...)
 ==== clear_cached_privileges
 Evicts application privileges from the native application privileges cache.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-privilege-cache.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-clear-privilege-cache.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.clearCachedPrivileges(...)
@@ -3041,7 +3045,7 @@ client.security.clearCachedPrivileges(...)
 ==== clear_cached_realms
 Evicts users from the user cache. Can completely clear the cache or evict specific users.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-clear-cache.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.clearCachedRealms(...)
@@ -3051,7 +3055,7 @@ client.security.clearCachedRealms(...)
 ==== clear_cached_roles
 Evicts roles from the native role cache.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-role-cache.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-clear-role-cache.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.clearCachedRoles(...)
@@ -3061,7 +3065,7 @@ client.security.clearCachedRoles(...)
 ==== clear_cached_service_tokens
 Evicts tokens from the service account token caches.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-service-token-caches.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-clear-service-token-caches.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.clearCachedServiceTokens(...)
@@ -3071,7 +3075,7 @@ client.security.clearCachedServiceTokens(...)
 ==== create_api_key
 Creates an API key for access without requiring basic authentication.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-create-api-key.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.createApiKey(...)
@@ -3081,7 +3085,7 @@ client.security.createApiKey(...)
 ==== create_service_token
 Creates a service account token for access without requiring basic authentication.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-service-token.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-create-service-token.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.createServiceToken(...)
@@ -3091,7 +3095,7 @@ client.security.createServiceToken(...)
 ==== delete_privileges
 Removes application privileges.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-privilege.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-delete-privilege.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.deletePrivileges(...)
@@ -3101,7 +3105,7 @@ client.security.deletePrivileges(...)
 ==== delete_role
 Removes roles in the native realm.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-delete-role.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.deleteRole(...)
@@ -3111,7 +3115,7 @@ client.security.deleteRole(...)
 ==== delete_role_mapping
 Removes role mappings.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role-mapping.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-delete-role-mapping.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.deleteRoleMapping(...)
@@ -3121,7 +3125,7 @@ client.security.deleteRoleMapping(...)
 ==== delete_service_token
 Deletes a service account token.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-service-token.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-delete-service-token.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.deleteServiceToken(...)
@@ -3131,7 +3135,7 @@ client.security.deleteServiceToken(...)
 ==== delete_user
 Deletes users from the native realm.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-user.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-delete-user.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.deleteUser(...)
@@ -3141,7 +3145,7 @@ client.security.deleteUser(...)
 ==== disable_user
 Disables users in the native realm.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-disable-user.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.disableUser(...)
@@ -3151,7 +3155,7 @@ client.security.disableUser(...)
 ==== enable_user
 Enables users in the native realm.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-enable-user.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-enable-user.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.enableUser(...)
@@ -3161,7 +3165,7 @@ client.security.enableUser(...)
 ==== enroll_kibana
 Allows a kibana instance to configure itself to communicate with a secured elasticsearch cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-kibana-enrollment.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-kibana-enrollment.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.enrollKibana(...)
@@ -3171,7 +3175,7 @@ client.security.enrollKibana(...)
 ==== enroll_node
 Allows a new node to enroll to an existing cluster with security enabled.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-node-enrollment.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-node-enrollment.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.enrollNode(...)
@@ -3181,7 +3185,7 @@ client.security.enrollNode(...)
 ==== get_api_key
 Retrieves information for one or more API keys.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-get-api-key.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getApiKey(...)
@@ -3191,7 +3195,7 @@ client.security.getApiKey(...)
 ==== get_builtin_privileges
 Retrieves the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-builtin-privileges.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-get-builtin-privileges.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getBuiltinPrivileges(...)
@@ -3201,7 +3205,7 @@ client.security.getBuiltinPrivileges(...)
 ==== get_privileges
 Retrieves application privileges.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-get-privileges.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getPrivileges(...)
@@ -3211,7 +3215,7 @@ client.security.getPrivileges(...)
 ==== get_role
 Retrieves roles in the native realm.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-get-role.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getRole(...)
@@ -3221,7 +3225,7 @@ client.security.getRole(...)
 ==== get_role_mapping
 Retrieves role mappings.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role-mapping.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-get-role-mapping.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getRoleMapping(...)
@@ -3231,7 +3235,7 @@ client.security.getRoleMapping(...)
 ==== get_service_accounts
 Retrieves information about service accounts.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-service-accounts.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-get-service-accounts.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getServiceAccounts(...)
@@ -3241,7 +3245,7 @@ client.security.getServiceAccounts(...)
 ==== get_service_credentials
 Retrieves information of all service credentials for a service account.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-service-credentials.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-get-service-credentials.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getServiceCredentials(...)
@@ -3251,7 +3255,7 @@ client.security.getServiceCredentials(...)
 ==== get_token
 Creates a bearer token for access without requiring basic authentication.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-token.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-get-token.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getToken(...)
@@ -3261,7 +3265,7 @@ client.security.getToken(...)
 ==== get_user
 Retrieves information about users in the native realm and built-in users.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-get-user.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getUser(...)
@@ -3271,7 +3275,7 @@ client.security.getUser(...)
 ==== get_user_privileges
 Retrieves security privileges for the logged in user.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-privileges.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-get-user-privileges.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.getUserPrivileges(...)
@@ -3281,7 +3285,7 @@ client.security.getUserPrivileges(...)
 ==== grant_api_key
 Creates an API key on behalf of another user.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-grant-api-key.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-grant-api-key.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.grantApiKey(...)
@@ -3291,7 +3295,7 @@ client.security.grantApiKey(...)
 ==== has_privileges
 Determines whether the specified user has a specified list of privileges.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-has-privileges.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.hasPrivileges(...)
@@ -3301,7 +3305,7 @@ client.security.hasPrivileges(...)
 ==== invalidate_api_key
 Invalidates one or more API keys.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-invalidate-api-key.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.invalidateApiKey(...)
@@ -3311,7 +3315,7 @@ client.security.invalidateApiKey(...)
 ==== invalidate_token
 Invalidates one or more access tokens or refresh tokens.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-token.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-invalidate-token.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.invalidateToken(...)
@@ -3321,7 +3325,7 @@ client.security.invalidateToken(...)
 ==== oidc_authenticate
 Exchanges an OpenID Connection authentication response message for an Elasticsearch access token and refresh token pair
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-oidc-authenticate.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-oidc-authenticate.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.oidcAuthenticate(...)
@@ -3331,7 +3335,7 @@ client.security.oidcAuthenticate(...)
 ==== oidc_logout
 Invalidates a refresh token and access token that was generated from the OpenID Connect Authenticate API
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-oidc-logout.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-oidc-logout.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.oidcLogout(...)
@@ -3341,7 +3345,7 @@ client.security.oidcLogout(...)
 ==== oidc_prepare_authentication
 Creates an OAuth 2.0 authentication request as a URL string
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-oidc-prepare-authentication.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-oidc-prepare-authentication.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.oidcPrepareAuthentication(...)
@@ -3351,7 +3355,7 @@ client.security.oidcPrepareAuthentication(...)
 ==== put_privileges
 Adds or updates application privileges.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-privileges.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-put-privileges.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.putPrivileges(...)
@@ -3361,7 +3365,7 @@ client.security.putPrivileges(...)
 ==== put_role
 Adds and updates roles in the native realm.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-put-role.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.putRole(...)
@@ -3371,7 +3375,7 @@ client.security.putRole(...)
 ==== put_role_mapping
 Creates and updates role mappings.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-put-role-mapping.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.putRoleMapping(...)
@@ -3381,7 +3385,7 @@ client.security.putRoleMapping(...)
 ==== put_user
 Adds and updates users in the native realm. These users are commonly referred to as native users.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-user.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-put-user.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.putUser(...)
@@ -3391,7 +3395,7 @@ client.security.putUser(...)
 ==== query_api_keys
 Retrieves information for API keys using a subset of query DSL
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-query-api-key.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-query-api-key.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.queryApiKeys(...)
@@ -3401,7 +3405,7 @@ client.security.queryApiKeys(...)
 ==== saml_authenticate
 Exchanges a SAML Response message for an Elasticsearch access token and refresh token pair
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-authenticate.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-saml-authenticate.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.samlAuthenticate(...)
@@ -3411,7 +3415,7 @@ client.security.samlAuthenticate(...)
 ==== saml_complete_logout
 Verifies the logout response sent from the SAML IdP
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-complete-logout.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-saml-complete-logout.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.samlCompleteLogout(...)
@@ -3421,7 +3425,7 @@ client.security.samlCompleteLogout(...)
 ==== saml_invalidate
 Consumes a SAML LogoutRequest
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-invalidate.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-saml-invalidate.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.samlInvalidate(...)
@@ -3431,7 +3435,7 @@ client.security.samlInvalidate(...)
 ==== saml_logout
 Invalidates an access token and a refresh token that were generated via the SAML Authenticate API
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-logout.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-saml-logout.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.samlLogout(...)
@@ -3441,7 +3445,7 @@ client.security.samlLogout(...)
 ==== saml_prepare_authentication
 Creates a SAML authentication request
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-prepare-authentication.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-saml-prepare-authentication.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.samlPrepareAuthentication(...)
@@ -3451,7 +3455,7 @@ client.security.samlPrepareAuthentication(...)
 ==== saml_service_provider_metadata
 Generates SAML metadata for the Elastic stack SAML 2.0 Service Provider
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-sp-metadata.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-saml-sp-metadata.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.samlServiceProviderMetadata(...)
@@ -3460,6 +3464,8 @@ client.security.samlServiceProviderMetadata(...)
 [discrete]
 ==== update_api_key
 Updates attributes of an existing API key.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-update-api-key.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.updateApiKey(...)
@@ -3471,7 +3477,7 @@ client.security.updateApiKey(...)
 ==== delete_lifecycle
 Deletes an existing snapshot lifecycle policy.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-delete-policy.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/slm-api-delete-policy.html[Endpoint documentation]
 [source,ts]
 ----
 client.slm.deleteLifecycle(...)
@@ -3481,7 +3487,7 @@ client.slm.deleteLifecycle(...)
 ==== execute_lifecycle
 Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-lifecycle.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/slm-api-execute-lifecycle.html[Endpoint documentation]
 [source,ts]
 ----
 client.slm.executeLifecycle(...)
@@ -3491,7 +3497,7 @@ client.slm.executeLifecycle(...)
 ==== execute_retention
 Deletes any snapshots that are expired according to the policy's retention rules.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-retention.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/slm-api-execute-retention.html[Endpoint documentation]
 [source,ts]
 ----
 client.slm.executeRetention(...)
@@ -3501,7 +3507,7 @@ client.slm.executeRetention(...)
 ==== get_lifecycle
 Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-policy.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/slm-api-get-policy.html[Endpoint documentation]
 [source,ts]
 ----
 client.slm.getLifecycle(...)
@@ -3511,7 +3517,7 @@ client.slm.getLifecycle(...)
 ==== get_stats
 Returns global and policy-level statistics about actions taken by snapshot lifecycle management.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/slm-api-get-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/slm-api-get-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.slm.getStats(...)
@@ -3521,7 +3527,7 @@ client.slm.getStats(...)
 ==== get_status
 Retrieves the status of snapshot lifecycle management (SLM).
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-status.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/slm-api-get-status.html[Endpoint documentation]
 [source,ts]
 ----
 client.slm.getStatus(...)
@@ -3531,7 +3537,7 @@ client.slm.getStatus(...)
 ==== put_lifecycle
 Creates or updates a snapshot lifecycle policy.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-put-policy.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/slm-api-put-policy.html[Endpoint documentation]
 [source,ts]
 ----
 client.slm.putLifecycle(...)
@@ -3541,7 +3547,7 @@ client.slm.putLifecycle(...)
 ==== start
 Turns on snapshot lifecycle management (SLM).
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-start.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/slm-api-start.html[Endpoint documentation]
 [source,ts]
 ----
 client.slm.start(...)
@@ -3551,7 +3557,7 @@ client.slm.start(...)
 ==== stop
 Turns off snapshot lifecycle management (SLM).
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-stop.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/slm-api-stop.html[Endpoint documentation]
 [source,ts]
 ----
 client.slm.stop(...)
@@ -3563,7 +3569,7 @@ client.slm.stop(...)
 ==== cleanup_repository
 Removes stale data from repository.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/clean-up-snapshot-repo-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/clean-up-snapshot-repo-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.cleanupRepository(...)
@@ -3573,7 +3579,7 @@ client.snapshot.cleanupRepository(...)
 ==== clone
 Clones indices from one snapshot into another snapshot in the same repository.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.clone(...)
@@ -3583,7 +3589,7 @@ client.snapshot.clone(...)
 ==== create
 Creates a snapshot in a repository.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.create(...)
@@ -3593,7 +3599,7 @@ client.snapshot.create(...)
 ==== create_repository
 Creates a repository.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.createRepository(...)
@@ -3603,7 +3609,7 @@ client.snapshot.createRepository(...)
 ==== delete
 Deletes one or more snapshots.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.delete(...)
@@ -3613,7 +3619,7 @@ client.snapshot.delete(...)
 ==== delete_repository
 Deletes a repository.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.deleteRepository(...)
@@ -3623,7 +3629,7 @@ client.snapshot.deleteRepository(...)
 ==== get
 Returns information about a snapshot.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.get(...)
@@ -3633,7 +3639,7 @@ client.snapshot.get(...)
 ==== get_repository
 Returns information about a repository.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.getRepository(...)
@@ -3643,7 +3649,7 @@ client.snapshot.getRepository(...)
 ==== repository_analyze
 Analyzes a repository for correctness and performance
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.repositoryAnalyze(...)
@@ -3653,7 +3659,7 @@ client.snapshot.repositoryAnalyze(...)
 ==== restore
 Restores a snapshot.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.restore(...)
@@ -3663,7 +3669,7 @@ client.snapshot.restore(...)
 ==== status
 Returns information about the status of a snapshot.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.status(...)
@@ -3673,7 +3679,7 @@ client.snapshot.status(...)
 ==== verify_repository
 Verifies a repository.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/modules-snapshots.html[Endpoint documentation]
 [source,ts]
 ----
 client.snapshot.verifyRepository(...)
@@ -3685,7 +3691,7 @@ client.snapshot.verifyRepository(...)
 ==== clear_cursor
 Clears the SQL cursor
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-sql-cursor-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/clear-sql-cursor-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.sql.clearCursor(...)
@@ -3695,7 +3701,7 @@ client.sql.clearCursor(...)
 ==== delete_async
 Deletes an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-async-sql-search-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/delete-async-sql-search-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.sql.deleteAsync(...)
@@ -3705,7 +3711,7 @@ client.sql.deleteAsync(...)
 ==== get_async
 Returns the current status and available results for an async SQL search or stored synchronous SQL search
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-sql-search-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-async-sql-search-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.sql.getAsync(...)
@@ -3715,7 +3721,7 @@ client.sql.getAsync(...)
 ==== get_async_status
 Returns the current status of an async SQL search or a stored synchronous SQL search
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-sql-search-status-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-async-sql-search-status-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.sql.getAsyncStatus(...)
@@ -3725,7 +3731,7 @@ client.sql.getAsyncStatus(...)
 ==== query
 Executes a SQL request
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-search-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/sql-search-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.sql.query(...)
@@ -3735,7 +3741,7 @@ client.sql.query(...)
 ==== translate
 Translates SQL into Elasticsearch queries
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/sql-translate-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.sql.translate(...)
@@ -3747,7 +3753,7 @@ client.sql.translate(...)
 ==== certificates
 Retrieves information about the X.509 certificates used to encrypt communications in the cluster.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-ssl.html[Endpoint documentation]
 [source,ts]
 ----
 client.ssl.certificates(...)
@@ -3759,7 +3765,7 @@ client.ssl.certificates(...)
 ==== cancel
 Cancels a task, if it can be cancelled through an API.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/tasks.html[Endpoint documentation]
 [source,ts]
 ----
 client.tasks.cancel(...)
@@ -3769,7 +3775,7 @@ client.tasks.cancel(...)
 ==== get
 Returns information about a task.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/tasks.html[Endpoint documentation]
 [source,ts]
 ----
 client.tasks.get(...)
@@ -3779,7 +3785,7 @@ client.tasks.get(...)
 ==== list
 Returns a list of tasks.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/tasks.html[Endpoint documentation]
 [source,ts]
 ----
 client.tasks.list(...)
@@ -3791,7 +3797,7 @@ client.tasks.list(...)
 ==== find_structure
 Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/find-structure.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/find-structure.html[Endpoint documentation]
 [source,ts]
 ----
 client.textStructure.findStructure(...)
@@ -3803,7 +3809,7 @@ client.textStructure.findStructure(...)
 ==== delete_transform
 Deletes an existing transform.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/delete-transform.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.deleteTransform(...)
@@ -3813,7 +3819,7 @@ client.transform.deleteTransform(...)
 ==== get_transform
 Retrieves configuration information for transforms.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-transform.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.getTransform(...)
@@ -3823,7 +3829,7 @@ client.transform.getTransform(...)
 ==== get_transform_stats
 Retrieves usage information for transforms.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-transform-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.getTransformStats(...)
@@ -3833,7 +3839,7 @@ client.transform.getTransformStats(...)
 ==== preview_transform
 Previews a transform.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/preview-transform.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.previewTransform(...)
@@ -3843,7 +3849,7 @@ client.transform.previewTransform(...)
 ==== put_transform
 Instantiates a transform.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/put-transform.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/put-transform.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.putTransform(...)
@@ -3853,7 +3859,7 @@ client.transform.putTransform(...)
 ==== reset_transform
 Resets an existing transform.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/reset-transform.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/reset-transform.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.resetTransform(...)
@@ -3863,7 +3869,7 @@ client.transform.resetTransform(...)
 ==== start_transform
 Starts one or more transforms.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/start-transform.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/start-transform.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.startTransform(...)
@@ -3873,7 +3879,7 @@ client.transform.startTransform(...)
 ==== stop_transform
 Stops one or more transforms.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-transform.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/stop-transform.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.stopTransform(...)
@@ -3883,7 +3889,7 @@ client.transform.stopTransform(...)
 ==== update_transform
 Updates certain properties of a transform.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/update-transform.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/update-transform.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.updateTransform(...)
@@ -3893,7 +3899,7 @@ client.transform.updateTransform(...)
 ==== upgrade_transforms
 Upgrades all transforms.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/upgrade-transforms.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/upgrade-transforms.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.upgradeTransforms(...)
@@ -3905,7 +3911,7 @@ client.transform.upgradeTransforms(...)
 ==== ack_watch
 Acknowledges a watch, manually throttling the execution of the watch's actions.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/watcher-api-ack-watch.html[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.ackWatch(...)
@@ -3915,7 +3921,7 @@ client.watcher.ackWatch(...)
 ==== activate_watch
 Activates a currently inactive watch.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-activate-watch.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/watcher-api-activate-watch.html[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.activateWatch(...)
@@ -3925,7 +3931,7 @@ client.watcher.activateWatch(...)
 ==== deactivate_watch
 Deactivates a currently active watch.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-deactivate-watch.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/watcher-api-deactivate-watch.html[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.deactivateWatch(...)
@@ -3935,7 +3941,7 @@ client.watcher.deactivateWatch(...)
 ==== delete_watch
 Removes a watch from Watcher.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/watcher-api-delete-watch.html[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.deleteWatch(...)
@@ -3945,7 +3951,7 @@ client.watcher.deleteWatch(...)
 ==== execute_watch
 Forces the execution of a stored watch.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/watcher-api-execute-watch.html[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.executeWatch(...)
@@ -3955,7 +3961,7 @@ client.watcher.executeWatch(...)
 ==== get_watch
 Retrieves a watch by its ID.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/watcher-api-get-watch.html[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.getWatch(...)
@@ -3965,7 +3971,7 @@ client.watcher.getWatch(...)
 ==== put_watch
 Creates a new watch, or updates an existing one.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/watcher-api-put-watch.html[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.putWatch(...)
@@ -3975,7 +3981,7 @@ client.watcher.putWatch(...)
 ==== query_watches
 Retrieves stored watches.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-query-watches.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/watcher-api-query-watches.html[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.queryWatches(...)
@@ -3985,7 +3991,7 @@ client.watcher.queryWatches(...)
 ==== start
 Starts Watcher if it is not already running.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/watcher-api-start.html[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.start(...)
@@ -3995,7 +4001,7 @@ client.watcher.start(...)
 ==== stats
 Retrieves the current Watcher metrics.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/watcher-api-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.stats(...)
@@ -4005,7 +4011,7 @@ client.watcher.stats(...)
 ==== stop
 Stops Watcher if it is running.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/watcher-api-stop.html[Endpoint documentation]
 [source,ts]
 ----
 client.watcher.stop(...)
@@ -4017,7 +4023,7 @@ client.watcher.stop(...)
 ==== info
 Retrieves information about the installed X-Pack features.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/info-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.xpack.info(...)
@@ -4027,7 +4033,7 @@ client.xpack.info(...)
 ==== usage
 Retrieves usage information about the installed X-Pack features.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/usage-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/usage-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.xpack.usage(...)
