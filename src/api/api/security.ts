@@ -891,7 +891,7 @@ export default class Security {
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityGrantApiKeyResponse>
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['api_key', 'grant_type', 'access_token', 'username', 'password']
+    const acceptedBody: string[] = ['api_key', 'grant_type', 'access_token', 'username', 'password', 'run_as']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

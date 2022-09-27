@@ -454,7 +454,7 @@ export interface GetScriptLanguagesResponse {
   types_allowed: string[]
 }
 
-export interface GetSourceRequest {
+export interface GetSourceRequest extends RequestBase {
   id: Id
   index: IndexName
   preference?: string
@@ -588,6 +588,7 @@ export interface MsearchMultisearchBody {
   collapse?: SearchFieldCollapse
   query?: QueryDslQueryContainer
   explain?: boolean
+  ext?: Record<string, any>
   stored_fields?: Fields
   docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
   knn?: KnnQuery
@@ -1041,6 +1042,7 @@ export interface SearchRequest extends RequestBase {
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
+    ext?: Record<string, any>
     from?: integer
     highlight?: SearchHighlight
     track_total_hits?: SearchTrackHits
@@ -1949,7 +1951,7 @@ export type EpochTime<Unit = unknown> = Unit
 
 export interface ErrorCauseKeys {
   type: string
-  reason: string
+  reason?: string
   stack_trace?: string
   caused_by?: ErrorCause
   root_cause?: ErrorCause[]
@@ -1991,7 +1993,7 @@ export interface FieldSort {
 
 export type FieldSortNumericType = 'long' | 'double' | 'date' | 'date_nanos'
 
-export type FieldValue = long | double | string | boolean
+export type FieldValue = long | double | string | boolean | any
 
 export interface FielddataStats {
   evictions?: long
@@ -3027,7 +3029,7 @@ export interface AggregationsFormattableMetricAggregation extends AggregationsMe
 export type AggregationsGapPolicy = 'skip' | 'insert_zeros'
 
 export interface AggregationsGeoBoundsAggregate extends AggregationsAggregateBase {
-  bounds: GeoBounds
+  bounds?: GeoBounds
 }
 
 export interface AggregationsGeoBoundsAggregation extends AggregationsMetricAggregationBase {
@@ -4026,17 +4028,18 @@ export type AnalysisIcuCollationStrength = 'primary' | 'secondary' | 'tertiary' 
 
 export interface AnalysisIcuCollationTokenFilter extends AnalysisTokenFilterBase {
   type: 'icu_collation'
-  alternate: AnalysisIcuCollationAlternate
-  caseFirst: AnalysisIcuCollationCaseFirst
-  caseLevel: boolean
-  country: string
-  decomposition: AnalysisIcuCollationDecomposition
-  hiraganaQuaternaryMode: boolean
-  language: string
-  numeric: boolean
-  strength: AnalysisIcuCollationStrength
+  alternate?: AnalysisIcuCollationAlternate
+  caseFirst?: AnalysisIcuCollationCaseFirst
+  caseLevel?: boolean
+  country?: string
+  decomposition?: AnalysisIcuCollationDecomposition
+  hiraganaQuaternaryMode?: boolean
+  language?: string
+  numeric?: boolean
+  rules?: string
+  strength?: AnalysisIcuCollationStrength
   variableTop?: string
-  variant: string
+  variant?: string
 }
 
 export interface AnalysisIcuFoldingTokenFilter extends AnalysisTokenFilterBase {
@@ -4068,7 +4071,7 @@ export type AnalysisIcuTransformDirection = 'forward' | 'reverse'
 
 export interface AnalysisIcuTransformTokenFilter extends AnalysisTokenFilterBase {
   type: 'icu_transform'
-  dir: AnalysisIcuTransformDirection
+  dir?: AnalysisIcuTransformDirection
   id: string
 }
 
@@ -4858,7 +4861,7 @@ export interface MappingRuntimeField {
 
 export type MappingRuntimeFieldType = 'boolean' | 'date' | 'double' | 'geo_point' | 'ip' | 'keyword' | 'long'
 
-export type MappingRuntimeFields = Record<Field, MappingRuntimeField | MappingRuntimeField[]>
+export type MappingRuntimeFields = Record<Field, MappingRuntimeField>
 
 export interface MappingScaledFloatNumberProperty extends MappingNumberPropertyBase {
   type: 'scaled_float'
@@ -5828,6 +5831,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
+    ext?: Record<string, any>
     from?: integer
     highlight?: SearchHighlight
     track_total_hits?: SearchTrackHits
@@ -7968,7 +7972,7 @@ export interface ClusterComponentTemplateNode {
 export interface ClusterComponentTemplateSummary {
   _meta?: Metadata
   version?: VersionNumber
-  settings: Record<IndexName, IndicesIndexSettings>
+  settings?: Record<IndexName, IndicesIndexSettings>
   mappings?: MappingTypeMapping
   aliases?: Record<string, IndicesAliasDefinition>
 }
@@ -8922,6 +8926,7 @@ export interface FleetSearchRequest extends RequestBase {
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
+    ext?: Record<string, any>
     from?: integer
     highlight?: SearchHighlight
     track_total_hits?: SearchTrackHits
@@ -9452,8 +9457,7 @@ export interface IndicesIndexTemplateSummary {
 }
 
 export interface IndicesIndexVersioning {
-  created: VersionString
-  created_string?: VersionString
+  created?: VersionString
 }
 
 export interface IndicesIndexingPressure {
@@ -9688,7 +9692,7 @@ export interface IndicesAnalyzeAnalyzeDetail {
 export interface IndicesAnalyzeAnalyzeToken {
   end_offset: long
   position: long
-  position_length?: long
+  positionLength?: long
   start_offset: long
   token: string
   type: string
@@ -9903,6 +9907,15 @@ export interface IndicesDiskUsageRequest extends RequestBase {
 }
 
 export type IndicesDiskUsageResponse = any
+
+export interface IndicesDownsampleRequest extends RequestBase {
+  index: IndexName
+  target_index: IndexName
+  /** @deprecated The use of the 'body' key has been deprecated, use 'config' instead. */
+  body?: any
+}
+
+export type IndicesDownsampleResponse = any
 
 export interface IndicesExistsRequest extends RequestBase {
   index: Indices
@@ -15046,15 +15059,6 @@ export interface RollupPutJobRequest extends RequestBase {
 
 export type RollupPutJobResponse = AcknowledgedResponseBase
 
-export interface RollupRollupRequest extends RequestBase {
-  index: IndexName
-  rollup_index: IndexName
-  /** @deprecated The use of the 'body' key has been deprecated, use 'config' instead. */
-  body?: any
-}
-
-export type RollupRollupResponse = any
-
 export interface RollupRollupSearchRequest extends RequestBase {
   index: Indices
   rest_total_hits_as_int?: boolean
@@ -15176,6 +15180,9 @@ export interface SecurityApiKey {
   realm?: string
   username?: Username
   metadata?: Metadata
+  role_descriptors?: Record<string, SecurityRoleDescriptor>
+  limited_by?: Record<string, SecurityRoleDescriptor>[]
+  _sort?: SortResults
 }
 
 export interface SecurityApplicationGlobalUserPrivileges {
@@ -15302,6 +15309,7 @@ export interface SecurityUser {
   roles: string[]
   username: Username
   enabled: boolean
+  profile_uid?: SecurityUserProfileId
 }
 
 export interface SecurityUserProfile {
@@ -15580,6 +15588,7 @@ export interface SecurityGetApiKeyRequest extends RequestBase {
   owner?: boolean
   realm_name?: Name
   username?: Username
+  with_limited_by?: boolean
 }
 
 export interface SecurityGetApiKeyResponse {
@@ -15694,7 +15703,7 @@ export interface SecurityGetTokenResponse {
   expires_in: long
   scope?: string
   type: string
-  refresh_token: string
+  refresh_token?: string
   kerberos_authentication_response_token?: string
   authentication: SecurityGetTokenAuthenticatedUser
 }
@@ -15706,6 +15715,7 @@ export interface SecurityGetTokenUserRealm {
 
 export interface SecurityGetUserRequest extends RequestBase {
   username?: Username | Username[]
+  with_profile_uid?: boolean
 }
 
 export type SecurityGetUserResponse = Record<string, SecurityUser>
@@ -15724,19 +15734,28 @@ export interface SecurityGetUserPrivilegesResponse {
   run_as: string[]
 }
 
+export interface SecurityGetUserProfileGetUserProfileErrors {
+  count: long
+  details: Record<SecurityUserProfileId, ErrorCause>
+}
+
 export interface SecurityGetUserProfileRequest extends RequestBase {
-  uid: SecurityUserProfileId
+  uid: SecurityUserProfileId | SecurityUserProfileId[]
   data?: string | string[]
 }
 
-export type SecurityGetUserProfileResponse = Record<string, SecurityUserProfileWithMetadata>
+export interface SecurityGetUserProfileResponse {
+  profiles: SecurityUserProfileWithMetadata[]
+  errors?: SecurityGetUserProfileGetUserProfileErrors
+}
 
 export type SecurityGrantApiKeyApiKeyGrantType = 'access_token' | 'password'
 
 export interface SecurityGrantApiKeyGrantApiKey {
   name: Name
-  expiration?: Duration
-  role_descriptors?: Record<string, any>[]
+  expiration?: DurationLarge
+  role_descriptors?: Record<string, SecurityRoleDescriptor> | Record<string, SecurityRoleDescriptor>[]
+  metadata?: Metadata
 }
 
 export interface SecurityGrantApiKeyRequest extends RequestBase {
@@ -15747,6 +15766,7 @@ export interface SecurityGrantApiKeyRequest extends RequestBase {
     access_token?: string
     username?: Username
     password?: Password
+    run_as?: Username
   }
 }
 
@@ -15755,6 +15775,7 @@ export interface SecurityGrantApiKeyResponse {
   id: Id
   name: Name
   expiration?: EpochTime<UnitMillis>
+  encoded: string
 }
 
 export interface SecurityHasPrivilegesApplicationPrivilegesCheck {
@@ -15793,6 +15814,11 @@ export interface SecurityHasPrivilegesResponse {
   username: Username
 }
 
+export interface SecurityHasPrivilegesUserProfileHasPrivilegesUserProfileErrors {
+  count: long
+  details: Record<SecurityUserProfileId, ErrorCause>
+}
+
 export interface SecurityHasPrivilegesUserProfilePrivilegesCheck {
   application?: SecurityHasPrivilegesApplicationPrivilegesCheck[]
   cluster?: SecurityClusterPrivilege[]
@@ -15809,7 +15835,7 @@ export interface SecurityHasPrivilegesUserProfileRequest extends RequestBase {
 
 export interface SecurityHasPrivilegesUserProfileResponse {
   has_privilege_uids: SecurityUserProfileId[]
-  error_uids?: SecurityUserProfileId[]
+  errors?: SecurityHasPrivilegesUserProfileHasPrivilegesUserProfileErrors
 }
 
 export interface SecurityInvalidateApiKeyRequest extends RequestBase {
@@ -15921,6 +15947,7 @@ export interface SecurityPutUserResponse {
 }
 
 export interface SecurityQueryApiKeysRequest extends RequestBase {
+  with_limited_by?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     query?: QueryDslQueryContainer
@@ -16702,6 +16729,7 @@ export interface TasksParentTaskInfo extends TasksTaskInfo {
 
 export interface TasksTaskInfo {
   action: string
+  cancelled?: boolean
   cancellable: boolean
   description?: string
   headers: Record<string, string>
@@ -17167,41 +17195,30 @@ export interface WatcherActivationStatus {
 export interface WatcherAlwaysCondition {
 }
 
-export interface WatcherArrayCompareCondition {
-  array_path: string
-  comparison: string
+export interface WatcherArrayCompareConditionKeys {
   path: string
+}
+export type WatcherArrayCompareCondition = WatcherArrayCompareConditionKeys
+& { [property: string]: WatcherArrayCompareOpParams | string }
+
+export interface WatcherArrayCompareOpParams {
   quantifier: WatcherQuantifier
-  value: any
+  value: FieldValue
 }
 
 export interface WatcherChainInput {
-  inputs: WatcherInputContainer[]
-}
-
-export interface WatcherCompareCondition {
-  comparison?: string
-  path?: string
-  value?: any
-  'ctx.payload.match'?: WatcherCompareContextPayloadCondition
-  'ctx.payload.value'?: WatcherCompareContextPayloadCondition
-}
-
-export interface WatcherCompareContextPayloadCondition {
-  eq?: any
-  lt?: any
-  gt?: any
-  lte?: any
-  gte?: any
+  inputs: Partial<Record<string, WatcherInputContainer>>[]
 }
 
 export interface WatcherConditionContainer {
   always?: WatcherAlwaysCondition
-  array_compare?: WatcherArrayCompareCondition
-  compare?: WatcherCompareCondition
+  array_compare?: Partial<Record<string, WatcherArrayCompareCondition>>
+  compare?: Partial<Record<string, Partial<Record<WatcherConditionOp, FieldValue>>>>
   never?: WatcherNeverCondition
   script?: WatcherScriptCondition
 }
+
+export type WatcherConditionOp = 'not_eq' | 'eq' | 'lt' | 'gt' | 'lte' | 'gte'
 
 export type WatcherConditionType = 'always' | 'never' | 'script' | 'compare' | 'array_compare'
 
@@ -17322,7 +17339,6 @@ export interface WatcherHttpEmailAttachment {
 }
 
 export interface WatcherHttpInput {
-  http?: WatcherHttpInput
   extract?: string[]
   request?: WatcherHttpInputRequestDefinition
   response_content_type?: WatcherResponseContentType
