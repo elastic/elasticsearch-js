@@ -527,8 +527,6 @@ client.cat.allocation(...)
 [discrete]
 ==== component_templates
 Returns information about existing component_templates templates.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-compoentn-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.componentTemplates(...)
@@ -587,8 +585,6 @@ client.cat.indices(...)
 [discrete]
 ==== master
 Returns information about the master node.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/8.5/cat-8.5.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.master(...)
@@ -2096,8 +2092,6 @@ client.migration.postFeatureUpgrade(...)
 [discrete]
 ==== clear_trained_model_deployment_cache
 Clear the cached results from a trained model deployment
-
-https://www.elastic.co/guide/en/elasticsearch/reference/8.5/clear-trained-model-deployment-cache.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.clearTrainedModelDeploymentCache(...)
@@ -3004,8 +2998,6 @@ client.security.authenticate(...)
 [discrete]
 ==== bulk_update_api_keys
 Updates the attributes of multiple existing API keys.
-
-https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-bulk-update-api-keys.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.bulkUpdateApiKeys(...)
