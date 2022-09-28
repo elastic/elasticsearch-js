@@ -155,7 +155,7 @@ request: {
 The event order is described in the following graph, in some edge cases, the 
 order is not guaranteed.
 You can find in 
-https://github.com/elastic/elasticsearch-js/blob/master/test/acceptance/events-order.test.js[`test/acceptance/events-order.test.js`] 
+https://github.com/elastic/elasticsearch-js/blob/main/test/acceptance/events-order.test.js[`test/acceptance/events-order.test.js`] 
 how the order changes based on the situation.
 
 [source]
@@ -377,9 +377,9 @@ child.search({
 To improve observability, the client offers an easy way to configure the 
 `X-Opaque-Id` header. If you set the `X-Opaque-Id` in a specific request, this 
 allows you to discover this identifier in the 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/logging.html#deprecation-logging[deprecation logs], 
-helps you with https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-slowlog.html#_identifying_search_slow_log_origin[identifying search slow log origin] 
-as well as https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html#_identifying_running_tasks[identifying running tasks].
+https://www.elastic.co/guide/en/elasticsearch/reference/current/logging.html#deprecation-logging[deprecation logs], 
+helps you with https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-slowlog.html#_identifying_search_slow_log_origin[identifying search slow log origin] 
+as well as https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html#_identifying_running_tasks[identifying running tasks].
 
 The `X-Opaque-Id` should be configured in each request, for doing that you can 
 use the `opaqueId` option, as you can see in the following example. The 
