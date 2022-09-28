@@ -433,7 +433,7 @@ export interface GetScriptLanguagesResponse {
   types_allowed: string[]
 }
 
-export interface GetSourceRequest {
+export interface GetSourceRequest extends RequestBase {
   id: Id
   index: IndexName
   preference?: string
@@ -9569,7 +9569,7 @@ export interface IndicesAnalyzeAnalyzeDetail {
 export interface IndicesAnalyzeAnalyzeToken {
   end_offset: long
   position: long
-  position_length?: long
+  positionLength?: long
   start_offset: long
   token: string
   type: string
