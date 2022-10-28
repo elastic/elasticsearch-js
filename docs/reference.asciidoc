@@ -2092,6 +2092,8 @@ client.migration.postFeatureUpgrade(...)
 [discrete]
 ==== clear_trained_model_deployment_cache
 Clear the cached results from a trained model deployment
+
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/clear-trained-model-deployment-cache.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.clearTrainedModelDeploymentCache(...)
@@ -2998,6 +3000,8 @@ client.security.authenticate(...)
 [discrete]
 ==== bulk_update_api_keys
 Updates the attributes of multiple existing API keys.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-bulk-update-api-keys.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.bulkUpdateApiKeys(...)
