@@ -792,7 +792,7 @@ export interface RankEvalRankEvalRequestItem {
 }
 
 export interface RankEvalRequest extends RequestBase {
-  index: Indices
+  index?: Indices
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
@@ -8816,7 +8816,7 @@ export interface FleetGlobalCheckpointsResponse {
 }
 
 export interface FleetMsearchRequest extends RequestBase {
-  index: IndexName | IndexAlias
+  index?: IndexName | IndexAlias
   allow_no_indices?: boolean
   ccs_minimize_roundtrips?: boolean
   expand_wildcards?: ExpandWildcards
@@ -12597,7 +12597,7 @@ export interface MlZeroShotClassificationInferenceUpdateOptions {
 }
 
 export interface MlClearTrainedModelDeploymentCacheRequest extends RequestBase {
-  model_id?: Id
+  model_id: Id
 }
 
 export interface MlClearTrainedModelDeploymentCacheResponse {
