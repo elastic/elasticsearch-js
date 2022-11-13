@@ -36,6 +36,7 @@
     "company": "Elastic BV"
   },
   "license": "Apache-2.0",
+  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/elastic/elasticsearch-js.git"
