@@ -2,6 +2,21 @@
 == Release notes
 
 [discrete]
+=== 8.6.0
+
+[discrete]
+===== Bump @elastic/transport to 8.3.1+ https://github.com/elastic/elasticsearch-js/pull/1802[#1802]
+
+The `@elastic/transport` dependency has been bumped to `~8.3.1` to ensure
+fixes to the `maxResponseSize` option are available in the client.
+
+[discrete]
+===== Support for Elasticsearch `v8.6.0`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.6/release-notes-8.6.0.html[here].
+
+[discrete]
 === 8.5.0
 
 [discrete]
