@@ -1,6 +1,6 @@
 = Elasticsearch JavaScript Client
 
-:branch: 7.16
+include::{asciidoc-dir}/../../shared/versions/stack/{source_branch}.asciidoc[]
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 
 include::introduction.asciidoc[]
