@@ -3468,7 +3468,7 @@ link:{ref}/modules-scripting.html[Documentation] +
 ----
 client.getScriptContext()
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html[Documentation] +
+link:https://www.elastic.co/guide/en/elasticsearch/painless/7.16/painless-contexts.html[Documentation] +
 
 
 [discrete]
@@ -9003,7 +9003,7 @@ client.scriptsPainlessExecute({
   body: object
 })
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Documentation] +
+link:https://www.elastic.co/guide/en/elasticsearch/painless/7.16/painless-execute-api.html[Documentation] +
 [cols=2*]
 |===
 |`body`
