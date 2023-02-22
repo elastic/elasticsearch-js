@@ -1,0 +1,3 @@
+steps:
+  - label: ":js: Greetings"
+    command: "echo 'Hello, world!'"
