@@ -181,7 +181,7 @@ client.getScript(...)
 === get_script_context
 Returns all script contexts.
 
-https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/painless/8.0/painless-contexts.html[Endpoint documentation]
 [source,ts]
 ----
 client.getScriptContext(...)
@@ -353,7 +353,7 @@ client.renderSearchTemplate(...)
 === scripts_painless_execute
 Allows an arbitrary script to be executed and a result to be returned
 
-https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/painless/8.0/painless-execute-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.scriptsPainlessExecute(...)
