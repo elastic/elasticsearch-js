@@ -4163,7 +4163,7 @@ client.scriptsPainlessExecute({
   body: object
 })
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Reference]
+link:https://www.elastic.co/guide/en/elasticsearch/painless/6.7/painless-execute-api.html[Reference]
 [cols=2*]
 |===
 |`body`
