@@ -30,10 +30,16 @@
     "client",
     "index"
   ],
-  "author": {
-    "name": "Tomas Della Vedova",
-    "company": "Elastic BV"
-  },
+  "contributors": [
+    {
+      "name": "Tomas Della Vedova",
+      "company": "Elastic BV"
+    },
+    {
+      "name": "Josh Mock",
+      "company": "Elastic BV"
+    }
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
