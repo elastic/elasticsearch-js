@@ -215,6 +215,28 @@ export default class Transform {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async scheduleNowTransform (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async scheduleNowTransform (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async scheduleNowTransform (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async scheduleNowTransform (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['transform_id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_transform/${encodeURIComponent(params.transform_id.toString())}/_schedule_now`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStartTransformResponse>
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformStartTransformResponse, unknown>>
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptions): Promise<T.TransformStartTransformResponse>

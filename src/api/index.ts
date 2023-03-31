@@ -55,6 +55,7 @@ import getScriptContextApi from './api/get_script_context'
 import getScriptLanguagesApi from './api/get_script_languages'
 import getSourceApi from './api/get_source'
 import GraphApi from './api/graph'
+import healthReportApi from './api/health_report'
 import IlmApi from './api/ilm'
 import indexApi from './api/index'
 import IndicesApi from './api/indices'
@@ -134,6 +135,7 @@ export default interface API {
   getScriptLanguages: typeof getScriptLanguagesApi
   getSource: typeof getSourceApi
   graph: GraphApi
+  healthReport: typeof healthReportApi
   ilm: IlmApi
   index: typeof indexApi
   indices: IndicesApi
@@ -306,6 +308,7 @@ API.prototype.getScript = getScriptApi
 API.prototype.getScriptContext = getScriptContextApi
 API.prototype.getScriptLanguages = getScriptLanguagesApi
 API.prototype.getSource = getSourceApi
+API.prototype.healthReport = healthReportApi
 API.prototype.index = indexApi
 API.prototype.info = infoApi
 API.prototype.knnSearch = knnSearchApi
