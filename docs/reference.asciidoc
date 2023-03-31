@@ -538,7 +538,6 @@ client.cat.allocation(...)
 ==== component_templates
 Returns information about existing component_templates templates.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/8.7/cat-compoentn-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.componentTemplates(...)
@@ -598,7 +597,7 @@ client.cat.indices(...)
 ==== master
 Returns information about the master node.
 
-https://www.elastic.co/guide/en/elasticsearch/reference/8.7/cat-8.7.html[Endpoint documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/8.7/cat-master.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.master(...)
