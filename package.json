@@ -6,12 +6,11 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "npm run build && npm run lint && tap test/{unit,acceptance}/{*,**/*}.test.ts",
+    "test": "npm run build && npm run lint && tap test/unit/{*,**/*}.test.ts",
     "test:unit": "npm run build && tap test/unit/{*,**/*}.test.ts",
-    "test:acceptance": "npm run build && tap test/acceptance/*.test.ts",
-    "test:coverage-100": "npm run build && tap test/{unit,acceptance}/{*,**/*}.test.ts --coverage --100",
-    "test:coverage-report": "npm run build && tap test/{unit,acceptance}/{*,**/*}.test.ts --coverage && nyc report --reporter=text-lcov > coverage.lcov",
-    "test:coverage-ui": "npm run build && tap test/{unit,acceptance}/{*,**/*}.test.ts --coverage --coverage-report=html",
+    "test:coverage-100": "npm run build && tap test/unit/{*,**/*}.test.ts --coverage --100",
+    "test:coverage-report": "npm run build && tap test/unit/{*,**/*}.test.ts --coverage && nyc report --reporter=text-lcov > coverage.lcov",
+    "test:coverage-ui": "npm run build && tap test/unit/{*,**/*}.test.ts --coverage --coverage-report=html",
     "test:integration": "tsc && node test/integration/index.js",
     "lint": "ts-standard src",
     "lint:fix": "ts-standard --fix src",
@@ -31,10 +30,16 @@
     "client",
     "index"
   ],
-  "author": {
-    "name": "Tomas Della Vedova",
-    "company": "Elastic BV"
-  },
+  "contributors": [
+    {
+      "name": "Tomas Della Vedova",
+      "company": "Elastic BV"
+    },
+    {
+      "name": "Josh Mock",
+      "company": "Elastic BV"
+    }
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
