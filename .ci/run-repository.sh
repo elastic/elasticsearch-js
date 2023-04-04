@@ -5,8 +5,8 @@
 # TEST_SUITE -- which test suite to run: free or platinum
 # ELASTICSEARCH_URL -- The url at which elasticsearch is reachable, a default is composed based on STACK_VERSION and TEST_SUITE
 # NODE_JS_VERSION -- node js version (defined in test-matrix.yml, a default is hardcoded here)
-script_path=$(dirname $(realpath -s $0))
-source $script_path/functions/imports.sh
+script_path=$(dirname "$(realpath -s "$0")")
+source "$script_path/functions/imports.sh"
 set -euo pipefail
 
 NODE_JS_VERSION=${NODE_JS_VERSION-16}
@@ -24,18 +24,18 @@ echo -e "\033[1m>>>>> Build docker container >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0
 docker build \
   --file .ci/Dockerfile \
   --tag elastic/elasticsearch-js \
-  --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} \
+  --build-arg NODE_JS_VERSION="${NODE_JS_VERSION}" \
   .
 
 echo -e "\033[1m>>>>> NPM run test:integration >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
 
-repo=$(realpath $(dirname $(realpath -s $0))/../)
+repo=$(realpath "$(dirname "$(realpath -s "$0")")"/../)
 
 docker run \
-  --network=${network_name} \
+  --network="${network_name}" \
   --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
   --env "TEST_SUITE=${TEST_SUITE}" \
-  --volume $repo:/usr/src/app \
+  --volume "$repo:/usr/src/app" \
   --volume /usr/src/app/node_modules \
   --name elasticsearch-js \
   --rm \
