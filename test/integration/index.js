@@ -363,6 +363,8 @@ async function start ({ client, isXPack }) {
 
           if (options.bail) {
             process.exit(1)
+          } else {
+            continue
           }
         }
         const totalTestTime = now() - testTime
