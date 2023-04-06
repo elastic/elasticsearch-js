@@ -50,9 +50,16 @@ const options = minimist(process.argv.slice(2), {
 const freeSkips = {
   // not supported yet
   '/free/cluster.desired_nodes/10_basic.yml': ['*'],
+
+  // Cannot find methods on `Internal` object
+  '/free/cluster.desired_balance/10_basic.yml': ['*'],
+  '/free/cluster.desired_nodes/20_dry_run.yml': ['*'],
+  '/free/cluster.prevalidate_node_removal/10_basic.yml': ['*'],
+
   '/free/health/30_feature.yml': ['*'],
   '/free/health/40_useractions.yml': ['*'],
-  // the v8 client never sends the scroll_id in querystgring,
+
+  // the v8 client never sends the scroll_id in querystring,
   // the way the test is structured causes a security exception
   'free/scroll/10_basic.yml': ['Body params override query string'],
   'free/scroll/11_clear.yml': [
@@ -61,23 +68,28 @@ const freeSkips = {
   ],
   'free/cat.allocation/10_basic.yml': ['*'],
   'free/cat.snapshots/10_basic.yml': ['Test cat snapshots output'],
+
   // TODO: remove this once 'arbitrary_key' is implemented
   // https://github.com/elastic/elasticsearch/pull/41492
   'indices.split/30_copy_settings.yml': ['*'],
   'indices.stats/50_disk_usage.yml': ['Disk usage stats'],
   'indices.stats/60_field_usage.yml': ['Field usage stats'],
+
   // skipping because we are booting ES with `discovery.type=single-node`
   // and this test will fail because of this configuration
   'nodes.stats/30_discovery.yml': ['*'],
+
   // the expected error is returning a 503,
   // which triggers a retry and the node to be marked as dead
   'search.aggregation/240_max_buckets.yml': ['*'],
+
   // long values and json do not play nicely together
   'search.aggregation/40_range.yml': ['Min and max long range bounds'],
+
   // the yaml runner assumes that null means "does not exists",
   // while null is a valid json value, so the check will fail
   'search/320_disallow_queries.yml': ['Test disallow expensive queries'],
-  'free/tsdb/90_unsupported_operations.yml': ['noop update']
+  'free/tsdb/90_unsupported_operations.yml': ['noop update'],
 }
 
 const platinumDenyList = {
@@ -85,57 +97,70 @@ const platinumDenyList = {
   'api_key/20_query.yml': ['*'],
   'api_key/11_invalidation.yml': ['Test invalidate api key by realm name'],
   'analytics/histogram.yml': ['Histogram requires values in increasing order'],
+
   // this two test cases are broken, we should
   // return on those in the future.
   'analytics/top_metrics.yml': [
     'sort by keyword field fails',
     'sort by string script fails'
   ],
+
   'cat.aliases/10_basic.yml': ['Empty cluster'],
   'index/10_with_id.yml': ['Index with ID'],
   'indices.get_alias/10_basic.yml': ['Get alias against closed indices'],
   'indices.get_alias/20_empty.yml': ['Check empty aliases when getting all aliases via /_alias'],
   'text_structure/find_structure.yml': ['*'],
+
   // https://github.com/elastic/elasticsearch/pull/39400
   'ml/jobs_crud.yml': ['Test put job with id that is already taken'],
+
   // object keys must me strings, and `0.0.toString()` is `0`
   'ml/evaluate_data_frame.yml': [
     'Test binary_soft_classifition precision',
     'Test binary_soft_classifition recall',
     'Test binary_soft_classifition confusion_matrix'
   ],
+
   // it gets random failures on CI, must investigate
   'ml/set_upgrade_mode.yml': [
     'Attempt to open job when upgrade_mode is enabled',
     'Setting upgrade mode to disabled from enabled'
   ],
+
   // The cleanup fails with a index not found when retrieving the jobs
   'ml/get_datafeed_stats.yml': ['Test get datafeed stats when total_search_time_ms mapping is missing'],
   'ml/bucket_correlation_agg.yml': ['Test correlation bucket agg simple'],
+
   // start should be a string
   'ml/jobs_get_result_overall_buckets.yml': ['Test overall buckets given epoch start and end params'],
+
   // this can't happen with the client
   'ml/start_data_frame_analytics.yml': ['Test start with inconsistent body/param ids'],
   'ml/stop_data_frame_analytics.yml': ['Test stop with inconsistent body/param ids'],
   'ml/preview_datafeed.yml': ['*'],
+
   // Investigate why is failing
   'ml/inference_crud.yml': ['*'],
   'ml/categorization_agg.yml': ['Test categorization aggregation with poor settings'],
   'ml/filter_crud.yml': ['*'],
+
   // investigate why this is failing
   'monitoring/bulk/10_basic.yml': ['*'],
   'monitoring/bulk/20_privileges.yml': ['*'],
   'license/20_put_license.yml': ['*'],
   'snapshot/10_basic.yml': ['*'],
   'snapshot/20_operator_privileges_disabled.yml': ['*'],
+
   // the body is correct, but the regex is failing
   'sql/sql.yml': ['Getting textual representation'],
   'searchable_snapshots/10_usage.yml': ['*'],
   'service_accounts/10_basic.yml': ['*'],
+
   // we are setting two certificates in the docker config
   'ssl/10_basic.yml': ['*'],
   'token/10_basic.yml': ['*'],
   'token/11_invalidation.yml': ['*'],
+
   // very likely, the index template has not been loaded yet.
   // we should run a indices.existsTemplate, but the name of the
   // template may vary during time.
@@ -153,16 +178,20 @@ const platinumDenyList = {
   'transforms_stats.yml': ['*'],
   'transforms_stats_continuous.yml': ['*'],
   'transforms_update.yml': ['*'],
+
   // js does not support ulongs
   'unsigned_long/10_basic.yml': ['*'],
   'unsigned_long/20_null_value.yml': ['*'],
   'unsigned_long/30_multi_fields.yml': ['*'],
   'unsigned_long/40_different_numeric.yml': ['*'],
   'unsigned_long/50_script_values.yml': ['*'],
+
   // the v8 client flattens the body into the parent object
   'platinum/users/10_basic.yml': ['Test put user with different username in body'],
+
   // docker issue?
   'watcher/execute_watch/60_http_input.yml': ['*'],
+
   // the checks are correct, but for some reason the test is failing on js side
   // I bet is because the backslashes in the rg
   'watcher/execute_watch/70_invalid.yml': ['*'],
@@ -176,6 +205,7 @@ const platinumDenyList = {
   'platinum/ml/delete_job_force.yml': ['Test force delete an open job that is referred by a started datafeed'],
   'platinum/ml/evaluate_data_frame.yml': ['*'],
   'platinum/ml/get_datafeed_stats.yml': ['*'],
+
   // start should be a string in the yaml test
   'platinum/ml/start_stop_datafeed.yml': ['*']
 }
