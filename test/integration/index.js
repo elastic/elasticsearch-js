@@ -27,6 +27,7 @@ process.on('unhandledRejection', function (err) {
 const { writeFileSync, readFileSync, readdirSync, statSync } = require('fs')
 const { join, sep } = require('path')
 const yaml = require('js-yaml')
+const minimist = require('minimist')
 const ms = require('ms')
 const { Client } = require('../../index')
 const { kProductCheck } = require('@elastic/transport/lib/symbols')
@@ -41,6 +42,10 @@ const xPackYamlFolder = downloadArtifacts.locations.xPackTestFolder
 const MAX_API_TIME = 1000 * 90
 const MAX_FILE_TIME = 1000 * 30
 const MAX_TEST_TIME = 1000 * 3
+
+const options = minimist(process.argv.slice(2), {
+  boolean: ['bail']
+})
 
 const freeSkips = {
   // not supported yet
@@ -317,7 +322,10 @@ async function start ({ client, isXPack }) {
           junitTestSuites.end()
           generateJunitXmlReport(junit, isXPack ? 'platinum' : 'free')
           console.error(err)
-          process.exit(1)
+
+          if (options.bail) {
+            process.exit(1)
+          }
         }
         const totalTestTime = now() - testTime
         junitTestCase.end()
