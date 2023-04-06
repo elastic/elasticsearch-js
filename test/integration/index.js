@@ -58,6 +58,7 @@ const freeSkips = {
 
   '/free/health/30_feature.yml': ['*'],
   '/free/health/40_useractions.yml': ['*'],
+  '/free/health/40_diagnosis.yml': ['Diagnosis'],
 
   // the v8 client never sends the scroll_id in querystring,
   // the way the test is structured causes a security exception
