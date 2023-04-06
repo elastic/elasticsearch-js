@@ -74,7 +74,8 @@ const freeSkips = {
   'search/320_disallow_queries.yml': ['Test disallow expensive queries'],
   'free/tsdb/90_unsupported_operations.yml': ['noop update']
 }
-const platinumBlackList = {
+
+const platinumDenyList = {
   'api_key/10_basic.yml': ['Test get api key'],
   'api_key/20_query.yml': ['*'],
   'api_key/11_invalidation.yml': ['Test invalidate api key by realm name'],
@@ -395,20 +396,20 @@ const shouldSkip = (isXPack, file, name) => {
     for (let j = 0; j < freeTest.length; j++) {
       if (file.endsWith(list[i]) && (name === freeTest[j] || freeTest[j] === '*')) {
         const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-        log(`Skipping test ${testName} because is blacklisted in the free test`)
+        log(`Skipping test ${testName} because is denylisted in the free test`)
         return true
       }
     }
   }
 
   if (file.includes('x-pack') || isXPack) {
-    list = Object.keys(platinumBlackList)
+    list = Object.keys(platinumDenyList)
     for (let i = 0; i < list.length; i++) {
-      const platTest = platinumBlackList[list[i]]
+      const platTest = platinumDenyList[list[i]]
       for (let j = 0; j < platTest.length; j++) {
         if (file.endsWith(list[i]) && (name === platTest[j] || platTest[j] === '*')) {
           const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-          log(`Skipping test ${testName} because is blacklisted in the platinum test`)
+          log(`Skipping test ${testName} because is denylisted in the platinum test`)
           return true
         }
       }
