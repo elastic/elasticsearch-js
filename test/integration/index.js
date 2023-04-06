@@ -207,7 +207,14 @@ const platinumDenyList = {
   'platinum/ml/get_datafeed_stats.yml': ['*'],
 
   // start should be a string in the yaml test
-  'platinum/ml/start_stop_datafeed.yml': ['*']
+  'platinum/ml/start_stop_datafeed.yml': ['*'],
+
+  // health API not yet supported
+  '/platinum/health/10_usage.yml': ['*'],
+
+  // ML update_trained_model_deployment not supported yet
+  '/platinum/ml/3rd_party_deployment.yml': ['Test update deployment'],
+  '/platinum/ml/update_trained_model_deployment.yml': ['Test with unknown model id']
 }
 
 function runner (opts = {}) {
