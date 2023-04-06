@@ -419,7 +419,8 @@ function generateJunitXmlReport (junit, suite) {
 }
 
 if (require.main === module) {
-  const node = process.env.TEST_ES_SERVER || 'http://elastic:changeme@localhost:9200'
+  const scheme = process.env.TEST_SUITE === 'platinum' ? 'https' : 'http'
+  const node = process.env.TEST_ES_SERVER || `${scheme}://elastic:changeme@localhost:9200`
   const opts = {
     node,
     isXPack: process.env.TEST_SUITE !== 'free'
