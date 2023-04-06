@@ -445,7 +445,7 @@ const shouldSkip = (isXPack, file, name) => {
     for (let j = 0; j < freeTest.length; j++) {
       if (file.endsWith(list[i]) && (name === freeTest[j] || freeTest[j] === '*')) {
         const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-        log(`Skipping test ${testName} because is denylisted in the free test`)
+        log(`Skipping test ${testName} because it is denylisted in the free test suite`)
         return true
       }
     }
@@ -458,7 +458,7 @@ const shouldSkip = (isXPack, file, name) => {
       for (let j = 0; j < platTest.length; j++) {
         if (file.endsWith(list[i]) && (name === platTest[j] || platTest[j] === '*')) {
           const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-          log(`Skipping test ${testName} because is denylisted in the platinum test`)
+          log(`Skipping test ${testName} because it is denylisted in the platinum test suite`)
           return true
         }
       }
