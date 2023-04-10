@@ -228,7 +228,7 @@ function generateSingleApi (version, spec, common) {
 
     ${genUrlValidation(paths, api)}
 
-    let { ${genQueryBlacklist(false)}, ...querystring } = params
+    let { ${genQueryDenylist(false)}, ...querystring } = params
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
     let path = ''
@@ -316,20 +316,20 @@ function generateSingleApi (version, spec, common) {
     }, {})
   }
 
-  function genQueryBlacklist (addQuotes = true) {
+  function genQueryDenylist (addQuotes = true) {
     const toCamelCase = str => {
       return str[0] === '_'
         ? '_' + str.slice(1).replace(/_([a-z])/g, k => k[1].toUpperCase())
         : str.replace(/_([a-z])/g, k => k[1].toUpperCase())
     }
 
-    const blacklist = ['method', 'body']
+    const denylist = ['method', 'body']
     parts.forEach(p => {
       const camelStr = toCamelCase(p)
-      if (camelStr !== p) blacklist.push(`${camelStr}`)
-      blacklist.push(`${p}`)
+      if (camelStr !== p) denylist.push(`${camelStr}`)
+      denylist.push(`${p}`)
     })
-    return addQuotes ? blacklist.map(q => `'${q}'`) : blacklist
+    return addQuotes ? denylist.map(q => `'${q}'`) : denylist
   }
 
   function buildPath () {
