@@ -44,7 +44,8 @@ const MAX_FILE_TIME = 1000 * 30
 const MAX_TEST_TIME = 1000 * 3
 
 const options = minimist(process.argv.slice(2), {
-  boolean: ['bail']
+  boolean: ['bail'],
+  string: ['suite', 'test'],
 })
 
 const freeSkips = {
@@ -333,13 +334,21 @@ async function start ({ client, isXPack }) {
       }
 
       const cleanPath = file.slice(file.lastIndexOf(apiName))
+
+      // skip if --suite CLI arg doesn't match
+      if (options.suite && !cleanPath.endsWith(options.suite)) continue
+
       log('    ' + cleanPath)
       const junitTestSuite = junitTestSuites.testsuite(apiName.slice(1) + ' - ' + cleanPath)
 
       for (const test of tests) {
         const testTime = now()
         const name = Object.keys(test)[0]
+
+        // skip setups, teardowns and anything that doesn't match --test flag when present
         if (name === 'setup' || name === 'teardown') continue
+        if (options.test && !name.endsWith(options.test)) continue
+
         const junitTestCase = junitTestSuite.testcase(name)
 
         stats.total += 1
@@ -439,6 +448,8 @@ if (require.main === module) {
 }
 
 const shouldSkip = (isXPack, file, name) => {
+  if (options.suite || options.test) return false
+
   let list = Object.keys(freeSkips)
   for (let i = 0; i < list.length; i++) {
     const freeTest = freeSkips[list[i]]
