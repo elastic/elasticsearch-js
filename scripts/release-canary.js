@@ -36,7 +36,9 @@ async function release (opts) {
   }
 
   assert(process.cwd() !== __dirname, 'You should run the script from the top level directory of the repository')
-  assert(typeof opts.otp === 'string', 'Missing OTP')
+  if (!opts['dry-run']) {
+    assert(typeof opts.otp === 'string', 'Missing OTP')
+  }
   const packageJson = JSON.parse(await readFile(join(__dirname, '..', 'package.json'), 'utf8'))
 
   const originalName = packageJson.name
