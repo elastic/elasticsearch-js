@@ -22,7 +22,19 @@ const { join } = require('path')
 const minimist = require('minimist')
 const chalk = require('chalk')
 
+const helpMessage = `usage: node scripts/release-canary.js [options]
+
+    --otp <code> One-time password (required)
+    --reset      Reset the canary version to 1
+    --dry-run    Run everything but don't actually publish
+    -h, --help   Show this help message`
+
 async function release (opts) {
+  if (opts.help) {
+    console.log(helpMessage)
+    process.exit(0)
+  }
+
   assert(process.cwd() !== __dirname, 'You should run the script from the top level directory of the repository')
   assert(typeof opts.otp === 'string', 'Missing OTP')
   const packageJson = JSON.parse(await readFile(join(__dirname, '..', 'package.json'), 'utf8'))
@@ -110,12 +122,18 @@ release(
     boolean: [
       // Reset the canary version to '1'
       'reset',
-      // run all the steps but publish
-      'dry-run'
-    ]
+
+      // run all the steps but don't publish
+      'dry-run',
+
+      // help text
+      'help',
+    ],
+    alias: { help: 'h' },
   })
 )
   .catch(err => {
     console.log(err)
+    console.log('\n' + helpMessage)
     process.exit(1)
   })
