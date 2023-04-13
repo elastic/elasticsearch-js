@@ -37,7 +37,7 @@ make integration
 
 If Elasticsearch doesn't come up, run `make integration-cleanup` and then `DETACH=false .ci/run-elasticsearch.sh` manually to read the startup logs.
 
-If you get an error about `vm.max_map_count` being too low, run `sudo sysctl -w vm.max_map_count=262144` to update the setting until the next reboot, or `sudo sysctl -w vm.max_map_count=262144 | sudo tee -a /etc/sysctl.conf` to update the setting permanently.
+If you get an error about `vm.max_map_count` being too low, run `sudo sysctl -w vm.max_map_count=262144` to update the setting until the next reboot, or `sudo sysctl -w vm.max_map_count=262144; echo 'vm.max_map_count=262144' | sudo tee -a /etc/sysctl.conf` to update the setting permanently.
 
 ### Exit on the first failure
 
