@@ -4,8 +4,7 @@ integration-setup: integration-cleanup
 
 .PHONY: integration-cleanup
 integration-cleanup:
-	docker stop instance || true
-	docker volume rm instance-rest-test-data || true
+	docker container rm --force --volumes instance || true
 
 .PHONY: integration
 integration: integration-setup
