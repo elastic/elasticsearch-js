@@ -34,14 +34,14 @@ TASK=$1
 TASK_ARGS=()
 VERSION=$2
 STACK_VERSION=$VERSION
-NODE_JS_VERSION=16
-WORKFLOW=${WORKFLOW-staging}
 set -euo pipefail
 
 product="elastic/elasticsearch-js"
 output_folder=".ci/output"
 OUTPUT_DIR="$repo/${output_folder}"
-REPO_BINDING="${OUTPUT_DIR}:/sln/${output_folder}"
+# REPO_BINDING="${OUTPUT_DIR}:/sln/${output_folder}"
+NODE_JS_VERSION=18
+WORKFLOW=${WORKFLOW-staging}
 mkdir -p "$OUTPUT_DIR"
 
 echo -e "\033[34;1mINFO:\033[0m PRODUCT ${product}\033[0m"
@@ -118,10 +118,8 @@ echo -e "\033[34;1mINFO: building $product container\033[0m"
 
 docker build \
   --file .ci/Dockerfile \
-  --tag ${product} \
-  --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} \
-  --build-arg USER_ID="$(id -u)" \
-  --build-arg GROUP_ID="$(id -g)" \
+  --tag "$product" \
+  --build-arg NODE_JS_VERSION="$NODE_JS_VERSION" \
   .
 
 # ------------------------------------------------------- #
@@ -131,14 +129,15 @@ docker build \
 echo -e "\033[34;1mINFO: running $product container\033[0m"
 
 docker run \
-  --volume $repo:/usr/src/app \
-  --volume $generator:/usr/src/elastic-client-generator-js \
+  --volume "$repo:/usr/src/app" \
+  --volume "$generator:/usr/src/elastic-client-generator-js" \
   --volume /usr/src/app/node_modules \
-  --env "WORKFLOW=${WORKFLOW}" \
+  -u "$(id -u):$(id -g)" \
+  --env "WORKFLOW=$WORKFLOW" \
   --name make-elasticsearch-js \
   --rm \
   $product \
-  node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}
+  node .ci/make.mjs --task $TASK "${TASK_ARGS[@]}"
 
 # ------------------------------------------------------- #
 # Post Command tasks & checks
