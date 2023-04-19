@@ -96,21 +96,23 @@ async function bump (args) {
 
 // this command can only be executed locally for now
 async function codegen (args) {
-  assert(args.length === 1, 'Bump task expects one parameter')
-  const clientGeneratorPath = join(import.meta.url, '..', '..', 'elastic-client-generator-js')
+  assert(args.length === 1, 'Codegen task expects one parameter')
   const [version] = args
 
+  const clientGeneratorPath = join(import.meta.url, '..', '..', 'elastic-client-generator-js')
   const isGeneratorCloned = await $`[[ -d ${clientGeneratorPath} ]]`.exitCode === 0
   assert(isGeneratorCloned, 'You must clone the elastic-client-generator-js first')
 
   await $`npm install --prefix ${clientGeneratorPath}`
-  // this command will take a while!
+
+  // generate elasticsearch client. this command will take a while!
   if (version === 'main') {
     await $`npm run elasticsearch --prefix ${clientGeneratorPath} -- --version main`
   } else {
     await $`npm run elasticsearch --prefix ${clientGeneratorPath} -- --version ${version.split('.').slice(0, 2).join('.')}`
   }
-  await $`npm run lint --prefix ${clientGeneratorPath}`
+  // clean up fixable linter issues
+  await $`npm run fix --prefix ${clientGeneratorPath}`
 
   await $`rm -rf ${join(import.meta.url, '..', 'src', 'api')}`
   await $`mkdir ${join(import.meta.url, '..', 'src', 'api')}`
