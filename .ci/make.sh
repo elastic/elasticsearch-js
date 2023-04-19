@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-
 # ------------------------------------------------------- #
 #
-# Skeleton for common build entry script for all elastic
-# clients. Needs to be adapted to individual client usage.
+# Build entry script for elasticsearch-js
 #
 # Must be called: ./.ci/make.sh <target> <params>
 #
@@ -11,19 +9,19 @@
 #
 # Targets:
 # ---------------------------
-# assemble <VERSION> : build client artefacts with version
-# bump     <VERSION> : bump client internals to version
-# codegen  <VERSION> : generate endpoints
-# docsgen  <VERSION> : generate documentation
-# examplegen         : generate the doc examples
-# clean              : clean workspace
+# assemble   <VERSION> : build client artifacts with version
+# bump       <VERSION> : bump client internals to version
+# bumpmatrix <VERSION> : bump stack version in test matrix to version
+# codegen              : generate endpoints
+# docsgen    <VERSION> : generate documentation
+# examplegen           : generate the doc examples
+# clean                : clean workspace
 #
 # ------------------------------------------------------- #
 
 # ------------------------------------------------------- #
 # Bootstrap
 # ------------------------------------------------------- #
-
 script_path=$(dirname "$(realpath -s "$0")")
 repo=$(realpath "$script_path/../")
 generator=$(realpath "$script_path/../../elastic-client-generator-js")
@@ -34,23 +32,20 @@ TASK=$1
 TASK_ARGS=()
 VERSION=$2
 STACK_VERSION=$VERSION
-NODE_JS_VERSION=16
-WORKFLOW=${WORKFLOW-staging}
 set -euo pipefail
 
 product="elastic/elasticsearch-js"
 output_folder=".ci/output"
+codegen_folder=".ci/output"
 OUTPUT_DIR="$repo/${output_folder}"
-REPO_BINDING="${OUTPUT_DIR}:/sln/${output_folder}"
+# REPO_BINDING="${OUTPUT_DIR}:/sln/${output_folder}"
+NODE_JS_VERSION=18
+WORKFLOW=${WORKFLOW-staging}
 mkdir -p "$OUTPUT_DIR"
 
 echo -e "\033[34;1mINFO:\033[0m PRODUCT ${product}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m VERSION ${STACK_VERSION}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m OUTPUT_DIR ${OUTPUT_DIR}\033[0m"
-
-# ------------------------------------------------------- #
-# Parse Command
-# ------------------------------------------------------- #
 
 case $CMD in
     clean)
@@ -104,8 +99,21 @@ case $CMD in
         # VERSION is BRANCH here for now
         TASK_ARGS=("$VERSION")
         ;;
+    bumpmatrix)
+      if [ -v $VERSION ]; then
+        echo -e "\033[31;1mTARGET: bumpmatrix -> missing version parameter\033[0m"
+        exit 1
+      fi
+      echo -e "\033[36;1mTARGET: bump stack in test matrix to version $VERSION\033[0m"
+      TASK=bumpmatrix
+      TASK_ARGS=("$VERSION")
+      ;;
     *)
-        echo -e "\nUsage:\n\t $CMD is not supported right now\n"
+        echo -e "\n'$CMD' is not supported right now\n"
+        echo -e "\nUsage:"
+        echo -e "\t $0 release \$VERSION\n"
+        echo -e "\t $0 bump \$VERSION"
+        echo -e "\t $0 codegen \$VERSION"
         exit 1
 esac
 
@@ -118,10 +126,8 @@ echo -e "\033[34;1mINFO: building $product container\033[0m"
 
 docker build \
   --file .ci/Dockerfile \
-  --tag ${product} \
-  --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} \
-  --build-arg USER_ID="$(id -u)" \
-  --build-arg GROUP_ID="$(id -g)" \
+  --tag "$product" \
+  --build-arg NODE_JS_VERSION="$NODE_JS_VERSION" \
   .
 
 # ------------------------------------------------------- #
@@ -131,14 +137,15 @@ docker build \
 echo -e "\033[34;1mINFO: running $product container\033[0m"
 
 docker run \
-  --volume $repo:/usr/src/app \
-  --volume $generator:/usr/src/elastic-client-generator-js \
+  --volume "$repo:/usr/src/app" \
+  --volume "$generator:/usr/src/elastic-client-generator-js" \
   --volume /usr/src/app/node_modules \
-  --env "WORKFLOW=${WORKFLOW}" \
+  -u "$(id -u):$(id -g)" \
+  --env "WORKFLOW=$WORKFLOW" \
   --name make-elasticsearch-js \
   --rm \
   $product \
-  node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}
+  node .ci/make.mjs --task $TASK "${TASK_ARGS[@]}"
 
 # ------------------------------------------------------- #
 # Post Command tasks & checks
