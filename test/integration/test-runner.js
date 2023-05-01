@@ -165,9 +165,25 @@ function build (opts = {}) {
     if (isXPack) {
       // delete ilm policies
       const preserveIlmPolicies = [
-        'ilm-history-ilm-policy', 'slm-history-ilm-policy',
-        'watch-history-ilm-policy', 'ml-size-based-ilm-policy',
-        'logs', 'metrics'
+        "ilm-history-ilm-policy",
+        "slm-history-ilm-policy",
+        "watch-history-ilm-policy",
+        "watch-history-ilm-policy-16",
+        "ml-size-based-ilm-policy",
+        "logs",
+        "metrics",
+        "synthetics",
+        "7-days-default",
+        "30-days-default",
+        "90-days-default",
+        "180-days-default",
+        "365-days-default",
+        ".fleet-actions-results-ilm-policy",
+        ".fleet-file-data-ilm-policy",
+        ".fleet-files-ilm-policy",
+        ".deprecation-indexing-ilm-policy",
+        ".monitoring-8-ilm-policy",
+        "behavioral_analytics-events-default_policy",
       ]
       const policies = await client.ilm.getLifecycle()
       for (const policy in policies) {
