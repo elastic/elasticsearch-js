@@ -55,6 +55,7 @@ import getScriptContextApi from './api/get_script_context'
 import getScriptLanguagesApi from './api/get_script_languages'
 import getSourceApi from './api/get_source'
 import GraphApi from './api/graph'
+import healthReportApi from './api/health_report'
 import IlmApi from './api/ilm'
 import indexApi from './api/index'
 import IndicesApi from './api/indices'
@@ -82,6 +83,7 @@ import RollupApi from './api/rollup'
 import scriptsPainlessExecuteApi from './api/scripts_painless_execute'
 import scrollApi from './api/scroll'
 import searchApi from './api/search'
+import SearchApplicationApi from './api/search_application'
 import searchMvtApi from './api/search_mvt'
 import searchShardsApi from './api/search_shards'
 import searchTemplateApi from './api/search_template'
@@ -134,6 +136,7 @@ export default interface API {
   getScriptLanguages: typeof getScriptLanguagesApi
   getSource: typeof getSourceApi
   graph: GraphApi
+  healthReport: typeof healthReportApi
   ilm: IlmApi
   index: typeof indexApi
   indices: IndicesApi
@@ -161,6 +164,7 @@ export default interface API {
   scriptsPainlessExecute: typeof scriptsPainlessExecuteApi
   scroll: typeof scrollApi
   search: typeof searchApi
+  searchApplication: SearchApplicationApi
   searchMvt: typeof searchMvtApi
   searchShards: typeof searchShardsApi
   searchTemplate: typeof searchTemplateApi
@@ -204,6 +208,7 @@ const kMl = Symbol('Ml')
 const kMonitoring = Symbol('Monitoring')
 const kNodes = Symbol('Nodes')
 const kRollup = Symbol('Rollup')
+const kSearchApplication = Symbol('SearchApplication')
 const kSearchableSnapshots = Symbol('SearchableSnapshots')
 const kSecurity = Symbol('Security')
 const kShutdown = Symbol('Shutdown')
@@ -239,6 +244,7 @@ export default class API {
   [kMonitoring]: symbol | null
   [kNodes]: symbol | null
   [kRollup]: symbol | null
+  [kSearchApplication]: symbol | null
   [kSearchableSnapshots]: symbol | null
   [kSecurity]: symbol | null
   [kShutdown]: symbol | null
@@ -273,6 +279,7 @@ export default class API {
     this[kMonitoring] = null
     this[kNodes] = null
     this[kRollup] = null
+    this[kSearchApplication] = null
     this[kSearchableSnapshots] = null
     this[kSecurity] = null
     this[kShutdown] = null
@@ -306,6 +313,7 @@ API.prototype.getScript = getScriptApi
 API.prototype.getScriptContext = getScriptContextApi
 API.prototype.getScriptLanguages = getScriptLanguagesApi
 API.prototype.getSource = getSourceApi
+API.prototype.healthReport = healthReportApi
 API.prototype.index = indexApi
 API.prototype.info = infoApi
 API.prototype.knnSearch = knnSearchApi
@@ -395,6 +403,9 @@ Object.defineProperties(API.prototype, {
   },
   rollup: {
     get () { return this[kRollup] === null ? (this[kRollup] = new RollupApi(this.transport)) : this[kRollup] }
+  },
+  searchApplication: {
+    get () { return this[kSearchApplication] === null ? (this[kSearchApplication] = new SearchApplicationApi(this.transport)) : this[kSearchApplication] }
   },
   searchableSnapshots: {
     get () { return this[kSearchableSnapshots] === null ? (this[kSearchableSnapshots] = new SearchableSnapshotsApi(this.transport)) : this[kSearchableSnapshots] }

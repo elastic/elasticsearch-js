@@ -208,6 +208,16 @@ client.getSource(...)
 ----
 
 [discrete]
+=== health_report
+Returns the health of the cluster.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/health-api.html[Endpoint documentation]
+[source,ts]
+----
+client.healthReport(...)
+----
+
+[discrete]
 === index
 Creates or updates a document in an index.
 
@@ -527,6 +537,8 @@ client.cat.allocation(...)
 [discrete]
 ==== component_templates
 Returns information about existing component_templates templates.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-component-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.componentTemplates(...)
@@ -585,6 +597,8 @@ client.cat.indices(...)
 [discrete]
 ==== master
 Returns information about the master node.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-master.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.master(...)
@@ -1449,6 +1463,16 @@ client.indices.deleteAlias(...)
 ----
 
 [discrete]
+==== delete_data_lifecycle
+Deletes the data lifecycle of the selected data streams.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/dlm-delete-lifecycle.html[Endpoint documentation]
+[source,ts]
+----
+client.indices.deleteDataLifecycle(...)
+----
+
+[discrete]
 ==== delete_data_stream
 Deletes a data stream.
 
@@ -1539,6 +1563,16 @@ client.indices.existsTemplate(...)
 ----
 
 [discrete]
+==== explain_data_lifecycle
+Retrieves information about the index's current DLM lifecycle, such as any potential encountered error, time since creation etc.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/dlm-explain-lifecycle.html[Endpoint documentation]
+[source,ts]
+----
+client.indices.explainDataLifecycle(...)
+----
+
+[discrete]
 ==== field_usage_stats
 Returns the field usage stats for each field of an index
 
@@ -1586,6 +1620,16 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.
 [source,ts]
 ----
 client.indices.getAlias(...)
+----
+
+[discrete]
+==== get_data_lifecycle
+Returns the data lifecycle of the selected data streams.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/dlm-get-lifecycle.html[Endpoint documentation]
+[source,ts]
+----
+client.indices.getDataLifecycle(...)
 ----
 
 [discrete]
@@ -1696,6 +1740,16 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.
 [source,ts]
 ----
 client.indices.putAlias(...)
+----
+
+[discrete]
+==== put_data_lifecycle
+Updates the data lifecycle of the selected data streams.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/dlm-put-lifecycle.html[Endpoint documentation]
+[source,ts]
+----
+client.indices.putDataLifecycle(...)
 ----
 
 [discrete]
@@ -2092,6 +2146,8 @@ client.migration.postFeatureUpgrade(...)
 [discrete]
 ==== clear_trained_model_deployment_cache
 Clear the cached results from a trained model deployment
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-trained-model-deployment-cache.html[Endpoint documentation]
 [source,ts]
 ----
 client.ml.clearTrainedModelDeploymentCache(...)
@@ -2778,6 +2834,16 @@ client.ml.updateModelSnapshot(...)
 ----
 
 [discrete]
+==== update_trained_model_deployment
+Updates certain properties of trained model deployment.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/update-trained-model-deployment.html[Endpoint documentation]
+[source,ts]
+----
+client.ml.updateTrainedModelDeployment(...)
+----
+
+[discrete]
 ==== upgrade_job_snapshot
 Upgrades a given job snapshot to the current major version.
 
@@ -2942,6 +3008,98 @@ client.rollup.stopJob(...)
 ----
 
 [discrete]
+=== search_application
+[discrete]
+==== delete
+Deletes a search application.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/put-search-application.html[Endpoint documentation]
+[source,ts]
+----
+client.searchApplication.delete(...)
+----
+
+[discrete]
+==== delete_behavioral_analytics
+Delete a behavioral analytics collection.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-analytics-collection.html[Endpoint documentation]
+[source,ts]
+----
+client.searchApplication.deleteBehavioralAnalytics(...)
+----
+
+[discrete]
+==== get
+Returns the details about a search application.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/get-search-application.html[Endpoint documentation]
+[source,ts]
+----
+client.searchApplication.get(...)
+----
+
+[discrete]
+==== get_behavioral_analytics
+Returns the existing behavioral analytics collections.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/list-analytics-collection.html[Endpoint documentation]
+[source,ts]
+----
+client.searchApplication.getBehavioralAnalytics(...)
+----
+
+[discrete]
+==== list
+Returns the existing search applications.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/list-search-applications.html[Endpoint documentation]
+[source,ts]
+----
+client.searchApplication.list(...)
+----
+
+[discrete]
+==== post_behavioral_analytics_event
+Creates a behavioral analytics event for existing collection.
+
+http://todo.com/tbd[Endpoint documentation]
+[source,ts]
+----
+client.searchApplication.postBehavioralAnalyticsEvent(...)
+----
+
+[discrete]
+==== put
+Creates or updates a search application.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/put-search-application.html[Endpoint documentation]
+[source,ts]
+----
+client.searchApplication.put(...)
+----
+
+[discrete]
+==== put_behavioral_analytics
+Creates a behavioral analytics collection.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/put-analytics-collection.html[Endpoint documentation]
+[source,ts]
+----
+client.searchApplication.putBehavioralAnalytics(...)
+----
+
+[discrete]
+==== search
+Perform a search against a search application
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/search-application-search.html[Endpoint documentation]
+[source,ts]
+----
+client.searchApplication.search(...)
+----
+
+[discrete]
 === searchable_snapshots
 [discrete]
 ==== cache_stats
@@ -2998,6 +3156,8 @@ client.security.authenticate(...)
 [discrete]
 ==== bulk_update_api_keys
 Updates the attributes of multiple existing API keys.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-bulk-update-api-keys.html[Endpoint documentation]
 [source,ts]
 ----
 client.security.bulkUpdateApiKeys(...)
@@ -3855,6 +4015,16 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/reset-transform.
 [source,ts]
 ----
 client.transform.resetTransform(...)
+----
+
+[discrete]
+==== schedule_now_transform
+Schedules now a transform.
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/schedule-now-transform.html[Endpoint documentation]
+[source,ts]
+----
+client.transform.scheduleNowTransform(...)
 ----
 
 [discrete]

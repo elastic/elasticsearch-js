@@ -1155,7 +1155,7 @@ export default class Security {
     }
 
     const method = 'PUT'
-    const path = '/_security/privilege/'
+    const path = '/_security/privilege'
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
