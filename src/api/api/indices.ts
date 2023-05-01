@@ -330,6 +330,35 @@ export default class Indices {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async deleteDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async deleteDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async deleteDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async deleteDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['name']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.name != null) {
+      method = 'DELETE'
+      path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_lifecycle`
+    } else {
+      method = 'DELETE'
+      path = '/_data_stream/_lifecycle'
+    }
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataStreamResponse>
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataStreamResponse, unknown>>
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptions): Promise<T.IndicesDeleteDataStreamResponse>
@@ -540,6 +569,28 @@ export default class Indices {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async explainDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async explainDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async explainDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async explainDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['index']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/${encodeURIComponent(params.index.toString())}/_lifecycle/explain`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesFieldUsageStatsResponse>
   async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesFieldUsageStatsResponse, unknown>>
   async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptions): Promise<T.IndicesFieldUsageStatsResponse>
@@ -676,6 +727,35 @@ export default class Indices {
     } else {
       method = 'GET'
       path = '/_alias'
+    }
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  async getDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['name']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.name != null) {
+      method = 'GET'
+      path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_lifecycle`
+    } else {
+      method = 'GET'
+      path = '/_data_stream/_lifecycle'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
   }
@@ -1002,6 +1082,35 @@ export default class Indices {
     } else {
       method = 'PUT'
       path = `/${encodeURIComponent(params.index.toString())}/_aliases/${encodeURIComponent(params.name.toString())}`
+    }
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  async putDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putDataLifecycle (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['name']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.name != null) {
+      method = 'PUT'
+      path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_lifecycle`
+    } else {
+      method = 'PUT'
+      path = '/_data_stream/_lifecycle'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
   }

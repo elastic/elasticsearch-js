@@ -290,7 +290,7 @@ export default class Snapshot {
   async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<T.SnapshotRestoreResponse>
   async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['repository', 'snapshot']
-    const acceptedBody: string[] = ['ignore_index_settings', 'ignore_unavailable', 'include_aliases', 'include_global_state', 'index_settings', 'indices', 'partial', 'rename_pattern', 'rename_replacement']
+    const acceptedBody: string[] = ['feature_states', 'ignore_index_settings', 'ignore_unavailable', 'include_aliases', 'include_global_state', 'index_settings', 'indices', 'partial', 'rename_pattern', 'rename_replacement']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

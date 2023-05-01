@@ -82,8 +82,15 @@ export default class Logstash {
       }
     }
 
-    const method = 'GET'
-    const path = `/_logstash/pipeline/${encodeURIComponent(params.id.toString())}`
+    let method = ''
+    let path = ''
+    if (params.id != null) {
+      method = 'GET'
+      path = `/_logstash/pipeline/${encodeURIComponent(params.id.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_logstash/pipeline'
+    }
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 

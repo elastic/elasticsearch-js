@@ -43,19 +43,19 @@ export default class Ml {
     this.transport = transport
   }
 
-  async clearTrainedModelDeploymentCache (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async clearTrainedModelDeploymentCache (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async clearTrainedModelDeploymentCache (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async clearTrainedModelDeploymentCache (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest | TB.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlClearTrainedModelDeploymentCacheResponse>
+  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest | TB.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlClearTrainedModelDeploymentCacheResponse, unknown>>
+  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest | TB.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptions): Promise<T.MlClearTrainedModelDeploymentCacheResponse>
+  async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest | TB.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -710,7 +710,7 @@ export default class Ml {
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/categories/${encodeURIComponent(params.category_id.toString())}`
     } else {
       method = body != null ? 'POST' : 'GET'
-      path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/categories/`
+      path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/categories`
     }
     return await this.transport.request({ path, method, querystring, body }, options)
   }
@@ -2006,7 +2006,7 @@ export default class Ml {
   async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptions): Promise<T.MlUpdateDatafeedResponse>
   async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['datafeed_id']
-    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size']
+    const acceptedBody: string[] = ['aggregations', 'chunking_config', 'delayed_data_check_config', 'frequency', 'indices', 'indexes', 'indices_options', 'job_id', 'max_empty_searches', 'query', 'query_delay', 'runtime_mappings', 'script_fields', 'scroll_size']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -2074,7 +2074,7 @@ export default class Ml {
   async updateJob (this: That, params: T.MlUpdateJobRequest | TB.MlUpdateJobRequest, options?: TransportRequestOptions): Promise<T.MlUpdateJobResponse>
   async updateJob (this: That, params: T.MlUpdateJobRequest | TB.MlUpdateJobRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['job_id']
-    const acceptedBody: string[] = ['allow_lazy_open', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'categorization_filters', 'description', 'model_plot_config', 'daily_model_snapshot_retention_after_days', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_retention_days', 'groups', 'detectors', 'per_partition_categorization']
+    const acceptedBody: string[] = ['allow_lazy_open', 'analysis_limits', 'background_persist_interval', 'custom_settings', 'categorization_filters', 'description', 'model_plot_config', 'model_prune_window', 'daily_model_snapshot_retention_after_days', 'model_snapshot_retention_days', 'renormalization_window_days', 'results_retention_days', 'groups', 'detectors', 'per_partition_categorization']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -2134,6 +2134,28 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/model_snapshots/${encodeURIComponent(params.snapshot_id.toString())}/_update`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  async updateTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async updateTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async updateTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async updateTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['model_id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/deployment/_update`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 

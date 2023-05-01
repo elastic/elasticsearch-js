@@ -215,6 +215,28 @@ export default class Transform {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest | TB.TransformScheduleNowTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformScheduleNowTransformResponse>
+  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest | TB.TransformScheduleNowTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformScheduleNowTransformResponse, unknown>>
+  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest | TB.TransformScheduleNowTransformRequest, options?: TransportRequestOptions): Promise<T.TransformScheduleNowTransformResponse>
+  async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest | TB.TransformScheduleNowTransformRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['transform_id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_transform/${encodeURIComponent(params.transform_id.toString())}/_schedule_now`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStartTransformResponse>
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformStartTransformResponse, unknown>>
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptions): Promise<T.TransformStartTransformResponse>
