@@ -90,7 +90,7 @@ export default class Rollup {
       path = `/_rollup/job/${encodeURIComponent(params.id.toString())}`
     } else {
       method = 'GET'
-      path = '/_rollup/job/'
+      path = '/_rollup/job'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
   }
@@ -120,7 +120,7 @@ export default class Rollup {
       path = `/_rollup/data/${encodeURIComponent(params.id.toString())}`
     } else {
       method = 'GET'
-      path = '/_rollup/data/'
+      path = '/_rollup/data'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
   }
