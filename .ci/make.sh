@@ -145,7 +145,7 @@ docker run \
   --name make-elasticsearch-js \
   --rm \
   $product \
-  node .ci/make.mjs --task $TASK "${TASK_ARGS[@]}"
+  node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}
 
 # ------------------------------------------------------- #
 # Post Command tasks & checks

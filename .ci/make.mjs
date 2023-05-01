@@ -97,7 +97,7 @@ async function bump (args) {
 // this command can only be executed locally for now
 async function codegen (args) {
   assert(args.length === 1, 'Codegen task expects one parameter')
-  const [version] = args
+  const version = args[0].toString()
 
   const clientGeneratorPath = join(import.meta.url, '..', '..', 'elastic-client-generator-js')
   const isGeneratorCloned = await $`[[ -d ${clientGeneratorPath} ]]`.exitCode === 0
