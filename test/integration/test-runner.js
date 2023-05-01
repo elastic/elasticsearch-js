@@ -265,7 +265,7 @@ function build (opts = {}) {
    *    - cleanup
    * @param {object} setup (null if not needed)
    * @param {object} test
-   * @oaram {object} teardown (null if not needed)
+   * @param {object} teardown (null if not needed)
    * @returns {Promise}
    */
   async function run (setup, test, teardown, stats, junit) {
