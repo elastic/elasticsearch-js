@@ -85,7 +85,11 @@ function build (opts = {}) {
       )
 
       // remove 'x_pack_rest_user', used in some xpack test
-      await client.security.deleteUser({ username: 'x_pack_rest_user' }, { ignore: [404] })
+      try {
+        await client.security.deleteUser({ username: 'x_pack_rest_user' }, { ignore: [404] })
+      } catch {
+        // do nothing
+      }
 
       const searchableSnapshotIndices = await client.cluster.state({
         metric: 'metadata',
@@ -137,7 +141,11 @@ function build (opts = {}) {
     const body = await client.cluster.getComponentTemplate()
     const components = body.component_templates.filter(c => !isXPackTemplate(c.name)).map(c => c.name)
     if (components.length > 0) {
-      await client.cluster.deleteComponentTemplate({ name: components.join(',') }, { ignore: [404] })
+      try {
+        await client.cluster.deleteComponentTemplate({ name: components.join(',') }, { ignore: [404] })
+      } catch {
+        // do nothing
+      }
     }
 
     // Remove any cluster setting
@@ -157,9 +165,25 @@ function build (opts = {}) {
     if (isXPack) {
       // delete ilm policies
       const preserveIlmPolicies = [
-        'ilm-history-ilm-policy', 'slm-history-ilm-policy',
-        'watch-history-ilm-policy', 'ml-size-based-ilm-policy',
-        'logs', 'metrics'
+        "ilm-history-ilm-policy",
+        "slm-history-ilm-policy",
+        "watch-history-ilm-policy",
+        "watch-history-ilm-policy-16",
+        "ml-size-based-ilm-policy",
+        "logs",
+        "metrics",
+        "synthetics",
+        "7-days-default",
+        "30-days-default",
+        "90-days-default",
+        "180-days-default",
+        "365-days-default",
+        ".fleet-actions-results-ilm-policy",
+        ".fleet-file-data-ilm-policy",
+        ".fleet-files-ilm-policy",
+        ".deprecation-indexing-ilm-policy",
+        ".monitoring-8-ilm-policy",
+        "behavioral_analytics-events-default_policy",
       ]
       const policies = await client.ilm.getLifecycle()
       for (const policy in policies) {
@@ -257,7 +281,7 @@ function build (opts = {}) {
    *    - cleanup
    * @param {object} setup (null if not needed)
    * @param {object} test
-   * @oaram {object} teardown (null if not needed)
+   * @param {object} teardown (null if not needed)
    * @returns {Promise}
    */
   async function run (setup, test, teardown, stats, junit) {
