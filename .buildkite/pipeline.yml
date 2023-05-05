@@ -1,0 +1,31 @@
+steps:
+  - label: ":elasticsearch: :javascript: ES JavaScript ({{ matrix.nodejs }}) Test Suite: {{ matrix.suite }}"
+    agents:
+      provider: "gcp"
+    env:
+      NODE_VERSION: "{{ matrix.nodejs }}"
+      TEST_SUITE: "{{ matrix.suite }}"
+      STACK_VERSION: 8.8.0-SNAPSHOT
+    matrix:
+      setup:
+        suite:
+          - "free"
+          - "platinum"
+        nodejs:
+          - "14"
+          - "16"
+          - "18"
+          - "20"
+    command: ./.buildkite/run-tests.sh
+    artifact_paths: "./junit-output/junit-*.xml"
+  - wait: ~
+    continue_on_failure: true
+  - label: ":junit: Test results"
+    agents:
+      provider: "gcp"
+      image: family/core-ubuntu-2204
+    plugins:
+      - junit-annotate#v2.4.1:
+          artifacts: "junit-output/junit-*.xml"
+          job-uuid-file-pattern: 'junit-(.*).xml'
+          fail-build-on-error: true
