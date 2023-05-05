@@ -44,9 +44,9 @@ if [[ -z $es_node_name ]]; then
 
 fi
 
-  export script_path=$(dirname "$(realpath -s "$0")")
-  source "$script_path/functions/cleanup.sh"
-  source "$script_path/functions/wait-for-container.sh"
+  export script_path=$(dirname $(realpath -s $0))
+  source $script_path/functions/cleanup.sh
+  source $script_path/functions/wait-for-container.sh
   trap "cleanup_trap ${network_name}" EXIT
 
 
@@ -57,3 +57,4 @@ fi
 
 echo -e "\033[34;1mINFO:\033[0m Creating network $network_name if it does not exist already \033[0m"
 docker network inspect "$network_name" > /dev/null 2>&1 || docker network create "$network_name"
+
