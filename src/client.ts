@@ -20,6 +20,7 @@
 import { ConnectionOptions as TlsConnectionOptions } from 'tls'
 import { URL } from 'url'
 import buffer from 'buffer'
+import os from 'os'
 import {
   Transport,
   UndiciConnection,
@@ -173,7 +174,9 @@ export default class Client extends API {
       tls: null,
       caFingerprint: null,
       agent: null,
-      headers: {},
+      headers: {
+        'user-agent': `elasticsearch-js/${clientVersion} Node.js ${nodeVersion}; Transport ${transportVersion}; (${os.platform()} ${os.release()} ${os.arch()})`
+      },
       nodeFilter: null,
       generateRequestId: null,
       name: 'elasticsearch-js',
