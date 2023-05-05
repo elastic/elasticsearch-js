@@ -37,10 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
-export default async function HealthReportApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-export default async function HealthReportApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-export default async function HealthReportApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-export default async function HealthReportApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+export default async function HealthReportApi (this: That, params?: T.HealthReportRequest | TB.HealthReportRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.HealthReportResponse>
+export default async function HealthReportApi (this: That, params?: T.HealthReportRequest | TB.HealthReportRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.HealthReportResponse, unknown>>
+export default async function HealthReportApi (this: That, params?: T.HealthReportRequest | TB.HealthReportRequest, options?: TransportRequestOptions): Promise<T.HealthReportResponse>
+export default async function HealthReportApi (this: That, params?: T.HealthReportRequest | TB.HealthReportRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['feature']
   const querystring: Record<string, any> = {}
   const body = undefined
@@ -50,6 +50,7 @@ export default async function HealthReportApi (this: That, params?: T.TODO | TB.
     if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body') {
+      // @ts-expect-error
       querystring[key] = params[key]
     }
   }

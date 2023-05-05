@@ -471,6 +471,150 @@ export interface GetSourceRequest extends RequestBase {
 
 export type GetSourceResponse<TDocument = unknown> = TDocument
 
+export interface HealthReportBaseIndicator {
+  status: HealthReportIndicatorHealthStatus
+  symptom: string
+  impacts?: HealthReportImpact[]
+  diagnosis?: HealthReportDiagnosis[]
+}
+
+export interface HealthReportDiagnosis {
+  id: string
+  action: string
+  affected_resources: HealthReportDiagnosisAffectedResources
+  cause: string
+  help_url: string
+}
+
+export interface HealthReportDiagnosisAffectedResources {
+  indices?: Indices
+  nodes?: HealthReportIndicatorNode[]
+  slm_policies?: string[]
+  feature_states?: string[]
+  snapshot_repositories?: string[]
+}
+
+export interface HealthReportDiskIndicator extends HealthReportBaseIndicator {
+  details?: HealthReportDiskIndicatorDetails
+}
+
+export interface HealthReportDiskIndicatorDetails {
+  indices_with_readonly_block: long
+  nodes_with_enough_disk_space: long
+  nodes_over_high_watermark: long
+  nodes_over_flood_stage_watermark: long
+  nodes_with_unknown_disk_status: long
+}
+
+export interface HealthReportIlmIndicator extends HealthReportBaseIndicator {
+  details?: HealthReportIlmIndicatorDetails
+}
+
+export interface HealthReportIlmIndicatorDetails {
+  ilm_status: LifecycleOperationMode
+  policies: long
+}
+
+export interface HealthReportImpact {
+  description: string
+  id: string
+  impact_areas: HealthReportImpactArea[]
+  severity: integer
+}
+
+export type HealthReportImpactArea = 'search' | 'ingest' | 'backup' | 'deployment_management'
+
+export type HealthReportIndicatorHealthStatus = 'green' | 'yellow' | 'red' | 'unknown'
+
+export interface HealthReportIndicatorNode {
+  name: string | null
+  node_id: string | null
+}
+
+export interface HealthReportIndicators {
+  master_is_stable?: HealthReportMasterIsStableIndicator
+  shards_availability?: HealthReportShardsAvailabilityIndicator
+  disk?: HealthReportDiskIndicator
+  repository_integrity?: HealthReportRepositoryIntegrityIndicator
+  ilm?: HealthReportIlmIndicator
+  slm?: HealthReportSlmIndicator
+}
+
+export interface HealthReportMasterIsStableIndicator extends HealthReportBaseIndicator {
+  details?: HealthReportMasterIsStableIndicatorDetails
+}
+
+export interface HealthReportMasterIsStableIndicatorClusterFormationNode {
+  name?: string
+  node_id: string
+  cluster_formation_message: string
+}
+
+export interface HealthReportMasterIsStableIndicatorDetails {
+  current_master: HealthReportIndicatorNode
+  recent_masters: HealthReportIndicatorNode[]
+  exception_fetching_history?: HealthReportMasterIsStableIndicatorExceptionFetchingHistory
+  cluster_formation?: HealthReportMasterIsStableIndicatorClusterFormationNode[]
+}
+
+export interface HealthReportMasterIsStableIndicatorExceptionFetchingHistory {
+  message: string
+  stack_trace: string
+}
+
+export interface HealthReportRepositoryIntegrityIndicator extends HealthReportBaseIndicator {
+  details?: HealthReportRepositoryIntegrityIndicatorDetails
+}
+
+export interface HealthReportRepositoryIntegrityIndicatorDetails {
+  total_repositories?: long
+  corrupted_repositories?: long
+  corrupted?: string[]
+}
+
+export interface HealthReportRequest extends RequestBase {
+  feature?: string | string[]
+  timeout?: Duration
+  verbose?: boolean
+  size?: integer
+}
+
+export interface HealthReportResponse {
+  cluster_name: string
+  indicators: HealthReportIndicators
+}
+
+export interface HealthReportShardsAvailabilityIndicator extends HealthReportBaseIndicator {
+  details?: HealthReportShardsAvailabilityIndicatorDetails
+}
+
+export interface HealthReportShardsAvailabilityIndicatorDetails {
+  creating_primaries: long
+  initializing_primaries: long
+  initializing_replicas: long
+  restarting_primaries: long
+  restarting_replicas: long
+  started_primaries: long
+  started_replicas: long
+  unassigned_primaries: long
+  unassigned_replicas: long
+}
+
+export interface HealthReportSlmIndicator extends HealthReportBaseIndicator {
+  details?: HealthReportSlmIndicatorDetails
+}
+
+export interface HealthReportSlmIndicatorDetails {
+  slm_status: LifecycleOperationMode
+  policies: long
+  unhealthy_policies: HealthReportSlmIndicatorUnhealthyPolicies
+}
+
+export interface HealthReportSlmIndicatorUnhealthyPolicies {
+  count: long
+  invocations_since_last_success?: Record<string, long>
+}
+
 export interface IndexRequest<TDocument = unknown> extends RequestBase {
   id?: Id
   index: IndexName
@@ -589,7 +733,7 @@ export interface MsearchMultisearchBody {
   ext?: Record<string, any>
   stored_fields?: Fields
   docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
-  knn?: KnnQuery
+  knn?: KnnQuery | KnnQuery[]
   from?: integer
   highlight?: SearchHighlight
   indices_boost?: Record<IndexName, double>[]
@@ -4258,7 +4402,7 @@ export interface AnalysisLetterTokenizer extends AnalysisTokenizerBase {
 export interface AnalysisLimitTokenCountTokenFilter extends AnalysisTokenFilterBase {
   type: 'limit'
   consume_all_tokens?: boolean
-  max_token_count?: integer
+  max_token_count?: SpecUtilsStringified<integer>
 }
 
 export interface AnalysisLowercaseNormalizer {
@@ -4455,7 +4599,8 @@ export interface AnalysisStemmerOverrideTokenFilter extends AnalysisTokenFilterB
 
 export interface AnalysisStemmerTokenFilter extends AnalysisTokenFilterBase {
   type: 'stemmer'
-  language: string
+  language?: string
+  name?: string
 }
 
 export interface AnalysisStopAnalyzer {
@@ -5933,7 +6078,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
     track_total_hits?: SearchTrackHits
     indices_boost?: Record<IndexName, double>[]
     docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
-    knn?: KnnQuery
+    knn?: KnnQuery | KnnQuery[]
     min_score?: double
     post_filter?: QueryDslQueryContainer
     profile?: boolean
@@ -8240,6 +8385,26 @@ export interface ClusterGetSettingsResponse {
   defaults?: Record<string, any>
 }
 
+export interface ClusterHealthHealthResponseBody {
+  active_primary_shards: integer
+  active_shards: integer
+  active_shards_percent_as_number: Percentage
+  cluster_name: Name
+  delayed_unassigned_shards: integer
+  indices?: Record<IndexName, ClusterHealthIndexHealthStats>
+  initializing_shards: integer
+  number_of_data_nodes: integer
+  number_of_in_flight_fetch: integer
+  number_of_nodes: integer
+  number_of_pending_tasks: integer
+  relocating_shards: integer
+  status: HealthStatus
+  task_max_waiting_in_queue?: Duration
+  task_max_waiting_in_queue_millis: DurationValue<UnitMillis>
+  timed_out: boolean
+  unassigned_shards: integer
+}
+
 export interface ClusterHealthIndexHealthStats {
   active_primary_shards: integer
   active_shards: integer
@@ -8267,25 +8432,7 @@ export interface ClusterHealthRequest extends RequestBase {
   wait_for_status?: HealthStatus
 }
 
-export interface ClusterHealthResponse {
-  active_primary_shards: integer
-  active_shards: integer
-  active_shards_percent_as_number: Percentage
-  cluster_name: Name
-  delayed_unassigned_shards: integer
-  indices?: Record<IndexName, ClusterHealthIndexHealthStats>
-  initializing_shards: integer
-  number_of_data_nodes: integer
-  number_of_in_flight_fetch: integer
-  number_of_nodes: integer
-  number_of_pending_tasks: integer
-  relocating_shards: integer
-  status: HealthStatus
-  task_max_waiting_in_queue?: Duration
-  task_max_waiting_in_queue_millis: DurationValue<UnitMillis>
-  timed_out: boolean
-  unassigned_shards: integer
-}
+export type ClusterHealthResponse = ClusterHealthHealthResponseBody
 
 export interface ClusterHealthShardHealthStats {
   active_shards: integer
@@ -9439,7 +9586,7 @@ export interface IndicesIndexSettingBlocks {
   read_only_allow_delete?: boolean
   read?: boolean
   write?: boolean | string
-  metadata?: boolean
+  metadata?: SpecUtilsStringified<boolean>
 }
 
 export interface IndicesIndexSettingsKeys {
@@ -9453,7 +9600,7 @@ export interface IndicesIndexSettingsKeys {
   number_of_routing_shards?: integer
   check_on_startup?: IndicesIndexCheckOnStartup
   codec?: string
-  routing_partition_size?: integer
+  routing_partition_size?: SpecUtilsStringified<integer>
   load_fixed_bitset_filters_eagerly?: boolean
   hidden?: boolean | string
   auto_expand_replicas?: string
@@ -9613,8 +9760,8 @@ export interface IndicesMerge {
 }
 
 export interface IndicesMergeScheduler {
-  max_thread_count?: integer
-  max_merge_count?: integer
+  max_thread_count?: SpecUtilsStringified<integer>
+  max_merge_count?: SpecUtilsStringified<integer>
 }
 
 export interface IndicesNumericFielddata {
@@ -9642,7 +9789,7 @@ export type IndicesSegmentSortMode = 'min' | 'MIN' | 'max' | 'MAX'
 export type IndicesSegmentSortOrder = 'asc' | 'ASC' | 'desc' | 'DESC'
 
 export interface IndicesSettingsAnalyze {
-  max_token_count?: integer
+  max_token_count?: SpecUtilsStringified<integer>
 }
 
 export interface IndicesSettingsHighlight {
@@ -9650,7 +9797,7 @@ export interface IndicesSettingsHighlight {
 }
 
 export interface IndicesSettingsQueryString {
-  lenient: boolean
+  lenient: SpecUtilsStringified<boolean>
 }
 
 export interface IndicesSettingsSearch {
@@ -13602,9 +13749,7 @@ export interface MlPreviewDatafeedRequest extends RequestBase {
   }
 }
 
-export interface MlPreviewDatafeedResponse<TDocument = unknown> {
-  data: TDocument[]
-}
+export type MlPreviewDatafeedResponse<TDocument = unknown> = TDocument[]
 
 export interface MlPutCalendarRequest extends RequestBase {
   calendar_id: Id
@@ -15400,7 +15545,7 @@ export interface SecurityClusterNode {
   name: Name
 }
 
-export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_ccr' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'read_ccr' | 'read_ilm' | 'read_pipeline' | 'read_slm' | 'transport_client'
+export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_ccr' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'read_ccr' | 'read_ilm' | 'read_pipeline' | 'read_slm' | 'transport_client'| string
 
 export interface SecurityCreatedStatus {
   created: boolean
@@ -15425,10 +15570,10 @@ export interface SecurityGlobalPrivilege {
 
 export type SecurityGrantType = 'password' | 'access_token'
 
-export type SecurityIndexPrivilege = 'none' | 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'delete' | 'delete_index' | 'index' | 'maintenance' | 'manage' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'monitor' | 'read' | 'read_cross_cluster' | 'view_index_metadata' | 'write'
+export type SecurityIndexPrivilege = 'none' | 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'delete' | 'delete_index' | 'index' | 'maintenance' | 'manage' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'monitor' | 'read' | 'read_cross_cluster' | 'view_index_metadata' | 'write'| string
 
 export interface SecurityIndicesPrivileges {
-  field_security?: SecurityFieldSecurity | SecurityFieldSecurity[]
+  field_security?: SecurityFieldSecurity
   names: Indices
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery
@@ -16596,7 +16741,7 @@ export interface SnapshotSnapshotInfo {
 
 export interface SnapshotSnapshotShardFailure {
   index: IndexName
-  node_id: Id
+  node_id?: Id
   reason: string
   shard_id: Id
   status: string
@@ -16755,6 +16900,7 @@ export interface SnapshotRestoreRequest extends RequestBase {
   wait_for_completion?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
+    feature_states?: string[]
     ignore_index_settings?: string[]
     ignore_unavailable?: boolean
     include_aliases?: boolean
@@ -17298,9 +17444,17 @@ export interface TransformResetTransformRequest extends RequestBase {
 
 export type TransformResetTransformResponse = AcknowledgedResponseBase
 
+export interface TransformScheduleNowTransformRequest extends RequestBase {
+  transform_id: Id
+  timeout?: Duration
+}
+
+export type TransformScheduleNowTransformResponse = AcknowledgedResponseBase
+
 export interface TransformStartTransformRequest extends RequestBase {
   transform_id: Id
   timeout?: Duration
+  from?: string
 }
 
 export type TransformStartTransformResponse = AcknowledgedResponseBase
