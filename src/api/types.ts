@@ -16469,7 +16469,7 @@ export interface SnapshotSnapshotInfo {
 
 export interface SnapshotSnapshotShardFailure {
   index: IndexName
-  node_id: Id
+  node_id?: Id
   reason: string
   shard_id: Id
   status: string
