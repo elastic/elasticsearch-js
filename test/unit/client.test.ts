@@ -432,3 +432,12 @@ test('caFingerprint can\'t be configured over http / 2', t => {
   )
   t.end()
 })
+
+test('user agent is in the correct format', t => {
+  const client = new Client({ node: 'http://localhost:9200' })
+  const agentRaw = client.transport[symbols.kHeaders]['user-agent'] || ''
+  const agentSplit = agentRaw.split(/\s+/)
+  t.equal(agentSplit[0].split('/')[0], 'elasticsearch-js')
+  t.ok(/^\d+\.\d+\.\d+/.test(agentSplit[0].split('/')[1]))
+  t.end()
+})
