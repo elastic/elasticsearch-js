@@ -538,7 +538,7 @@ client.cat.allocation(...)
 ==== component_templates
 Returns information about existing component_templates templates.
 
-{ref}/cat-compoentn-templates.html[Endpoint documentation]
+{ref}/cat-component-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.cat.componentTemplates(...)
