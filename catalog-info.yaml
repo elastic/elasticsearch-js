@@ -15,7 +15,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: elasticsearch-js-integration-tests
-  description: Elasticsearch JavaScript client integration tests
+  description: elasticsearch-js - integration tests
 spec:
   type: buildkite-pipeline
   owner: group:clients-team
