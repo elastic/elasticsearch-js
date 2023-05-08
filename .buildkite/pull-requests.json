@@ -1,0 +1,20 @@
+{
+  "jobs": [
+    {
+      "enabled": true,
+      "pipeline_slug": "elasticsearch-js-integration-tests",
+      "allowed_repo_permissions": ["admin", "write"],
+      "build_on_commit": true,
+      "skip_ci_on_only_changed": [
+        "\\.md$",
+        "\\.asciidoc$",
+        "^docs\\/",
+        "^\\.ci\\/",
+        "^scripts\\/",
+        "^catalog-info\\.yaml$",
+        "^test\\/unit\\/",
+        "^\\.github\\/"
+      ]
+    }
+  ]
+}
