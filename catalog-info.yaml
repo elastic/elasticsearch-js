@@ -38,10 +38,10 @@ spec:
       schedules:
         main_semi_daily:
           branch: 'main'
-          cronline: '*/12 * * *'
+          cronline: '*/12 * * * *'
         8_8_semi_daily:
           branch: '8.8'
-          cronline: '*/12 * * *'
+          cronline: '*/12 * * * *'
         8_7_daily:
           branch: '8.7'
           cronline: '@daily'
