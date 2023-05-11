@@ -73,13 +73,14 @@ function createJunitReporter () {
   }
 
   function createTestCase (testcaseList) {
-    return function testcase (name) {
+    return function testcase (name, file) {
       assert(name, 'The testcase name is required')
       const startTime = Date.now()
       const tcase = {
         '@id': new Date().toISOString(),
         '@name': name
       }
+      if (file) tcase['@file'] = file
       testcaseList.push(tcase)
       return {
         failure (error) {

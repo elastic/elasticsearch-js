@@ -21,13 +21,16 @@
 
 /* eslint camelcase: 0 */
 
-const assert = require('assert')
+const chai = require('chai')
 const semver = require('semver')
 const helper = require('./helper')
-const deepEqual = require('fast-deep-equal')
 const { join } = require('path')
 const { locations } = require('../../scripts/download-artifacts')
 const packageJson = require('../../package.json')
+
+chai.config.showDiff = true
+chai.config.truncateThreshold = 0
+const { assert } = chai
 
 const { delve, to, isXPackTemplate, sleep, updateParams } = helper
 
@@ -522,7 +525,7 @@ function build (opts = {}) {
       }
 
       stats.assertions += 1
-      assert.ok(deepEqual(warnings, action.warnings))
+      assert.deepEqual(warnings, action.warnings)
     }
 
     if (action.catch) {
@@ -530,7 +533,7 @@ function build (opts = {}) {
       assert.ok(err, `Expecting an error, but instead got ${JSON.stringify(err)}, the response was ${JSON.stringify(result)}`)
       assert.ok(
         parseDoError(err, action.catch),
-        `the error should be: ${action.catch}`
+        `the error should match: ${action.catch}, found ${JSON.stringify(err.body)}`
       )
       try {
         response = JSON.parse(err.body)
@@ -691,7 +694,7 @@ function is_false (val, msg) {
 function match (val1, val2, action) {
   // both values are objects
   if (typeof val1 === 'object' && typeof val2 === 'object') {
-    assert.ok(deepEqual(val1, val2), action)
+    assert.deepEqual(val1, val2, typeof action === 'object' ? JSON.stringify(action) : action)
   // the first value is the body as string and the second a pattern string
   } else if (
     typeof val1 === 'string' && typeof val2 === 'string' &&
@@ -702,8 +705,7 @@ function match (val1, val2, action) {
       .replace(/(^|[^\\])\s+/g, '$1')
       .slice(1, -1)
     // 'm' adds the support for multiline regex
-    assert.ok(new RegExp(regStr, 'm').test(val1), `should match pattern provided: ${val2}, but got: ${val1}`)
-    // tap.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}, action: ${JSON.stringify(action)}`)
+    assert.match(val1, new RegExp(regStr, 'm'), `should match pattern provided: ${val2}, but got: ${val1}`)
   // everything else
   } else {
     assert.equal(val1, val2, `should be equal: ${val1} - ${val2}, action: ${JSON.stringify(action)}`)
