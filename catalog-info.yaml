@@ -24,7 +24,7 @@ spec:
     apiVersion: buildkite.elastic.dev/v1
     kind: Pipeline
     metadata:
-      name: Elasticsearch JavaScript client integration tests
+      name: elasticsearch-js - integration tests
     spec:
       repository: elastic/elasticsearch-js
       pipeline_file: .buildkite/pipeline.yml
