@@ -317,7 +317,7 @@ async function start ({ client, isXPack }) {
         if (name === 'setup' || name === 'teardown') continue
         if (options.test && !name.endsWith(options.test)) continue
 
-        const junitTestCase = junitTestSuite.testcase(name, cleanPath)
+        const junitTestCase = junitTestSuite.testcase(name, `node_${process.version}/${cleanPath}`)
 
         stats.total += 1
         if (shouldSkip(isXPack, file, name)) {
