@@ -103,7 +103,7 @@ async function run () {
     // get the next response if there are more quotes to fetch
     responseQueue.push(
       await client.scroll({
-        scrollId: body._scroll_id,
+        scroll_id: body._scroll_id,
         scroll: '30s'
       })
     )
@@ -146,7 +146,7 @@ async function * scrollSearch (params) {
     }
 
     response = await client.scroll({
-      scrollId: response._scroll_id,
+      scroll_id: response._scroll_id,
       scroll: params.scroll
     })
   }
