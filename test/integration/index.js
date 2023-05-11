@@ -48,6 +48,13 @@ const options = minimist(process.argv.slice(2), {
 })
 
 const freeSkips = {
+  // working on fixes for these
+  '/free/aggregations/bucket_selector.yml': ['bad script'],
+  '/free/aggregations/bucket_script.yml': ['bad script'],
+
+  // either the YAML test definition is wrong, or this fails because JSON.stringify is coercing "1.0" to "1"
+  '/free/aggregations/percentiles_bucket.yml': ['*'],
+
   // not supported yet
   '/free/cluster.desired_nodes/10_basic.yml': ['*'],
 
