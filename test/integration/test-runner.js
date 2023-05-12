@@ -488,7 +488,17 @@ function build (opts = {}) {
       cmd.params.body = JSON.parse(cmd.params.body)
     }
 
-    const [err, result] = await to(api(cmd.params, options))
+    let err, result;
+    try {
+      [err, result] = await to(api(cmd.params, options))
+    } catch (exc) {
+      if (JSON.stringify(exc).includes('resource_already_exists_exception')) {
+        console.warn(`Resource already exists: ${JSON.stringify(cmd.params)}`)
+        // setup task was already done because cleanup didn't catch it? do nothing
+      } else {
+        throw exc
+      }
+    }
     let warnings = result ? result.warnings : null
     const body = result ? result.body : null
 
