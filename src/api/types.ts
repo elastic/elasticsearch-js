@@ -5695,6 +5695,7 @@ export interface QueryDslQueryContainer {
   term?: Partial<Record<Field, QueryDslTermQuery | FieldValue>>
   terms?: QueryDslTermsQuery
   terms_set?: Partial<Record<Field, QueryDslTermsSetQuery>>
+  text_expansion?: QueryDslTextExpansionQuery | Field
   wildcard?: Partial<Record<Field, QueryDslWildcardQuery | string>>
   wrapper?: QueryDslWrapperQuery
   type?: QueryDslTypeQuery
@@ -5906,6 +5907,12 @@ export interface QueryDslTermsSetQuery extends QueryDslQueryBase {
   minimum_should_match_field?: Field
   minimum_should_match_script?: Script
   terms: string[]
+}
+
+export interface QueryDslTextExpansionQuery extends QueryDslQueryBase {
+  value: Field
+  model_id: string
+  model_text: string
 }
 
 export type QueryDslTextQueryType = 'best_fields' | 'most_fields' | 'cross_fields' | 'phrase' | 'phrase_prefix' | 'bool_prefix'
@@ -8153,6 +8160,7 @@ export interface ClusterComponentTemplateSummary {
   settings?: Record<IndexName, IndicesIndexSettings>
   mappings?: MappingTypeMapping
   aliases?: Record<string, IndicesAliasDefinition>
+  lifecycle?: IndicesDataLifecycleWithRollover
 }
 
 export interface ClusterAllocationExplainAllocationDecision {
@@ -8299,6 +8307,7 @@ export interface ClusterGetComponentTemplateRequest extends RequestBase {
   flat_settings?: boolean
   local?: boolean
   master_timeout?: Duration
+  include_defaults?: boolean
 }
 
 export interface ClusterGetComponentTemplateResponse {
@@ -9403,6 +9412,15 @@ export interface IndicesCacheQueries {
   enabled: boolean
 }
 
+export interface IndicesDataLifecycle {
+  data_retention?: Duration
+}
+
+export interface IndicesDataLifecycleWithRollover {
+  data_retention?: Duration
+  rollover?: IndicesDlmRolloverConditions
+}
+
 export interface IndicesDataStream {
   name: DataStreamName
   timestamp_field: IndicesDataStreamTimestampField
@@ -9416,6 +9434,7 @@ export interface IndicesDataStream {
   ilm_policy?: Name
   _meta?: Metadata
   allow_custom_routing?: boolean
+  lifecycle?: IndicesDataLifecycleWithRollover
 }
 
 export interface IndicesDataStreamIndex {
@@ -9429,6 +9448,19 @@ export interface IndicesDataStreamTimestampField {
 
 export interface IndicesDataStreamVisibility {
   hidden?: boolean
+}
+
+export interface IndicesDlmRolloverConditions {
+  min_age?: Duration
+  max_age?: string
+  min_docs?: long
+  max_docs?: long
+  min_size?: ByteSize
+  max_size?: ByteSize
+  min_primary_shard_size?: ByteSize
+  max_primary_shard_size?: ByteSize
+  min_primary_shard_docs?: long
+  max_primary_shard_docs?: long
 }
 
 export interface IndicesDownsampleConfig {
@@ -9484,10 +9516,10 @@ export interface IndicesIndexSegmentSort {
 }
 
 export interface IndicesIndexSettingBlocks {
-  read_only?: boolean
-  read_only_allow_delete?: boolean
-  read?: boolean
-  write?: boolean | string
+  read_only?: SpecUtilsStringified<boolean>
+  read_only_allow_delete?: SpecUtilsStringified<boolean>
+  read?: SpecUtilsStringified<boolean>
+  write?: SpecUtilsStringified<boolean>
   metadata?: SpecUtilsStringified<boolean>
 }
 
@@ -9585,6 +9617,7 @@ export interface IndicesIndexState {
   settings?: IndicesIndexSettings
   defaults?: IndicesIndexSettings
   data_stream?: DataStreamName
+  lifecycle?: IndicesDataLifecycle
 }
 
 export interface IndicesIndexTemplate {
@@ -9607,6 +9640,7 @@ export interface IndicesIndexTemplateSummary {
   aliases?: Record<IndexName, IndicesAlias>
   mappings?: MappingTypeMapping
   settings?: IndicesIndexSettings
+  lifecycle?: IndicesDataLifecycleWithRollover
 }
 
 export interface IndicesIndexVersioning {
@@ -10020,6 +10054,15 @@ export interface IndicesDeleteAliasRequest extends RequestBase {
 
 export type IndicesDeleteAliasResponse = AcknowledgedResponseBase
 
+export interface IndicesDeleteDataLifecycleRequest extends RequestBase {
+  name: DataStreamNames
+  expand_wildcards?: ExpandWildcards
+  master_timeout?: Duration
+  timeout?: Duration
+}
+
+export type IndicesDeleteDataLifecycleResponse = AcknowledgedResponseBase
+
 export interface IndicesDeleteDataStreamRequest extends RequestBase {
   name: DataStreamNames
   expand_wildcards?: ExpandWildcards
@@ -10100,6 +10143,28 @@ export interface IndicesExistsTemplateRequest extends RequestBase {
 }
 
 export type IndicesExistsTemplateResponse = boolean
+
+export interface IndicesExplainDataLifecycleDataLifecycleExplain {
+  index: IndexName
+  managed_by_dlm: boolean
+  index_creation_date_millis?: EpochTime<UnitMillis>
+  time_since_index_creation?: Duration
+  rollover_date_millis?: EpochTime<UnitMillis>
+  time_since_rollover?: Duration
+  lifecycle?: IndicesDataLifecycleWithRollover
+  generation_time?: Duration
+  error?: string
+}
+
+export interface IndicesExplainDataLifecycleRequest extends RequestBase {
+  index: Indices
+  include_defaults?: boolean
+  master_timeout?: Duration
+}
+
+export interface IndicesExplainDataLifecycleResponse {
+  indices: Record<IndexName, IndicesExplainDataLifecycleDataLifecycleExplain>
+}
 
 export interface IndicesFieldUsageStatsFieldSummary {
   any: uint
@@ -10218,9 +10283,25 @@ export interface IndicesGetAliasRequest extends RequestBase {
 
 export type IndicesGetAliasResponse = Record<IndexName, IndicesGetAliasIndexAliases>
 
+export interface IndicesGetDataLifecycleDataStreamLifecycle {
+  name: DataStreamName
+  lifecycle?: IndicesDataLifecycle
+}
+
+export interface IndicesGetDataLifecycleRequest extends RequestBase {
+  name: DataStreamNames
+  expand_wildcards?: ExpandWildcards
+  include_defaults?: boolean
+}
+
+export interface IndicesGetDataLifecycleResponse {
+  data_streams: IndicesGetDataLifecycleDataStreamLifecycle[]
+}
+
 export interface IndicesGetDataStreamRequest extends RequestBase {
   name?: DataStreamNames
   expand_wildcards?: ExpandWildcards
+  include_defaults?: boolean
 }
 
 export interface IndicesGetDataStreamResponse {
@@ -10253,6 +10334,7 @@ export interface IndicesGetIndexTemplateRequest extends RequestBase {
   local?: boolean
   flat_settings?: boolean
   master_timeout?: Duration
+  include_defaults?: boolean
 }
 
 export interface IndicesGetIndexTemplateResponse {
@@ -10355,10 +10437,21 @@ export interface IndicesPutAliasRequest extends RequestBase {
 
 export type IndicesPutAliasResponse = AcknowledgedResponseBase
 
+export interface IndicesPutDataLifecycleRequest extends RequestBase {
+  name: DataStreamNames
+  expand_wildcards?: ExpandWildcards
+  master_timeout?: Duration
+  timeout?: Duration
+  data_retention?: Duration
+}
+
+export type IndicesPutDataLifecycleResponse = AcknowledgedResponseBase
+
 export interface IndicesPutIndexTemplateIndexTemplateMapping {
   aliases?: Record<IndexName, IndicesAlias>
   mappings?: MappingTypeMapping
   settings?: IndicesIndexSettings
+  lifecycle?: IndicesDataLifecycle
 }
 
 export interface IndicesPutIndexTemplateRequest extends RequestBase {
@@ -10740,6 +10833,7 @@ export interface IndicesSimulateIndexTemplateRequest extends RequestBase {
   name: Name
   create?: boolean
   master_timeout?: Duration
+  include_defaults?: boolean
   allow_auto_create?: boolean
   index_patterns?: Indices
   composed_of?: Name[]
@@ -10762,6 +10856,7 @@ export interface IndicesSimulateTemplateRequest extends RequestBase {
   name?: Name
   create?: boolean
   master_timeout?: Duration
+  include_defaults?: boolean
   template?: IndicesIndexTemplate
 }
 
@@ -15188,6 +15283,14 @@ export interface RollupStopJobResponse {
   stopped: boolean
 }
 
+export interface SearchApplicationAnalyticsCollection {
+  event_data_stream: SearchApplicationEventDataStream
+}
+
+export interface SearchApplicationEventDataStream {
+  name: IndexName
+}
+
 export interface SearchApplicationSearchApplication {
   name: Name
   indices: IndexName[]
@@ -15206,11 +15309,23 @@ export interface SearchApplicationDeleteRequest extends RequestBase {
 
 export type SearchApplicationDeleteResponse = AcknowledgedResponseBase
 
+export interface SearchApplicationDeleteBehavioralAnalyticsRequest extends RequestBase {
+  name: Name
+}
+
+export type SearchApplicationDeleteBehavioralAnalyticsResponse = AcknowledgedResponseBase
+
 export interface SearchApplicationGetRequest extends RequestBase {
   name: Name
 }
 
 export type SearchApplicationGetResponse = SearchApplicationSearchApplication
+
+export interface SearchApplicationGetBehavioralAnalyticsRequest extends RequestBase {
+  name?: Name[]
+}
+
+export type SearchApplicationGetBehavioralAnalyticsResponse = Record<Name, SearchApplicationAnalyticsCollection>
 
 export interface SearchApplicationListRequest extends RequestBase {
   q?: string
@@ -15239,6 +15354,16 @@ export interface SearchApplicationPutRequest extends RequestBase {
 export interface SearchApplicationPutResponse {
   result: Result
 }
+
+export interface SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase extends AcknowledgedResponseBase {
+  name: Name
+}
+
+export interface SearchApplicationPutBehavioralAnalyticsRequest extends RequestBase {
+  name: Name
+}
+
+export type SearchApplicationPutBehavioralAnalyticsResponse = SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase
 
 export interface SearchApplicationSearchRequest extends RequestBase {
   name: Name
