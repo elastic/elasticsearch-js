@@ -29,3 +29,4 @@ steps:
           artifacts: "junit-output/junit-*.xml"
           job-uuid-file-pattern: 'junit-(.*).xml'
           fail-build-on-error: true
+          failure-format: file

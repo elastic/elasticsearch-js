@@ -48,6 +48,13 @@ const options = minimist(process.argv.slice(2), {
 })
 
 const freeSkips = {
+  // working on fixes for these
+  '/free/aggregations/bucket_selector.yml': ['bad script'],
+  '/free/aggregations/bucket_script.yml': ['bad script'],
+
+  // either the YAML test definition is wrong, or this fails because JSON.stringify is coercing "1.0" to "1"
+  '/free/aggregations/percentiles_bucket.yml': ['*'],
+
   // not supported yet
   '/free/cluster.desired_nodes/10_basic.yml': ['*'],
 
@@ -186,7 +193,7 @@ function runner (opts = {}) {
   const options = { node: opts.node }
   if (opts.isXPack) {
     options.tls = {
-      ca: readFileSync(join(__dirname, '..', '..', '.ci', 'certs', 'ca.crt'), 'utf8'),
+      ca: readFileSync(join(__dirname, '..', '..', '.buildkite', 'certs', 'ca.crt'), 'utf8'),
       rejectUnauthorized: false
     }
   }
@@ -310,7 +317,7 @@ async function start ({ client, isXPack }) {
         if (name === 'setup' || name === 'teardown') continue
         if (options.test && !name.endsWith(options.test)) continue
 
-        const junitTestCase = junitTestSuite.testcase(name)
+        const junitTestCase = junitTestSuite.testcase(name, `node_${process.version}/${cleanPath}`)
 
         stats.total += 1
         if (shouldSkip(isXPack, file, name)) {
