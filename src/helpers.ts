@@ -823,13 +823,13 @@ export default class Helpers {
             }
             const retry = []
             const { items } = result
+            let indexSlice = 0
             for (let i = 0, len = items.length; i < len; i++) {
               const action = items[i]
               const operation = Object.keys(action)[0]
               // @ts-expect-error
               const responseItem = action[operation as keyof T.BulkResponseItemContainer]
               assert(responseItem !== undefined, 'The responseItem is undefined, please file a bug report')
-              const indexSlice = operation !== 'delete' ? i * 2 : i
 
               if (responseItem.status >= 400) {
                 // 429 is the only staus code where we might want to retry
@@ -857,6 +857,7 @@ export default class Helpers {
               } else {
                 stats.successful += 1
               }
+              operation === 'delete' ? indexSlice += 1 : indexSlice += 2
             }
             callback(null, retry)
           })
