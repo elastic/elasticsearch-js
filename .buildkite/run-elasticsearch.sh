@@ -33,7 +33,10 @@ master_node_name=${es_node_name}
 cluster_name=${moniker}${suffix}
 
 # Set vm.max_map_count kernel setting to 262144
-sudo sysctl -w vm.max_map_count=262144
+if [ "$(sysctl vm.max_map_count)" != 'vm.max_map_count = 262144' ]; then
+  echo "vm.max_map_count may be too low. resetting."
+  sudo sysctl -w vm.max_map_count=262144
+fi
 
 declare -a volumes
 environment=($(cat <<-END
