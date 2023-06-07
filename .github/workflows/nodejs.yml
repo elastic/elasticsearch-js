@@ -1,3 +1,4 @@
+---
 name: Node CI
 
 on: [push, pull_request]
@@ -8,29 +9,37 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       matrix:
         node-version: [14.x, 16.x, 18.x, 20.x]
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install
-      run: |
-        npm install
+      # workaround for failing tests on Node.js 14.x
+      # see https://github.com/actions/setup-node/issues/411
+      - name: Force install specific npm version
+        run: |
+          npm install --global npm@8.3.1
+          npm install --global npm@9.7.1
 
-    - name: Lint
-      run: |
-        npm run lint
+      - name: Install
+        run: |
+          npm install
 
-    - name: Unit test
-      run: |
-        npm run test:unit
+      - name: Lint
+        run: |
+          npm run lint
+
+      - name: Unit test
+        run: |
+          npm run test:unit
 
   license:
     name: License check
@@ -41,17 +50,17 @@ jobs:
         node-version: [20.x]
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install
-      run: |
-        npm install
+      - name: Install
+        run: |
+          npm install
 
-    - name: License checker
-      run: |
-        npm run license-checker
+      - name: License checker
+        run: |
+          npm run license-checker
