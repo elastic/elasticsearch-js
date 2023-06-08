@@ -33,6 +33,8 @@ spec:
           access_level: MANAGE_BUILD_AND_READ
         everyone:
           access_level: READ_ONLY
+      provider_settings:
+        build_pull_requests: false
       cancel_intermediate_builds: true
       cancel_intermediate_builds_branch_filter: '!main'
       schedules:
@@ -44,10 +46,4 @@ spec:
           cronline: '*/12 * * *'
         8_7_daily:
           branch: '8.7'
-          cronline: '@daily'
-        8_6_daily:
-          branch: '8.6'
-          cronline: '@daily'
-        7_17_daily:
-          branch: '7.17'
           cronline: '@daily'
