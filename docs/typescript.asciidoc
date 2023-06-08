@@ -6,6 +6,7 @@ of type definitions of Elasticsearch's API surface.
 
 The types are not 100% complete yet. Some APIs are missing (the newest ones, e.g. EQL),
 and others may contain some errors, but we are continuously pushing fixes & improvements.
+Contribute type fixes and improvements to https://github.com/elastic/elasticsearch-specification[elasticsearch-specification github repository].
 
 NOTE: The client is developed against the https://www.npmjs.com/package/typescript?activeTab=versions[latest]
 version of TypeScript. Furthermore, unless you have set `skipLibCheck` to `true`,
