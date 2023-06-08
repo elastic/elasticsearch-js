@@ -12,7 +12,6 @@ steps:
           - "free"
           - "platinum"
         nodejs:
-          - "14"
           - "16"
           - "18"
           - "20"
