@@ -2,6 +2,27 @@
 == Release notes
 
 [discrete]
+=== 8.8.1
+
+===== Support for Elasticsearch `v8.8.1`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.8/release-notes-8.8.1.html[here].
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Fix index drift bug in bulk helper https://github.com/elastic/elasticsearch-js/pull/1759[#1759]
+
+Fixes a bug in the bulk helper that would cause `onDrop` to send back the wrong JSON document or error on a nonexistent document when an error occurred on a bulk HTTP request that contained a `delete` action.
+
+[discrete]
+===== Fix a memory leak caused by an outdated version of Undici https://github.com/elastic/elasticsearch-js/pull/1902[#1902]
+
+Undici 5.5.1, used by https://github.com/elastic/elastic-transport-js[elastic-transport-js], could create a memory leak when a high volume of requests created too many HTTP `abort` listeners. Upgrading Undici to 5.22.1 removed the memory leak.
+
+[discrete]
 === 8.8.0
 
 [discrete]
@@ -11,7 +32,7 @@
 ===== Support for Elasticsearch `v8.8.0`
 
 You can find all the API changes
-https://www.elastic.co/guide/en/elasticsearch/reference/8.8/release-notes-8.7.0.html[here].
+https://www.elastic.co/guide/en/elasticsearch/reference/8.8/release-notes-8.8.0.html[here].
 
 [discrete]
 ==== Fixes
