@@ -760,6 +760,14 @@ declare class Client {
     globalCheckpoints<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     globalCheckpoints<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.FleetGlobalCheckpoints, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     globalCheckpoints<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.FleetGlobalCheckpoints, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    msearch<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params?: RequestParams.FleetMsearch<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    msearch<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    msearch<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params: RequestParams.FleetMsearch<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    msearch<TResponse = Record<string, any>, TRequestBody extends RequestNDBody = Record<string, any>[], TContext = Context>(params: RequestParams.FleetMsearch<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.FleetSearch<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.FleetSearch<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    search<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.FleetSearch<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   get<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.Get, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   get<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1118,6 +1126,14 @@ declare class Client {
     migrateToDataStream<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     migrateToDataStream<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesMigrateToDataStream, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     migrateToDataStream<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesMigrateToDataStream, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    modify_data_stream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesModifyDataStream<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    modify_data_stream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    modify_data_stream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.IndicesModifyDataStream<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    modify_data_stream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.IndicesModifyDataStream<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    modifyDataStream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesModifyDataStream<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    modifyDataStream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    modifyDataStream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.IndicesModifyDataStream<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    modifyDataStream<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.IndicesModifyDataStream<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     open<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.IndicesOpen, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     open<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     open<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.IndicesOpen, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1394,6 +1410,22 @@ declare class Client {
     deprecations<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deprecations<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MigrationDeprecations, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     deprecations<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MigrationDeprecations, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_feature_upgrade_status<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MigrationGetFeatureUpgradeStatus, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get_feature_upgrade_status<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_feature_upgrade_status<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MigrationGetFeatureUpgradeStatus, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_feature_upgrade_status<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MigrationGetFeatureUpgradeStatus, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getFeatureUpgradeStatus<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MigrationGetFeatureUpgradeStatus, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getFeatureUpgradeStatus<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getFeatureUpgradeStatus<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MigrationGetFeatureUpgradeStatus, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getFeatureUpgradeStatus<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MigrationGetFeatureUpgradeStatus, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    post_feature_upgrade<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MigrationPostFeatureUpgrade, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    post_feature_upgrade<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    post_feature_upgrade<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MigrationPostFeatureUpgrade, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    post_feature_upgrade<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MigrationPostFeatureUpgrade, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    postFeatureUpgrade<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MigrationPostFeatureUpgrade, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    postFeatureUpgrade<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    postFeatureUpgrade<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MigrationPostFeatureUpgrade, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    postFeatureUpgrade<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MigrationPostFeatureUpgrade, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   ml: {
     close_job<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MlCloseJob<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
@@ -1540,10 +1572,10 @@ declare class Client {
     flushJob<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     flushJob<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlFlushJob<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     flushJob<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlFlushJob<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    forecast<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MlForecast, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    forecast<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    forecast<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlForecast, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    forecast<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlForecast, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    forecast<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MlForecast<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    forecast<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    forecast<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlForecast<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    forecast<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlForecast<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_buckets<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MlGetBuckets<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     get_buckets<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_buckets<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlGetBuckets<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1640,6 +1672,14 @@ declare class Client {
     getJobs<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getJobs<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlGetJobs, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     getJobs<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlGetJobs, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_model_snapshot_upgrade_stats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MlGetModelSnapshotUpgradeStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get_model_snapshot_upgrade_stats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_model_snapshot_upgrade_stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlGetModelSnapshotUpgradeStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_model_snapshot_upgrade_stats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlGetModelSnapshotUpgradeStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getModelSnapshotUpgradeStats<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MlGetModelSnapshotUpgradeStats, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getModelSnapshotUpgradeStats<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getModelSnapshotUpgradeStats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlGetModelSnapshotUpgradeStats, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getModelSnapshotUpgradeStats<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlGetModelSnapshotUpgradeStats, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_model_snapshots<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MlGetModelSnapshots<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     get_model_snapshots<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     get_model_snapshots<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlGetModelSnapshots<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1684,14 +1724,14 @@ declare class Client {
     info<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     info<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlInfo, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     info<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlInfo, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    open_job<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MlOpenJob, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    open_job<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    open_job<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlOpenJob, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    open_job<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlOpenJob, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    openJob<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.MlOpenJob, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    openJob<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    openJob<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlOpenJob, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    openJob<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.MlOpenJob, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    open_job<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MlOpenJob<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    open_job<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    open_job<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlOpenJob<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    open_job<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlOpenJob<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    openJob<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MlOpenJob<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    openJob<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    openJob<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlOpenJob<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    openJob<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlOpenJob<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     post_calendar_events<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.MlPostCalendarEvents<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     post_calendar_events<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     post_calendar_events<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.MlPostCalendarEvents<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -1928,22 +1968,22 @@ declare class Client {
   mtermvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Mtermvectors<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   mtermvectors<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.Mtermvectors<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   nodes: {
-    clear_metering_archive<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesClearMeteringArchive, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    clear_metering_archive<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    clear_metering_archive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearMeteringArchive, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    clear_metering_archive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearMeteringArchive, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    clearMeteringArchive<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesClearMeteringArchive, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    clearMeteringArchive<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    clearMeteringArchive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearMeteringArchive, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    clearMeteringArchive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearMeteringArchive, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_metering_info<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesGetMeteringInfo, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    get_metering_info<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_metering_info<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetMeteringInfo, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    get_metering_info<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetMeteringInfo, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getMeteringInfo<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesGetMeteringInfo, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
-    getMeteringInfo<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getMeteringInfo<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetMeteringInfo, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
-    getMeteringInfo<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetMeteringInfo, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_repositories_metering_archive<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesClearRepositoriesMeteringArchive, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clear_repositories_metering_archive<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_repositories_metering_archive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearRepositoriesMeteringArchive, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clear_repositories_metering_archive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearRepositoriesMeteringArchive, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearRepositoriesMeteringArchive<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesClearRepositoriesMeteringArchive, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    clearRepositoriesMeteringArchive<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearRepositoriesMeteringArchive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearRepositoriesMeteringArchive, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    clearRepositoriesMeteringArchive<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesClearRepositoriesMeteringArchive, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_repositories_metering_info<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesGetRepositoriesMeteringInfo, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    get_repositories_metering_info<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_repositories_metering_info<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetRepositoriesMeteringInfo, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    get_repositories_metering_info<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetRepositoriesMeteringInfo, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getRepositoriesMeteringInfo<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesGetRepositoriesMeteringInfo, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    getRepositoriesMeteringInfo<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getRepositoriesMeteringInfo<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetRepositoriesMeteringInfo, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    getRepositoriesMeteringInfo<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesGetRepositoriesMeteringInfo, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     hot_threads<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.NodesHotThreads, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
     hot_threads<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     hot_threads<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.NodesHotThreads, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
@@ -2850,6 +2890,14 @@ declare class Client {
     updateTransform<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     updateTransform<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.TransformUpdateTransform<TRequestBody>, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
     updateTransform<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params: RequestParams.TransformUpdateTransform<TRequestBody>, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    upgrade_transforms<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.TransformUpgradeTransforms, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    upgrade_transforms<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    upgrade_transforms<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.TransformUpgradeTransforms, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    upgrade_transforms<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.TransformUpgradeTransforms, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    upgradeTransforms<TResponse = Record<string, any>, TContext = Context>(params?: RequestParams.TransformUpgradeTransforms, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
+    upgradeTransforms<TResponse = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    upgradeTransforms<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.TransformUpgradeTransforms, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
+    upgradeTransforms<TResponse = Record<string, any>, TContext = Context>(params: RequestParams.TransformUpgradeTransforms, options: TransportRequestOptions, callback: callbackFn<TResponse, TContext>): TransportRequestCallback
   }
   update<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(params?: RequestParams.Update<TRequestBody>, options?: TransportRequestOptions): TransportRequestPromise<ApiResponse<TResponse, TContext>>
   update<TResponse = Record<string, any>, TRequestBody extends RequestBody = Record<string, any>, TContext = Context>(callback: callbackFn<TResponse, TContext>): TransportRequestCallback

@@ -1,12 +1,7 @@
 = Elasticsearch JavaScript Client
 
-:branch: 7.16
+include::{asciidoc-dir}/../../shared/versions/stack/{source_branch}.asciidoc[]
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
-
-// 7.x exists in this repo but not in stack repos
-// This line overwrites the jsclient attribute so it can point to 7.x, but stack links can point to 7.16
-// Remove this line when a 7.16 branch exists in this repo
-:jsclient: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.x
 
 include::introduction.asciidoc[]
 include::installation.asciidoc[]

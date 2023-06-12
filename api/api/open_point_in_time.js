@@ -29,17 +29,22 @@ const snakeCase = { ignoreUnavailable: 'ignore_unavailable', expandWildcards: 'e
 function openPointInTimeApi (params, options, callback) {
   ;[params, options, callback] = normalizeArguments(params, options, callback)
 
+  // check required parameters
+  if (params.index == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: index')
+    return handleError(err, callback)
+  }
+  if (params.keep_alive == null && params.keepAlive == null) {
+    const err = new this[kConfigurationError]('Missing required parameter: keep_alive or keepAlive')
+    return handleError(err, callback)
+  }
+
   let { method, body, index, ...querystring } = params
   querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
   let path = ''
-  if ((index) != null) {
-    if (method == null) method = 'POST'
-    path = '/' + encodeURIComponent(index) + '/' + '_pit'
-  } else {
-    if (method == null) method = 'POST'
-    path = '/' + '_pit'
-  }
+  if (method == null) method = 'POST'
+  path = '/' + encodeURIComponent(index) + '/' + '_pit'
 
   // build request object
   const request = {

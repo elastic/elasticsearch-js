@@ -438,7 +438,7 @@ client.bulk({
 })
 ----
 link:{ref}/docs-bulk.html[Documentation] +
-{jsclient}/bulk_examples.html[Code Example] +
+<<bulk_examples,Code Example>> +
 [cols=2*]
 |===
 |`index`
@@ -2693,9 +2693,6 @@ client.deleteByQuery({
   size: number,
   max_docs: number,
   sort: string | string[],
-  _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
   terminate_after: number,
   stats: string | string[],
   version: boolean,
@@ -2778,15 +2775,6 @@ _Default:_ `open`
 
 |`sort`
 |`string \| string[]` - A comma-separated list of <field>:<direction> pairs
-
-|`_source`
-|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
-
-|`_source_excludes` or `_sourceExcludes`
-|`string \| string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_includes` or `_sourceIncludes`
-|`string \| string[]` - A list of fields to extract and return from the _source field
 
 |`terminate_after` or `terminateAfter`
 |`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
@@ -3079,7 +3067,7 @@ client.exists({
 })
 ----
 link:{ref}/docs-get.html[Documentation] +
-{jsclient}/exists_examples.html[Code Example] +
+<<exists_examples,Code Example>> +
 [cols=2*]
 |===
 |`id`
@@ -3339,7 +3327,7 @@ _Default:_ `open`
 
 [discrete]
 === fleet.globalCheckpoints
-*Stability:* experimental
+
 [source,ts]
 ----
 client.fleet.globalCheckpoints({
@@ -3350,6 +3338,7 @@ client.fleet.globalCheckpoints({
   timeout: string
 })
 ----
+link:{ref}/get-global-checkpoints.html[Documentation] +
 [cols=2*]
 |===
 |`index`
@@ -3369,6 +3358,59 @@ _Default:_ `false`
 |`timeout`
 |`string` - Timeout to wait for global checkpoint to advance +
 _Default:_ `30s`
+
+|===
+
+[discrete]
+=== fleet.msearch
+*Stability:* experimental
+[source,ts]
+----
+client.fleet.msearch({
+  index: string,
+  body: object
+})
+----
+[cols=2*]
+|===
+|`index`
+|`string` - The index name to use as the default
+
+|`body`
+|`object` - The request definitions (metadata-fleet search request definition pairs), separated by newlines
+
+|===
+
+[discrete]
+=== fleet.search
+*Stability:* experimental
+[source,ts]
+----
+client.fleet.search({
+  index: string,
+  wait_for_checkpoints: string | string[],
+  wait_for_checkpoints_timeout: string,
+  allow_partial_search_results: boolean,
+  body: object
+})
+----
+[cols=2*]
+|===
+|`index`
+|`string` - The index name to search.
+
+|`wait_for_checkpoints` or `waitForCheckpoints`
+|`string \| string[]` - Comma separated list of checkpoints, one per shard
+
+|`wait_for_checkpoints_timeout` or `waitForCheckpointsTimeout`
+|`string` - Explicit wait_for_checkpoints timeout
+
+|`allow_partial_search_results` or `allowPartialSearchResults`
+|`boolean` - Indicate if an error should be returned if there is a partial search failure or timeout +
+_Default:_ `true`
+
+|`body`
+|`object` - The search definition using the Query DSL
 
 |===
 
@@ -3394,7 +3436,7 @@ client.get({
 })
 ----
 link:{ref}/docs-get.html[Documentation] +
-{jsclient}/get_examples.html[Code Example] +
+<<get_examples,Code Example>> +
 [cols=2*]
 |===
 |`id`
@@ -3463,17 +3505,17 @@ link:{ref}/modules-scripting.html[Documentation] +
 
 [discrete]
 === getScriptContext
-*Stability:* experimental
+
 [source,ts]
 ----
 client.getScriptContext()
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html[Documentation] +
+link:https://www.elastic.co/guide/en/elasticsearch/painless/7.17/painless-contexts.html[Documentation] +
 
 
 [discrete]
 === getScriptLanguages
-*Stability:* experimental
+
 [source,ts]
 ----
 client.getScriptLanguages()
@@ -4132,8 +4174,8 @@ link:{ref}/indices-delete-index.html[Documentation] +
 |`boolean` - Ignore if a wildcard expression resolves to no concrete indices (default: false)
 
 |`expand_wildcards` or `expandWildcards`
-|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open or closed indices (default: open) +
-_Default:_ `open`
+|`'open' \| 'closed' \| 'hidden' \| 'none' \| 'all'` - Whether wildcard expressions should get expanded to open, closed, or hidden indices +
+_Default:_ `open,closed`
 
 |===
 
@@ -4806,7 +4848,7 @@ _Default:_ `open`
 [source,ts]
 ----
 client.indices.getIndexTemplate({
-  name: string | string[],
+  name: string,
   flat_settings: boolean,
   master_timeout: string,
   local: boolean
@@ -4816,7 +4858,7 @@ link:{ref}/indices-templates.html[Documentation] +
 [cols=2*]
 |===
 |`name`
-|`string \| string[]` - The comma separated names of the index templates
+|`string` - A pattern that returned template names must match
 
 |`flat_settings` or `flatSettings`
 |`boolean` - Return settings in flat format (default: false)
@@ -5006,6 +5048,23 @@ link:{ref}/data-streams.html[Documentation] +
 |===
 |`name`
 |`string` - The name of the alias to migrate
+
+|===
+
+[discrete]
+=== indices.modifyDataStream
+
+[source,ts]
+----
+client.indices.modifyDataStream({
+  body: object
+})
+----
+link:{ref}/data-streams.html[Documentation] +
+[cols=2*]
+|===
+|`body`
+|`object` - The data stream modifications
 
 |===
 
@@ -5364,7 +5423,7 @@ _Default:_ `open`
 
 [discrete]
 === indices.resolveIndex
-*Stability:* experimental
+
 [source,ts]
 ----
 client.indices.resolveIndex({
@@ -5978,6 +6037,7 @@ link:{ref}/grok-processor.html#grok-processor-rest-get[Documentation] +
 ----
 client.ingest.putPipeline({
   id: string,
+  if_version: number,
   master_timeout: string,
   timeout: string,
   body: object
@@ -5988,6 +6048,9 @@ link:{ref}/put-pipeline-api.html[Documentation] +
 |===
 |`id`
 |`string` - Pipeline ID
+
+|`if_version` or `ifVersion`
+|`number` - Required version for optimistic concurrency control for pipeline updates
 
 |`master_timeout` or `masterTimeout`
 |`string` - Explicit operation timeout for connection to master node
@@ -6265,6 +6328,26 @@ link:{ref}/migration-api-deprecation.html[Documentation] +
 |`string` - Index pattern
 
 |===
+
+[discrete]
+=== migration.getFeatureUpgradeStatus
+
+[source,ts]
+----
+client.migration.getFeatureUpgradeStatus()
+----
+link:{ref}/migration-api-feature-upgrade.html[Documentation] +
+
+
+[discrete]
+=== migration.postFeatureUpgrade
+
+[source,ts]
+----
+client.migration.postFeatureUpgrade()
+----
+link:{ref}/migration-api-feature-upgrade.html[Documentation] +
+
 
 [discrete]
 === ml.closeJob
@@ -6751,7 +6834,8 @@ client.ml.forecast({
   job_id: string,
   duration: string,
   expires_in: string,
-  max_model_memory: string
+  max_model_memory: string,
+  body: object
 })
 ----
 link:{ref}/ml-forecast.html[Documentation] +
@@ -6768,6 +6852,9 @@ link:{ref}/ml-forecast.html[Documentation] +
 
 |`max_model_memory` or `maxModelMemory`
 |`string` - The max memory able to be used by the forecast. Default is 20mb.
+
+|`body`
+|`object` - Query parameters can be specified in the body
 
 |===
 
@@ -7200,6 +7287,31 @@ WARNING: This parameter has been deprecated.
 |===
 
 [discrete]
+=== ml.getModelSnapshotUpgradeStats
+
+[source,ts]
+----
+client.ml.getModelSnapshotUpgradeStats({
+  job_id: string,
+  snapshot_id: string,
+  allow_no_match: boolean
+})
+----
+link:{ref}/ml-get-job-model-snapshot-upgrade-stats.html[Documentation] +
+[cols=2*]
+|===
+|`job_id` or `jobId`
+|`string` - The ID of the job. May be a wildcard, comma separated list or `_all`.
+
+|`snapshot_id` or `snapshotId`
+|`string` - The ID of the snapshot. May be a wildcard, comma separated list or `_all`.
+
+|`allow_no_match` or `allowNoMatch`
+|`boolean` - Whether to ignore if a wildcard expression matches no jobs or no snapshots. (This includes the `_all` string.)
+
+|===
+
+[discrete]
 === ml.getModelSnapshots
 
 [source,ts]
@@ -7457,7 +7569,8 @@ link:{ref}/get-ml-info.html[Documentation] +
 [source,ts]
 ----
 client.ml.openJob({
-  job_id: string
+  job_id: string,
+  body: object
 })
 ----
 link:{ref}/ml-open-job.html[Documentation] +
@@ -7465,6 +7578,9 @@ link:{ref}/ml-open-job.html[Documentation] +
 |===
 |`job_id` or `jobId`
 |`string` - The ID of the job to open
+
+|`body`
+|`object` - Query parameters can be specified in the body
 
 |===
 
@@ -7725,6 +7841,7 @@ link:{ref}/ml-put-job.html[Documentation] +
 ----
 client.ml.putTrainedModel({
   model_id: string,
+  defer_definition_decompression: boolean,
   body: object
 })
 ----
@@ -7733,6 +7850,9 @@ link:{ref}/put-trained-models.html[Documentation] +
 |===
 |`model_id` or `modelId`
 |`string` - The ID of the trained models to store
+
+|`defer_definition_decompression` or `deferDefinitionDecompression`
+|`boolean` - If set to `true` and a `compressed_definition` is provided, the request defers definition decompression and skips relevant validations.
 
 |`body`
 |`object` - The trained model configuration
@@ -8156,7 +8276,7 @@ link:https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html[Docum
 
 [discrete]
 === monitoring.bulk
-*Stability:* experimental
+
 [source,ts]
 ----
 client.monitoring.bulk({
@@ -8208,7 +8328,7 @@ client.msearch({
 })
 ----
 link:{ref}/search-multi-search.html[Documentation] +
-{jsclient}/msearch_examples.html[Code Example] +
+<<msearch_examples,Code Example>> +
 [cols=2*]
 |===
 |`index`
@@ -8369,11 +8489,11 @@ _Default:_ `true`
 |===
 
 [discrete]
-=== nodes.clearMeteringArchive
+=== nodes.clearRepositoriesMeteringArchive
 *Stability:* experimental
 [source,ts]
 ----
-client.nodes.clearMeteringArchive({
+client.nodes.clearRepositoriesMeteringArchive({
   node_id: string | string[],
   max_archive_version: number
 })
@@ -8390,11 +8510,11 @@ link:{ref}/clear-repositories-metering-archive-api.html[Documentation] +
 |===
 
 [discrete]
-=== nodes.getMeteringInfo
+=== nodes.getRepositoriesMeteringInfo
 *Stability:* experimental
 [source,ts]
 ----
-client.nodes.getMeteringInfo({
+client.nodes.getRepositoriesMeteringInfo({
   node_id: string | string[]
 })
 ----
@@ -8417,7 +8537,8 @@ client.nodes.hotThreads({
   snapshots: number,
   threads: number,
   ignore_idle_threads: boolean,
-  type: 'cpu' | 'wait' | 'block',
+  type: 'cpu' | 'wait' | 'block' | 'mem',
+  sort: 'cpu' | 'total',
   timeout: string
 })
 ----
@@ -8440,7 +8561,10 @@ link:{ref}/cluster-nodes-hot-threads.html[Documentation] +
 |`boolean` - Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
 
 |`type`
-|`'cpu' \| 'wait' \| 'block'` - The type to sample (default: cpu)
+|`'cpu' \| 'wait' \| 'block' \| 'mem'` - The type to sample (default: cpu)
+
+|`sort`
+|`'cpu' \| 'total'` - The sort order for 'cpu' type (default: total)
 
 |`timeout`
 |`string` - Explicit operation timeout
@@ -8466,7 +8590,7 @@ link:{ref}/cluster-nodes-info.html[Documentation] +
 |`string \| string[]` - A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
 
 |`metric`
-|`string \| string[]` - A comma-separated list of metrics you wish returned. Leave empty to return all.
+|`string \| string[]` - A comma-separated list of metrics you wish returned. Leave empty to return all metrics.
 
 |`flat_settings` or `flatSettings`
 |`boolean` - Return settings in flat format (default: false)
@@ -8671,7 +8795,7 @@ link:{ref}/modules-scripting.html[Documentation] +
 
 [discrete]
 === rankEval
-*Stability:* experimental
+
 [source,ts]
 ----
 client.rankEval({
@@ -8725,7 +8849,7 @@ client.reindex({
 })
 ----
 link:{ref}/docs-reindex.html[Documentation] +
-{jsclient}/reindex_examples.html[Code Example] +
+<<reindex_examples,Code Example>> +
 [cols=2*]
 |===
 |`refresh`
@@ -9003,7 +9127,7 @@ client.scriptsPainlessExecute({
   body: object
 })
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html[Documentation] +
+link:https://www.elastic.co/guide/en/elasticsearch/painless/7.17/painless-execute-api.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -9024,7 +9148,7 @@ client.scroll({
 })
 ----
 link:{ref}/search-request-body.html#request-body-search-scroll[Documentation] +
-{jsclient}/scroll_examples.html[Code Example] +
+<<scroll_examples,Code Example>> +
 [cols=2*]
 |===
 |`scroll_id` or `scrollId`
@@ -9098,7 +9222,7 @@ client.search({
 })
 ----
 link:{ref}/search-search.html[Documentation] +
-{jsclient}/search_examples.html[Code Example] +
+<<search_examples,Code Example>> +
 [cols=2*]
 |===
 |`index`
@@ -9262,8 +9386,9 @@ client.searchMvt({
   exact_bounds: boolean,
   extent: number,
   grid_precision: number,
-  grid_type: 'grid' | 'point',
+  grid_type: 'grid' | 'point' | 'centroid',
   size: number,
+  track_total_hits: boolean|long,
   body: object
 })
 ----
@@ -9297,12 +9422,15 @@ _Default:_ `4096`
 _Default:_ `8`
 
 |`grid_type` or `gridType`
-|`'grid' \| 'point'` - Determines the geometry type for features in the aggs layer. +
+|`'grid' \| 'point' \| 'centroid'` - Determines the geometry type for features in the aggs layer. +
 _Default:_ `grid`
 
 |`size`
 |`number` - Maximum number of features to return in the hits layer. Accepts 0-10000. +
 _Default:_ `10000`
+
+|`track_total_hits` or `trackTotalHits`
+|`boolean\|long` - Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
 
 |`body`
 |`object` - Search request body.
@@ -9479,7 +9607,7 @@ _Default:_ `open`
 
 [discrete]
 === searchableSnapshots.mount
-*Stability:* experimental
+
 [source,ts]
 ----
 client.searchableSnapshots.mount({
@@ -9533,7 +9661,7 @@ link:{ref}/searchable-snapshots-apis.html[Documentation] +
 
 [discrete]
 === searchableSnapshots.stats
-*Stability:* experimental
+
 [source,ts]
 ----
 client.searchableSnapshots.stats({
@@ -9662,7 +9790,7 @@ link:{ref}/security-api-clear-role-cache.html[Documentation] +
 
 [discrete]
 === security.clearCachedServiceTokens
-*Stability:* beta
+
 [source,ts]
 ----
 client.security.clearCachedServiceTokens({
@@ -9708,7 +9836,7 @@ link:{ref}/security-api-create-api-key.html[Documentation] +
 
 [discrete]
 === security.createServiceToken
-*Stability:* beta
+
 [source,ts]
 ----
 client.security.createServiceToken({
@@ -9804,7 +9932,7 @@ link:{ref}/security-api-delete-role-mapping.html[Documentation] +
 
 [discrete]
 === security.deleteServiceToken
-*Stability:* beta
+
 [source,ts]
 ----
 client.security.deleteServiceToken({
@@ -9994,7 +10122,7 @@ link:{ref}/security-api-get-role-mapping.html[Documentation] +
 
 [discrete]
 === security.getServiceAccounts
-*Stability:* beta
+
 [source,ts]
 ----
 client.security.getServiceAccounts({
@@ -10015,7 +10143,7 @@ link:{ref}/security-api-get-service-accounts.html[Documentation] +
 
 [discrete]
 === security.getServiceCredentials
-*Stability:* beta
+
 [source,ts]
 ----
 client.security.getServiceCredentials({
@@ -10371,7 +10499,7 @@ link:{ref}/security-api-saml-sp-metadata.html[Documentation] +
 
 [discrete]
 === shutdown.deleteNode
-*Stability:* experimental
+
 [source,ts]
 ----
 client.shutdown.deleteNode({
@@ -10388,7 +10516,7 @@ link:https://www.elastic.co/guide/en/elasticsearch/reference/current[Documentati
 
 [discrete]
 === shutdown.getNode
-*Stability:* experimental
+
 [source,ts]
 ----
 client.shutdown.getNode({
@@ -10405,7 +10533,7 @@ link:https://www.elastic.co/guide/en/elasticsearch/reference/current[Documentati
 
 [discrete]
 === shutdown.putNode
-*Stability:* experimental
+
 [source,ts]
 ----
 client.shutdown.putNode({
@@ -11031,7 +11159,7 @@ client.sql.query({
 })
 ----
 link:{ref}/sql-search-api.html[Documentation] +
-{jsclient}/sql_query_examples.html[Code Example] +
+<<sql_query_examples,Code Example>> +
 [cols=2*]
 |===
 |`format`
@@ -11171,7 +11299,7 @@ _Default:_ `nodes`
 
 [discrete]
 === termsEnum
-*Stability:* beta
+
 [source,ts]
 ----
 client.termsEnum({
@@ -11350,7 +11478,8 @@ _Default:_ `25s`
 ----
 client.transform.deleteTransform({
   transform_id: string,
-  force: boolean
+  force: boolean,
+  timeout: string
 })
 ----
 link:{ref}/delete-transform.html[Documentation] +
@@ -11361,6 +11490,9 @@ link:{ref}/delete-transform.html[Documentation] +
 
 |`force`
 |`boolean` - When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
+
+|`timeout`
+|`string` - Controls the time to wait for the transform deletion
 
 |===
 
@@ -11432,12 +11564,20 @@ link:{ref}/get-transform-stats.html[Documentation] +
 [source,ts]
 ----
 client.transform.previewTransform({
+  transform_id: string,
+  timeout: string,
   body: object
 })
 ----
 link:{ref}/preview-transform.html[Documentation] +
 [cols=2*]
 |===
+|`transform_id` or `transformId`
+|`string` - The id of the transform to preview.
+
+|`timeout`
+|`string` - Controls the time to wait for the preview
+
 |`body`
 |`object` - The definition for the transform to preview
 
@@ -11451,6 +11591,7 @@ link:{ref}/preview-transform.html[Documentation] +
 client.transform.putTransform({
   transform_id: string,
   defer_validation: boolean,
+  timeout: string,
   body: object
 })
 ----
@@ -11462,6 +11603,9 @@ link:{ref}/put-transform.html[Documentation] +
 
 |`defer_validation` or `deferValidation`
 |`boolean` - If validations should be deferred until transform starts, defaults to false.
+
+|`timeout`
+|`string` - Controls the time to wait for the transform to start
 
 |`body`
 |`object` - The transform definition
@@ -11534,6 +11678,7 @@ link:{ref}/stop-transform.html[Documentation] +
 client.transform.updateTransform({
   transform_id: string,
   defer_validation: boolean,
+  timeout: string,
   body: object
 })
 ----
@@ -11546,8 +11691,32 @@ link:{ref}/update-transform.html[Documentation] +
 |`defer_validation` or `deferValidation`
 |`boolean` - If validations should be deferred until transform starts, defaults to false.
 
+|`timeout`
+|`string` - Controls the time to wait for the update
+
 |`body`
 |`object` - The update transform definition
+
+|===
+
+[discrete]
+=== transform.upgradeTransforms
+
+[source,ts]
+----
+client.transform.upgradeTransforms({
+  dry_run: boolean,
+  timeout: string
+})
+----
+link:{ref}/upgrade-transforms.html[Documentation] +
+[cols=2*]
+|===
+|`dry_run` or `dryRun`
+|`boolean` - Whether to only check for updates but don't execute
+
+|`timeout`
+|`string` - Controls the time to wait for the upgrade
 
 |===
 
@@ -11576,7 +11745,7 @@ client.update({
 })
 ----
 link:{ref}/docs-update.html[Documentation] +
-{jsclient}/update_examples.html[Code Example] +
+<<update_examples,Code Example>> +
 [cols=2*]
 |===
 |`id`
@@ -11659,9 +11828,6 @@ client.updateByQuery({
   size: number,
   max_docs: number,
   sort: string | string[],
-  _source: string | string[],
-  _source_excludes: string | string[],
-  _source_includes: string | string[],
   terminate_after: number,
   stats: string | string[],
   version: boolean,
@@ -11678,7 +11844,7 @@ client.updateByQuery({
 })
 ----
 link:{ref}/docs-update-by-query.html[Documentation] +
-{jsclient}/update_by_query_examples.html[Code Example] +
+<<update_by_query_examples,Code Example>> +
 [cols=2*]
 |===
 |`index`
@@ -11749,15 +11915,6 @@ _Default:_ `open`
 
 |`sort`
 |`string \| string[]` - A comma-separated list of <field>:<direction> pairs
-
-|`_source`
-|`string \| string[]` - True or false to return the _source field or not, or a list of fields to return
-
-|`_source_excludes` or `_sourceExcludes`
-|`string \| string[]` - A list of fields to exclude from the returned _source field
-
-|`_source_includes` or `_sourceIncludes`
-|`string \| string[]` - A list of fields to extract and return from the _source field
 
 |`terminate_after` or `terminateAfter`
 |`number` - The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.

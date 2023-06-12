@@ -653,8 +653,6 @@ export interface Delete extends Generic {
 export interface DeleteByQuery<T = RequestBody> extends Generic {
   index: string | string[];
   type?: string | string[];
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
@@ -674,9 +672,6 @@ export interface DeleteByQuery<T = RequestBody> extends Generic {
   size?: number;
   max_docs?: number;
   sort?: string | string[];
-  _source?: string | string[];
-  _source_excludes?: string | string[];
-  _source_includes?: string | string[];
   terminate_after?: number;
   stats?: string | string[];
   version?: boolean;
@@ -824,6 +819,19 @@ export interface FleetGlobalCheckpoints extends Generic {
   wait_for_index?: boolean;
   checkpoints?: string | string[];
   timeout?: string;
+}
+
+export interface FleetMsearch<T = RequestNDBody> extends Generic {
+  index?: string;
+  body: T;
+}
+
+export interface FleetSearch<T = RequestBody> extends Generic {
+  index: string;
+  wait_for_checkpoints?: string | string[];
+  wait_for_checkpoints_timeout?: string;
+  allow_partial_search_results?: boolean;
+  body?: T;
 }
 
 export interface Get extends Generic {
@@ -1173,7 +1181,7 @@ export interface IndicesGetFieldMapping extends Generic {
 }
 
 export interface IndicesGetIndexTemplate extends Generic {
-  name?: string | string[];
+  name?: string;
   flat_settings?: boolean;
   master_timeout?: string;
   local?: boolean;
@@ -1219,6 +1227,10 @@ export interface IndicesGetUpgrade extends Generic {
 
 export interface IndicesMigrateToDataStream extends Generic {
   name: string;
+}
+
+export interface IndicesModifyDataStream<T = RequestBody> extends Generic {
+  body: T;
 }
 
 export interface IndicesOpen extends Generic {
@@ -1454,6 +1466,7 @@ export interface IngestProcessorGrok extends Generic {
 
 export interface IngestPutPipeline<T = RequestBody> extends Generic {
   id: string;
+  if_version?: number;
   master_timeout?: string;
   timeout?: string;
   body: T;
@@ -1524,6 +1537,12 @@ export interface Mget<T = RequestBody> extends Generic {
 
 export interface MigrationDeprecations extends Generic {
   index?: string;
+}
+
+export interface MigrationGetFeatureUpgradeStatus extends Generic {
+}
+
+export interface MigrationPostFeatureUpgrade extends Generic {
 }
 
 export interface MlCloseJob<T = RequestBody> extends Generic {
@@ -1639,11 +1658,12 @@ export interface MlFlushJob<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface MlForecast extends Generic {
+export interface MlForecast<T = RequestBody> extends Generic {
   job_id: string;
   duration?: string;
   expires_in?: string;
   max_model_memory?: string;
+  body?: T;
 }
 
 export interface MlGetBuckets<T = RequestBody> extends Generic {
@@ -1747,6 +1767,12 @@ export interface MlGetJobs extends Generic {
   exclude_generated?: boolean;
 }
 
+export interface MlGetModelSnapshotUpgradeStats extends Generic {
+  job_id: string;
+  snapshot_id: string;
+  allow_no_match?: boolean;
+}
+
 export interface MlGetModelSnapshots<T = RequestBody> extends Generic {
   job_id: string;
   snapshot_id?: string;
@@ -1807,8 +1833,9 @@ export interface MlGetTrainedModelsStats extends Generic {
 export interface MlInfo extends Generic {
 }
 
-export interface MlOpenJob extends Generic {
+export interface MlOpenJob<T = RequestBody> extends Generic {
   job_id: string;
+  body?: T;
 }
 
 export interface MlPostCalendarEvents<T = RequestBody> extends Generic {
@@ -1873,6 +1900,7 @@ export interface MlPutJob<T = RequestBody> extends Generic {
 
 export interface MlPutTrainedModel<T = RequestBody> extends Generic {
   model_id: string;
+  defer_definition_decompression?: boolean;
   body: T;
 }
 
@@ -2025,12 +2053,12 @@ export interface Mtermvectors<T = RequestBody> extends Generic {
   body?: T;
 }
 
-export interface NodesClearMeteringArchive extends Generic {
+export interface NodesClearRepositoriesMeteringArchive extends Generic {
   node_id: string | string[];
   max_archive_version: number;
 }
 
-export interface NodesGetMeteringInfo extends Generic {
+export interface NodesGetRepositoriesMeteringInfo extends Generic {
   node_id: string | string[];
 }
 
@@ -2040,7 +2068,8 @@ export interface NodesHotThreads extends Generic {
   snapshots?: number;
   threads?: number;
   ignore_idle_threads?: boolean;
-  type?: 'cpu' | 'wait' | 'block';
+  type?: 'cpu' | 'wait' | 'block' | 'mem';
+  sort?: 'cpu' | 'total';
   timeout?: string;
 }
 
@@ -2079,12 +2108,12 @@ export interface NodesUsage extends Generic {
 }
 
 export interface OpenPointInTime extends Generic {
-  index?: string | string[];
+  index: string | string[];
   preference?: string;
   routing?: string;
   ignore_unavailable?: boolean;
   expand_wildcards?: 'open' | 'closed' | 'hidden' | 'none' | 'all';
-  keep_alive?: string;
+  keep_alive: string;
 }
 
 export interface Ping extends Generic {
@@ -2245,8 +2274,9 @@ export interface SearchMvt<T = RequestBody> extends Generic {
   exact_bounds?: boolean;
   extent?: number;
   grid_precision?: number;
-  grid_type?: 'grid' | 'point';
+  grid_type?: 'grid' | 'point' | 'centroid';
   size?: number;
+  track_total_hits?: boolean | number;
   body?: T;
 }
 
@@ -2743,6 +2773,7 @@ export interface TextStructureFindStructure<T = RequestNDBody> extends Generic {
 export interface TransformDeleteTransform extends Generic {
   transform_id: string;
   force?: boolean;
+  timeout?: string;
 }
 
 export interface TransformGetTransform extends Generic {
@@ -2761,12 +2792,15 @@ export interface TransformGetTransformStats extends Generic {
 }
 
 export interface TransformPreviewTransform<T = RequestBody> extends Generic {
-  body: T;
+  transform_id?: string;
+  timeout?: string;
+  body?: T;
 }
 
 export interface TransformPutTransform<T = RequestBody> extends Generic {
   transform_id: string;
   defer_validation?: boolean;
+  timeout?: string;
   body: T;
 }
 
@@ -2787,7 +2821,13 @@ export interface TransformStopTransform extends Generic {
 export interface TransformUpdateTransform<T = RequestBody> extends Generic {
   transform_id: string;
   defer_validation?: boolean;
+  timeout?: string;
   body: T;
+}
+
+export interface TransformUpgradeTransforms extends Generic {
+  dry_run?: boolean;
+  timeout?: string;
 }
 
 export interface Update<T = RequestBody> extends Generic {
@@ -2814,8 +2854,6 @@ export interface Update<T = RequestBody> extends Generic {
 export interface UpdateByQuery<T = RequestBody> extends Generic {
   index: string | string[];
   type?: string | string[];
-  _source_exclude?: string | string[];
-  _source_include?: string | string[];
   analyzer?: string;
   analyze_wildcard?: boolean;
   default_operator?: 'AND' | 'OR';
@@ -2836,9 +2874,6 @@ export interface UpdateByQuery<T = RequestBody> extends Generic {
   size?: number;
   max_docs?: number;
   sort?: string | string[];
-  _source?: string | string[];
-  _source_excludes?: string | string[];
-  _source_includes?: string | string[];
   terminate_after?: number;
   stats?: string | string[];
   version?: boolean;
