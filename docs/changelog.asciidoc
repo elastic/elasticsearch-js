@@ -5,7 +5,10 @@
 === 8.8.1
 
 [discrete]
-=== Support for Elasticsearch `v8.8.1`
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v8.8.1`
 
 You can find all the API changes
 https://www.elastic.co/guide/en/elasticsearch/reference/8.8/release-notes-8.8.1.html[here].
