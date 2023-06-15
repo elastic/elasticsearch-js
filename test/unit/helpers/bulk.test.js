@@ -1082,7 +1082,7 @@ test('bulk delete', t => {
     server.stop()
   })
 
-    t.test('Should call onDrop on the correct document when doing a mix of operations that includes deletes', async t => {
+  t.test('Should call onDrop on the correct document when doing a mix of operations that includes deletes', async t => {
     // checks to ensure onDrop doesn't provide the wrong document when some operations are deletes
     // see https://github.com/elastic/elasticsearch-js/issues/1751
     async function handler (req, res) {
@@ -1118,7 +1118,7 @@ test('bulk delete', t => {
         } else {
           return {
             index: {
-              _index: 'test',
+              _index: 'test'
             }
           }
         }
@@ -1128,8 +1128,8 @@ test('bulk delete', t => {
           status: 429,
           error: null,
           operation: { index: { _index: 'test' } },
-          document: { user: "arya", age: 18 },
-          retried: false,
+          document: { user: 'arya', age: 18 },
+          retried: false
         })
       }
     })
