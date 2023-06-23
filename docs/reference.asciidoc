@@ -34,6 +34,7 @@ Allows to perform multiple index/update/delete operations in a single request.
 ----
 client.bulk({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -57,6 +58,7 @@ Explicitly clears the search context for a scroll.
 ----
 client.clearScroll({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -71,6 +73,7 @@ Close a point in time
 ----
 client.closePointInTime({ id })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -85,6 +88,7 @@ Returns number of documents matching a query.
 ----
 client.count({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -116,6 +120,7 @@ Returns a 409 response when a document with a same ID already exists in the inde
 ----
 client.create({ id, index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -138,6 +143,7 @@ Removes a document from the index.
 ----
 client.delete({ id, index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -161,6 +167,7 @@ Deletes documents matching the provided query.
 ----
 client.deleteByQuery({ index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -206,6 +213,7 @@ Changes the number of requests per second for a particular Delete By Query opera
 ----
 client.deleteByQueryRethrottle({ task_id })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -221,6 +229,7 @@ Deletes a script.
 ----
 client.deleteScript({ id })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -237,6 +246,7 @@ Returns information about whether a document exists in an index.
 ----
 client.exists({ id, index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -262,6 +272,7 @@ Returns information about whether a document source exists in an index.
 ----
 client.existsSource({ id, index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -286,6 +297,7 @@ Returns information about why a specific matches (or doesn't match) a query.
 ----
 client.explain({ id, index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -314,6 +326,7 @@ Returns the information about the capabilities of fields among multiple indices.
 ----
 client.fieldCaps({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -340,6 +353,7 @@ Returns a document.
 ----
 client.get({ id, index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -365,6 +379,7 @@ Returns a script.
 ----
 client.getScript({ id })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -380,6 +395,7 @@ Returns all script contexts.
 ----
 client.getScriptContext()
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -393,6 +409,7 @@ Returns available script types, languages and contexts
 ----
 client.getScriptLanguages()
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -406,6 +423,7 @@ Returns the source of a document.
 ----
 client.getSource({ id, index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -431,6 +449,7 @@ Returns the health of the cluster.
 ----
 client.healthReport({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -448,6 +467,7 @@ Creates or updates a document in an index.
 ----
 client.index({ index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -474,6 +494,7 @@ Returns basic information about the cluster.
 ----
 client.info()
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -487,6 +508,7 @@ Performs a kNN search.
 ----
 client.knnSearch({ index, knn })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -517,6 +539,7 @@ Allows to get multiple documents in one request.
 ----
 client.mget({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -544,6 +567,7 @@ Allows to execute several search operations in one request.
 ----
 client.msearch({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -570,6 +594,7 @@ Allows to execute several search template operations in one request.
 ----
 client.msearchTemplate({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -589,6 +614,7 @@ Returns multiple termvectors in one request.
 ----
 client.mtermvectors({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -616,6 +642,7 @@ Open a point in time that can be used in subsequent searches
 ----
 client.openPointInTime({ index, keep_alive })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -635,6 +662,7 @@ Returns whether the cluster is running.
 ----
 client.ping()
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -648,6 +676,7 @@ Creates or updates a script.
 ----
 client.putScript({ id, script })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -666,6 +695,7 @@ Allows to evaluate the quality of ranked search results over a set of typical se
 ----
 client.rankEval({ requests })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -689,6 +719,7 @@ documents from a remote cluster.
 ----
 client.reindex({ dest, source })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -716,6 +747,7 @@ Changes the number of requests per second for a particular Reindex operation.
 ----
 client.reindexRethrottle({ task_id })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -731,6 +763,7 @@ Allows to use the Mustache language to pre-render a search definition.
 ----
 client.renderSearchTemplate({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -748,6 +781,7 @@ Allows an arbitrary script to be executed and a result to be returned
 ----
 client.scriptsPainlessExecute({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -764,6 +798,7 @@ Allows to retrieve a large numbers of results from a single search request.
 ----
 client.scroll({ scroll_id })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -780,6 +815,7 @@ Returns results matching a query.
 ----
 client.search({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -860,6 +896,7 @@ Searches a vector tile for geospatial values. Returns results as a binary Mapbox
 ----
 client.searchMvt({ index, field, zoom, x, y })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -918,6 +955,7 @@ Returns information about the indices and shards that a search request would be 
 ----
 client.searchShards({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -938,6 +976,7 @@ Allows to use the Mustache language to pre-render a search definition.
 ----
 client.searchTemplate({ ... })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -973,6 +1012,7 @@ The terms enum API  can be used to discover terms in the index that begin with t
 ----
 client.termsEnum({ index, field })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -994,6 +1034,7 @@ Returns information and statistics about terms in the fields of a particular doc
 ----
 client.termvectors({ index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1023,6 +1064,7 @@ Updates a document with a script or partial document.
 ----
 client.update({ id, index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1066,6 +1108,7 @@ for example to pick up a mapping change.
 ----
 client.updateByQuery({ index })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1113,6 +1156,7 @@ Changes the number of requests per second for a particular Update By Query opera
 ----
 client.updateByQueryRethrottle({ task_id })
 ----
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1131,6 +1175,7 @@ Deletes an async search by ID. If the search is still running, the search reques
 client.asyncSearch.delete({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1146,6 +1191,7 @@ Retrieves the results of a previously submitted async search request given its I
 client.asyncSearch.get({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1170,6 +1216,7 @@ Retrieves the status of a previously submitted async search request given its ID
 client.asyncSearch.status({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1185,6 +1232,7 @@ Executes a search request asynchronously.
 client.asyncSearch.submit({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1273,6 +1321,7 @@ Shows information about currently configured aliases to indices including filter
 client.cat.aliases({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1289,6 +1338,7 @@ Provides a snapshot of how many shards are allocated to each data node and how m
 client.cat.allocation({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1305,6 +1355,7 @@ Returns information about existing component_templates templates.
 client.cat.componentTemplates({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1320,6 +1371,7 @@ Provides quick access to the document count of the entire cluster, or individual
 client.cat.count({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1336,6 +1388,7 @@ Shows how much heap memory is currently being used by fielddata on every data no
 client.cat.fielddata({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1353,6 +1406,7 @@ Returns a concise representation of the cluster health.
 client.cat.health({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1369,6 +1423,7 @@ Returns help for the Cat APIs.
 client.cat.help()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1383,6 +1438,7 @@ Returns information about indices: number of primaries and replicas, document co
 client.cat.indices({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1405,6 +1461,7 @@ Returns information about the master node.
 client.cat.master()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1419,6 +1476,7 @@ Gets configuration and usage information about data frame analytics jobs.
 client.cat.mlDataFrameAnalytics({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1440,6 +1498,7 @@ Gets configuration and usage information about datafeeds.
 client.cat.mlDatafeeds({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1467,6 +1526,7 @@ Gets configuration and usage information about anomaly detection jobs.
 client.cat.mlJobs({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1495,6 +1555,7 @@ Gets configuration and usage information about inference trained models.
 client.cat.mlTrainedModels({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1518,6 +1579,7 @@ Returns information about custom node attributes.
 client.cat.nodeattrs()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1532,6 +1594,7 @@ Returns basic statistics about performance of cluster nodes.
 client.cat.nodes({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1549,6 +1612,7 @@ Returns a concise representation of the cluster pending tasks.
 client.cat.pendingTasks()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1563,6 +1627,7 @@ Returns information about installed plugins across nodes node.
 client.cat.plugins()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1577,6 +1642,7 @@ Returns information about index shard recoveries, both on-going completed.
 client.cat.recovery({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1596,6 +1662,7 @@ Returns information about snapshot repositories registered in the cluster.
 client.cat.repositories()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1610,6 +1677,7 @@ Provides low-level information about the segments in the shards of an index.
 client.cat.segments({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1628,6 +1696,7 @@ Provides a detailed view of shard allocation on nodes.
 client.cat.shards({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1646,6 +1715,7 @@ Returns all snapshots in a specific repository.
 client.cat.snapshots({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1665,6 +1735,7 @@ Returns information about the tasks currently executing on one or more nodes in 
 client.cat.tasks({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1683,6 +1754,7 @@ Returns information about existing templates.
 client.cat.templates({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1700,6 +1772,7 @@ By default the active, queue and rejected statistics are returned for all thread
 client.cat.threadPool({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1717,6 +1790,7 @@ Gets configuration and usage information about transforms.
 client.cat.transforms({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1743,6 +1817,7 @@ Deletes auto-follow patterns.
 client.ccr.deleteAutoFollowPattern({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1758,6 +1833,7 @@ Creates a new follower index configured to follow the referenced leader index.
 client.ccr.follow({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1786,6 +1862,7 @@ Retrieves information about all follower indices, including parameters and statu
 client.ccr.followInfo({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1801,6 +1878,7 @@ Retrieves follower stats. return shard-level stats about the following tasks ass
 client.ccr.followStats({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1816,6 +1894,7 @@ Removes the follower retention leases from the leader.
 client.ccr.forgetFollower({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1835,6 +1914,7 @@ Gets configured auto-follow patterns. Returns the specified auto-follow pattern 
 client.ccr.getAutoFollowPattern({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1850,6 +1930,7 @@ Pauses an auto-follow pattern
 client.ccr.pauseAutoFollowPattern({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1865,6 +1946,7 @@ Pauses a follower index. The follower index will not fetch any additional operat
 client.ccr.pauseFollow({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1880,6 +1962,7 @@ Creates a new named collection of auto-follow patterns against a specified remot
 client.ccr.putAutoFollowPattern({ name, remote_cluster })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1910,6 +1993,7 @@ Resumes an auto-follow pattern that has been paused
 client.ccr.resumeAutoFollowPattern({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1925,6 +2009,7 @@ Resumes a follower index that has been paused
 client.ccr.resumeFollow({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1950,6 +2035,7 @@ Gets all stats related to cross-cluster replication.
 client.ccr.stats()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1964,6 +2050,7 @@ Stops the following task associated with a follower index and removes index meta
 client.ccr.unfollow({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -1981,6 +2068,7 @@ Provides explanations for shard allocations in the cluster.
 client.cluster.allocationExplain({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2001,6 +2089,7 @@ Deletes a component template
 client.cluster.deleteComponentTemplate({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2018,6 +2107,7 @@ Clears cluster voting config exclusions.
 client.cluster.deleteVotingConfigExclusions({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2038,6 +2128,7 @@ Returns information about whether a particular component template exist
 client.cluster.existsComponentTemplate({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2059,6 +2150,7 @@ Returns one or more component templates
 client.cluster.getComponentTemplate({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2078,6 +2170,7 @@ Returns cluster settings.
 client.cluster.getSettings({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2096,6 +2189,7 @@ Returns basic information about the health of the cluster.
 client.cluster.health({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2122,6 +2216,7 @@ Returns different information about the cluster.
 client.cluster.info({ target })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2138,6 +2233,7 @@ allocate or fail shard) which have not yet been executed.
 client.cluster.pendingTasks({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2156,6 +2252,7 @@ Updates the cluster voting config exclusions by node ids or node names.
 client.cluster.postVotingConfigExclusions({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2178,6 +2275,7 @@ Creates or updates a component template
 client.cluster.putComponentTemplate({ name, template })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2204,6 +2302,7 @@ Updates the cluster settings.
 client.cluster.putSettings({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2223,6 +2322,7 @@ Returns the information about configured remote clusters.
 client.cluster.remoteInfo()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2237,6 +2337,7 @@ Allows to manually change the allocation of individual shards in the cluster.
 client.cluster.reroute({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2258,6 +2359,7 @@ Returns a comprehensive information about the state of the cluster.
 client.cluster.state({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2282,6 +2384,7 @@ Returns high-level overview of cluster statistics.
 client.cluster.stats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2301,6 +2404,7 @@ Deletes the specified dangling index
 client.danglingIndices.deleteDanglingIndex({ index_uuid, accept_data_loss })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2319,6 +2423,7 @@ Imports the specified dangling index
 client.danglingIndices.importDanglingIndex({ index_uuid, accept_data_loss })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2337,6 +2442,7 @@ Returns all dangling indices.
 client.danglingIndices.listDanglingIndices()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2353,6 +2459,7 @@ Deletes an existing enrich policy and its enrich index.
 client.enrich.deletePolicy({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2368,6 +2475,7 @@ Creates the enrich index for an existing enrich policy.
 client.enrich.executePolicy({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2384,6 +2492,7 @@ Gets information about an enrich policy.
 client.enrich.getPolicy({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2399,6 +2508,7 @@ Creates a new enrich policy.
 client.enrich.putPolicy({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2417,6 +2527,7 @@ Gets enrich coordinator statistics and information about enrich policies that ar
 client.enrich.stats()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2433,6 +2544,7 @@ Deletes an async EQL search by ID. If the search is still running, the search re
 client.eql.delete({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2448,6 +2560,7 @@ Returns async results from previously executed Event Query Language (EQL) search
 client.eql.get({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2465,6 +2578,7 @@ Returns the status of a previously submitted async or stored Event Query Languag
 client.eql.getStatus({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2480,6 +2594,7 @@ Returns results matching a query expressed in Event Query Language (EQL)
 client.eql.search({ index, query })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2514,6 +2629,7 @@ Gets a list of features which can be included in snapshots using the feature_sta
 client.features.getFeatures()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2528,6 +2644,7 @@ Resets the internal state of features, usually by deleting system indices
 client.features.resetFeatures()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2544,6 +2661,7 @@ Returns the current global checkpoints for an index. This API is design for inte
 client.fleet.globalCheckpoints({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2565,6 +2683,7 @@ Multi Search API where the search will only be executed after specified checkpoi
 client.fleet.msearch({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2595,6 +2714,7 @@ Search API where the search will only be executed after specified checkpoints ar
 client.fleet.search({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2681,6 +2801,7 @@ Explore extracted and summarized information about the documents and terms in an
 client.graph.explore({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2704,6 +2825,7 @@ Deletes the specified lifecycle policy definition. A currently used policy canno
 client.ilm.deleteLifecycle({ policy })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2721,6 +2843,7 @@ Retrieves information about the index's current lifecycle state, such as the cur
 client.ilm.explainLifecycle({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2741,6 +2864,7 @@ Returns the specified policy definition. Includes the policy version and last mo
 client.ilm.getLifecycle({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2758,6 +2882,7 @@ Retrieves the current index lifecycle management (ILM) status.
 client.ilm.getStatus()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2772,6 +2897,7 @@ Migrates the indices and ILM policies away from custom node attribute allocation
 client.ilm.migrateToDataTiers({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2790,6 +2916,7 @@ Manually moves an index into the specified step and executes that step.
 client.ilm.moveToStep({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2807,6 +2934,7 @@ Creates a lifecycle policy
 client.ilm.putLifecycle({ policy })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2824,6 +2952,7 @@ Removes the assigned lifecycle policy and stops managing the specified index
 client.ilm.removePolicy({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2839,6 +2968,7 @@ Retries executing the policy for an index that is in the ERROR step.
 client.ilm.retry({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2854,6 +2984,7 @@ Start the index lifecycle management (ILM) plugin.
 client.ilm.start({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2870,6 +3001,7 @@ Halts all lifecycle management operations and stops the index lifecycle manageme
 client.ilm.stop({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2888,6 +3020,7 @@ Adds a block to an index.
 client.indices.addBlock({ index, block })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2909,6 +3042,7 @@ Performs the analysis process on a text and return the tokens breakdown of the t
 client.indices.analyze({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2933,6 +3067,7 @@ Clears all or specific caches for one or more indices.
 client.indices.clearCache({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2955,6 +3090,7 @@ Clones an index
 client.indices.clone({ index, target })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2976,6 +3112,7 @@ Closes an index.
 client.indices.close({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -2997,6 +3134,7 @@ Creates an index with optional settings and mappings.
 client.indices.create({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3021,6 +3159,7 @@ Creates a data stream
 client.indices.createDataStream({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3036,6 +3175,7 @@ Provides statistics on operations happening in a data stream.
 client.indices.dataStreamsStats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3052,6 +3192,7 @@ Deletes an index.
 client.indices.delete({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3072,6 +3213,7 @@ Deletes an alias.
 client.indices.deleteAlias({ index, name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3090,6 +3232,7 @@ Deletes the data lifecycle of the selected data streams.
 client.indices.deleteDataLifecycle({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3108,6 +3251,7 @@ Deletes a data stream.
 client.indices.deleteDataStream({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3124,6 +3268,7 @@ Deletes an index template.
 client.indices.deleteIndexTemplate({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3141,6 +3286,7 @@ Deletes an index template.
 client.indices.deleteTemplate({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3158,6 +3304,7 @@ Analyzes the disk usage of each field of an index or data stream
 client.indices.diskUsage({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3178,6 +3325,7 @@ Downsample an index
 client.indices.downsample({ index, target_index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3194,6 +3342,7 @@ Returns information about whether a particular index exists.
 client.indices.exists({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3215,6 +3364,7 @@ Returns information about whether a particular alias exists.
 client.indices.existsAlias({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3235,6 +3385,7 @@ Returns information about whether a particular index template exists.
 client.indices.existsIndexTemplate({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3251,6 +3402,7 @@ Returns information about whether a particular index template exists.
 client.indices.existsTemplate({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3269,6 +3421,7 @@ Retrieves information about the index's current DLM lifecycle, such as any poten
 client.indices.explainDataLifecycle({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3286,6 +3439,7 @@ Returns the field usage stats for each field of an index
 client.indices.fieldUsageStats({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3316,6 +3470,7 @@ Performs the flush operation on one or more indices.
 client.indices.flush({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3336,6 +3491,7 @@ Performs the force merge operation on one or more indices.
 client.indices.forcemerge({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3358,6 +3514,7 @@ Returns information about one or more indices.
 client.indices.get({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3386,6 +3543,7 @@ Returns an alias.
 client.indices.getAlias({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3406,6 +3564,7 @@ Returns the data lifecycle of the selected data streams.
 client.indices.getDataLifecycle({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3423,6 +3582,7 @@ Returns data streams.
 client.indices.getDataStream({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3440,6 +3600,7 @@ Returns mapping for one or more fields.
 client.indices.getFieldMapping({ fields })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3461,6 +3622,7 @@ Returns an index template.
 client.indices.getIndexTemplate({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3480,6 +3642,7 @@ Returns mappings for one or more indices.
 client.indices.getMapping({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3500,6 +3663,7 @@ Returns settings for one or more indices.
 client.indices.getSettings({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3523,6 +3687,7 @@ Returns an index template.
 client.indices.getTemplate({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3541,6 +3706,7 @@ Migrates an alias to a data stream
 client.indices.migrateToDataStream({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3556,6 +3722,7 @@ Modifies a data stream
 client.indices.modifyDataStream({ actions })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3571,6 +3738,7 @@ Opens an index.
 client.indices.open({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3592,6 +3760,7 @@ Promotes a data stream from a replicated data stream managed by CCR to a regular
 client.indices.promoteDataStream({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3607,6 +3776,7 @@ Creates or updates an alias.
 client.indices.putAlias({ index, name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3630,6 +3800,7 @@ Updates the data lifecycle of the selected data streams.
 client.indices.putDataLifecycle({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3649,6 +3820,7 @@ Creates or updates an index template.
 client.indices.putIndexTemplate({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3672,6 +3844,7 @@ Updates the index mappings.
 client.indices.putMapping({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3712,6 +3885,7 @@ Updates the index settings.
 client.indices.putSettings({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3734,6 +3908,7 @@ Creates or updates an index template.
 client.indices.putTemplate({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3766,6 +3941,7 @@ Returns information about ongoing index shard recoveries.
 client.indices.recovery({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3783,6 +3959,7 @@ Performs the refresh operation in one or more indices.
 client.indices.refresh({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3801,6 +3978,7 @@ Reloads an index's search analyzers and their resources.
 client.indices.reloadSearchAnalyzers({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3819,6 +3997,7 @@ Returns information about any matching indices, aliases, and data streams
 client.indices.resolveIndex({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3836,6 +4015,7 @@ is considered to be too large or too old.
 client.indices.rollover({ alias })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3860,6 +4040,7 @@ Provides low-level information about segments in a Lucene index.
 client.indices.segments({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3879,6 +4060,7 @@ Provides store information for shard copies of indices.
 client.indices.shardStores({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3901,6 +4083,7 @@ Allow to shrink an existing index into a new index with fewer primary shards.
 client.indices.shrink({ index, target })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3922,6 +4105,7 @@ Simulate matching the given index name against the index templates in the system
 client.indices.simulateIndexTemplate({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3953,6 +4137,7 @@ Simulate resolving the given template name or body
 client.indices.simulateTemplate({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3972,6 +4157,7 @@ Allows you to split an existing index into a new index with more primary shards.
 client.indices.split({ index, target })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -3993,6 +4179,7 @@ Provides statistics on operations happening in an index.
 client.indices.stats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4020,6 +4207,7 @@ Unfreezes an index. When a frozen index is unfrozen, the index goes through the 
 client.indices.unfreeze({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4041,6 +4229,7 @@ Updates index aliases.
 client.indices.updateAliases({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4058,6 +4247,7 @@ Allows a user to validate a potentially expensive query without executing it.
 client.indices.validateQuery({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4088,6 +4278,7 @@ Deletes a pipeline.
 client.ingest.deletePipeline({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4105,6 +4296,7 @@ Returns statistical information about geoip databases
 client.ingest.geoIpStats()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4119,6 +4311,7 @@ Returns a pipeline.
 client.ingest.getPipeline({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4136,6 +4329,7 @@ Returns a list of the built-in patterns.
 client.ingest.processorGrok()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4150,6 +4344,7 @@ Creates or updates a pipeline.
 client.ingest.putPipeline({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4173,6 +4368,7 @@ Allows to simulate a pipeline with example documents.
 client.ingest.simulate({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4193,6 +4389,7 @@ Deletes licensing information for the cluster
 client.license.delete()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4207,6 +4404,7 @@ Retrieves licensing information for the cluster
 client.license.get({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4224,6 +4422,7 @@ Retrieves information about the status of the basic license.
 client.license.getBasicStatus()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4238,6 +4437,7 @@ Retrieves information about the status of the trial license.
 client.license.getTrialStatus()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4252,6 +4452,7 @@ Updates the license for the cluster.
 client.license.post({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4269,6 +4470,7 @@ Starts an indefinite basic license.
 client.license.postStartBasic({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4284,6 +4486,7 @@ starts a limited time trial license.
 client.license.postStartTrial({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4302,6 +4505,7 @@ Deletes Logstash Pipelines used by Central Management
 client.logstash.deletePipeline({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4317,6 +4521,7 @@ Retrieves Logstash Pipelines used by Central Management
 client.logstash.getPipeline({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4332,6 +4537,7 @@ Adds and updates Logstash Pipelines used for Central Management
 client.logstash.putPipeline({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4349,6 +4555,7 @@ Retrieves information about different cluster, node, and index level settings th
 client.migration.deprecations({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4364,6 +4571,7 @@ Find out whether system features need to be upgraded or not
 client.migration.getFeatureUpgradeStatus()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4378,6 +4586,7 @@ Begin upgrades for system features
 client.migration.postFeatureUpgrade()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4394,6 +4603,7 @@ Clear the cached results from a trained model deployment
 client.ml.clearTrainedModelDeploymentCache({ model_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4409,6 +4619,7 @@ Closes one or more anomaly detection jobs. A job can be opened and closed multip
 client.ml.closeJob({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4429,6 +4640,7 @@ Deletes a calendar.
 client.ml.deleteCalendar({ calendar_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4444,6 +4656,7 @@ Deletes scheduled events from a calendar.
 client.ml.deleteCalendarEvent({ calendar_id, event_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4460,6 +4673,7 @@ Deletes anomaly detection jobs from a calendar.
 client.ml.deleteCalendarJob({ calendar_id, job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4477,6 +4691,7 @@ Deletes an existing data frame analytics job.
 client.ml.deleteDataFrameAnalytics({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4494,6 +4709,7 @@ Deletes an existing datafeed.
 client.ml.deleteDatafeed({ datafeed_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4514,6 +4730,7 @@ Deletes expired and unused machine learning data.
 client.ml.deleteExpiredData({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4533,6 +4750,7 @@ Deletes a filter.
 client.ml.deleteFilter({ filter_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4548,6 +4766,7 @@ Deletes forecasts from a machine learning job.
 client.ml.deleteForecast({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4573,6 +4792,7 @@ Deletes an existing anomaly detection job.
 client.ml.deleteJob({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4595,6 +4815,7 @@ Deletes an existing model snapshot.
 client.ml.deleteModelSnapshot({ job_id, snapshot_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4611,6 +4832,7 @@ Deletes an existing trained inference model that is currently not referenced by 
 client.ml.deleteTrainedModel({ model_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4627,6 +4849,7 @@ Deletes a model alias that refers to the trained model
 client.ml.deleteTrainedModelAlias({ model_alias, model_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4643,6 +4866,7 @@ Estimates the model memory
 client.ml.estimateModelMemory({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4671,6 +4895,7 @@ Evaluates the data frame analytics for an annotated index.
 client.ml.evaluateDataFrame({ evaluation, index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4688,6 +4913,7 @@ Explains a data frame analytics config.
 client.ml.explainDataFrameAnalytics({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4729,6 +4955,7 @@ Forces any buffered data to be processed by the job.
 client.ml.flushJob({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4754,6 +4981,7 @@ Predicts the future behavior of a time series by using its historical behavior.
 client.ml.forecast({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4781,6 +5009,7 @@ Retrieves anomaly detection job results for one or more buckets.
 client.ml.getBuckets({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4810,6 +5039,7 @@ Retrieves information about the scheduled events in calendars.
 client.ml.getCalendarEvents({ calendar_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4830,6 +5060,7 @@ Retrieves configuration information for calendars.
 client.ml.getCalendars({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4848,6 +5079,7 @@ Retrieves anomaly detection job results for one or more categories.
 client.ml.getCategories({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4872,6 +5104,7 @@ Retrieves configuration information for data frame analytics jobs.
 client.ml.getDataFrameAnalytics({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4905,6 +5138,7 @@ Retrieves usage information for data frame analytics jobs.
 client.ml.getDataFrameAnalyticsStats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4936,6 +5170,7 @@ Retrieves usage information for datafeeds.
 client.ml.getDatafeedStats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4963,6 +5198,7 @@ Retrieves configuration information for datafeeds.
 client.ml.getDatafeeds({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -4993,6 +5229,7 @@ Retrieves filters.
 client.ml.getFilters({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5010,6 +5247,7 @@ Retrieves anomaly detection job results for one or more influencers.
 client.ml.getInfluencers({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5040,6 +5278,7 @@ Retrieves usage information for anomaly detection jobs.
 client.ml.getJobStats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5068,6 +5307,7 @@ Retrieves configuration information for anomaly detection jobs.
 client.ml.getJobs({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5098,6 +5338,7 @@ Returns information on how ML is using memory.
 client.ml.getMemoryStats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5120,6 +5361,7 @@ Gets stats for anomaly detection job model snapshot upgrades that are in progres
 client.ml.getModelSnapshotUpgradeStats({ job_id, snapshot_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5147,6 +5389,7 @@ Retrieves information about model snapshots.
 client.ml.getModelSnapshots({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5173,6 +5416,7 @@ Retrieves overall bucket results that summarize the bucket results of multiple a
 client.ml.getOverallBuckets({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5217,6 +5461,7 @@ Retrieves anomaly records for an anomaly detection job.
 client.ml.getRecords({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5243,6 +5488,7 @@ Retrieves configuration information for a trained inference model.
 client.ml.getTrainedModels({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5278,6 +5524,7 @@ Retrieves usage information for trained inference models.
 client.ml.getTrainedModelsStats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5304,6 +5551,7 @@ Evaluate a trained model.
 client.ml.inferTrainedModel({ model_id, docs })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5324,6 +5572,7 @@ Returns defaults and limits used by machine learning.
 client.ml.info()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5338,6 +5587,7 @@ Opens one or more anomaly detection jobs.
 client.ml.openJob({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5354,6 +5604,7 @@ Posts scheduled events in a calendar.
 client.ml.postCalendarEvents({ calendar_id, events })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5370,6 +5621,7 @@ Sends data to an anomaly detection job for analysis.
 client.ml.postData({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5387,6 +5639,7 @@ Previews that will be analyzed given a data frame analytics config.
 client.ml.previewDataFrameAnalytics({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5405,6 +5658,7 @@ Previews a datafeed.
 client.ml.previewDatafeed({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5430,6 +5684,7 @@ Instantiates a calendar.
 client.ml.putCalendar({ calendar_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5447,6 +5702,7 @@ Adds an anomaly detection job to a calendar.
 client.ml.putCalendarJob({ calendar_id, job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5463,6 +5719,7 @@ Instantiates a data frame analytics job.
 client.ml.putDataFrameAnalytics({ id, analysis, dest, source })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5533,6 +5790,7 @@ Instantiates a datafeed.
 client.ml.putDatafeed({ datafeed_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5593,6 +5851,7 @@ Instantiates a filter.
 client.ml.putFilter({ filter_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5611,6 +5870,7 @@ Instantiates an anomaly detection job.
 client.ml.putJob({ job_id, analysis_config, data_description })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5641,6 +5901,7 @@ Creates an inference trained model.
 client.ml.putTrainedModel({ model_id, inference_config })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5673,6 +5934,7 @@ Creates a new model alias (or reassigns an existing one) to refer to the trained
 client.ml.putTrainedModelAlias({ model_alias, model_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5692,6 +5954,7 @@ Creates part of a trained model definition
 client.ml.putTrainedModelDefinitionPart({ model_id, part, definition, total_definition_length, total_parts })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5712,6 +5975,7 @@ Creates a trained model vocabulary
 client.ml.putTrainedModelVocabulary({ model_id, vocabulary })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5729,6 +5993,7 @@ Resets an existing anomaly detection job.
 client.ml.resetJob({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5749,6 +6014,7 @@ Reverts to a specific snapshot.
 client.ml.revertModelSnapshot({ job_id, snapshot_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5773,6 +6039,7 @@ Sets a cluster wide upgrade_mode setting that prepares machine learning indices 
 client.ml.setUpgradeMode({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5791,6 +6058,7 @@ Starts a data frame analytics job.
 client.ml.startDataFrameAnalytics({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5810,6 +6078,7 @@ Starts one or more datafeeds.
 client.ml.startDatafeed({ datafeed_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5845,6 +6114,7 @@ Start a trained model deployment.
 client.ml.startTrainedModelDeployment({ model_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5879,6 +6149,7 @@ Stops one or more data frame analytics jobs.
 client.ml.stopDataFrameAnalytics({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5910,6 +6181,7 @@ Stops one or more datafeeds.
 client.ml.stopDatafeed({ datafeed_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5938,6 +6210,7 @@ Stop a trained model deployment.
 client.ml.stopTrainedModelDeployment({ model_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5959,6 +6232,7 @@ Updates certain properties of a data frame analytics job.
 client.ml.updateDataFrameAnalytics({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -5988,6 +6262,7 @@ Updates certain properties of a datafeed.
 client.ml.updateDatafeed({ datafeed_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6056,6 +6331,7 @@ Updates the description of a filter, adds items, or removes items.
 client.ml.updateFilter({ filter_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6074,6 +6350,7 @@ Updates certain properties of an anomaly detection job.
 client.ml.updateJob({ job_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6138,6 +6415,7 @@ Updates certain properties of a snapshot.
 client.ml.updateModelSnapshot({ job_id, snapshot_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6158,6 +6436,7 @@ Updates certain properties of trained model deployment.
 client.ml.updateTrainedModelDeployment()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6172,6 +6451,7 @@ Upgrades a given job snapshot to the current major version.
 client.ml.upgradeJobSnapshot({ job_id, snapshot_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6193,6 +6473,7 @@ Removes the archived repositories metering information present in the cluster.
 client.nodes.clearRepositoriesMeteringArchive({ node_id, max_archive_version })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6210,6 +6491,7 @@ Returns cluster repositories metering information.
 client.nodes.getRepositoriesMeteringInfo({ node_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6226,6 +6508,7 @@ Returns information about hot threads on each node in the cluster.
 client.nodes.hotThreads({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6253,6 +6536,7 @@ Returns information about nodes in the cluster.
 client.nodes.info({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6272,6 +6556,7 @@ Reloads secure settings.
 client.nodes.reloadSecureSettings({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6289,6 +6574,7 @@ Returns statistical information about nodes in the cluster.
 client.nodes.stats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6316,6 +6602,7 @@ Returns low-level information about REST actions usage on nodes.
 client.nodes.usage({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6335,6 +6622,7 @@ Deletes an existing rollup job.
 client.rollup.deleteJob({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6350,6 +6638,7 @@ Retrieves the configuration, stats, and status of rollup jobs.
 client.rollup.getJobs({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6365,6 +6654,7 @@ Returns the capabilities of any rollup jobs that have been configured for a spec
 client.rollup.getRollupCaps({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6380,6 +6670,7 @@ Returns the rollup capabilities of all jobs inside of a rollup index (e.g. the i
 client.rollup.getRollupIndexCaps({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6395,6 +6686,7 @@ Creates a rollup job.
 client.rollup.putJob({ id, cron, groups, index_pattern, page_size, rollup_index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6435,6 +6727,7 @@ Enables searching rolled-up data using the standard query DSL.
 client.rollup.rollupSearch({ index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6455,6 +6748,7 @@ Starts an existing, stopped rollup job.
 client.rollup.startJob({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6470,6 +6764,7 @@ Stops an existing, started rollup job.
 client.rollup.stopJob({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6489,6 +6784,7 @@ Deletes a search application.
 client.searchApplication.delete({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6504,6 +6800,7 @@ Delete a behavioral analytics collection.
 client.searchApplication.deleteBehavioralAnalytics({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6519,6 +6816,7 @@ Returns the details about a search application.
 client.searchApplication.get({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6534,6 +6832,7 @@ Returns the existing behavioral analytics collections.
 client.searchApplication.getBehavioralAnalytics({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6549,6 +6848,7 @@ Returns the existing search applications.
 client.searchApplication.list({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6566,6 +6866,7 @@ http://todo.com/tbd[Endpoint documentation]
 client.searchApplication.postBehavioralAnalyticsEvent()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6580,6 +6881,7 @@ Creates or updates a search application.
 client.searchApplication.put({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6596,6 +6898,7 @@ Creates a behavioral analytics collection.
 client.searchApplication.putBehavioralAnalytics({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6611,6 +6914,7 @@ Renders a query for given search application search parameters
 client.searchApplication.renderQuery()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6625,6 +6929,7 @@ Perform a search against a search application
 client.searchApplication.search({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6643,6 +6948,7 @@ Retrieve node-level cache statistics about searchable snapshots.
 client.searchableSnapshots.cacheStats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6659,6 +6965,7 @@ Clear the cache of searchable snapshots.
 client.searchableSnapshots.clearCache({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6679,6 +6986,7 @@ Mount a snapshot as a searchable index.
 client.searchableSnapshots.mount({ repository, snapshot, index })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6702,6 +7010,7 @@ Retrieve shard-level statistics about searchable snapshots.
 client.searchableSnapshots.stats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6720,6 +7029,7 @@ Enables authentication as a user and retrieve information about the authenticate
 client.security.authenticate()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6734,6 +7044,7 @@ Updates the attributes of multiple existing API keys.
 client.security.bulkUpdateApiKeys()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6748,6 +7059,7 @@ Changes the passwords of users in the native realm and built-in users.
 client.security.changePassword({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6770,6 +7082,7 @@ Clear a subset or all entries from the API key cache.
 client.security.clearApiKeyCache({ ids })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6785,6 +7098,7 @@ Evicts application privileges from the native application privileges cache.
 client.security.clearCachedPrivileges({ application })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6800,6 +7114,7 @@ Evicts users from the user cache. Can completely clear the cache or evict specif
 client.security.clearCachedRealms({ realms })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6816,6 +7131,7 @@ Evicts roles from the native role cache.
 client.security.clearCachedRoles({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6831,6 +7147,7 @@ Evicts tokens from the service account token caches.
 client.security.clearCachedServiceTokens({ namespace, service, name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6848,6 +7165,7 @@ Creates an API key for access without requiring basic authentication.
 client.security.createApiKey({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6867,6 +7185,7 @@ Creates a cross-cluster API key for API key based remote cluster access.
 client.security.createCrossClusterApiKey()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6881,6 +7200,7 @@ Creates a service account token for access without requiring basic authenticatio
 client.security.createServiceToken({ namespace, service })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6899,6 +7219,7 @@ Removes application privileges.
 client.security.deletePrivileges({ application, name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6916,6 +7237,7 @@ Removes roles in the native realm.
 client.security.deleteRole({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6932,6 +7254,7 @@ Removes role mappings.
 client.security.deleteRoleMapping({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6948,6 +7271,7 @@ Deletes a service account token.
 client.security.deleteServiceToken({ namespace, service, name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6966,6 +7290,7 @@ Deletes users from the native realm.
 client.security.deleteUser({ username })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6982,6 +7307,7 @@ Disables users in the native realm.
 client.security.disableUser({ username })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -6998,6 +7324,7 @@ Enables users in the native realm.
 client.security.enableUser({ username })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7014,6 +7341,7 @@ Allows a kibana instance to configure itself to communicate with a secured elast
 client.security.enrollKibana()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7028,6 +7356,7 @@ Allows a new node to enroll to an existing cluster with security enabled.
 client.security.enrollNode()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7042,6 +7371,7 @@ Retrieves information for one or more API keys.
 client.security.getApiKey({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7065,6 +7395,7 @@ Retrieves the list of cluster privileges and index privileges that are available
 client.security.getBuiltinPrivileges()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7079,6 +7410,7 @@ Retrieves application privileges.
 client.security.getPrivileges({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7095,6 +7427,7 @@ Retrieves roles in the native realm.
 client.security.getRole({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7110,6 +7443,7 @@ Retrieves role mappings.
 client.security.getRoleMapping({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7125,6 +7459,7 @@ Retrieves information about service accounts.
 client.security.getServiceAccounts({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7141,6 +7476,7 @@ Retrieves information of all service credentials for a service account.
 client.security.getServiceCredentials({ namespace, service })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7157,6 +7493,7 @@ Creates a bearer token for access without requiring basic authentication.
 client.security.getToken({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7177,6 +7514,7 @@ Retrieves information about users in the native realm and built-in users.
 client.security.getUser({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7193,6 +7531,7 @@ Retrieves security privileges for the logged in user.
 client.security.getUserPrivileges({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7210,6 +7549,7 @@ Creates an API key on behalf of another user.
 client.security.grantApiKey({ api_key, grant_type })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7230,6 +7570,7 @@ Determines whether the specified user has a specified list of privileges.
 client.security.hasPrivileges({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7248,6 +7589,7 @@ Invalidates one or more API keys.
 client.security.invalidateApiKey({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7268,6 +7610,7 @@ Invalidates one or more access tokens or refresh tokens.
 client.security.invalidateToken({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7286,6 +7629,7 @@ Exchanges an OpenID Connection authentication response message for an Elasticsea
 client.security.oidcAuthenticate()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7300,6 +7644,7 @@ Invalidates a refresh token and access token that was generated from the OpenID 
 client.security.oidcLogout()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7314,6 +7659,7 @@ Creates an OAuth 2.0 authentication request as a URL string
 client.security.oidcPrepareAuthentication()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7328,6 +7674,7 @@ Adds or updates application privileges.
 client.security.putPrivileges({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7343,6 +7690,7 @@ Adds and updates roles in the native realm.
 client.security.putRole({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7366,6 +7714,7 @@ Creates and updates role mappings.
 client.security.putRoleMapping({ name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7387,6 +7736,7 @@ Adds and updates users in the native realm. These users are commonly referred to
 client.security.putUser({ username })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7410,6 +7760,7 @@ Retrieves information for API keys using a subset of query DSL
 client.security.queryApiKeys({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7439,6 +7790,7 @@ Exchanges a SAML Response message for an Elasticsearch access token and refresh 
 client.security.samlAuthenticate({ content, ids })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7456,6 +7808,7 @@ Verifies the logout response sent from the SAML IdP
 client.security.samlCompleteLogout({ realm, ids })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7474,6 +7827,7 @@ Consumes a SAML LogoutRequest
 client.security.samlInvalidate({ query_string })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7495,6 +7849,7 @@ Invalidates an access token and a refresh token that were generated via the SAML
 client.security.samlLogout({ token })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7513,6 +7868,7 @@ Creates a SAML authentication request
 client.security.samlPrepareAuthentication({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7533,6 +7889,7 @@ Generates SAML metadata for the Elastic stack SAML 2.0 Service Provider
 client.security.samlServiceProviderMetadata({ realm_name })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7548,6 +7905,7 @@ Updates attributes of an existing API key.
 client.security.updateApiKey({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7565,6 +7923,7 @@ Updates attributes of an existing cross-cluster API key.
 client.security.updateCrossClusterApiKey()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7581,6 +7940,7 @@ Deletes an existing snapshot lifecycle policy.
 client.slm.deleteLifecycle({ policy_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7596,6 +7956,7 @@ Immediately creates a snapshot according to the lifecycle policy, without waitin
 client.slm.executeLifecycle({ policy_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7611,6 +7972,7 @@ Deletes any snapshots that are expired according to the policy's retention rules
 client.slm.executeRetention()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7625,6 +7987,7 @@ Retrieves one or more snapshot lifecycle policy definitions and information abou
 client.slm.getLifecycle({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7640,6 +8003,7 @@ Returns global and policy-level statistics about actions taken by snapshot lifec
 client.slm.getStats()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7654,6 +8018,7 @@ Retrieves the status of snapshot lifecycle management (SLM).
 client.slm.getStatus()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7668,6 +8033,7 @@ Creates or updates a snapshot lifecycle policy.
 client.slm.putLifecycle({ policy_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7690,6 +8056,7 @@ Turns on snapshot lifecycle management (SLM).
 client.slm.start()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7704,6 +8071,7 @@ Turns off snapshot lifecycle management (SLM).
 client.slm.stop()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7720,6 +8088,7 @@ Removes stale data from repository.
 client.snapshot.cleanupRepository({ repository })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7737,6 +8106,7 @@ Clones indices from one snapshot into another snapshot in the same repository.
 client.snapshot.clone({ repository, snapshot, target_snapshot, indices })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7757,6 +8127,7 @@ Creates a snapshot in a repository.
 client.snapshot.create({ repository, snapshot })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7781,6 +8152,7 @@ Creates a repository.
 client.snapshot.createRepository({ repository, type, settings })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7801,6 +8173,7 @@ Deletes one or more snapshots.
 client.snapshot.delete({ repository, snapshot })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7818,6 +8191,7 @@ Deletes a repository.
 client.snapshot.deleteRepository({ repository })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7835,6 +8209,7 @@ Returns information about a snapshot.
 client.snapshot.get({ repository, snapshot })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7866,6 +8241,7 @@ Returns information about a repository.
 client.snapshot.getRepository({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7883,6 +8259,7 @@ Analyzes a repository for correctness and performance
 client.snapshot.repositoryAnalyze()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7897,6 +8274,7 @@ Restores a snapshot.
 client.snapshot.restore({ repository, snapshot })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7925,6 +8303,7 @@ Returns information about the status of a snapshot.
 client.snapshot.status({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7943,6 +8322,7 @@ Verifies a repository.
 client.snapshot.verifyRepository({ repository })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7962,6 +8342,7 @@ Clears the SQL cursor
 client.sql.clearCursor({ cursor })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7977,6 +8358,7 @@ Deletes an async SQL search or a stored synchronous SQL search. If the search is
 client.sql.deleteAsync({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -7992,6 +8374,7 @@ Returns the current status and available results for an async SQL search or stor
 client.sql.getAsync({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8014,6 +8397,7 @@ Returns the current status of an async SQL search or a stored synchronous SQL se
 client.sql.getAsyncStatus({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8029,6 +8413,7 @@ Executes a SQL request
 client.sql.query({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8061,6 +8446,7 @@ Translates SQL into Elasticsearch queries
 client.sql.translate({ query })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8081,6 +8467,7 @@ Retrieves information about the X.509 certificates used to encrypt communication
 client.ssl.certificates()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8097,6 +8484,7 @@ Deletes a synonym set
 client.synonyms.delete()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8111,6 +8499,7 @@ Retrieves a synonym set
 client.synonyms.get()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8125,6 +8514,7 @@ Creates or updates a synonyms set
 client.synonyms.put()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8141,6 +8531,7 @@ Cancels a task, if it can be cancelled through an API.
 client.tasks.cancel({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8160,6 +8551,7 @@ Returns information about a task.
 client.tasks.get({ task_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8177,6 +8569,7 @@ Returns a list of tasks.
 client.tasks.list({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8201,6 +8594,7 @@ Finds the structure of a text file. The text file must contain data that is suit
 client.textStructure.findStructure({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8231,6 +8625,7 @@ Deletes an existing transform.
 client.transform.deleteTransform({ transform_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8249,6 +8644,7 @@ Retrieves configuration information for transforms.
 client.transform.getTransform({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8280,6 +8676,7 @@ Retrieves usage information for transforms.
 client.transform.getTransformStats({ transform_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8309,6 +8706,7 @@ Previews a transform.
 client.transform.previewTransform({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8343,6 +8741,7 @@ Instantiates a transform.
 client.transform.putTransform({ transform_id, dest, source })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8379,6 +8778,7 @@ Resets an existing transform.
 client.transform.resetTransform({ transform_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8397,6 +8797,7 @@ Schedules now a transform.
 client.transform.scheduleNowTransform({ transform_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8413,6 +8814,7 @@ Starts one or more transforms.
 client.transform.startTransform({ transform_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8430,6 +8832,7 @@ Stops one or more transforms.
 client.transform.stopTransform({ transform_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8462,6 +8865,7 @@ Updates certain properties of a transform.
 client.transform.updateTransform({ transform_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8494,6 +8898,7 @@ Upgrades all transforms.
 client.transform.upgradeTransforms({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8513,6 +8918,7 @@ Acknowledges a watch, manually throttling the execution of the watch's actions.
 client.watcher.ackWatch({ watch_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8529,6 +8935,7 @@ Activates a currently inactive watch.
 client.watcher.activateWatch({ watch_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8544,6 +8951,7 @@ Deactivates a currently active watch.
 client.watcher.deactivateWatch({ watch_id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8559,6 +8967,7 @@ Removes a watch from Watcher.
 client.watcher.deleteWatch({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8574,6 +8983,7 @@ Forces the execution of a stored watch.
 client.watcher.executeWatch({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8597,6 +9007,7 @@ Retrieve settings for the watcher system index
 client.watcher.getSettings()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8611,6 +9022,7 @@ Retrieves a watch by its ID.
 client.watcher.getWatch({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8626,6 +9038,7 @@ Creates a new watch, or updates an existing one.
 client.watcher.putWatch({ id })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8652,6 +9065,7 @@ Retrieves stored watches.
 client.watcher.queryWatches({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8671,6 +9085,7 @@ Starts Watcher if it is not already running.
 client.watcher.start()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8685,6 +9100,7 @@ Retrieves the current Watcher metrics.
 client.watcher.stats({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8701,6 +9117,7 @@ Stops Watcher if it is running.
 client.watcher.stop()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8715,6 +9132,7 @@ Update settings for the watcher system index
 client.watcher.updateSettings()
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8731,6 +9149,7 @@ Retrieves information about the installed X-Pack features.
 client.xpack.info({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
@@ -8748,6 +9167,7 @@ Retrieves usage information about the installed X-Pack features.
 client.xpack.usage({ ... })
 ----
 
+[discrete]
 ==== Arguments
 
 * *Request (object):*
