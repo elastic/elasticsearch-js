@@ -43,6 +43,10 @@ export default class Features {
     this.transport = transport
   }
 
+  /**
+    * Gets a list of features which can be included in snapshots using the feature_states field when creating a snapshot
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/get-features-api.html Elasticsearch API docs}
+    */
   async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest | TB.FeaturesGetFeaturesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FeaturesGetFeaturesResponse>
   async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest | TB.FeaturesGetFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FeaturesGetFeaturesResponse, unknown>>
   async getFeatures (this: That, params?: T.FeaturesGetFeaturesRequest | TB.FeaturesGetFeaturesRequest, options?: TransportRequestOptions): Promise<T.FeaturesGetFeaturesResponse>
@@ -66,6 +70,10 @@ export default class Features {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Resets the internal state of features, usually by deleting system indices
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/modules-snapshots.html Elasticsearch API docs}
+    */
   async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest | TB.FeaturesResetFeaturesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FeaturesResetFeaturesResponse>
   async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest | TB.FeaturesResetFeaturesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FeaturesResetFeaturesResponse, unknown>>
   async resetFeatures (this: That, params?: T.FeaturesResetFeaturesRequest | TB.FeaturesResetFeaturesRequest, options?: TransportRequestOptions): Promise<T.FeaturesResetFeaturesResponse>

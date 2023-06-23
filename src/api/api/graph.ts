@@ -43,6 +43,10 @@ export default class Graph {
     this.transport = transport
   }
 
+  /**
+    * Explore extracted and summarized information about the documents and terms in an index.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/graph-explore-api.html Elasticsearch API docs}
+    */
   async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GraphExploreResponse>
   async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GraphExploreResponse, unknown>>
   async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptions): Promise<T.GraphExploreResponse>
