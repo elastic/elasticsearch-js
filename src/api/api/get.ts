@@ -37,6 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Returns a document.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/docs-get.html Elasticsearch API docs}
+  */
 export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest | TB.GetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetResponse<TDocument>>
 export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest | TB.GetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetResponse<TDocument>, unknown>>
 export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest | TB.GetRequest, options?: TransportRequestOptions): Promise<T.GetResponse<TDocument>>

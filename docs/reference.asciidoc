@@ -980,6 +980,16 @@ client.cluster.health(...)
 ----
 
 [discrete]
+==== info
+Returns different information about the cluster.
+
+{ref}/cluster-info.html[Endpoint documentation]
+[source,ts]
+----
+client.cluster.info(...)
+----
+
+[discrete]
 ==== pending_tasks
 Returns a list of any cluster-level changes (e.g. create index, update mapping,
 allocate or fail shard) which have not yet been executed.
@@ -3090,6 +3100,16 @@ client.searchApplication.putBehavioralAnalytics(...)
 ----
 
 [discrete]
+==== render_query
+Renders a query for given search application search parameters
+
+{ref}/search-application-render-query.html[Endpoint documentation]
+[source,ts]
+----
+client.searchApplication.renderQuery(...)
+----
+
+[discrete]
 ==== search
 Perform a search against a search application
 
@@ -3231,6 +3251,16 @@ Creates an API key for access without requiring basic authentication.
 [source,ts]
 ----
 client.security.createApiKey(...)
+----
+
+[discrete]
+==== create_cross_cluster_api_key
+Creates a cross-cluster API key for API key based remote cluster access.
+
+{ref}/security-api-create-cross-cluster-api-key.html[Endpoint documentation]
+[source,ts]
+----
+client.security.createCrossClusterApiKey(...)
 ----
 
 [discrete]
@@ -3624,6 +3654,16 @@ client.security.updateApiKey(...)
 ----
 
 [discrete]
+==== update_cross_cluster_api_key
+Updates attributes of an existing cross-cluster API key.
+
+{ref}/security-api-update-cross-cluster-api-key.html[Endpoint documentation]
+[source,ts]
+----
+client.security.updateCrossClusterApiKey(...)
+----
+
+[discrete]
 === slm
 [discrete]
 ==== delete_lifecycle
@@ -3912,6 +3952,38 @@ client.ssl.certificates(...)
 ----
 
 [discrete]
+=== synonyms
+[discrete]
+==== delete
+Deletes a synonym set
+
+{ref}/delete-synonyms.html[Endpoint documentation]
+[source,ts]
+----
+client.synonyms.delete(...)
+----
+
+[discrete]
+==== get
+Retrieves a synonym set
+
+{ref}/get-synonyms.html[Endpoint documentation]
+[source,ts]
+----
+client.synonyms.get(...)
+----
+
+[discrete]
+==== put
+Creates or updates a synonyms set
+
+{ref}/put-synonyms.html[Endpoint documentation]
+[source,ts]
+----
+client.synonyms.put(...)
+----
+
+[discrete]
 === tasks
 [discrete]
 ==== cancel
@@ -4120,6 +4192,16 @@ client.watcher.executeWatch(...)
 ----
 
 [discrete]
+==== get_settings
+Retrieve settings for the watcher system index
+
+{ref}/watcher-api-get-settings.html[Endpoint documentation]
+[source,ts]
+----
+client.watcher.getSettings(...)
+----
+
+[discrete]
 ==== get_watch
 Retrieves a watch by its ID.
 
@@ -4177,6 +4259,16 @@ Stops Watcher if it is running.
 [source,ts]
 ----
 client.watcher.stop(...)
+----
+
+[discrete]
+==== update_settings
+Update settings for the watcher system index
+
+{ref}/watcher-api-update-settings.html[Endpoint documentation]
+[source,ts]
+----
+client.watcher.updateSettings(...)
 ----
 
 [discrete]

@@ -43,6 +43,10 @@ export default class SearchApplication {
     this.transport = transport
   }
 
+  /**
+    * Deletes a search application.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/put-search-application.html Elasticsearch API docs}
+    */
   async delete (this: That, params: T.SearchApplicationDeleteRequest | TB.SearchApplicationDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationDeleteResponse>
   async delete (this: That, params: T.SearchApplicationDeleteRequest | TB.SearchApplicationDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationDeleteResponse, unknown>>
   async delete (this: That, params: T.SearchApplicationDeleteRequest | TB.SearchApplicationDeleteRequest, options?: TransportRequestOptions): Promise<T.SearchApplicationDeleteResponse>
@@ -65,19 +69,23 @@ export default class SearchApplication {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async deleteBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async deleteBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async deleteBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async deleteBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  /**
+    * Delete a behavioral analytics collection.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/delete-analytics-collection.html Elasticsearch API docs}
+    */
+  async deleteBehavioralAnalytics (this: That, params: T.SearchApplicationDeleteBehavioralAnalyticsRequest | TB.SearchApplicationDeleteBehavioralAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationDeleteBehavioralAnalyticsResponse>
+  async deleteBehavioralAnalytics (this: That, params: T.SearchApplicationDeleteBehavioralAnalyticsRequest | TB.SearchApplicationDeleteBehavioralAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationDeleteBehavioralAnalyticsResponse, unknown>>
+  async deleteBehavioralAnalytics (this: That, params: T.SearchApplicationDeleteBehavioralAnalyticsRequest | TB.SearchApplicationDeleteBehavioralAnalyticsRequest, options?: TransportRequestOptions): Promise<T.SearchApplicationDeleteBehavioralAnalyticsResponse>
+  async deleteBehavioralAnalytics (this: That, params: T.SearchApplicationDeleteBehavioralAnalyticsRequest | TB.SearchApplicationDeleteBehavioralAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -87,6 +95,10 @@ export default class SearchApplication {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns the details about a search application.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/get-search-application.html Elasticsearch API docs}
+    */
   async get (this: That, params: T.SearchApplicationGetRequest | TB.SearchApplicationGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationGetResponse>
   async get (this: That, params: T.SearchApplicationGetRequest | TB.SearchApplicationGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationGetResponse, unknown>>
   async get (this: That, params: T.SearchApplicationGetRequest | TB.SearchApplicationGetRequest, options?: TransportRequestOptions): Promise<T.SearchApplicationGetResponse>
@@ -109,10 +121,14 @@ export default class SearchApplication {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async getBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async getBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async getBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async getBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  /**
+    * Returns the existing behavioral analytics collections.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/list-analytics-collection.html Elasticsearch API docs}
+    */
+  async getBehavioralAnalytics (this: That, params?: T.SearchApplicationGetBehavioralAnalyticsRequest | TB.SearchApplicationGetBehavioralAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationGetBehavioralAnalyticsResponse>
+  async getBehavioralAnalytics (this: That, params?: T.SearchApplicationGetBehavioralAnalyticsRequest | TB.SearchApplicationGetBehavioralAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationGetBehavioralAnalyticsResponse, unknown>>
+  async getBehavioralAnalytics (this: That, params?: T.SearchApplicationGetBehavioralAnalyticsRequest | TB.SearchApplicationGetBehavioralAnalyticsRequest, options?: TransportRequestOptions): Promise<T.SearchApplicationGetBehavioralAnalyticsResponse>
+  async getBehavioralAnalytics (this: That, params?: T.SearchApplicationGetBehavioralAnalyticsRequest | TB.SearchApplicationGetBehavioralAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -122,6 +138,7 @@ export default class SearchApplication {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -138,6 +155,10 @@ export default class SearchApplication {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns the existing search applications.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/list-search-applications.html Elasticsearch API docs}
+    */
   async list (this: That, params?: T.SearchApplicationListRequest | TB.SearchApplicationListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationListResponse>
   async list (this: That, params?: T.SearchApplicationListRequest | TB.SearchApplicationListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationListResponse, unknown>>
   async list (this: That, params?: T.SearchApplicationListRequest | TB.SearchApplicationListRequest, options?: TransportRequestOptions): Promise<T.SearchApplicationListResponse>
@@ -161,6 +182,10 @@ export default class SearchApplication {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates a behavioral analytics event for existing collection.
+    * @see {@link http://todo.com/tbd Elasticsearch API docs}
+    */
   async postBehavioralAnalyticsEvent (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async postBehavioralAnalyticsEvent (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async postBehavioralAnalyticsEvent (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
@@ -183,6 +208,10 @@ export default class SearchApplication {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates or updates a search application.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/put-search-application.html Elasticsearch API docs}
+    */
   async put (this: That, params: T.SearchApplicationPutRequest | TB.SearchApplicationPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationPutResponse>
   async put (this: That, params: T.SearchApplicationPutRequest | TB.SearchApplicationPutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationPutResponse, unknown>>
   async put (this: That, params: T.SearchApplicationPutRequest | TB.SearchApplicationPutRequest, options?: TransportRequestOptions): Promise<T.SearchApplicationPutResponse>
@@ -210,10 +239,40 @@ export default class SearchApplication {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async putBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async putBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async putBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async putBehavioralAnalytics (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  /**
+    * Creates a behavioral analytics collection.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/put-analytics-collection.html Elasticsearch API docs}
+    */
+  async putBehavioralAnalytics (this: That, params: T.SearchApplicationPutBehavioralAnalyticsRequest | TB.SearchApplicationPutBehavioralAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationPutBehavioralAnalyticsResponse>
+  async putBehavioralAnalytics (this: That, params: T.SearchApplicationPutBehavioralAnalyticsRequest | TB.SearchApplicationPutBehavioralAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationPutBehavioralAnalyticsResponse, unknown>>
+  async putBehavioralAnalytics (this: That, params: T.SearchApplicationPutBehavioralAnalyticsRequest | TB.SearchApplicationPutBehavioralAnalyticsRequest, options?: TransportRequestOptions): Promise<T.SearchApplicationPutBehavioralAnalyticsResponse>
+  async putBehavioralAnalytics (this: That, params: T.SearchApplicationPutBehavioralAnalyticsRequest | TB.SearchApplicationPutBehavioralAnalyticsRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['name']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_application/analytics/${encodeURIComponent(params.name.toString())}`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  /**
+    * Renders a query for given search application search parameters
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/search-application-render-query.html Elasticsearch API docs}
+    */
+  async renderQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async renderQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async renderQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async renderQuery (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -227,11 +286,15 @@ export default class SearchApplication {
       }
     }
 
-    const method = 'PUT'
-    const path = `/_application/analytics/${encodeURIComponent(params.name.toString())}`
+    const method = 'POST'
+    const path = `/_application/search_application/${encodeURIComponent(params.name.toString())}/_render_query`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Perform a search against a search application
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/search-application-search.html Elasticsearch API docs}
+    */
   async search<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.SearchApplicationSearchRequest | TB.SearchApplicationSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationSearchResponse<TDocument, TAggregations>>
   async search<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.SearchApplicationSearchRequest | TB.SearchApplicationSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationSearchResponse<TDocument, TAggregations>, unknown>>
   async search<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.SearchApplicationSearchRequest | TB.SearchApplicationSearchRequest, options?: TransportRequestOptions): Promise<T.SearchApplicationSearchResponse<TDocument, TAggregations>>

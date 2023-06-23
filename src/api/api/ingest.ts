@@ -43,6 +43,10 @@ export default class Ingest {
     this.transport = transport
   }
 
+  /**
+    * Deletes a pipeline.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/delete-pipeline-api.html Elasticsearch API docs}
+    */
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest | TB.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeletePipelineResponse>
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest | TB.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeletePipelineResponse, unknown>>
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest | TB.IngestDeletePipelineRequest, options?: TransportRequestOptions): Promise<T.IngestDeletePipelineResponse>
@@ -65,6 +69,10 @@ export default class Ingest {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns statistical information about geoip databases
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/geoip-stats-api.html Elasticsearch API docs}
+    */
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest | TB.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGeoIpStatsResponse>
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest | TB.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGeoIpStatsResponse, unknown>>
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest | TB.IngestGeoIpStatsRequest, options?: TransportRequestOptions): Promise<T.IngestGeoIpStatsResponse>
@@ -88,6 +96,10 @@ export default class Ingest {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns a pipeline.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/get-pipeline-api.html Elasticsearch API docs}
+    */
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest | TB.IngestGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetPipelineResponse>
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest | TB.IngestGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetPipelineResponse, unknown>>
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest | TB.IngestGetPipelineRequest, options?: TransportRequestOptions): Promise<T.IngestGetPipelineResponse>
@@ -118,6 +130,10 @@ export default class Ingest {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns a list of the built-in patterns.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/grok-processor.html#grok-processor-rest-get Elasticsearch API docs}
+    */
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest | TB.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestProcessorGrokResponse>
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest | TB.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestProcessorGrokResponse, unknown>>
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest | TB.IngestProcessorGrokRequest, options?: TransportRequestOptions): Promise<T.IngestProcessorGrokResponse>
@@ -141,6 +157,10 @@ export default class Ingest {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates or updates a pipeline.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/put-pipeline-api.html Elasticsearch API docs}
+    */
   async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutPipelineResponse>
   async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutPipelineResponse, unknown>>
   async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptions): Promise<T.IngestPutPipelineResponse>
@@ -175,6 +195,10 @@ export default class Ingest {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Allows to simulate a pipeline with example documents.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/simulate-pipeline-api.html Elasticsearch API docs}
+    */
   async simulate (this: That, params?: T.IngestSimulateRequest | TB.IngestSimulateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestSimulateResponse>
   async simulate (this: That, params?: T.IngestSimulateRequest | TB.IngestSimulateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestSimulateResponse, unknown>>
   async simulate (this: That, params?: T.IngestSimulateRequest | TB.IngestSimulateRequest, options?: TransportRequestOptions): Promise<T.IngestSimulateResponse>

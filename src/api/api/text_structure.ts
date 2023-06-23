@@ -43,6 +43,10 @@ export default class TextStructure {
     this.transport = transport
   }
 
+  /**
+    * Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/find-structure.html Elasticsearch API docs}
+    */
   async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument> | TB.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureFindStructureResponse>
   async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument> | TB.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindStructureResponse, unknown>>
   async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument> | TB.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptions): Promise<T.TextStructureFindStructureResponse>

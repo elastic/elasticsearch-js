@@ -37,6 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Allows to use the Mustache language to pre-render a search definition.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/render-search-template-api.html Elasticsearch API docs}
+  */
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RenderSearchTemplateResponse>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RenderSearchTemplateResponse, unknown>>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptions): Promise<T.RenderSearchTemplateResponse>

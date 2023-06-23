@@ -43,6 +43,10 @@ export default class Autoscaling {
     this.transport = transport
   }
 
+  /**
+    * Deletes an autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/autoscaling-delete-autoscaling-policy.html Elasticsearch API docs}
+    */
   async deleteAutoscalingPolicy (this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest | TB.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AutoscalingDeleteAutoscalingPolicyResponse>
   async deleteAutoscalingPolicy (this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest | TB.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingDeleteAutoscalingPolicyResponse, unknown>>
   async deleteAutoscalingPolicy (this: That, params: T.AutoscalingDeleteAutoscalingPolicyRequest | TB.AutoscalingDeleteAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<T.AutoscalingDeleteAutoscalingPolicyResponse>
@@ -65,6 +69,10 @@ export default class Autoscaling {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Gets the current autoscaling capacity based on the configured autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/autoscaling-get-autoscaling-capacity.html Elasticsearch API docs}
+    */
   async getAutoscalingCapacity (this: That, params?: T.AutoscalingGetAutoscalingCapacityRequest | TB.AutoscalingGetAutoscalingCapacityRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AutoscalingGetAutoscalingCapacityResponse>
   async getAutoscalingCapacity (this: That, params?: T.AutoscalingGetAutoscalingCapacityRequest | TB.AutoscalingGetAutoscalingCapacityRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingGetAutoscalingCapacityResponse, unknown>>
   async getAutoscalingCapacity (this: That, params?: T.AutoscalingGetAutoscalingCapacityRequest | TB.AutoscalingGetAutoscalingCapacityRequest, options?: TransportRequestOptions): Promise<T.AutoscalingGetAutoscalingCapacityResponse>
@@ -88,6 +96,10 @@ export default class Autoscaling {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves an autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/autoscaling-get-autoscaling-capacity.html Elasticsearch API docs}
+    */
   async getAutoscalingPolicy (this: That, params: T.AutoscalingGetAutoscalingPolicyRequest | TB.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AutoscalingGetAutoscalingPolicyResponse>
   async getAutoscalingPolicy (this: That, params: T.AutoscalingGetAutoscalingPolicyRequest | TB.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingGetAutoscalingPolicyResponse, unknown>>
   async getAutoscalingPolicy (this: That, params: T.AutoscalingGetAutoscalingPolicyRequest | TB.AutoscalingGetAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<T.AutoscalingGetAutoscalingPolicyResponse>
@@ -110,6 +122,10 @@ export default class Autoscaling {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates a new autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/autoscaling-put-autoscaling-policy.html Elasticsearch API docs}
+    */
   async putAutoscalingPolicy (this: That, params: T.AutoscalingPutAutoscalingPolicyRequest | TB.AutoscalingPutAutoscalingPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AutoscalingPutAutoscalingPolicyResponse>
   async putAutoscalingPolicy (this: That, params: T.AutoscalingPutAutoscalingPolicyRequest | TB.AutoscalingPutAutoscalingPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AutoscalingPutAutoscalingPolicyResponse, unknown>>
   async putAutoscalingPolicy (this: That, params: T.AutoscalingPutAutoscalingPolicyRequest | TB.AutoscalingPutAutoscalingPolicyRequest, options?: TransportRequestOptions): Promise<T.AutoscalingPutAutoscalingPolicyResponse>

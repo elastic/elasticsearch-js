@@ -43,6 +43,10 @@ export default class Slm {
     this.transport = transport
   }
 
+  /**
+    * Deletes an existing snapshot lifecycle policy.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/slm-api-delete-policy.html Elasticsearch API docs}
+    */
   async deleteLifecycle (this: That, params: T.SlmDeleteLifecycleRequest | TB.SlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmDeleteLifecycleResponse>
   async deleteLifecycle (this: That, params: T.SlmDeleteLifecycleRequest | TB.SlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmDeleteLifecycleResponse, unknown>>
   async deleteLifecycle (this: That, params: T.SlmDeleteLifecycleRequest | TB.SlmDeleteLifecycleRequest, options?: TransportRequestOptions): Promise<T.SlmDeleteLifecycleResponse>
@@ -65,6 +69,10 @@ export default class Slm {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/slm-api-execute-lifecycle.html Elasticsearch API docs}
+    */
   async executeLifecycle (this: That, params: T.SlmExecuteLifecycleRequest | TB.SlmExecuteLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmExecuteLifecycleResponse>
   async executeLifecycle (this: That, params: T.SlmExecuteLifecycleRequest | TB.SlmExecuteLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmExecuteLifecycleResponse, unknown>>
   async executeLifecycle (this: That, params: T.SlmExecuteLifecycleRequest | TB.SlmExecuteLifecycleRequest, options?: TransportRequestOptions): Promise<T.SlmExecuteLifecycleResponse>
@@ -87,6 +95,10 @@ export default class Slm {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Deletes any snapshots that are expired according to the policy's retention rules.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/slm-api-execute-retention.html Elasticsearch API docs}
+    */
   async executeRetention (this: That, params?: T.SlmExecuteRetentionRequest | TB.SlmExecuteRetentionRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmExecuteRetentionResponse>
   async executeRetention (this: That, params?: T.SlmExecuteRetentionRequest | TB.SlmExecuteRetentionRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmExecuteRetentionResponse, unknown>>
   async executeRetention (this: That, params?: T.SlmExecuteRetentionRequest | TB.SlmExecuteRetentionRequest, options?: TransportRequestOptions): Promise<T.SlmExecuteRetentionResponse>
@@ -110,6 +122,10 @@ export default class Slm {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/slm-api-get-policy.html Elasticsearch API docs}
+    */
   async getLifecycle (this: That, params?: T.SlmGetLifecycleRequest | TB.SlmGetLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmGetLifecycleResponse>
   async getLifecycle (this: That, params?: T.SlmGetLifecycleRequest | TB.SlmGetLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmGetLifecycleResponse, unknown>>
   async getLifecycle (this: That, params?: T.SlmGetLifecycleRequest | TB.SlmGetLifecycleRequest, options?: TransportRequestOptions): Promise<T.SlmGetLifecycleResponse>
@@ -140,6 +156,10 @@ export default class Slm {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns global and policy-level statistics about actions taken by snapshot lifecycle management.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/slm-api-get-stats.html Elasticsearch API docs}
+    */
   async getStats (this: That, params?: T.SlmGetStatsRequest | TB.SlmGetStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmGetStatsResponse>
   async getStats (this: That, params?: T.SlmGetStatsRequest | TB.SlmGetStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmGetStatsResponse, unknown>>
   async getStats (this: That, params?: T.SlmGetStatsRequest | TB.SlmGetStatsRequest, options?: TransportRequestOptions): Promise<T.SlmGetStatsResponse>
@@ -163,6 +183,10 @@ export default class Slm {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves the status of snapshot lifecycle management (SLM).
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/slm-api-get-status.html Elasticsearch API docs}
+    */
   async getStatus (this: That, params?: T.SlmGetStatusRequest | TB.SlmGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmGetStatusResponse>
   async getStatus (this: That, params?: T.SlmGetStatusRequest | TB.SlmGetStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmGetStatusResponse, unknown>>
   async getStatus (this: That, params?: T.SlmGetStatusRequest | TB.SlmGetStatusRequest, options?: TransportRequestOptions): Promise<T.SlmGetStatusResponse>
@@ -186,6 +210,10 @@ export default class Slm {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates or updates a snapshot lifecycle policy.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/slm-api-put-policy.html Elasticsearch API docs}
+    */
   async putLifecycle (this: That, params: T.SlmPutLifecycleRequest | TB.SlmPutLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmPutLifecycleResponse>
   async putLifecycle (this: That, params: T.SlmPutLifecycleRequest | TB.SlmPutLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmPutLifecycleResponse, unknown>>
   async putLifecycle (this: That, params: T.SlmPutLifecycleRequest | TB.SlmPutLifecycleRequest, options?: TransportRequestOptions): Promise<T.SlmPutLifecycleResponse>
@@ -220,6 +248,10 @@ export default class Slm {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Turns on snapshot lifecycle management (SLM).
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/slm-api-start.html Elasticsearch API docs}
+    */
   async start (this: That, params?: T.SlmStartRequest | TB.SlmStartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmStartResponse>
   async start (this: That, params?: T.SlmStartRequest | TB.SlmStartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmStartResponse, unknown>>
   async start (this: That, params?: T.SlmStartRequest | TB.SlmStartRequest, options?: TransportRequestOptions): Promise<T.SlmStartResponse>
@@ -243,6 +275,10 @@ export default class Slm {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Turns off snapshot lifecycle management (SLM).
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/slm-api-stop.html Elasticsearch API docs}
+    */
   async stop (this: That, params?: T.SlmStopRequest | TB.SlmStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SlmStopResponse>
   async stop (this: That, params?: T.SlmStopRequest | TB.SlmStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SlmStopResponse, unknown>>
   async stop (this: That, params?: T.SlmStopRequest | TB.SlmStopRequest, options?: TransportRequestOptions): Promise<T.SlmStopResponse>

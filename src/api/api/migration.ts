@@ -43,6 +43,10 @@ export default class Migration {
     this.transport = transport
   }
 
+  /**
+    * Retrieves information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/migration-api-deprecation.html Elasticsearch API docs}
+    */
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest | TB.MigrationDeprecationsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MigrationDeprecationsResponse>
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest | TB.MigrationDeprecationsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MigrationDeprecationsResponse, unknown>>
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest | TB.MigrationDeprecationsRequest, options?: TransportRequestOptions): Promise<T.MigrationDeprecationsResponse>
@@ -73,6 +77,10 @@ export default class Migration {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Find out whether system features need to be upgraded or not
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/migration-api-feature-upgrade.html Elasticsearch API docs}
+    */
   async getFeatureUpgradeStatus (this: That, params?: T.MigrationGetFeatureUpgradeStatusRequest | TB.MigrationGetFeatureUpgradeStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MigrationGetFeatureUpgradeStatusResponse>
   async getFeatureUpgradeStatus (this: That, params?: T.MigrationGetFeatureUpgradeStatusRequest | TB.MigrationGetFeatureUpgradeStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MigrationGetFeatureUpgradeStatusResponse, unknown>>
   async getFeatureUpgradeStatus (this: That, params?: T.MigrationGetFeatureUpgradeStatusRequest | TB.MigrationGetFeatureUpgradeStatusRequest, options?: TransportRequestOptions): Promise<T.MigrationGetFeatureUpgradeStatusResponse>
@@ -96,6 +104,10 @@ export default class Migration {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Begin upgrades for system features
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/migration-api-feature-upgrade.html Elasticsearch API docs}
+    */
   async postFeatureUpgrade (this: That, params?: T.MigrationPostFeatureUpgradeRequest | TB.MigrationPostFeatureUpgradeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MigrationPostFeatureUpgradeResponse>
   async postFeatureUpgrade (this: That, params?: T.MigrationPostFeatureUpgradeRequest | TB.MigrationPostFeatureUpgradeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MigrationPostFeatureUpgradeResponse, unknown>>
   async postFeatureUpgrade (this: That, params?: T.MigrationPostFeatureUpgradeRequest | TB.MigrationPostFeatureUpgradeRequest, options?: TransportRequestOptions): Promise<T.MigrationPostFeatureUpgradeResponse>

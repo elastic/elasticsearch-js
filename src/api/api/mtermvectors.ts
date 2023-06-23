@@ -37,6 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Returns multiple termvectors in one request.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/docs-multi-termvectors.html Elasticsearch API docs}
+  */
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MtermvectorsResponse>
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MtermvectorsResponse, unknown>>
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptions): Promise<T.MtermvectorsResponse>
