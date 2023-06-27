@@ -282,6 +282,7 @@ function fixLink (name, str) {
   str = str.replace(/frozen\.html/, 'freeze-index-api.html')
   str = str.replace(/ml-file-structure\.html/, 'ml-find-file-structure.html')
   str = str.replace(/security-api-get-user-privileges\.html/, 'security-api-get-privileges.html')
+  str = str.replace(/^.+guide\/en\/elasticsearch\/painless\/[^/]+\/([^./]*\.html(?:#.+)?)$/, '{painless}/$1')
 
   return str
 }

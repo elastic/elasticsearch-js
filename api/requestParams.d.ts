@@ -2628,6 +2628,13 @@ export interface SnapshotGet extends Generic {
   ignore_unavailable?: boolean;
   index_details?: boolean;
   include_repository?: boolean;
+  sort?: 'start_time' | 'duration' | 'name' | 'repository' | 'index_count' | 'shard_count' | 'failed_shard_count';
+  size?: integer;
+  order?: 'asc' | 'desc';
+  from_sort_value?: string;
+  after?: string;
+  offset?: integer;
+  slm_policy_filter?: string;
   verbose?: boolean;
 }
 
