@@ -43,6 +43,10 @@ export default class DanglingIndices {
     this.transport = transport
   }
 
+  /**
+    * Deletes the specified dangling index
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/modules-gateway-dangling-indices.html Elasticsearch API docs}
+    */
   async deleteDanglingIndex (this: That, params: T.DanglingIndicesDeleteDanglingIndexRequest | TB.DanglingIndicesDeleteDanglingIndexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DanglingIndicesDeleteDanglingIndexResponse>
   async deleteDanglingIndex (this: That, params: T.DanglingIndicesDeleteDanglingIndexRequest | TB.DanglingIndicesDeleteDanglingIndexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DanglingIndicesDeleteDanglingIndexResponse, unknown>>
   async deleteDanglingIndex (this: That, params: T.DanglingIndicesDeleteDanglingIndexRequest | TB.DanglingIndicesDeleteDanglingIndexRequest, options?: TransportRequestOptions): Promise<T.DanglingIndicesDeleteDanglingIndexResponse>
@@ -65,6 +69,10 @@ export default class DanglingIndices {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Imports the specified dangling index
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/modules-gateway-dangling-indices.html Elasticsearch API docs}
+    */
   async importDanglingIndex (this: That, params: T.DanglingIndicesImportDanglingIndexRequest | TB.DanglingIndicesImportDanglingIndexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DanglingIndicesImportDanglingIndexResponse>
   async importDanglingIndex (this: That, params: T.DanglingIndicesImportDanglingIndexRequest | TB.DanglingIndicesImportDanglingIndexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DanglingIndicesImportDanglingIndexResponse, unknown>>
   async importDanglingIndex (this: That, params: T.DanglingIndicesImportDanglingIndexRequest | TB.DanglingIndicesImportDanglingIndexRequest, options?: TransportRequestOptions): Promise<T.DanglingIndicesImportDanglingIndexResponse>
@@ -87,6 +95,10 @@ export default class DanglingIndices {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns all dangling indices.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/modules-gateway-dangling-indices.html Elasticsearch API docs}
+    */
   async listDanglingIndices (this: That, params?: T.DanglingIndicesListDanglingIndicesRequest | TB.DanglingIndicesListDanglingIndicesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DanglingIndicesListDanglingIndicesResponse>
   async listDanglingIndices (this: That, params?: T.DanglingIndicesListDanglingIndicesRequest | TB.DanglingIndicesListDanglingIndicesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DanglingIndicesListDanglingIndicesResponse, unknown>>
   async listDanglingIndices (this: That, params?: T.DanglingIndicesListDanglingIndicesRequest | TB.DanglingIndicesListDanglingIndicesRequest, options?: TransportRequestOptions): Promise<T.DanglingIndicesListDanglingIndicesResponse>

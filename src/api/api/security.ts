@@ -43,6 +43,10 @@ export default class Security {
     this.transport = transport
   }
 
+  /**
+    * Creates or updates the user profile on behalf of another user.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-activate-user-profile.html Elasticsearch API docs}
+    */
   async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest | TB.SecurityActivateUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityActivateUserProfileResponse>
   async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest | TB.SecurityActivateUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityActivateUserProfileResponse, unknown>>
   async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest | TB.SecurityActivateUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityActivateUserProfileResponse>
@@ -77,6 +81,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Enables authentication as a user and retrieve information about the authenticated user.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-authenticate.html Elasticsearch API docs}
+    */
   async authenticate (this: That, params?: T.SecurityAuthenticateRequest | TB.SecurityAuthenticateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityAuthenticateResponse>
   async authenticate (this: That, params?: T.SecurityAuthenticateRequest | TB.SecurityAuthenticateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityAuthenticateResponse, unknown>>
   async authenticate (this: That, params?: T.SecurityAuthenticateRequest | TB.SecurityAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecurityAuthenticateResponse>
@@ -100,6 +108,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Updates the attributes of multiple existing API keys.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-bulk-update-api-keys.html Elasticsearch API docs}
+    */
   async bulkUpdateApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async bulkUpdateApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async bulkUpdateApiKeys (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
@@ -122,6 +134,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Changes the passwords of users in the native realm and built-in users.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-change-password.html Elasticsearch API docs}
+    */
   async changePassword (this: That, params?: T.SecurityChangePasswordRequest | TB.SecurityChangePasswordRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityChangePasswordResponse>
   async changePassword (this: That, params?: T.SecurityChangePasswordRequest | TB.SecurityChangePasswordRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityChangePasswordResponse, unknown>>
   async changePassword (this: That, params?: T.SecurityChangePasswordRequest | TB.SecurityChangePasswordRequest, options?: TransportRequestOptions): Promise<T.SecurityChangePasswordResponse>
@@ -164,6 +180,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Clear a subset or all entries from the API key cache.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-clear-api-key-cache.html Elasticsearch API docs}
+    */
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearApiKeyCacheResponse>
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearApiKeyCacheResponse, unknown>>
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptions): Promise<T.SecurityClearApiKeyCacheResponse>
@@ -186,6 +206,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Evicts application privileges from the native application privileges cache.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-clear-privilege-cache.html Elasticsearch API docs}
+    */
   async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest | TB.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedPrivilegesResponse>
   async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest | TB.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedPrivilegesResponse, unknown>>
   async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest | TB.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedPrivilegesResponse>
@@ -208,6 +232,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Evicts users from the user cache. Can completely clear the cache or evict specific users.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-clear-cache.html Elasticsearch API docs}
+    */
   async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest | TB.SecurityClearCachedRealmsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedRealmsResponse>
   async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest | TB.SecurityClearCachedRealmsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedRealmsResponse, unknown>>
   async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest | TB.SecurityClearCachedRealmsRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedRealmsResponse>
@@ -230,6 +258,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Evicts roles from the native role cache.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-clear-role-cache.html Elasticsearch API docs}
+    */
   async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest | TB.SecurityClearCachedRolesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedRolesResponse>
   async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest | TB.SecurityClearCachedRolesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedRolesResponse, unknown>>
   async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest | TB.SecurityClearCachedRolesRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedRolesResponse>
@@ -252,6 +284,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Evicts tokens from the service account token caches.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-clear-service-token-caches.html Elasticsearch API docs}
+    */
   async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest | TB.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedServiceTokensResponse>
   async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest | TB.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityClearCachedServiceTokensResponse, unknown>>
   async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest | TB.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptions): Promise<T.SecurityClearCachedServiceTokensResponse>
@@ -274,6 +310,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates an API key for access without requiring basic authentication.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-create-api-key.html Elasticsearch API docs}
+    */
   async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest | TB.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateApiKeyResponse>
   async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest | TB.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateApiKeyResponse, unknown>>
   async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest | TB.SecurityCreateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateApiKeyResponse>
@@ -309,6 +349,36 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates a cross-cluster API key for API key based remote cluster access.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-create-cross-cluster-api-key.html Elasticsearch API docs}
+    */
+  async createCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async createCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async createCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async createCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_security/cross_cluster/api_key'
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  /**
+    * Creates a service account token for access without requiring basic authentication.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-create-service-token.html Elasticsearch API docs}
+    */
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateServiceTokenResponse>
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateServiceTokenResponse, unknown>>
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateServiceTokenResponse>
@@ -338,6 +408,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Removes application privileges.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-delete-privilege.html Elasticsearch API docs}
+    */
   async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest | TB.SecurityDeletePrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeletePrivilegesResponse>
   async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest | TB.SecurityDeletePrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeletePrivilegesResponse, unknown>>
   async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest | TB.SecurityDeletePrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityDeletePrivilegesResponse>
@@ -360,6 +434,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Removes roles in the native realm.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-delete-role.html Elasticsearch API docs}
+    */
   async deleteRole (this: That, params: T.SecurityDeleteRoleRequest | TB.SecurityDeleteRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteRoleResponse>
   async deleteRole (this: That, params: T.SecurityDeleteRoleRequest | TB.SecurityDeleteRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteRoleResponse, unknown>>
   async deleteRole (this: That, params: T.SecurityDeleteRoleRequest | TB.SecurityDeleteRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteRoleResponse>
@@ -382,6 +460,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Removes role mappings.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-delete-role-mapping.html Elasticsearch API docs}
+    */
   async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest | TB.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteRoleMappingResponse>
   async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest | TB.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteRoleMappingResponse, unknown>>
   async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest | TB.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteRoleMappingResponse>
@@ -404,6 +486,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Deletes a service account token.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-delete-service-token.html Elasticsearch API docs}
+    */
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest | TB.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteServiceTokenResponse>
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest | TB.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteServiceTokenResponse, unknown>>
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest | TB.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteServiceTokenResponse>
@@ -426,6 +512,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Deletes users from the native realm.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-delete-user.html Elasticsearch API docs}
+    */
   async deleteUser (this: That, params: T.SecurityDeleteUserRequest | TB.SecurityDeleteUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteUserResponse>
   async deleteUser (this: That, params: T.SecurityDeleteUserRequest | TB.SecurityDeleteUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDeleteUserResponse, unknown>>
   async deleteUser (this: That, params: T.SecurityDeleteUserRequest | TB.SecurityDeleteUserRequest, options?: TransportRequestOptions): Promise<T.SecurityDeleteUserResponse>
@@ -448,6 +538,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Disables users in the native realm.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-disable-user.html Elasticsearch API docs}
+    */
   async disableUser (this: That, params: T.SecurityDisableUserRequest | TB.SecurityDisableUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDisableUserResponse>
   async disableUser (this: That, params: T.SecurityDisableUserRequest | TB.SecurityDisableUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDisableUserResponse, unknown>>
   async disableUser (this: That, params: T.SecurityDisableUserRequest | TB.SecurityDisableUserRequest, options?: TransportRequestOptions): Promise<T.SecurityDisableUserResponse>
@@ -470,6 +564,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Disables a user profile so it's not visible in user profile searches.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-disable-user-profile.html Elasticsearch API docs}
+    */
   async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest | TB.SecurityDisableUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDisableUserProfileResponse>
   async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest | TB.SecurityDisableUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityDisableUserProfileResponse, unknown>>
   async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest | TB.SecurityDisableUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityDisableUserProfileResponse>
@@ -492,6 +590,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Enables users in the native realm.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-enable-user.html Elasticsearch API docs}
+    */
   async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnableUserResponse>
   async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnableUserResponse, unknown>>
   async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptions): Promise<T.SecurityEnableUserResponse>
@@ -514,6 +616,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Enables a user profile so it's visible in user profile searches.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-enable-user-profile.html Elasticsearch API docs}
+    */
   async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest | TB.SecurityEnableUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnableUserProfileResponse>
   async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest | TB.SecurityEnableUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnableUserProfileResponse, unknown>>
   async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest | TB.SecurityEnableUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityEnableUserProfileResponse>
@@ -536,6 +642,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Allows a kibana instance to configure itself to communicate with a secured elasticsearch cluster.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-kibana-enrollment.html Elasticsearch API docs}
+    */
   async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollKibanaResponse>
   async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnrollKibanaResponse, unknown>>
   async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptions): Promise<T.SecurityEnrollKibanaResponse>
@@ -559,6 +669,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Allows a new node to enroll to an existing cluster with security enabled.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-node-enrollment.html Elasticsearch API docs}
+    */
   async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollNodeResponse>
   async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityEnrollNodeResponse, unknown>>
   async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptions): Promise<T.SecurityEnrollNodeResponse>
@@ -582,6 +696,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves information for one or more API keys.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-get-api-key.html Elasticsearch API docs}
+    */
   async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest | TB.SecurityGetApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetApiKeyResponse>
   async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest | TB.SecurityGetApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetApiKeyResponse, unknown>>
   async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest | TB.SecurityGetApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityGetApiKeyResponse>
@@ -605,6 +723,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-get-builtin-privileges.html Elasticsearch API docs}
+    */
   async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest | TB.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetBuiltinPrivilegesResponse>
   async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest | TB.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetBuiltinPrivilegesResponse, unknown>>
   async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest | TB.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetBuiltinPrivilegesResponse>
@@ -628,6 +750,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves application privileges.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-get-privileges.html Elasticsearch API docs}
+    */
   async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest | TB.SecurityGetPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetPrivilegesResponse>
   async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest | TB.SecurityGetPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetPrivilegesResponse, unknown>>
   async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest | TB.SecurityGetPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetPrivilegesResponse>
@@ -661,6 +787,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves roles in the native realm.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-get-role.html Elasticsearch API docs}
+    */
   async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetRoleResponse>
   async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetRoleResponse, unknown>>
   async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityGetRoleResponse>
@@ -691,6 +821,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves role mappings.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-get-role-mapping.html Elasticsearch API docs}
+    */
   async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest | TB.SecurityGetRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetRoleMappingResponse>
   async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest | TB.SecurityGetRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetRoleMappingResponse, unknown>>
   async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest | TB.SecurityGetRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityGetRoleMappingResponse>
@@ -721,6 +855,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves information about service accounts.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-get-service-accounts.html Elasticsearch API docs}
+    */
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetServiceAccountsResponse>
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetServiceAccountsResponse, unknown>>
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetServiceAccountsResponse>
@@ -754,6 +892,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves information of all service credentials for a service account.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-get-service-credentials.html Elasticsearch API docs}
+    */
   async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest | TB.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetServiceCredentialsResponse>
   async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest | TB.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetServiceCredentialsResponse, unknown>>
   async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest | TB.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptions): Promise<T.SecurityGetServiceCredentialsResponse>
@@ -776,6 +918,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates a bearer token for access without requiring basic authentication.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-get-token.html Elasticsearch API docs}
+    */
   async getToken (this: That, params?: T.SecurityGetTokenRequest | TB.SecurityGetTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetTokenResponse>
   async getToken (this: That, params?: T.SecurityGetTokenRequest | TB.SecurityGetTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetTokenResponse, unknown>>
   async getToken (this: That, params?: T.SecurityGetTokenRequest | TB.SecurityGetTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityGetTokenResponse>
@@ -811,6 +957,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves information about users in the native realm and built-in users.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-get-user.html Elasticsearch API docs}
+    */
   async getUser (this: That, params?: T.SecurityGetUserRequest | TB.SecurityGetUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserResponse>
   async getUser (this: That, params?: T.SecurityGetUserRequest | TB.SecurityGetUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserResponse, unknown>>
   async getUser (this: That, params?: T.SecurityGetUserRequest | TB.SecurityGetUserRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserResponse>
@@ -841,6 +991,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves security privileges for the logged in user.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-get-user-privileges.html Elasticsearch API docs}
+    */
   async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest | TB.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserPrivilegesResponse>
   async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest | TB.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserPrivilegesResponse, unknown>>
   async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest | TB.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserPrivilegesResponse>
@@ -864,6 +1018,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves user profiles for the given unique ID(s).
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-get-user-profile.html Elasticsearch API docs}
+    */
   async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest | TB.SecurityGetUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserProfileResponse>
   async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest | TB.SecurityGetUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGetUserProfileResponse, unknown>>
   async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest | TB.SecurityGetUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityGetUserProfileResponse>
@@ -886,6 +1044,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates an API key on behalf of another user.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-grant-api-key.html Elasticsearch API docs}
+    */
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGrantApiKeyResponse>
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityGrantApiKeyResponse, unknown>>
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityGrantApiKeyResponse>
@@ -920,6 +1082,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Determines whether the specified user has a specified list of privileges.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-has-privileges.html Elasticsearch API docs}
+    */
   async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest | TB.SecurityHasPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityHasPrivilegesResponse>
   async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest | TB.SecurityHasPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityHasPrivilegesResponse, unknown>>
   async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest | TB.SecurityHasPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityHasPrivilegesResponse>
@@ -962,6 +1128,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Determines whether the users associated with the specified profile IDs have all the requested privileges.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-has-privileges-user-profile.html Elasticsearch API docs}
+    */
   async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest | TB.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityHasPrivilegesUserProfileResponse>
   async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest | TB.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityHasPrivilegesUserProfileResponse, unknown>>
   async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest | TB.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptions): Promise<T.SecurityHasPrivilegesUserProfileResponse>
@@ -996,6 +1166,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Invalidates one or more API keys.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-invalidate-api-key.html Elasticsearch API docs}
+    */
   async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest | TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityInvalidateApiKeyResponse>
   async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest | TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityInvalidateApiKeyResponse, unknown>>
   async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest | TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityInvalidateApiKeyResponse>
@@ -1031,6 +1205,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Invalidates one or more access tokens or refresh tokens.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-invalidate-token.html Elasticsearch API docs}
+    */
   async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest | TB.SecurityInvalidateTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityInvalidateTokenResponse>
   async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest | TB.SecurityInvalidateTokenRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityInvalidateTokenResponse, unknown>>
   async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest | TB.SecurityInvalidateTokenRequest, options?: TransportRequestOptions): Promise<T.SecurityInvalidateTokenResponse>
@@ -1066,6 +1244,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Exchanges an OpenID Connection authentication response message for an Elasticsearch access token and refresh token pair
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-oidc-authenticate.html Elasticsearch API docs}
+    */
   async oidcAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async oidcAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async oidcAuthenticate (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
@@ -1088,6 +1270,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Invalidates a refresh token and access token that was generated from the OpenID Connect Authenticate API
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-oidc-logout.html Elasticsearch API docs}
+    */
   async oidcLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async oidcLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async oidcLogout (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
@@ -1110,6 +1296,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates an OAuth 2.0 authentication request as a URL string
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-oidc-prepare-authentication.html Elasticsearch API docs}
+    */
   async oidcPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async oidcPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async oidcPrepareAuthentication (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
@@ -1132,6 +1322,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Adds or updates application privileges.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-put-privileges.html Elasticsearch API docs}
+    */
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutPrivilegesResponse>
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutPrivilegesResponse, unknown>>
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptions): Promise<T.SecurityPutPrivilegesResponse>
@@ -1159,6 +1353,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Adds and updates roles in the native realm.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-put-role.html Elasticsearch API docs}
+    */
   async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutRoleResponse>
   async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutRoleResponse, unknown>>
   async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleResponse>
@@ -1193,6 +1391,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates and updates role mappings.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-put-role-mapping.html Elasticsearch API docs}
+    */
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutRoleMappingResponse>
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutRoleMappingResponse, unknown>>
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleMappingResponse>
@@ -1227,6 +1429,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Adds and updates users in the native realm. These users are commonly referred to as native users.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-put-user.html Elasticsearch API docs}
+    */
   async putUser (this: That, params: T.SecurityPutUserRequest | TB.SecurityPutUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutUserResponse>
   async putUser (this: That, params: T.SecurityPutUserRequest | TB.SecurityPutUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityPutUserResponse, unknown>>
   async putUser (this: That, params: T.SecurityPutUserRequest | TB.SecurityPutUserRequest, options?: TransportRequestOptions): Promise<T.SecurityPutUserResponse>
@@ -1261,6 +1467,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves information for API keys using a subset of query DSL
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-query-api-key.html Elasticsearch API docs}
+    */
   async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryApiKeysResponse>
   async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryApiKeysResponse, unknown>>
   async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryApiKeysResponse>
@@ -1296,6 +1506,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Exchanges a SAML Response message for an Elasticsearch access token and refresh token pair
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-saml-authenticate.html Elasticsearch API docs}
+    */
   async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlAuthenticateResponse>
   async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlAuthenticateResponse, unknown>>
   async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlAuthenticateResponse>
@@ -1330,6 +1544,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Verifies the logout response sent from the SAML IdP
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-saml-complete-logout.html Elasticsearch API docs}
+    */
   async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlCompleteLogoutResponse>
   async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlCompleteLogoutResponse, unknown>>
   async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlCompleteLogoutResponse>
@@ -1364,6 +1582,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Consumes a SAML LogoutRequest
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-saml-invalidate.html Elasticsearch API docs}
+    */
   async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlInvalidateResponse>
   async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlInvalidateResponse, unknown>>
   async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlInvalidateResponse>
@@ -1398,6 +1620,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Invalidates an access token and a refresh token that were generated via the SAML Authenticate API
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-saml-logout.html Elasticsearch API docs}
+    */
   async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlLogoutResponse>
   async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlLogoutResponse, unknown>>
   async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlLogoutResponse>
@@ -1432,6 +1658,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates a SAML authentication request
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-saml-prepare-authentication.html Elasticsearch API docs}
+    */
   async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlPrepareAuthenticationResponse>
   async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlPrepareAuthenticationResponse, unknown>>
   async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlPrepareAuthenticationResponse>
@@ -1467,6 +1697,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Generates SAML metadata for the Elastic stack SAML 2.0 Service Provider
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-saml-sp-metadata.html Elasticsearch API docs}
+    */
   async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlServiceProviderMetadataResponse>
   async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySamlServiceProviderMetadataResponse, unknown>>
   async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptions): Promise<T.SecuritySamlServiceProviderMetadataResponse>
@@ -1489,6 +1723,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Get suggestions for user profiles that match specified search criteria.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-suggest-user-profile.html Elasticsearch API docs}
+    */
   async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest | TB.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySuggestUserProfilesResponse>
   async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest | TB.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecuritySuggestUserProfilesResponse, unknown>>
   async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest | TB.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptions): Promise<T.SecuritySuggestUserProfilesResponse>
@@ -1524,6 +1762,10 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Updates attributes of an existing API key.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-update-api-key.html Elasticsearch API docs}
+    */
   async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest | TB.SecurityUpdateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateApiKeyResponse>
   async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest | TB.SecurityUpdateApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateApiKeyResponse, unknown>>
   async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest | TB.SecurityUpdateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateApiKeyResponse>
@@ -1558,6 +1800,36 @@ export default class Security {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Updates attributes of an existing cross-cluster API key.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-update-cross-cluster-api-key.html Elasticsearch API docs}
+    */
+  async updateCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async updateCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async updateCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async updateCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_security/cross_cluster/api_key/${encodeURIComponent(params.id.toString())}`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  /**
+    * Update application specific data for the user profile of the given unique ID.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/security-api-update-user-profile-data.html Elasticsearch API docs}
+    */
   async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest | TB.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateUserProfileDataResponse>
   async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest | TB.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateUserProfileDataResponse, unknown>>
   async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest | TB.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateUserProfileDataResponse>

@@ -37,6 +37,11 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Performs an update on every document in the index without changing the source,
+for example to pick up a mapping change.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-update-by-query.html Elasticsearch API docs}
+  */
 export default async function UpdateByQueryApi (this: That, params: T.UpdateByQueryRequest | TB.UpdateByQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.UpdateByQueryResponse>
 export default async function UpdateByQueryApi (this: That, params: T.UpdateByQueryRequest | TB.UpdateByQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.UpdateByQueryResponse, unknown>>
 export default async function UpdateByQueryApi (this: That, params: T.UpdateByQueryRequest | TB.UpdateByQueryRequest, options?: TransportRequestOptions): Promise<T.UpdateByQueryResponse>

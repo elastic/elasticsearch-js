@@ -94,6 +94,7 @@ import SlmApi from './api/slm'
 import SnapshotApi from './api/snapshot'
 import SqlApi from './api/sql'
 import SslApi from './api/ssl'
+import SynonymsApi from './api/synonyms'
 import TasksApi from './api/tasks'
 import termsEnumApi from './api/terms_enum'
 import termvectorsApi from './api/termvectors'
@@ -175,6 +176,7 @@ export default interface API {
   snapshot: SnapshotApi
   sql: SqlApi
   ssl: SslApi
+  synonyms: SynonymsApi
   tasks: TasksApi
   termsEnum: typeof termsEnumApi
   termvectors: typeof termvectorsApi
@@ -216,6 +218,7 @@ const kSlm = Symbol('Slm')
 const kSnapshot = Symbol('Snapshot')
 const kSql = Symbol('Sql')
 const kSsl = Symbol('Ssl')
+const kSynonyms = Symbol('Synonyms')
 const kTasks = Symbol('Tasks')
 const kTextStructure = Symbol('TextStructure')
 const kTransform = Symbol('Transform')
@@ -252,6 +255,7 @@ export default class API {
   [kSnapshot]: symbol | null
   [kSql]: symbol | null
   [kSsl]: symbol | null
+  [kSynonyms]: symbol | null
   [kTasks]: symbol | null
   [kTextStructure]: symbol | null
   [kTransform]: symbol | null
@@ -287,6 +291,7 @@ export default class API {
     this[kSnapshot] = null
     this[kSql] = null
     this[kSsl] = null
+    this[kSynonyms] = null
     this[kTasks] = null
     this[kTextStructure] = null
     this[kTransform] = null
@@ -427,6 +432,9 @@ Object.defineProperties(API.prototype, {
   },
   ssl: {
     get () { return this[kSsl] === null ? (this[kSsl] = new SslApi(this.transport)) : this[kSsl] }
+  },
+  synonyms: {
+    get () { return this[kSynonyms] === null ? (this[kSynonyms] = new SynonymsApi(this.transport)) : this[kSynonyms] }
   },
   tasks: {
     get () { return this[kTasks] === null ? (this[kTasks] = new TasksApi(this.transport)) : this[kTasks] }
