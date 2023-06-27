@@ -3510,7 +3510,7 @@ link:{ref}/modules-scripting.html[Documentation] +
 ----
 client.getScriptContext()
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/painless/7.17/painless-contexts.html[Documentation] +
+link:{painless}/painless-contexts.html[Documentation] +
 
 
 [discrete]
@@ -9127,7 +9127,7 @@ client.scriptsPainlessExecute({
   body: object
 })
 ----
-link:https://www.elastic.co/guide/en/elasticsearch/painless/7.17/painless-execute-api.html[Documentation] +
+link:{painless}/painless-execute-api.html[Documentation] +
 [cols=2*]
 |===
 |`body`
@@ -10860,6 +10860,13 @@ client.snapshot.get({
   ignore_unavailable: boolean,
   index_details: boolean,
   include_repository: boolean,
+  sort: 'start_time' | 'duration' | 'name' | 'repository' | 'index_count' | 'shard_count' | 'failed_shard_count',
+  size: integer,
+  order: 'asc' | 'desc',
+  from_sort_value: string,
+  after: string,
+  offset: integer,
+  slm_policy_filter: string,
   verbose: boolean
 })
 ----
@@ -10883,6 +10890,29 @@ link:{ref}/modules-snapshots.html[Documentation] +
 
 |`include_repository` or `includeRepository`
 |`boolean` - Whether to include the repository name in the snapshot info. Defaults to true.
+
+|`sort`
+|`'start_time' \| 'duration' \| 'name' \| 'repository' \| 'index_count' \| 'shard_count' \| 'failed_shard_count'` - Allows setting a sort order for the result. Defaults to start_time +
+_Default:_ `start_time`
+
+|`size`
+|`integer` - Maximum number of snapshots to return. Defaults to 0 which means return all that match without limit.
+
+|`order`
+|`'asc' \| 'desc'` - Sort order +
+_Default:_ `asc`
+
+|`from_sort_value` or `fromSortValue`
+|`string` - Value of the current sort column at which to start retrieval.
+
+|`after`
+|`string` - Offset identifier to start pagination from as returned by the 'next' field in the response body.
+
+|`offset`
+|`integer` - Numeric offset to start pagination based on the snapshots matching the request. Defaults to 0
+
+|`slm_policy_filter` or `slmPolicyFilter`
+|`string` - Filter snapshots by a comma-separated list of SLM policy names that snapshots belong to. Accepts wildcards. Use the special pattern '_none' to match snapshots without an SLM policy
 
 |`verbose`
 |`boolean` - Whether to show verbose snapshot info or only show the basic info found in the repository index blob
