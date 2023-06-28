@@ -16739,10 +16739,10 @@ export interface SnapshotGetRequest extends RequestBase {
   index_names?: boolean
   include_repository?: boolean
   sort?: SnapshotSnapshotSort
-  size?: integer
+  size?: number
   order?: SortOrder
   after?: string
-  offset?: integer
+  offset?: number
   from_sort_value?: string
   slm_policy_filter?: Name
 }
