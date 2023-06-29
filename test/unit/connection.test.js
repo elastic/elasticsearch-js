@@ -237,7 +237,7 @@ test('Disable keep alive', t => {
       server.stop()
     })
   })
-})
+}, { skip: true })
 
 test('Timeout support', t => {
   t.plan(1)

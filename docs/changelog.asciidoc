@@ -2,6 +2,26 @@
 == Release notes
 
 [discrete]
+=== 7.17.11
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v7.17.11`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/7.17/release-notes-7.17.11.html[here].
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Fix index drift bug in bulk helper https://github.com/elastic/elasticsearch-js/pull/1759[#1759]
+
+Fixes a bug in the bulk helper that would cause `onDrop` to send back the wrong JSON document or error on a nonexistent document when an error occurred on a bulk HTTP request that contained a `delete` action.
+
+[discrete]
 === 7.17.0
 
 [discrete]
