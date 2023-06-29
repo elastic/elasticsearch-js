@@ -169,6 +169,7 @@ export interface ${toPascalCase(name)}${body ? `<T = ${bodyGeneric}>` : ''} exte
       case 'int':
       case 'double':
       case 'long':
+      case 'integer':
         return 'number'
       case 'boolean|long':
         return 'boolean | number'
