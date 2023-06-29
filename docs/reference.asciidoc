@@ -395,10 +395,6 @@ Returns all script contexts.
 ----
 client.getScriptContext()
 ----
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === get_script_languages
@@ -409,10 +405,6 @@ Returns available script types, languages and contexts
 ----
 client.getScriptLanguages()
 ----
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === get_source
@@ -494,10 +486,6 @@ Returns basic information about the cluster.
 ----
 client.info()
 ----
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === knn_search
@@ -662,10 +650,6 @@ Returns whether the cluster is running.
 ----
 client.ping()
 ----
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === put_script
@@ -1423,10 +1407,6 @@ Returns help for the Cat APIs.
 client.cat.help()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== indices
@@ -1461,10 +1441,6 @@ Returns information about the master node.
 client.cat.master()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== ml_data_frame_analytics
@@ -1579,10 +1555,6 @@ Returns information about custom node attributes.
 client.cat.nodeattrs()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== nodes
@@ -1612,10 +1584,6 @@ Returns a concise representation of the cluster pending tasks.
 client.cat.pendingTasks()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== plugins
@@ -1627,10 +1595,6 @@ Returns information about installed plugins across nodes node.
 client.cat.plugins()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== recovery
@@ -1662,10 +1626,6 @@ Returns information about snapshot repositories registered in the cluster.
 client.cat.repositories()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== segments
@@ -2035,10 +1995,6 @@ Gets all stats related to cross-cluster replication.
 client.ccr.stats()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== unfollow
@@ -2337,10 +2293,6 @@ Returns the information about configured remote clusters.
 client.cluster.remoteInfo()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== reroute
@@ -2459,10 +2411,6 @@ Returns all dangling indices.
 client.danglingIndices.listDanglingIndices()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === enrich
@@ -2544,10 +2492,6 @@ Gets enrich coordinator statistics and information about enrich policies that ar
 client.enrich.stats()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === eql
@@ -2646,10 +2590,6 @@ Gets a list of features which can be included in snapshots using the feature_sta
 client.features.getFeatures()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== reset_features
@@ -2661,10 +2601,6 @@ Resets the internal state of features, usually by deleting system indices
 client.features.resetFeatures()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === fleet
@@ -2899,10 +2835,6 @@ Retrieves the current index lifecycle management (ILM) status.
 client.ilm.getStatus()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== migrate_to_data_tiers
@@ -4320,10 +4252,6 @@ Returns statistical information about geoip databases
 client.ingest.geoIpStats()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== get_pipeline
@@ -4353,10 +4281,6 @@ Returns a list of the built-in patterns.
 client.ingest.processorGrok()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== put_pipeline
@@ -4413,10 +4337,6 @@ Deletes licensing information for the cluster
 client.license.delete()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== get
@@ -4446,10 +4366,6 @@ Retrieves information about the status of the basic license.
 client.license.getBasicStatus()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== get_trial_status
@@ -4461,10 +4377,6 @@ Retrieves information about the status of the trial license.
 client.license.getTrialStatus()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== post
@@ -4595,10 +4507,6 @@ Find out whether system features need to be upgraded or not
 client.migration.getFeatureUpgradeStatus()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== post_feature_upgrade
@@ -4610,10 +4518,6 @@ Begin upgrades for system features
 client.migration.postFeatureUpgrade()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === ml
@@ -5596,10 +5500,6 @@ Returns defaults and limits used by machine learning.
 client.ml.info()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== open_job
@@ -6460,10 +6360,6 @@ Updates certain properties of trained model deployment.
 client.ml.updateTrainedModelDeployment()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== upgrade_job_snapshot
@@ -6890,10 +6786,6 @@ http://todo.com/tbd[Endpoint documentation]
 client.searchApplication.postBehavioralAnalyticsEvent()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== put
@@ -6938,10 +6830,6 @@ Renders a query for given search application search parameters
 client.searchApplication.renderQuery()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== search
@@ -7053,10 +6941,6 @@ Enables authentication as a user and retrieve information about the authenticate
 client.security.authenticate()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== bulk_update_api_keys
@@ -7068,10 +6952,6 @@ Updates the attributes of multiple existing API keys.
 client.security.bulkUpdateApiKeys()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== change_password
@@ -7209,10 +7089,6 @@ Creates a cross-cluster API key for API key based remote cluster access.
 client.security.createCrossClusterApiKey()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== create_service_token
@@ -7365,10 +7241,6 @@ Allows a kibana instance to configure itself to communicate with a secured elast
 client.security.enrollKibana()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== enroll_node
@@ -7380,10 +7252,6 @@ Allows a new node to enroll to an existing cluster with security enabled.
 client.security.enrollNode()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== get_api_key
@@ -7419,10 +7287,6 @@ Retrieves the list of cluster privileges and index privileges that are available
 client.security.getBuiltinPrivileges()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== get_privileges
@@ -7653,10 +7517,6 @@ Exchanges an OpenID Connection authentication response message for an Elasticsea
 client.security.oidcAuthenticate()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== oidc_logout
@@ -7668,10 +7528,6 @@ Invalidates a refresh token and access token that was generated from the OpenID 
 client.security.oidcLogout()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== oidc_prepare_authentication
@@ -7683,10 +7539,6 @@ Creates an OAuth 2.0 authentication request as a URL string
 client.security.oidcPrepareAuthentication()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== put_privileges
@@ -7947,10 +7799,6 @@ Updates attributes of an existing cross-cluster API key.
 client.security.updateCrossClusterApiKey()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === slm
@@ -7996,10 +7844,6 @@ Deletes any snapshots that are expired according to the policy's retention rules
 client.slm.executeRetention()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== get_lifecycle
@@ -8027,10 +7871,6 @@ Returns global and policy-level statistics about actions taken by snapshot lifec
 client.slm.getStats()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== get_status
@@ -8042,10 +7882,6 @@ Retrieves the status of snapshot lifecycle management (SLM).
 client.slm.getStatus()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== put_lifecycle
@@ -8080,10 +7916,6 @@ Turns on snapshot lifecycle management (SLM).
 client.slm.start()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== stop
@@ -8095,10 +7927,6 @@ Turns off snapshot lifecycle management (SLM).
 client.slm.stop()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === snapshot
@@ -8283,10 +8111,6 @@ Analyzes a repository for correctness and performance
 client.snapshot.repositoryAnalyze()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== restore
@@ -8491,10 +8315,6 @@ Retrieves information about the X.509 certificates used to encrypt communication
 client.ssl.certificates()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === synonyms
@@ -8508,10 +8328,6 @@ Deletes a synonym set
 client.synonyms.delete()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== get
@@ -8523,10 +8339,6 @@ Retrieves a synonym set
 client.synonyms.get()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== put
@@ -8538,10 +8350,6 @@ Creates or updates a synonyms set
 client.synonyms.put()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === tasks
@@ -9031,10 +8839,6 @@ Retrieve settings for the watcher system index
 client.watcher.getSettings()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== get_watch
@@ -9109,10 +8913,6 @@ Starts Watcher if it is not already running.
 client.watcher.start()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== stats
@@ -9141,10 +8941,6 @@ Stops Watcher if it is running.
 client.watcher.stop()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 ==== update_settings
@@ -9156,10 +8952,6 @@ Update settings for the watcher system index
 client.watcher.updateSettings()
 ----
 
-[discrete]
-==== Arguments
-
-* *Request (object):*
 
 [discrete]
 === xpack
