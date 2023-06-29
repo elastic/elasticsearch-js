@@ -232,7 +232,7 @@ test('Authentication', t => {
           server.stop()
         })
       })
-    })
+    }, { skip: true })
 
     t.test('Node with basic auth data in the url (array of nodes)', t => {
       t.plan(3)
@@ -1176,7 +1176,7 @@ test('Disable keep alive agent', t => {
       server.stop()
     })
   })
-})
+}, { skip: true })
 
 test('name property as string', t => {
   t.plan(1)

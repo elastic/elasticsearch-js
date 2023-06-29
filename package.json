@@ -12,7 +12,7 @@
     "./*": "./*.js"
   },
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
-  "version": "7.17.11",
+  "version": "7.17.11-patch.1",
   "versionCanary": "7.17.11-canary.2",
   "keywords": [
     "elasticsearch",
