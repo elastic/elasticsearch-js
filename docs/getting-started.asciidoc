@@ -36,7 +36,10 @@ const { Client } = require('@elastic/elasticsearch')
 const client = new Client({
   node: 'https://...', // Elasticsearch endpoint
   auth: {
-    apiKey: 'abc123' // base64-encoded key
+    apiKey: { // API key ID and secret
+      id: 'foo',
+      api_key: 'bar',
+    }
   }
 })
 ----
