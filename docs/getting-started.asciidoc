@@ -8,7 +8,8 @@ operations with it.
 [discrete]
 === Requirements
 
-* (...)
+* https://nodejs.org/[Node.js] version 14.x or newer
+* https://docs.npmjs.com/downloading-and-installing-node-js-and-npm[`npm`], usually bundled with Node.js
 
 [discrete]
 === Installation 
@@ -17,7 +18,7 @@ To install the latest version of the client, run the following command:
 
 [source,shell]
 --------------------------
-
+npm install @elastic/elasticsearch
 --------------------------
 
 Refer to the <<installation>> page to learn more.
@@ -31,7 +32,13 @@ endpoint.
 
 [source,js]
 ----
-
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://...', // Elasticsearch endpoint
+  auth: {
+    apiKey: 'abc123' // base64-encoded key
+  }
+})
 ----
 
 Your Elasticsearch endpoint can be found on the **My deployment** page of your 
@@ -60,7 +67,7 @@ This is how you create the `my_index` index:
 
 [source,js]
 ----
-
+await client.indices.create({ index: 'my_index' })
 ----
 
 
@@ -71,7 +78,14 @@ This is a simple way of indexing a document:
 
 [source,js]
 ----
-
+await client.index({
+  index: 'my_index',
+  id: 'my_document_id',
+  document: {
+    foo: 'foo',
+    bar: 'bar',
+  },
+})
 ----
 
 
@@ -82,7 +96,10 @@ You can get documents by using the following code:
 
 [source,js]
 ----
-
+await client.get({
+  index: 'my_index',
+  id: 'my_document_id',
+})
 ----
 
 
@@ -93,7 +110,13 @@ This is how you can create a single match query with the client:
 
 [source,js]
 ----
-
+await client.search({
+  query: {
+    match: {
+      foo: 'foo'
+    }
+  }
+})
 ----
 
 
@@ -104,7 +127,14 @@ This is how you can update a document, for example to add a new field:
 
 [source,js]
 ----
-
+await client.update({
+  index: 'my_index',
+  id: 'my_document_id',
+  doc: {
+    foo: 'bar',
+    new_field: 'new value'
+  }
+})
 ----
 
 
@@ -113,7 +143,10 @@ This is how you can update a document, for example to add a new field:
 
 [source,js]
 ----
-
+await client.delete({
+  index: 'my_index',
+  id: 'my_document_id',
+})
 ----
 
 
@@ -122,7 +155,7 @@ This is how you can update a document, for example to add a new field:
 
 [source,js]
 ----
-
+await client.indices.delete({ index: 'my_index' })
 ----
 
 
