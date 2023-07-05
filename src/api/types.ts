@@ -13891,7 +13891,7 @@ export interface MlPutTrainedModelRequest extends RequestBase {
   compressed_definition?: string
   definition?: MlPutTrainedModelDefinition
   description?: string
-  inference_config: MlInferenceConfigCreateContainer
+  inference_config?: MlInferenceConfigCreateContainer
   input?: MlPutTrainedModelInput
   metadata?: any
   model_type?: MlTrainedModelType
