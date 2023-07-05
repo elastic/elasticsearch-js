@@ -1,0 +1,170 @@
+[[getting-started-js]]
+== Getting started
+
+This page guides you through the installation process of the Node.js client,
+shows you how to instantiate the client, and how to perform basic Elasticsearch 
+operations with it.
+
+[discrete]
+=== Requirements
+
+* https://nodejs.org/[Node.js] version 14.x or newer
+* https://docs.npmjs.com/downloading-and-installing-node-js-and-npm[`npm`], usually bundled with Node.js
+
+[discrete]
+=== Installation 
+
+To install the latest version of the client, run the following command:
+
+[source,shell]
+--------------------------
+npm install @elastic/elasticsearch
+--------------------------
+
+Refer to the <<installation>> page to learn more.
+
+
+[discrete]
+=== Connecting
+
+You can connect to the Elastic Cloud using an API key and the Elasticsearch 
+endpoint. 
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://...', // Elasticsearch endpoint
+  auth: {
+    apiKey: { // API key ID and secret
+      id: 'foo',
+      api_key: 'bar',
+    }
+  }
+})
+----
+
+Your Elasticsearch endpoint can be found on the **My deployment** page of your 
+deployment:
+
+image::images/es-endpoint.jpg[alt="Finding Elasticsearch endpoint",align="center"]
+
+You can generate an API key on the **Management** page under Security.
+
+image::images/create-api-key.png[alt="Create API key",align="center"]
+
+For other connection options, refer to the <<client-connecting>> section.
+
+
+[discrete]
+=== Operations
+
+Time to use Elasticsearch! This section walks you through the basic, and most 
+important, operations of Elasticsearch.
+
+
+[discrete]
+==== Creating an index
+
+This is how you create the `my_index` index:
+
+[source,js]
+----
+await client.indices.create({ index: 'my_index' })
+----
+
+
+[discrete]
+==== Indexing documents
+
+This is a simple way of indexing a document:
+
+[source,js]
+----
+await client.index({
+  index: 'my_index',
+  id: 'my_document_id',
+  document: {
+    foo: 'foo',
+    bar: 'bar',
+  },
+})
+----
+
+
+[discrete]
+==== Getting documents
+
+You can get documents by using the following code:
+
+[source,js]
+----
+await client.get({
+  index: 'my_index',
+  id: 'my_document_id',
+})
+----
+
+
+[discrete]
+==== Searching documents
+
+This is how you can create a single match query with the client: 
+
+[source,js]
+----
+await client.search({
+  query: {
+    match: {
+      foo: 'foo'
+    }
+  }
+})
+----
+
+
+[discrete]
+==== Updating documents
+
+This is how you can update a document, for example to add a new field:
+
+[source,js]
+----
+await client.update({
+  index: 'my_index',
+  id: 'my_document_id',
+  doc: {
+    foo: 'bar',
+    new_field: 'new value'
+  }
+})
+----
+
+
+[discrete]
+==== Deleting documents
+
+[source,js]
+----
+await client.delete({
+  index: 'my_index',
+  id: 'my_document_id',
+})
+----
+
+
+[discrete]
+==== Deleting an index
+
+[source,js]
+----
+await client.indices.delete({ index: 'my_index' })
+----
+
+
+[discrete]
+== Further reading
+
+* Use <<client-helpers>> for a more comfortable experience with the APIs.
+* For an elaborate example of how to ingest data into Elastic Cloud, 
+refer to {cloud}/ec-getting-started-node-js.html[this page].
