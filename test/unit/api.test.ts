@@ -300,3 +300,66 @@ test('With generic document and aggregation', async t => {
   t.ok(Array.isArray(response.aggregations?.unique.buckets))
 })
 
+test('With generic document and aggregation for multi search', async t => {
+  t.plan(1)
+
+  interface Doc {
+    foo: string
+  }
+
+  interface Aggregations {
+    unique: T.AggregationsTermsAggregateBase<{ key: string }>
+  }
+
+  const Connection = connection.buildMockConnection({
+    onRequest (opts) {
+      return {
+        statusCode: 200,
+        body: {
+          responses: [{
+            took: 42,
+            hits: {
+              hits: [{
+                _source: { foo: 'bar' }
+              }]
+            },
+            aggregations: {
+              unique: {
+                buckets: [{ key: 'bar' }]
+              }
+            }
+          }]
+        }
+      }
+    }
+  })
+
+  const client = new Client({
+    node: 'http://localhost:9200',
+    Connection
+  })
+
+  const response = await client.msearch<Doc, Aggregations>({
+    index: 'test',
+    searches: [
+      {},
+      {
+        allow_no_indices: true,
+        query: { match_all: {} },
+        aggregations: {
+          unique: {
+            terms: {
+              field: 'foo'
+            }
+          }
+        }
+      }
+    ]
+  })
+
+  response.responses.forEach((r) => {
+    if ("error" in r) return
+    t.ok(Array.isArray(r.aggregations?.unique.buckets))
+  })
+})
+

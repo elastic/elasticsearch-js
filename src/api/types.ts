@@ -702,13 +702,13 @@ export interface MgetResponse<TDocument = unknown> {
 
 export type MgetResponseItem<TDocument = unknown> = GetGetResult<TDocument> | MgetMultiGetError
 
-export interface MsearchMultiSearchItem<TDocument = unknown> extends SearchResponseBody<TDocument> {
+export interface MsearchMultiSearchItem<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> extends SearchResponseBody<TDocument, TAggregations> {
   status?: integer
 }
 
-export interface MsearchMultiSearchResult<TDocument = unknown> {
+export interface MsearchMultiSearchResult<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> {
   took: long
-  responses: MsearchResponseItem<TDocument>[]
+  responses: MsearchResponseItem<TDocument, TAggregations>[]
 }
 
 export interface MsearchMultisearchBody {
@@ -779,9 +779,9 @@ export interface MsearchRequest extends RequestBase {
 
 export type MsearchRequestItem = MsearchMultisearchHeader | MsearchMultisearchBody
 
-export type MsearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument>
+export type MsearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
 
-export type MsearchResponseItem<TDocument = unknown> = MsearchMultiSearchItem<TDocument> | ErrorResponseBase
+export type MsearchResponseItem<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchItem<TDocument, TAggregations> | ErrorResponseBase
 
 export interface MsearchTemplateRequest extends RequestBase {
   index?: Indices
