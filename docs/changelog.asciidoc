@@ -2,6 +2,27 @@
 == Release notes
 
 [discrete]
+=== 7.17.12
+
+[discrete]
+==== Notes
+
+This is the first 7.x release where patch versions of the client will no longer (intentionally) align with patch versions of Elasticsearch. The latest patch release of the client will always be compatible with the corresponding minor release of Elasticsearch.
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== TypeScript build failure
+
+Fixes a type declaration bug that caused TypeScript builds to fail. https://github.com/elastic/elasticsearch-js/pull/1927[#1927]
+
+[discrete]
+===== Add TypeScript type declarations to exports 
+
+Adds TypeScript type declarations file to package.json `exports` https://github.com/elastic/elasticsearch-js/pull/1930[#1930]
+
+[discrete]
 === 7.17.11
 
 [discrete]
@@ -54,7 +75,6 @@ https://www.elastic.co/guide/en/elasticsearch/reference/7.16/release-notes-7.16.
 [discrete]
 ===== Fixed export field deprecation log https://github.com/elastic/elasticsearch-js/pull/1593#[#1593]
 
-
 [discrete]
 === 7.15.0
 
@@ -70,7 +90,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/7.15/release-notes-7.15.
 [discrete]
 ===== Support mapbox content type https://github.com/elastic/elasticsearch-js/pull/1500[#1500]
 
-If you call an API that returns a mapbox conten type, the response body will be a buffer.
+If you call an API that returns a mapbox content type, the response body will be a buffer.
 
 [discrete]
 ===== Support CA fingerprint validation https://github.com/elastic/elasticsearch-js/pull/1499[#1499]
