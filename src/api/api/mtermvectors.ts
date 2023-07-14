@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Returns multiple termvectors in one request.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-multi-termvectors.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-multi-termvectors.html | Elasticsearch API documentation}
   */
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MtermvectorsResponse>
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MtermvectorsResponse, unknown>>

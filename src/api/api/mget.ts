@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Allows to get multiple documents in one request.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-multi-get.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-multi-get.html | Elasticsearch API documentation}
   */
 export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest | TB.MgetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MgetResponse<TDocument>>
 export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest | TB.MgetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MgetResponse<TDocument>, unknown>>

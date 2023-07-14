@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Allows to perform multiple index/update/delete operations in a single request.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-bulk.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-bulk.html | Elasticsearch API documentation}
   */
 export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument> | TB.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.BulkResponse>
 export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument> | TB.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.BulkResponse, unknown>>

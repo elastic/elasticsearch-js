@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Removes a document from the index.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-delete.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-delete.html | Elasticsearch API documentation}
   */
 export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteResponse>
 export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteResponse, unknown>>

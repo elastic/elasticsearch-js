@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Close a point in time
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/point-in-time-api.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/point-in-time-api.html | Elasticsearch API documentation}
   */
 export default async function ClosePointInTimeApi (this: That, params: T.ClosePointInTimeRequest | TB.ClosePointInTimeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClosePointInTimeResponse>
 export default async function ClosePointInTimeApi (this: That, params: T.ClosePointInTimeRequest | TB.ClosePointInTimeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClosePointInTimeResponse, unknown>>

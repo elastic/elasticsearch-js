@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Returns number of documents matching a query.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/search-count.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/search-count.html | Elasticsearch API documentation}
   */
 export default async function CountApi (this: That, params?: T.CountRequest | TB.CountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CountResponse>
 export default async function CountApi (this: That, params?: T.CountRequest | TB.CountRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CountResponse, unknown>>

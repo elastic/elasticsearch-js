@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Deletes documents matching the provided query.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-delete-by-query.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-delete-by-query.html | Elasticsearch API documentation}
   */
 export default async function DeleteByQueryApi (this: That, params: T.DeleteByQueryRequest | TB.DeleteByQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteByQueryResponse>
 export default async function DeleteByQueryApi (this: That, params: T.DeleteByQueryRequest | TB.DeleteByQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteByQueryResponse, unknown>>

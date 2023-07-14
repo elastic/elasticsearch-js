@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Allows to use the Mustache language to pre-render a search definition.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/render-search-template-api.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/render-search-template-api.html | Elasticsearch API documentation}
   */
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RenderSearchTemplateResponse>
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RenderSearchTemplateResponse, unknown>>

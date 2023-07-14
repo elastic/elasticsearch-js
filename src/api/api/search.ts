@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Returns results matching a query.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/search-search.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/search-search.html | Elasticsearch API documentation}
   */
 export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchResponse<TDocument, TAggregations>>
 export default async function SearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.SearchRequest | TB.SearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchResponse<TDocument, TAggregations>, unknown>>

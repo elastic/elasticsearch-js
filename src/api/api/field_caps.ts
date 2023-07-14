@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Returns the information about the capabilities of fields among multiple indices.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/search-field-caps.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/search-field-caps.html | Elasticsearch API documentation}
   */
 export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FieldCapsResponse>
 export default async function FieldCapsApi (this: That, params?: T.FieldCapsRequest | TB.FieldCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FieldCapsResponse, unknown>>

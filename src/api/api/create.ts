@@ -38,10 +38,8 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Creates a new document in the index.
-
-Returns a 409 response when a document with a same ID already exists in the index.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-index_.html Elasticsearch API docs}
+  * Creates a new document in the index. Returns a 409 response when a document with a same ID already exists in the index.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-index_.html | Elasticsearch API documentation}
   */
 export default async function CreateApi<TDocument = unknown> (this: That, params: T.CreateRequest<TDocument> | TB.CreateRequest<TDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.CreateResponse>
 export default async function CreateApi<TDocument = unknown> (this: That, params: T.CreateRequest<TDocument> | TB.CreateRequest<TDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CreateResponse, unknown>>

@@ -45,7 +45,7 @@ export default class Fleet {
 
   /**
     * Returns the current global checkpoints for an index. This API is design for internal use by the fleet server project.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/get-global-checkpoints.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/get-global-checkpoints.html | Elasticsearch API documentation}
     */
   async globalCheckpoints (this: That, params: T.FleetGlobalCheckpointsRequest | TB.FleetGlobalCheckpointsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.FleetGlobalCheckpointsResponse>
   async globalCheckpoints (this: That, params: T.FleetGlobalCheckpointsRequest | TB.FleetGlobalCheckpointsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.FleetGlobalCheckpointsResponse, unknown>>

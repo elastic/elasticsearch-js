@@ -45,7 +45,7 @@ export default class AsyncSearch {
 
   /**
     * Deletes an async search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/async-search.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/async-search.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.AsyncSearchDeleteRequest | TB.AsyncSearchDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AsyncSearchDeleteResponse>
   async delete (this: That, params: T.AsyncSearchDeleteRequest | TB.AsyncSearchDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AsyncSearchDeleteResponse, unknown>>
@@ -71,7 +71,7 @@ export default class AsyncSearch {
 
   /**
     * Retrieves the results of a previously submitted async search request given its ID.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/async-search.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/async-search.html | Elasticsearch API documentation}
     */
   async get<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.AsyncSearchGetRequest | TB.AsyncSearchGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AsyncSearchGetResponse<TDocument, TAggregations>>
   async get<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.AsyncSearchGetRequest | TB.AsyncSearchGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AsyncSearchGetResponse<TDocument, TAggregations>, unknown>>
@@ -97,7 +97,7 @@ export default class AsyncSearch {
 
   /**
     * Retrieves the status of a previously submitted async search request given its ID.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/async-search.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/async-search.html | Elasticsearch API documentation}
     */
   async status (this: That, params: T.AsyncSearchStatusRequest | TB.AsyncSearchStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AsyncSearchStatusResponse>
   async status (this: That, params: T.AsyncSearchStatusRequest | TB.AsyncSearchStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AsyncSearchStatusResponse, unknown>>
@@ -123,7 +123,7 @@ export default class AsyncSearch {
 
   /**
     * Executes a search request asynchronously.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/async-search.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/async-search.html | Elasticsearch API documentation}
     */
   async submit<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.AsyncSearchSubmitRequest | TB.AsyncSearchSubmitRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AsyncSearchSubmitResponse<TDocument, TAggregations>>
   async submit<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.AsyncSearchSubmitRequest | TB.AsyncSearchSubmitRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AsyncSearchSubmitResponse<TDocument, TAggregations>, unknown>>

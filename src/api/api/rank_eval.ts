@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Allows to evaluate the quality of ranked search results over a set of typical search queries
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/search-rank-eval.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/search-rank-eval.html | Elasticsearch API documentation}
   */
 export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RankEvalResponse>
 export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RankEvalResponse, unknown>>

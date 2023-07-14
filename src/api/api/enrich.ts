@@ -45,7 +45,7 @@ export default class Enrich {
 
   /**
     * Deletes an existing enrich policy and its enrich index.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/delete-enrich-policy-api.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/delete-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest | TB.EnrichDeletePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichDeletePolicyResponse>
   async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest | TB.EnrichDeletePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichDeletePolicyResponse, unknown>>
@@ -71,7 +71,7 @@ export default class Enrich {
 
   /**
     * Creates the enrich index for an existing enrich policy.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/execute-enrich-policy-api.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/execute-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async executePolicy (this: That, params: T.EnrichExecutePolicyRequest | TB.EnrichExecutePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichExecutePolicyResponse>
   async executePolicy (this: That, params: T.EnrichExecutePolicyRequest | TB.EnrichExecutePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichExecutePolicyResponse, unknown>>
@@ -97,7 +97,7 @@ export default class Enrich {
 
   /**
     * Gets information about an enrich policy.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/get-enrich-policy-api.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/get-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async getPolicy (this: That, params?: T.EnrichGetPolicyRequest | TB.EnrichGetPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichGetPolicyResponse>
   async getPolicy (this: That, params?: T.EnrichGetPolicyRequest | TB.EnrichGetPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichGetPolicyResponse, unknown>>
@@ -131,7 +131,7 @@ export default class Enrich {
 
   /**
     * Creates a new enrich policy.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/put-enrich-policy-api.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/put-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichPutPolicyResponse>
   async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichPutPolicyResponse, unknown>>
@@ -169,7 +169,7 @@ export default class Enrich {
 
   /**
     * Gets enrich coordinator statistics and information about enrich policies that are currently executing.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/enrich-stats-api.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/enrich-stats-api.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.EnrichStatsRequest | TB.EnrichStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichStatsResponse>
   async stats (this: That, params?: T.EnrichStatsRequest | TB.EnrichStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichStatsResponse, unknown>>
