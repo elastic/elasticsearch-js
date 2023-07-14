@@ -135,6 +135,8 @@ docker build \
   --file .ci/Dockerfile \
   --tag "$product" \
   --build-arg NODE_JS_VERSION="$NODE_JS_VERSION" \
+  --build-arg "BUILDER_UID=$(id -u)" \
+  --build-arg "BUILDER_GID=$(id -g)" \
   .
 
 # ------------------------------------------------------- #
