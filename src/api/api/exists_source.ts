@@ -37,6 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Returns information about whether a document source exists in an index.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/docs-get.html | Elasticsearch API documentation}
+  */
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest | TB.ExistsSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExistsSourceResponse>
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest | TB.ExistsSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExistsSourceResponse, unknown>>
 export default async function ExistsSourceApi (this: That, params: T.ExistsSourceRequest | TB.ExistsSourceRequest, options?: TransportRequestOptions): Promise<T.ExistsSourceResponse>

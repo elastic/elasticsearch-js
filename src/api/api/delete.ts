@@ -37,6 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Removes a document from the index.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/docs-delete.html | Elasticsearch API documentation}
+  */
 export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteResponse>
 export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteResponse, unknown>>
 export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptions): Promise<T.DeleteResponse>

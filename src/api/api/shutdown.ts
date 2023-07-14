@@ -43,6 +43,10 @@ export default class Shutdown {
     this.transport = transport
   }
 
+  /**
+    * Removes a node from the shutdown list. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/current | Elasticsearch API documentation}
+    */
   async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownDeleteNodeResponse>
   async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownDeleteNodeResponse, unknown>>
   async deleteNode (this: That, params: T.ShutdownDeleteNodeRequest | TB.ShutdownDeleteNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownDeleteNodeResponse>
@@ -65,6 +69,10 @@ export default class Shutdown {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieve status of a node or nodes that are currently marked as shutting down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/current | Elasticsearch API documentation}
+    */
   async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownGetNodeResponse>
   async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownGetNodeResponse, unknown>>
   async getNode (this: That, params?: T.ShutdownGetNodeRequest | TB.ShutdownGetNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownGetNodeResponse>
@@ -95,6 +103,10 @@ export default class Shutdown {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Adds a node to be shut down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/current | Elasticsearch API documentation}
+    */
   async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ShutdownPutNodeResponse>
   async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ShutdownPutNodeResponse, unknown>>
   async putNode (this: That, params: T.ShutdownPutNodeRequest | TB.ShutdownPutNodeRequest, options?: TransportRequestOptions): Promise<T.ShutdownPutNodeResponse>
