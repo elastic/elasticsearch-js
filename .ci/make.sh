@@ -67,7 +67,7 @@ case $CMD in
             # fall back to branch name or `main` if no VERSION is set
             branch_name=$(git rev-parse --abbrev-ref HEAD)
             if [[ "$branch_name" =~ ^\d+\.\d+ ]]; then
-              echo -e "\033[36;1mTARGET: codegen -> No VERSION found, using branch name: \`main\`\033[0m"
+              echo -e "\033[36;1mTARGET: codegen -> No VERSION found, using branch name: \`$VERSION\`\033[0m"
               VERSION="$branch_name"
             else
               echo -e "\033[36;1mTARGET: codegen -> No VERSION found, using \`main\`\033[0m"
