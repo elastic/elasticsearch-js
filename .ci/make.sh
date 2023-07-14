@@ -155,6 +155,7 @@ docker run \
   $product \
   /bin/bash -c "cd /usr/src && \
     git clone https://$CLIENTS_GITHUB_TOKEN@github.com/elastic/elastic-client-generator-js.git && \
+    mkdir -p /usr/src/elastic-client-generator-js/output && \
     cd /usr/src/elasticsearch-js && \
     node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}"
 
