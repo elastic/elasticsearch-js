@@ -137,15 +137,17 @@ docker build \
 echo -e "\033[34;1mINFO: running $product container\033[0m"
 
 docker run \
-  --volume "$repo:/usr/src/app" \
-  --volume "$generator:/usr/src/elastic-client-generator-js" \
-  --volume /usr/src/app/node_modules \
+  --volume "$repo:/usr/src/elasticsearch-js" \
+  --volume /usr/src/elasticsearch-js/node_modules \
   -u "$(id -u):$(id -g)" \
   --env "WORKFLOW=$WORKFLOW" \
   --name make-elasticsearch-js \
   --rm \
   $product \
-  node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}
+  /bin/bash -c "cd /usr/src && \
+    git clone https://$CLIENTS_GITHUB_TOKEN@github.com/elastic/elastic-client-generator-js.git && \
+    cd /usr/src/elasticsearch-js && \
+    node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}"
 
 # ------------------------------------------------------- #
 # Post Command tasks & checks
