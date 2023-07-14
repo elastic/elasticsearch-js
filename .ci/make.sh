@@ -24,7 +24,6 @@
 # ------------------------------------------------------- #
 script_path=$(dirname "$(realpath -s "$0")")
 repo=$(realpath "$script_path/../")
-generator=$(realpath "$script_path/../../elastic-client-generator-js")
 
 # shellcheck disable=SC1090
 CMD=$1
