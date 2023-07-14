@@ -37,6 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Open a point in time that can be used in subsequent searches
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/point-in-time-api.html | Elasticsearch API documentation}
+  */
 export default async function OpenPointInTimeApi (this: That, params: T.OpenPointInTimeRequest | TB.OpenPointInTimeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.OpenPointInTimeResponse>
 export default async function OpenPointInTimeApi (this: That, params: T.OpenPointInTimeRequest | TB.OpenPointInTimeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.OpenPointInTimeResponse, unknown>>
 export default async function OpenPointInTimeApi (this: That, params: T.OpenPointInTimeRequest | TB.OpenPointInTimeRequest, options?: TransportRequestOptions): Promise<T.OpenPointInTimeResponse>

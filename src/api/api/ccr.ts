@@ -43,6 +43,10 @@ export default class Ccr {
     this.transport = transport
   }
 
+  /**
+    * Deletes auto-follow patterns.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-delete-auto-follow-pattern.html | Elasticsearch API documentation}
+    */
   async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest | TB.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrDeleteAutoFollowPatternResponse>
   async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest | TB.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrDeleteAutoFollowPatternResponse, unknown>>
   async deleteAutoFollowPattern (this: That, params: T.CcrDeleteAutoFollowPatternRequest | TB.CcrDeleteAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrDeleteAutoFollowPatternResponse>
@@ -65,6 +69,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates a new follower index configured to follow the referenced leader index.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-put-follow.html | Elasticsearch API documentation}
+    */
   async follow (this: That, params: T.CcrFollowRequest | TB.CcrFollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrFollowResponse>
   async follow (this: That, params: T.CcrFollowRequest | TB.CcrFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowResponse, unknown>>
   async follow (this: That, params: T.CcrFollowRequest | TB.CcrFollowRequest, options?: TransportRequestOptions): Promise<T.CcrFollowResponse>
@@ -99,6 +107,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves information about all follower indices, including parameters and status for each follower index
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-get-follow-info.html | Elasticsearch API documentation}
+    */
   async followInfo (this: That, params: T.CcrFollowInfoRequest | TB.CcrFollowInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrFollowInfoResponse>
   async followInfo (this: That, params: T.CcrFollowInfoRequest | TB.CcrFollowInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowInfoResponse, unknown>>
   async followInfo (this: That, params: T.CcrFollowInfoRequest | TB.CcrFollowInfoRequest, options?: TransportRequestOptions): Promise<T.CcrFollowInfoResponse>
@@ -121,6 +133,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-get-follow-stats.html | Elasticsearch API documentation}
+    */
   async followStats (this: That, params: T.CcrFollowStatsRequest | TB.CcrFollowStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrFollowStatsResponse>
   async followStats (this: That, params: T.CcrFollowStatsRequest | TB.CcrFollowStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrFollowStatsResponse, unknown>>
   async followStats (this: That, params: T.CcrFollowStatsRequest | TB.CcrFollowStatsRequest, options?: TransportRequestOptions): Promise<T.CcrFollowStatsResponse>
@@ -143,6 +159,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Removes the follower retention leases from the leader.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-post-forget-follower.html | Elasticsearch API documentation}
+    */
   async forgetFollower (this: That, params: T.CcrForgetFollowerRequest | TB.CcrForgetFollowerRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrForgetFollowerResponse>
   async forgetFollower (this: That, params: T.CcrForgetFollowerRequest | TB.CcrForgetFollowerRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrForgetFollowerResponse, unknown>>
   async forgetFollower (this: That, params: T.CcrForgetFollowerRequest | TB.CcrForgetFollowerRequest, options?: TransportRequestOptions): Promise<T.CcrForgetFollowerResponse>
@@ -177,6 +197,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-get-auto-follow-pattern.html | Elasticsearch API documentation}
+    */
   async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest | TB.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrGetAutoFollowPatternResponse>
   async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest | TB.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrGetAutoFollowPatternResponse, unknown>>
   async getAutoFollowPattern (this: That, params?: T.CcrGetAutoFollowPatternRequest | TB.CcrGetAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrGetAutoFollowPatternResponse>
@@ -207,6 +231,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Pauses an auto-follow pattern
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-pause-auto-follow-pattern.html | Elasticsearch API documentation}
+    */
   async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest | TB.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrPauseAutoFollowPatternResponse>
   async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest | TB.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPauseAutoFollowPatternResponse, unknown>>
   async pauseAutoFollowPattern (this: That, params: T.CcrPauseAutoFollowPatternRequest | TB.CcrPauseAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrPauseAutoFollowPatternResponse>
@@ -229,6 +257,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Pauses a follower index. The follower index will not fetch any additional operations from the leader index.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-post-pause-follow.html | Elasticsearch API documentation}
+    */
   async pauseFollow (this: That, params: T.CcrPauseFollowRequest | TB.CcrPauseFollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrPauseFollowResponse>
   async pauseFollow (this: That, params: T.CcrPauseFollowRequest | TB.CcrPauseFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPauseFollowResponse, unknown>>
   async pauseFollow (this: That, params: T.CcrPauseFollowRequest | TB.CcrPauseFollowRequest, options?: TransportRequestOptions): Promise<T.CcrPauseFollowResponse>
@@ -251,6 +283,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates a new named collection of auto-follow patterns against a specified remote cluster. Newly created indices on the remote cluster matching any of the specified patterns will be automatically configured as follower indices.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-put-auto-follow-pattern.html | Elasticsearch API documentation}
+    */
   async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest | TB.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrPutAutoFollowPatternResponse>
   async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest | TB.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrPutAutoFollowPatternResponse, unknown>>
   async putAutoFollowPattern (this: That, params: T.CcrPutAutoFollowPatternRequest | TB.CcrPutAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrPutAutoFollowPatternResponse>
@@ -285,6 +321,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Resumes an auto-follow pattern that has been paused
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-resume-auto-follow-pattern.html | Elasticsearch API documentation}
+    */
   async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest | TB.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrResumeAutoFollowPatternResponse>
   async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest | TB.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrResumeAutoFollowPatternResponse, unknown>>
   async resumeAutoFollowPattern (this: That, params: T.CcrResumeAutoFollowPatternRequest | TB.CcrResumeAutoFollowPatternRequest, options?: TransportRequestOptions): Promise<T.CcrResumeAutoFollowPatternResponse>
@@ -307,6 +347,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Resumes a follower index that has been paused
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-post-resume-follow.html | Elasticsearch API documentation}
+    */
   async resumeFollow (this: That, params: T.CcrResumeFollowRequest | TB.CcrResumeFollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrResumeFollowResponse>
   async resumeFollow (this: That, params: T.CcrResumeFollowRequest | TB.CcrResumeFollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrResumeFollowResponse, unknown>>
   async resumeFollow (this: That, params: T.CcrResumeFollowRequest | TB.CcrResumeFollowRequest, options?: TransportRequestOptions): Promise<T.CcrResumeFollowResponse>
@@ -341,6 +385,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Gets all stats related to cross-cluster replication.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-get-stats.html | Elasticsearch API documentation}
+    */
   async stats (this: That, params?: T.CcrStatsRequest | TB.CcrStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrStatsResponse>
   async stats (this: That, params?: T.CcrStatsRequest | TB.CcrStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrStatsResponse, unknown>>
   async stats (this: That, params?: T.CcrStatsRequest | TB.CcrStatsRequest, options?: TransportRequestOptions): Promise<T.CcrStatsResponse>
@@ -364,6 +412,10 @@ export default class Ccr {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-post-unfollow.html | Elasticsearch API documentation}
+    */
   async unfollow (this: That, params: T.CcrUnfollowRequest | TB.CcrUnfollowRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CcrUnfollowResponse>
   async unfollow (this: That, params: T.CcrUnfollowRequest | TB.CcrUnfollowRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CcrUnfollowResponse, unknown>>
   async unfollow (this: That, params: T.CcrUnfollowRequest | TB.CcrUnfollowRequest, options?: TransportRequestOptions): Promise<T.CcrUnfollowResponse>

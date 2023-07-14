@@ -43,6 +43,10 @@ export default class Watcher {
     this.transport = transport
   }
 
+  /**
+    * Acknowledges a watch, manually throttling the execution of the watch's actions.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-ack-watch.html | Elasticsearch API documentation}
+    */
   async ackWatch (this: That, params: T.WatcherAckWatchRequest | TB.WatcherAckWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherAckWatchResponse>
   async ackWatch (this: That, params: T.WatcherAckWatchRequest | TB.WatcherAckWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherAckWatchResponse, unknown>>
   async ackWatch (this: That, params: T.WatcherAckWatchRequest | TB.WatcherAckWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherAckWatchResponse>
@@ -72,6 +76,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Activates a currently inactive watch.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-activate-watch.html | Elasticsearch API documentation}
+    */
   async activateWatch (this: That, params: T.WatcherActivateWatchRequest | TB.WatcherActivateWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherActivateWatchResponse>
   async activateWatch (this: That, params: T.WatcherActivateWatchRequest | TB.WatcherActivateWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherActivateWatchResponse, unknown>>
   async activateWatch (this: That, params: T.WatcherActivateWatchRequest | TB.WatcherActivateWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherActivateWatchResponse>
@@ -94,6 +102,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Deactivates a currently active watch.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-deactivate-watch.html | Elasticsearch API documentation}
+    */
   async deactivateWatch (this: That, params: T.WatcherDeactivateWatchRequest | TB.WatcherDeactivateWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherDeactivateWatchResponse>
   async deactivateWatch (this: That, params: T.WatcherDeactivateWatchRequest | TB.WatcherDeactivateWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherDeactivateWatchResponse, unknown>>
   async deactivateWatch (this: That, params: T.WatcherDeactivateWatchRequest | TB.WatcherDeactivateWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherDeactivateWatchResponse>
@@ -116,6 +128,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Removes a watch from Watcher.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-delete-watch.html | Elasticsearch API documentation}
+    */
   async deleteWatch (this: That, params: T.WatcherDeleteWatchRequest | TB.WatcherDeleteWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherDeleteWatchResponse>
   async deleteWatch (this: That, params: T.WatcherDeleteWatchRequest | TB.WatcherDeleteWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherDeleteWatchResponse, unknown>>
   async deleteWatch (this: That, params: T.WatcherDeleteWatchRequest | TB.WatcherDeleteWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherDeleteWatchResponse>
@@ -138,6 +154,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Forces the execution of a stored watch.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-execute-watch.html | Elasticsearch API documentation}
+    */
   async executeWatch (this: That, params?: T.WatcherExecuteWatchRequest | TB.WatcherExecuteWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherExecuteWatchResponse>
   async executeWatch (this: That, params?: T.WatcherExecuteWatchRequest | TB.WatcherExecuteWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherExecuteWatchResponse, unknown>>
   async executeWatch (this: That, params?: T.WatcherExecuteWatchRequest | TB.WatcherExecuteWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherExecuteWatchResponse>
@@ -180,6 +200,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieve settings for the watcher system index
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-get-settings.html | Elasticsearch API documentation}
+    */
   async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
@@ -202,6 +226,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves a watch by its ID.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-get-watch.html | Elasticsearch API documentation}
+    */
   async getWatch (this: That, params: T.WatcherGetWatchRequest | TB.WatcherGetWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherGetWatchResponse>
   async getWatch (this: That, params: T.WatcherGetWatchRequest | TB.WatcherGetWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherGetWatchResponse, unknown>>
   async getWatch (this: That, params: T.WatcherGetWatchRequest | TB.WatcherGetWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherGetWatchResponse>
@@ -224,6 +252,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates a new watch, or updates an existing one.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-put-watch.html | Elasticsearch API documentation}
+    */
   async putWatch (this: That, params: T.WatcherPutWatchRequest | TB.WatcherPutWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherPutWatchResponse>
   async putWatch (this: That, params: T.WatcherPutWatchRequest | TB.WatcherPutWatchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherPutWatchResponse, unknown>>
   async putWatch (this: That, params: T.WatcherPutWatchRequest | TB.WatcherPutWatchRequest, options?: TransportRequestOptions): Promise<T.WatcherPutWatchResponse>
@@ -258,6 +290,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves stored watches.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-query-watches.html | Elasticsearch API documentation}
+    */
   async queryWatches (this: That, params?: T.WatcherQueryWatchesRequest | TB.WatcherQueryWatchesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherQueryWatchesResponse>
   async queryWatches (this: That, params?: T.WatcherQueryWatchesRequest | TB.WatcherQueryWatchesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherQueryWatchesResponse, unknown>>
   async queryWatches (this: That, params?: T.WatcherQueryWatchesRequest | TB.WatcherQueryWatchesRequest, options?: TransportRequestOptions): Promise<T.WatcherQueryWatchesResponse>
@@ -293,6 +329,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Starts Watcher if it is not already running.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-start.html | Elasticsearch API documentation}
+    */
   async start (this: That, params?: T.WatcherStartRequest | TB.WatcherStartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherStartResponse>
   async start (this: That, params?: T.WatcherStartRequest | TB.WatcherStartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherStartResponse, unknown>>
   async start (this: That, params?: T.WatcherStartRequest | TB.WatcherStartRequest, options?: TransportRequestOptions): Promise<T.WatcherStartResponse>
@@ -316,6 +356,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves the current Watcher metrics.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-stats.html | Elasticsearch API documentation}
+    */
   async stats (this: That, params?: T.WatcherStatsRequest | TB.WatcherStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherStatsResponse>
   async stats (this: That, params?: T.WatcherStatsRequest | TB.WatcherStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherStatsResponse, unknown>>
   async stats (this: That, params?: T.WatcherStatsRequest | TB.WatcherStatsRequest, options?: TransportRequestOptions): Promise<T.WatcherStatsResponse>
@@ -346,6 +390,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Stops Watcher if it is running.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-stop.html | Elasticsearch API documentation}
+    */
   async stop (this: That, params?: T.WatcherStopRequest | TB.WatcherStopRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherStopResponse>
   async stop (this: That, params?: T.WatcherStopRequest | TB.WatcherStopRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.WatcherStopResponse, unknown>>
   async stop (this: That, params?: T.WatcherStopRequest | TB.WatcherStopRequest, options?: TransportRequestOptions): Promise<T.WatcherStopResponse>
@@ -369,6 +417,10 @@ export default class Watcher {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Update settings for the watcher system index
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.8/watcher-api-update-settings.html | Elasticsearch API documentation}
+    */
   async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
   async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>

@@ -229,9 +229,9 @@ export interface DeleteByQueryResponse {
   slice_id?: integer
   task?: TaskId
   throttled?: Duration
-  throttled_millis: DurationValue<UnitMillis>
+  throttled_millis?: DurationValue<UnitMillis>
   throttled_until?: Duration
-  throttled_until_millis: DurationValue<UnitMillis>
+  throttled_until_millis?: DurationValue<UnitMillis>
   timed_out?: boolean
   took?: DurationValue<UnitMillis>
   total?: long

@@ -37,6 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Allows an arbitrary script to be executed and a result to be returned
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/8.8/painless-execute-api.html | Elasticsearch API documentation}
+  */
 export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest | TB.ScriptsPainlessExecuteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ScriptsPainlessExecuteResponse<TResult>>
 export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest | TB.ScriptsPainlessExecuteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ScriptsPainlessExecuteResponse<TResult>, unknown>>
 export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest | TB.ScriptsPainlessExecuteRequest, options?: TransportRequestOptions): Promise<T.ScriptsPainlessExecuteResponse<TResult>>
