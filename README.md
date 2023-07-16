@@ -128,9 +128,12 @@ async function run () {
   // Let's search!
   const result= await client.search({
     index: 'game-of-thrones',
-    query: {
-      match: { quote: 'winter' }
+    body: {
+      query: {
+        match: { quote: 'winter' }
+      }
     }
+   
   })
 
   console.log(result.hits.hits)
