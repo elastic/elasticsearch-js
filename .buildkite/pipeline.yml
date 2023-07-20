@@ -1,3 +1,4 @@
+---
 steps:
   - label: ":elasticsearch: :javascript: ES JavaScript ({{ matrix.nodejs }}) Test Suite: {{ matrix.suite }}"
     agents:

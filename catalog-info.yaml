@@ -35,15 +35,16 @@ spec:
           access_level: READ_ONLY
       provider_settings:
         build_pull_requests: false
+        build_branches: false
       cancel_intermediate_builds: true
       cancel_intermediate_builds_branch_filter: '!main'
       schedules:
         main_semi_daily:
           branch: 'main'
           cronline: '0 */12 * * *'
-        8_8_semi_daily:
-          branch: '8.8'
+        8_9_semi_daily:
+          branch: '8.9'
           cronline: '0 */12 * * *'
-        8_7_daily:
-          branch: '8.7'
+        8_8_daily:
+          branch: '8.8'
           cronline: '@daily'
