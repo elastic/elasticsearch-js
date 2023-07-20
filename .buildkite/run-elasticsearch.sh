@@ -26,11 +26,17 @@ script_path=$(dirname $(realpath -s $0))
 source $script_path/functions/imports.sh
 set -euo pipefail
 
-echo -e "\033[34;1mINFO:\033[0m Take down node if called twice with the same arguments (DETACH=true) or on seperate terminals \033[0m"
+echo -e "\033[34;1mINFO:\033[0m Take down node if called twice with the same arguments (DETACH=true) or on separate terminals \033[0m"
 cleanup_node $es_node_name
 
 master_node_name=${es_node_name}
 cluster_name=${moniker}${suffix}
+
+# Set vm.max_map_count kernel setting to 262144
+if [ "$(sysctl vm.max_map_count)" != 'vm.max_map_count = 262144' ]; then
+  echo "vm.max_map_count may be too low. resetting."
+  sudo sysctl -w vm.max_map_count=262144
+fi
 
 declare -a volumes
 environment=($(cat <<-END
@@ -73,6 +79,7 @@ END
 ))
 else
   environment+=($(cat <<-END
+    --env node.roles=data,data_cold,data_content,data_frozen,data_hot,data_warm,ingest,master,ml,remote_cluster_client,transform
     --env xpack.security.enabled=false
     --env xpack.security.http.ssl.enabled=false
 END
@@ -84,6 +91,13 @@ if [[ "$TEST_SUITE" == "platinum" ]]; then
   cert_validation_flags="--insecure --cacert /usr/share/elasticsearch/config/certs/ca.crt --resolve ${es_node_name}:443:127.0.0.1"
 fi
 
+echo "--- :elasticsearch: Environment setup"
+echo "TEST_SUITE: $TEST_SUITE"
+echo "Elasticsearch URL: $elasticsearch_url"
+echo "Elasticsearch External URL: $external_elasticsearch_url"
+
+
+echo "--- :elasticsearch: Running container"
 # Pull the container, retry on failures up to 5 times with
 # short delays between each attempt. Fixes most transient network errors.
 docker_pull_attempts=0
@@ -138,6 +152,4 @@ END
   if wait_for_container "$es_node_name" "$network_name"; then
     echo -e "\033[32;1mSUCCESS:\033[0m Running on: $node_url\033[0m"
   fi
-
 done
-

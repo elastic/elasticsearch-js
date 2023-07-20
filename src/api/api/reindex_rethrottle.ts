@@ -37,6 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Changes the number of requests per second for a particular Reindex operation.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-reindex.html Elasticsearch API docs}
+  */
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest | TB.ReindexRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ReindexRethrottleResponse>
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest | TB.ReindexRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ReindexRethrottleResponse, unknown>>
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest | TB.ReindexRethrottleRequest, options?: TransportRequestOptions): Promise<T.ReindexRethrottleResponse>

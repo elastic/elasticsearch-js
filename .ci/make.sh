@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-
 # ------------------------------------------------------- #
 #
-# Skeleton for common build entry script for all elastic
-# clients. Needs to be adapted to individual client usage.
+# Build entry script for elasticsearch-js
 #
 # Must be called: ./.ci/make.sh <target> <params>
 #
@@ -11,22 +9,21 @@
 #
 # Targets:
 # ---------------------------
-# assemble <VERSION> : build client artefacts with version
-# bump     <VERSION> : bump client internals to version
-# codegen  <VERSION> : generate endpoints
-# docsgen  <VERSION> : generate documentation
-# examplegen         : generate the doc examples
-# clean              : clean workspace
+# assemble   <VERSION> : build client artifacts with version
+# bump       <VERSION> : bump client internals to version
+# bumpmatrix <VERSION> : bump stack version in test matrix to version
+# codegen    <VERSION> : generate endpoints
+# docsgen    <VERSION> : generate documentation
+# examplegen           : generate the doc examples
+# clean                : clean workspace
 #
 # ------------------------------------------------------- #
 
 # ------------------------------------------------------- #
 # Bootstrap
 # ------------------------------------------------------- #
-
 script_path=$(dirname "$(realpath -s "$0")")
 repo=$(realpath "$script_path/../")
-generator=$(realpath "$script_path/../../elastic-client-generator-js")
 
 # shellcheck disable=SC1090
 CMD=$1
@@ -34,23 +31,19 @@ TASK=$1
 TASK_ARGS=()
 VERSION=$2
 STACK_VERSION=$VERSION
-NODE_JS_VERSION=16
-WORKFLOW=${WORKFLOW-staging}
 set -euo pipefail
 
 product="elastic/elasticsearch-js"
 output_folder=".ci/output"
+codegen_folder=".ci/output"
 OUTPUT_DIR="$repo/${output_folder}"
-REPO_BINDING="${OUTPUT_DIR}:/sln/${output_folder}"
+NODE_JS_VERSION=18
+WORKFLOW=${WORKFLOW-staging}
 mkdir -p "$OUTPUT_DIR"
 
 echo -e "\033[34;1mINFO:\033[0m PRODUCT ${product}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m VERSION ${STACK_VERSION}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m OUTPUT_DIR ${OUTPUT_DIR}\033[0m"
-
-# ------------------------------------------------------- #
-# Parse Command
-# ------------------------------------------------------- #
 
 case $CMD in
     clean)
@@ -64,18 +57,29 @@ case $CMD in
             echo -e "\033[31;1mTARGET: assemble -> missing version parameter\033[0m"
             exit 1
         fi
-        echo -e "\033[36;1mTARGET: assemble artefact $VERSION\033[0m"
+        echo -e "\033[36;1mTARGET: assemble artifact $VERSION\033[0m"
         TASK=release
         TASK_ARGS=("$VERSION" "$output_folder")
         ;;
     codegen)
-        if [ -v $VERSION ]; then
-            echo -e "\033[31;1mTARGET: codegen -> missing version parameter\033[0m"
-            exit 1
+        if [ -v "$VERSION" ] || [[ -z "$VERSION" ]]; then
+            # fall back to branch name or `main` if no VERSION is set
+            branch_name=$(git rev-parse --abbrev-ref HEAD)
+            if [[ "$branch_name" =~ ^\d+\.\d+ ]]; then
+              echo -e "\033[36;1mTARGET: codegen -> No VERSION found, using branch name: \`$VERSION\`\033[0m"
+              VERSION="$branch_name"
+            else
+              echo -e "\033[36;1mTARGET: codegen -> No VERSION found, using \`main\`\033[0m"
+              VERSION="main"
+            fi
         fi
-        echo -e "\033[36;1mTARGET: codegen API v$VERSION\033[0m"
+        if [ "$VERSION" = 'main' ]; then
+          echo -e "\033[36;1mTARGET: codegen API $VERSION\033[0m"
+        else
+          echo -e "\033[36;1mTARGET: codegen API v$VERSION\033[0m"
+        fi
+
         TASK=codegen
-        # VERSION is BRANCH here for now
         TASK_ARGS=("$VERSION")
         ;;
     docsgen)
@@ -85,13 +89,11 @@ case $CMD in
         fi
         echo -e "\033[36;1mTARGET: generate docs for $VERSION\033[0m"
         TASK=codegen
-        # VERSION is BRANCH here for now
         TASK_ARGS=("$VERSION" "$codegen_folder")
         ;;
     examplesgen)
         echo -e "\033[36;1mTARGET: generate examples\033[0m"
         TASK=codegen
-        # VERSION is BRANCH here for now
         TASK_ARGS=("$VERSION" "$codegen_folder")
         ;;
     bump)
@@ -101,11 +103,23 @@ case $CMD in
         fi
         echo -e "\033[36;1mTARGET: bump to version $VERSION\033[0m"
         TASK=bump
-        # VERSION is BRANCH here for now
         TASK_ARGS=("$VERSION")
         ;;
+    bumpmatrix)
+      if [ -v $VERSION ]; then
+        echo -e "\033[31;1mTARGET: bumpmatrix -> missing version parameter\033[0m"
+        exit 1
+      fi
+      echo -e "\033[36;1mTARGET: bump stack in test matrix to version $VERSION\033[0m"
+      TASK=bumpmatrix
+      TASK_ARGS=("$VERSION")
+      ;;
     *)
-        echo -e "\nUsage:\n\t $CMD is not supported right now\n"
+        echo -e "\n'$CMD' is not supported right now\n"
+        echo -e "\nUsage:"
+        echo -e "\t $0 release \$VERSION\n"
+        echo -e "\t $0 bump \$VERSION"
+        echo -e "\t $0 codegen \$VERSION"
         exit 1
 esac
 
@@ -118,10 +132,10 @@ echo -e "\033[34;1mINFO: building $product container\033[0m"
 
 docker build \
   --file .ci/Dockerfile \
-  --tag ${product} \
-  --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} \
-  --build-arg USER_ID="$(id -u)" \
-  --build-arg GROUP_ID="$(id -g)" \
+  --tag "$product" \
+  --build-arg NODE_JS_VERSION="$NODE_JS_VERSION" \
+  --build-arg "BUILDER_UID=$(id -u)" \
+  --build-arg "BUILDER_GID=$(id -g)" \
   .
 
 # ------------------------------------------------------- #
@@ -131,14 +145,18 @@ docker build \
 echo -e "\033[34;1mINFO: running $product container\033[0m"
 
 docker run \
-  --volume $repo:/usr/src/app \
-  --volume $generator:/usr/src/elastic-client-generator-js \
-  --volume /usr/src/app/node_modules \
-  --env "WORKFLOW=${WORKFLOW}" \
+  --volume "$repo:/usr/src/elasticsearch-js" \
+  --volume /usr/src/elasticsearch-js/node_modules \
+  -u "$(id -u):$(id -g)" \
+  --env "WORKFLOW=$WORKFLOW" \
   --name make-elasticsearch-js \
   --rm \
   $product \
-  node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}
+  /bin/bash -c "cd /usr/src && \
+    git clone https://$CLIENTS_GITHUB_TOKEN@github.com/elastic/elastic-client-generator-js.git && \
+    mkdir -p /usr/src/elastic-client-generator-js/output && \
+    cd /usr/src/elasticsearch-js && \
+    node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}"
 
 # ------------------------------------------------------- #
 # Post Command tasks & checks

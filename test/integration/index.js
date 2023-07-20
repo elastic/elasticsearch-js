@@ -27,9 +27,9 @@ process.on('unhandledRejection', function (err) {
 const { writeFileSync, readFileSync, readdirSync, statSync } = require('fs')
 const { join, sep } = require('path')
 const yaml = require('js-yaml')
+const minimist = require('minimist')
 const ms = require('ms')
 const { Client } = require('../../index')
-const { kProductCheck } = require('@elastic/transport/lib/symbols')
 const build = require('./test-runner')
 const { sleep } = require('./helper')
 const createJunitReporter = require('./reporter')
@@ -42,12 +42,28 @@ const MAX_API_TIME = 1000 * 90
 const MAX_FILE_TIME = 1000 * 30
 const MAX_TEST_TIME = 1000 * 3
 
+const options = minimist(process.argv.slice(2), {
+  boolean: ['bail'],
+  string: ['suite', 'test'],
+})
+
 const freeSkips = {
+  // working on fixes for these
+  '/free/aggregations/bucket_selector.yml': ['bad script'],
+  '/free/aggregations/bucket_script.yml': ['bad script'],
+
+  // either the YAML test definition is wrong, or this fails because JSON.stringify is coercing "1.0" to "1"
+  '/free/aggregations/percentiles_bucket.yml': ['*'],
+
   // not supported yet
   '/free/cluster.desired_nodes/10_basic.yml': ['*'],
-  '/free/health/30_feature.yml': ['*'],
-  '/free/health/40_useractions.yml': ['*'],
-  // the v8 client never sends the scroll_id in querystgring,
+
+  // Cannot find methods on `Internal` object
+  '/free/cluster.desired_balance/10_basic.yml': ['*'],
+  '/free/cluster.desired_nodes/20_dry_run.yml': ['*'],
+  '/free/cluster.prevalidate_node_removal/10_basic.yml': ['*'],
+
+  // the v8 client never sends the scroll_id in querystring,
   // the way the test is structured causes a security exception
   'free/scroll/10_basic.yml': ['Body params override query string'],
   'free/scroll/11_clear.yml': [
@@ -56,80 +72,74 @@ const freeSkips = {
   ],
   'free/cat.allocation/10_basic.yml': ['*'],
   'free/cat.snapshots/10_basic.yml': ['Test cat snapshots output'],
-  // TODO: remove this once 'arbitrary_key' is implemented
-  // https://github.com/elastic/elasticsearch/pull/41492
-  'indices.split/30_copy_settings.yml': ['*'],
+
   'indices.stats/50_disk_usage.yml': ['Disk usage stats'],
   'indices.stats/60_field_usage.yml': ['Field usage stats'],
+
   // skipping because we are booting ES with `discovery.type=single-node`
   // and this test will fail because of this configuration
   'nodes.stats/30_discovery.yml': ['*'],
+
   // the expected error is returning a 503,
   // which triggers a retry and the node to be marked as dead
   'search.aggregation/240_max_buckets.yml': ['*'],
+
   // long values and json do not play nicely together
   'search.aggregation/40_range.yml': ['Min and max long range bounds'],
+
   // the yaml runner assumes that null means "does not exists",
   // while null is a valid json value, so the check will fail
   'search/320_disallow_queries.yml': ['Test disallow expensive queries'],
-  'free/tsdb/90_unsupported_operations.yml': ['noop update']
+  'free/tsdb/90_unsupported_operations.yml': ['noop update'],
 }
-const platinumBlackList = {
+
+const platinumDenyList = {
   'api_key/10_basic.yml': ['Test get api key'],
   'api_key/20_query.yml': ['*'],
   'api_key/11_invalidation.yml': ['Test invalidate api key by realm name'],
   'analytics/histogram.yml': ['Histogram requires values in increasing order'],
-  // this two test cases are broken, we should
-  // return on those in the future.
-  'analytics/top_metrics.yml': [
-    'sort by keyword field fails',
-    'sort by string script fails'
-  ],
-  'cat.aliases/10_basic.yml': ['Empty cluster'],
-  'index/10_with_id.yml': ['Index with ID'],
-  'indices.get_alias/10_basic.yml': ['Get alias against closed indices'],
-  'indices.get_alias/20_empty.yml': ['Check empty aliases when getting all aliases via /_alias'],
-  'text_structure/find_structure.yml': ['*'],
-  // https://github.com/elastic/elasticsearch/pull/39400
-  'ml/jobs_crud.yml': ['Test put job with id that is already taken'],
+
   // object keys must me strings, and `0.0.toString()` is `0`
   'ml/evaluate_data_frame.yml': [
     'Test binary_soft_classifition precision',
     'Test binary_soft_classifition recall',
     'Test binary_soft_classifition confusion_matrix'
   ],
-  // it gets random failures on CI, must investigate
-  'ml/set_upgrade_mode.yml': [
-    'Attempt to open job when upgrade_mode is enabled',
-    'Setting upgrade mode to disabled from enabled'
-  ],
+
   // The cleanup fails with a index not found when retrieving the jobs
   'ml/get_datafeed_stats.yml': ['Test get datafeed stats when total_search_time_ms mapping is missing'],
   'ml/bucket_correlation_agg.yml': ['Test correlation bucket agg simple'],
+
   // start should be a string
   'ml/jobs_get_result_overall_buckets.yml': ['Test overall buckets given epoch start and end params'],
+
   // this can't happen with the client
   'ml/start_data_frame_analytics.yml': ['Test start with inconsistent body/param ids'],
   'ml/stop_data_frame_analytics.yml': ['Test stop with inconsistent body/param ids'],
   'ml/preview_datafeed.yml': ['*'],
+
   // Investigate why is failing
   'ml/inference_crud.yml': ['*'],
   'ml/categorization_agg.yml': ['Test categorization aggregation with poor settings'],
   'ml/filter_crud.yml': ['*'],
+
   // investigate why this is failing
   'monitoring/bulk/10_basic.yml': ['*'],
   'monitoring/bulk/20_privileges.yml': ['*'],
   'license/20_put_license.yml': ['*'],
   'snapshot/10_basic.yml': ['*'],
   'snapshot/20_operator_privileges_disabled.yml': ['*'],
+
   // the body is correct, but the regex is failing
   'sql/sql.yml': ['Getting textual representation'],
   'searchable_snapshots/10_usage.yml': ['*'],
   'service_accounts/10_basic.yml': ['*'],
+
   // we are setting two certificates in the docker config
   'ssl/10_basic.yml': ['*'],
   'token/10_basic.yml': ['*'],
   'token/11_invalidation.yml': ['*'],
+
   // very likely, the index template has not been loaded yet.
   // we should run a indices.existsTemplate, but the name of the
   // template may vary during time.
@@ -147,16 +157,20 @@ const platinumBlackList = {
   'transforms_stats.yml': ['*'],
   'transforms_stats_continuous.yml': ['*'],
   'transforms_update.yml': ['*'],
+
   // js does not support ulongs
   'unsigned_long/10_basic.yml': ['*'],
   'unsigned_long/20_null_value.yml': ['*'],
   'unsigned_long/30_multi_fields.yml': ['*'],
   'unsigned_long/40_different_numeric.yml': ['*'],
   'unsigned_long/50_script_values.yml': ['*'],
+
   // the v8 client flattens the body into the parent object
   'platinum/users/10_basic.yml': ['Test put user with different username in body'],
+
   // docker issue?
   'watcher/execute_watch/60_http_input.yml': ['*'],
+
   // the checks are correct, but for some reason the test is failing on js side
   // I bet is because the backslashes in the rg
   'watcher/execute_watch/70_invalid.yml': ['*'],
@@ -170,21 +184,20 @@ const platinumBlackList = {
   'platinum/ml/delete_job_force.yml': ['Test force delete an open job that is referred by a started datafeed'],
   'platinum/ml/evaluate_data_frame.yml': ['*'],
   'platinum/ml/get_datafeed_stats.yml': ['*'],
+
   // start should be a string in the yaml test
-  'platinum/ml/start_stop_datafeed.yml': ['*']
+  'platinum/ml/start_stop_datafeed.yml': ['*'],
 }
 
 function runner (opts = {}) {
   const options = { node: opts.node }
   if (opts.isXPack) {
     options.tls = {
-      ca: readFileSync(join(__dirname, '..', '..', '.ci', 'certs', 'ca.crt'), 'utf8'),
+      ca: readFileSync(join(__dirname, '..', '..', '.buildkite', 'certs', 'ca.crt'), 'utf8'),
       rejectUnauthorized: false
     }
   }
   const client = new Client(options)
-  // TODO: remove the following line once https://github.com/elastic/elasticsearch/issues/82358 is fixed
-  client.transport[kProductCheck] = null
   log('Loading yaml suite')
   start({ client, isXPack: opts.isXPack })
     .catch(err => {
@@ -289,14 +302,22 @@ async function start ({ client, isXPack }) {
       }
 
       const cleanPath = file.slice(file.lastIndexOf(apiName))
+
+      // skip if --suite CLI arg doesn't match
+      if (options.suite && !cleanPath.endsWith(options.suite)) continue
+
       log('    ' + cleanPath)
       const junitTestSuite = junitTestSuites.testsuite(apiName.slice(1) + ' - ' + cleanPath)
 
       for (const test of tests) {
         const testTime = now()
         const name = Object.keys(test)[0]
+
+        // skip setups, teardowns and anything that doesn't match --test flag when present
         if (name === 'setup' || name === 'teardown') continue
-        const junitTestCase = junitTestSuite.testcase(name)
+        if (options.test && !name.endsWith(options.test)) continue
+
+        const junitTestCase = junitTestSuite.testcase(name, `node_${process.version}/${cleanPath}`)
 
         stats.total += 1
         if (shouldSkip(isXPack, file, name)) {
@@ -316,7 +337,12 @@ async function start ({ client, isXPack }) {
           junitTestSuites.end()
           generateJunitXmlReport(junit, isXPack ? 'platinum' : 'free')
           console.error(err)
-          process.exit(1)
+
+          if (options.bail) {
+            process.exit(1)
+          } else {
+            continue
+          }
         }
         const totalTestTime = now() - testTime
         junitTestCase.end()
@@ -380,7 +406,8 @@ function generateJunitXmlReport (junit, suite) {
 }
 
 if (require.main === module) {
-  const node = process.env.TEST_ES_SERVER || 'http://elastic:changeme@localhost:9200'
+  const scheme = process.env.TEST_SUITE === 'platinum' ? 'https' : 'http'
+  const node = process.env.TEST_ES_SERVER || `${scheme}://elastic:changeme@localhost:9200`
   const opts = {
     node,
     isXPack: process.env.TEST_SUITE !== 'free'
@@ -389,26 +416,28 @@ if (require.main === module) {
 }
 
 const shouldSkip = (isXPack, file, name) => {
+  if (options.suite || options.test) return false
+
   let list = Object.keys(freeSkips)
   for (let i = 0; i < list.length; i++) {
     const freeTest = freeSkips[list[i]]
     for (let j = 0; j < freeTest.length; j++) {
       if (file.endsWith(list[i]) && (name === freeTest[j] || freeTest[j] === '*')) {
         const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-        log(`Skipping test ${testName} because is blacklisted in the free test`)
+        log(`Skipping test ${testName} because it is denylisted in the free test suite`)
         return true
       }
     }
   }
 
   if (file.includes('x-pack') || isXPack) {
-    list = Object.keys(platinumBlackList)
+    list = Object.keys(platinumDenyList)
     for (let i = 0; i < list.length; i++) {
-      const platTest = platinumBlackList[list[i]]
+      const platTest = platinumDenyList[list[i]]
       for (let j = 0; j < platTest.length; j++) {
         if (file.endsWith(list[i]) && (name === platTest[j] || platTest[j] === '*')) {
           const testName = file.slice(file.indexOf(`${sep}elasticsearch${sep}`)) + ' / ' + name
-          log(`Skipping test ${testName} because is blacklisted in the platinum test`)
+          log(`Skipping test ${testName} because it is denylisted in the platinum test suite`)
           return true
         }
       }

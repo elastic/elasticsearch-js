@@ -43,6 +43,10 @@ export default class Rollup {
     this.transport = transport
   }
 
+  /**
+    * Deletes an existing rollup job.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/rollup-delete-job.html Elasticsearch API docs}
+    */
   async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupDeleteJobResponse>
   async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupDeleteJobResponse, unknown>>
   async deleteJob (this: That, params: T.RollupDeleteJobRequest | TB.RollupDeleteJobRequest, options?: TransportRequestOptions): Promise<T.RollupDeleteJobResponse>
@@ -65,6 +69,10 @@ export default class Rollup {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves the configuration, stats, and status of rollup jobs.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/rollup-get-job.html Elasticsearch API docs}
+    */
   async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetJobsResponse>
   async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetJobsResponse, unknown>>
   async getJobs (this: That, params?: T.RollupGetJobsRequest | TB.RollupGetJobsRequest, options?: TransportRequestOptions): Promise<T.RollupGetJobsResponse>
@@ -90,11 +98,15 @@ export default class Rollup {
       path = `/_rollup/job/${encodeURIComponent(params.id.toString())}`
     } else {
       method = 'GET'
-      path = '/_rollup/job/'
+      path = '/_rollup/job'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/rollup-get-rollup-caps.html Elasticsearch API docs}
+    */
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetRollupCapsResponse>
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupCapsResponse, unknown>>
   async getRollupCaps (this: That, params?: T.RollupGetRollupCapsRequest | TB.RollupGetRollupCapsRequest, options?: TransportRequestOptions): Promise<T.RollupGetRollupCapsResponse>
@@ -120,11 +132,15 @@ export default class Rollup {
       path = `/_rollup/data/${encodeURIComponent(params.id.toString())}`
     } else {
       method = 'GET'
-      path = '/_rollup/data/'
+      path = '/_rollup/data'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns the rollup capabilities of all jobs inside of a rollup index (e.g. the index where rollup data is stored).
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/rollup-get-rollup-index-caps.html Elasticsearch API docs}
+    */
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetRollupIndexCapsResponse>
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupGetRollupIndexCapsResponse, unknown>>
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptions): Promise<T.RollupGetRollupIndexCapsResponse>
@@ -147,6 +163,10 @@ export default class Rollup {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates a rollup job.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/rollup-put-job.html Elasticsearch API docs}
+    */
   async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupPutJobResponse>
   async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupPutJobResponse, unknown>>
   async putJob (this: That, params: T.RollupPutJobRequest | TB.RollupPutJobRequest, options?: TransportRequestOptions): Promise<T.RollupPutJobResponse>
@@ -181,33 +201,10 @@ export default class Rollup {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
-  async rollup (this: That, params: T.RollupRollupRequest | TB.RollupRollupRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupRollupResponse>
-  async rollup (this: That, params: T.RollupRollupRequest | TB.RollupRollupRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupRollupResponse, unknown>>
-  async rollup (this: That, params: T.RollupRollupRequest | TB.RollupRollupRequest, options?: TransportRequestOptions): Promise<T.RollupRollupResponse>
-  async rollup (this: That, params: T.RollupRollupRequest | TB.RollupRollupRequest, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['index', 'rollup_index']
-    const acceptedBody: string[] = ['config']
-    const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    let body: any = params.body ?? undefined
-
-    for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        // @ts-expect-error
-        body = params[key]
-      } else if (acceptedPath.includes(key)) {
-        continue
-      } else if (key !== 'body') {
-        // @ts-expect-error
-        querystring[key] = params[key]
-      }
-    }
-
-    const method = 'POST'
-    const path = `/${encodeURIComponent(params.index.toString())}/_rollup/${encodeURIComponent(params.rollup_index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
-  }
-
+  /**
+    * Enables searching rolled-up data using the standard query DSL.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/rollup-search.html Elasticsearch API docs}
+    */
   async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
   async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupRollupSearchResponse<TDocument, TAggregations>, unknown>>
   async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptions): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
@@ -242,6 +239,10 @@ export default class Rollup {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Starts an existing, stopped rollup job.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/rollup-start-job.html Elasticsearch API docs}
+    */
   async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupStartJobResponse>
   async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStartJobResponse, unknown>>
   async startJob (this: That, params: T.RollupStartJobRequest | TB.RollupStartJobRequest, options?: TransportRequestOptions): Promise<T.RollupStartJobResponse>
@@ -264,6 +265,10 @@ export default class Rollup {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Stops an existing, started rollup job.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/rollup-stop-job.html Elasticsearch API docs}
+    */
   async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupStopJobResponse>
   async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RollupStopJobResponse, unknown>>
   async stopJob (this: That, params: T.RollupStopJobRequest | TB.RollupStopJobRequest, options?: TransportRequestOptions): Promise<T.RollupStopJobResponse>

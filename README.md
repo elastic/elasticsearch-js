@@ -2,23 +2,29 @@
 
 # Elasticsearch Node.js client
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)  [![Build Status](https://clients-ci.elastic.co/buildStatus/icon?job=elastic%2Belasticsearch-js%2Bmain)](https://clients-ci.elastic.co/view/JavaScript/job/elastic+elasticsearch-js+main/)  [![Node CI](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml/badge.svg)](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml)  [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js)  [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)  [![Build Status](https://badge.buildkite.com/15e4246eb268ea78f6e10aa90bce38c1abb0a4489e79f5a0ac.svg)](https://buildkite.com/elastic/elasticsearch-javascript-client-integration-tests/builds?branch=main)  [![Node CI](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml/badge.svg)](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml)  [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js)  [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
 
 The official Node.js client for Elasticsearch.
 
-## Features
-- One-to-one mapping with REST API.
-- Generalized, pluggable architecture.
-- Configurable, automatic discovery of cluster nodes.
-- Persistent, Keep-Alive connections.
-- Load balancing across all available nodes.
-- Child client support.
-- TypeScript support out of the box.
+## Installation
 
-## Install
-```
-npm install @elastic/elasticsearch
-```
+Refer to the [Installation section](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_installation)
+of the getting started documentation.
+
+## Connecting
+
+Refer to the [Connecting section](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_connecting)
+of the getting started documentation.
+
+## Usage
+
+* [Creating an index](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_creating_an_index)
+* [Indexing a document](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_indexing_documents)
+* [Getting documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_getting_documents)
+* [Searching documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_searching_documents)
+* [Updating documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_updating_documents)
+* [Deleting documents](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_deleting_documents)
+* [Deleting an index](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/getting-started-js.html#_deleting_an_index)
 
 ### Node.js support
 
@@ -72,93 +78,45 @@ We recommend that you write a lightweight proxy that uses this client instead, y
 
 ## Documentation
 
-- [Introduction](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/introduction.html)
-- [Usage](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-connecting.html#client-usage)
-- [Client configuration](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-configuration.html)
-- [API reference](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference.html)
-- [Authentication](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-connecting.html#authentication)
-- [Observability](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/observability.html)
-- [Creating a child client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/child.html)
-- [Client helpers](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-helpers.html)
-- [Typescript support](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html)
-- [Testing](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-testing.html)
-- [Examples](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/examples.html)
-
-## Quick start
-
-```js
-'use strict'
-
-const { Client } = require('@elastic/elasticsearch')
-const client = new Client({
-  cloud: { id: '<cloud-id>' },
-  auth: { apiKey: 'base64EncodedKey' }
-})
-
-async function run () {
-  // Let's start by indexing some data
-  await client.index({
-    index: 'game-of-thrones',
-    document: {
-      character: 'Ned Stark',
-      quote: 'Winter is coming.'
-    }
-  })
-
-  await client.index({
-    index: 'game-of-thrones',
-    document: {
-      character: 'Daenerys Targaryen',
-      quote: 'I am the blood of the dragon.'
-    }
-  })
-
-  await client.index({
-    index: 'game-of-thrones',
-    document: {
-      character: 'Tyrion Lannister',
-      quote: 'A mind needs books like a sword needs a whetstone.'
-    }
-  })
-
-  // here we are forcing an index refresh, otherwise we will not
-  // get any result in the consequent search
-  await client.indices.refresh({ index: 'game-of-thrones' })
-
-  // Let's search!
-  const result= await client.search({
-    index: 'game-of-thrones',
-    query: {
-      match: { quote: 'winter' }
-    }
-  })
-
-  console.log(result.hits.hits)
-}
-
-run().catch(console.log)
-```
+* [Introduction](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/introduction.html)
+* [Usage](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-connecting.html#client-usage)
+* [Client configuration](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-configuration.html)
+* [API reference](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference.html)
+* [Authentication](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-connecting.html#authentication)
+* [Observability](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/observability.html)
+* [Creating a child client](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/child.html)
+* [Client helpers](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-helpers.html)
+* [Typescript support](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html)
+* [Testing](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-testing.html)
+* [Examples](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/examples.html)
 
 ## Install multiple versions
 If you are using multiple versions of Elasticsearch, you need to use multiple versions of the client. In the past, install multiple versions of the same package was not possible, but with `npm v6.9`, you can do that via aliasing.
 
 The command you must run to install different version of the client is:
+
 ```sh
 npm install <alias>@npm:@elastic/elasticsearch@<version>
 ```
-So for example if you need to install `7.x` and `6.x`, you will run
+
+So for example if you need to install `7.x` and `6.x`, you will run:
+
 ```sh
 npm install es6@npm:@elastic/elasticsearch@6
 npm install es7@npm:@elastic/elasticsearch@7
 ```
+
 And your `package.json` will look like the following:
+
 ```json
 "dependencies": {
   "es6": "npm:@elastic/elasticsearch@^6.7.0",
   "es7": "npm:@elastic/elasticsearch@^7.0.0"
 }
 ```
+
 You will require the packages from your code by using the alias you have defined.
+
 ```js
 const { Client: Client6 } = require('es6')
 const { Client: Client7 } = require('es7')
@@ -176,7 +134,10 @@ client6.info().then(console.log, console.log)
 client7.info().then(console.log, console.log)
 ```
 
-Finally, if you want to install the client for the next version of Elasticsearch *(the one that lives in Elasticsearch’s main branch)*, you can use the following command:
+Finally, if you want to install the client for the next version of Elasticsearch
+*(the one that lives in Elasticsearch’s main branch)*, you can use the following
+command:
+
 ```sh
 npm install esmain@github:elastic/elasticsearch-js
 ```

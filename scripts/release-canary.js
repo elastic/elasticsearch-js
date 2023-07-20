@@ -22,11 +22,25 @@ const { join } = require('path')
 const minimist = require('minimist')
 const chalk = require('chalk')
 
-async function release (opts) {
-  assert(process.cwd() !== __dirname, 'You should run the script from the top level directory of the repository')
-  assert(typeof opts.otp === 'string', 'Missing OTP')
-  const packageJson = JSON.parse(await readFile(join(__dirname, '..', 'package.json'), 'utf8'))
+const helpMessage = `usage: node scripts/release-canary.js [options]
 
+    --otp <code> One-time password (required)
+    --reset      Reset the canary version to 1
+    --dry-run    Run everything but don't actually publish
+    -h, --help   Show this help message`
+
+async function release (opts) {
+  if (opts.help) {
+    console.log(helpMessage)
+    process.exit(0)
+  }
+
+  assert(process.cwd() !== __dirname, 'You should run the script from the top level directory of the repository')
+  if (!opts['dry-run']) {
+    assert(typeof opts.otp === 'string', 'Missing OTP')
+  }
+
+  const packageJson = JSON.parse(await readFile(join(__dirname, '..', 'package.json'), 'utf8'))
   const originalName = packageJson.name
   const originalVersion = packageJson.version
   const currentCanaryVersion = packageJson.versionCanary
@@ -52,6 +66,7 @@ async function release (opts) {
   const diff = execSync('git diff').toString().split('\n').map(colorDiff).join('\n')
   console.log(diff)
   const answer = await confirm()
+
   // release on npm with provided otp
   if (answer) {
     execSync(`npm publish --otp ${opts.otp} ${opts['dry-run'] ? '--dry-run' : ''}`, { stdio: 'inherit' })
@@ -73,8 +88,8 @@ async function release (opts) {
   )
 }
 
-function confirm (question) {
-  return new Promise((resolve, reject) => {
+function confirm () {
+  return new Promise((resolve) => {
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout
@@ -110,12 +125,18 @@ release(
     boolean: [
       // Reset the canary version to '1'
       'reset',
-      // run all the steps but publish
-      'dry-run'
-    ]
+
+      // run all the steps but don't publish
+      'dry-run',
+
+      // help text
+      'help',
+    ],
+    alias: { help: 'h' },
   })
 )
   .catch(err => {
     console.log(err)
+    console.log('\n' + helpMessage)
     process.exit(1)
   })

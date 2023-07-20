@@ -1175,6 +1175,7 @@ test('bulk delete', t => {
     const [{ port }, server] = await buildServer(handler)
     const client = new Client({ node: `http://localhost:${port}` })
     let id = 0
+
     const result = await client.helpers.bulk({
       datasource: dataset.slice(),
       flushBytes: 1,
@@ -1195,6 +1196,70 @@ test('bulk delete', t => {
           operation: { delete: { _index: 'test', _id: 1 } },
           document: null,
           retried: false
+        })
+      }
+    })
+
+    t.type(result.time, 'number')
+    t.type(result.bytes, 'number')
+    t.match(result, {
+      total: 3,
+      successful: 2,
+      retry: 0,
+      failed: 1,
+      aborted: false
+    })
+    server.stop()
+  })
+
+  t.test('Should call onDrop on the correct document when doing a mix of operations that includes deletes', async t => {
+    // checks to ensure onDrop doesn't provide the wrong document when some operations are deletes
+    // see https://github.com/elastic/elasticsearch-js/issues/1751
+    async function handler (req: http.IncomingMessage, res: http.ServerResponse) {
+      res.setHeader('content-type', 'application/json')
+      res.end(JSON.stringify({
+        took: 0,
+        errors: true,
+        items: [
+          { delete: { status: 200 } },
+          { index: { status: 429 } },
+          { index: { status: 200 } }
+        ]
+      }))
+    }
+
+    const [{ port }, server] = await buildServer(handler)
+    const client = new Client({ node: `http://localhost:${port}` })
+    let counter = 0
+    const result = await client.helpers.bulk({
+      datasource: dataset.slice(),
+      concurrency: 1,
+      wait: 10,
+      retries: 0,
+      onDocument (doc) {
+        counter++
+        if (counter === 1) {
+          return {
+            delete: {
+              _index: 'test',
+              _id: String(counter)
+            }
+          }
+        } else {
+          return {
+            index: {
+              _index: 'test',
+            }
+          }
+        }
+      },
+      onDrop (doc) {
+        t.same(doc, {
+          status: 429,
+          error: null,
+          operation: { index: { _index: 'test' } },
+          document: { user: "arya", age: 18 },
+          retried: false,
         })
       }
     })

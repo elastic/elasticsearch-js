@@ -37,12 +37,16 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Searches a vector tile for geospatial values. Returns results as a binary Mapbox vector tile.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/search-vector-tile-api.html Elasticsearch API docs}
+  */
 export default async function SearchMvtApi (this: That, params: T.SearchMvtRequest | TB.SearchMvtRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchMvtResponse>
 export default async function SearchMvtApi (this: That, params: T.SearchMvtRequest | TB.SearchMvtRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchMvtResponse, unknown>>
 export default async function SearchMvtApi (this: That, params: T.SearchMvtRequest | TB.SearchMvtRequest, options?: TransportRequestOptions): Promise<T.SearchMvtResponse>
 export default async function SearchMvtApi (this: That, params: T.SearchMvtRequest | TB.SearchMvtRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index', 'field', 'zoom', 'x', 'y']
-  const acceptedBody: string[] = ['aggs', 'exact_bounds', 'extent', 'fields', 'grid_precision', 'grid_type', 'query', 'runtime_mappings', 'size', 'sort', 'track_total_hits']
+  const acceptedBody: string[] = ['aggs', 'buffer', 'exact_bounds', 'extent', 'fields', 'grid_agg', 'grid_precision', 'grid_type', 'query', 'runtime_mappings', 'size', 'sort', 'track_total_hits', 'with_labels']
   const querystring: Record<string, any> = {}
   // @ts-expect-error
   const userBody: any = params?.body

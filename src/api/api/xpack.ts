@@ -43,6 +43,10 @@ export default class Xpack {
     this.transport = transport
   }
 
+  /**
+    * Retrieves information about the installed X-Pack features.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/info-api.html Elasticsearch API docs}
+    */
   async info (this: That, params?: T.XpackInfoRequest | TB.XpackInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackInfoResponse>
   async info (this: That, params?: T.XpackInfoRequest | TB.XpackInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackInfoResponse, unknown>>
   async info (this: That, params?: T.XpackInfoRequest | TB.XpackInfoRequest, options?: TransportRequestOptions): Promise<T.XpackInfoResponse>
@@ -66,6 +70,10 @@ export default class Xpack {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves usage information about the installed X-Pack features.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/usage-api.html Elasticsearch API docs}
+    */
   async usage (this: That, params?: T.XpackUsageRequest | TB.XpackUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackUsageResponse>
   async usage (this: That, params?: T.XpackUsageRequest | TB.XpackUsageRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackUsageResponse, unknown>>
   async usage (this: That, params?: T.XpackUsageRequest | TB.XpackUsageRequest, options?: TransportRequestOptions): Promise<T.XpackUsageResponse>

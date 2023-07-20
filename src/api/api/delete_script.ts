@@ -37,6 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Deletes a script.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/modules-scripting.html Elasticsearch API docs}
+  */
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteScriptResponse>
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteScriptResponse, unknown>>
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptions): Promise<T.DeleteScriptResponse>

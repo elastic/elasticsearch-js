@@ -37,6 +37,10 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
+/**
+  * Allows to perform multiple index/update/delete operations in a single request.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/docs-bulk.html Elasticsearch API docs}
+  */
 export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument> | TB.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.BulkResponse>
 export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument> | TB.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.BulkResponse, unknown>>
 export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument> | TB.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.BulkResponse>

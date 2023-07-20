@@ -66,6 +66,7 @@ scripts
 # ci configuration
 .ci
 .travis.yml
+.buildkite
 certs
 .github
 CODE_OF_CONDUCT.md

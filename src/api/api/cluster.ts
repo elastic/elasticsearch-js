@@ -43,6 +43,10 @@ export default class Cluster {
     this.transport = transport
   }
 
+  /**
+    * Provides explanations for shard allocations in the cluster.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/cluster-allocation-explain.html Elasticsearch API docs}
+    */
   async allocationExplain (this: That, params?: T.ClusterAllocationExplainRequest | TB.ClusterAllocationExplainRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterAllocationExplainResponse>
   async allocationExplain (this: That, params?: T.ClusterAllocationExplainRequest | TB.ClusterAllocationExplainRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterAllocationExplainResponse, unknown>>
   async allocationExplain (this: That, params?: T.ClusterAllocationExplainRequest | TB.ClusterAllocationExplainRequest, options?: TransportRequestOptions): Promise<T.ClusterAllocationExplainResponse>
@@ -78,6 +82,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Deletes a component template
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/indices-component-template.html Elasticsearch API docs}
+    */
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest | TB.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterDeleteComponentTemplateResponse>
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest | TB.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterDeleteComponentTemplateResponse, unknown>>
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest | TB.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptions): Promise<T.ClusterDeleteComponentTemplateResponse>
@@ -100,6 +108,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Clears cluster voting config exclusions.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/voting-config-exclusions.html Elasticsearch API docs}
+    */
   async deleteVotingConfigExclusions (this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest | TB.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterDeleteVotingConfigExclusionsResponse>
   async deleteVotingConfigExclusions (this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest | TB.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterDeleteVotingConfigExclusionsResponse, unknown>>
   async deleteVotingConfigExclusions (this: That, params?: T.ClusterDeleteVotingConfigExclusionsRequest | TB.ClusterDeleteVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<T.ClusterDeleteVotingConfigExclusionsResponse>
@@ -123,6 +135,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns information about whether a particular component template exist
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/indices-component-template.html Elasticsearch API docs}
+    */
   async existsComponentTemplate (this: That, params: T.ClusterExistsComponentTemplateRequest | TB.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterExistsComponentTemplateResponse>
   async existsComponentTemplate (this: That, params: T.ClusterExistsComponentTemplateRequest | TB.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterExistsComponentTemplateResponse, unknown>>
   async existsComponentTemplate (this: That, params: T.ClusterExistsComponentTemplateRequest | TB.ClusterExistsComponentTemplateRequest, options?: TransportRequestOptions): Promise<T.ClusterExistsComponentTemplateResponse>
@@ -145,6 +161,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns one or more component templates
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/indices-component-template.html Elasticsearch API docs}
+    */
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest | TB.ClusterGetComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterGetComponentTemplateResponse>
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest | TB.ClusterGetComponentTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterGetComponentTemplateResponse, unknown>>
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest | TB.ClusterGetComponentTemplateRequest, options?: TransportRequestOptions): Promise<T.ClusterGetComponentTemplateResponse>
@@ -175,6 +195,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns cluster settings.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/cluster-get-settings.html Elasticsearch API docs}
+    */
   async getSettings (this: That, params?: T.ClusterGetSettingsRequest | TB.ClusterGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterGetSettingsResponse>
   async getSettings (this: That, params?: T.ClusterGetSettingsRequest | TB.ClusterGetSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterGetSettingsResponse, unknown>>
   async getSettings (this: That, params?: T.ClusterGetSettingsRequest | TB.ClusterGetSettingsRequest, options?: TransportRequestOptions): Promise<T.ClusterGetSettingsResponse>
@@ -198,6 +222,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns basic information about the health of the cluster.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/cluster-health.html Elasticsearch API docs}
+    */
   async health (this: That, params?: T.ClusterHealthRequest | TB.ClusterHealthRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterHealthResponse>
   async health (this: That, params?: T.ClusterHealthRequest | TB.ClusterHealthRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterHealthResponse, unknown>>
   async health (this: That, params?: T.ClusterHealthRequest | TB.ClusterHealthRequest, options?: TransportRequestOptions): Promise<T.ClusterHealthResponse>
@@ -228,6 +256,37 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns different information about the cluster.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/cluster-info.html Elasticsearch API docs}
+    */
+  async info (this: That, params: T.ClusterInfoRequest | TB.ClusterInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterInfoResponse>
+  async info (this: That, params: T.ClusterInfoRequest | TB.ClusterInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterInfoResponse, unknown>>
+  async info (this: That, params: T.ClusterInfoRequest | TB.ClusterInfoRequest, options?: TransportRequestOptions): Promise<T.ClusterInfoResponse>
+  async info (this: That, params: T.ClusterInfoRequest | TB.ClusterInfoRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['target']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_info/${encodeURIComponent(params.target.toString())}`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  /**
+    * Returns a list of any cluster-level changes (e.g. create index, update mapping,
+  allocate or fail shard) which have not yet been executed.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/cluster-pending.html Elasticsearch API docs}
+    */
   async pendingTasks (this: That, params?: T.ClusterPendingTasksRequest | TB.ClusterPendingTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterPendingTasksResponse>
   async pendingTasks (this: That, params?: T.ClusterPendingTasksRequest | TB.ClusterPendingTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterPendingTasksResponse, unknown>>
   async pendingTasks (this: That, params?: T.ClusterPendingTasksRequest | TB.ClusterPendingTasksRequest, options?: TransportRequestOptions): Promise<T.ClusterPendingTasksResponse>
@@ -251,6 +310,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Updates the cluster voting config exclusions by node ids or node names.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/voting-config-exclusions.html Elasticsearch API docs}
+    */
   async postVotingConfigExclusions (this: That, params?: T.ClusterPostVotingConfigExclusionsRequest | TB.ClusterPostVotingConfigExclusionsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterPostVotingConfigExclusionsResponse>
   async postVotingConfigExclusions (this: That, params?: T.ClusterPostVotingConfigExclusionsRequest | TB.ClusterPostVotingConfigExclusionsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterPostVotingConfigExclusionsResponse, unknown>>
   async postVotingConfigExclusions (this: That, params?: T.ClusterPostVotingConfigExclusionsRequest | TB.ClusterPostVotingConfigExclusionsRequest, options?: TransportRequestOptions): Promise<T.ClusterPostVotingConfigExclusionsResponse>
@@ -274,12 +337,16 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Creates or updates a component template
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/indices-component-template.html Elasticsearch API docs}
+    */
   async putComponentTemplate (this: That, params: T.ClusterPutComponentTemplateRequest | TB.ClusterPutComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterPutComponentTemplateResponse>
   async putComponentTemplate (this: That, params: T.ClusterPutComponentTemplateRequest | TB.ClusterPutComponentTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterPutComponentTemplateResponse, unknown>>
   async putComponentTemplate (this: That, params: T.ClusterPutComponentTemplateRequest | TB.ClusterPutComponentTemplateRequest, options?: TransportRequestOptions): Promise<T.ClusterPutComponentTemplateResponse>
   async putComponentTemplate (this: That, params: T.ClusterPutComponentTemplateRequest | TB.ClusterPutComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['template', 'aliases', 'mappings', 'settings', 'version', '_meta']
+    const acceptedBody: string[] = ['allow_auto_create', 'template', 'version', '_meta']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -308,6 +375,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Updates the cluster settings.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/cluster-update-settings.html Elasticsearch API docs}
+    */
   async putSettings (this: That, params?: T.ClusterPutSettingsRequest | TB.ClusterPutSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterPutSettingsResponse>
   async putSettings (this: That, params?: T.ClusterPutSettingsRequest | TB.ClusterPutSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterPutSettingsResponse, unknown>>
   async putSettings (this: That, params?: T.ClusterPutSettingsRequest | TB.ClusterPutSettingsRequest, options?: TransportRequestOptions): Promise<T.ClusterPutSettingsResponse>
@@ -343,6 +414,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns the information about configured remote clusters.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/cluster-remote-info.html Elasticsearch API docs}
+    */
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest | TB.ClusterRemoteInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterRemoteInfoResponse>
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest | TB.ClusterRemoteInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterRemoteInfoResponse, unknown>>
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest | TB.ClusterRemoteInfoRequest, options?: TransportRequestOptions): Promise<T.ClusterRemoteInfoResponse>
@@ -366,6 +441,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Allows to manually change the allocation of individual shards in the cluster.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/cluster-reroute.html Elasticsearch API docs}
+    */
   async reroute (this: That, params?: T.ClusterRerouteRequest | TB.ClusterRerouteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterRerouteResponse>
   async reroute (this: That, params?: T.ClusterRerouteRequest | TB.ClusterRerouteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterRerouteResponse, unknown>>
   async reroute (this: That, params?: T.ClusterRerouteRequest | TB.ClusterRerouteRequest, options?: TransportRequestOptions): Promise<T.ClusterRerouteResponse>
@@ -401,6 +480,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns a comprehensive information about the state of the cluster.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/cluster-state.html Elasticsearch API docs}
+    */
   async state (this: That, params?: T.ClusterStateRequest | TB.ClusterStateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterStateResponse>
   async state (this: That, params?: T.ClusterStateRequest | TB.ClusterStateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterStateResponse, unknown>>
   async state (this: That, params?: T.ClusterStateRequest | TB.ClusterStateRequest, options?: TransportRequestOptions): Promise<T.ClusterStateResponse>
@@ -434,6 +517,10 @@ export default class Cluster {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Returns high-level overview of cluster statistics.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/cluster-stats.html Elasticsearch API docs}
+    */
   async stats (this: That, params?: T.ClusterStatsRequest | TB.ClusterStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterStatsResponse>
   async stats (this: That, params?: T.ClusterStatsRequest | TB.ClusterStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClusterStatsResponse, unknown>>
   async stats (this: That, params?: T.ClusterStatsRequest | TB.ClusterStatsRequest, options?: TransportRequestOptions): Promise<T.ClusterStatsResponse>

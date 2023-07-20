@@ -43,6 +43,10 @@ export default class Logstash {
     this.transport = transport
   }
 
+  /**
+    * Deletes Logstash Pipelines used by Central Management
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/logstash-api-delete-pipeline.html Elasticsearch API docs}
+    */
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashDeletePipelineResponse>
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashDeletePipelineResponse, unknown>>
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashDeletePipelineResponse>
@@ -65,6 +69,10 @@ export default class Logstash {
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Retrieves Logstash Pipelines used by Central Management
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/logstash-api-get-pipeline.html Elasticsearch API docs}
+    */
   async getPipeline (this: That, params: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashGetPipelineResponse>
   async getPipeline (this: That, params: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashGetPipelineResponse, unknown>>
   async getPipeline (this: That, params: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashGetPipelineResponse>
@@ -82,11 +90,22 @@ export default class Logstash {
       }
     }
 
-    const method = 'GET'
-    const path = `/_logstash/pipeline/${encodeURIComponent(params.id.toString())}`
+    let method = ''
+    let path = ''
+    if (params.id != null) {
+      method = 'GET'
+      path = `/_logstash/pipeline/${encodeURIComponent(params.id.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_logstash/pipeline'
+    }
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
+  /**
+    * Adds and updates Logstash Pipelines used for Central Management
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/logstash-api-put-pipeline.html Elasticsearch API docs}
+    */
   async putPipeline (this: That, params: T.LogstashPutPipelineRequest | TB.LogstashPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashPutPipelineResponse>
   async putPipeline (this: That, params: T.LogstashPutPipelineRequest | TB.LogstashPutPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashPutPipelineResponse, unknown>>
   async putPipeline (this: That, params: T.LogstashPutPipelineRequest | TB.LogstashPutPipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashPutPipelineResponse>

@@ -26,7 +26,6 @@
 // DO NOT MODIFY IT BY HAND. Instead, modify the source open api file,
 // and elastic/elastic-client-generator-js to regenerate this file again.
 
-import InternalApi from './api/_internal'
 import AsyncSearchApi from './api/async_search'
 import AutoscalingApi from './api/autoscaling'
 import bulkApi from './api/bulk'
@@ -56,6 +55,7 @@ import getScriptContextApi from './api/get_script_context'
 import getScriptLanguagesApi from './api/get_script_languages'
 import getSourceApi from './api/get_source'
 import GraphApi from './api/graph'
+import healthReportApi from './api/health_report'
 import IlmApi from './api/ilm'
 import indexApi from './api/index'
 import IndicesApi from './api/indices'
@@ -83,6 +83,7 @@ import RollupApi from './api/rollup'
 import scriptsPainlessExecuteApi from './api/scripts_painless_execute'
 import scrollApi from './api/scroll'
 import searchApi from './api/search'
+import SearchApplicationApi from './api/search_application'
 import searchMvtApi from './api/search_mvt'
 import searchShardsApi from './api/search_shards'
 import searchTemplateApi from './api/search_template'
@@ -93,6 +94,7 @@ import SlmApi from './api/slm'
 import SnapshotApi from './api/snapshot'
 import SqlApi from './api/sql'
 import SslApi from './api/ssl'
+import SynonymsApi from './api/synonyms'
 import TasksApi from './api/tasks'
 import termsEnumApi from './api/terms_enum'
 import termvectorsApi from './api/termvectors'
@@ -106,7 +108,6 @@ import XpackApi from './api/xpack'
 
 export default interface API {
   new(): API
-  Internal: InternalApi
   asyncSearch: AsyncSearchApi
   autoscaling: AutoscalingApi
   bulk: typeof bulkApi
@@ -136,6 +137,7 @@ export default interface API {
   getScriptLanguages: typeof getScriptLanguagesApi
   getSource: typeof getSourceApi
   graph: GraphApi
+  healthReport: typeof healthReportApi
   ilm: IlmApi
   index: typeof indexApi
   indices: IndicesApi
@@ -163,6 +165,7 @@ export default interface API {
   scriptsPainlessExecute: typeof scriptsPainlessExecuteApi
   scroll: typeof scrollApi
   search: typeof searchApi
+  searchApplication: SearchApplicationApi
   searchMvt: typeof searchMvtApi
   searchShards: typeof searchShardsApi
   searchTemplate: typeof searchTemplateApi
@@ -173,6 +176,7 @@ export default interface API {
   snapshot: SnapshotApi
   sql: SqlApi
   ssl: SslApi
+  synonyms: SynonymsApi
   tasks: TasksApi
   termsEnum: typeof termsEnumApi
   termvectors: typeof termvectorsApi
@@ -185,7 +189,6 @@ export default interface API {
   xpack: XpackApi
 }
 
-const kInternal = Symbol('Internal')
 const kAsyncSearch = Symbol('AsyncSearch')
 const kAutoscaling = Symbol('Autoscaling')
 const kCat = Symbol('Cat')
@@ -207,6 +210,7 @@ const kMl = Symbol('Ml')
 const kMonitoring = Symbol('Monitoring')
 const kNodes = Symbol('Nodes')
 const kRollup = Symbol('Rollup')
+const kSearchApplication = Symbol('SearchApplication')
 const kSearchableSnapshots = Symbol('SearchableSnapshots')
 const kSecurity = Symbol('Security')
 const kShutdown = Symbol('Shutdown')
@@ -214,6 +218,7 @@ const kSlm = Symbol('Slm')
 const kSnapshot = Symbol('Snapshot')
 const kSql = Symbol('Sql')
 const kSsl = Symbol('Ssl')
+const kSynonyms = Symbol('Synonyms')
 const kTasks = Symbol('Tasks')
 const kTextStructure = Symbol('TextStructure')
 const kTransform = Symbol('Transform')
@@ -221,7 +226,6 @@ const kWatcher = Symbol('Watcher')
 const kXpack = Symbol('Xpack')
 
 export default class API {
-  [kInternal]: symbol | null
   [kAsyncSearch]: symbol | null
   [kAutoscaling]: symbol | null
   [kCat]: symbol | null
@@ -243,6 +247,7 @@ export default class API {
   [kMonitoring]: symbol | null
   [kNodes]: symbol | null
   [kRollup]: symbol | null
+  [kSearchApplication]: symbol | null
   [kSearchableSnapshots]: symbol | null
   [kSecurity]: symbol | null
   [kShutdown]: symbol | null
@@ -250,13 +255,13 @@ export default class API {
   [kSnapshot]: symbol | null
   [kSql]: symbol | null
   [kSsl]: symbol | null
+  [kSynonyms]: symbol | null
   [kTasks]: symbol | null
   [kTextStructure]: symbol | null
   [kTransform]: symbol | null
   [kWatcher]: symbol | null
   [kXpack]: symbol | null
   constructor () {
-    this[kInternal] = null
     this[kAsyncSearch] = null
     this[kAutoscaling] = null
     this[kCat] = null
@@ -278,6 +283,7 @@ export default class API {
     this[kMonitoring] = null
     this[kNodes] = null
     this[kRollup] = null
+    this[kSearchApplication] = null
     this[kSearchableSnapshots] = null
     this[kSecurity] = null
     this[kShutdown] = null
@@ -285,6 +291,7 @@ export default class API {
     this[kSnapshot] = null
     this[kSql] = null
     this[kSsl] = null
+    this[kSynonyms] = null
     this[kTasks] = null
     this[kTextStructure] = null
     this[kTransform] = null
@@ -311,6 +318,7 @@ API.prototype.getScript = getScriptApi
 API.prototype.getScriptContext = getScriptContextApi
 API.prototype.getScriptLanguages = getScriptLanguagesApi
 API.prototype.getSource = getSourceApi
+API.prototype.healthReport = healthReportApi
 API.prototype.index = indexApi
 API.prototype.info = infoApi
 API.prototype.knnSearch = knnSearchApi
@@ -338,9 +346,6 @@ API.prototype.updateByQuery = updateByQueryApi
 API.prototype.updateByQueryRethrottle = updateByQueryRethrottleApi
 
 Object.defineProperties(API.prototype, {
-  Internal: {
-    get () { return this[kInternal] === null ? (this[kInternal] = new InternalApi(this.transport)) : this[kInternal] }
-  },
   asyncSearch: {
     get () { return this[kAsyncSearch] === null ? (this[kAsyncSearch] = new AsyncSearchApi(this.transport)) : this[kAsyncSearch] }
   },
@@ -404,6 +409,9 @@ Object.defineProperties(API.prototype, {
   rollup: {
     get () { return this[kRollup] === null ? (this[kRollup] = new RollupApi(this.transport)) : this[kRollup] }
   },
+  searchApplication: {
+    get () { return this[kSearchApplication] === null ? (this[kSearchApplication] = new SearchApplicationApi(this.transport)) : this[kSearchApplication] }
+  },
   searchableSnapshots: {
     get () { return this[kSearchableSnapshots] === null ? (this[kSearchableSnapshots] = new SearchableSnapshotsApi(this.transport)) : this[kSearchableSnapshots] }
   },
@@ -424,6 +432,9 @@ Object.defineProperties(API.prototype, {
   },
   ssl: {
     get () { return this[kSsl] === null ? (this[kSsl] = new SslApi(this.transport)) : this[kSsl] }
+  },
+  synonyms: {
+    get () { return this[kSynonyms] === null ? (this[kSynonyms] = new SynonymsApi(this.transport)) : this[kSynonyms] }
   },
   tasks: {
     get () { return this[kTasks] === null ? (this[kTasks] = new TasksApi(this.transport)) : this[kTasks] }

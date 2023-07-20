@@ -1,9 +1,10 @@
 = Elasticsearch JavaScript Client
 
-:branch: master
+include::{asciidoc-dir}/../../shared/versions/stack/{source_branch}.asciidoc[]
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 
 include::introduction.asciidoc[]
+include::getting-started.asciidoc[]
 include::changelog.asciidoc[]
 include::installation.asciidoc[]
 include::connecting.asciidoc[]
