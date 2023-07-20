@@ -281,7 +281,7 @@ helper uses those options in conjunction with the Bulk API call.
 [source,js]
 ----
 const result = await client.helpers.bulk({
-  datasource: [...]
+  datasource: [...],
   onDocument (doc) {
     return {
       index: { _index: 'my-index' }
@@ -342,7 +342,7 @@ const client = new Client({
   auth: { apiKey: 'base64EncodedKey' }
 })
 const result = await client.helpers.bulk({
-  datasource: [...]
+  datasource: [...],
   onDocument (doc) {
     return [
       { index: { _index: 'my-index' } },
