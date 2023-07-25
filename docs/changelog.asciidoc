@@ -2,6 +2,31 @@
 == Release notes
 
 [discrete]
+=== 8.9.0
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v8.9.0`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.9/release-notes-8.9.0.html[here].
+
+[discrete]
+===== Allow document to be overwritten in `onDocument` iteratee of bulk helper https://github.com/elastic/elasticsearch-js/pull/1732[#1732]
+
+In the https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-helpers.html#bulk-helper[bulk helper], documents could not be modified before being sent to Elasticsearch. It is now possible to https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-helpers.html#_modifying_a_document_before_operation[modify a document] before sending it.
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Updated `user-agent` header https://github.com/elastic/elasticsearch-js/pull/1954[#1954]
+
+The `user-agent` header the client used to connect to Elasticsearch was using a non-standard format that has been improved.
+
+[discrete]
 === 8.8.1
 
 [discrete]
