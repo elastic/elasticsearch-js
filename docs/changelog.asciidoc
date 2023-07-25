@@ -21,6 +21,7 @@ In the https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/curre
 [discrete]
 ==== Fixes
 
+[discrete]
 ===== Updated `user-agent` header https://github.com/elastic/elasticsearch-js/pull/1954[#1954]
 
 The `user-agent` header the client used to connect to Elasticsearch was using a non-standard format that has been improved.
