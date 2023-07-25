@@ -45,7 +45,7 @@ export default class Tasks {
 
   /**
     * Cancels a task, if it can be cancelled through an API.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/tasks.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/tasks.html | Elasticsearch API documentation}
     */
   async cancel (this: That, params?: T.TasksCancelRequest | TB.TasksCancelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TasksCancelResponse>
   async cancel (this: That, params?: T.TasksCancelRequest | TB.TasksCancelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TasksCancelResponse, unknown>>
@@ -79,7 +79,7 @@ export default class Tasks {
 
   /**
     * Returns information about a task.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/tasks.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/tasks.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.TasksGetRequest | TB.TasksGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TasksGetResponse>
   async get (this: That, params: T.TasksGetRequest | TB.TasksGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TasksGetResponse, unknown>>
@@ -105,7 +105,7 @@ export default class Tasks {
 
   /**
     * Returns a list of tasks.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/tasks.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/tasks.html | Elasticsearch API documentation}
     */
   async list (this: That, params?: T.TasksListRequest | TB.TasksListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TasksListResponse>
   async list (this: That, params?: T.TasksListRequest | TB.TasksListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TasksListResponse, unknown>>

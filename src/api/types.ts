@@ -1387,7 +1387,7 @@ export type SearchHighlighterOrder = 'score'
 
 export type SearchHighlighterTagsSchema = 'styled'
 
-export type SearchHighlighterType = 'plain' | 'fvh' | 'unified'| string
+export type SearchHighlighterType = 'plain' | 'fvh' | 'unified' | string
 
 export interface SearchHit<TDocument = unknown> {
   _index: IndexName
@@ -2444,7 +2444,7 @@ export interface ScriptField {
   ignore_failure?: boolean
 }
 
-export type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java'| string
+export type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java' | string
 
 export interface ScriptSort {
   order?: SortOrder
@@ -4077,7 +4077,7 @@ export type AnalysisAnalyzer = AnalysisCustomAnalyzer | AnalysisFingerprintAnaly
 
 export interface AnalysisAsciiFoldingTokenFilter extends AnalysisTokenFilterBase {
   type: 'asciifolding'
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
 }
 
 export type AnalysisCharFilter = string | AnalysisCharFilterDefinition
@@ -4157,7 +4157,7 @@ export interface AnalysisEdgeNGramTokenFilter extends AnalysisTokenFilterBase {
   max_gram?: integer
   min_gram?: integer
   side?: AnalysisEdgeNGramSide
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
 }
 
 export interface AnalysisEdgeNGramTokenizer extends AnalysisTokenizerBase {
@@ -4396,14 +4396,14 @@ export interface AnalysisMappingCharFilter extends AnalysisCharFilterBase {
 export interface AnalysisMultiplexerTokenFilter extends AnalysisTokenFilterBase {
   type: 'multiplexer'
   filters: string[]
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
 }
 
 export interface AnalysisNGramTokenFilter extends AnalysisTokenFilterBase {
   type: 'ngram'
   max_gram?: integer
   min_gram?: integer
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
 }
 
 export interface AnalysisNGramTokenizer extends AnalysisTokenizerBase {
@@ -4460,7 +4460,7 @@ export interface AnalysisPatternAnalyzer {
 export interface AnalysisPatternCaptureTokenFilter extends AnalysisTokenFilterBase {
   type: 'pattern_capture'
   patterns: string[]
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
 }
 
 export interface AnalysisPatternReplaceCharFilter extends AnalysisCharFilterBase {
@@ -4673,7 +4673,7 @@ export interface AnalysisWordDelimiterGraphTokenFilter extends AnalysisTokenFilt
   generate_number_parts?: boolean
   generate_word_parts?: boolean
   ignore_keywords?: boolean
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
   protected_words?: string[]
   protected_words_path?: string
   split_on_case_change?: boolean
@@ -4690,7 +4690,7 @@ export interface AnalysisWordDelimiterTokenFilter extends AnalysisTokenFilterBas
   catenate_words?: boolean
   generate_number_parts?: boolean
   generate_word_parts?: boolean
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
   protected_words?: string[]
   protected_words_path?: string
   split_on_case_change?: boolean
@@ -9626,7 +9626,7 @@ export interface IndicesIndexSettingsAnalysis {
 
 export interface IndicesIndexSettingsLifecycle {
   name: Name
-  indexing_complete?: boolean
+  indexing_complete?: SpecUtilsStringified<boolean>
   origination_date?: long
   parse_origination_date?: boolean
   step?: IndicesIndexSettingsLifecycleStep
@@ -9853,7 +9853,7 @@ export interface IndicesStorage {
   allow_mmap?: boolean
 }
 
-export type IndicesStorageType = 'fs' | '' | 'niofs' | 'mmapfs' | 'hybridfs'| string
+export type IndicesStorageType = 'fs' | '' | 'niofs' | 'mmapfs' | 'hybridfs' | string
 
 export interface IndicesTemplateMapping {
   aliases: Record<IndexName, IndicesAlias>
@@ -13876,7 +13876,7 @@ export interface MlPutTrainedModelRequest extends RequestBase {
   compressed_definition?: string
   definition?: MlPutTrainedModelDefinition
   description?: string
-  inference_config: MlInferenceConfigCreateContainer
+  inference_config?: MlInferenceConfigCreateContainer
   input?: MlPutTrainedModelInput
   metadata?: any
   model_type?: MlTrainedModelType
@@ -15500,7 +15500,7 @@ export interface SecurityClusterNode {
   name: Name
 }
 
-export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_ccr' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'read_ccr' | 'read_ilm' | 'read_pipeline' | 'read_slm' | 'transport_client'| string
+export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_ccr' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'read_ccr' | 'read_ilm' | 'read_pipeline' | 'read_slm' | 'transport_client' | string
 
 export interface SecurityCreatedStatus {
   created: boolean
@@ -15525,7 +15525,7 @@ export interface SecurityGlobalPrivilege {
 
 export type SecurityGrantType = 'password' | 'access_token'
 
-export type SecurityIndexPrivilege = 'none' | 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'delete' | 'delete_index' | 'index' | 'maintenance' | 'manage' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'monitor' | 'read' | 'read_cross_cluster' | 'view_index_metadata' | 'write'| string
+export type SecurityIndexPrivilege = 'none' | 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'delete' | 'delete_index' | 'index' | 'maintenance' | 'manage' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'monitor' | 'read' | 'read_cross_cluster' | 'view_index_metadata' | 'write' | string
 
 export interface SecurityIndicesPrivileges {
   field_security?: SecurityFieldSecurity

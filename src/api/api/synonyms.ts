@@ -45,7 +45,7 @@ export default class Synonyms {
 
   /**
     * Deletes a synonym set
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/delete-synonyms.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/delete-synonyms.html | Elasticsearch API documentation}
     */
   async delete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async delete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -71,7 +71,7 @@ export default class Synonyms {
 
   /**
     * Retrieves a synonym set
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/get-synonyms.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/get-synonyms.html | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async get (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -97,7 +97,7 @@ export default class Synonyms {
 
   /**
     * Creates or updates a synonyms set
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/put-synonyms.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/put-synonyms.html | Elasticsearch API documentation}
     */
   async put (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async put (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>

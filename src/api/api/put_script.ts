@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Creates or updates a script.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/modules-scripting.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/modules-scripting.html | Elasticsearch API documentation}
   */
 export default async function PutScriptApi (this: That, params: T.PutScriptRequest | TB.PutScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.PutScriptResponse>
 export default async function PutScriptApi (this: That, params: T.PutScriptRequest | TB.PutScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.PutScriptResponse, unknown>>
