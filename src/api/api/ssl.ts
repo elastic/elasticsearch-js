@@ -45,7 +45,7 @@ export default class Ssl {
 
   /**
     * Retrieves information about the X.509 certificates used to encrypt communications in the cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/security-api-ssl.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.9/security-api-ssl.html | Elasticsearch API documentation}
     */
   async certificates (this: That, params?: T.SslCertificatesRequest | TB.SslCertificatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SslCertificatesResponse>
   async certificates (this: That, params?: T.SslCertificatesRequest | TB.SslCertificatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SslCertificatesResponse, unknown>>
