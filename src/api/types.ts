@@ -560,6 +560,7 @@ export interface HealthReportRequest extends RequestBase {
 
 export interface HealthReportResponse {
   cluster_name: string
+  status?: HealthReportIndicatorHealthStatus
   indicators: HealthReportIndicators
 }
 
