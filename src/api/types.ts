@@ -4495,9 +4495,9 @@ export interface AnalysisPatternReplaceTokenFilter extends AnalysisTokenFilterBa
 
 export interface AnalysisPatternTokenizer extends AnalysisTokenizerBase {
   type: 'pattern'
-  flags: string
-  group: integer
-  pattern: string
+  flags?: string
+  group?: integer
+  pattern?: string
 }
 
 export type AnalysisPhoneticEncoder = 'metaphone' | 'double_metaphone' | 'soundex' | 'refined_soundex' | 'caverphone1' | 'caverphone2' | 'cologne' | 'nysiis' | 'koelnerphonetik' | 'haasephonetik' | 'beider_morse' | 'daitch_mokotoff'
