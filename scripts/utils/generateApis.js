@@ -232,7 +232,7 @@ function generateSingleApi (version, spec, common) {
     querystring = snakeCaseKeys(acceptedQuerystring, snakeCase, querystring)
 
     let path = ''
-    ${buildPath(api)}
+    ${buildPath()}
 
     // build request object
     const request = {
@@ -254,7 +254,7 @@ function generateSingleApi (version, spec, common) {
     documentation: generateDocumentation(spec[api], api)
   }
 
-  function genRequiredChecks (param) {
+  function genRequiredChecks () {
     const code = required
       .map(_genRequiredCheck)
       .concat(_noBody())
