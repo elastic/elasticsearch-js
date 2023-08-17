@@ -2,6 +2,17 @@
 == Release notes
 
 [discrete]
+=== 8.9.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Upgrade Transport https://github.com/elastic/elasticsearch-js/pull/1968[#1968]
+
+Upgrades `@elastic/transport` to the latest patch release to fix https://github.com/elastic/elastic-transport-js/pull/69[a bug] that could cause the process to exit when handling malformed `HEAD` requests.
+
+[discrete]
 === 8.9.0
 
 [discrete]
