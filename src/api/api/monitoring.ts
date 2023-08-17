@@ -45,7 +45,7 @@ export default class Monitoring {
 
   /**
     * Used by the monitoring features to send monitoring data.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/monitor-elasticsearch-cluster.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/monitor-elasticsearch-cluster.html | Elasticsearch API documentation}
     */
   async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.MonitoringBulkResponse>
   async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MonitoringBulkResponse, unknown>>

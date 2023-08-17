@@ -45,7 +45,7 @@ export default class Sql {
 
   /**
     * Clears the SQL cursor
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/clear-sql-cursor-api.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-sql-cursor-api.html | Elasticsearch API documentation}
     */
   async clearCursor (this: That, params: T.SqlClearCursorRequest | TB.SqlClearCursorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlClearCursorResponse>
   async clearCursor (this: That, params: T.SqlClearCursorRequest | TB.SqlClearCursorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlClearCursorResponse, unknown>>
@@ -83,7 +83,7 @@ export default class Sql {
 
   /**
     * Deletes an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/delete-async-sql-search-api.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-async-sql-search-api.html | Elasticsearch API documentation}
     */
   async deleteAsync (this: That, params: T.SqlDeleteAsyncRequest | TB.SqlDeleteAsyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlDeleteAsyncResponse>
   async deleteAsync (this: That, params: T.SqlDeleteAsyncRequest | TB.SqlDeleteAsyncRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlDeleteAsyncResponse, unknown>>
@@ -109,7 +109,7 @@ export default class Sql {
 
   /**
     * Returns the current status and available results for an async SQL search or stored synchronous SQL search
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/get-async-sql-search-api.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-sql-search-api.html | Elasticsearch API documentation}
     */
   async getAsync (this: That, params: T.SqlGetAsyncRequest | TB.SqlGetAsyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlGetAsyncResponse>
   async getAsync (this: That, params: T.SqlGetAsyncRequest | TB.SqlGetAsyncRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlGetAsyncResponse, unknown>>
@@ -135,7 +135,7 @@ export default class Sql {
 
   /**
     * Returns the current status of an async SQL search or a stored synchronous SQL search
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/get-async-sql-search-status-api.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-sql-search-status-api.html | Elasticsearch API documentation}
     */
   async getAsyncStatus (this: That, params: T.SqlGetAsyncStatusRequest | TB.SqlGetAsyncStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlGetAsyncStatusResponse>
   async getAsyncStatus (this: That, params: T.SqlGetAsyncStatusRequest | TB.SqlGetAsyncStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlGetAsyncStatusResponse, unknown>>
@@ -161,7 +161,7 @@ export default class Sql {
 
   /**
     * Executes a SQL request
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/sql-search-api.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/sql-search-api.html | Elasticsearch API documentation}
     */
   async query (this: That, params?: T.SqlQueryRequest | TB.SqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlQueryResponse>
   async query (this: That, params?: T.SqlQueryRequest | TB.SqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlQueryResponse, unknown>>
@@ -200,7 +200,7 @@ export default class Sql {
 
   /**
     * Translates SQL into Elasticsearch queries
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/sql-translate-api.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/sql-translate-api.html | Elasticsearch API documentation}
     */
   async translate (this: That, params: T.SqlTranslateRequest | TB.SqlTranslateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SqlTranslateResponse>
   async translate (this: That, params: T.SqlTranslateRequest | TB.SqlTranslateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SqlTranslateResponse, unknown>>
