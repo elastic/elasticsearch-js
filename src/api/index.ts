@@ -75,6 +75,7 @@ import NodesApi from './api/nodes'
 import openPointInTimeApi from './api/open_point_in_time'
 import pingApi from './api/ping'
 import putScriptApi from './api/put_script'
+import QueryRulesetApi from './api/query_ruleset'
 import rankEvalApi from './api/rank_eval'
 import reindexApi from './api/reindex'
 import reindexRethrottleApi from './api/reindex_rethrottle'
@@ -157,6 +158,7 @@ export default interface API {
   openPointInTime: typeof openPointInTimeApi
   ping: typeof pingApi
   putScript: typeof putScriptApi
+  queryRuleset: QueryRulesetApi
   rankEval: typeof rankEvalApi
   reindex: typeof reindexApi
   reindexRethrottle: typeof reindexRethrottleApi
@@ -209,6 +211,7 @@ const kMigration = Symbol('Migration')
 const kMl = Symbol('Ml')
 const kMonitoring = Symbol('Monitoring')
 const kNodes = Symbol('Nodes')
+const kQueryRuleset = Symbol('QueryRuleset')
 const kRollup = Symbol('Rollup')
 const kSearchApplication = Symbol('SearchApplication')
 const kSearchableSnapshots = Symbol('SearchableSnapshots')
@@ -246,6 +249,7 @@ export default class API {
   [kMl]: symbol | null
   [kMonitoring]: symbol | null
   [kNodes]: symbol | null
+  [kQueryRuleset]: symbol | null
   [kRollup]: symbol | null
   [kSearchApplication]: symbol | null
   [kSearchableSnapshots]: symbol | null
@@ -282,6 +286,7 @@ export default class API {
     this[kMl] = null
     this[kMonitoring] = null
     this[kNodes] = null
+    this[kQueryRuleset] = null
     this[kRollup] = null
     this[kSearchApplication] = null
     this[kSearchableSnapshots] = null
@@ -405,6 +410,9 @@ Object.defineProperties(API.prototype, {
   },
   nodes: {
     get () { return this[kNodes] === null ? (this[kNodes] = new NodesApi(this.transport)) : this[kNodes] }
+  },
+  queryRuleset: {
+    get () { return this[kQueryRuleset] === null ? (this[kQueryRuleset] = new QueryRulesetApi(this.transport)) : this[kQueryRuleset] }
   },
   rollup: {
     get () { return this[kRollup] === null ? (this[kRollup] = new RollupApi(this.transport)) : this[kRollup] }

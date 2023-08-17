@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Returns all script contexts.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/main/painless-contexts.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html | Elasticsearch API documentation}
   */
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptContextResponse>
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptContextResponse, unknown>>

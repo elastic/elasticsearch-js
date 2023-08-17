@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Performs a kNN search.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/search-search.html Elasticsearch API docs}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html | Elasticsearch API documentation}
   */
 export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest | TB.KnnSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.KnnSearchResponse<TDocument>>
 export default async function KnnSearchApi<TDocument = unknown> (this: That, params: T.KnnSearchRequest | TB.KnnSearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.KnnSearchResponse<TDocument>, unknown>>

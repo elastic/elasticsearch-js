@@ -562,6 +562,7 @@ export interface HealthReportRequest extends RequestBase {
 export interface HealthReportResponse {
   cluster_name: string
   indicators: HealthReportIndicators
+  status?: HealthReportIndicatorHealthStatus
 }
 
 export interface HealthReportShardsAvailabilityIndicator extends HealthReportBaseIndicator {
@@ -1402,7 +1403,7 @@ export type SearchHighlighterOrder = 'score'
 
 export type SearchHighlighterTagsSchema = 'styled'
 
-export type SearchHighlighterType = 'plain' | 'fvh' | 'unified'| string
+export type SearchHighlighterType = 'plain' | 'fvh' | 'unified' | string
 
 export interface SearchHit<TDocument = unknown> {
   _index: IndexName
@@ -1951,6 +1952,8 @@ export interface SpecUtilsBaseNode {
   transport_address: TransportAddress
 }
 
+export type SpecUtilsPipeSeparatedFlags<T = unknown> = T | string
+
 export type SpecUtilsStringified<T = unknown> = T | string
 
 export interface AcknowledgedResponseBase {
@@ -2459,7 +2462,7 @@ export interface ScriptField {
   ignore_failure?: boolean
 }
 
-export type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java'| string
+export type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java' | string
 
 export interface ScriptSort {
   order?: SortOrder
@@ -3000,11 +3003,20 @@ export interface AggregationsCompositeAggregation extends AggregationsBucketAggr
   sources?: Record<string, AggregationsCompositeAggregationSource>[]
 }
 
+export interface AggregationsCompositeAggregationBase {
+  field?: Field
+  missing_bucket?: boolean
+  missing_order?: AggregationsMissingOrder
+  script?: Script
+  value_type?: AggregationsValueType
+  order?: SortOrder
+}
+
 export interface AggregationsCompositeAggregationSource {
-  terms?: AggregationsTermsAggregation
-  histogram?: AggregationsHistogramAggregation
-  date_histogram?: AggregationsDateHistogramAggregation
-  geotile_grid?: AggregationsGeoTileGridAggregation
+  terms?: AggregationsCompositeTermsAggregation
+  histogram?: AggregationsCompositeHistogramAggregation
+  date_histogram?: AggregationsCompositeDateHistogramAggregation
+  geotile_grid?: AggregationsCompositeGeoTileGridAggregation
 }
 
 export interface AggregationsCompositeBucketKeys extends AggregationsMultiBucketBase {
@@ -3012,6 +3024,26 @@ export interface AggregationsCompositeBucketKeys extends AggregationsMultiBucket
 }
 export type AggregationsCompositeBucket = AggregationsCompositeBucketKeys
 & { [property: string]: AggregationsAggregate | AggregationsCompositeAggregateKey | long }
+
+export interface AggregationsCompositeDateHistogramAggregation extends AggregationsCompositeAggregationBase {
+  format?: string
+  calendar_interval?: DurationLarge
+  fixed_interval?: DurationLarge
+  offset?: Duration
+  time_zone?: TimeZone
+}
+
+export interface AggregationsCompositeGeoTileGridAggregation extends AggregationsCompositeAggregationBase {
+  precision?: integer
+  bounds?: GeoBounds
+}
+
+export interface AggregationsCompositeHistogramAggregation extends AggregationsCompositeAggregationBase {
+  interval: double
+}
+
+export interface AggregationsCompositeTermsAggregation extends AggregationsCompositeAggregationBase {
+}
 
 export interface AggregationsCumulativeCardinalityAggregate extends AggregationsAggregateBase {
   value: long
@@ -4092,7 +4124,7 @@ export type AnalysisAnalyzer = AnalysisCustomAnalyzer | AnalysisFingerprintAnaly
 
 export interface AnalysisAsciiFoldingTokenFilter extends AnalysisTokenFilterBase {
   type: 'asciifolding'
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
 }
 
 export type AnalysisCharFilter = string | AnalysisCharFilterDefinition
@@ -4172,7 +4204,7 @@ export interface AnalysisEdgeNGramTokenFilter extends AnalysisTokenFilterBase {
   max_gram?: integer
   min_gram?: integer
   side?: AnalysisEdgeNGramSide
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
 }
 
 export interface AnalysisEdgeNGramTokenizer extends AnalysisTokenizerBase {
@@ -4187,7 +4219,7 @@ export interface AnalysisElisionTokenFilter extends AnalysisTokenFilterBase {
   type: 'elision'
   articles?: string[]
   articles_path?: string
-  articles_case?: boolean
+  articles_case?: SpecUtilsStringified<boolean>
 }
 
 export interface AnalysisFingerprintAnalyzer {
@@ -4411,14 +4443,14 @@ export interface AnalysisMappingCharFilter extends AnalysisCharFilterBase {
 export interface AnalysisMultiplexerTokenFilter extends AnalysisTokenFilterBase {
   type: 'multiplexer'
   filters: string[]
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
 }
 
 export interface AnalysisNGramTokenFilter extends AnalysisTokenFilterBase {
   type: 'ngram'
   max_gram?: integer
   min_gram?: integer
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
 }
 
 export interface AnalysisNGramTokenizer extends AnalysisTokenizerBase {
@@ -4456,11 +4488,11 @@ export type AnalysisNormalizer = AnalysisLowercaseNormalizer | AnalysisCustomNor
 
 export interface AnalysisPathHierarchyTokenizer extends AnalysisTokenizerBase {
   type: 'path_hierarchy'
-  buffer_size: integer
+  buffer_size: SpecUtilsStringified<integer>
   delimiter: string
   replacement: string
-  reverse: boolean
-  skip: integer
+  reverse: SpecUtilsStringified<boolean>
+  skip: SpecUtilsStringified<integer>
 }
 
 export interface AnalysisPatternAnalyzer {
@@ -4475,7 +4507,7 @@ export interface AnalysisPatternAnalyzer {
 export interface AnalysisPatternCaptureTokenFilter extends AnalysisTokenFilterBase {
   type: 'pattern_capture'
   patterns: string[]
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
 }
 
 export interface AnalysisPatternReplaceCharFilter extends AnalysisCharFilterBase {
@@ -4688,7 +4720,7 @@ export interface AnalysisWordDelimiterGraphTokenFilter extends AnalysisTokenFilt
   generate_number_parts?: boolean
   generate_word_parts?: boolean
   ignore_keywords?: boolean
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
   protected_words?: string[]
   protected_words_path?: string
   split_on_case_change?: boolean
@@ -4705,7 +4737,7 @@ export interface AnalysisWordDelimiterTokenFilter extends AnalysisTokenFilterBas
   catenate_words?: boolean
   generate_number_parts?: boolean
   generate_word_parts?: boolean
-  preserve_original?: boolean
+  preserve_original?: SpecUtilsStringified<boolean>
   protected_words?: string[]
   protected_words_path?: string
   split_on_case_change?: boolean
@@ -5377,7 +5409,7 @@ export interface QueryDslGeoDistanceFeatureQuery extends QueryDslDistanceFeature
 }
 
 export interface QueryDslGeoDistanceQueryKeys extends QueryDslQueryBase {
-  distance?: Distance
+  distance: Distance
   distance_type?: GeoDistanceType
   validation_method?: QueryDslGeoValidationMethod
 }
@@ -5711,6 +5743,7 @@ export interface QueryDslQueryContainer {
   range?: Partial<Record<Field, QueryDslRangeQuery>>
   rank_feature?: QueryDslRankFeatureQuery
   regexp?: Partial<Record<Field, QueryDslRegexpQuery | string>>
+  rule_query?: QueryDslRuleQuery
   script?: QueryDslScriptQuery
   script_score?: QueryDslScriptScoreQuery
   shape?: QueryDslShapeQuery
@@ -5727,7 +5760,7 @@ export interface QueryDslQueryContainer {
   term?: Partial<Record<Field, QueryDslTermQuery | FieldValue>>
   terms?: QueryDslTermsQuery
   terms_set?: Partial<Record<Field, QueryDslTermsSetQuery>>
-  text_expansion?: QueryDslTextExpansionQuery | Field
+  text_expansion?: Partial<Record<Field, QueryDslTextExpansionQuery>>
   wildcard?: Partial<Record<Field, QueryDslWildcardQuery | string>>
   wrapper?: QueryDslWrapperQuery
   type?: QueryDslTypeQuery
@@ -5809,6 +5842,12 @@ export interface QueryDslRegexpQuery extends QueryDslQueryBase {
   value: string
 }
 
+export interface QueryDslRuleQuery extends QueryDslQueryBase {
+  organic: QueryDslQueryContainer
+  ruleset_id: Id
+  match_criteria: any
+}
+
 export interface QueryDslScriptQuery extends QueryDslQueryBase {
   script: Script
 }
@@ -5835,9 +5874,9 @@ export interface QueryDslShapeQueryKeys extends QueryDslQueryBase {
 export type QueryDslShapeQuery = QueryDslShapeQueryKeys
 & { [property: string]: QueryDslShapeFieldQuery | boolean | float | string }
 
-export type QueryDslSimpleQueryStringFlag = 'NONE' | 'AND' | 'OR' | 'NOT' | 'PREFIX' | 'PHRASE' | 'PRECEDENCE' | 'ESCAPE' | 'WHITESPACE' | 'FUZZY' | 'NEAR' | 'SLOP' | 'ALL'
+export type QueryDslSimpleQueryStringFlag = 'NONE' | 'AND' | 'NOT' | 'OR' | 'PREFIX' | 'PHRASE' | 'PRECEDENCE' | 'ESCAPE' | 'WHITESPACE' | 'FUZZY' | 'NEAR' | 'SLOP' | 'ALL'
 
-export type QueryDslSimpleQueryStringFlags = QueryDslSimpleQueryStringFlag | string
+export type QueryDslSimpleQueryStringFlags = SpecUtilsPipeSeparatedFlags<QueryDslSimpleQueryStringFlag>
 
 export interface QueryDslSimpleQueryStringQuery extends QueryDslQueryBase {
   analyzer?: string
@@ -5942,7 +5981,6 @@ export interface QueryDslTermsSetQuery extends QueryDslQueryBase {
 }
 
 export interface QueryDslTextExpansionQuery extends QueryDslQueryBase {
-  value: Field
   model_id: string
   model_text: string
 }
@@ -9624,7 +9662,7 @@ export interface IndicesIndexSettingsKeys {
   queries?: IndicesQueries
   similarity?: IndicesSettingsSimilarity
   mapping?: IndicesMappingLimitSettings
-  'indexing.slowlog'?: IndicesSlowlogSettings
+  'indexing.slowlog'?: IndicesIndexingSlowlogSettings
   indexing_pressure?: IndicesIndexingPressure
   store?: IndicesStorage
 }
@@ -9641,7 +9679,7 @@ export interface IndicesIndexSettingsAnalysis {
 
 export interface IndicesIndexSettingsLifecycle {
   name: Name
-  indexing_complete?: boolean
+  indexing_complete?: SpecUtilsStringified<boolean>
   origination_date?: long
   parse_origination_date?: boolean
   step?: IndicesIndexSettingsLifecycleStep
@@ -9700,6 +9738,17 @@ export interface IndicesIndexingPressure {
 
 export interface IndicesIndexingPressureMemory {
   limit?: integer
+}
+
+export interface IndicesIndexingSlowlogSettings {
+  level?: string
+  source?: integer
+  reformat?: boolean
+  threshold?: IndicesIndexingSlowlogTresholds
+}
+
+export interface IndicesIndexingSlowlogTresholds {
+  index?: IndicesSlowlogTresholdLevels
 }
 
 export interface IndicesMappingLimitSettings {
@@ -9855,7 +9904,6 @@ export interface IndicesSlowlogTresholdLevels {
 export interface IndicesSlowlogTresholds {
   query?: IndicesSlowlogTresholdLevels
   fetch?: IndicesSlowlogTresholdLevels
-  index?: IndicesSlowlogTresholdLevels
 }
 
 export interface IndicesSoftDeletes {
@@ -9868,7 +9916,7 @@ export interface IndicesStorage {
   allow_mmap?: boolean
 }
 
-export type IndicesStorageType = 'fs' | '' | 'niofs' | 'mmapfs' | 'hybridfs'| string
+export type IndicesStorageType = 'fs' | '' | 'niofs' | 'mmapfs' | 'hybridfs' | string
 
 export interface IndicesTemplateMapping {
   aliases: Record<IndexName, IndicesAlias>
@@ -10061,9 +10109,9 @@ export type IndicesCreateDataStreamResponse = AcknowledgedResponseBase
 export interface IndicesDataStreamsStatsDataStreamsStatsItem {
   backing_indices: integer
   data_stream: Name
+  maximum_timestamp: EpochTime<UnitMillis>
   store_size?: ByteSize
   store_size_bytes: integer
-  maximum_timestamp: EpochTime<UnitMillis>
 }
 
 export interface IndicesDataStreamsStatsRequest extends RequestBase {
@@ -10075,9 +10123,9 @@ export interface IndicesDataStreamsStatsResponse {
   _shards: ShardStatistics
   backing_indices: integer
   data_stream_count: integer
+  data_streams: IndicesDataStreamsStatsDataStreamsStatsItem[]
   total_store_sizes?: ByteSize
   total_store_size_bytes: integer
-  data_streams: IndicesDataStreamsStatsDataStreamsStatsItem[]
 }
 
 export interface IndicesDeleteRequest extends RequestBase {
@@ -10438,8 +10486,8 @@ export interface IndicesModifyDataStreamAction {
 }
 
 export interface IndicesModifyDataStreamIndexAndDataStreamAction {
-  index: IndexName
   data_stream: DataStreamName
+  index: IndexName
 }
 
 export interface IndicesModifyDataStreamRequest extends RequestBase {
@@ -10689,6 +10737,11 @@ export interface IndicesReloadSearchAnalyzersReloadDetails {
   reloaded_node_ids: string[]
 }
 
+export interface IndicesReloadSearchAnalyzersReloadResult {
+  reload_details: IndicesReloadSearchAnalyzersReloadDetails[]
+  _shards: ShardStatistics
+}
+
 export interface IndicesReloadSearchAnalyzersRequest extends RequestBase {
   index: Indices
   allow_no_indices?: boolean
@@ -10696,10 +10749,7 @@ export interface IndicesReloadSearchAnalyzersRequest extends RequestBase {
   ignore_unavailable?: boolean
 }
 
-export interface IndicesReloadSearchAnalyzersResponse {
-  reload_details: IndicesReloadSearchAnalyzersReloadDetails[]
-  _shards: ShardStatistics
-}
+export type IndicesReloadSearchAnalyzersResponse = IndicesReloadSearchAnalyzersReloadResult
 
 export interface IndicesResolveIndexRequest extends RequestBase {
   name: Names
@@ -11479,7 +11529,7 @@ export interface IngestUppercaseProcessor extends IngestProcessorBase {
 
 export interface IngestUrlDecodeProcessor extends IngestProcessorBase {
   field: Field
-  ignore_missing?: boolean
+  ignre_missing?: boolean
   target_field?: Field
 }
 
@@ -12382,6 +12432,7 @@ export interface MlDiscoveryNode {
 export type MlExcludeFrequent = 'all' | 'none' | 'by' | 'over'
 
 export interface MlFillMaskInferenceOptions {
+  mask_token?: string
   num_top_classes?: integer
   tokenization?: MlTokenizationConfigContainer
   results_field?: string
@@ -15143,6 +15194,69 @@ export interface NodesUsageResponseBase extends NodesNodesResponseBase {
   nodes: Record<string, NodesUsageNodeUsage>
 }
 
+export interface QueryRulesetQueryRule {
+  rule_id: Id
+  type: QueryRulesetQueryRuleType
+  criteria: QueryRulesetQueryRuleCriteria[]
+  actions: QueryRulesetQueryRuleActions
+}
+
+export interface QueryRulesetQueryRuleActions {
+  ids?: Id[]
+  docs?: QueryDslPinnedDoc[]
+}
+
+export interface QueryRulesetQueryRuleCriteria {
+  type: QueryRulesetQueryRuleCriteriaType
+  metadata: string
+  values?: any[]
+}
+
+export type QueryRulesetQueryRuleCriteriaType = 'global' | 'exact' | 'exact_fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte'
+
+export type QueryRulesetQueryRuleType = 'pinned'
+
+export interface QueryRulesetQueryRuleset {
+  ruleset_id: Id
+  rules: QueryRulesetQueryRule[]
+}
+
+export interface QueryRulesetDeleteRequest extends RequestBase {
+  ruleset_id: Id
+}
+
+export type QueryRulesetDeleteResponse = AcknowledgedResponseBase
+
+export interface QueryRulesetGetRequest extends RequestBase {
+  ruleset_id: Id
+}
+
+export type QueryRulesetGetResponse = QueryRulesetQueryRuleset
+
+export interface QueryRulesetListQueryRulesetListItem {
+  ruleset_id: Id
+  rules_count: integer
+}
+
+export interface QueryRulesetListRequest extends RequestBase {
+  from?: integer
+  size?: integer
+}
+
+export interface QueryRulesetListResponse {
+  count: long
+  results: QueryRulesetListQueryRulesetListItem[]
+}
+
+export interface QueryRulesetPutRequest extends RequestBase {
+  ruleset_id: Id
+  query_ruleset?: QueryRulesetQueryRuleset
+}
+
+export interface QueryRulesetPutResponse {
+  result: Result
+}
+
 export interface RollupDateHistogramGrouping {
   delay?: Duration
   field: Field
@@ -15515,7 +15629,7 @@ export interface SecurityClusterNode {
   name: Name
 }
 
-export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_ccr' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'read_ccr' | 'read_ilm' | 'read_pipeline' | 'read_slm' | 'transport_client'| string
+export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_ccr' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'read_ccr' | 'read_ilm' | 'read_pipeline' | 'read_slm' | 'transport_client' | string
 
 export interface SecurityCreatedStatus {
   created: boolean
@@ -15540,7 +15654,7 @@ export interface SecurityGlobalPrivilege {
 
 export type SecurityGrantType = 'password' | 'access_token'
 
-export type SecurityIndexPrivilege = 'none' | 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'delete' | 'delete_index' | 'index' | 'maintenance' | 'manage' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'monitor' | 'read' | 'read_cross_cluster' | 'view_index_metadata' | 'write'| string
+export type SecurityIndexPrivilege = 'none' | 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'delete' | 'delete_index' | 'index' | 'maintenance' | 'manage' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'monitor' | 'read' | 'read_cross_cluster' | 'view_index_metadata' | 'write' | string
 
 export interface SecurityIndicesPrivileges {
   field_security?: SecurityFieldSecurity
@@ -16946,6 +17060,87 @@ export interface SslCertificatesRequest extends RequestBase {
 }
 
 export type SslCertificatesResponse = SslCertificatesCertificateInformation[]
+
+export interface SynonymsSynonymRule {
+  id?: Id
+  synonyms: SynonymsSynonymString
+}
+
+export interface SynonymsSynonymRuleRead {
+  id: Id
+  synonyms: SynonymsSynonymString
+}
+
+export type SynonymsSynonymString = string
+
+export interface SynonymsSynonymsUpdateResult {
+  result: Result
+  reload_analyzers_details: IndicesReloadSearchAnalyzersReloadResult
+}
+
+export interface SynonymsDeleteSynonymRequest extends RequestBase {
+  id: Id
+}
+
+export type SynonymsDeleteSynonymResponse = AcknowledgedResponseBase
+
+export interface SynonymsDeleteSynonymRuleRequest extends RequestBase {
+  set_id: Id
+  rule_id: Id
+}
+
+export type SynonymsDeleteSynonymRuleResponse = SynonymsSynonymsUpdateResult
+
+export interface SynonymsGetSynonymRequest extends RequestBase {
+  id: Id
+  from?: integer
+  size?: integer
+}
+
+export interface SynonymsGetSynonymResponse {
+  count: integer
+  synonyms_set: SynonymsSynonymRuleRead[]
+}
+
+export interface SynonymsGetSynonymRuleRequest extends RequestBase {
+  set_id: Id
+  rule_id: Id
+}
+
+export type SynonymsGetSynonymRuleResponse = SynonymsSynonymRuleRead
+
+export interface SynonymsGetSynonymsSetsRequest extends RequestBase {
+  from?: integer
+  size?: integer
+}
+
+export interface SynonymsGetSynonymsSetsResponse {
+  count: integer
+  results: SynonymsGetSynonymsSetsSynonymsSetItem[]
+}
+
+export interface SynonymsGetSynonymsSetsSynonymsSetItem {
+  synonyms_set: Id
+  count: integer
+}
+
+export interface SynonymsPutSynonymRequest extends RequestBase {
+  id: Id
+  synonyms_set: SynonymsSynonymRule[]
+}
+
+export interface SynonymsPutSynonymResponse {
+  result: Result
+  reload_analyzers_details: IndicesReloadSearchAnalyzersReloadDetails
+}
+
+export interface SynonymsPutSynonymRuleRequest extends RequestBase {
+  set_id: Id
+  rule_id: Id
+  synonyms: SynonymsSynonymString[]
+}
+
+export type SynonymsPutSynonymRuleResponse = SynonymsSynonymsUpdateResult
 
 export type TasksGroupBy = 'nodes' | 'parents' | 'none'
 

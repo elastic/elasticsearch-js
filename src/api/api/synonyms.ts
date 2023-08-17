@@ -45,65 +45,117 @@ export default class Synonyms {
 
   /**
     * Deletes a synonym set
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/delete-synonyms.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-synonyms-set.html | Elasticsearch API documentation}
     */
-  async delete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async delete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async delete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async delete (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['synonyms_set']
+  async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest | TB.SynonymsDeleteSynonymRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsDeleteSynonymResponse>
+  async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest | TB.SynonymsDeleteSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsDeleteSynonymResponse, unknown>>
+  async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest | TB.SynonymsDeleteSynonymRequest, options?: TransportRequestOptions): Promise<T.SynonymsDeleteSynonymResponse>
+  async deleteSynonym (this: That, params: T.SynonymsDeleteSynonymRequest | TB.SynonymsDeleteSynonymRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
 
     const method = 'DELETE'
-    const path = `/_synonyms/${encodeURIComponent(params.synonyms_set.toString())}`
+    const path = `/_synonyms/${encodeURIComponent(params.id.toString())}`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  /**
+    * Deletes a synonym rule in a synonym set
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-synonym-rule.html | Elasticsearch API documentation}
+    */
+  async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest | TB.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsDeleteSynonymRuleResponse>
+  async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest | TB.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsDeleteSynonymRuleResponse, unknown>>
+  async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest | TB.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptions): Promise<T.SynonymsDeleteSynonymRuleResponse>
+  async deleteSynonymRule (this: That, params: T.SynonymsDeleteSynonymRuleRequest | TB.SynonymsDeleteSynonymRuleRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['set_id', 'rule_id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/_synonyms/${encodeURIComponent(params.set_id.toString())}/${encodeURIComponent(params.rule_id.toString())}`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
   /**
     * Retrieves a synonym set
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/get-synonyms.html Elasticsearch API docs}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-synonyms-set.html | Elasticsearch API documentation}
     */
-  async get (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async get (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async get (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async get (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['synonyms_set']
+  async getSynonym (this: That, params: T.SynonymsGetSynonymRequest | TB.SynonymsGetSynonymRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsGetSynonymResponse>
+  async getSynonym (this: That, params: T.SynonymsGetSynonymRequest | TB.SynonymsGetSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymResponse, unknown>>
+  async getSynonym (this: That, params: T.SynonymsGetSynonymRequest | TB.SynonymsGetSynonymRequest, options?: TransportRequestOptions): Promise<T.SynonymsGetSynonymResponse>
+  async getSynonym (this: That, params: T.SynonymsGetSynonymRequest | TB.SynonymsGetSynonymRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
-    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
 
     const method = 'GET'
-    const path = `/_synonyms/${encodeURIComponent(params.synonyms_set.toString())}`
+    const path = `/_synonyms/${encodeURIComponent(params.id.toString())}`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
   /**
-    * Creates or updates a synonyms set
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/main/put-synonyms.html Elasticsearch API docs}
+    * Retrieves a synonym rule from a synonym set
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-synonym-rule.html | Elasticsearch API documentation}
     */
-  async put (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async put (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async put (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async put (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['synonyms_set']
+  async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest | TB.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsGetSynonymRuleResponse>
+  async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest | TB.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymRuleResponse, unknown>>
+  async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest | TB.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptions): Promise<T.SynonymsGetSynonymRuleResponse>
+  async getSynonymRule (this: That, params: T.SynonymsGetSynonymRuleRequest | TB.SynonymsGetSynonymRuleRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['set_id', 'rule_id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = `/_synonyms/${encodeURIComponent(params.set_id.toString())}/${encodeURIComponent(params.rule_id.toString())}`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  /**
+    * Retrieves a summary of all defined synonym sets
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/list-synonyms-sets.html | Elasticsearch API documentation}
+    */
+  async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest | TB.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsGetSynonymsSetsResponse>
+  async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest | TB.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsGetSynonymsSetsResponse, unknown>>
+  async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest | TB.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptions): Promise<T.SynonymsGetSynonymsSetsResponse>
+  async getSynonymsSets (this: That, params?: T.SynonymsGetSynonymsSetsRequest | TB.SynonymsGetSynonymsSetsRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
     const querystring: Record<string, any> = {}
     const body = undefined
 
@@ -112,12 +164,89 @@ export default class Synonyms {
       if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_synonyms'
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  /**
+    * Creates or updates a synonyms set
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-synonyms-set.html | Elasticsearch API documentation}
+    */
+  async putSynonym (this: That, params: T.SynonymsPutSynonymRequest | TB.SynonymsPutSynonymRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsPutSynonymResponse>
+  async putSynonym (this: That, params: T.SynonymsPutSynonymRequest | TB.SynonymsPutSynonymRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsPutSynonymResponse, unknown>>
+  async putSynonym (this: That, params: T.SynonymsPutSynonymRequest | TB.SynonymsPutSynonymRequest, options?: TransportRequestOptions): Promise<T.SynonymsPutSynonymResponse>
+  async putSynonym (this: That, params: T.SynonymsPutSynonymRequest | TB.SynonymsPutSynonymRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const acceptedBody: string[] = ['synonyms_set']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
 
     const method = 'PUT'
-    const path = `/_synonyms/${encodeURIComponent(params.synonyms_set.toString())}`
+    const path = `/_synonyms/${encodeURIComponent(params.id.toString())}`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  /**
+    * Creates or updates a synonym rule in a synonym set
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-synonym-rule.html | Elasticsearch API documentation}
+    */
+  async putSynonymRule (this: That, params: T.SynonymsPutSynonymRuleRequest | TB.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsPutSynonymRuleResponse>
+  async putSynonymRule (this: That, params: T.SynonymsPutSynonymRuleRequest | TB.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SynonymsPutSynonymRuleResponse, unknown>>
+  async putSynonymRule (this: That, params: T.SynonymsPutSynonymRuleRequest | TB.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptions): Promise<T.SynonymsPutSynonymRuleResponse>
+  async putSynonymRule (this: That, params: T.SynonymsPutSynonymRuleRequest | TB.SynonymsPutSynonymRuleRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['set_id', 'rule_id']
+    const acceptedBody: string[] = ['synonyms']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_synonyms/${encodeURIComponent(params.set_id.toString())}/${encodeURIComponent(params.rule_id.toString())}`
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 }
