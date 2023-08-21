@@ -32,11 +32,7 @@
   ],
   "contributors": [
     {
-      "name": "Tomas Della Vedova",
-      "company": "Elastic BV"
-    },
-    {
-      "name": "Josh Mock",
+      "name": "Elastic Client Library Maintainers",
       "company": "Elastic BV"
     }
   ],
