@@ -8232,7 +8232,7 @@ export interface ClusterComponentTemplateSummary {
   settings?: Record<IndexName, IndicesIndexSettings>
   mappings?: MappingTypeMapping
   aliases?: Record<string, IndicesAliasDefinition>
-  lifecycle?: IndicesDataLifecycleWithRollover
+  lifecycle?: IndicesDataStreamLifecycleWithRollover
 }
 
 export interface ClusterAllocationExplainAllocationDecision {
@@ -9496,15 +9496,6 @@ export interface IndicesCacheQueries {
   enabled: boolean
 }
 
-export interface IndicesDataLifecycle {
-  data_retention?: Duration
-}
-
-export interface IndicesDataLifecycleWithRollover {
-  data_retention?: Duration
-  rollover?: IndicesDlmRolloverConditions
-}
-
 export interface IndicesDataStream {
   _meta?: Metadata
   allow_custom_routing?: boolean
@@ -9512,7 +9503,7 @@ export interface IndicesDataStream {
   hidden: boolean
   ilm_policy?: Name
   indices: IndicesDataStreamIndex[]
-  lifecycle?: IndicesDataLifecycleWithRollover
+  lifecycle?: IndicesDataStreamLifecycleWithRollover
   name: DataStreamName
   replicated?: boolean
   status: HealthStatus
@@ -9526,15 +9517,11 @@ export interface IndicesDataStreamIndex {
   index_uuid: Uuid
 }
 
-export interface IndicesDataStreamTimestampField {
-  name: Field
+export interface IndicesDataStreamLifecycle {
+  data_retention?: Duration
 }
 
-export interface IndicesDataStreamVisibility {
-  hidden?: boolean
-}
-
-export interface IndicesDlmRolloverConditions {
+export interface IndicesDataStreamLifecycleRolloverConditions {
   min_age?: Duration
   max_age?: string
   min_docs?: long
@@ -9545,6 +9532,19 @@ export interface IndicesDlmRolloverConditions {
   max_primary_shard_size?: ByteSize
   min_primary_shard_docs?: long
   max_primary_shard_docs?: long
+}
+
+export interface IndicesDataStreamLifecycleWithRollover {
+  data_retention?: Duration
+  rollover?: IndicesDataStreamLifecycleRolloverConditions
+}
+
+export interface IndicesDataStreamTimestampField {
+  name: Field
+}
+
+export interface IndicesDataStreamVisibility {
+  hidden?: boolean
 }
 
 export interface IndicesDownsampleConfig {
@@ -9701,7 +9701,7 @@ export interface IndicesIndexState {
   settings?: IndicesIndexSettings
   defaults?: IndicesIndexSettings
   data_stream?: DataStreamName
-  lifecycle?: IndicesDataLifecycle
+  lifecycle?: IndicesDataStreamLifecycle
 }
 
 export interface IndicesIndexTemplate {
@@ -9724,7 +9724,7 @@ export interface IndicesIndexTemplateSummary {
   aliases?: Record<IndexName, IndicesAlias>
   mappings?: MappingTypeMapping
   settings?: IndicesIndexSettings
-  lifecycle?: IndicesDataLifecycleWithRollover
+  lifecycle?: IndicesDataStreamLifecycleWithRollover
 }
 
 export interface IndicesIndexVersioning {
@@ -10238,14 +10238,14 @@ export interface IndicesExistsTemplateRequest extends RequestBase {
 
 export type IndicesExistsTemplateResponse = boolean
 
-export interface IndicesExplainDataLifecycleDataLifecycleExplain {
+export interface IndicesExplainDataLifecycleDataStreamLifecycleExplain {
   index: IndexName
-  managed_by_dlm: boolean
+  managed_by_lifecycle: boolean
   index_creation_date_millis?: EpochTime<UnitMillis>
   time_since_index_creation?: Duration
   rollover_date_millis?: EpochTime<UnitMillis>
   time_since_rollover?: Duration
-  lifecycle?: IndicesDataLifecycleWithRollover
+  lifecycle?: IndicesDataStreamLifecycleWithRollover
   generation_time?: Duration
   error?: string
 }
@@ -10257,7 +10257,7 @@ export interface IndicesExplainDataLifecycleRequest extends RequestBase {
 }
 
 export interface IndicesExplainDataLifecycleResponse {
-  indices: Record<IndexName, IndicesExplainDataLifecycleDataLifecycleExplain>
+  indices: Record<IndexName, IndicesExplainDataLifecycleDataStreamLifecycleExplain>
 }
 
 export interface IndicesFieldUsageStatsFieldSummary {
@@ -10377,9 +10377,9 @@ export interface IndicesGetAliasRequest extends RequestBase {
 
 export type IndicesGetAliasResponse = Record<IndexName, IndicesGetAliasIndexAliases>
 
-export interface IndicesGetDataLifecycleDataStreamLifecycle {
+export interface IndicesGetDataLifecycleDataStreamWithLifecycle {
   name: DataStreamName
-  lifecycle?: IndicesDataLifecycle
+  lifecycle?: IndicesDataStreamLifecycle
 }
 
 export interface IndicesGetDataLifecycleRequest extends RequestBase {
@@ -10389,7 +10389,7 @@ export interface IndicesGetDataLifecycleRequest extends RequestBase {
 }
 
 export interface IndicesGetDataLifecycleResponse {
-  data_streams: IndicesGetDataLifecycleDataStreamLifecycle[]
+  data_streams: IndicesGetDataLifecycleDataStreamWithLifecycle[]
 }
 
 export interface IndicesGetDataStreamRequest extends RequestBase {
@@ -10545,7 +10545,7 @@ export interface IndicesPutIndexTemplateIndexTemplateMapping {
   aliases?: Record<IndexName, IndicesAlias>
   mappings?: MappingTypeMapping
   settings?: IndicesIndexSettings
-  lifecycle?: IndicesDataLifecycle
+  lifecycle?: IndicesDataStreamLifecycle
 }
 
 export interface IndicesPutIndexTemplateRequest extends RequestBase {

@@ -371,8 +371,8 @@ export default class Indices {
   }
 
   /**
-    * Deletes the data lifecycle of the selected data streams.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/dlm-delete-lifecycle.html | Elasticsearch API documentation}
+    * Deletes the data stream lifecycle of the selected data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams-delete-lifecycle.html | Elasticsearch API documentation}
     */
   async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest | TB.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataLifecycleResponse>
   async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest | TB.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesDeleteDataLifecycleResponse, unknown>>
@@ -643,8 +643,8 @@ export default class Indices {
   }
 
   /**
-    * Retrieves information about the index's current DLM lifecycle, such as any potential encountered error, time since creation etc.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/dlm-explain-lifecycle.html | Elasticsearch API documentation}
+    * Retrieves information about the index's current data stream lifecycle, such as any potential encountered error, time since creation etc.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams-explain-lifecycle.html | Elasticsearch API documentation}
     */
   async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest | TB.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExplainDataLifecycleResponse>
   async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest | TB.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesExplainDataLifecycleResponse, unknown>>
@@ -829,8 +829,8 @@ export default class Indices {
   }
 
   /**
-    * Returns the data lifecycle of the selected data streams.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/dlm-get-lifecycle.html | Elasticsearch API documentation}
+    * Returns the data stream lifecycle of the selected data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams-get-lifecycle.html | Elasticsearch API documentation}
     */
   async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest | TB.IndicesGetDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataLifecycleResponse>
   async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest | TB.IndicesGetDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesGetDataLifecycleResponse, unknown>>
@@ -1225,8 +1225,8 @@ export default class Indices {
   }
 
   /**
-    * Updates the data lifecycle of the selected data streams.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/dlm-put-lifecycle.html | Elasticsearch API documentation}
+    * Updates the data stream lifecycle of the selected data streams.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams-put-lifecycle.html | Elasticsearch API documentation}
     */
   async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest | TB.IndicesPutDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataLifecycleResponse>
   async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest | TB.IndicesPutDataLifecycleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesPutDataLifecycleResponse, unknown>>
