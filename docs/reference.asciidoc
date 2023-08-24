@@ -3335,9 +3335,9 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== delete_data_lifecycle
-Deletes the data lifecycle of the selected data streams.
+Deletes the data stream lifecycle of the selected data streams.
 
-{ref}/dlm-delete-lifecycle.html[Endpoint documentation]
+{ref}/data-streams-delete-lifecycle.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.deleteDataLifecycle({ name })
@@ -3347,7 +3347,7 @@ client.indices.deleteDataLifecycle({ name })
 ==== Arguments
 
 * *Request (object):*
-** *`name` (string | string[])*: A list of data streams of which the data lifecycle will be deleted; use `*` to get all data streams
+** *`name` (string | string[])*: A list of data streams of which the data stream lifecycle will be deleted; use `*` to get all data streams
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether wildcard expressions should get expanded to open or closed indices (default: open)
 ** *`master_timeout` (Optional, string | -1 | 0)*: Specify timeout for connection to master
 ** *`timeout` (Optional, string | -1 | 0)*: Explicit timestamp for the document
@@ -3544,9 +3544,9 @@ client.indices.existsTemplate({ name })
 
 [discrete]
 ==== explain_data_lifecycle
-Retrieves information about the index's current DLM lifecycle, such as any potential encountered error, time since creation etc.
+Retrieves information about the index's current data stream lifecycle, such as any potential encountered error, time since creation etc.
 
-{ref}/dlm-explain-lifecycle.html[Endpoint documentation]
+{ref}/data-streams-explain-lifecycle.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.explainDataLifecycle({ index })
@@ -3701,9 +3701,9 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 
 [discrete]
 ==== get_data_lifecycle
-Returns the data lifecycle of the selected data streams.
+Returns the data stream lifecycle of the selected data streams.
 
-{ref}/dlm-get-lifecycle.html[Endpoint documentation]
+{ref}/data-streams-get-lifecycle.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.getDataLifecycle({ name })
@@ -3995,9 +3995,9 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== put_data_lifecycle
-Updates the data lifecycle of the selected data streams.
+Updates the data stream lifecycle of the selected data streams.
 
-{ref}/dlm-put-lifecycle.html[Endpoint documentation]
+{ref}/data-streams-put-lifecycle.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.putDataLifecycle({ name })
