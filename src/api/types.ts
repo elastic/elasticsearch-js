@@ -1387,7 +1387,7 @@ export type SearchHighlighterOrder = 'score'
 
 export type SearchHighlighterTagsSchema = 'styled'
 
-export type SearchHighlighterType = 'plain' | 'fvh' | 'unified'| string
+export type SearchHighlighterType = 'plain' | 'fvh' | 'unified' | string
 
 export interface SearchHit<TDocument = unknown> {
   _index: IndexName
@@ -2440,7 +2440,7 @@ export interface ScriptField {
   ignore_failure?: boolean
 }
 
-export type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java'| string
+export type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java' | string
 
 export interface ScriptSort {
   order?: SortOrder
@@ -9835,7 +9835,7 @@ export interface IndicesStorage {
   allow_mmap?: boolean
 }
 
-export type IndicesStorageType = 'fs' | '' | 'niofs' | 'mmapfs' | 'hybridfs'| string
+export type IndicesStorageType = 'fs' | '' | 'niofs' | 'mmapfs' | 'hybridfs' | string
 
 export interface IndicesTemplateMapping {
   aliases: Record<IndexName, IndicesAlias>
@@ -15482,7 +15482,7 @@ export interface SecurityClusterNode {
   name: Name
 }
 
-export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_ccr' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'read_ccr' | 'read_ilm' | 'read_pipeline' | 'read_slm' | 'transport_client'| string
+export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_ccr' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'read_ccr' | 'read_ilm' | 'read_pipeline' | 'read_slm' | 'transport_client' | string
 
 export interface SecurityCreatedStatus {
   created: boolean
@@ -15507,7 +15507,7 @@ export interface SecurityGlobalPrivilege {
 
 export type SecurityGrantType = 'password' | 'access_token'
 
-export type SecurityIndexPrivilege = 'none' | 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'delete' | 'delete_index' | 'index' | 'maintenance' | 'manage' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'monitor' | 'read' | 'read_cross_cluster' | 'view_index_metadata' | 'write'| string
+export type SecurityIndexPrivilege = 'none' | 'all' | 'auto_configure' | 'create' | 'create_doc' | 'create_index' | 'delete' | 'delete_index' | 'index' | 'maintenance' | 'manage' | 'manage_follow_index' | 'manage_ilm' | 'manage_leader_index' | 'monitor' | 'read' | 'read_cross_cluster' | 'view_index_metadata' | 'write' | string
 
 export interface SecurityIndicesPrivileges {
   field_security?: SecurityFieldSecurity
