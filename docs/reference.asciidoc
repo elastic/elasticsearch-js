@@ -712,20 +712,23 @@ client.reindex({ dest, source })
 ==== Arguments
 
 * *Request (object):*
-** *`dest` ({ index, op_type, pipeline, routing, version_type })*
-** *`source` ({ index, query, remote, size, slice, sort, _source, runtime_mappings })*
-** *`conflicts` (Optional, Enum("abort" | "proceed"))*
-** *`max_docs` (Optional, number)*
-** *`script` (Optional, { lang, options, source } | { id })*
+** *`dest` ({ index, op_type, pipeline, routing, version_type })*: The destination you are copying to.
+** *`source` ({ index, query, remote, size, slice, sort, _source, runtime_mappings })*: The source you are copying from.
+** *`conflicts` (Optional, Enum("abort" | "proceed"))*: Set to proceed to continue reindexing even if there are conflicts.
+** *`max_docs` (Optional, number)*: The maximum number of documents to reindex.
+** *`script` (Optional, { lang, options, source } | { id })*: The script to run to update the document source or metadata when reindexing.
 ** *`size` (Optional, number)*
-** *`refresh` (Optional, boolean)*: Should the affected indexes be refreshed?
-** *`requests_per_second` (Optional, float)*: The throttle to set on this request in sub-requests per second. -1 means no throttle.
-** *`scroll` (Optional, string | -1 | 0)*: Control how long to keep the search context alive
-** *`slices` (Optional, number | Enum("auto"))*: The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`.
-** *`timeout` (Optional, string | -1 | 0)*: Time each individual bulk request should wait for shards that are unavailable.
-** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-** *`wait_for_completion` (Optional, boolean)*: Should the request should block until the reindex is complete.
-** *`require_alias` (Optional, boolean)*
+** *`refresh` (Optional, boolean)*: If `true`, the request refreshes affected shards to make this operation visible to search.
+** *`requests_per_second` (Optional, float)*: The throttle for this request in sub-requests per second.
+Defaults to no throttle.
+** *`scroll` (Optional, string | -1 | 0)*: Specifies how long a consistent view of the index should be maintained for scrolled search.
+** *`slices` (Optional, number | Enum("auto"))*: The number of slices this task should be divided into.
+Defaults to 1 slice, meaning the task isn’t sliced into subtasks.
+** *`timeout` (Optional, string | -1 | 0)*: Period each indexing waits for automatic index creation, dynamic mapping updates, and waiting for active shards.
+** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: The number of shard copies that must be active before proceeding with the operation.
+Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+** *`wait_for_completion` (Optional, boolean)*: If `true`, the request blocks until the operation is complete.
+** *`require_alias` (Optional, boolean)*: If `true`, the destination must be an index alias.
 
 [discrete]
 === reindex_rethrottle
@@ -4949,8 +4952,9 @@ client.ml.deleteCalendarEvent({ calendar_id, event_id })
 ==== Arguments
 
 * *Request (object):*
-** *`calendar_id` (string)*: The ID of the calendar to modify
-** *`event_id` (string)*: The ID of the event to remove from the calendar
+** *`calendar_id` (string)*: A string that uniquely identifies a calendar.
+** *`event_id` (string)*: Identifier for the scheduled event.
+You can obtain this identifier by using the get calendar events API.
 
 [discrete]
 ==== delete_calendar_job
@@ -5363,7 +5367,8 @@ neither the category ID nor the partition_field_value, the API returns
 information about all categories. If you specify only the
 partition_field_value, it returns information about all categories for
 the specified partition.
-** *`page` (Optional, { from, size })*
+** *`page` (Optional, { from, size })*: Configures pagination.
+This parameter has the `from` and `size` properties.
 ** *`from` (Optional, number)*: Skips the specified number of categories.
 ** *`partition_field_value` (Optional, string)*: Only return categories for the specified partition.
 ** *`size` (Optional, number)*: Specifies the maximum number of categories to obtain.
@@ -5526,7 +5531,8 @@ client.ml.getInfluencers({ job_id })
 
 * *Request (object):*
 ** *`job_id` (string)*: Identifier for the anomaly detection job.
-** *`page` (Optional, { from, size })*
+** *`page` (Optional, { from, size })*: Configures pagination.
+This parameter has the `from` and `size` properties.
 ** *`desc` (Optional, boolean)*: If true, the results are sorted in descending order.
 ** *`end` (Optional, string | Unit)*: Returns influencers with timestamps earlier than this time.
 The default value means it is unset and results are not limited to
