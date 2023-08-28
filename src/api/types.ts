@@ -16696,6 +16696,9 @@ export interface SnapshotRepositorySettings {
   location: string
   read_only?: string | boolean
   readonly?: string | boolean
+  client: string
+  base_path: string
+  bucket: string
 }
 
 export interface SnapshotShardsStats {
