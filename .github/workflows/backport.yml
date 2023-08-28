@@ -11,6 +11,6 @@ jobs:
     name: Backport
     steps:
       - name: Backport
-        uses: tibdex/backport@v2
+        uses: tibdex/backport@7005ef85c4562bc23b0e9b4a9940d5922f439750
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
