@@ -6786,9 +6786,10 @@ client.nodes.reloadSecureSettings({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`node_id` (Optional, string | string[])*: A list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
-** *`secure_settings_password` (Optional, string)*
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
+** *`node_id` (Optional, string | string[])*: The names of particular nodes in the cluster to target.
+** *`secure_settings_password` (Optional, string)*: The password for the Elasticsearch keystore.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== stats
@@ -6816,7 +6817,7 @@ client.nodes.stats({ ... })
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`types` (Optional, string[])*: A list of document types for the indexing index metric.
-** *`include_unloaded_segments` (Optional, boolean)*: If set to true segment stats will include stats for segments that are not currently loaded into memory
+** *`include_unloaded_segments` (Optional, boolean)*: If `true`, the response includes information from segments that are not loaded into memory.
 
 [discrete]
 ==== usage
@@ -6833,8 +6834,10 @@ client.nodes.usage({ ... })
 
 * *Request (object):*
 ** *`node_id` (Optional, string | string[])*: A list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-** *`metric` (Optional, string | string[])*: Limit the information returned to the specified metrics
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
+** *`metric` (Optional, string | string[])*: Limits the information returned to the specific metrics.
+A list of the following options: `_all`, `rest_actions`.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 === query_ruleset
