@@ -17169,7 +17169,7 @@ export interface TasksTaskInfo {
   running_time?: Duration
   running_time_in_nanos: DurationValue<UnitNanos>
   start_time_in_millis: EpochTime<UnitMillis>
-  status?: TasksTaskStatus
+  status?: any
   type: string
   parent_task_id?: TaskId
 }
@@ -17181,26 +17181,6 @@ export interface TasksTaskListResponseBase {
   task_failures?: TaskFailure[]
   nodes?: Record<string, TasksNodeTasks>
   tasks?: TasksTaskInfos
-}
-
-export interface TasksTaskStatus {
-  batches: long
-  canceled?: string
-  created: long
-  deleted: long
-  noops: long
-  failures?: string[]
-  requests_per_second: float
-  retries: Retries
-  throttled?: Duration
-  throttled_millis: DurationValue<UnitMillis>
-  throttled_until?: Duration
-  throttled_until_millis: DurationValue<UnitMillis>
-  timed_out?: boolean
-  took?: DurationValue<UnitMillis>
-  total: long
-  updated: long
-  version_conflicts: long
 }
 
 export interface TasksCancelRequest extends RequestBase {
@@ -17222,7 +17202,7 @@ export interface TasksGetRequest extends RequestBase {
 export interface TasksGetResponse {
   completed: boolean
   task: TasksTaskInfo
-  response?: TasksTaskStatus
+  response?: any
   error?: ErrorCause
 }
 
