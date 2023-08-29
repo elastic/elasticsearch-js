@@ -6923,7 +6923,7 @@ client.rollup.deleteJob({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The ID of the job to delete
+** *`id` (string)*: Identifier for the job.
 
 [discrete]
 ==== get_jobs
@@ -6939,7 +6939,8 @@ client.rollup.getJobs({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (Optional, string)*: The ID of the job(s) to fetch. Accepts glob patterns, or left blank for all jobs
+** *`id` (Optional, string)*: Identifier for the rollup job.
+If it is `_all` or omitted, the API returns all rollup jobs.
 
 [discrete]
 ==== get_rollup_caps
@@ -6955,7 +6956,8 @@ client.rollup.getRollupCaps({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (Optional, string)*: The ID of the index to check rollup capabilities on, or left blank for all jobs
+** *`id` (Optional, string)*: Index, indices or index-pattern to return rollup capabilities for.
+`_all` may be used to fetch rollup capabilities from all jobs.
 
 [discrete]
 ==== get_rollup_index_caps
@@ -6971,7 +6973,8 @@ client.rollup.getRollupIndexCaps({ index })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string | string[])*: The rollup index or index pattern to obtain rollup capabilities from.
+** *`index` (string | string[])*: Data stream or index to check for rollup capabilities.
+Wildcard (`*`) expressions are supported.
 
 [discrete]
 ==== put_job
@@ -7028,10 +7031,10 @@ client.rollup.rollupSearch({ index })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string | string[])*: The indices or index-pattern(s) (containing rollup or regular data) that should be searched
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*
-** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*
-** *`size` (Optional, number)*: Must be zero if set, as rollups work on pre-aggregated data
+** *`index` (string | string[])*: Enables searching rolled-up data using the standard Query DSL.
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Specifies aggregations.
+** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*: Specifies a DSL query.
+** *`size` (Optional, number)*: Must be zero if set, as rollups work on pre-aggregated data.
 ** *`rest_total_hits_as_int` (Optional, boolean)*: Indicates whether hits.total should be rendered as an integer or an object in the rest search response
 ** *`typed_keys` (Optional, boolean)*: Specify whether aggregation and suggester names should be prefixed by their respective types in the response
 
@@ -7049,7 +7052,7 @@ client.rollup.startJob({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The ID of the job to start
+** *`id` (string)*: Identifier for the rollup job.
 
 [discrete]
 ==== stop_job
@@ -7065,9 +7068,11 @@ client.rollup.stopJob({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The ID of the job to stop
-** *`timeout` (Optional, string | -1 | 0)*: Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
-** *`wait_for_completion` (Optional, boolean)*: True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
+** *`id` (string)*: Identifier for the rollup job.
+** *`timeout` (Optional, string | -1 | 0)*: If `wait_for_completion` is `true`, the API blocks for (at maximum) the specified duration while waiting for the job to stop.
+If more than `timeout` time has passed, the API throws a timeout exception.
+** *`wait_for_completion` (Optional, boolean)*: If set to `true`, causes the API to block until the indexer state completely stops.
+If set to `false`, the API returns immediately and the indexer is stopped asynchronously in the background.
 
 [discrete]
 === search_application
