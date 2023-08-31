@@ -4016,6 +4016,8 @@ To target all data streams use `*` or `_all`.
 ** *`data_retention` (Optional, string | -1 | 0)*: If defined, every document added to this data stream will be stored at least for this time frame.
 Any time after this duration the document could be deleted.
 When empty, every document in this data stream will be stored indefinitely.
+** *`downsampling` (Optional, { rounds })*: If defined, every backing index will execute the configured downsampling configuration after the backing
+index is not the data stream write index anymore.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of data stream that wildcard patterns can match.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `hidden`, `open`, `closed`, `none`.
