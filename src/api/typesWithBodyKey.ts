@@ -9642,6 +9642,11 @@ export interface IndicesDataStreamIndex {
 
 export interface IndicesDataStreamLifecycle {
   data_retention?: Duration
+  downsampling?: IndicesDataStreamLifecycleDownsampling
+}
+
+export interface IndicesDataStreamLifecycleDownsampling {
+  rounds: IndicesDownsamplingRound[]
 }
 
 export interface IndicesDataStreamLifecycleRolloverConditions {
@@ -9659,6 +9664,7 @@ export interface IndicesDataStreamLifecycleRolloverConditions {
 
 export interface IndicesDataStreamLifecycleWithRollover {
   data_retention?: Duration
+  downsampling?: IndicesDataStreamLifecycleDownsampling
   rollover?: IndicesDataStreamLifecycleRolloverConditions
 }
 
@@ -9672,6 +9678,11 @@ export interface IndicesDataStreamVisibility {
 
 export interface IndicesDownsampleConfig {
   fixed_interval: DurationLarge
+}
+
+export interface IndicesDownsamplingRound {
+  after: Duration
+  config: IndicesDownsampleConfig
 }
 
 export interface IndicesFielddataFrequencyFilter {
@@ -10678,6 +10689,7 @@ export interface IndicesPutDataLifecycleRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     data_retention?: Duration
+    downsampling?: IndicesDataStreamLifecycleDownsampling
   }
 }
 
