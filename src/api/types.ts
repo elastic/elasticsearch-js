@@ -1988,14 +1988,28 @@ export type Bytes = 'b' | 'kb' | 'mb' | 'gb' | 'tb' | 'pb'
 
 export type CategoryId = string
 
+export type ClusterAlias = string
+
+export interface ClusterDetails {
+  status: ClusterSearchStatus
+  indices: string
+  took?: DurationValue<UnitMillis>
+  timed_out: boolean
+  _shards?: ShardStatistics
+  failures?: ShardFailure[]
+}
+
 export type ClusterInfoTarget = '_all' | 'http' | 'ingest' | 'thread_pool' | 'script'
 
 export type ClusterInfoTargets = ClusterInfoTarget | ClusterInfoTarget[]
+
+export type ClusterSearchStatus = 'running' | 'successful' | 'partial' | 'skipped' | 'failed'
 
 export interface ClusterStatistics {
   skipped: integer
   successful: integer
   total: integer
+  details?: Record<ClusterAlias, ClusterDetails>
 }
 
 export interface CompletionStats {
@@ -6033,6 +6047,8 @@ export interface AsyncSearchAsyncSearchResponseBase {
   expiration_time_in_millis: EpochTime<UnitMillis>
   start_time?: DateTime
   start_time_in_millis: EpochTime<UnitMillis>
+  completion_time?: DateTime
+  completion_time_in_millis?: EpochTime<UnitMillis>
 }
 
 export interface AsyncSearchDeleteRequest extends RequestBase {
@@ -6058,6 +6074,7 @@ export type AsyncSearchStatusResponse = AsyncSearchStatusStatusResponseBase
 
 export interface AsyncSearchStatusStatusResponseBase extends AsyncSearchAsyncSearchResponseBase {
   _shards: ShardStatistics
+  _clusters?: ClusterStatistics
   completion_status?: integer
 }
 

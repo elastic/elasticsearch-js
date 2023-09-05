@@ -93,22 +93,34 @@ client.count({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string | string[])*: A list of indices to restrict the results
-** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*
-** *`allow_no_indices` (Optional, boolean)*: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-** *`analyzer` (Optional, string)*: The analyzer to use for the query string
-** *`analyze_wildcard` (Optional, boolean)*: Specify whether wildcard and prefix queries should be analyzed (default: false)
-** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query (AND or OR)
-** *`df` (Optional, string)*: The field to use as default where no field prefix is given in the query string
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
-** *`ignore_throttled` (Optional, boolean)*: Whether specified concrete, expanded or aliased indices should be ignored when throttled
-** *`ignore_unavailable` (Optional, boolean)*: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-** *`lenient` (Optional, boolean)*: Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-** *`min_score` (Optional, number)*: Include only documents with a specific `_score` value in the result
-** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random)
-** *`routing` (Optional, string)*: A list of specific routing values
-** *`terminate_after` (Optional, number)*: The maximum count for each shard, upon reaching which the query execution will terminate early
-** *`q` (Optional, string)*: Query in the Lucene query string syntax
+** *`index` (Optional, string | string[])*: List of data streams, indices, and aliases to search.
+Supports wildcards (`*`).
+To search all data streams and indices, omit this parameter or use `*` or `_all`.
+** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*: Defines the search definition using the Query DSL.
+** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
+This behavior applies even if the request targets other open indices.
+** *`analyzer` (Optional, string)*: Analyzer to use for the query string.
+This parameter can only be used when the `q` query string parameter is specified.
+** *`analyze_wildcard` (Optional, boolean)*: If `true`, wildcard and prefix queries are analyzed.
+This parameter can only be used when the `q` query string parameter is specified.
+** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query: `AND` or `OR`.
+This parameter can only be used when the `q` query string parameter is specified.
+** *`df` (Optional, string)*: Field to use as default where no field prefix is given in the query string.
+This parameter can only be used when the `q` query string parameter is specified.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
+If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+Supports a list of values, such as `open,hidden`.
+** *`ignore_throttled` (Optional, boolean)*: If `true`, concrete, expanded or aliased indices are ignored when frozen.
+** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
+** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
+** *`min_score` (Optional, number)*: Sets the minimum `_score` value that documents must have to be included in the result.
+** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
+Random by default.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`terminate_after` (Optional, number)*: Maximum number of documents to collect for each shard.
+If a query reaches this limit, Elasticsearch terminates the query early.
+Elasticsearch collects documents before sorting.
+** *`q` (Optional, string)*: Query in the Lucene query string syntax.
 
 [discrete]
 === create
@@ -7156,9 +7168,9 @@ client.searchApplication.list({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`q` (Optional, string)*: Query in the Lucene query string syntax"
-** *`from` (Optional, number)*: Starting offset (default: 0)
-** *`size` (Optional, number)*: specifies a max number of results to get
+** *`q` (Optional, string)*: Query in the Lucene query string syntax.
+** *`from` (Optional, number)*: Starting offset.
+** *`size` (Optional, number)*: Specifies a max number of results to get.
 
 [discrete]
 ==== post_behavioral_analytics_event
@@ -7185,9 +7197,9 @@ client.searchApplication.put({ name })
 ==== Arguments
 
 * *Request (object):*
-** *`name` (string)*: The name of the search application to be created or updated
+** *`name` (string)*: The name of the search application to be created or updated.
 ** *`search_application` (Optional, { name, indices, updated_at_millis, analytics_collection_name, template })*
-** *`create` (Optional, boolean)*: If true, requires that a search application with the specified resource_id does not already exist. (default: false)
+** *`create` (Optional, boolean)*: If `true`, this request cannot replace or update existing Search Applications.
 
 [discrete]
 ==== put_behavioral_analytics
@@ -7203,7 +7215,7 @@ client.searchApplication.putBehavioralAnalytics({ name })
 ==== Arguments
 
 * *Request (object):*
-** *`name` (string)*: The name of the analytics collection to be created or updated
+** *`name` (string)*: The name of the analytics collection to be created or updated.
 
 [discrete]
 ==== render_query
@@ -7230,8 +7242,8 @@ client.searchApplication.search({ name })
 ==== Arguments
 
 * *Request (object):*
-** *`name` (string)*: The name of the search application to be searched
-** *`params` (Optional, Record<string, User-defined value>)*
+** *`name` (string)*: The name of the search application to be searched.
+** *`params` (Optional, Record<string, User-defined value>)*: Query parameters specific to this request, which will override any defaults specified in the template.
 
 [discrete]
 === searchable_snapshots
@@ -8575,7 +8587,7 @@ client.sql.clearCursor({ cursor })
 ==== Arguments
 
 * *Request (object):*
-** *`cursor` (string)*
+** *`cursor` (string)*: Cursor to clear.
 
 [discrete]
 ==== delete_async
@@ -8591,7 +8603,7 @@ client.sql.deleteAsync({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The async search ID
+** *`id` (string)*: Identifier for the search.
 
 [discrete]
 ==== get_async
@@ -8607,7 +8619,7 @@ client.sql.getAsync({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The async search ID
+** *`id` (string)*: Identifier for the search.
 ** *`delimiter` (Optional, string)*: Separator for CSV results. The API only supports this parameter for CSV responses.
 ** *`format` (Optional, string)*: Format for the response. You must specify a format using this parameter or the
 Accept HTTP header. If you specify both, the API uses this parameter.
@@ -8630,7 +8642,7 @@ client.sql.getAsyncStatus({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The async search ID
+** *`id` (string)*: Identifier for the search.
 
 [discrete]
 ==== query
@@ -8648,13 +8660,15 @@ client.sql.query({ ... })
 * *Request (object):*
 ** *`catalog` (Optional, string)*: Default catalog (cluster) for queries. If unspecified, the queries execute on the data in the local cluster only.
 ** *`columnar` (Optional, boolean)*: If true, the results in a columnar fashion: one row represents all the values of a certain column from the current page of results.
-** *`cursor` (Optional, string)*
+** *`cursor` (Optional, string)*: Cursor used to retrieve a set of paginated results.
+If you specify a cursor, the API only uses the `columnar` and `time_zone` request body parameters.
+It ignores other request body parameters.
 ** *`fetch_size` (Optional, number)*: The maximum number of rows (or entries) to return in one response
-** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*: Optional Elasticsearch query DSL for additional filtering.
-** *`query` (Optional, string)*: SQL query to execute
+** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*: Elasticsearch query DSL for additional filtering.
+** *`query` (Optional, string)*: SQL query to run.
 ** *`request_timeout` (Optional, string | -1 | 0)*: The timeout before the request fails.
 ** *`page_timeout` (Optional, string | -1 | 0)*: The timeout before a pagination request fails.
-** *`time_zone` (Optional, string)*: Time-zone in ISO 8601 used for executing the query on the server. More information available here.
+** *`time_zone` (Optional, string)*: ISO-8601 time zone ID for the search.
 ** *`field_multi_value_leniency` (Optional, boolean)*: Throw an exception when encountering multiple values for a field (default) or be lenient and return the first value from the list (without any guarantees of what that will be - typically the first in natural ascending order).
 ** *`runtime_mappings` (Optional, Record<string, { fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request. These fields take
 precedence over mapped fields with the same name.
@@ -8663,7 +8677,7 @@ precedence over mapped fields with the same name.
 ** *`keep_alive` (Optional, string | -1 | 0)*: Retention period for an async or saved synchronous search.
 ** *`keep_on_completion` (Optional, boolean)*: If true, Elasticsearch stores synchronous searches if you also specify the wait_for_completion_timeout parameter. If false, Elasticsearch only stores async searches that don’t finish before the wait_for_completion_timeout.
 ** *`index_using_frozen` (Optional, boolean)*: If true, the search can run on frozen indices. Defaults to false.
-** *`format` (Optional, string)*: a short version of the Accept header, e.g. json, yaml
+** *`format` (Optional, string)*: Format for the response.
 
 [discrete]
 ==== translate
@@ -8679,10 +8693,10 @@ client.sql.translate({ query })
 ==== Arguments
 
 * *Request (object):*
-** *`query` (string)*
-** *`fetch_size` (Optional, number)*
-** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*
-** *`time_zone` (Optional, string)*
+** *`query` (string)*: SQL query to run.
+** *`fetch_size` (Optional, number)*: The maximum number of rows (or entries) to return in one response.
+** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*: Elasticsearch query DSL for additional filtering.
+** *`time_zone` (Optional, string)*: ISO-8601 time zone ID for the search.
 
 [discrete]
 === ssl
@@ -8835,10 +8849,10 @@ client.tasks.cancel({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`task_id` (Optional, string | number)*: Cancel the task with specified task id (node_id:task_number)
-** *`actions` (Optional, string | string[])*: A list of actions that should be cancelled. Leave empty to cancel all.
-** *`nodes` (Optional, string[])*: A list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-** *`parent_task_id` (Optional, string)*: Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
+** *`task_id` (Optional, string | number)*: ID of the task.
+** *`actions` (Optional, string | string[])*: List or wildcard expression of actions used to limit the request.
+** *`nodes` (Optional, string[])*: List of node IDs or names used to limit the request.
+** *`parent_task_id` (Optional, string)*: Parent task ID used to limit the tasks.
 ** *`wait_for_completion` (Optional, boolean)*: Should the request block until the cancellation of the task and its descendant tasks is completed. Defaults to false
 
 [discrete]
@@ -8855,9 +8869,10 @@ client.tasks.get({ task_id })
 ==== Arguments
 
 * *Request (object):*
-** *`task_id` (string)*: Return the task with specified id (node_id:task_number)
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
-** *`wait_for_completion` (Optional, boolean)*: Wait for the matching tasks to complete (default: false)
+** *`task_id` (string)*: ID of the task.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`wait_for_completion` (Optional, boolean)*: If `true`, the request blocks until the task has completed.
 
 [discrete]
 ==== list
