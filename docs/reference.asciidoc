@@ -38,17 +38,21 @@ client.bulk({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string)*: Default index for items which don't provide one
+** *`index` (Optional, string)*: Name of the data stream, index, or index alias to perform bulk actions on.
 ** *`operations` (Optional, { index, create, update, delete } | { detect_noop, doc, doc_as_upsert, script, scripted_upsert, _source, upsert } | object[])*
-** *`pipeline` (Optional, string)*: The pipeline id to preprocess incoming documents with
-** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
-** *`routing` (Optional, string)*: Specific routing value
-** *`_source` (Optional, boolean | string | string[])*: True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
-** *`_source_excludes` (Optional, string | string[])*: Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
-** *`_source_includes` (Optional, string | string[])*: Default list of fields to extract and return from the _source field, can be overridden on each sub-request
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
-** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Sets the number of shard copies that must be active before proceeding with the bulk operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-** *`require_alias` (Optional, boolean)*: Sets require_alias for all incoming documents. Defaults to unset (false)
+** *`pipeline` (Optional, string)*: ID of the pipeline to use to preprocess incoming documents.
+If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request.
+If a final pipeline is configured it will always run, regardless of the value of this parameter.
+** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` do nothing with refreshes.
+Valid values: `true`, `false`, `wait_for`.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`_source` (Optional, boolean | string | string[])*: `true` or `false` to return the `_source` field or not, or a list of fields to return.
+** *`_source_excludes` (Optional, string | string[])*: A list of source fields to exclude from the response.
+** *`_source_includes` (Optional, string | string[])*: A list of source fields to include in the response.
+** *`timeout` (Optional, string | -1 | 0)*: Period each action waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.
+** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: The number of shard copies that must be active before proceeding with the operation.
+Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+** *`require_alias` (Optional, boolean)*: If `true`, the request’s actions must target an index alias.
 
 [discrete]
 === clear_scroll
@@ -63,7 +67,8 @@ client.clearScroll({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`scroll_id` (Optional, string | string[])*: A list of scroll IDs to clear
+** *`scroll_id` (Optional, string | string[])*: List of scroll IDs to clear.
+To clear all scroll IDs, use `_all`.
 
 [discrete]
 === close_point_in_time
@@ -78,7 +83,7 @@ client.closePointInTime({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*
+** *`id` (string)*: The ID of the point-in-time.
 
 [discrete]
 === count
@@ -623,20 +628,22 @@ client.mtermvectors({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string)*: The index in which the document resides.
-** *`docs` (Optional, { _id, _index, routing, _source, stored_fields, version, version_type }[])*
-** *`ids` (Optional, string[])*
-** *`fields` (Optional, string | string[])*: A list of fields to return. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-** *`field_statistics` (Optional, boolean)*: Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-** *`offsets` (Optional, boolean)*: Specifies if term offsets should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-** *`payloads` (Optional, boolean)*: Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-** *`positions` (Optional, boolean)*: Specifies if term positions should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body "params" or "docs".
-** *`realtime` (Optional, boolean)*: Specifies if requests are real-time as opposed to near-real-time (default: true).
-** *`routing` (Optional, string)*: Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-** *`term_statistics` (Optional, boolean)*: Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-** *`version` (Optional, number)*: Explicit version number for concurrency control
-** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type
+** *`index` (Optional, string)*: Name of the index that contains the documents.
+** *`docs` (Optional, { _id, _index, routing, _source, stored_fields, version, version_type }[])*: Array of existing or artificial documents.
+** *`ids` (Optional, string[])*: Simplified syntax to specify documents by their ID if they're in the same index.
+** *`fields` (Optional, string | string[])*: List or wildcard expressions of fields to include in the statistics.
+Used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
+** *`field_statistics` (Optional, boolean)*: If `true`, the response includes the document count, sum of document frequencies, and sum of total term frequencies.
+** *`offsets` (Optional, boolean)*: If `true`, the response includes term offsets.
+** *`payloads` (Optional, boolean)*: If `true`, the response includes term payloads.
+** *`positions` (Optional, boolean)*: If `true`, the response includes term positions.
+** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
+Random by default.
+** *`realtime` (Optional, boolean)*: If true, the request is real-time as opposed to near-real-time.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`term_statistics` (Optional, boolean)*: If true, the response includes term frequency and document frequency.
+** *`version` (Optional, number)*: If `true`, returns the document version as part of a hit.
+** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type.
 
 [discrete]
 === open_point_in_time
@@ -1106,22 +1113,24 @@ client.termvectors({ index })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string)*: The index in which the document resides.
-** *`id` (Optional, string)*: The id of the document, when not specified a doc param should be supplied.
-** *`doc` (Optional, object)*: A document.
-** *`filter` (Optional, { max_doc_freq, max_num_terms, max_term_freq, max_word_length, min_doc_freq, min_term_freq, min_word_length })*
-** *`per_field_analyzer` (Optional, Record<string, string>)*
-** *`fields` (Optional, string | string[])*: A list of fields to return.
-** *`field_statistics` (Optional, boolean)*: Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned.
-** *`offsets` (Optional, boolean)*: Specifies if term offsets should be returned.
-** *`payloads` (Optional, boolean)*: Specifies if term payloads should be returned.
-** *`positions` (Optional, boolean)*: Specifies if term positions should be returned.
-** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random).
-** *`realtime` (Optional, boolean)*: Specifies if request is real-time as opposed to near-real-time (default: true).
-** *`routing` (Optional, string)*: Specific routing value.
-** *`term_statistics` (Optional, boolean)*: Specifies if total term frequency and document frequency should be returned.
-** *`version` (Optional, number)*: Explicit version number for concurrency control
-** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type
+** *`index` (string)*: Name of the index that contains the document.
+** *`id` (Optional, string)*: Unique identifier of the document.
+** *`doc` (Optional, object)*: An artificial document (a document not present in the index) for which you want to retrieve term vectors.
+** *`filter` (Optional, { max_doc_freq, max_num_terms, max_term_freq, max_word_length, min_doc_freq, min_term_freq, min_word_length })*: Filter terms based on their tf-idf scores.
+** *`per_field_analyzer` (Optional, Record<string, string>)*: Overrides the default per-field analyzer.
+** *`fields` (Optional, string | string[])*: List or wildcard expressions of fields to include in the statistics.
+Used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
+** *`field_statistics` (Optional, boolean)*: If `true`, the response includes the document count, sum of document frequencies, and sum of total term frequencies.
+** *`offsets` (Optional, boolean)*: If `true`, the response includes term offsets.
+** *`payloads` (Optional, boolean)*: If `true`, the response includes term payloads.
+** *`positions` (Optional, boolean)*: If `true`, the response includes term positions.
+** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
+Random by default.
+** *`realtime` (Optional, boolean)*: If true, the request is real-time as opposed to near-real-time.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`term_statistics` (Optional, boolean)*: If `true`, the response includes term frequency and document frequency.
+** *`version` (Optional, number)*: If `true`, returns the document version as part of a hit.
+** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type.
 
 [discrete]
 === update
