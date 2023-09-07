@@ -142,16 +142,23 @@ client.create({ id, index })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Document ID
-** *`index` (string)*: The name of the index
+** *`id` (string)*: Unique identifier for the document.
+** *`index` (string)*: Name of the data stream or index to target.
+If the target doesn’t exist and matches the name or wildcard (`*`) pattern of an index template with a `data_stream` definition, this request creates the data stream.
+If the target doesn’t exist and doesn’t match a data stream template, this request creates the index.
 ** *`document` (Optional, object)*: A document.
-** *`pipeline` (Optional, string)*: The pipeline id to preprocess incoming documents with
-** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
-** *`routing` (Optional, string)*: Specific routing value
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
-** *`version` (Optional, number)*: Explicit version number for concurrency control
-** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type
-** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
+** *`pipeline` (Optional, string)*: ID of the pipeline to use to preprocess incoming documents.
+If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request.
+If a final pipeline is configured it will always run, regardless of the value of this parameter.
+** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` do nothing with refreshes.
+Valid values: `true`, `false`, `wait_for`.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`timeout` (Optional, string | -1 | 0)*: Period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.
+** *`version` (Optional, number)*: Explicit version number for concurrency control.
+The specified version must match the current version of the document for the request to succeed.
+** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type: `external`, `external_gte`.
+** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: The number of shard copies that must be active before proceeding with the operation.
+Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 
 [discrete]
 === delete
@@ -166,16 +173,19 @@ client.delete({ id, index })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The document ID
-** *`index` (string)*: The name of the index
-** *`if_primary_term` (Optional, number)*: only perform the delete operation if the last operation that has changed the document has the specified primary term
-** *`if_seq_no` (Optional, number)*: only perform the delete operation if the last operation that has changed the document has the specified sequence number
-** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
-** *`routing` (Optional, string)*: Specific routing value
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
-** *`version` (Optional, number)*: Explicit version number for concurrency control
-** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type
-** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
+** *`id` (string)*: Unique identifier for the document.
+** *`index` (string)*: Name of the target index.
+** *`if_primary_term` (Optional, number)*: Only perform the operation if the document has this primary term.
+** *`if_seq_no` (Optional, number)*: Only perform the operation if the document has this sequence number.
+** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` do nothing with refreshes.
+Valid values: `true`, `false`, `wait_for`.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for active shards.
+** *`version` (Optional, number)*: Explicit version number for concurrency control.
+The specified version must match the current version of the document for the request to succeed.
+** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type: `external`, `external_gte`.
+** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: The number of shard copies that must be active before proceeding with the operation.
+Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
 
 [discrete]
 === delete_by_query
@@ -190,38 +200,55 @@ client.deleteByQuery({ index })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string | string[])*: A list of index names to search; use `_all` or empty string to perform the operation on all indices
-** *`max_docs` (Optional, number)*
-** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*
-** *`slice` (Optional, { field, id, max })*
-** *`allow_no_indices` (Optional, boolean)*: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-** *`analyzer` (Optional, string)*: The analyzer to use for the query string
-** *`analyze_wildcard` (Optional, boolean)*: Specify whether wildcard and prefix queries should be analyzed (default: false)
-** *`conflicts` (Optional, Enum("abort" | "proceed"))*: What to do when the delete by query hits version conflicts?
-** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query (AND or OR)
-** *`df` (Optional, string)*: The field to use as default where no field prefix is given in the query string
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+** *`index` (string | string[])*: List of data streams, indices, and aliases to search.
+Supports wildcards (`*`).
+To search all data streams or indices, omit this parameter or use `*` or `_all`.
+** *`max_docs` (Optional, number)*: The maximum number of documents to delete.
+** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*: Specifies the documents to delete using the Query DSL.
+** *`slice` (Optional, { field, id, max })*: Slice the request manually using the provided slice ID and total number of slices.
+** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
+This behavior applies even if the request targets other open indices.
+For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+** *`analyzer` (Optional, string)*: Analyzer to use for the query string.
+** *`analyze_wildcard` (Optional, boolean)*: If `true`, wildcard and prefix queries are analyzed.
+** *`conflicts` (Optional, Enum("abort" | "proceed"))*: What to do if delete by query hits version conflicts: `abort` or `proceed`.
+** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query: `AND` or `OR`.
+** *`df` (Optional, string)*: Field to use as default where no field prefix is given in the query string.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
+If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`from` (Optional, number)*: Starting offset (default: 0)
-** *`ignore_unavailable` (Optional, boolean)*: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-** *`lenient` (Optional, boolean)*: Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random)
-** *`refresh` (Optional, boolean)*: Should the affected indexes be refreshed?
-** *`request_cache` (Optional, boolean)*: Specify if request cache should be used for this request or not, defaults to index level setting
-** *`requests_per_second` (Optional, float)*: The throttle for this request in sub-requests per second. -1 means no throttle.
-** *`routing` (Optional, string)*: A list of specific routing values
-** *`q` (Optional, string)*: Query in the Lucene query string syntax
-** *`scroll` (Optional, string | -1 | 0)*: Specify how long a consistent view of the index should be maintained for scrolled search
-** *`scroll_size` (Optional, number)*: Size on the scroll request powering the delete by query
-** *`search_timeout` (Optional, string | -1 | 0)*: Explicit timeout for each search request. Defaults to no timeout.
-** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: Search operation type
-** *`slices` (Optional, number | Enum("auto"))*: The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`.
-** *`sort` (Optional, string[])*: A list of <field>:<direction> pairs
-** *`stats` (Optional, string[])*: Specific 'tag' of the request for logging and statistical purposes
-** *`terminate_after` (Optional, number)*: The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
-** *`timeout` (Optional, string | -1 | 0)*: Time each individual bulk request should wait for shards that are unavailable.
-** *`version` (Optional, boolean)*: Specify whether to return document version as part of a hit
-** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-** *`wait_for_completion` (Optional, boolean)*: Should the request should block until the delete by query is complete.
+** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
+** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
+** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
+Random by default.
+** *`refresh` (Optional, boolean)*: If `true`, Elasticsearch refreshes all shards involved in the delete by query after the request completes.
+** *`request_cache` (Optional, boolean)*: If `true`, the request cache is used for this request.
+Defaults to the index-level setting.
+** *`requests_per_second` (Optional, float)*: The throttle for this request in sub-requests per second.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`q` (Optional, string)*: Query in the Lucene query string syntax.
+** *`scroll` (Optional, string | -1 | 0)*: Period to retain the search context for scrolling.
+** *`scroll_size` (Optional, number)*: Size of the scroll request that powers the operation.
+** *`search_timeout` (Optional, string | -1 | 0)*: Explicit timeout for each search request.
+Defaults to no timeout.
+** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: The type of the search operation.
+Available options: `query_then_fetch`, `dfs_query_then_fetch`.
+** *`slices` (Optional, number | Enum("auto"))*: The number of slices this task should be divided into.
+** *`sort` (Optional, string[])*: A list of <field>:<direction> pairs.
+** *`stats` (Optional, string[])*: Specific `tag` of the request for logging and statistical purposes.
+** *`terminate_after` (Optional, number)*: Maximum number of documents to collect for each shard.
+If a query reaches this limit, Elasticsearch terminates the query early.
+Elasticsearch collects documents before sorting.
+Use with caution.
+Elasticsearch applies this parameter to each shard handling the request.
+When possible, let Elasticsearch perform early termination automatically.
+Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers.
+** *`timeout` (Optional, string | -1 | 0)*: Period each deletion request waits for active shards.
+** *`version` (Optional, boolean)*: If `true`, returns the document version as part of a hit.
+** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: The number of shard copies that must be active before proceeding with the operation.
+Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+** *`wait_for_completion` (Optional, boolean)*: If `true`, the request blocks until the operation is complete.
 
 [discrete]
 === delete_by_query_rethrottle
@@ -236,8 +263,8 @@ client.deleteByQueryRethrottle({ task_id })
 ==== Arguments
 
 * *Request (object):*
-** *`task_id` (string | number)*: The task id to rethrottle
-** *`requests_per_second` (Optional, float)*: The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
+** *`task_id` (string | number)*: The ID for the task.
+** *`requests_per_second` (Optional, float)*: The throttle for this request in sub-requests per second.
 
 [discrete]
 === delete_script
@@ -252,9 +279,11 @@ client.deleteScript({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Script ID
-** *`master_timeout` (Optional, string | -1 | 0)*: Specify timeout for connection to master
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
+** *`id` (string)*: Identifier for the stored script or search template.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 === exists
@@ -402,7 +431,7 @@ client.getScript({ id })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Script ID
+** *`id` (string)*: Identifier for the stored script or search template.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Specify timeout for connection to master
 
 [discrete]
@@ -659,11 +688,14 @@ client.openPointInTime({ index, keep_alive })
 
 * *Request (object):*
 ** *`index` (string | string[])*: A list of index names to open point in time; use `_all` or empty string to perform the operation on all indices
-** *`keep_alive` (string | -1 | 0)*: Specific the time to live for the point in time
-** *`ignore_unavailable` (Optional, boolean)*: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random)
-** *`routing` (Optional, string)*: Specific routing value
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+** *`keep_alive` (string | -1 | 0)*: Extends the time to live of the corresponding point in time.
+** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
+** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
+Random by default.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
+If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 
 [discrete]
 === ping
@@ -688,11 +720,15 @@ client.putScript({ id, script })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: Script ID
-** *`script` ({ lang, options, source })*
-** *`context` (Optional, string)*: Script context
-** *`master_timeout` (Optional, string | -1 | 0)*: Specify timeout for connection to master
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
+** *`id` (string)*: Identifier for the stored script or search template.
+Must be unique within the cluster.
+** *`script` ({ lang, options, source })*: Contains the script or search template, its parameters, and its language.
+** *`context` (Optional, string)*: Context in which the script or search template should run.
+To prevent errors, the API immediately compiles the script or template in this context.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
+If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
+If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 === rank_eval
@@ -796,9 +832,9 @@ client.scriptsPainlessExecute({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`context` (Optional, string)*
-** *`context_setup` (Optional, { document, index, query })*
-** *`script` (Optional, { lang, options, source })*
+** *`context` (Optional, string)*: The context that the script should run in.
+** *`context_setup` (Optional, { document, index, query })*: Additional parameters for the `context`.
+** *`script` (Optional, { lang, options, source })*: The Painless script to execute.
 
 [discrete]
 === scroll
@@ -1189,40 +1225,57 @@ client.updateByQuery({ index })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string | string[])*: A list of index names to search; use `_all` or empty string to perform the operation on all indices
-** *`max_docs` (Optional, number)*
-** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*
-** *`script` (Optional, { lang, options, source } | { id })*
-** *`slice` (Optional, { field, id, max })*
-** *`conflicts` (Optional, Enum("abort" | "proceed"))*
-** *`allow_no_indices` (Optional, boolean)*: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-** *`analyzer` (Optional, string)*: The analyzer to use for the query string
-** *`analyze_wildcard` (Optional, boolean)*: Specify whether wildcard and prefix queries should be analyzed (default: false)
-** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query (AND or OR)
-** *`df` (Optional, string)*: The field to use as default where no field prefix is given in the query string
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+** *`index` (string | string[])*: List of data streams, indices, and aliases to search.
+Supports wildcards (`*`).
+To search all data streams or indices, omit this parameter or use `*` or `_all`.
+** *`max_docs` (Optional, number)*: The maximum number of documents to update.
+** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*: Specifies the documents to update using the Query DSL.
+** *`script` (Optional, { lang, options, source } | { id })*: The script to run to update the document source or metadata when updating.
+** *`slice` (Optional, { field, id, max })*: Slice the request manually using the provided slice ID and total number of slices.
+** *`conflicts` (Optional, Enum("abort" | "proceed"))*: What to do if update by query hits version conflicts: `abort` or `proceed`.
+** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
+This behavior applies even if the request targets other open indices.
+For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+** *`analyzer` (Optional, string)*: Analyzer to use for the query string.
+** *`analyze_wildcard` (Optional, boolean)*: If `true`, wildcard and prefix queries are analyzed.
+** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query: `AND` or `OR`.
+** *`df` (Optional, string)*: Field to use as default where no field prefix is given in the query string.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
+If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+Supports a list of values, such as `open,hidden`.
+Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`from` (Optional, number)*: Starting offset (default: 0)
-** *`ignore_unavailable` (Optional, boolean)*: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-** *`lenient` (Optional, boolean)*: Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-** *`pipeline` (Optional, string)*: Ingest pipeline to set on index requests made by this action. (default: none)
-** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random)
-** *`refresh` (Optional, boolean)*: Should the affected indexes be refreshed?
-** *`request_cache` (Optional, boolean)*: Specify if request cache should be used for this request or not, defaults to index level setting
-** *`requests_per_second` (Optional, float)*: The throttle to set on this request in sub-requests per second. -1 means no throttle.
-** *`routing` (Optional, string)*: A list of specific routing values
-** *`scroll` (Optional, string | -1 | 0)*: Specify how long a consistent view of the index should be maintained for scrolled search
-** *`scroll_size` (Optional, number)*: Size on the scroll request powering the update by query
-** *`search_timeout` (Optional, string | -1 | 0)*: Explicit timeout for each search request. Defaults to no timeout.
-** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: Search operation type
-** *`slices` (Optional, number | Enum("auto"))*: The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`.
-** *`sort` (Optional, string[])*: A list of <field>:<direction> pairs
-** *`stats` (Optional, string[])*: Specific 'tag' of the request for logging and statistical purposes
-** *`terminate_after` (Optional, number)*: The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
-** *`timeout` (Optional, string | -1 | 0)*: Time each individual bulk request should wait for shards that are unavailable.
-** *`version` (Optional, boolean)*: Specify whether to return document version as part of a hit
+** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
+** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
+** *`pipeline` (Optional, string)*: ID of the pipeline to use to preprocess incoming documents.
+If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request.
+If a final pipeline is configured it will always run, regardless of the value of this parameter.
+** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
+Random by default.
+** *`refresh` (Optional, boolean)*: If `true`, Elasticsearch refreshes affected shards to make the operation visible to search.
+** *`request_cache` (Optional, boolean)*: If `true`, the request cache is used for this request.
+** *`requests_per_second` (Optional, float)*: The throttle for this request in sub-requests per second.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`scroll` (Optional, string | -1 | 0)*: Period to retain the search context for scrolling.
+** *`scroll_size` (Optional, number)*: Size of the scroll request that powers the operation.
+** *`search_timeout` (Optional, string | -1 | 0)*: Explicit timeout for each search request.
+** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: The type of the search operation. Available options: `query_then_fetch`, `dfs_query_then_fetch`.
+** *`slices` (Optional, number | Enum("auto"))*: The number of slices this task should be divided into.
+** *`sort` (Optional, string[])*: A list of <field>:<direction> pairs.
+** *`stats` (Optional, string[])*: Specific `tag` of the request for logging and statistical purposes.
+** *`terminate_after` (Optional, number)*: Maximum number of documents to collect for each shard.
+If a query reaches this limit, Elasticsearch terminates the query early.
+Elasticsearch collects documents before sorting.
+Use with caution.
+Elasticsearch applies this parameter to each shard handling the request.
+When possible, let Elasticsearch perform early termination automatically.
+Avoid specifying this parameter for requests that target data streams with backing indices across multiple data tiers.
+** *`timeout` (Optional, string | -1 | 0)*: Period each update request waits for the following operations: dynamic mapping updates, waiting for active shards.
+** *`version` (Optional, boolean)*: If `true`, returns the document version as part of a hit.
 ** *`version_type` (Optional, boolean)*: Should the document increment the version number (internal) on hit or not (reindex)
-** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Sets the number of shard copies that must be active before proceeding with the update by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-** *`wait_for_completion` (Optional, boolean)*: Should the request should block until the update by query operation is complete.
+** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: The number of shard copies that must be active before proceeding with the operation.
+Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+** *`wait_for_completion` (Optional, boolean)*: If `true`, the request blocks until the operation is complete.
 
 [discrete]
 === update_by_query_rethrottle
@@ -1237,8 +1290,8 @@ client.updateByQueryRethrottle({ task_id })
 ==== Arguments
 
 * *Request (object):*
-** *`task_id` (string)*: The task id to rethrottle
-** *`requests_per_second` (Optional, float)*: The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
+** *`task_id` (string)*: The ID for the task.
+** *`requests_per_second` (Optional, float)*: The throttle for this request in sub-requests per second.
 
 [discrete]
 === async_search
