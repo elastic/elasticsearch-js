@@ -298,18 +298,23 @@ client.exists({ id, index })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The document ID
-** *`index` (string)*: The name of the index
-** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random)
-** *`realtime` (Optional, boolean)*: Specify whether to perform the operation in realtime or search mode
-** *`refresh` (Optional, boolean)*: Refresh the shard containing the document before performing the operation
-** *`routing` (Optional, string)*: Specific routing value
-** *`_source` (Optional, boolean | string | string[])*: True or false to return the _source field or not, or a list of fields to return
-** *`_source_excludes` (Optional, string | string[])*: A list of fields to exclude from the returned _source field
-** *`_source_includes` (Optional, string | string[])*: A list of fields to extract and return from the _source field
-** *`stored_fields` (Optional, string | string[])*: A list of stored fields to return in the response
-** *`version` (Optional, number)*: Explicit version number for concurrency control
-** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type
+** *`id` (string)*: Identifier of the document.
+** *`index` (string)*: List of data streams, indices, and aliases.
+Supports wildcards (`*`).
+** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
+Random by default.
+** *`realtime` (Optional, boolean)*: If `true`, the request is real-time as opposed to near-real-time.
+** *`refresh` (Optional, boolean)*: If `true`, Elasticsearch refreshes all shards involved in the delete by query after the request completes.
+** *`routing` (Optional, string)*: Target the specified primary shard.
+** *`_source` (Optional, boolean | string | string[])*: `true` or `false` to return the `_source` field or not, or a list of fields to return.
+** *`_source_excludes` (Optional, string | string[])*: A list of source fields to exclude in the response.
+** *`_source_includes` (Optional, string | string[])*: A list of source fields to include in the response.
+** *`stored_fields` (Optional, string | string[])*: List of stored fields to return as part of a hit.
+If no fields are specified, no stored fields are included in the response.
+If this field is specified, the `_source` parameter defaults to false.
+** *`version` (Optional, number)*: Explicit version number for concurrency control.
+The specified version must match the current version of the document for the request to succeed.
+** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type: `external`, `external_gte`.
 
 [discrete]
 === exists_source
@@ -324,17 +329,20 @@ client.existsSource({ id, index })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The document ID
-** *`index` (string)*: The name of the index
-** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random)
-** *`realtime` (Optional, boolean)*: Specify whether to perform the operation in realtime or search mode
-** *`refresh` (Optional, boolean)*: Refresh the shard containing the document before performing the operation
-** *`routing` (Optional, string)*: Specific routing value
-** *`_source` (Optional, boolean | string | string[])*: True or false to return the _source field or not, or a list of fields to return
-** *`_source_excludes` (Optional, string | string[])*: A list of fields to exclude from the returned _source field
-** *`_source_includes` (Optional, string | string[])*: A list of fields to extract and return from the _source field
-** *`version` (Optional, number)*: Explicit version number for concurrency control
-** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type
+** *`id` (string)*: Identifier of the document.
+** *`index` (string)*: List of data streams, indices, and aliases.
+Supports wildcards (`*`).
+** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
+Random by default.
+** *`realtime` (Optional, boolean)*: If true, the request is real-time as opposed to near-real-time.
+** *`refresh` (Optional, boolean)*: If `true`, Elasticsearch refreshes all shards involved in the delete by query after the request completes.
+** *`routing` (Optional, string)*: Target the specified primary shard.
+** *`_source` (Optional, boolean | string | string[])*: `true` or `false` to return the `_source` field or not, or a list of fields to return.
+** *`_source_excludes` (Optional, string | string[])*: A list of source fields to exclude in the response.
+** *`_source_includes` (Optional, string | string[])*: A list of source fields to include in the response.
+** *`version` (Optional, number)*: Explicit version number for concurrency control.
+The specified version must match the current version of the document for the request to succeed.
+** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type: `external`, `external_gte`.
 
 [discrete]
 === explain
@@ -349,21 +357,24 @@ client.explain({ id, index })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string)*: The document ID
-** *`index` (string)*: The name of the index
-** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*
-** *`analyzer` (Optional, string)*: The analyzer for the query string query
-** *`analyze_wildcard` (Optional, boolean)*: Specify whether wildcards and prefix queries in the query string query should be analyzed (default: false)
-** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query (AND or OR)
-** *`df` (Optional, string)*: The default field for query string query (default: _all)
-** *`lenient` (Optional, boolean)*: Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random)
-** *`routing` (Optional, string)*: Specific routing value
-** *`_source` (Optional, boolean | string | string[])*: True or false to return the _source field or not, or a list of fields to return
-** *`_source_excludes` (Optional, string | string[])*: A list of fields to exclude from the returned _source field
-** *`_source_includes` (Optional, string | string[])*: A list of fields to extract and return from the _source field
-** *`stored_fields` (Optional, string | string[])*: A list of stored fields to return in the response
-** *`q` (Optional, string)*: Query in the Lucene query string syntax
+** *`id` (string)*: Defines the document ID.
+** *`index` (string)*: Index names used to limit the request.
+Only a single index name can be provided to this parameter.
+** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*: Defines the search definition using the Query DSL.
+** *`analyzer` (Optional, string)*: Analyzer to use for the query string.
+This parameter can only be used when the `q` query string parameter is specified.
+** *`analyze_wildcard` (Optional, boolean)*: If `true`, wildcard and prefix queries are analyzed.
+** *`default_operator` (Optional, Enum("and" | "or"))*: The default operator for query string query: `AND` or `OR`.
+** *`df` (Optional, string)*: Field to use as default where no field prefix is given in the query string.
+** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
+** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
+Random by default.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`_source` (Optional, boolean | string | string[])*: True or false to return the `_source` field or not, or a list of fields to return.
+** *`_source_excludes` (Optional, string | string[])*: A list of source fields to exclude from the response.
+** *`_source_includes` (Optional, string | string[])*: A list of source fields to include in the response.
+** *`stored_fields` (Optional, string | string[])*: A list of stored fields to return in the response.
+** *`q` (Optional, string)*: Query in the Lucene query string syntax.
 
 [discrete]
 === field_caps
@@ -408,13 +419,15 @@ client.get({ id, index })
 ** *`id` (string)*: Unique identifier of the document.
 ** *`index` (string)*: Name of the index that contains the document.
 ** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on. Random by default.
-** *`realtime` (Optional, boolean)*: Boolean) If true, the request is real-time as opposed to near-real-time.
+** *`realtime` (Optional, boolean)*: If `true`, the request is real-time as opposed to near-real-time.
 ** *`refresh` (Optional, boolean)*: If true, Elasticsearch refreshes the affected shards to make this operation visible to search. If false, do nothing with refreshes.
 ** *`routing` (Optional, string)*: Target the specified primary shard.
 ** *`_source` (Optional, boolean | string | string[])*: True or false to return the _source field or not, or a list of fields to return.
 ** *`_source_excludes` (Optional, string | string[])*: A list of source fields to exclude in the response.
 ** *`_source_includes` (Optional, string | string[])*: A list of source fields to include in the response.
-** *`stored_fields` (Optional, string | string[])*: A list of stored fields to return in the response
+** *`stored_fields` (Optional, string | string[])*: List of stored fields to return as part of a hit.
+If no fields are specified, no stored fields are included in the response.
+If this field is specified, the `_source` parameter defaults to false.
 ** *`version` (Optional, number)*: Explicit version number for concurrency control. The specified version must match the current version of the document for the request to succeed.
 ** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type: internal, external, external_gte.
 
@@ -511,20 +524,30 @@ client.index({ index })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string)*: The name of the index
-** *`id` (Optional, string)*: Document ID
+** *`index` (string)*: Name of the data stream or index to target.
+** *`id` (Optional, string)*: Unique identifier for the document.
 ** *`document` (Optional, object)*: A document.
-** *`if_primary_term` (Optional, number)*: only perform the index operation if the last operation that has changed the document has the specified primary term
-** *`if_seq_no` (Optional, number)*: only perform the index operation if the last operation that has changed the document has the specified sequence number
-** *`op_type` (Optional, Enum("index" | "create"))*: Explicit operation type. Defaults to `index` for requests with an explicit document ID, and to `create`for requests without an explicit document ID
-** *`pipeline` (Optional, string)*: The pipeline id to preprocess incoming documents with
-** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
-** *`routing` (Optional, string)*: Specific routing value
-** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
-** *`version` (Optional, number)*: Explicit version number for concurrency control
-** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type
-** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-** *`require_alias` (Optional, boolean)*: When true, requires destination to be an alias. Default is false
+** *`if_primary_term` (Optional, number)*: Only perform the operation if the document has this primary term.
+** *`if_seq_no` (Optional, number)*: Only perform the operation if the document has this sequence number.
+** *`op_type` (Optional, Enum("index" | "create"))*: Set to create to only index the document if it does not already exist (put if absent).
+If a document with the specified `_id` already exists, the indexing operation will fail.
+Same as using the `<index>/_create` endpoint.
+Valid values: `index`, `create`.
+If document id is specified, it defaults to `index`.
+Otherwise, it defaults to `create`.
+** *`pipeline` (Optional, string)*: ID of the pipeline to use to preprocess incoming documents.
+If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request.
+If a final pipeline is configured it will always run, regardless of the value of this parameter.
+** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` do nothing with refreshes.
+Valid values: `true`, `false`, `wait_for`.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
+** *`timeout` (Optional, string | -1 | 0)*: Period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.
+** *`version` (Optional, number)*: Explicit version number for concurrency control.
+The specified version must match the current version of the document for the request to succeed.
+** *`version_type` (Optional, Enum("internal" | "external" | "external_gte" | "force"))*: Specific version type: `external`, `external_gte`.
+** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: The number of shard copies that must be active before proceeding with the operation.
+Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+** *`require_alias` (Optional, boolean)*: If `true`, the destination must be an index alias.
 
 [discrete]
 === info
@@ -636,13 +659,17 @@ client.msearchTemplate({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string | string[])*: A list of index names to use as default
+** *`index` (Optional, string | string[])*: List of data streams, indices, and aliases to search.
+Supports wildcards (`*`).
+To search all data streams and indices, omit this parameter or use `*`.
 ** *`search_templates` (Optional, { allow_no_indices, expand_wildcards, ignore_unavailable, index, preference, request_cache, routing, search_type, ccs_minimize_roundtrips, allow_partial_search_results, ignore_throttled } | { aggregations, collapse, query, explain, ext, stored_fields, docvalue_fields, knn, from, highlight, indices_boost, min_score, post_filter, profile, rescore, script_fields, search_after, size, sort, _source, fields, terminate_after, stats, timeout, track_scores, track_total_hits, version, runtime_mappings, seq_no_primary_term, pit, suggest }[])*
-** *`ccs_minimize_roundtrips` (Optional, boolean)*: Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
-** *`max_concurrent_searches` (Optional, number)*: Controls the maximum number of concurrent searches the multi search api will execute
-** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: Search operation type
-** *`rest_total_hits_as_int` (Optional, boolean)*: Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-** *`typed_keys` (Optional, boolean)*: Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+** *`ccs_minimize_roundtrips` (Optional, boolean)*: If `true`, network round-trips are minimized for cross-cluster search requests.
+** *`max_concurrent_searches` (Optional, number)*: Maximum number of concurrent searches the API can run.
+** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: The type of the search operation.
+Available options: `query_then_fetch`, `dfs_query_then_fetch`.
+** *`rest_total_hits_as_int` (Optional, boolean)*: If `true`, the response returns `hits.total` as an integer.
+If `false`, it returns `hits.total` as an object.
+** *`typed_keys` (Optional, boolean)*: If `true`, the response prefixes aggregation and suggester names with their respective types.
 
 [discrete]
 === mtermvectors
@@ -798,8 +825,8 @@ client.reindexRethrottle({ task_id })
 ==== Arguments
 
 * *Request (object):*
-** *`task_id` (string)*: The task id to rethrottle
-** *`requests_per_second` (Optional, float)*: The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.
+** *`task_id` (string)*: Identifier for the task.
+** *`requests_per_second` (Optional, float)*: The throttle for this request in sub-requests per second.
 
 [discrete]
 === render_search_template
@@ -814,10 +841,16 @@ client.renderSearchTemplate({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`id` (Optional, string)*: The id of the stored search template
+** *`id` (Optional, string)*: ID of the search template to render.
+If no `source` is specified, this or the `id` request body parameter is required.
 ** *`file` (Optional, string)*
-** *`params` (Optional, Record<string, User-defined value>)*
-** *`source` (Optional, string)*
+** *`params` (Optional, Record<string, User-defined value>)*: Key-value pairs used to replace Mustache variables in the template.
+The key is the variable name.
+The value is the variable value.
+** *`source` (Optional, string)*: An inline search template.
+Supports the same parameters as the search API's request body.
+These parameters also support Mustache variables.
+If no `id` or `<templated-id>` is specified, this parameter is required.
 
 [discrete]
 === scripts_painless_execute
@@ -1070,13 +1103,19 @@ client.searchShards({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string | string[])*: A list of index names to search; use `_all` or empty string to perform the operation on all indices
-** *`allow_no_indices` (Optional, boolean)*: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
-** *`ignore_unavailable` (Optional, boolean)*: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-** *`local` (Optional, boolean)*: Return local information, do not retrieve the state from master node (default: false)
-** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random)
-** *`routing` (Optional, string)*: Specific routing value
+** *`index` (Optional, string | string[])*: Returns the indices and shards that a search request would be executed against.
+** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
+This behavior applies even if the request targets other open indices.
+For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
+If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+Supports a list of values, such as `open,hidden`.
+Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
+** *`local` (Optional, boolean)*: If `true`, the request retrieves information from the local node only.
+** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
+Random by default.
+** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
 
 [discrete]
 === search_template
@@ -1093,26 +1132,34 @@ client.searchTemplate({ ... })
 * *Request (object):*
 ** *`index` (Optional, string | string[])*: List of data streams, indices,
 and aliases to search. Supports wildcards (*).
-** *`explain` (Optional, boolean)*
+** *`explain` (Optional, boolean)*: If `true`, returns detailed information about score calculation as part of each hit.
 ** *`id` (Optional, string)*: ID of the search template to use. If no source is specified,
 this parameter is required.
-** *`params` (Optional, Record<string, User-defined value>)*
-** *`profile` (Optional, boolean)*
+** *`params` (Optional, Record<string, User-defined value>)*: Key-value pairs used to replace Mustache variables in the template.
+The key is the variable name.
+The value is the variable value.
+** *`profile` (Optional, boolean)*: If `true`, the query execution is profiled.
 ** *`source` (Optional, string)*: An inline search template. Supports the same parameters as the search API's
 request body. Also supports Mustache variables. If no id is specified, this
 parameter is required.
-** *`allow_no_indices` (Optional, boolean)*: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-** *`ccs_minimize_roundtrips` (Optional, boolean)*: Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
-** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
-** *`ignore_throttled` (Optional, boolean)*: Whether specified concrete, expanded or aliased indices should be ignored when throttled
-** *`ignore_unavailable` (Optional, boolean)*: Whether specified concrete indices should be ignored when unavailable (missing or closed)
-** *`preference` (Optional, string)*: Specify the node or shard the operation should be performed on (default: random)
+** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
+This behavior applies even if the request targets other open indices.
+For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
+** *`ccs_minimize_roundtrips` (Optional, boolean)*: If `true`, network round-trips are minimized for cross-cluster search requests.
+** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
+If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+Supports a list of values, such as `open,hidden`.
+Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+** *`ignore_throttled` (Optional, boolean)*: If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled.
+** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
+** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
+Random by default.
 ** *`routing` (Optional, string)*: Custom value used to route operations to a specific shard.
 ** *`scroll` (Optional, string | -1 | 0)*: Specifies how long a consistent view of the index
 should be maintained for scrolled search.
 ** *`search_type` (Optional, Enum("query_then_fetch" | "dfs_query_then_fetch"))*: The type of the search operation.
 ** *`rest_total_hits_as_int` (Optional, boolean)*: If true, hits.total are rendered as an integer in the response.
-** *`typed_keys` (Optional, boolean)*: Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+** *`typed_keys` (Optional, boolean)*: If `true`, the response prefixes aggregation and suggester names with their respective types.
 
 [discrete]
 === terms_enum
