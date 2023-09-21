@@ -8,7 +8,7 @@ improving the documentation,
 submitting bug reports and feature requests or writing code.
 
 ## Repository structure
-The `master` branch is considered unstable, and it's compatible with Elasticsearch master. Unless you are patching an issue, new features should always be sent to the `master` branch, in case of a bugfix, it depends if the bug affects all the release lines.<br/>
+The `main` branch is considered unstable, and it's compatible with Elasticsearch main. Unless you are patching an issue, new features should always be sent to the `main` branch, in case of a bugfix, it depends if the bug affects all the release lines.<br/>
 There is a branch for every supported release line, such as `7.x` or `6.x`. We release bugfixes as soon as possible, while minor and major releases are published at the same time of the Elastic Stack.
 
 Usually for every release line there will be a *published* version and a *next* version. Eg: the `7.x` branch contains the version published on npm, and bugfixes should be sent there, while `7.2` *(assuming that 7.1.x is released)* contains the next version, and new features should be sent there.
@@ -31,7 +31,7 @@ Once your changes are ready to submit for review:
 1. Test your changes
 
     Run the test suite to make sure that nothing is broken.
-    Usually run `npm test` is enough, our CI will take care of running the integration test. If you want to run the integration test yourself, see the *Testing* section below.
+    Usually running `npm test` is enough; our CI will take care of running the integration tests. If you want to run the integration tests yourself, see [the *Testing* section](#testing) below.
 
 2. Submit a pull request
 
@@ -58,36 +58,50 @@ Once your changes are ready to submit for review:
 
 ### Code generation
 
-The entire content of the API folder is generated as well as the `docs/reference.asciidoc` file.<br/>
-If you want to run the code generation you should run the following command:
-```sh
-node scripts/generate --tag <tag name>
-# or
-node scripts/generate --branch <branch name>
-```
-Then you should copy the content of `api/generated.d.ts` into the `index.d.ts` file *(automate this step would be a nice pr!)*.
+The entire content of the `src/api/` directory is automatically generated from [the Elasticsearch specification](https://github.com/elastic/elasticsearch-specification), as is the `docs/reference.asciidoc` file.
+This code generation is done using a separate repository that is not currently available to the public.
+
+If you find discrepancies between this client's API code and what you see when actually interacting with an Elasticsearch API, you can open a pull request here to fix it.
+For API fixes, it's likely a change will need to be made to the specification as well, to ensure your fix is not undone by the code generation process.
+We will do our best to make sure this is addressed when reviewing and merging your changes.
+
+PRs to improve the specification are also welcome!
+It is implemented in TypeScript, so JavaScript devs should be able to understand it fairly easily.
+Spec fixes are particularly helpful, as they will be reflected in ALL official Elasticsearch clients, not just this one.
 
 ### Testing
-There are different test scripts, usually during development you only need to run `npm test`, but if you want you can run just a part of the suite, following you will find all the testing scripts and what they do.
+
+There are a few different test scripts.
+Usually during development you only need to run `npm test`, but if you want you can run just a part of the suite:
 
 | Script | Description |
 |---|---|
 | `npm run test:unit` | Runs the content of the `test/unit` folder. |
-| `npm run test:behavior` | Runs the content of the `test/behavior` folder. |
-| `npm run test:types` | Runs the content of the `test/types` folder. |
-| `npm run test:unit -- --cov --coverage-report=html` | Runs the content of the `test/unit` folder and calculates the code coverage. |
-| `npm run test:integration` | Runs the integration test runner.<br/>*Note: it requires a living instance of Elasticsearch.* |
-| `npm run lint` | Run the [linter](https://standardjs.com/). |
-| `npm run lint:fix` | Fixes the lint errors. |
-| `npm test` | Runs lint, unit, behavior, and types test. |
+| `npm run test:coverage-100` | Runs unit tests enforcing 100% coverage. |
+| `npm run test:coverage-report` | Runs unit tests and generates an `lcov` coverage report. |
+| `npm run test:coverage-ui` | Runs unit tests and generates an HTML coverage report. |
+| `npm run test:integration` | Runs the integration test runner.<br/>**Note: requires a living instance of Elasticsearch.** |
+| `npm run lint` | Run the [linter](https://github.com/standard/ts-standard). |
+| `npm run lint:fix` | Fixes linter errors. |
+| `npm run license-checker` | Checks that all dependencies have acceptable open source licenses. |
+
+| `npm test` | Runs `lint` and `test:unit`. |
 
 #### Integration test
-The integration test are generated on the fly by the runner you will find inside `test/integration`, once you execute it, it will clone the Elasticsearch repository and checkout the correct version to grab the [OSS yaml files](https://github.com/elastic/elasticsearch/tree/master/rest-api-spec/src/main/resources/rest-api-spec/test) and the [Elastic licensed yaml files](https://github.com/elastic/elasticsearch/tree/master/x-pack/plugin/src/test/resources/rest-api-spec/test) that will be used for generating the test.
 
-Usually this step is executed by CI since it takes some time, but you can easily run this yourself! Just follow this steps:
-1. Boot an Elasticsearch instance, you can do that by running `./scripts/es-docker.sh` or `./scripts/es-docker-platinum.sh`, the first one will work only with the OSS APIs, while the second will work also with the Elastic licensed APIs;
-1. If you are running the OSS test, you should use `npm run test:integration`, otherwise use `TEST_ES_SERVER=https://elastic:changeme@localhost:9200 npm run test:integration`. You can also pass a `-b` parameter if you want the test to bail out at the first failure: `npm run test:integration -- -b`;
-1. Grab a coffee, it will take some time ;)
+The integration tests are generated on the fly by the runner you will find inside `test/integration`.
+Once you execute it, it will clone the Elasticsearch repository and checkout the correct version to grab the [YAML REST test files](https://github.com/elastic/elasticsearch/tree/main/rest-api-spec/src/yamlRestTest/resources/rest-api-spec/test) in the Elasticsearch repo.
+These are used to generate the integration tests.
+
+Usually this step is executed by CI since it takes some time, but you can easily run this yourself!
+Just follow this steps:
+1. Boot a fresh Elasticsearch instance, which can be done in a Docker container by running `STACK_VERSION=8.10.0 DETACH=true .buildkite/run-elasticsearch.sh`, where `STACK_VERSION` and `DETACH` environment variables can be adjusted to your needs. A `TEST_SUITE` env var can also be set to `free` or `platinum`, and defaults to `free`.
+1. Run `npm run test:integration` to run the whole suite, or `npm run test:integration -- --bail` to stop after the first failure.
+1. Grab a coffee, it will take some time. ;)
+
+This suite is very large, and not all tests will pass.
+This is fine.
+This suite is mostly used to identify notable changes in success/fail rate over time as we make changes to the client.
 
 ### Releasing
 
