@@ -7020,7 +7020,7 @@ Creates or updates a query ruleset.
 {ref}/put-query-ruleset.html[Endpoint documentation]
 [source,ts]
 ----
-client.queryRuleset.put({ ruleset_id })
+client.queryRuleset.put({ ruleset_id, rules })
 ----
 
 [discrete]
@@ -7028,7 +7028,7 @@ client.queryRuleset.put({ ruleset_id })
 
 * *Request (object):*
 ** *`ruleset_id` (string)*: The unique identifier of the query ruleset to be created or updated
-** *`query_ruleset` (Optional, { ruleset_id, rules })*
+** *`rules` ({ rule_id, type, criteria, actions }[])*
 
 [discrete]
 === rollup
