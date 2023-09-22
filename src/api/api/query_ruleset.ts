@@ -131,15 +131,22 @@ export default class QueryRuleset {
   async put (this: That, params: T.QueryRulesetPutRequest | TB.QueryRulesetPutRequest, options?: TransportRequestOptions): Promise<T.QueryRulesetPutResponse>
   async put (this: That, params: T.QueryRulesetPutRequest | TB.QueryRulesetPutRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ruleset_id']
-    const acceptedBody: string[] = ['query_ruleset']
+    const acceptedBody: string[] = ['rules']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: any = params.body ?? undefined
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
-        body = params[key]
+        body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
