@@ -90,7 +90,7 @@ Usually during development you only need to run `npm test`, but if you want you 
 #### Integration test
 
 The integration tests are generated on the fly by the runner you will find inside `test/integration`.
-Once you execute it, it will clone the Elasticsearch repository and checkout the correct version to grab the [YAML REST test files](https://github.com/elastic/elasticsearch/tree/main/rest-api-spec/src/yamlRestTest/resources/rest-api-spec/test) in the Elasticsearch repo.
+Once you execute it, it will fetch the [YAML REST test files](https://github.com/elastic/elasticsearch/tree/main/rest-api-spec/src/yamlRestTest/resources/rest-api-spec/test) from our artifacts API.
 These are used to generate the integration tests.
 
 Usually this step is executed by CI since it takes some time, but you can easily run this yourself!
