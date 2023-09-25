@@ -45,7 +45,7 @@ export default class Transform {
 
   /**
     * Deletes an existing transform.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-transform.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/delete-transform.html | Elasticsearch API documentation}
     */
   async deleteTransform (this: That, params: T.TransformDeleteTransformRequest | TB.TransformDeleteTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformDeleteTransformResponse>
   async deleteTransform (this: That, params: T.TransformDeleteTransformRequest | TB.TransformDeleteTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformDeleteTransformResponse, unknown>>
@@ -71,7 +71,7 @@ export default class Transform {
 
   /**
     * Retrieves configuration information for transforms.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-transform.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-transform.html | Elasticsearch API documentation}
     */
   async getTransform (this: That, params?: T.TransformGetTransformRequest | TB.TransformGetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformResponse>
   async getTransform (this: That, params?: T.TransformGetTransformRequest | TB.TransformGetTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformGetTransformResponse, unknown>>
@@ -105,7 +105,7 @@ export default class Transform {
 
   /**
     * Retrieves usage information for transforms.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-transform-stats.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-transform-stats.html | Elasticsearch API documentation}
     */
   async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest | TB.TransformGetTransformStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformGetTransformStatsResponse>
   async getTransformStats (this: That, params: T.TransformGetTransformStatsRequest | TB.TransformGetTransformStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformGetTransformStatsResponse, unknown>>
@@ -131,7 +131,7 @@ export default class Transform {
 
   /**
     * Previews a transform.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/preview-transform.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/preview-transform.html | Elasticsearch API documentation}
     */
   async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest | TB.TransformPreviewTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformPreviewTransformResponse<TTransform>>
   async previewTransform<TTransform = unknown> (this: That, params?: T.TransformPreviewTransformRequest | TB.TransformPreviewTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformPreviewTransformResponse<TTransform>, unknown>>
@@ -177,7 +177,7 @@ export default class Transform {
 
   /**
     * Instantiates a transform.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-transform.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-transform.html | Elasticsearch API documentation}
     */
   async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformPutTransformResponse>
   async putTransform (this: That, params: T.TransformPutTransformRequest | TB.TransformPutTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformPutTransformResponse, unknown>>
@@ -215,7 +215,7 @@ export default class Transform {
 
   /**
     * Resets an existing transform.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/reset-transform.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/reset-transform.html | Elasticsearch API documentation}
     */
   async resetTransform (this: That, params: T.TransformResetTransformRequest | TB.TransformResetTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformResetTransformResponse>
   async resetTransform (this: That, params: T.TransformResetTransformRequest | TB.TransformResetTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformResetTransformResponse, unknown>>
@@ -241,7 +241,7 @@ export default class Transform {
 
   /**
     * Schedules now a transform.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/schedule-now-transform.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/schedule-now-transform.html | Elasticsearch API documentation}
     */
   async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest | TB.TransformScheduleNowTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformScheduleNowTransformResponse>
   async scheduleNowTransform (this: That, params: T.TransformScheduleNowTransformRequest | TB.TransformScheduleNowTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformScheduleNowTransformResponse, unknown>>
@@ -267,7 +267,7 @@ export default class Transform {
 
   /**
     * Starts one or more transforms.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/start-transform.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/start-transform.html | Elasticsearch API documentation}
     */
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStartTransformResponse>
   async startTransform (this: That, params: T.TransformStartTransformRequest | TB.TransformStartTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformStartTransformResponse, unknown>>
@@ -293,7 +293,7 @@ export default class Transform {
 
   /**
     * Stops one or more transforms.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/stop-transform.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/stop-transform.html | Elasticsearch API documentation}
     */
   async stopTransform (this: That, params: T.TransformStopTransformRequest | TB.TransformStopTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformStopTransformResponse>
   async stopTransform (this: That, params: T.TransformStopTransformRequest | TB.TransformStopTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformStopTransformResponse, unknown>>
@@ -319,7 +319,7 @@ export default class Transform {
 
   /**
     * Updates certain properties of a transform.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-transform.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/update-transform.html | Elasticsearch API documentation}
     */
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformUpdateTransformResponse>
   async updateTransform (this: That, params: T.TransformUpdateTransformRequest | TB.TransformUpdateTransformRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformUpdateTransformResponse, unknown>>
@@ -357,7 +357,7 @@ export default class Transform {
 
   /**
     * Upgrades all transforms.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/upgrade-transforms.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/upgrade-transforms.html | Elasticsearch API documentation}
     */
   async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest | TB.TransformUpgradeTransformsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TransformUpgradeTransformsResponse>
   async upgradeTransforms (this: That, params?: T.TransformUpgradeTransformsRequest | TB.TransformUpgradeTransformsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TransformUpgradeTransformsResponse, unknown>>

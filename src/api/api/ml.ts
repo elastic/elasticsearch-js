@@ -45,7 +45,7 @@ export default class Ml {
 
   /**
     * Clear the cached results from a trained model deployment
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-trained-model-deployment-cache.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/clear-trained-model-deployment-cache.html | Elasticsearch API documentation}
     */
   async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest | TB.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlClearTrainedModelDeploymentCacheResponse>
   async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest | TB.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlClearTrainedModelDeploymentCacheResponse, unknown>>
@@ -71,7 +71,7 @@ export default class Ml {
 
   /**
     * Closes one or more anomaly detection jobs. A job can be opened and closed multiple times throughout its lifecycle.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-close-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-close-job.html | Elasticsearch API documentation}
     */
   async closeJob (this: That, params: T.MlCloseJobRequest | TB.MlCloseJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlCloseJobResponse>
   async closeJob (this: That, params: T.MlCloseJobRequest | TB.MlCloseJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlCloseJobResponse, unknown>>
@@ -109,7 +109,7 @@ export default class Ml {
 
   /**
     * Deletes a calendar.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-calendar.html | Elasticsearch API documentation}
     */
   async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest | TB.MlDeleteCalendarRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarResponse>
   async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest | TB.MlDeleteCalendarRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarResponse, unknown>>
@@ -135,7 +135,7 @@ export default class Ml {
 
   /**
     * Deletes scheduled events from a calendar.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar-event.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-calendar-event.html | Elasticsearch API documentation}
     */
   async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest | TB.MlDeleteCalendarEventRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarEventResponse>
   async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest | TB.MlDeleteCalendarEventRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarEventResponse, unknown>>
@@ -161,7 +161,7 @@ export default class Ml {
 
   /**
     * Deletes anomaly detection jobs from a calendar.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-calendar-job.html | Elasticsearch API documentation}
     */
   async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest | TB.MlDeleteCalendarJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarJobResponse>
   async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest | TB.MlDeleteCalendarJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteCalendarJobResponse, unknown>>
@@ -187,7 +187,7 @@ export default class Ml {
 
   /**
     * Deletes an existing data frame analytics job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/delete-dfanalytics.html | Elasticsearch API documentation}
     */
   async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest | TB.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteDataFrameAnalyticsResponse>
   async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest | TB.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteDataFrameAnalyticsResponse, unknown>>
@@ -213,7 +213,7 @@ export default class Ml {
 
   /**
     * Deletes an existing datafeed.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-datafeed.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-datafeed.html | Elasticsearch API documentation}
     */
   async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest | TB.MlDeleteDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteDatafeedResponse>
   async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest | TB.MlDeleteDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteDatafeedResponse, unknown>>
@@ -239,7 +239,7 @@ export default class Ml {
 
   /**
     * Deletes expired and unused machine learning data.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-expired-data.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-expired-data.html | Elasticsearch API documentation}
     */
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteExpiredDataResponse>
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteExpiredDataResponse, unknown>>
@@ -285,7 +285,7 @@ export default class Ml {
 
   /**
     * Deletes a filter.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-filter.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-filter.html | Elasticsearch API documentation}
     */
   async deleteFilter (this: That, params: T.MlDeleteFilterRequest | TB.MlDeleteFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteFilterResponse>
   async deleteFilter (this: That, params: T.MlDeleteFilterRequest | TB.MlDeleteFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteFilterResponse, unknown>>
@@ -311,7 +311,7 @@ export default class Ml {
 
   /**
     * Deletes forecasts from a machine learning job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-forecast.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-forecast.html | Elasticsearch API documentation}
     */
   async deleteForecast (this: That, params: T.MlDeleteForecastRequest | TB.MlDeleteForecastRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteForecastResponse>
   async deleteForecast (this: That, params: T.MlDeleteForecastRequest | TB.MlDeleteForecastRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteForecastResponse, unknown>>
@@ -344,7 +344,7 @@ export default class Ml {
 
   /**
     * Deletes an existing anomaly detection job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-job.html | Elasticsearch API documentation}
     */
   async deleteJob (this: That, params: T.MlDeleteJobRequest | TB.MlDeleteJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteJobResponse>
   async deleteJob (this: That, params: T.MlDeleteJobRequest | TB.MlDeleteJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteJobResponse, unknown>>
@@ -370,7 +370,7 @@ export default class Ml {
 
   /**
     * Deletes an existing model snapshot.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-snapshot.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-snapshot.html | Elasticsearch API documentation}
     */
   async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest | TB.MlDeleteModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteModelSnapshotResponse>
   async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest | TB.MlDeleteModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteModelSnapshotResponse, unknown>>
@@ -396,7 +396,7 @@ export default class Ml {
 
   /**
     * Deletes an existing trained inference model that is currently not referenced by an ingest pipeline.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-trained-models.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/delete-trained-models.html | Elasticsearch API documentation}
     */
   async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest | TB.MlDeleteTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteTrainedModelResponse>
   async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest | TB.MlDeleteTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteTrainedModelResponse, unknown>>
@@ -422,7 +422,7 @@ export default class Ml {
 
   /**
     * Deletes a model alias that refers to the trained model
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-trained-models-aliases.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/delete-trained-models-aliases.html | Elasticsearch API documentation}
     */
   async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest | TB.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteTrainedModelAliasResponse>
   async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest | TB.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlDeleteTrainedModelAliasResponse, unknown>>
@@ -448,7 +448,7 @@ export default class Ml {
 
   /**
     * Estimates the model memory
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-apis.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-apis.html | Elasticsearch API documentation}
     */
   async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest | TB.MlEstimateModelMemoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlEstimateModelMemoryResponse>
   async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest | TB.MlEstimateModelMemoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlEstimateModelMemoryResponse, unknown>>
@@ -487,7 +487,7 @@ export default class Ml {
 
   /**
     * Evaluates the data frame analytics for an annotated index.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/evaluate-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/evaluate-dfanalytics.html | Elasticsearch API documentation}
     */
   async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest | TB.MlEvaluateDataFrameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlEvaluateDataFrameResponse>
   async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest | TB.MlEvaluateDataFrameRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlEvaluateDataFrameResponse, unknown>>
@@ -525,7 +525,7 @@ export default class Ml {
 
   /**
     * Explains a data frame analytics config.
-    * @see {@link http://www.elastic.co/guide/en/elasticsearch/reference/master/explain-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link http://www.elastic.co/guide/en/elasticsearch/reference/8.10/explain-dfanalytics.html | Elasticsearch API documentation}
     */
   async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlExplainDataFrameAnalyticsResponse>
   async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlExplainDataFrameAnalyticsResponse, unknown>>
@@ -571,7 +571,7 @@ export default class Ml {
 
   /**
     * Forces any buffered data to be processed by the job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-flush-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-flush-job.html | Elasticsearch API documentation}
     */
   async flushJob (this: That, params: T.MlFlushJobRequest | TB.MlFlushJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlFlushJobResponse>
   async flushJob (this: That, params: T.MlFlushJobRequest | TB.MlFlushJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlFlushJobResponse, unknown>>
@@ -609,7 +609,7 @@ export default class Ml {
 
   /**
     * Predicts the future behavior of a time series by using its historical behavior.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-forecast.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-forecast.html | Elasticsearch API documentation}
     */
   async forecast (this: That, params: T.MlForecastRequest | TB.MlForecastRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlForecastResponse>
   async forecast (this: That, params: T.MlForecastRequest | TB.MlForecastRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlForecastResponse, unknown>>
@@ -647,7 +647,7 @@ export default class Ml {
 
   /**
     * Retrieves anomaly detection job results for one or more buckets.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-bucket.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-bucket.html | Elasticsearch API documentation}
     */
   async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetBucketsResponse>
   async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetBucketsResponse, unknown>>
@@ -692,7 +692,7 @@ export default class Ml {
 
   /**
     * Retrieves information about the scheduled events in calendars.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-calendar-event.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-calendar-event.html | Elasticsearch API documentation}
     */
   async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCalendarEventsResponse>
   async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCalendarEventsResponse, unknown>>
@@ -718,7 +718,7 @@ export default class Ml {
 
   /**
     * Retrieves configuration information for calendars.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-calendar.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-calendar.html | Elasticsearch API documentation}
     */
   async getCalendars (this: That, params?: T.MlGetCalendarsRequest | TB.MlGetCalendarsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCalendarsResponse>
   async getCalendars (this: That, params?: T.MlGetCalendarsRequest | TB.MlGetCalendarsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCalendarsResponse, unknown>>
@@ -764,7 +764,7 @@ export default class Ml {
 
   /**
     * Retrieves anomaly detection job results for one or more categories.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-category.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-category.html | Elasticsearch API documentation}
     */
   async getCategories (this: That, params: T.MlGetCategoriesRequest | TB.MlGetCategoriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCategoriesResponse>
   async getCategories (this: That, params: T.MlGetCategoriesRequest | TB.MlGetCategoriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetCategoriesResponse, unknown>>
@@ -809,7 +809,7 @@ export default class Ml {
 
   /**
     * Retrieves configuration information for data frame analytics jobs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-dfanalytics.html | Elasticsearch API documentation}
     */
   async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest | TB.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsResponse>
   async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest | TB.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDataFrameAnalyticsResponse, unknown>>
@@ -843,7 +843,7 @@ export default class Ml {
 
   /**
     * Retrieves usage information for data frame analytics jobs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-dfanalytics-stats.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-dfanalytics-stats.html | Elasticsearch API documentation}
     */
   async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest | TB.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsStatsResponse>
   async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest | TB.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDataFrameAnalyticsStatsResponse, unknown>>
@@ -877,7 +877,7 @@ export default class Ml {
 
   /**
     * Retrieves usage information for datafeeds.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-datafeed-stats.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-datafeed-stats.html | Elasticsearch API documentation}
     */
   async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest | TB.MlGetDatafeedStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDatafeedStatsResponse>
   async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest | TB.MlGetDatafeedStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDatafeedStatsResponse, unknown>>
@@ -911,7 +911,7 @@ export default class Ml {
 
   /**
     * Retrieves configuration information for datafeeds.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-datafeed.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-datafeed.html | Elasticsearch API documentation}
     */
   async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest | TB.MlGetDatafeedsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDatafeedsResponse>
   async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest | TB.MlGetDatafeedsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetDatafeedsResponse, unknown>>
@@ -945,7 +945,7 @@ export default class Ml {
 
   /**
     * Retrieves filters.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-filter.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-filter.html | Elasticsearch API documentation}
     */
   async getFilters (this: That, params?: T.MlGetFiltersRequest | TB.MlGetFiltersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetFiltersResponse>
   async getFilters (this: That, params?: T.MlGetFiltersRequest | TB.MlGetFiltersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetFiltersResponse, unknown>>
@@ -979,7 +979,7 @@ export default class Ml {
 
   /**
     * Retrieves anomaly detection job results for one or more influencers.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-influencer.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-influencer.html | Elasticsearch API documentation}
     */
   async getInfluencers (this: That, params: T.MlGetInfluencersRequest | TB.MlGetInfluencersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetInfluencersResponse>
   async getInfluencers (this: That, params: T.MlGetInfluencersRequest | TB.MlGetInfluencersRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetInfluencersResponse, unknown>>
@@ -1017,7 +1017,7 @@ export default class Ml {
 
   /**
     * Retrieves usage information for anomaly detection jobs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-job-stats.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-job-stats.html | Elasticsearch API documentation}
     */
   async getJobStats (this: That, params?: T.MlGetJobStatsRequest | TB.MlGetJobStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetJobStatsResponse>
   async getJobStats (this: That, params?: T.MlGetJobStatsRequest | TB.MlGetJobStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetJobStatsResponse, unknown>>
@@ -1051,7 +1051,7 @@ export default class Ml {
 
   /**
     * Retrieves configuration information for anomaly detection jobs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-job.html | Elasticsearch API documentation}
     */
   async getJobs (this: That, params?: T.MlGetJobsRequest | TB.MlGetJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetJobsResponse>
   async getJobs (this: That, params?: T.MlGetJobsRequest | TB.MlGetJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetJobsResponse, unknown>>
@@ -1085,7 +1085,7 @@ export default class Ml {
 
   /**
     * Returns information on how ML is using memory.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-ml-memory.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-ml-memory.html | Elasticsearch API documentation}
     */
   async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest | TB.MlGetMemoryStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetMemoryStatsResponse>
   async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest | TB.MlGetMemoryStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetMemoryStatsResponse, unknown>>
@@ -1119,7 +1119,7 @@ export default class Ml {
 
   /**
     * Gets stats for anomaly detection job model snapshot upgrades that are in progress.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-job-model-snapshot-upgrade-stats.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-job-model-snapshot-upgrade-stats.html | Elasticsearch API documentation}
     */
   async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest | TB.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotUpgradeStatsResponse>
   async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest | TB.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetModelSnapshotUpgradeStatsResponse, unknown>>
@@ -1145,7 +1145,7 @@ export default class Ml {
 
   /**
     * Retrieves information about model snapshots.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-snapshot.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-snapshot.html | Elasticsearch API documentation}
     */
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotsResponse>
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetModelSnapshotsResponse, unknown>>
@@ -1190,7 +1190,7 @@ export default class Ml {
 
   /**
     * Retrieves overall bucket results that summarize the bucket results of multiple anomaly detection jobs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-overall-buckets.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-overall-buckets.html | Elasticsearch API documentation}
     */
   async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest | TB.MlGetOverallBucketsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetOverallBucketsResponse>
   async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest | TB.MlGetOverallBucketsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetOverallBucketsResponse, unknown>>
@@ -1228,7 +1228,7 @@ export default class Ml {
 
   /**
     * Retrieves anomaly records for an anomaly detection job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-record.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-record.html | Elasticsearch API documentation}
     */
   async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetRecordsResponse>
   async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetRecordsResponse, unknown>>
@@ -1266,7 +1266,7 @@ export default class Ml {
 
   /**
     * Retrieves configuration information for a trained inference model.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trained-models.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-trained-models.html | Elasticsearch API documentation}
     */
   async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest | TB.MlGetTrainedModelsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetTrainedModelsResponse>
   async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest | TB.MlGetTrainedModelsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetTrainedModelsResponse, unknown>>
@@ -1300,7 +1300,7 @@ export default class Ml {
 
   /**
     * Retrieves usage information for trained inference models.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trained-models-stats.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-trained-models-stats.html | Elasticsearch API documentation}
     */
   async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest | TB.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetTrainedModelsStatsResponse>
   async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest | TB.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlGetTrainedModelsStatsResponse, unknown>>
@@ -1334,7 +1334,7 @@ export default class Ml {
 
   /**
     * Evaluate a trained model.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-model.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/infer-trained-model.html | Elasticsearch API documentation}
     */
   async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest | TB.MlInferTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInferTrainedModelResponse>
   async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest | TB.MlInferTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInferTrainedModelResponse, unknown>>
@@ -1372,7 +1372,7 @@ export default class Ml {
 
   /**
     * Returns defaults and limits used by machine learning.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-ml-info.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-ml-info.html | Elasticsearch API documentation}
     */
   async info (this: That, params?: T.MlInfoRequest | TB.MlInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInfoResponse>
   async info (this: That, params?: T.MlInfoRequest | TB.MlInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlInfoResponse, unknown>>
@@ -1399,7 +1399,7 @@ export default class Ml {
 
   /**
     * Opens one or more anomaly detection jobs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-open-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-open-job.html | Elasticsearch API documentation}
     */
   async openJob (this: That, params: T.MlOpenJobRequest | TB.MlOpenJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlOpenJobResponse>
   async openJob (this: That, params: T.MlOpenJobRequest | TB.MlOpenJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlOpenJobResponse, unknown>>
@@ -1437,7 +1437,7 @@ export default class Ml {
 
   /**
     * Posts scheduled events in a calendar.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-post-calendar-event.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-post-calendar-event.html | Elasticsearch API documentation}
     */
   async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest | TB.MlPostCalendarEventsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPostCalendarEventsResponse>
   async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest | TB.MlPostCalendarEventsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPostCalendarEventsResponse, unknown>>
@@ -1475,7 +1475,7 @@ export default class Ml {
 
   /**
     * Sends data to an anomaly detection job for analysis.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-post-data.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-post-data.html | Elasticsearch API documentation}
     */
   async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData> | TB.MlPostDataRequest<TData>, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPostDataResponse>
   async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData> | TB.MlPostDataRequest<TData>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPostDataResponse, unknown>>
@@ -1506,7 +1506,7 @@ export default class Ml {
 
   /**
     * Previews that will be analyzed given a data frame analytics config.
-    * @see {@link http://www.elastic.co/guide/en/elasticsearch/reference/master/preview-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link http://www.elastic.co/guide/en/elasticsearch/reference/8.10/preview-dfanalytics.html | Elasticsearch API documentation}
     */
   async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest | TB.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDataFrameAnalyticsResponse>
   async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest | TB.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPreviewDataFrameAnalyticsResponse, unknown>>
@@ -1552,7 +1552,7 @@ export default class Ml {
 
   /**
     * Previews a datafeed.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-preview-datafeed.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-preview-datafeed.html | Elasticsearch API documentation}
     */
   async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest | TB.MlPreviewDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDatafeedResponse<TDocument>>
   async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest | TB.MlPreviewDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPreviewDatafeedResponse<TDocument>, unknown>>
@@ -1598,7 +1598,7 @@ export default class Ml {
 
   /**
     * Instantiates a calendar.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-put-calendar.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-put-calendar.html | Elasticsearch API documentation}
     */
   async putCalendar (this: That, params: T.MlPutCalendarRequest | TB.MlPutCalendarRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutCalendarResponse>
   async putCalendar (this: That, params: T.MlPutCalendarRequest | TB.MlPutCalendarRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutCalendarResponse, unknown>>
@@ -1636,7 +1636,7 @@ export default class Ml {
 
   /**
     * Adds an anomaly detection job to a calendar.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-put-calendar-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-put-calendar-job.html | Elasticsearch API documentation}
     */
   async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest | TB.MlPutCalendarJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutCalendarJobResponse>
   async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest | TB.MlPutCalendarJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutCalendarJobResponse, unknown>>
@@ -1662,7 +1662,7 @@ export default class Ml {
 
   /**
     * Instantiates a data frame analytics job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-dfanalytics.html | Elasticsearch API documentation}
     */
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutDataFrameAnalyticsResponse>
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutDataFrameAnalyticsResponse, unknown>>
@@ -1700,7 +1700,7 @@ export default class Ml {
 
   /**
     * Instantiates a datafeed.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-put-datafeed.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-put-datafeed.html | Elasticsearch API documentation}
     */
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutDatafeedResponse>
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutDatafeedResponse, unknown>>
@@ -1738,7 +1738,7 @@ export default class Ml {
 
   /**
     * Instantiates a filter.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-put-filter.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-put-filter.html | Elasticsearch API documentation}
     */
   async putFilter (this: That, params: T.MlPutFilterRequest | TB.MlPutFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutFilterResponse>
   async putFilter (this: That, params: T.MlPutFilterRequest | TB.MlPutFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutFilterResponse, unknown>>
@@ -1776,7 +1776,7 @@ export default class Ml {
 
   /**
     * Instantiates an anomaly detection job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-put-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-put-job.html | Elasticsearch API documentation}
     */
   async putJob (this: That, params: T.MlPutJobRequest | TB.MlPutJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutJobResponse>
   async putJob (this: That, params: T.MlPutJobRequest | TB.MlPutJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutJobResponse, unknown>>
@@ -1814,7 +1814,7 @@ export default class Ml {
 
   /**
     * Creates an inference trained model.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-trained-models.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-trained-models.html | Elasticsearch API documentation}
     */
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelResponse>
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelResponse, unknown>>
@@ -1852,7 +1852,7 @@ export default class Ml {
 
   /**
     * Creates a new model alias (or reassigns an existing one) to refer to the trained model
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-trained-models-aliases.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-trained-models-aliases.html | Elasticsearch API documentation}
     */
   async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest | TB.MlPutTrainedModelAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelAliasResponse>
   async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest | TB.MlPutTrainedModelAliasRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelAliasResponse, unknown>>
@@ -1878,7 +1878,7 @@ export default class Ml {
 
   /**
     * Creates part of a trained model definition
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-trained-model-definition-part.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-trained-model-definition-part.html | Elasticsearch API documentation}
     */
   async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelDefinitionPartResponse>
   async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelDefinitionPartResponse, unknown>>
@@ -1916,7 +1916,7 @@ export default class Ml {
 
   /**
     * Creates a trained model vocabulary
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-trained-model-vocabulary.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-trained-model-vocabulary.html | Elasticsearch API documentation}
     */
   async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelVocabularyResponse>
   async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlPutTrainedModelVocabularyResponse, unknown>>
@@ -1954,7 +1954,7 @@ export default class Ml {
 
   /**
     * Resets an existing anomaly detection job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-reset-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-reset-job.html | Elasticsearch API documentation}
     */
   async resetJob (this: That, params: T.MlResetJobRequest | TB.MlResetJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlResetJobResponse>
   async resetJob (this: That, params: T.MlResetJobRequest | TB.MlResetJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlResetJobResponse, unknown>>
@@ -1980,7 +1980,7 @@ export default class Ml {
 
   /**
     * Reverts to a specific snapshot.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-revert-snapshot.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-revert-snapshot.html | Elasticsearch API documentation}
     */
   async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest | TB.MlRevertModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlRevertModelSnapshotResponse>
   async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest | TB.MlRevertModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlRevertModelSnapshotResponse, unknown>>
@@ -2018,7 +2018,7 @@ export default class Ml {
 
   /**
     * Sets a cluster wide upgrade_mode setting that prepares machine learning indices for an upgrade.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-set-upgrade-mode.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-set-upgrade-mode.html | Elasticsearch API documentation}
     */
   async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest | TB.MlSetUpgradeModeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlSetUpgradeModeResponse>
   async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest | TB.MlSetUpgradeModeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlSetUpgradeModeResponse, unknown>>
@@ -2045,7 +2045,7 @@ export default class Ml {
 
   /**
     * Starts a data frame analytics job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/start-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/start-dfanalytics.html | Elasticsearch API documentation}
     */
   async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest | TB.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartDataFrameAnalyticsResponse>
   async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest | TB.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartDataFrameAnalyticsResponse, unknown>>
@@ -2071,7 +2071,7 @@ export default class Ml {
 
   /**
     * Starts one or more datafeeds.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-start-datafeed.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-start-datafeed.html | Elasticsearch API documentation}
     */
   async startDatafeed (this: That, params: T.MlStartDatafeedRequest | TB.MlStartDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartDatafeedResponse>
   async startDatafeed (this: That, params: T.MlStartDatafeedRequest | TB.MlStartDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartDatafeedResponse, unknown>>
@@ -2109,7 +2109,7 @@ export default class Ml {
 
   /**
     * Start a trained model deployment.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trained-model-deployment.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/start-trained-model-deployment.html | Elasticsearch API documentation}
     */
   async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartTrainedModelDeploymentResponse>
   async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStartTrainedModelDeploymentResponse, unknown>>
@@ -2135,7 +2135,7 @@ export default class Ml {
 
   /**
     * Stops one or more data frame analytics jobs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/stop-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/stop-dfanalytics.html | Elasticsearch API documentation}
     */
   async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest | TB.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopDataFrameAnalyticsResponse>
   async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest | TB.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopDataFrameAnalyticsResponse, unknown>>
@@ -2161,7 +2161,7 @@ export default class Ml {
 
   /**
     * Stops one or more datafeeds.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-stop-datafeed.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-stop-datafeed.html | Elasticsearch API documentation}
     */
   async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopDatafeedResponse>
   async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopDatafeedResponse, unknown>>
@@ -2199,7 +2199,7 @@ export default class Ml {
 
   /**
     * Stop a trained model deployment.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/stop-trained-model-deployment.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/stop-trained-model-deployment.html | Elasticsearch API documentation}
     */
   async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopTrainedModelDeploymentResponse>
   async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlStopTrainedModelDeploymentResponse, unknown>>
@@ -2225,7 +2225,7 @@ export default class Ml {
 
   /**
     * Updates certain properties of a data frame analytics job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/update-dfanalytics.html | Elasticsearch API documentation}
     */
   async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest | TB.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDataFrameAnalyticsResponse>
   async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest | TB.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateDataFrameAnalyticsResponse, unknown>>
@@ -2263,7 +2263,7 @@ export default class Ml {
 
   /**
     * Updates certain properties of a datafeed.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-update-datafeed.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-update-datafeed.html | Elasticsearch API documentation}
     */
   async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDatafeedResponse>
   async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateDatafeedResponse, unknown>>
@@ -2301,7 +2301,7 @@ export default class Ml {
 
   /**
     * Updates the description of a filter, adds items, or removes items.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-update-filter.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-update-filter.html | Elasticsearch API documentation}
     */
   async updateFilter (this: That, params: T.MlUpdateFilterRequest | TB.MlUpdateFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateFilterResponse>
   async updateFilter (this: That, params: T.MlUpdateFilterRequest | TB.MlUpdateFilterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateFilterResponse, unknown>>
@@ -2339,7 +2339,7 @@ export default class Ml {
 
   /**
     * Updates certain properties of an anomaly detection job.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-update-job.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-update-job.html | Elasticsearch API documentation}
     */
   async updateJob (this: That, params: T.MlUpdateJobRequest | TB.MlUpdateJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateJobResponse>
   async updateJob (this: That, params: T.MlUpdateJobRequest | TB.MlUpdateJobRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateJobResponse, unknown>>
@@ -2377,7 +2377,7 @@ export default class Ml {
 
   /**
     * Updates certain properties of a snapshot.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-update-snapshot.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-update-snapshot.html | Elasticsearch API documentation}
     */
   async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest | TB.MlUpdateModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateModelSnapshotResponse>
   async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest | TB.MlUpdateModelSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateModelSnapshotResponse, unknown>>
@@ -2415,7 +2415,7 @@ export default class Ml {
 
   /**
     * Updates certain properties of trained model deployment.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-trained-model-deployment.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/update-trained-model-deployment.html | Elasticsearch API documentation}
     */
   async updateTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async updateTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -2441,7 +2441,7 @@ export default class Ml {
 
   /**
     * Upgrades a given job snapshot to the current major version.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-upgrade-job-model-snapshot.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-upgrade-job-model-snapshot.html | Elasticsearch API documentation}
     */
   async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest | TB.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpgradeJobSnapshotResponse>
   async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest | TB.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpgradeJobSnapshotResponse, unknown>>
@@ -2467,7 +2467,7 @@ export default class Ml {
 
   /**
     * Validates an anomaly detection job.
-    * @see {@link https://www.elastic.co/guide/en/machine-learning/master/ml-jobs.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/machine-learning/8.10/ml-jobs.html | Elasticsearch API documentation}
     */
   async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateResponse>
   async validate (this: That, params?: T.MlValidateRequest | TB.MlValidateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateResponse, unknown>>
@@ -2506,7 +2506,7 @@ export default class Ml {
 
   /**
     * Validates an anomaly detection detector.
-    * @see {@link https://www.elastic.co/guide/en/machine-learning/master/ml-jobs.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/machine-learning/8.10/ml-jobs.html | Elasticsearch API documentation}
     */
   async validateDetector (this: That, params: T.MlValidateDetectorRequest | TB.MlValidateDetectorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlValidateDetectorResponse>
   async validateDetector (this: That, params: T.MlValidateDetectorRequest | TB.MlValidateDetectorRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlValidateDetectorResponse, unknown>>

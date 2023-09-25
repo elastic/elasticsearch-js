@@ -1200,6 +1200,7 @@ export interface SearchRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
+    /** @alias aggregations */
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
@@ -2061,14 +2062,28 @@ export type Bytes = 'b' | 'kb' | 'mb' | 'gb' | 'tb' | 'pb'
 
 export type CategoryId = string
 
+export type ClusterAlias = string
+
+export interface ClusterDetails {
+  status: ClusterSearchStatus
+  indices: string
+  took?: DurationValue<UnitMillis>
+  timed_out: boolean
+  _shards?: ShardStatistics
+  failures?: ShardFailure[]
+}
+
 export type ClusterInfoTarget = '_all' | 'http' | 'ingest' | 'thread_pool' | 'script'
 
 export type ClusterInfoTargets = ClusterInfoTarget | ClusterInfoTarget[]
+
+export type ClusterSearchStatus = 'running' | 'successful' | 'partial' | 'skipped' | 'failed'
 
 export interface ClusterStatistics {
   skipped: integer
   successful: integer
   total: integer
+  details?: Record<ClusterAlias, ClusterDetails>
 }
 
 export interface CompletionStats {
@@ -3299,8 +3314,8 @@ export type AggregationsFrequentItemSetsBucket = AggregationsFrequentItemSetsBuc
 
 export interface AggregationsFrequentItemSetsField {
   field: Field
-  exclude?: string | string[]
-  include?: string | string[]
+  exclude?: AggregationsTermsExclude
+  include?: AggregationsTermsInclude
 }
 
 export type AggregationsGapPolicy = 'skip' | 'insert_zeros' | 'keep_values'
@@ -3915,7 +3930,7 @@ export interface AggregationsSignificantTextAggregation extends AggregationsBuck
   field?: Field
   filter_duplicate_text?: boolean
   gnd?: AggregationsGoogleNormalizedDistanceHeuristic
-  include?: string | string[]
+  include?: AggregationsTermsInclude
   jlh?: EmptyObject
   min_doc_count?: long
   mutual_information?: AggregationsMutualInformationHeuristic
@@ -6106,6 +6121,8 @@ export interface AsyncSearchAsyncSearchResponseBase {
   expiration_time_in_millis: EpochTime<UnitMillis>
   start_time?: DateTime
   start_time_in_millis: EpochTime<UnitMillis>
+  completion_time?: DateTime
+  completion_time_in_millis?: EpochTime<UnitMillis>
 }
 
 export interface AsyncSearchDeleteRequest extends RequestBase {
@@ -6131,6 +6148,7 @@ export type AsyncSearchStatusResponse = AsyncSearchStatusStatusResponseBase
 
 export interface AsyncSearchStatusStatusResponseBase extends AsyncSearchAsyncSearchResponseBase {
   _shards: ShardStatistics
+  _clusters?: ClusterStatistics
   completion_status?: integer
 }
 
@@ -6171,6 +6189,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
+    /** @alias aggregations */
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
@@ -9287,6 +9306,7 @@ export interface FleetSearchRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
+    /** @alias aggregations */
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
@@ -11700,7 +11720,7 @@ export interface IngestUppercaseProcessor extends IngestProcessorBase {
 
 export interface IngestUrlDecodeProcessor extends IngestProcessorBase {
   field: Field
-  ignre_missing?: boolean
+  ignore_missing?: boolean
   target_field?: Field
 }
 
@@ -14058,6 +14078,7 @@ export interface MlPutDatafeedRequest extends RequestBase {
     delayed_data_check_config?: MlDelayedDataCheckConfig
     frequency?: Duration
     indices?: Indices
+    /** @alias indices */
     indexes?: Indices
     indices_options?: IndicesOptions
     job_id?: Id
@@ -14419,6 +14440,7 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
     delayed_data_check_config?: MlDelayedDataCheckConfig
     frequency?: Duration
     indices?: string[]
+    /** @alias indices */
     indexes?: string[]
     indices_options?: IndicesOptions
     job_id?: Id
@@ -15545,8 +15567,10 @@ export interface QueryRulesetListResponse {
 
 export interface QueryRulesetPutRequest extends RequestBase {
   ruleset_id: Id
-  /** @deprecated The use of the 'body' key has been deprecated, use 'query_ruleset' instead. */
-  body?: QueryRulesetQueryRuleset
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    rules: QueryRulesetQueryRule[]
+  }
 }
 
 export interface QueryRulesetPutResponse {
@@ -15712,6 +15736,7 @@ export interface RollupRollupSearchRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
+    /** @alias aggregations */
     aggs?: Record<string, AggregationsAggregationContainer>
     query?: QueryDslQueryContainer
     size?: integer
@@ -17576,7 +17601,7 @@ export interface TasksTaskInfo {
   running_time?: Duration
   running_time_in_nanos: DurationValue<UnitNanos>
   start_time_in_millis: EpochTime<UnitMillis>
-  status?: TasksTaskStatus
+  status?: any
   type: string
   parent_task_id?: TaskId
 }
@@ -17588,26 +17613,6 @@ export interface TasksTaskListResponseBase {
   task_failures?: TaskFailure[]
   nodes?: Record<string, TasksNodeTasks>
   tasks?: TasksTaskInfos
-}
-
-export interface TasksTaskStatus {
-  batches: long
-  canceled?: string
-  created: long
-  deleted: long
-  noops: long
-  failures?: string[]
-  requests_per_second: float
-  retries: Retries
-  throttled?: Duration
-  throttled_millis: DurationValue<UnitMillis>
-  throttled_until?: Duration
-  throttled_until_millis: DurationValue<UnitMillis>
-  timed_out?: boolean
-  took?: DurationValue<UnitMillis>
-  total: long
-  updated: long
-  version_conflicts: long
 }
 
 export interface TasksCancelRequest extends RequestBase {
@@ -17629,7 +17634,7 @@ export interface TasksGetRequest extends RequestBase {
 export interface TasksGetResponse {
   completed: boolean
   task: TasksTaskInfo
-  response?: TasksTaskStatus
+  response?: any
   error?: ErrorCause
 }
 
