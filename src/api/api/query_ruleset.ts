@@ -45,7 +45,7 @@ export default class QueryRuleset {
 
   /**
     * Deletes a query ruleset.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-query-ruleset.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/delete-query-ruleset.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.QueryRulesetDeleteRequest | TB.QueryRulesetDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesetDeleteResponse>
   async delete (this: That, params: T.QueryRulesetDeleteRequest | TB.QueryRulesetDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesetDeleteResponse, unknown>>
@@ -71,7 +71,7 @@ export default class QueryRuleset {
 
   /**
     * Returns the details about a query ruleset.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-query-ruleset.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-query-ruleset.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.QueryRulesetGetRequest | TB.QueryRulesetGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesetGetResponse>
   async get (this: That, params: T.QueryRulesetGetRequest | TB.QueryRulesetGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesetGetResponse, unknown>>
@@ -97,7 +97,7 @@ export default class QueryRuleset {
 
   /**
     * Lists query rulesets.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/list-query-rulesets.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/list-query-rulesets.html | Elasticsearch API documentation}
     */
   async list (this: That, params?: T.QueryRulesetListRequest | TB.QueryRulesetListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesetListResponse>
   async list (this: That, params?: T.QueryRulesetListRequest | TB.QueryRulesetListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesetListResponse, unknown>>
@@ -124,22 +124,29 @@ export default class QueryRuleset {
 
   /**
     * Creates or updates a query ruleset.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-query-ruleset.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-query-ruleset.html | Elasticsearch API documentation}
     */
   async put (this: That, params: T.QueryRulesetPutRequest | TB.QueryRulesetPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesetPutResponse>
   async put (this: That, params: T.QueryRulesetPutRequest | TB.QueryRulesetPutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesetPutResponse, unknown>>
   async put (this: That, params: T.QueryRulesetPutRequest | TB.QueryRulesetPutRequest, options?: TransportRequestOptions): Promise<T.QueryRulesetPutResponse>
   async put (this: That, params: T.QueryRulesetPutRequest | TB.QueryRulesetPutRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ruleset_id']
-    const acceptedBody: string[] = ['query_ruleset']
+    const acceptedBody: string[] = ['rules']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: any = params.body ?? undefined
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
-        body = params[key]
+        body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {

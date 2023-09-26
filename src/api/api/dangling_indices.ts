@@ -45,7 +45,7 @@ export default class DanglingIndices {
 
   /**
     * Deletes the specified dangling index
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-dangling-indices.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-gateway-dangling-indices.html | Elasticsearch API documentation}
     */
   async deleteDanglingIndex (this: That, params: T.DanglingIndicesDeleteDanglingIndexRequest | TB.DanglingIndicesDeleteDanglingIndexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DanglingIndicesDeleteDanglingIndexResponse>
   async deleteDanglingIndex (this: That, params: T.DanglingIndicesDeleteDanglingIndexRequest | TB.DanglingIndicesDeleteDanglingIndexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DanglingIndicesDeleteDanglingIndexResponse, unknown>>
@@ -71,7 +71,7 @@ export default class DanglingIndices {
 
   /**
     * Imports the specified dangling index
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-dangling-indices.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-gateway-dangling-indices.html | Elasticsearch API documentation}
     */
   async importDanglingIndex (this: That, params: T.DanglingIndicesImportDanglingIndexRequest | TB.DanglingIndicesImportDanglingIndexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DanglingIndicesImportDanglingIndexResponse>
   async importDanglingIndex (this: That, params: T.DanglingIndicesImportDanglingIndexRequest | TB.DanglingIndicesImportDanglingIndexRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DanglingIndicesImportDanglingIndexResponse, unknown>>
@@ -97,7 +97,7 @@ export default class DanglingIndices {
 
   /**
     * Returns all dangling indices.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-gateway-dangling-indices.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-gateway-dangling-indices.html | Elasticsearch API documentation}
     */
   async listDanglingIndices (this: That, params?: T.DanglingIndicesListDanglingIndicesRequest | TB.DanglingIndicesListDanglingIndicesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DanglingIndicesListDanglingIndicesResponse>
   async listDanglingIndices (this: That, params?: T.DanglingIndicesListDanglingIndicesRequest | TB.DanglingIndicesListDanglingIndicesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DanglingIndicesListDanglingIndicesResponse, unknown>>

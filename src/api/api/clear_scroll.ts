@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Explicitly clears the search context for a scroll.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-scroll-api.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.10/clear-scroll-api.html | Elasticsearch API documentation}
   */
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest | TB.ClearScrollRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClearScrollResponse>
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest | TB.ClearScrollRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ClearScrollResponse, unknown>>
