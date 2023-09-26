@@ -2,6 +2,14 @@
 == Release notes
 
 [discrete]
+=== 7.17.13
+
+[discrete]
+==== Fixes
+
+Fixes a bug where newly-added nodes that don't have HTTP information yet should be skipped during sniffing, to prevent an unexpected `TypeError`. https://github.com/elastic/elasticsearch-js/issues/1230[#1230]
+
+[discrete]
 === 7.17.12
 
 [discrete]
