@@ -2344,6 +2344,7 @@ export interface KnnQuery {
   num_candidates: long
   boost?: float
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  similarity?: float
 }
 
 export interface LatLonGeoLocation {
