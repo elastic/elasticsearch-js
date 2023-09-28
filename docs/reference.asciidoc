@@ -824,7 +824,7 @@ Defaults to 10,000 hits.
 ** *`indices_boost` (Optional, Record<string, number>[])*: Boosts the _score of documents from specified indices.
 ** *`docvalue_fields` (Optional, { field, format, include_unmapped }[])*: Array of wildcard (*) patterns. The request returns doc values for field
 names matching these patterns in the hits.fields property of the response.
-** *`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter } | { field, query_vector, query_vector_builder, k, num_candidates, boost, filter }[])*: Defines the approximate kNN search to run.
+** *`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity } | { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity }[])*: Defines the approximate kNN search to run.
 ** *`rank` (Optional, { rrf })*: Defines the Reciprocal Rank Fusion (RRF) to use
 ** *`min_score` (Optional, number)*: Minimum _score for matching documents. Documents with a lower _score are
 not included in the search results.
@@ -1254,7 +1254,7 @@ Defaults to 10,000 hits.
 ** *`indices_boost` (Optional, Record<string, number>[])*: Boosts the _score of documents from specified indices.
 ** *`docvalue_fields` (Optional, { field, format, include_unmapped }[])*: Array of wildcard (*) patterns. The request returns doc values for field
 names matching these patterns in the hits.fields property of the response.
-** *`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter } | { field, query_vector, query_vector_builder, k, num_candidates, boost, filter }[])*: Defines the approximate kNN search to run.
+** *`knn` (Optional, { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity } | { field, query_vector, query_vector_builder, k, num_candidates, boost, filter, similarity }[])*: Defines the approximate kNN search to run.
 ** *`min_score` (Optional, number)*: Minimum _score for matching documents. Documents with a lower _score are
 not included in the search results.
 ** *`post_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*
