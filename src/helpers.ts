@@ -648,10 +648,11 @@ export default class Helpers {
 
         if (chunkBytes >= flushBytes) {
           stats.bytes += chunkBytes
-          const send = await semaphore()
-          send(bulkBody.slice())
+          const bulkBodyCopy = bulkBody.slice()
           bulkBody.length = 0
           chunkBytes = 0
+          const send = await semaphore()
+          send(bulkBodyCopy)
         }
       }
 
