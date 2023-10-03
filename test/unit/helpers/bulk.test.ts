@@ -22,9 +22,11 @@ import { createReadStream } from 'fs'
 import * as http from 'http'
 import { join } from 'path'
 import split from 'split2'
+import { Readable } from 'stream'
 import { test } from 'tap'
 import { Client, errors } from '../../../'
 import { buildServer, connection } from '../../utils'
+const { sleep } = require('../../integration/helper')
 
 let clientVersion: string = require('../../../package.json').version // eslint-disable-line
 if (clientVersion.includes('-')) {
@@ -1561,4 +1563,151 @@ test('Flush interval', t => {
   })
 
   t.end()
+})
+
+test(`flush timeout does not lock process when flushInterval is less than server timeout`, async t => {
+  const flushInterval = 500
+
+  async function handler (req: http.IncomingMessage, res: http.ServerResponse) {
+    setTimeout(() => {
+      res.writeHead(200, { 'content-type': 'application/json' })
+      res.end(JSON.stringify({ errors: false, items: [{}] }))
+    }, 1000)
+  }
+
+  const [{ port }, server] = await buildServer(handler)
+  const client = new Client({ node: `http://localhost:${port}` })
+
+  async function * generator () {
+    const data = dataset.slice()
+    for (const doc of data) {
+      await sleep(flushInterval)
+      yield doc
+    }
+  }
+
+  const result = await client.helpers.bulk({
+    datasource: Readable.from(generator()),
+    flushBytes: 1,
+    flushInterval: flushInterval,
+    concurrency: 1,
+    onDocument (_) {
+      return {
+        index: { _index: 'test' }
+      }
+    },
+    onDrop (_) {
+      t.fail('This should never be called')
+    }
+  })
+
+  t.type(result.time, 'number')
+  t.type(result.bytes, 'number')
+  t.match(result, {
+    total: 3,
+    successful: 3,
+    retry: 0,
+    failed: 0,
+    aborted: false
+  })
+
+  server.stop()
+})
+
+test(`flush timeout does not lock process when flushInterval is greater than server timeout`, async t => {
+  const flushInterval = 500
+
+  async function handler (req: http.IncomingMessage, res: http.ServerResponse) {
+    setTimeout(() => {
+      res.writeHead(200, { 'content-type': 'application/json' })
+      res.end(JSON.stringify({ errors: false, items: [{}] }))
+    }, 250)
+  }
+
+  const [{ port }, server] = await buildServer(handler)
+  const client = new Client({ node: `http://localhost:${port}` })
+
+  async function * generator () {
+    const data = dataset.slice()
+    for (const doc of data) {
+      await sleep(flushInterval)
+      yield doc
+    }
+  }
+
+  const result = await client.helpers.bulk({
+    datasource: Readable.from(generator()),
+    flushBytes: 1,
+    flushInterval: flushInterval,
+    concurrency: 1,
+    onDocument (_) {
+      return {
+        index: { _index: 'test' }
+      }
+    },
+    onDrop (_) {
+      t.fail('This should never be called')
+    }
+  })
+
+  t.type(result.time, 'number')
+  t.type(result.bytes, 'number')
+  t.match(result, {
+    total: 3,
+    successful: 3,
+    retry: 0,
+    failed: 0,
+    aborted: false
+  })
+
+  server.stop()
+})
+
+test(`flush timeout does not lock process when flushInterval is equal to server timeout`, async t => {
+  const flushInterval = 500
+
+  async function handler (req: http.IncomingMessage, res: http.ServerResponse) {
+    setTimeout(() => {
+      res.writeHead(200, { 'content-type': 'application/json' })
+      res.end(JSON.stringify({ errors: false, items: [{}] }))
+    }, flushInterval)
+  }
+
+  const [{ port }, server] = await buildServer(handler)
+  const client = new Client({ node: `http://localhost:${port}` })
+
+  async function * generator () {
+    const data = dataset.slice()
+    for (const doc of data) {
+      await sleep(flushInterval)
+      yield doc
+    }
+  }
+
+  const result = await client.helpers.bulk({
+    datasource: Readable.from(generator()),
+    flushBytes: 1,
+    flushInterval: flushInterval,
+    concurrency: 1,
+    onDocument (_) {
+      return {
+        index: { _index: 'test' }
+      }
+    },
+    onDrop (_) {
+      t.fail('This should never be called')
+    }
+  })
+
+  t.type(result.time, 'number')
+  t.type(result.bytes, 'number')
+  t.match(result, {
+    total: 3,
+    successful: 3,
+    retry: 0,
+    failed: 0,
+    aborted: false
+  })
+
+  server.stop()
 })
