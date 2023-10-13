@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Returns the source of a document.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/docs-get.html | Elasticsearch API documentation}
   */
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest | TB.GetSourceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetSourceResponse<TDocument>>
 export default async function GetSourceApi<TDocument = unknown> (this: That, params: T.GetSourceRequest | TB.GetSourceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetSourceResponse<TDocument>, unknown>>

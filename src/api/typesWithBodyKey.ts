@@ -2082,6 +2082,9 @@ export interface ClusterStatistics {
   skipped: integer
   successful: integer
   total: integer
+  running: integer
+  partial: integer
+  failed: integer
   details?: Record<ClusterAlias, ClusterDetails>
 }
 
@@ -5003,7 +5006,7 @@ export interface MappingFieldNamesField {
   enabled: boolean
 }
 
-export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'match_only_text'
+export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'sparse_vector' | 'match_only_text'
 
 export interface MappingFlattenedProperty extends MappingPropertyBase {
   boost?: double
@@ -14233,6 +14236,7 @@ export interface MlPutTrainedModelRequest extends RequestBase {
     metadata?: any
     model_type?: MlTrainedModelType
     model_size_bytes?: long
+    platform_architecture?: string
     tags?: string[]
   }
 }
