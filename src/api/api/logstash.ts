@@ -73,14 +73,15 @@ export default class Logstash {
     * Retrieves Logstash Pipelines used by Central Management
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/logstash-api-get-pipeline.html | Elasticsearch API documentation}
     */
-  async getPipeline (this: That, params: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashGetPipelineResponse>
-  async getPipeline (this: That, params: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashGetPipelineResponse, unknown>>
-  async getPipeline (this: That, params: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashGetPipelineResponse>
-  async getPipeline (this: That, params: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<any> {
+  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashGetPipelineResponse>
+  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashGetPipelineResponse, unknown>>
+  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<T.LogstashGetPipelineResponse>
+  async getPipeline (this: That, params?: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
+    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue

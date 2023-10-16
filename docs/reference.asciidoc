@@ -4942,14 +4942,14 @@ Retrieves Logstash Pipelines used by Central Management
 {ref}/logstash-api-get-pipeline.html[Endpoint documentation]
 [source,ts]
 ----
-client.logstash.getPipeline({ id })
+client.logstash.getPipeline({ ... })
 ----
 
 [discrete]
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string | string[])*: List of pipeline identifiers.
+** *`id` (Optional, string | string[])*: List of pipeline identifiers.
 
 [discrete]
 ==== put_pipeline
