@@ -45,7 +45,7 @@ export default class Snapshot {
 
   /**
     * Removes stale data from repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clean-up-snapshot-repo-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/clean-up-snapshot-repo-api.html | Elasticsearch API documentation}
     */
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCleanupRepositoryResponse>
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCleanupRepositoryResponse, unknown>>
@@ -71,7 +71,7 @@ export default class Snapshot {
 
   /**
     * Clones indices from one snapshot into another snapshot in the same repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-snapshots.html | Elasticsearch API documentation}
     */
   async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCloneResponse>
   async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCloneResponse, unknown>>
@@ -109,7 +109,7 @@ export default class Snapshot {
 
   /**
     * Creates a snapshot in a repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-snapshots.html | Elasticsearch API documentation}
     */
   async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateResponse>
   async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateResponse, unknown>>
@@ -147,7 +147,7 @@ export default class Snapshot {
 
   /**
     * Creates a repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-snapshots.html | Elasticsearch API documentation}
     */
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateRepositoryResponse>
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateRepositoryResponse, unknown>>
@@ -185,7 +185,7 @@ export default class Snapshot {
 
   /**
     * Deletes one or more snapshots.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-snapshots.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteResponse>
   async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteResponse, unknown>>
@@ -211,7 +211,7 @@ export default class Snapshot {
 
   /**
     * Deletes a repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-snapshots.html | Elasticsearch API documentation}
     */
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteRepositoryResponse>
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteRepositoryResponse, unknown>>
@@ -237,7 +237,7 @@ export default class Snapshot {
 
   /**
     * Returns information about a snapshot.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-snapshots.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetResponse>
   async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetResponse, unknown>>
@@ -263,7 +263,7 @@ export default class Snapshot {
 
   /**
     * Returns information about a repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-snapshots.html | Elasticsearch API documentation}
     */
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetRepositoryResponse>
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetRepositoryResponse, unknown>>
@@ -297,7 +297,7 @@ export default class Snapshot {
 
   /**
     * Analyzes a repository for correctness and performance
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-snapshots.html | Elasticsearch API documentation}
     */
   async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -323,7 +323,7 @@ export default class Snapshot {
 
   /**
     * Restores a snapshot.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-snapshots.html | Elasticsearch API documentation}
     */
   async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRestoreResponse>
   async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRestoreResponse, unknown>>
@@ -361,7 +361,7 @@ export default class Snapshot {
 
   /**
     * Returns information about the status of a snapshot.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-snapshots.html | Elasticsearch API documentation}
     */
   async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotStatusResponse>
   async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotStatusResponse, unknown>>
@@ -398,7 +398,7 @@ export default class Snapshot {
 
   /**
     * Verifies a repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-snapshots.html | Elasticsearch API documentation}
     */
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotVerifyRepositoryResponse>
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotVerifyRepositoryResponse, unknown>>
