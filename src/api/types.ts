@@ -2286,7 +2286,7 @@ export type Level = 'cluster' | 'indices' | 'shards'
 
 export type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 
-export type ManagedBy = 'Index Lifecycle Management' | 'Data Stream Lifecycle' | 'Unmanaged'
+export type ManagedBy = 'Index Lifecycle Management' | 'Data stream lifecycle' | 'Unmanaged'
 
 export type MapboxVectorTiles = ArrayBuffer
 
