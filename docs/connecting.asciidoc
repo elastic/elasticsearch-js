@@ -539,11 +539,17 @@ If you need to pass through an http(s) proxy for connecting to {es}, the client
 out of the box offers a handy configuration for helping you with it. Under the 
 hood, it uses the https://github.com/delvedor/hpagent[`hpagent`] module.
 
+In versions 8.0+ of the client, the default `Connection` type is set to `UndiciConnection`, which does not support proxy configurations.
+To use a proxy, you will need to use the `HttpConnection` class from `@elastic/transport` instead.
+
 [source,js]
 ----
+import { HttpConnection } from '@elastic/transport'
+
 const client = new Client({
   node: 'http://localhost:9200',
-  proxy: 'http://localhost:8080'
+  proxy: 'http://localhost:8080',
+  Connection: HttpConnection,
 })
 ----
 
@@ -553,11 +559,12 @@ Basic authentication is supported as well:
 ----
 const client = new Client({
   node: 'http://localhost:9200',
-  proxy: 'http:user:pwd@//localhost:8080'
+  proxy: 'http:user:pwd@//localhost:8080',
+  Connection: HttpConnection,
 })
 ----
 
-If you are connecting through a not http(s) proxy, such as a `socks5` or `pac`,
+If you are connecting through a non-http(s) proxy, such as a `socks5` or `pac`,
 you can use the `agent` option to configure it.
 
 [source,js]
@@ -567,7 +574,8 @@ const client = new Client({
   node: 'http://localhost:9200',
   agent () {
     return new SocksProxyAgent('socks://127.0.0.1:1080')
-  }
+  },
+  Connection: HttpConnection,
 })
 ----
 
