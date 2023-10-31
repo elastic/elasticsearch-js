@@ -3,7 +3,7 @@ name: Node CI
 
 on:
   push:
-    paths-ignore: &ignore
+    paths-ignore:
       - '**/*.md'
       - '**/*.asciidoc'
       - '**/*.txt'
@@ -13,7 +13,15 @@ on:
       - 'scripts/**'
       - 'catalog-info.yaml'
   pull_request:
-    paths-ignore: *ignore
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.asciidoc'
+      - '**/*.txt'
+      - 'docs/**'
+      - '.ci/**'
+      - '.buildkite/**'
+      - 'scripts/**'
+      - 'catalog-info.yaml'
 
 jobs:
   test:
