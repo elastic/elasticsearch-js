@@ -14051,6 +14051,7 @@ export interface MlPutTrainedModelVocabularyRequest extends RequestBase {
   model_id: Id
   vocabulary: string[]
   merges?: string[]
+  scores?: double[]
 }
 
 export type MlPutTrainedModelVocabularyResponse = AcknowledgedResponseBase
