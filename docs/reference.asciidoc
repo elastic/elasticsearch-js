@@ -6370,6 +6370,7 @@ client.ml.putTrainedModelVocabulary({ model_id, vocabulary })
 ** *`model_id` (string)*: The unique identifier of the trained model.
 ** *`vocabulary` (string[])*: The model vocabulary, which must not be empty.
 ** *`merges` (Optional, string[])*: The optional model merges if required by the tokenizer.
+** *`scores` (Optional, number[])*: The optional vocabulary value scores if required by the tokenizer.
 
 [discrete]
 ==== reset_job
