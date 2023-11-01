@@ -1923,7 +1923,7 @@ export default class Ml {
   async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<T.MlPutTrainedModelVocabularyResponse>
   async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
-    const acceptedBody: string[] = ['vocabulary', 'merges']
+    const acceptedBody: string[] = ['vocabulary', 'merges', 'scores']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
