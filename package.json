@@ -46,7 +46,7 @@
   },
   "homepage": "http://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html",
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "github:sinonjs/fake-timers#0bfffc1",

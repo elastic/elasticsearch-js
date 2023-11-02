@@ -13,7 +13,6 @@ steps:
           - "free"
           - "platinum"
         nodejs:
-          - "16"
           - "18"
           - "20"
     command: ./.buildkite/run-tests.sh
