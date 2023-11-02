@@ -11,6 +11,7 @@ This page contains the information you need to connect and use the Client with
 * <<client-faas-env, Using the Client in a Function-as-a-Service Environment>>
 * <<client-connect-proxy, Connecting through a proxy>>
 * <<client-error-handling, Handling errors>>
+* <<keep-alive, Keep-alive connections>>
 * <<product-check, Automatic product check>>
 
 [[authentication]]
@@ -658,6 +659,37 @@ a|* `name` - `string`
 * `statusCode` - `object`, the response headers
 * `headers` - `object`, the response status code
 |===
+
+[[keep-alive]]
+[discrete]
+=== Keep-alive connections
+
+By default, the client uses persistent, keep-alive connections to reduce the overhead of creating a new HTTP connection for each Elasticsearch request.
+If you are using the default `UndiciConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 10 minutes.
+If you are using the legacy `HttpConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 1 minute.
+
+If you need to disable keep-alive connections, you can override the HTTP agent with your preferred https://nodejs.org/api/http.html#http_new_agent_options[HTTP agent options]:
+
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200',
+  // the function takes as parameter the option
+  // object passed to the Connection constructor
+  agent: (opts) => new CustomAgent()
+})
+----
+
+Or you can disable the HTTP agent entirely:
+
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200',
+  // Disable agent and keep-alive
+  agent: false
+})
+----
 
 [discrete]
 [[product-check]]
