@@ -1,32 +1,35 @@
 ---
 name: Node CI
 
-on:
-  push:
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.asciidoc'
-      - '**/*.txt'
-      - 'docs/**'
-      - '.ci/**'
-      - '.buildkite/**'
-      - 'scripts/**'
-      - 'catalog-info.yaml'
-  pull_request:
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.asciidoc'
-      - '**/*.txt'
-      - 'docs/**'
-      - '.ci/**'
-      - '.buildkite/**'
-      - 'scripts/**'
-      - 'catalog-info.yaml'
+on: [push, pull_request]
 
 jobs:
+  paths-filter:
+    name: Detect files changed
+    runs-on: ubuntu-latest
+    outputs:
+      skip: '${{ steps.changes.outputs.skip }}'
+    steps:
+      - uses: dorny/paths-filter/@v2.11.1
+        id: changes
+        with:
+          filters: |
+            skip:
+              - '**/*.md'
+              - '**/*.asciidoc'
+              - '**/*.txt'
+              - 'docs/**'
+              - '.ci/**'
+              - '.buildkite/**'
+              - 'scripts/**'
+              - 'catalog-info.yaml'
+
   test:
     name: Test
     runs-on: ${{ matrix.os }}
+    needs: paths-filter
+    # only run if files not in `skip` filter were changed
+    if: needs.paths-filter.outputs.skip != 'true'
 
     strategy:
       fail-fast: false
