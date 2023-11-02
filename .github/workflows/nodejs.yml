@@ -10,6 +10,7 @@ jobs:
     outputs:
       skip: '${{ steps.changes.outputs.skip }}'
     steps:
+      - uses: actions/checkout@v4
       - uses: dorny/paths-filter/@v2.11.1
         id: changes
         with:
@@ -38,7 +39,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
