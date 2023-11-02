@@ -24,7 +24,7 @@ To learn more about the supported major versions, please refer to the
 [[nodejs-support]]
 === Node.js support
 
-NOTE: The minimum supported version of Node.js is `v14`.
+NOTE: The minimum supported version of Node.js is `v18`.
 
 The client versioning follows the {stack} versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
@@ -64,6 +64,10 @@ of `^7.10.0`).
 |`14.x`
 |April 2023
 |`8.8` (early 2023)
+
+|`16.x`
+|September 2023
+|`8.11` (late 2023)
 |===
 
 [discrete]
