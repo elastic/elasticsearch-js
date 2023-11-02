@@ -28,7 +28,7 @@ of the getting started documentation.
 
 ### Node.js support
 
-NOTE: The minimum supported version of Node.js is `v14`.
+NOTE: The minimum supported version of Node.js is `v18`.
 
 The client versioning follows the Elastic Stack versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
@@ -53,6 +53,7 @@ of `^7.10.0`).
 | `10.x`          | `April 2021`     | `7.12` (mid 2021)      |
 | `12.x`          | `April 2022`     | `8.2` (early 2022)     |
 | `14.x`          | `April 2023`     | `8.8` (early 2023)     |
+| `16.x`          | `September 2023` | `8.11` (late 2023)     |
 
 ### Compatibility
 
