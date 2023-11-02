@@ -86,10 +86,10 @@ async function bump (args) {
     'utf8'
   )
 
-  const pipeline = await readFile(join(import.meta.url, '..', '.buildkite', 'pipeline.yml'))
+  const pipeline = await readFile(join(import.meta.url, '..', '.buildkite', 'pipeline.yml'), 'utf8')
   await writeFile(
     join(import.meta.url, '..', '.buildkite', 'pipeline.yml'),
-    pipeline.replace(/STACK_VERSION: [0-9]+[0-9\.]*[0-9](?:\-SNAPSHOT)?/, `STACK_VERSION: ${cleanVersion}-SNAPSHOT`), // eslint-disable-line
+    pipeline.replace(/STACK_VERSION: [0-9]+[0-9\.]*[0-9](?:\-SNAPSHOT)?/, `STACK_VERSION: ${cleanVersion}-SNAPSHOT`),
     'utf8'
   )
 }
