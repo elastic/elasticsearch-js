@@ -5,6 +5,7 @@
   "description": "The official Elasticsearch client for Node.js",
   "main": "index.js",
   "types": "index.d.ts",
+  "type": "commonjs",
   "scripts": {
     "test": "npm run build && npm run lint && tap test/unit/{*,**/*}.test.ts",
     "test:unit": "npm run build && tap test/unit/{*,**/*}.test.ts",
