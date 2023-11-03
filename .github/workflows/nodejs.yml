@@ -9,29 +9,22 @@ jobs:
     name: Detect files changed
     runs-on: ubuntu-latest
     outputs:
-      skip: '${{ steps.changes.outputs.skip }}'
+      src-only: '${{ steps.changes.outputs.src-only }}'
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter/@v2.11.1
         id: changes
         with:
           filters: |
-            skip:
-              - '**/*.md'
-              - '**/*.asciidoc'
-              - '**/*.txt'
-              - 'docs/**'
-              - '.ci/**'
-              - '.buildkite/**'
-              - 'scripts/**'
-              - 'catalog-info.yaml'
+            src-only:
+              - '!(**/*.{md,asciidoc,txt}|{docs,.ci,.buildkite,scripts}/**/*|catalog-info.yaml|README.md)'
 
   test:
     name: Test
     runs-on: ${{ matrix.os }}
     needs: paths-filter
-    # only run if files not in `skip` filter were changed
-    if: needs.paths-filter.outputs.skip != 'true'
+    # only run if code relevant to unit tests was changed
+    if: needs.paths-filter.outputs.src-only == 'true'
 
     strategy:
       fail-fast: false
