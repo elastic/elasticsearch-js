@@ -707,7 +707,7 @@ export interface MsearchMultiSearchItem<TDocument = unknown> extends SearchRespo
   status?: integer
 }
 
-export interface MsearchMultiSearchResult<TDocument = unknown> {
+export interface MsearchMultiSearchResult<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> {
   took: long
   responses: MsearchResponseItem<TDocument>[]
 }
@@ -780,7 +780,7 @@ export interface MsearchRequest extends RequestBase {
 
 export type MsearchRequestItem = MsearchMultisearchHeader | MsearchMultisearchBody
 
-export type MsearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument>
+export type MsearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
 
 export type MsearchResponseItem<TDocument = unknown> = MsearchMultiSearchItem<TDocument> | ErrorResponseBase
 
@@ -796,7 +796,7 @@ export interface MsearchTemplateRequest extends RequestBase {
 
 export type MsearchTemplateRequestItem = MsearchMultisearchHeader | MsearchTemplateTemplateConfig
 
-export type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument>
+export type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
 
 export interface MsearchTemplateTemplateConfig {
   explain?: boolean
