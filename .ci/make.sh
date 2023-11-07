@@ -131,7 +131,7 @@ esac
 echo -e "\033[34;1mINFO: building $product container\033[0m"
 
 docker build \
-  --file .buildkite/Dockerfile \
+  --file .ci/Dockerfile \
   --tag "$product" \
   --build-arg NODE_JS_VERSION="$NODE_JS_VERSION" \
   --build-arg "BUILDER_UID=$(id -u)" \
@@ -144,19 +144,35 @@ docker build \
 
 echo -e "\033[34;1mINFO: running $product container\033[0m"
 
-docker run \
-  --volume "$repo:/usr/src/elasticsearch-js" \
-  --volume /usr/src/elasticsearch-js/node_modules \
-  -u "$(id -u):$(id -g)" \
-  --env "WORKFLOW=$WORKFLOW" \
-  --name make-elasticsearch-js \
-  --rm \
-  $product \
-  /bin/bash -c "cd /usr/src && \
-    git clone https://$CLIENTS_GITHUB_TOKEN@github.com/elastic/elastic-client-generator-js.git && \
-    mkdir -p /usr/src/elastic-client-generator-js/output && \
-    cd /usr/src/elasticsearch-js && \
-    node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}"
+if [[ -z "${BUILDKITE+x}" ]] && [[ -z "${CI+x}" ]] && [[ -z "${GITHUB_ACTIONS+x}" ]]; then
+  echo -e "\033[34;1mINFO: Running in local mode"
+  docker run \
+    -u "$(id -u):$(id -g)" \
+    --volume "$repo:/usr/src/elasticsearch-js" \
+    --volume /usr/src/elasticsearch-js/node_modules \
+    --volume "$(realpath $repo/../elastic-client-generator-js):/usr/src/elastic-client-generator-js" \
+    --env "WORKFLOW=$WORKFLOW" \
+    --name make-elasticsearch-js \
+    --rm \
+    $product \
+    /bin/bash -c "mkdir -p /usr/src/elastic-client-generator-js/output && \
+      node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}"
+else
+  echo -e "\033[34;1mINFO: Running in CI mode"
+  docker run \
+    --volume "$repo:/usr/src/elasticsearch-js" \
+    --volume /usr/src/elasticsearch-js/node_modules \
+    -u "$(id -u):$(id -g)" \
+    --env "WORKFLOW=$WORKFLOW" \
+    --name make-elasticsearch-js \
+    --rm \
+    $product \
+    /bin/bash -c "cd /usr/src && \
+      git clone https://$CLIENTS_GITHUB_TOKEN@github.com/elastic/elastic-client-generator-js.git && \
+      mkdir -p /usr/src/elastic-client-generator-js/output && \
+      cd /usr/src/elasticsearch-js && \
+      node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}"
+fi
 
 # ------------------------------------------------------- #
 # Post Command tasks & checks
