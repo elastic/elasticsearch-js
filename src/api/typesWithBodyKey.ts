@@ -14375,6 +14375,7 @@ export interface MlStartDatafeedResponse {
 export interface MlStartTrainedModelDeploymentRequest extends RequestBase {
   model_id: Id
   cache_size?: ByteSize
+  deployment_id?: string
   number_of_allocations?: integer
   priority?: MlTrainingPriority
   queue_capacity?: integer
