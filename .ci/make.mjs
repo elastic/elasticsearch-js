@@ -28,6 +28,11 @@ import assert from 'assert'
 import { join } from 'desm'
 import semver from 'semver'
 
+// xz/globals loads minimist-parsed args as a global `argv`, but it
+// interprets args like '8.10' as numbers and shortens them to '8.1'.
+// so we have to import and configure minimist ourselves.
+import minimist from 'minimist'
+const argv = minimist(process.argv.slice(2), { string: ['_', 'task'] })
 assert(typeof argv.task === 'string', 'Missing task parameter')
 
 switch (argv.task) {
