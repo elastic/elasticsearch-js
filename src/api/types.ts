@@ -707,7 +707,7 @@ export interface MsearchMultiSearchItem<TDocument = unknown> extends SearchRespo
   status?: integer
 }
 
-export interface MsearchMultiSearchResult<TDocument = unknown> {
+export interface MsearchMultiSearchResult<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> {
   took: long
   responses: MsearchResponseItem<TDocument>[]
 }
@@ -780,7 +780,7 @@ export interface MsearchRequest extends RequestBase {
 
 export type MsearchRequestItem = MsearchMultisearchHeader | MsearchMultisearchBody
 
-export type MsearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument>
+export type MsearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
 
 export type MsearchResponseItem<TDocument = unknown> = MsearchMultiSearchItem<TDocument> | ErrorResponseBase
 
@@ -796,7 +796,7 @@ export interface MsearchTemplateRequest extends RequestBase {
 
 export type MsearchTemplateRequestItem = MsearchMultisearchHeader | MsearchTemplateTemplateConfig
 
-export type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument>
+export type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
 
 export interface MsearchTemplateTemplateConfig {
   explain?: boolean
@@ -1146,7 +1146,6 @@ export interface SearchRequest extends RequestBase {
   _source_includes?: Fields
   q?: string
   aggregations?: Record<string, AggregationsAggregationContainer>
-  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
   explain?: boolean
@@ -2272,6 +2271,7 @@ export interface KnnQuery {
   num_candidates: long
   boost?: float
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  similarity?: float
 }
 
 export interface LatLonGeoLocation {
@@ -6114,7 +6114,6 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   _source_includes?: Fields
   q?: string
   aggregations?: Record<string, AggregationsAggregationContainer>
-  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
   explain?: boolean
@@ -9196,7 +9195,6 @@ export interface FleetSearchRequest extends RequestBase {
   wait_for_checkpoints?: FleetCheckpoint[]
   allow_partial_search_results?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
-  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
   explain?: boolean
@@ -13831,7 +13829,6 @@ export interface MlPutDatafeedRequest extends RequestBase {
   delayed_data_check_config?: MlDelayedDataCheckConfig
   frequency?: Duration
   indices?: Indices
-  /** @alias indices */
   indexes?: Indices
   indices_options?: IndicesOptions
   job_id?: Id
@@ -14031,6 +14028,7 @@ export interface MlPutTrainedModelVocabularyRequest extends RequestBase {
   model_id: Id
   vocabulary: string[]
   merges?: string[]
+  scores?: double[]
 }
 
 export type MlPutTrainedModelVocabularyResponse = AcknowledgedResponseBase
@@ -14163,7 +14161,6 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
   delayed_data_check_config?: MlDelayedDataCheckConfig
   frequency?: Duration
   indices?: string[]
-  /** @alias indices */
   indexes?: string[]
   indices_options?: IndicesOptions
   job_id?: Id
@@ -15433,7 +15430,6 @@ export interface RollupRollupSearchRequest extends RequestBase {
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
-  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   query?: QueryDslQueryContainer
   size?: integer
@@ -17361,6 +17357,7 @@ export interface TransformTimeSync {
 export interface TransformDeleteTransformRequest extends RequestBase {
   transform_id: Id
   force?: boolean
+  delete_dest_index?: boolean
   timeout?: Duration
 }
 
