@@ -1200,6 +1200,7 @@ export interface SearchRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
+    /** @alias aggregations */
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
@@ -6192,6 +6193,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
+    /** @alias aggregations */
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
@@ -9308,6 +9310,7 @@ export interface FleetSearchRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
+    /** @alias aggregations */
     aggs?: Record<string, AggregationsAggregationContainer>
     collapse?: SearchFieldCollapse
     explain?: boolean
@@ -14091,6 +14094,7 @@ export interface MlPutDatafeedRequest extends RequestBase {
     delayed_data_check_config?: MlDelayedDataCheckConfig
     frequency?: Duration
     indices?: Indices
+    /** @alias indices */
     indexes?: Indices
     indices_options?: IndicesOptions
     job_id?: Id
@@ -14454,6 +14458,7 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
     delayed_data_check_config?: MlDelayedDataCheckConfig
     frequency?: Duration
     indices?: string[]
+    /** @alias indices */
     indexes?: string[]
     indices_options?: IndicesOptions
     job_id?: Id
@@ -15749,6 +15754,7 @@ export interface RollupRollupSearchRequest extends RequestBase {
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     aggregations?: Record<string, AggregationsAggregationContainer>
+    /** @alias aggregations */
     aggs?: Record<string, AggregationsAggregationContainer>
     query?: QueryDslQueryContainer
     size?: integer
