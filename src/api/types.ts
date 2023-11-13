@@ -1146,6 +1146,7 @@ export interface SearchRequest extends RequestBase {
   _source_includes?: Fields
   q?: string
   aggregations?: Record<string, AggregationsAggregationContainer>
+  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
   explain?: boolean
@@ -6117,6 +6118,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   _source_includes?: Fields
   q?: string
   aggregations?: Record<string, AggregationsAggregationContainer>
+  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
   explain?: boolean
@@ -9198,6 +9200,7 @@ export interface FleetSearchRequest extends RequestBase {
   wait_for_checkpoints?: FleetCheckpoint[]
   allow_partial_search_results?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
+  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
   explain?: boolean
@@ -13844,6 +13847,7 @@ export interface MlPutDatafeedRequest extends RequestBase {
   delayed_data_check_config?: MlDelayedDataCheckConfig
   frequency?: Duration
   indices?: Indices
+  /** @alias indices */
   indexes?: Indices
   indices_options?: IndicesOptions
   job_id?: Id
@@ -14177,6 +14181,7 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
   delayed_data_check_config?: MlDelayedDataCheckConfig
   frequency?: Duration
   indices?: string[]
+  /** @alias indices */
   indexes?: string[]
   indices_options?: IndicesOptions
   job_id?: Id
@@ -15446,6 +15451,7 @@ export interface RollupRollupSearchRequest extends RequestBase {
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
+  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   query?: QueryDslQueryContainer
   size?: integer
