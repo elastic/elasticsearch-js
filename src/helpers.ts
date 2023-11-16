@@ -527,6 +527,8 @@ export default class Helpers {
    * @return {object} The possible operations to run with the datasource.
    */
   bulk<TDocument = unknown> (options: BulkHelperOptions<TDocument>, reqOptions: TransportRequestOptions = {}): BulkHelper<TDocument> {
+    assert(!(reqOptions.asStream ?? false), 'bulk helper: the asStream request option is not supported')
+
     const client = this[kClient]
     const { serializer } = client
     if (this[kMetaHeader] !== null) {
