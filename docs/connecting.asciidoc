@@ -12,8 +12,8 @@ This page contains the information you need to connect and use the Client with
 * <<client-connect-proxy, Connecting through a proxy>>
 * <<client-error-handling, Handling errors>>
 * <<keep-alive, Keep-alive connections>>
-* <<product-check, Automatic product check>>
 * <<closing, Closing the client>>
+* <<product-check, Automatic product check>>
 
 [[authentication]]
 [discrete]
@@ -692,9 +692,10 @@ const client = new Client({
 })
 ----
 
+
+[[closing]]
 [discrete]
-[[close-connection]]
-=== Close connection
+=== Closing the client
 
 If you want to end a connection to an Elasticsearch server, use the `close()` function.
 
@@ -706,7 +707,6 @@ const client = new Client({
 // ... do various queries
 client.close();
 ----
-
 
 
 [discrete]
