@@ -13,6 +13,7 @@ This page contains the information you need to connect and use the Client with
 * <<client-error-handling, Handling errors>>
 * <<keep-alive, Keep-alive connections>>
 * <<product-check, Automatic product check>>
+* <<closing, Closing the client>>
 
 [[authentication]]
 [discrete]
@@ -692,6 +693,23 @@ const client = new Client({
 ----
 
 [discrete]
+[[close-connection]]
+=== Close connection
+
+If you want to end a connection to an Elasticsearch server, use the `close()` function.
+
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200'
+});
+// ... do various queries
+client.close();
+----
+
+
+
+[discrete]
 [[product-check]]
 === Automatic product check
 
@@ -702,3 +720,4 @@ be sent to the server as part of the request pipeline before the main API call i
 In most cases, this will succeed during the very first API call that the client sends.
 Once the product check completes, no further product check HTTP requests are sent for 
 subsequent API calls.
+
