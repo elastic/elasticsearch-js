@@ -1400,7 +1400,7 @@ export default class Security {
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleMappingResponse>
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['enabled', 'metadata', 'roles', 'rules', 'run_as']
+    const acceptedBody: string[] = ['enabled', 'metadata', 'roles', 'role_templates', 'rules', 'run_as']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
