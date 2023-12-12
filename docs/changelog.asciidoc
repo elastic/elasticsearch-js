@@ -14,9 +14,11 @@ You can find all the API changes
 https://www.elastic.co/guide/en/elasticsearch/reference/8.11/release-notes-8.11.0.html[here].
 
 [discrete]
-===== Enhanced support for redacting potentially sensitive data
+===== Enhanced support for redacting potentially sensitive data https://github.com/elastic/elasticsearch-js/pull/2095[#2095]
 
 `@elastic/transport` https://github.com/elastic/elastic-transport-js/releases/tag/v8.4.0[version 8.4.0] introduces enhanced measures for ensuring that request metadata attached to some `Error` objects is redacted. This functionality is primarily to address custom logging solutions that don't use common serialization methods like `JSON.stringify`, `console.log`, or `util.inspect`, which were already accounted for.
+
+See <<redaction>> for more information.
 
 [discrete]
 === 8.10.0
