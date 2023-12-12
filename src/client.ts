@@ -43,6 +43,7 @@ import {
   BearerAuth,
   Context
 } from '@elastic/transport/lib/types'
+import { RedactionOptions } from '@elastic/transport/lib/Transport'
 import BaseConnection, { prepareHeaders } from '@elastic/transport/lib/connection/BaseConnection'
 import SniffingTransport from './sniffingTransport'
 import Helpers from './helpers'
@@ -113,6 +114,7 @@ export interface ClientOptions {
   caFingerprint?: string
   maxResponseSize?: number
   maxCompressedResponseSize?: number
+  redaction?: RedactionOptions
 }
 
 export default class Client extends API {
@@ -186,7 +188,11 @@ export default class Client extends API {
       proxy: null,
       enableMetaHeader: true,
       maxResponseSize: null,
-      maxCompressedResponseSize: null
+      maxCompressedResponseSize: null,
+      redaction: {
+        type: 'replace',
+        additionalKeys: []
+      }
     }, opts)
 
     if (options.caFingerprint != null && isHttpConnection(opts.node ?? opts.nodes)) {
@@ -259,7 +265,8 @@ export default class Client extends API {
         jsonContentType: 'application/vnd.elasticsearch+json; compatible-with=8',
         ndjsonContentType: 'application/vnd.elasticsearch+x-ndjson; compatible-with=8',
         accept: 'application/vnd.elasticsearch+json; compatible-with=8,text/plain'
-      }
+      },
+      redaction: options.redaction
     })
 
     this.helpers = new Helpers({
