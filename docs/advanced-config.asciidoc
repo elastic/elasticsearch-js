@@ -92,6 +92,94 @@ const client = new Client({
 ----
 
 [discrete]
+==== Redaction of potentially sensitive data
+
+When the client raises an `Error` that originated at the HTTP layer, like a `ConnectionError` or `TimeoutError`, a `meta` object is often attached to the error object that includes metadata useful for debugging, like request and response information. Because this can include potentially sensitive data, like authentication secrets in an `Authorization` header, the client takes measures to redact common sources of sensitive data when this metadata is attached and serialized.
+
+If your configuration requires extra headers or other configurations that may include sensitive data, you may want to adjust these settings to account for that.
+
+By default, the `redaction` option is set to `{ type: 'replace' }`, which recursively searches for sensitive key names, case insensitive, and replaces their values with the string `[redacted]`.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' },
+})
+
+try {
+  await client.indices.create({ index: 'my_index' })
+} catch (err) {
+  console.log(err.meta.meta.request.options.headers.authorization) // prints "[redacted]"
+}
+----
+
+If you would like to redact additional properties, you can include additional key names to search and replace:
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' },
+  headers: { 'X-My-Secret-Password': 'shhh it's a secret!' },
+  redaction: {
+    type: "replace",
+    additionalKeys: ["x-my-secret-password"]
+  }
+})
+
+try {
+  await client.indices.create({ index: 'my_index' })
+} catch (err) {
+  console.log(err.meta.meta.request.options.headers['X-My-Secret-Password']) // prints "[redacted]"
+}
+----
+
+Alternatively, if you know you're not going to use the metadata at all, setting the redaction type to `remove` will remove all optional sources of potentially sensitive data entirely, or replacing them with `null` for required properties.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' },
+  redaction: { type: "remove" }
+})
+
+try {
+  await client.indices.create({ index: 'my_index' })
+} catch (err) {
+  console.log(err.meta.meta.request.options.headers) // undefined
+}
+----
+
+Finally, if you prefer to turn off redaction altogether, perhaps while debugging on a local developer environment, you can set the redaction type to `off`. This will revert the client to pre-8.11.0 behavior, where basic redaction is only performed during common serialization methods like `console.log` and `JSON.stringify`.
+
+WARNING: Setting `redaction.type` to `off` is not recommended in production environments.
+
+[source,js]
+----
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+  cloud: { id: '<cloud-id>' },
+  auth: { apiKey: 'base64EncodedKey' },
+  redaction: { type: "off" }
+})
+
+try {
+  await client.indices.create({ index: 'my_index' })
+} catch (err) {
+  console.log(err.meta.meta.request.options.headers.authorization) // the actual header value will be logged
+}
+----
+
+[discrete]
 ==== Migrate to v8
 
 The Node.js client can be configured to emit an HTTP header
