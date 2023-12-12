@@ -92,6 +92,7 @@ const client = new Client({
 ----
 
 [discrete]
+[[redaction]]
 ==== Redaction of potentially sensitive data
 
 When the client raises an `Error` that originated at the HTTP layer, like a `ConnectionError` or `TimeoutError`, a `meta` object is often attached to the error object that includes metadata useful for debugging, like request and response information. Because this can include potentially sensitive data, like authentication secrets in an `Authorization` header, the client takes measures to redact common sources of sensitive data when this metadata is attached and serialized.
