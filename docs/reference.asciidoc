@@ -8121,6 +8121,7 @@ client.security.putRoleMapping({ name })
 ** *`enabled` (Optional, boolean)*
 ** *`metadata` (Optional, Record<string, User-defined value>)*
 ** *`roles` (Optional, string[])*
+** *`role_templates` (Optional, { format, template }[])*
 ** *`rules` (Optional, { any, all, field, except })*
 ** *`run_as` (Optional, string[])*
 ** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
