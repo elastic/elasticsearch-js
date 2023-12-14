@@ -12,6 +12,7 @@ This page contains the information you need to connect and use the Client with
 * <<client-connect-proxy, Connecting through a proxy>>
 * <<client-error-handling, Handling errors>>
 * <<keep-alive, Keep-alive connections>>
+* <<close-connections, Closing a client's connections>>
 * <<product-check, Automatic product check>>
 
 [[authentication]]
@@ -689,6 +690,20 @@ const client = new Client({
   // Disable agent and keep-alive
   agent: false
 })
+----
+
+[discrete]
+[[close-connections]]
+=== Closing a client's connections
+
+If you would like to close all open connections being managed by an instance of the client, use the `close()` function:
+
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200'
+});
+client.close();
 ----
 
 [discrete]
