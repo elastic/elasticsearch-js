@@ -42,9 +42,9 @@ spec:
         main_semi_daily:
           branch: 'main'
           cronline: '0 */12 * * *'
-        8_11_semi_daily:
-          branch: '8.11'
+        8_12_semi_daily:
+          branch: '8.12'
           cronline: '0 */12 * * *'
-        8_10_daily:
-          branch: '8.10'
+        8_11_daily:
+          branch: '8.11'
           cronline: '@daily'
