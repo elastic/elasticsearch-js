@@ -3,3 +3,5 @@ npm-debug.log
 test/benchmarks
 elasticsearch
 .git
+lib
+junit-output
