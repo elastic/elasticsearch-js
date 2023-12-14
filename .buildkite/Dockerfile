@@ -10,5 +10,7 @@ RUN apt-get clean -y && \
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY package.json .
 RUN npm install --production=false
+
+COPY . .
