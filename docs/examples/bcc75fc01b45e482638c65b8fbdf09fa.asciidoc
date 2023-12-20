@@ -1,0 +1,9 @@
+// getting-started.asciidoc:228
+
+[source,js]
+----
+resp = await client.search({
+  index: 'books'
+});
+console.log(resp.hits.hits);
+----

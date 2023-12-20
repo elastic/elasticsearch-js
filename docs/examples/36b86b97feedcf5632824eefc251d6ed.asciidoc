@@ -1,0 +1,14 @@
+// getting-started.asciidoc:245
+
+[source, js]
+----
+const resp = await client.search({
+    index: 'books',
+    query: {
+        match: {
+            name: "brave"
+        }
+    }
+});
+console.log(resp);
+----
