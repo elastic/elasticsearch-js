@@ -361,6 +361,9 @@ The client API leaks HTTP-related notions in many places, and removing them woul
 
 This could be a rather big breaking change, so a double solution could be used during the 8.x lifecycle. (accepting body keys without them being wrapped in the body as well as the current solution).
 
+To convert code from 7.x, you need to remove the `body` parameter in all the endpoints request.
+For instance, this is an example for the `search` endpoint:
+
 [source,js]
 ----
 // from
@@ -398,6 +401,12 @@ If you weren't extending the internals of the client, this won't be a breaking c
 
 The client API leaks HTTP-related notions in many places, and removing them would definitely improve the DX.
 The client will expose a new request-specific option to still get the full response details.
+
+The new behaviour returns the `body` value directly as response.
+If you want to have the 7.x response format, you need to add `meta : true` in the request.
+This will return all the HTTP meta information, including the `body`.
+
+For instance, this is an example for the `search` endpoint:
 
 [source,js]
 ----
