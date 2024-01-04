@@ -361,7 +361,7 @@ The client API leaks HTTP-related notions in many places, and removing them woul
 
 This could be a rather big breaking change, so a double solution could be used during the 8.x lifecycle. (accepting body keys without them being wrapped in the body as well as the current solution).
 
-To convert code from 7.x, you just need to remove the `body` parameter in all the endpoints request.
+To convert code from 7.x, you need to remove the `body` parameter in all the endpoints request.
 For instance, this is an example for the `search` endpoint:
 
 [source,js]
