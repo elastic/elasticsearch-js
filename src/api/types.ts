@@ -1146,7 +1146,6 @@ export interface SearchRequest extends RequestBase {
   _source_includes?: Fields
   q?: string
   aggregations?: Record<string, AggregationsAggregationContainer>
-  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
   explain?: boolean
@@ -2095,8 +2094,6 @@ export interface ErrorResponseBase {
   status: integer
 }
 
-export type EsqlColumns = ArrayBuffer
-
 export type ExpandWildcard = 'all' | 'open' | 'closed' | 'hidden' | 'none'
 
 export type ExpandWildcards = ExpandWildcard | ExpandWildcard[]
@@ -2289,6 +2286,8 @@ export type Level = 'cluster' | 'indices' | 'shards'
 
 export type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 
+export type ManagedBy = 'Index Lifecycle Management' | 'Data stream lifecycle' | 'Unmanaged'
+
 export type MapboxVectorTiles = ArrayBuffer
 
 export interface MergesStats {
@@ -2467,8 +2466,6 @@ export interface RrfRank {
   rank_constant?: long
   window_size?: long
 }
-
-export type ScalarValue = long | double | string | boolean | null
 
 export interface ScoreSort {
   order?: SortOrder
@@ -4511,11 +4508,11 @@ export type AnalysisNormalizer = AnalysisLowercaseNormalizer | AnalysisCustomNor
 
 export interface AnalysisPathHierarchyTokenizer extends AnalysisTokenizerBase {
   type: 'path_hierarchy'
-  buffer_size?: SpecUtilsStringified<integer>
-  delimiter?: string
-  replacement?: string
-  reverse?: SpecUtilsStringified<boolean>
-  skip?: SpecUtilsStringified<integer>
+  buffer_size: SpecUtilsStringified<integer>
+  delimiter: string
+  replacement: string
+  reverse: SpecUtilsStringified<boolean>
+  skip: SpecUtilsStringified<integer>
 }
 
 export interface AnalysisPatternAnalyzer {
@@ -5099,7 +5096,7 @@ export interface MappingPointProperty extends MappingDocValuesPropertyBase {
   type: 'point'
 }
 
-export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingSparseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty
+export type MappingProperty = MappingBinaryProperty | MappingBooleanProperty | MappingDynamicProperty | MappingJoinProperty | MappingKeywordProperty | MappingMatchOnlyTextProperty | MappingPercolatorProperty | MappingRankFeatureProperty | MappingRankFeaturesProperty | MappingSearchAsYouTypeProperty | MappingTextProperty | MappingVersionProperty | MappingWildcardProperty | MappingDateNanosProperty | MappingDateProperty | MappingAggregateMetricDoubleProperty | MappingDenseVectorProperty | MappingFlattenedProperty | MappingNestedProperty | MappingObjectProperty | MappingCompletionProperty | MappingConstantKeywordProperty | MappingFieldAliasProperty | MappingHistogramProperty | MappingIpProperty | MappingMurmur3HashProperty | MappingTokenCountProperty | MappingGeoPointProperty | MappingGeoShapeProperty | MappingPointProperty | MappingShapeProperty | MappingByteNumberProperty | MappingDoubleNumberProperty | MappingFloatNumberProperty | MappingHalfFloatNumberProperty | MappingIntegerNumberProperty | MappingLongNumberProperty | MappingScaledFloatNumberProperty | MappingShortNumberProperty | MappingUnsignedLongNumberProperty | MappingDateRangeProperty | MappingDoubleRangeProperty | MappingFloatRangeProperty | MappingIntegerRangeProperty | MappingIpRangeProperty | MappingLongRangeProperty
 
 export interface MappingPropertyBase {
   meta?: Record<string, string>
@@ -5192,10 +5189,6 @@ export interface MappingSourceField {
 }
 
 export type MappingSourceFieldMode = 'disabled' | 'stored' | 'synthetic'
-
-export interface MappingSparseVectorProperty extends MappingPropertyBase {
-  type: 'sparse_vector'
-}
 
 export interface MappingSuggestContext {
   name: Name
@@ -5439,10 +5432,9 @@ export interface QueryDslGeoDistanceQueryKeys extends QueryDslQueryBase {
   distance: Distance
   distance_type?: GeoDistanceType
   validation_method?: QueryDslGeoValidationMethod
-  ignore_unmapped?: boolean
 }
 export type QueryDslGeoDistanceQuery = QueryDslGeoDistanceQueryKeys
-& { [property: string]: GeoLocation | Distance | GeoDistanceType | QueryDslGeoValidationMethod | boolean | float | string }
+& { [property: string]: GeoLocation | Distance | GeoDistanceType | QueryDslGeoValidationMethod | float | string }
 
 export type QueryDslGeoExecution = 'memory' | 'indexed'
 
@@ -6127,7 +6119,6 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   _source_includes?: Fields
   q?: string
   aggregations?: Record<string, AggregationsAggregationContainer>
-  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
   explain?: boolean
@@ -9120,18 +9111,6 @@ export type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEven
 
 export type EqlSearchResultPosition = 'tail' | 'head'
 
-export interface EsqlQueryRequest extends RequestBase {
-  format?: string
-  delimiter?: string
-  columnar?: boolean
-  filter?: QueryDslQueryContainer
-  locale?: string
-  params?: ScalarValue[]
-  query: string
-}
-
-export type EsqlQueryResponse = EsqlColumns
-
 export interface FeaturesFeature {
   name: string
   description: string
@@ -9221,7 +9200,6 @@ export interface FleetSearchRequest extends RequestBase {
   wait_for_checkpoints?: FleetCheckpoint[]
   allow_partial_search_results?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
-  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   collapse?: SearchFieldCollapse
   explain?: boolean
@@ -9547,7 +9525,7 @@ export interface IndicesDataStream {
   generation: integer
   hidden: boolean
   ilm_policy?: Name
-  next_generation_managed_by: IndicesManagedBy
+  next_generation_managed_by: ManagedBy
   prefer_ilm: boolean
   indices: IndicesDataStreamIndex[]
   lifecycle?: IndicesDataStreamLifecycleWithRollover
@@ -9563,7 +9541,7 @@ export interface IndicesDataStreamIndex {
   index_name: IndexName
   index_uuid: Uuid
   ilm_policy?: Name
-  managed_by: IndicesManagedBy
+  managed_by: ManagedBy
   prefer_ilm: boolean
 }
 
@@ -9719,6 +9697,7 @@ export interface IndicesIndexSettingsKeys {
   analysis?: IndicesIndexSettingsAnalysis
   settings?: IndicesIndexSettings
   time_series?: IndicesIndexSettingsTimeSeries
+  shards?: integer
   queries?: IndicesQueries
   similarity?: IndicesSettingsSimilarity
   mapping?: IndicesMappingLimitSettings
@@ -9810,8 +9789,6 @@ export interface IndicesIndexingSlowlogSettings {
 export interface IndicesIndexingSlowlogTresholds {
   index?: IndicesSlowlogTresholdLevels
 }
-
-export type IndicesManagedBy = 'Index Lifecycle Management' | 'Data stream lifecycle' | 'Unmanaged'
 
 export interface IndicesMappingLimitSettings {
   coerce?: boolean
@@ -11286,73 +11263,6 @@ export interface IndicesValidateQueryResponse {
   error?: string
 }
 
-export type InferenceDenseVector = float[]
-
-export interface InferenceInferenceResult {
-  text_embedding?: InferenceTextEmbeddingResult[]
-  sparse_embedding?: InferenceSparseEmbeddingResult[]
-}
-
-export interface InferenceModelConfig {
-  service: string
-  service_settings: InferenceServiceSettings
-  task_settings: InferenceTaskSettings
-}
-
-export interface InferenceModelConfigContainer extends InferenceModelConfig {
-  model_id: string
-  task_type: InferenceTaskType
-}
-
-export type InferenceServiceSettings = any
-
-export interface InferenceSparseEmbeddingResult {
-  embedding: InferenceSparseVector
-}
-
-export type InferenceSparseVector = Record<string, float>
-
-export type InferenceTaskSettings = any
-
-export type InferenceTaskType = 'sparse_embedding' | 'text_embedding'
-
-export interface InferenceTextEmbeddingResult {
-  embedding: InferenceDenseVector
-}
-
-export interface InferenceDeleteModelRequest extends RequestBase {
-  task_type: InferenceTaskType
-  model_id: Id
-}
-
-export type InferenceDeleteModelResponse = AcknowledgedResponseBase
-
-export interface InferenceGetModelRequest extends RequestBase {
-  task_type: InferenceTaskType
-  model_id: Id
-}
-
-export interface InferenceGetModelResponse {
-  models: InferenceModelConfigContainer[]
-}
-
-export interface InferenceInferenceRequest extends RequestBase {
-  task_type: InferenceTaskType
-  model_id: Id
-  input: string | string[]
-  task_settings?: InferenceTaskSettings
-}
-
-export type InferenceInferenceResponse = InferenceInferenceResult
-
-export interface InferencePutModelRequest extends RequestBase {
-  task_type: InferenceTaskType
-  model_id: Id
-  model_config?: InferenceModelConfig
-}
-
-export type InferencePutModelResponse = InferenceModelConfigContainer
-
 export interface IngestAppendProcessor extends IngestProcessorBase {
   field: Field
   value: any[]
@@ -11546,7 +11456,6 @@ export interface IngestPipeline {
   on_failure?: IngestProcessorContainer[]
   processors?: IngestProcessorContainer[]
   version?: VersionNumber
-  _meta: Metadata
 }
 
 export interface IngestPipelineConfig {
@@ -11589,7 +11498,6 @@ export interface IngestProcessorContainer {
   lowercase?: IngestLowercaseProcessor
   remove?: IngestRemoveProcessor
   rename?: IngestRenameProcessor
-  reroute?: IngestRerouteProcessor
   script?: Script
   set?: IngestSetProcessor
   sort?: IngestSortProcessor
@@ -11615,12 +11523,6 @@ export interface IngestRenameProcessor extends IngestProcessorBase {
   field: Field
   ignore_missing?: boolean
   target_field: Field
-}
-
-export interface IngestRerouteProcessor extends IngestProcessorBase {
-  destination?: string
-  dataset?: string | string[]
-  namespace?: string | string[]
 }
 
 export interface IngestSetProcessor extends IngestProcessorBase {
@@ -13949,7 +13851,6 @@ export interface MlPutDatafeedRequest extends RequestBase {
   delayed_data_check_config?: MlDelayedDataCheckConfig
   frequency?: Duration
   indices?: Indices
-  /** @alias indices */
   indexes?: Indices
   indices_options?: IndicesOptions
   job_id?: Id
@@ -14284,7 +14185,6 @@ export interface MlUpdateDatafeedRequest extends RequestBase {
   delayed_data_check_config?: MlDelayedDataCheckConfig
   frequency?: Duration
   indices?: string[]
-  /** @alias indices */
   indexes?: string[]
   indices_options?: IndicesOptions
   job_id?: Id
@@ -15554,7 +15454,6 @@ export interface RollupRollupSearchRequest extends RequestBase {
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
-  /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   query?: QueryDslQueryContainer
   size?: integer
@@ -15780,9 +15679,11 @@ export interface SecurityCreatedStatus {
 }
 
 export interface SecurityFieldRule {
-  username?: Names
+  username?: Name
   dn?: Names
   groups?: Names
+  metadata?: any
+  realm?: SecurityRealm
 }
 
 export interface SecurityFieldSecurity {
@@ -15810,6 +15711,10 @@ export type SecurityIndicesPrivilegesQuery = string | QueryDslQueryContainer | S
 
 export interface SecurityManageUserPrivileges {
   applications: string[]
+}
+
+export interface SecurityRealm {
+  name: Name
 }
 
 export interface SecurityRealmInfo {
@@ -15844,7 +15749,7 @@ export interface SecurityRoleMapping {
   metadata: Metadata
   roles: string[]
   rules: SecurityRoleMappingRule
-  role_templates?: SecurityRoleTemplate[]
+  role_templates?: SecurityGetRoleRoleTemplate[]
 }
 
 export interface SecurityRoleMappingRule {
@@ -15852,11 +15757,6 @@ export interface SecurityRoleMappingRule {
   all?: SecurityRoleMappingRule[]
   field?: SecurityFieldRule
   except?: SecurityRoleMappingRule
-}
-
-export interface SecurityRoleTemplate {
-  format?: SecurityTemplateFormat
-  template: Script
 }
 
 export type SecurityRoleTemplateInlineQuery = string | QueryDslQueryContainer
@@ -15872,8 +15772,6 @@ export interface SecurityRoleTemplateQuery {
 }
 
 export type SecurityRoleTemplateScript = SecurityRoleTemplateInlineScript | SecurityRoleTemplateInlineQuery | StoredScriptId
-
-export type SecurityTemplateFormat = 'string' | 'json'
 
 export interface SecurityTransientMetadataConfig {
   enabled: boolean
@@ -16165,7 +16063,6 @@ export interface SecurityGetApiKeyRequest extends RequestBase {
   realm_name?: Name
   username?: Username
   with_limited_by?: boolean
-  active_only?: boolean
 }
 
 export interface SecurityGetApiKeyResponse {
@@ -16200,9 +16097,16 @@ export interface SecurityGetRoleRole {
   run_as: string[]
   transient_metadata: SecurityTransientMetadataConfig
   applications: SecurityApplicationPrivileges[]
-  role_templates?: SecurityRoleTemplate[]
+  role_templates?: SecurityGetRoleRoleTemplate[]
   global?: Record<string, Record<string, Record<string, string[]>>>
 }
+
+export interface SecurityGetRoleRoleTemplate {
+  format?: SecurityGetRoleTemplateFormat
+  template: Script
+}
+
+export type SecurityGetRoleTemplateFormat = 'string' | 'json'
 
 export interface SecurityGetRoleMappingRequest extends RequestBase {
   name?: Names
@@ -16462,7 +16366,6 @@ export interface SecurityPutRoleMappingRequest extends RequestBase {
   enabled?: boolean
   metadata?: Metadata
   roles?: string[]
-  role_templates?: SecurityRoleTemplate[]
   rules?: SecurityRoleMappingRule
   run_as?: string[]
 }
@@ -16594,7 +16497,6 @@ export interface SecurityUpdateApiKeyRequest extends RequestBase {
   id: Id
   role_descriptors?: Record<string, SecurityRoleDescriptor>
   metadata?: Metadata
-  expiration?: Duration
 }
 
 export interface SecurityUpdateApiKeyResponse {

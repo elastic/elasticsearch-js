@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Returns information about the indices and shards that a search request would be executed against.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/search-shards.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html | Elasticsearch API documentation}
   */
 export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest | TB.SearchShardsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchShardsResponse>
 export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest | TB.SearchShardsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchShardsResponse, unknown>>

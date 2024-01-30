@@ -45,7 +45,7 @@ export default class Cat {
 
   /**
     * Shows information about currently configured aliases to indices including filter and routing infos.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-alias.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html | Elasticsearch API documentation}
     */
   async aliases (this: That, params?: T.CatAliasesRequest | TB.CatAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatAliasesResponse>
   async aliases (this: That, params?: T.CatAliasesRequest | TB.CatAliasesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatAliasesResponse, unknown>>
@@ -79,7 +79,7 @@ export default class Cat {
 
   /**
     * Provides a snapshot of how many shards are allocated to each data node and how much disk space they are using.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-allocation.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html | Elasticsearch API documentation}
     */
   async allocation (this: That, params?: T.CatAllocationRequest | TB.CatAllocationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatAllocationResponse>
   async allocation (this: That, params?: T.CatAllocationRequest | TB.CatAllocationRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatAllocationResponse, unknown>>
@@ -113,7 +113,7 @@ export default class Cat {
 
   /**
     * Returns information about existing component_templates templates.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-component-templates.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-component-templates.html | Elasticsearch API documentation}
     */
   async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest | TB.CatComponentTemplatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatComponentTemplatesResponse>
   async componentTemplates (this: That, params?: T.CatComponentTemplatesRequest | TB.CatComponentTemplatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatComponentTemplatesResponse, unknown>>
@@ -147,7 +147,7 @@ export default class Cat {
 
   /**
     * Provides quick access to the document count of the entire cluster, or individual indices.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-count.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-count.html | Elasticsearch API documentation}
     */
   async count (this: That, params?: T.CatCountRequest | TB.CatCountRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatCountResponse>
   async count (this: That, params?: T.CatCountRequest | TB.CatCountRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatCountResponse, unknown>>
@@ -181,7 +181,7 @@ export default class Cat {
 
   /**
     * Shows how much heap memory is currently being used by fielddata on every data node in the cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-fielddata.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html | Elasticsearch API documentation}
     */
   async fielddata (this: That, params?: T.CatFielddataRequest | TB.CatFielddataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatFielddataResponse>
   async fielddata (this: That, params?: T.CatFielddataRequest | TB.CatFielddataRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatFielddataResponse, unknown>>
@@ -215,7 +215,7 @@ export default class Cat {
 
   /**
     * Returns a concise representation of the cluster health.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-health.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html | Elasticsearch API documentation}
     */
   async health (this: That, params?: T.CatHealthRequest | TB.CatHealthRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatHealthResponse>
   async health (this: That, params?: T.CatHealthRequest | TB.CatHealthRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatHealthResponse, unknown>>
@@ -242,7 +242,7 @@ export default class Cat {
 
   /**
     * Returns help for the Cat APIs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html | Elasticsearch API documentation}
     */
   async help (this: That, params?: T.CatHelpRequest | TB.CatHelpRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatHelpResponse>
   async help (this: That, params?: T.CatHelpRequest | TB.CatHelpRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatHelpResponse, unknown>>
@@ -269,7 +269,7 @@ export default class Cat {
 
   /**
     * Returns information about indices: number of primaries and replicas, document counts, disk size, ...
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-indices.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html | Elasticsearch API documentation}
     */
   async indices (this: That, params?: T.CatIndicesRequest | TB.CatIndicesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatIndicesResponse>
   async indices (this: That, params?: T.CatIndicesRequest | TB.CatIndicesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatIndicesResponse, unknown>>
@@ -303,7 +303,7 @@ export default class Cat {
 
   /**
     * Returns information about the master node.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-master.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-master.html | Elasticsearch API documentation}
     */
   async master (this: That, params?: T.CatMasterRequest | TB.CatMasterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMasterResponse>
   async master (this: That, params?: T.CatMasterRequest | TB.CatMasterRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMasterResponse, unknown>>
@@ -330,7 +330,7 @@ export default class Cat {
 
   /**
     * Gets configuration and usage information about data frame analytics jobs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-dfanalytics.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-dfanalytics.html | Elasticsearch API documentation}
     */
   async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest | TB.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlDataFrameAnalyticsResponse>
   async mlDataFrameAnalytics (this: That, params?: T.CatMlDataFrameAnalyticsRequest | TB.CatMlDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlDataFrameAnalyticsResponse, unknown>>
@@ -364,7 +364,7 @@ export default class Cat {
 
   /**
     * Gets configuration and usage information about datafeeds.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-datafeeds.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-datafeeds.html | Elasticsearch API documentation}
     */
   async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest | TB.CatMlDatafeedsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlDatafeedsResponse>
   async mlDatafeeds (this: That, params?: T.CatMlDatafeedsRequest | TB.CatMlDatafeedsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlDatafeedsResponse, unknown>>
@@ -398,7 +398,7 @@ export default class Cat {
 
   /**
     * Gets configuration and usage information about anomaly detection jobs.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-anomaly-detectors.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-anomaly-detectors.html | Elasticsearch API documentation}
     */
   async mlJobs (this: That, params?: T.CatMlJobsRequest | TB.CatMlJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlJobsResponse>
   async mlJobs (this: That, params?: T.CatMlJobsRequest | TB.CatMlJobsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlJobsResponse, unknown>>
@@ -432,7 +432,7 @@ export default class Cat {
 
   /**
     * Gets configuration and usage information about inference trained models.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-trained-model.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-trained-model.html | Elasticsearch API documentation}
     */
   async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest | TB.CatMlTrainedModelsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatMlTrainedModelsResponse>
   async mlTrainedModels (this: That, params?: T.CatMlTrainedModelsRequest | TB.CatMlTrainedModelsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatMlTrainedModelsResponse, unknown>>
@@ -466,7 +466,7 @@ export default class Cat {
 
   /**
     * Returns information about custom node attributes.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-nodeattrs.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.html | Elasticsearch API documentation}
     */
   async nodeattrs (this: That, params?: T.CatNodeattrsRequest | TB.CatNodeattrsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatNodeattrsResponse>
   async nodeattrs (this: That, params?: T.CatNodeattrsRequest | TB.CatNodeattrsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatNodeattrsResponse, unknown>>
@@ -493,7 +493,7 @@ export default class Cat {
 
   /**
     * Returns basic statistics about performance of cluster nodes.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-nodes.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html | Elasticsearch API documentation}
     */
   async nodes (this: That, params?: T.CatNodesRequest | TB.CatNodesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatNodesResponse>
   async nodes (this: That, params?: T.CatNodesRequest | TB.CatNodesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatNodesResponse, unknown>>
@@ -520,7 +520,7 @@ export default class Cat {
 
   /**
     * Returns a concise representation of the cluster pending tasks.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-pending-tasks.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-pending-tasks.html | Elasticsearch API documentation}
     */
   async pendingTasks (this: That, params?: T.CatPendingTasksRequest | TB.CatPendingTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatPendingTasksResponse>
   async pendingTasks (this: That, params?: T.CatPendingTasksRequest | TB.CatPendingTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatPendingTasksResponse, unknown>>
@@ -547,7 +547,7 @@ export default class Cat {
 
   /**
     * Returns information about installed plugins across nodes node.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-plugins.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html | Elasticsearch API documentation}
     */
   async plugins (this: That, params?: T.CatPluginsRequest | TB.CatPluginsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatPluginsResponse>
   async plugins (this: That, params?: T.CatPluginsRequest | TB.CatPluginsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatPluginsResponse, unknown>>
@@ -574,7 +574,7 @@ export default class Cat {
 
   /**
     * Returns information about index shard recoveries, both on-going completed.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-recovery.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html | Elasticsearch API documentation}
     */
   async recovery (this: That, params?: T.CatRecoveryRequest | TB.CatRecoveryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatRecoveryResponse>
   async recovery (this: That, params?: T.CatRecoveryRequest | TB.CatRecoveryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatRecoveryResponse, unknown>>
@@ -608,7 +608,7 @@ export default class Cat {
 
   /**
     * Returns information about snapshot repositories registered in the cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-repositories.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.html | Elasticsearch API documentation}
     */
   async repositories (this: That, params?: T.CatRepositoriesRequest | TB.CatRepositoriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatRepositoriesResponse>
   async repositories (this: That, params?: T.CatRepositoriesRequest | TB.CatRepositoriesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatRepositoriesResponse, unknown>>
@@ -635,7 +635,7 @@ export default class Cat {
 
   /**
     * Provides low-level information about the segments in the shards of an index.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-segments.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html | Elasticsearch API documentation}
     */
   async segments (this: That, params?: T.CatSegmentsRequest | TB.CatSegmentsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatSegmentsResponse>
   async segments (this: That, params?: T.CatSegmentsRequest | TB.CatSegmentsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatSegmentsResponse, unknown>>
@@ -669,7 +669,7 @@ export default class Cat {
 
   /**
     * Provides a detailed view of shard allocation on nodes.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-shards.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-shards.html | Elasticsearch API documentation}
     */
   async shards (this: That, params?: T.CatShardsRequest | TB.CatShardsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatShardsResponse>
   async shards (this: That, params?: T.CatShardsRequest | TB.CatShardsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatShardsResponse, unknown>>
@@ -703,7 +703,7 @@ export default class Cat {
 
   /**
     * Returns all snapshots in a specific repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-snapshots.html | Elasticsearch API documentation}
     */
   async snapshots (this: That, params?: T.CatSnapshotsRequest | TB.CatSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatSnapshotsResponse>
   async snapshots (this: That, params?: T.CatSnapshotsRequest | TB.CatSnapshotsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatSnapshotsResponse, unknown>>
@@ -737,7 +737,7 @@ export default class Cat {
 
   /**
     * Returns information about the tasks currently executing on one or more nodes in the cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/tasks.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html | Elasticsearch API documentation}
     */
   async tasks (this: That, params?: T.CatTasksRequest | TB.CatTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTasksResponse>
   async tasks (this: That, params?: T.CatTasksRequest | TB.CatTasksRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTasksResponse, unknown>>
@@ -764,7 +764,7 @@ export default class Cat {
 
   /**
     * Returns information about existing templates.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-templates.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html | Elasticsearch API documentation}
     */
   async templates (this: That, params?: T.CatTemplatesRequest | TB.CatTemplatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTemplatesResponse>
   async templates (this: That, params?: T.CatTemplatesRequest | TB.CatTemplatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTemplatesResponse, unknown>>
@@ -798,7 +798,7 @@ export default class Cat {
 
   /**
     * Returns cluster-wide thread pool statistics per node. By default the active, queue and rejected statistics are returned for all thread pools.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-thread-pool.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html | Elasticsearch API documentation}
     */
   async threadPool (this: That, params?: T.CatThreadPoolRequest | TB.CatThreadPoolRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatThreadPoolResponse>
   async threadPool (this: That, params?: T.CatThreadPoolRequest | TB.CatThreadPoolRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatThreadPoolResponse, unknown>>
@@ -832,7 +832,7 @@ export default class Cat {
 
   /**
     * Gets configuration and usage information about transforms.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cat-transforms.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-transforms.html | Elasticsearch API documentation}
     */
   async transforms (this: That, params?: T.CatTransformsRequest | TB.CatTransformsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.CatTransformsResponse>
   async transforms (this: That, params?: T.CatTransformsRequest | TB.CatTransformsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CatTransformsResponse, unknown>>

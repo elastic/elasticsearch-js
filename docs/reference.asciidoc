@@ -2796,30 +2796,6 @@ client.eql.search({ index, query })
 ** *`ignore_unavailable` (Optional, boolean)*: If true, missing or closed indices are not included in the response.
 
 [discrete]
-=== esql
-[discrete]
-==== query
-Executes an ESQL request
-
-{ref}/esql-rest.html[Endpoint documentation]
-[source,ts]
-----
-client.esql.query({ query })
-----
-
-[discrete]
-==== Arguments
-
-* *Request (object):*
-** *`query` (string)*: The ES|QL query API accepts an ES|QL query string in the query parameter, runs it, and returns the results.
-** *`columnar` (Optional, boolean)*: By default, ES|QL returns results as rows. For example, FROM returns each individual document as one row. For the JSON, YAML, CBOR and smile formats, ES|QL can return the results in a columnar fashion where one row represents all the values of a certain column in the results.
-** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, wildcard, wrapper, type })*: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
-** *`locale` (Optional, string)*
-** *`params` (Optional, number | number | string | boolean | null[])*: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
-** *`format` (Optional, string)*: A short version of the Accept header, e.g. json, yaml.
-** *`delimiter` (Optional, string)*: The character to use between values within a CSV row. Only valid for the CSV format.
-
-[discrete]
 === features
 [discrete]
 ==== get_features
@@ -3379,7 +3355,7 @@ client.indices.create({ index })
 - Field names
 - Field data types
 - Mapping parameters
-** *`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*: Configuration options for the index.
+** *`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, shards, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*: Configuration options for the index.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response.
@@ -3521,7 +3497,7 @@ client.indices.deleteDataStream({ name })
 ==== delete_index_template
 Deletes an index template.
 
-{ref}/indices-delete-template.html[Endpoint documentation]
+{ref}/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.deleteIndexTemplate({ name })
@@ -3539,7 +3515,7 @@ client.indices.deleteIndexTemplate({ name })
 ==== delete_template
 Deletes an index template.
 
-{ref}/indices-delete-template-v1.html[Endpoint documentation]
+{ref}/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.deleteTemplate({ name })
@@ -3658,7 +3634,7 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ==== exists_index_template
 Returns information about whether a particular index template exists.
 
-{ref}/index-templates.html[Endpoint documentation]
+{ref}/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.existsIndexTemplate({ name })
@@ -3675,7 +3651,7 @@ client.indices.existsIndexTemplate({ name })
 ==== exists_template
 Returns information about whether a particular index template exists.
 
-{ref}/indices-template-exists-v1.html[Endpoint documentation]
+{ref}/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.existsTemplate({ name })
@@ -3921,7 +3897,7 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ==== get_index_template
 Returns an index template.
 
-{ref}/indices-get-template.html[Endpoint documentation]
+{ref}/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.getIndexTemplate({ ... })
@@ -4004,7 +3980,7 @@ error.
 ==== get_template
 Returns an index template.
 
-{ref}/indices-get-template-v1.html[Endpoint documentation]
+{ref}/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.getTemplate({ ... })
@@ -4176,7 +4152,7 @@ If no response is received before the timeout expires, the request fails and ret
 ==== put_index_template
 Creates or updates an index template.
 
-{ref}/indices-put-template.html[Endpoint documentation]
+{ref}/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.putIndexTemplate({ name })
@@ -4232,7 +4208,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 ** *`numeric_detection` (Optional, boolean)*: Automatically map strings into numeric data types for all fields.
-** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, normalizer, norms, null_value, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, dims, similarity, index, index_options } | { type } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type }>)*: Mapping for a field. For new fields, this mapping can include:
+** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, normalizer, norms, null_value, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, dims, similarity, index, index_options } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type }>)*: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -4270,7 +4246,7 @@ client.indices.putSettings({ ... })
 ** *`index` (Optional, string | string[])*: List of data streams, indices, and aliases used to limit
 the request. Supports wildcards (`*`). To target all data streams and
 indices, omit this parameter or use `*` or `_all`.
-** *`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*
+** *`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, shards, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*
 ** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index
 alias, or `_all` value targets only missing or closed indices. This
 behavior applies even if the request targets other open indices. For
@@ -4293,7 +4269,7 @@ error.
 ==== put_template
 Creates or updates an index template.
 
-{ref}/indices-templates-v1.html[Endpoint documentation]
+{ref}/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.putTemplate({ name })
@@ -4525,7 +4501,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 ==== simulate_index_template
 Simulate matching the given index name against the index templates in the system
 
-{ref}/indices-simulate-index.html[Endpoint documentation]
+{ref}/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.simulateIndexTemplate({ name })
@@ -4569,7 +4545,7 @@ before the timeout expires, the request fails and returns an error.
 ==== simulate_template
 Simulate resolving the given template name or body
 
-{ref}/indices-simulate-template.html[Endpoint documentation]
+{ref}/indices-templates.html[Endpoint documentation]
 [source,ts]
 ----
 client.indices.simulateTemplate({ ... })
@@ -4726,80 +4702,6 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`q` (Optional, string)*: Query in the Lucene query string syntax.
 
 [discrete]
-=== inference
-[discrete]
-==== delete_model
-Delete model in the Inference API
-
-{ref}/delete-inference-api.html[Endpoint documentation]
-[source,ts]
-----
-client.inference.deleteModel({ task_type, model_id })
-----
-
-[discrete]
-==== Arguments
-
-* *Request (object):*
-** *`task_type` (Enum("sparse_embedding" | "text_embedding"))*: The model task type
-** *`model_id` (string)*: The unique identifier of the inference model.
-
-[discrete]
-==== get_model
-Get a model in the Inference API
-
-{ref}/get-inference-api.html[Endpoint documentation]
-[source,ts]
-----
-client.inference.getModel({ task_type, model_id })
-----
-
-[discrete]
-==== Arguments
-
-* *Request (object):*
-** *`task_type` (Enum("sparse_embedding" | "text_embedding"))*: The model task type
-** *`model_id` (string)*: The unique identifier of the inference model.
-
-[discrete]
-==== inference
-Perform inference on a model
-
-{ref}/post-inference-api.html[Endpoint documentation]
-[source,ts]
-----
-client.inference.inference({ task_type, model_id, input })
-----
-
-[discrete]
-==== Arguments
-
-* *Request (object):*
-** *`task_type` (Enum("sparse_embedding" | "text_embedding"))*: The model task type
-** *`model_id` (string)*: The unique identifier of the inference model.
-** *`input` (string | string[])*: Text input to the model.
-Either a string or an array of strings.
-** *`task_settings` (Optional, User-defined value)*: Optional task settings
-
-[discrete]
-==== put_model
-Configure a model for use in the Inference API
-
-{ref}/put-inference-api.html[Endpoint documentation]
-[source,ts]
-----
-client.inference.putModel({ task_type, model_id })
-----
-
-[discrete]
-==== Arguments
-
-* *Request (object):*
-** *`task_type` (Enum("sparse_embedding" | "text_embedding"))*: The model task type
-** *`model_id` (string)*: The unique identifier of the inference model.
-** *`model_config` (Optional, { service, service_settings, task_settings })*
-
-[discrete]
 === ingest
 [discrete]
 ==== delete_pipeline
@@ -4882,8 +4784,8 @@ client.ingest.putPipeline({ id })
 ** *`id` (string)*: ID of the ingest pipeline to create or update.
 ** *`_meta` (Optional, Record<string, User-defined value>)*: Optional metadata about the ingest pipeline. May have any contents. This map is not automatically generated by Elasticsearch.
 ** *`description` (Optional, string)*: Description of the ingest pipeline.
-** *`on_failure` (Optional, { attachment, append, csv, convert, date, date_index_name, dot_expander, enrich, fail, foreach, json, user_agent, kv, geoip, grok, gsub, join, lowercase, remove, rename, reroute, script, set, sort, split, trim, uppercase, urldecode, bytes, dissect, set_security_user, pipeline, drop, circle, inference }[])*: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
-** *`processors` (Optional, { attachment, append, csv, convert, date, date_index_name, dot_expander, enrich, fail, foreach, json, user_agent, kv, geoip, grok, gsub, join, lowercase, remove, rename, reroute, script, set, sort, split, trim, uppercase, urldecode, bytes, dissect, set_security_user, pipeline, drop, circle, inference }[])*: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
+** *`on_failure` (Optional, { attachment, append, csv, convert, date, date_index_name, dot_expander, enrich, fail, foreach, json, user_agent, kv, geoip, grok, gsub, join, lowercase, remove, rename, script, set, sort, split, trim, uppercase, urldecode, bytes, dissect, set_security_user, pipeline, drop, circle, inference }[])*: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
+** *`processors` (Optional, { attachment, append, csv, convert, date, date_index_name, dot_expander, enrich, fail, foreach, json, user_agent, kv, geoip, grok, gsub, join, lowercase, remove, rename, script, set, sort, split, trim, uppercase, urldecode, bytes, dissect, set_security_user, pipeline, drop, circle, inference }[])*: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
 ** *`version` (Optional, number)*: Version number used by external systems to track ingest pipelines. This parameter is intended for external systems only. Elasticsearch does not use or validate pipeline version numbers.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
@@ -4906,7 +4808,7 @@ client.ingest.simulate({ ... })
 ** *`id` (Optional, string)*: Pipeline to test.
 If you don’t specify a `pipeline` in the request body, this parameter is required.
 ** *`docs` (Optional, { _id, _index, _source }[])*: Sample documents to test in the pipeline.
-** *`pipeline` (Optional, { description, on_failure, processors, version, _meta })*: Pipeline to test.
+** *`pipeline` (Optional, { description, on_failure, processors, version })*: Pipeline to test.
 If you don’t specify the `pipeline` request path parameter, this parameter is required.
 If you specify both this and the request path parameter, the API only uses the request path parameter.
 ** *`verbose` (Optional, boolean)*: If `true`, the response includes output data for each processor in the executed pipeline.
@@ -5064,7 +4966,7 @@ client.logstash.putPipeline({ id })
 
 * *Request (object):*
 ** *`id` (string)*: Identifier for the pipeline.
-** *`pipeline` (Optional, { description, on_failure, processors, version, _meta })*
+** *`pipeline` (Optional, { description, on_failure, processors, version })*
 
 [discrete]
 === migration
@@ -7310,7 +7212,7 @@ If set to `false`, the API returns immediately and the indexer is stopped asynch
 ==== delete
 Deletes a search application.
 
-{ref}/delete-search-application.html[Endpoint documentation]
+{ref}/put-search-application.html[Endpoint documentation]
 [source,ts]
 ----
 client.searchApplication.delete({ name })
@@ -7695,17 +7597,6 @@ client.security.createApiKey({ ... })
 ** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 [discrete]
-==== create_cross_cluster_api_key
-Creates a cross-cluster API key for API key based remote cluster access.
-
-{ref}/security-api-create-cross-cluster-api-key.html[Endpoint documentation]
-[source,ts]
-----
-client.security.createCrossClusterApiKey()
-----
-
-
-[discrete]
 ==== create_service_token
 Creates a service account token for access without requiring basic authentication.
 
@@ -7897,7 +7788,6 @@ This parameter cannot be used with either `id` or `name` or when `owner` flag is
 associated with the API key. An API key's actual
 permission is the intersection of its assigned role
 descriptors and the owner user's role descriptors.
-** *`active_only` (Optional, boolean)*: A boolean flag that can be used to query API keys that are currently active. An API key is considered active if it is neither invalidated, nor expired at query time. You can specify this together with other parameters such as `owner` or `name`. If `active_only` is false, the response will include both active and inactive (expired or invalidated) keys.
 
 [discrete]
 ==== get_builtin_privileges
@@ -7992,17 +7882,6 @@ client.security.getServiceCredentials({ namespace, service })
 * *Request (object):*
 ** *`namespace` (string)*: Name of the namespace.
 ** *`service` (string)*: Name of the service name.
-
-[discrete]
-==== get_settings
-Retrieve settings for the security system indices
-
-{ref}/security-api-get-settings.html[Endpoint documentation]
-[source,ts]
-----
-client.security.getSettings()
-----
-
 
 [discrete]
 ==== get_token
@@ -8242,7 +8121,6 @@ client.security.putRoleMapping({ name })
 ** *`enabled` (Optional, boolean)*
 ** *`metadata` (Optional, Record<string, User-defined value>)*
 ** *`roles` (Optional, string[])*
-** *`role_templates` (Optional, { format, template }[])*
 ** *`rules` (Optional, { any, all, field, except })*
 ** *`run_as` (Optional, string[])*
 ** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
@@ -8432,29 +8310,6 @@ client.security.updateApiKey({ id })
 ** *`id` (string)*: The ID of the API key to update.
 ** *`role_descriptors` (Optional, Record<string, { cluster, indices, global, applications, metadata, run_as, transient_metadata }>)*: An array of role descriptors for this API key. This parameter is optional. When it is not specified or is an empty array, then the API key will have a point in time snapshot of permissions of the authenticated user. If you supply role descriptors then the resultant permissions would be an intersection of API keys permissions and authenticated user’s permissions thereby limiting the access scope for API keys. The structure of role descriptor is the same as the request for create role API. For more details, see create or update roles API.
 ** *`metadata` (Optional, Record<string, User-defined value>)*: Arbitrary metadata that you want to associate with the API key. It supports nested data structure. Within the metadata object, keys beginning with _ are reserved for system usage.
-** *`expiration` (Optional, string | -1 | 0)*: Expiration time for the API key.
-
-[discrete]
-==== update_cross_cluster_api_key
-Updates attributes of an existing cross-cluster API key.
-
-{ref}/security-api-update-cross-cluster-api-key.html[Endpoint documentation]
-[source,ts]
-----
-client.security.updateCrossClusterApiKey()
-----
-
-
-[discrete]
-==== update_settings
-Update settings for the security system index
-
-{ref}/security-api-update-settings.html[Endpoint documentation]
-[source,ts]
-----
-client.security.updateSettings()
-----
-
 
 [discrete]
 === slm
@@ -8789,7 +8644,7 @@ client.snapshot.restore({ repository, snapshot })
 ** *`ignore_unavailable` (Optional, boolean)*
 ** *`include_aliases` (Optional, boolean)*
 ** *`include_global_state` (Optional, boolean)*
-** *`index_settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*
+** *`index_settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, shards, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*
 ** *`indices` (Optional, string | string[])*
 ** *`partial` (Optional, boolean)*
 ** *`rename_pattern` (Optional, string)*
