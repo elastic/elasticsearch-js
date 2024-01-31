@@ -45,7 +45,7 @@ export default class QueryRuleset {
 
   /**
     * Deletes a query ruleset.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-query-ruleset.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/delete-query-ruleset.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.QueryRulesetDeleteRequest | TB.QueryRulesetDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesetDeleteResponse>
   async delete (this: That, params: T.QueryRulesetDeleteRequest | TB.QueryRulesetDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesetDeleteResponse, unknown>>
@@ -71,7 +71,7 @@ export default class QueryRuleset {
 
   /**
     * Returns the details about a query ruleset.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-query-ruleset.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/get-query-ruleset.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.QueryRulesetGetRequest | TB.QueryRulesetGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesetGetResponse>
   async get (this: That, params: T.QueryRulesetGetRequest | TB.QueryRulesetGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesetGetResponse, unknown>>
@@ -97,7 +97,7 @@ export default class QueryRuleset {
 
   /**
     * Lists query rulesets.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/list-query-rulesets.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/list-query-rulesets.html | Elasticsearch API documentation}
     */
   async list (this: That, params?: T.QueryRulesetListRequest | TB.QueryRulesetListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesetListResponse>
   async list (this: That, params?: T.QueryRulesetListRequest | TB.QueryRulesetListRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesetListResponse, unknown>>
@@ -124,7 +124,7 @@ export default class QueryRuleset {
 
   /**
     * Creates or updates a query ruleset.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-query-ruleset.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/put-query-ruleset.html | Elasticsearch API documentation}
     */
   async put (this: That, params: T.QueryRulesetPutRequest | TB.QueryRulesetPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesetPutResponse>
   async put (this: That, params: T.QueryRulesetPutRequest | TB.QueryRulesetPutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesetPutResponse, unknown>>

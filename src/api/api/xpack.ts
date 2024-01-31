@@ -45,7 +45,7 @@ export default class Xpack {
 
   /**
     * Retrieves information about the installed X-Pack features.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/info-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/info-api.html | Elasticsearch API documentation}
     */
   async info (this: That, params?: T.XpackInfoRequest | TB.XpackInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackInfoResponse>
   async info (this: That, params?: T.XpackInfoRequest | TB.XpackInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackInfoResponse, unknown>>
@@ -72,7 +72,7 @@ export default class Xpack {
 
   /**
     * Retrieves usage information about the installed X-Pack features.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/usage-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/usage-api.html | Elasticsearch API documentation}
     */
   async usage (this: That, params?: T.XpackUsageRequest | TB.XpackUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackUsageResponse>
   async usage (this: That, params?: T.XpackUsageRequest | TB.XpackUsageRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackUsageResponse, unknown>>
