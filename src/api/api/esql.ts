@@ -37,30 +37,37 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
-export default class Monitoring {
+export default class Esql {
   transport: Transport
   constructor (transport: Transport) {
     this.transport = transport
   }
 
   /**
-    * Used by the monitoring features to send monitoring data.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/monitor-elasticsearch-cluster.html | Elasticsearch API documentation}
+    * Executes an ESQL request
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.12/esql-rest.html | Elasticsearch API documentation}
     */
-  async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.MonitoringBulkResponse>
-  async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MonitoringBulkResponse, unknown>>
-  async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<T.MonitoringBulkResponse>
-  async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptions): Promise<any> {
-    const acceptedPath: string[] = ['type']
-    const acceptedBody: string[] = ['operations']
+  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EsqlQueryResponse>
+  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EsqlQueryResponse, unknown>>
+  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlQueryResponse>
+  async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'query']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: any = params.body ?? undefined
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
-        body = params[key]
+        body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
@@ -70,7 +77,7 @@ export default class Monitoring {
     }
 
     const method = 'POST'
-    const path = '/_monitoring/bulk'
-    return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+    const path = '/_query'
+    return await this.transport.request({ path, method, querystring, body }, options)
   }
 }
