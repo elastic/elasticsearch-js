@@ -624,7 +624,7 @@ export default class Helpers {
       let chunkBytes = 0
       timeoutRef = setTimeout(onFlushTimeout, flushInterval) // eslint-disable-line
 
-      // @ts-expect-error datasoruce is an iterable
+      // @ts-expect-error datasource is an iterable
       for await (const chunk of datasource) {
         if (shouldAbort) break
         timeoutRef.refresh()
@@ -656,15 +656,16 @@ export default class Helpers {
 
         if (chunkBytes >= flushBytes) {
           stats.bytes += chunkBytes
-          const send = await semaphore()
-          send(bulkBody.slice())
+          const bulkBodyCopy = bulkBody.slice()
           bulkBody.length = 0
           chunkBytes = 0
+          const send = await semaphore()
+          send(bulkBodyCopy)
         }
       }
 
       clearTimeout(timeoutRef)
-      // In some cases the previos http call does not have finished,
+      // In some cases the previous http call has not finished,
       // or we didn't reach the flush bytes threshold, so we force one last operation.
       if (!shouldAbort && chunkBytes > 0) {
         const send = await semaphore()
@@ -708,8 +709,8 @@ export default class Helpers {
     // to guarantee that no more than the number of operations
     // allowed to run at the same time are executed.
     // It returns a semaphore function which resolves in the next tick
-    // if we didn't reach the maximim concurrency yet, otherwise it returns
-    // a promise that resolves as soon as one of the running request has finshed.
+    // if we didn't reach the maximum concurrency yet, otherwise it returns
+    // a promise that resolves as soon as one of the running requests has finished.
     // The semaphore function resolves a send function, which will be used
     // to send the actual bulk request.
     // It also returns a finish function, which returns a promise that is resolved
