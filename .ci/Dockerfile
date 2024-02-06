@@ -1,4 +1,4 @@
-ARG NODE_JS_VERSION=18
+ARG NODE_JS_VERSION=${NODE_JS_VERSION:-18}
 FROM node:${NODE_JS_VERSION}
 
 ARG BUILDER_UID=1000
@@ -12,15 +12,19 @@ RUN apt-get clean -y && \
     apt-get install -y zip
 
 # Set user permissions and directory
-RUN groupadd --system -g ${BUILDER_GID} ${BUILDER_GROUP} \
-    && useradd --system --shell /bin/bash -u ${BUILDER_UID} -g ${BUILDER_GROUP} -m elastic 1>/dev/null 2>/dev/null \
+RUN (id -g ${BUILDER_GID} || groupadd --system -g ${BUILDER_GID} ${BUILDER_GROUP}) \
+    && (id -u ${BUILDER_UID} || useradd --system --shell /bin/bash -u ${BUILDER_UID} -g ${BUILDER_GID} -m elastic) \
     && mkdir -p /usr/src/elasticsearch-js \
-    && chown -R ${BUILDER_USER}:${BUILDER_GROUP} /usr/src/
+    && chown -R ${BUILDER_UID}:${BUILDER_GID} /usr/src/
+
 WORKDIR /usr/src/elasticsearch-js
-USER ${BUILDER_USER}:${BUILDER_GROUP}
 
-# Install app dependencies
-COPY --chown=$BUILDER_USER:$BUILDER_GROUP package*.json ./
-RUN npm install
+# run remainder of commands as non-root user
+USER ${BUILDER_UID}:${BUILDER_GID}
 
-COPY --chown=$BUILDER_USER:$BUILDER_GROUP . .
+# install dependencies
+COPY package.json .
+RUN npm install --production=false
+
+# copy project files
+COPY . .

@@ -6,14 +6,13 @@ steps:
     env:
       NODE_VERSION: "{{ matrix.nodejs }}"
       TEST_SUITE: "{{ matrix.suite }}"
-      STACK_VERSION: 8.8.0-SNAPSHOT
+      STACK_VERSION: 8.12.0-SNAPSHOT
     matrix:
       setup:
         suite:
           - "free"
           - "platinum"
         nodejs:
-          - "16"
           - "18"
           - "20"
     command: ./.buildkite/run-tests.sh

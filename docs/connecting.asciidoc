@@ -11,6 +11,8 @@ This page contains the information you need to connect and use the Client with
 * <<client-faas-env, Using the Client in a Function-as-a-Service Environment>>
 * <<client-connect-proxy, Connecting through a proxy>>
 * <<client-error-handling, Handling errors>>
+* <<keep-alive, Keep-alive connections>>
+* <<close-connections, Closing a client's connections>>
 * <<product-check, Automatic product check>>
 
 [[authentication]]
@@ -539,11 +541,17 @@ If you need to pass through an http(s) proxy for connecting to {es}, the client
 out of the box offers a handy configuration for helping you with it. Under the 
 hood, it uses the https://github.com/delvedor/hpagent[`hpagent`] module.
 
+IMPORTANT: In versions 8.0+ of the client, the default `Connection` type is set to `UndiciConnection`, which does not support proxy configurations.
+To use a proxy, you will need to use the `HttpConnection` class from `@elastic/transport` instead.
+
 [source,js]
 ----
+import { HttpConnection } from '@elastic/transport'
+
 const client = new Client({
   node: 'http://localhost:9200',
-  proxy: 'http://localhost:8080'
+  proxy: 'http://localhost:8080',
+  Connection: HttpConnection,
 })
 ----
 
@@ -553,11 +561,12 @@ Basic authentication is supported as well:
 ----
 const client = new Client({
   node: 'http://localhost:9200',
-  proxy: 'http:user:pwd@//localhost:8080'
+  proxy: 'http:user:pwd@//localhost:8080',
+  Connection: HttpConnection,
 })
 ----
 
-If you are connecting through a not http(s) proxy, such as a `socks5` or `pac`,
+If you are connecting through a non-http(s) proxy, such as a `socks5` or `pac`,
 you can use the `agent` option to configure it.
 
 [source,js]
@@ -567,7 +576,8 @@ const client = new Client({
   node: 'http://localhost:9200',
   agent () {
     return new SocksProxyAgent('socks://127.0.0.1:1080')
-  }
+  },
+  Connection: HttpConnection,
 })
 ----
 
@@ -650,6 +660,51 @@ a|* `name` - `string`
 * `statusCode` - `object`, the response headers
 * `headers` - `object`, the response status code
 |===
+
+[[keep-alive]]
+[discrete]
+=== Keep-alive connections
+
+By default, the client uses persistent, keep-alive connections to reduce the overhead of creating a new HTTP connection for each Elasticsearch request.
+If you are using the default `UndiciConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 10 minutes.
+If you are using the legacy `HttpConnection` connection class, it maintains a pool of 256 connections with a keep-alive of 1 minute.
+
+If you need to disable keep-alive connections, you can override the HTTP agent with your preferred https://nodejs.org/api/http.html#http_new_agent_options[HTTP agent options]:
+
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200',
+  // the function takes as parameter the option
+  // object passed to the Connection constructor
+  agent: (opts) => new CustomAgent()
+})
+----
+
+Or you can disable the HTTP agent entirely:
+
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200',
+  // Disable agent and keep-alive
+  agent: false
+})
+----
+
+[discrete]
+[[close-connections]]
+=== Closing a client's connections
+
+If you would like to close all open connections being managed by an instance of the client, use the `close()` function:
+
+[source,js]
+----
+const client = new Client({
+  node: 'http://localhost:9200'
+});
+client.close();
+----
 
 [discrete]
 [[product-check]]

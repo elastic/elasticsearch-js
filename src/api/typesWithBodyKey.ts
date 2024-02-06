@@ -735,7 +735,7 @@ export interface MsearchMultiSearchItem<TDocument = unknown> extends SearchRespo
   status?: integer
 }
 
-export interface MsearchMultiSearchResult<TDocument = unknown> {
+export interface MsearchMultiSearchResult<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> {
   took: long
   responses: MsearchResponseItem<TDocument>[]
 }
@@ -809,7 +809,7 @@ export interface MsearchRequest extends RequestBase {
 
 export type MsearchRequestItem = MsearchMultisearchHeader | MsearchMultisearchBody
 
-export type MsearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument>
+export type MsearchResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
 
 export type MsearchResponseItem<TDocument = unknown> = MsearchMultiSearchItem<TDocument> | ErrorResponseBase
 
@@ -826,7 +826,7 @@ export interface MsearchTemplateRequest extends RequestBase {
 
 export type MsearchTemplateRequestItem = MsearchMultisearchHeader | MsearchTemplateTemplateConfig
 
-export type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument>
+export type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<AggregateName, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
 
 export interface MsearchTemplateTemplateConfig {
   explain?: boolean
@@ -2082,6 +2082,9 @@ export interface ClusterStatistics {
   skipped: integer
   successful: integer
   total: integer
+  running: integer
+  partial: integer
+  failed: integer
   details?: Record<ClusterAlias, ClusterDetails>
 }
 
@@ -2355,6 +2358,8 @@ export interface LatLonGeoLocation {
 export type Level = 'cluster' | 'indices' | 'shards'
 
 export type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
+
+export type ManagedBy = 'Index Lifecycle Management' | 'Data stream lifecycle' | 'Unmanaged'
 
 export type MapboxVectorTiles = ArrayBuffer
 
@@ -5003,7 +5008,7 @@ export interface MappingFieldNamesField {
   enabled: boolean
 }
 
-export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'match_only_text'
+export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'sparse_vector' | 'match_only_text'
 
 export interface MappingFlattenedProperty extends MappingPropertyBase {
   boost?: double
@@ -9643,6 +9648,8 @@ export interface IndicesDataStream {
   generation: integer
   hidden: boolean
   ilm_policy?: Name
+  next_generation_managed_by: ManagedBy
+  prefer_ilm: boolean
   indices: IndicesDataStreamIndex[]
   lifecycle?: IndicesDataStreamLifecycleWithRollover
   name: DataStreamName
@@ -9656,6 +9663,9 @@ export interface IndicesDataStream {
 export interface IndicesDataStreamIndex {
   index_name: IndexName
   index_uuid: Uuid
+  ilm_policy?: Name
+  managed_by: ManagedBy
+  prefer_ilm: boolean
 }
 
 export interface IndicesDataStreamLifecycle {
@@ -11989,7 +11999,7 @@ export interface LogstashDeletePipelineRequest extends RequestBase {
 export type LogstashDeletePipelineResponse = boolean
 
 export interface LogstashGetPipelineRequest extends RequestBase {
-  id: Ids
+  id?: Ids
 }
 
 export type LogstashGetPipelineResponse = Record<Id, LogstashPipeline>
@@ -14233,6 +14243,7 @@ export interface MlPutTrainedModelRequest extends RequestBase {
     metadata?: any
     model_type?: MlTrainedModelType
     model_size_bytes?: long
+    platform_architecture?: string
     tags?: string[]
   }
 }
@@ -14302,6 +14313,7 @@ export interface MlPutTrainedModelVocabularyRequest extends RequestBase {
   body?: {
     vocabulary: string[]
     merges?: string[]
+    scores?: double[]
   }
 }
 
@@ -14363,6 +14375,7 @@ export interface MlStartDatafeedResponse {
 export interface MlStartTrainedModelDeploymentRequest extends RequestBase {
   model_id: Id
   cache_size?: ByteSize
+  deployment_id?: string
   number_of_allocations?: integer
   priority?: MlTrainingPriority
   queue_capacity?: integer
@@ -17778,6 +17791,7 @@ export interface TransformTimeSync {
 export interface TransformDeleteTransformRequest extends RequestBase {
   transform_id: Id
   force?: boolean
+  delete_dest_index?: boolean
   timeout?: Duration
 }
 

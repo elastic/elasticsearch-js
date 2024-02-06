@@ -4942,14 +4942,14 @@ Retrieves Logstash Pipelines used by Central Management
 {ref}/logstash-api-get-pipeline.html[Endpoint documentation]
 [source,ts]
 ----
-client.logstash.getPipeline({ id })
+client.logstash.getPipeline({ ... })
 ----
 
 [discrete]
 ==== Arguments
 
 * *Request (object):*
-** *`id` (string | string[])*: List of pipeline identifiers.
+** *`id` (Optional, string | string[])*: List of pipeline identifiers.
 
 [discrete]
 ==== put_pipeline
@@ -6302,6 +6302,13 @@ ELSER the config is not required.
 ** *`model_size_bytes` (Optional, number)*: The estimated memory usage in bytes to keep the trained model in memory.
 This property is supported only if defer_definition_decompression is true
 or the model definition is not supplied.
+** *`platform_architecture` (Optional, string)*: The platform architecture (if applicable) of the trained mode. If the model
+only works on one platform, because it is heavily optimized for a particular
+processor architecture and OS combination, then this field specifies which.
+The format of the string must match the platform identifiers used by Elasticsearch,
+so one of, `linux-x86_64`, `linux-aarch64`, `darwin-x86_64`, `darwin-aarch64`,
+or `windows-x86_64`. For portable models (those that work independent of processor
+architecture or OS features), leave this field unset.
 ** *`tags` (Optional, string[])*: An array of tags to organize the model.
 ** *`defer_definition_decompression` (Optional, boolean)*: If set to `true` and a `compressed_definition` is provided, the request defers definition decompression and skips relevant validations.
 
@@ -6363,6 +6370,7 @@ client.ml.putTrainedModelVocabulary({ model_id, vocabulary })
 ** *`model_id` (string)*: The unique identifier of the trained model.
 ** *`vocabulary` (string[])*: The model vocabulary, which must not be empty.
 ** *`merges` (Optional, string[])*: The optional model merges if required by the tokenizer.
+** *`scores` (Optional, number[])*: The optional vocabulary value scores if required by the tokenizer.
 
 [discrete]
 ==== reset_job
@@ -6483,6 +6491,7 @@ client.ml.startTrainedModelDeployment({ model_id })
 ** *`cache_size` (Optional, number | string)*: The inference cache size (in memory outside the JVM heap) per node for the model.
 The default value is the same size as the `model_size_bytes`. To disable the cache,
 `0b` can be provided.
+** *`deployment_id` (Optional, string)*: A unique identifier for the deployment of the model.
 ** *`number_of_allocations` (Optional, number)*: The number of model allocations on each node where the model is deployed.
 All allocations on a node share the same copy of the model in memory but use
 a separate set of threads to evaluate the model.
@@ -9057,6 +9066,8 @@ client.transform.deleteTransform({ transform_id })
 ** *`transform_id` (string)*: Identifier for the transform.
 ** *`force` (Optional, boolean)*: If this value is false, the transform must be stopped before it can be deleted. If true, the transform is
 deleted regardless of its current state.
+** *`delete_dest_index` (Optional, boolean)*: If this value is true, the destination index is deleted together with the transform. If false, the destination
+index will not be deleted
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]

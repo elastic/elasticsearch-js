@@ -1,21 +1,40 @@
 ---
 name: Node CI
 
-on: [push, pull_request]
+on:
+  pull_request: {}
 
 jobs:
+  paths-filter:
+    name: Detect files changed
+    runs-on: ubuntu-latest
+    outputs:
+      src-only: '${{ steps.changes.outputs.src-only }}'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter/@v2.11.1
+        id: changes
+        with:
+          filters: |
+            src-only:
+              - '!(**/*.{md,asciidoc,txt}|*.{md,asciidoc,txt}|{docs,.ci,.buildkite,scripts}/**/*|catalog-info.yaml)'
+              - '.github/workflows/**'
+
   test:
     name: Test
     runs-on: ${{ matrix.os }}
+    needs: paths-filter
+    # only run if code relevant to unit tests was changed
+    if: needs.paths-filter.outputs.src-only == 'true'
 
     strategy:
       fail-fast: false
       matrix:
-        node-version: [14.x, 16.x, 18.x, 20.x]
+        node-version: [18.x, 20.x]
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3

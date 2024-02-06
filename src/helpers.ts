@@ -196,8 +196,11 @@ export default class Helpers {
       await sleep(wait)
     }
     assert(response !== undefined, 'The response is undefined, please file a bug report')
+
+    const { redaction = { type: 'replace' } } = options
+    const errorOptions = { redaction }
     if (response.statusCode === 429) {
-      throw new ResponseError(response)
+      throw new ResponseError(response, errorOptions)
     }
 
     let scroll_id = response.body._scroll_id
@@ -237,7 +240,7 @@ export default class Helpers {
         await sleep(wait)
       }
       if (response.statusCode === 429) {
-        throw new ResponseError(response)
+        throw new ResponseError(response, errorOptions)
       }
     }
 
@@ -288,6 +291,9 @@ export default class Helpers {
       ...msearchOptions
     } = options
     reqOptions.meta = true
+
+    const { redaction = { type: 'replace' } } = reqOptions
+    const errorOptions = { redaction }
 
     let stopReading = false
     let stopError: Error | null = null
@@ -502,7 +508,7 @@ export default class Helpers {
               // @ts-expect-error
               addDocumentsGetter(result)
               if (response.status != null && response.status >= 400) {
-                callbacks[i](new ResponseError(result), result)
+                callbacks[i](new ResponseError(result, errorOptions), result)
               } else {
                 callbacks[i](null, result)
               }
@@ -527,6 +533,8 @@ export default class Helpers {
    * @return {object} The possible operations to run with the datasource.
    */
   bulk<TDocument = unknown> (options: BulkHelperOptions<TDocument>, reqOptions: TransportRequestOptions = {}): BulkHelper<TDocument> {
+    assert(!(reqOptions.asStream ?? false), 'bulk helper: the asStream request option is not supported')
+
     const client = this[kClient]
     const { serializer } = client
     if (this[kMetaHeader] !== null) {

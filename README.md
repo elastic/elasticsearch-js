@@ -4,6 +4,11 @@
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)  [![Build Status](https://badge.buildkite.com/15e4246eb268ea78f6e10aa90bce38c1abb0a4489e79f5a0ac.svg)](https://buildkite.com/elastic/elasticsearch-javascript-client-integration-tests/builds?branch=main)  [![Node CI](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml/badge.svg)](https://github.com/elastic/elasticsearch-js/actions/workflows/nodejs.yml)  [![codecov](https://codecov.io/gh/elastic/elasticsearch-js/branch/master/graph/badge.svg)](https://codecov.io/gh/elastic/elasticsearch-js)  [![NPM downloads](https://img.shields.io/npm/dm/@elastic/elasticsearch.svg?style=flat)](https://www.npmjs.com/package/@elastic/elasticsearch)
 
+**[Download the latest version of Elasticsearch](https://www.elastic.co/downloads/elasticsearch)**
+or
+**[sign-up](https://cloud.elastic.co/registration?elektra=en-ess-sign-up-page)**
+**for a free trial of Elastic Cloud**.
+
 The official Node.js client for Elasticsearch.
 
 ## Installation
@@ -28,7 +33,7 @@ of the getting started documentation.
 
 ### Node.js support
 
-NOTE: The minimum supported version of Node.js is `v14`.
+NOTE: The minimum supported version of Node.js is `v18`.
 
 The client versioning follows the Elastic Stack versioning, this means that
 major, minor, and patch releases are done following a precise schedule that
@@ -53,6 +58,7 @@ of `^7.10.0`).
 | `10.x`          | `April 2021`     | `7.12` (mid 2021)      |
 | `12.x`          | `April 2022`     | `8.2` (early 2022)     |
 | `14.x`          | `April 2023`     | `8.8` (early 2023)     |
+| `16.x`          | `September 2023` | `8.11` (late 2023)     |
 
 ### Compatibility
 
