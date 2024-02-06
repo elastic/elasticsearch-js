@@ -2,6 +2,17 @@
 == Release notes
 
 [discrete]
+=== 8.12.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Fix hang in bulk helper semaphore https://github.com/elastic/elasticsearch-js/pull/2027[#2027]
+
+The failing state could be reached when a server's response times are slower than flushInterval.
+
+[discrete]
 === 8.12.0
 
 [discrete]
