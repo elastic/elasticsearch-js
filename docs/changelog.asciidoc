@@ -2,6 +2,17 @@
 == Release notes
 
 [discrete]
+=== 8.12.2
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Upgrade transport to 8.4.1 https://github.com/elastic/elasticsearch-js/pull/2137[#2137]
+
+Upgrades `@elastic/transport` to 8.4.1 to resolve https://github.com/elastic/elastic-transport-js/pull/83[a bug] where arrays in error diagnostics were unintentionally transformed into objects.
+
+[discrete]
 === 8.12.1
 
 [discrete]
