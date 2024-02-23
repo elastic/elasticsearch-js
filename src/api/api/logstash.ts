@@ -45,7 +45,7 @@ export default class Logstash {
 
   /**
     * Deletes Logstash Pipelines used by Central Management
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/logstash-api-delete-pipeline.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.13/logstash-api-delete-pipeline.html | Elasticsearch API documentation}
     */
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashDeletePipelineResponse>
   async deletePipeline (this: That, params: T.LogstashDeletePipelineRequest | TB.LogstashDeletePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashDeletePipelineResponse, unknown>>
@@ -71,7 +71,7 @@ export default class Logstash {
 
   /**
     * Retrieves Logstash Pipelines used by Central Management
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/logstash-api-get-pipeline.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.13/logstash-api-get-pipeline.html | Elasticsearch API documentation}
     */
   async getPipeline (this: That, params?: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashGetPipelineResponse>
   async getPipeline (this: That, params?: T.LogstashGetPipelineRequest | TB.LogstashGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashGetPipelineResponse, unknown>>
@@ -105,7 +105,7 @@ export default class Logstash {
 
   /**
     * Adds and updates Logstash Pipelines used for Central Management
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/logstash-api-put-pipeline.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.13/logstash-api-put-pipeline.html | Elasticsearch API documentation}
     */
   async putPipeline (this: That, params: T.LogstashPutPipelineRequest | TB.LogstashPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LogstashPutPipelineResponse>
   async putPipeline (this: That, params: T.LogstashPutPipelineRequest | TB.LogstashPutPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.LogstashPutPipelineResponse, unknown>>
