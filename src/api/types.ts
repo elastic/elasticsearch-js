@@ -17178,7 +17178,7 @@ export interface SynonymsPutSynonymResponse {
 export interface SynonymsPutSynonymRuleRequest extends RequestBase {
   set_id: Id
   rule_id: Id
-  synonyms: SynonymsSynonymString[]
+  synonyms: SynonymsSynonymString
 }
 
 export type SynonymsPutSynonymRuleResponse = SynonymsSynonymsUpdateResult

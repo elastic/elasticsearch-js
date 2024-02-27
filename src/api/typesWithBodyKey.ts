@@ -17586,7 +17586,7 @@ export interface SynonymsPutSynonymRuleRequest extends RequestBase {
   rule_id: Id
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
-    synonyms: SynonymsSynonymString[]
+    synonyms: SynonymsSynonymString
   }
 }
 
