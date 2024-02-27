@@ -45,7 +45,7 @@ export default class TextStructure {
 
   /**
     * Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/find-structure.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.13/find-structure.html | Elasticsearch API documentation}
     */
   async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument> | TB.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureFindStructureResponse>
   async findStructure<TJsonDocument = unknown> (this: That, params: T.TextStructureFindStructureRequest<TJsonDocument> | TB.TextStructureFindStructureRequest<TJsonDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureFindStructureResponse, unknown>>
@@ -72,5 +72,43 @@ export default class TextStructure {
     const method = 'POST'
     const path = '/_text_structure/find_structure'
     return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+  }
+
+  /**
+    * Tests a Grok pattern on some text.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.13/test-grok-pattern-api.html | Elasticsearch API documentation}
+    */
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureTestGrokPatternResponse>
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureTestGrokPatternResponse, unknown>>
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptions): Promise<T.TextStructureTestGrokPatternResponse>
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['grok_pattern', 'text']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = body != null ? 'POST' : 'GET'
+    const path = '/_text_structure/test_grok_pattern'
+    return await this.transport.request({ path, method, querystring, body }, options)
   }
 }
