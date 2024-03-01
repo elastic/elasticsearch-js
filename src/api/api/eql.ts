@@ -71,7 +71,7 @@ export default class Eql {
 
   /**
     * Returns async results from previously executed Event Query Language (EQL) search
-    * @see {@link  https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-eql-search-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-eql-search-api.html | Elasticsearch API documentation}
     */
   async get<TEvent = unknown> (this: That, params: T.EqlGetRequest | TB.EqlGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetResponse<TEvent>>
   async get<TEvent = unknown> (this: That, params: T.EqlGetRequest | TB.EqlGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlGetResponse<TEvent>, unknown>>
@@ -97,7 +97,7 @@ export default class Eql {
 
   /**
     * Returns the status of a previously submitted async or stored Event Query Language (EQL) search
-    * @see {@link  https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-eql-status-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-eql-status-api.html | Elasticsearch API documentation}
     */
   async getStatus (this: That, params: T.EqlGetStatusRequest | TB.EqlGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetStatusResponse>
   async getStatus (this: That, params: T.EqlGetStatusRequest | TB.EqlGetStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EqlGetStatusResponse, unknown>>

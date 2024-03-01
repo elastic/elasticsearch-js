@@ -73,4 +73,42 @@ export default class TextStructure {
     const path = '/_text_structure/find_structure'
     return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
   }
+
+  /**
+    * Tests a Grok pattern on some text.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/test-grok-pattern.html | Elasticsearch API documentation}
+    */
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureTestGrokPatternResponse>
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureTestGrokPatternResponse, unknown>>
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptions): Promise<T.TextStructureTestGrokPatternResponse>
+  async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['grok_pattern', 'text']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = body != null ? 'POST' : 'GET'
+    const path = '/_text_structure/test_grok_pattern'
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
 }
