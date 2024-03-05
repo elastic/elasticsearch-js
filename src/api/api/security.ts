@@ -919,6 +919,32 @@ export default class Security {
   }
 
   /**
+    * Retrieve settings for the security system indices
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-settings.html | Elasticsearch API documentation}
+    */
+  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_security/settings'
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  /**
     * Creates a bearer token for access without requiring basic authentication.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-token.html | Elasticsearch API documentation}
     */
@@ -1400,7 +1426,7 @@ export default class Security {
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleMappingResponse>
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['enabled', 'metadata', 'roles', 'rules', 'run_as']
+    const acceptedBody: string[] = ['enabled', 'metadata', 'roles', 'role_templates', 'rules', 'run_as']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1771,7 +1797,7 @@ export default class Security {
   async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest | TB.SecurityUpdateApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateApiKeyResponse>
   async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest | TB.SecurityUpdateApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['role_descriptors', 'metadata']
+    const acceptedBody: string[] = ['role_descriptors', 'metadata', 'expiration']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1823,6 +1849,32 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/cross_cluster/api_key/${encodeURIComponent(params.id.toString())}`
+    return await this.transport.request({ path, method, querystring, body }, options)
+  }
+
+  /**
+    * Update settings for the security system index
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-update-settings.html | Elasticsearch API documentation}
+    */
+  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async updateSettings (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = '/_security/settings'
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 

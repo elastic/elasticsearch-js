@@ -45,7 +45,7 @@ export default class SearchApplication {
 
   /**
     * Deletes a search application.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-search-application.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-search-application.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.SearchApplicationDeleteRequest | TB.SearchApplicationDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationDeleteResponse>
   async delete (this: That, params: T.SearchApplicationDeleteRequest | TB.SearchApplicationDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchApplicationDeleteResponse, unknown>>
