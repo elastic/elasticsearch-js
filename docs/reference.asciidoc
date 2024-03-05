@@ -9225,7 +9225,7 @@ client.textStructure.findStructure({ ... })
 ==== test_grok_pattern
 Tests a Grok pattern on some text.
 
-{ref}/test-grok-pattern-api.html[Endpoint documentation]
+{ref}/test-grok-pattern.html[Endpoint documentation]
 [source,ts]
 ----
 client.textStructure.testGrokPattern({ grok_pattern, text })

@@ -76,7 +76,7 @@ export default class TextStructure {
 
   /**
     * Tests a Grok pattern on some text.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.13/test-grok-pattern-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.13/test-grok-pattern.html | Elasticsearch API documentation}
     */
   async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TextStructureTestGrokPatternResponse>
   async testGrokPattern (this: That, params: T.TextStructureTestGrokPatternRequest | TB.TextStructureTestGrokPatternRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TextStructureTestGrokPatternResponse, unknown>>
