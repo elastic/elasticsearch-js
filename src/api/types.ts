@@ -11595,7 +11595,7 @@ export interface IngestPipeline {
   on_failure?: IngestProcessorContainer[]
   processors?: IngestProcessorContainer[]
   version?: VersionNumber
-  _meta: Metadata
+  _meta?: Metadata
 }
 
 export interface IngestPipelineConfig {
