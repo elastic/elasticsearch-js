@@ -75,6 +75,15 @@ test('Missing node(s)', t => {
   t.end()
 })
 
+test('Creat a client instance, single node as string, with additional connection options', t => {
+  const client = new Client({
+    node: 'http://localhost:9200',
+    requestTimeout: 60000,
+  })
+  t.equal(client.connectionPool.connections[0].timeout, 60000)
+  t.end()
+})
+
 test('Custom headers', t => {
   const client = new Client({
     node: 'http://localhost:9200',
