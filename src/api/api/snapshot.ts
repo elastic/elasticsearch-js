@@ -154,22 +154,15 @@ export default class Snapshot {
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<T.SnapshotCreateRepositoryResponse>
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['repository', 'type', 'settings']
+    const acceptedBody: string[] = ['repository']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    let body: any = params.body ?? undefined
 
     for (const key in params) {
       if (acceptedBody.includes(key)) {
-        body = body ?? {}
         // @ts-expect-error
-        body[key] = params[key]
+        body = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
