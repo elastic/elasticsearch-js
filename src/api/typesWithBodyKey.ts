@@ -5156,6 +5156,7 @@ export interface MappingNumberPropertyBase extends MappingDocValuesPropertyBase 
 
 export interface MappingObjectProperty extends MappingCorePropertyBase {
   enabled?: boolean
+  subobjects?: boolean
   type?: 'object'
 }
 
@@ -5329,6 +5330,7 @@ export interface MappingTypeMapping {
   _source?: MappingSourceField
   runtime?: Record<string, MappingRuntimeField>
   enabled?: boolean
+  subobjects?: boolean
   _data_stream_timestamp?: MappingDataStreamTimestamp
 }
 
@@ -13256,6 +13258,7 @@ export interface MlTrainedModelConfig {
   metadata?: MlTrainedModelConfigMetadata
   model_size_bytes?: ByteSize
   location?: MlTrainedModelLocation
+  prefix_strings?: MlTrainedModelPrefixStrings
 }
 
 export interface MlTrainedModelConfigInput {
@@ -13341,6 +13344,11 @@ export interface MlTrainedModelLocation {
 
 export interface MlTrainedModelLocationIndex {
   name: IndexName
+}
+
+export interface MlTrainedModelPrefixStrings {
+  ingest?: string
+  search?: string
 }
 
 export interface MlTrainedModelSizeStats {
@@ -14352,6 +14360,7 @@ export interface MlPutTrainedModelRequest extends RequestBase {
     model_size_bytes?: long
     platform_architecture?: string
     tags?: string[]
+    prefix_strings?: MlTrainedModelPrefixStrings
   }
 }
 
