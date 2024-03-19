@@ -3377,7 +3377,7 @@ client.indices.create({ index })
 * *Request (object):*
 ** *`index` (string)*: Name of the index you wish to create.
 ** *`aliases` (Optional, Record<string, { filter, index_routing, is_hidden, is_write_index, routing, search_routing }>)*: Aliases for the index.
-** *`mappings` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, _data_stream_timestamp })*: Mapping for fields in the index. If specified, this mapping can include:
+** *`mappings` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, subobjects, _data_stream_timestamp })*: Mapping for fields in the index. If specified, this mapping can include:
 - Field names
 - Field data types
 - Mapping parameters
@@ -4234,7 +4234,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 ** *`numeric_detection` (Optional, boolean)*: Automatically map strings into numeric data types for all fields.
-** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, normalizer, norms, null_value, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, dims, similarity, index, index_options } | { type } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type }>)*: Mapping for a field. For new fields, this mapping can include:
+** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, normalizer, norms, null_value, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, dims, similarity, index, index_options } | { type } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type }>)*: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -4309,7 +4309,7 @@ client.indices.putTemplate({ name })
 ** *`aliases` (Optional, Record<string, { filter, index_routing, is_hidden, is_write_index, routing, search_routing }>)*: Aliases for the index.
 ** *`index_patterns` (Optional, string | string[])*: Array of wildcard expressions used to match the names
 of indices during creation.
-** *`mappings` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, _data_stream_timestamp })*: Mapping for fields in the index.
+** *`mappings` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, subobjects, _data_stream_timestamp })*: Mapping for fields in the index.
 ** *`order` (Optional, number)*: Order in which Elasticsearch applies this template if index
 matches multiple templates.
 
@@ -4462,7 +4462,7 @@ If specified, Elasticsearch only performs the rollover if the current index sati
 If this parameter is not specified, Elasticsearch performs the rollover unconditionally.
 If conditions are specified, at least one of them must be a `max_*` condition.
 The index will rollover if any `max_*` condition is satisfied and all `min_*` conditions are satisfied.
-** *`mappings` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, _data_stream_timestamp })*: Mapping for fields in the index.
+** *`mappings` (Optional, { all_field, date_detection, dynamic, dynamic_date_formats, dynamic_templates, _field_names, index_field, _meta, numeric_detection, properties, _routing, _size, _source, runtime, enabled, subobjects, _data_stream_timestamp })*: Mapping for fields in the index.
 If specified, this mapping can include field names, field data types, and mapping paramaters.
 ** *`settings` (Optional, Record<string, User-defined value>)*: Configuration options for the index.
 Data streams do not support this parameter.
@@ -6436,6 +6436,7 @@ so one of, `linux-x86_64`, `linux-aarch64`, `darwin-x86_64`, `darwin-aarch64`,
 or `windows-x86_64`. For portable models (those that work independent of processor
 architecture or OS features), leave this field unset.
 ** *`tags` (Optional, string[])*: An array of tags to organize the model.
+** *`prefix_strings` (Optional, { ingest, search })*: Optional prefix strings applied at inference
 ** *`defer_definition_decompression` (Optional, boolean)*: If set to `true` and a `compressed_definition` is provided, the request defers definition decompression and skips relevant validations.
 
 [discrete]
@@ -8313,9 +8314,17 @@ client.security.queryApiKeys({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: A query to filter which API keys to return.
-The query supports a subset of query types, including `match_all`, `bool`, `term`, `terms`, `ids`, `prefix`, `wildcard`, and `range`.
-You can query all public information associated with an API key.
+** *`aggregations` (Optional, Record<string, { aggregations, meta, cardinality, composite, date_range, filter, filters, missing, range, terms, value_count }>)*: Any aggregations to run over the corpus of returned API keys.
+Aggregations and queries work together. Aggregations are computed only on the API keys that match the query.
+This supports only a subset of aggregation types, namely: `terms`, `range`, `date_range`, `missing`,
+`cardinality`, `value_count`, `composite`, `filter`, and `filters`.
+Additionally, aggregations only run over the same subset of fields that query works with.
+** *`query` (Optional, { bool, exists, ids, match, match_all, prefix, range, simple_query_string, term, terms, wildcard })*: A query to filter which API keys to return.
+If the query parameter is missing, it is equivalent to a `match_all` query.
+The query supports a subset of query types, including `match_all`, `bool`, `term`, `terms`, `match`,
+`ids`, `prefix`, `wildcard`, `exists`, `range`, and `simple_query_string`.
+You can query the following public information associated with an API key: `id`, `type`, `name`,
+`creation`, `expiration`, `invalidated`, `invalidation`, `username`, `realm`, and `metadata`.
 ** *`from` (Optional, number)*: Starting document offset.
 By default, you cannot page through more than 10,000 hits using the from and size parameters.
 To page through more hits, use the `search_after` parameter.
@@ -8325,7 +8334,7 @@ In addition, sort can also be applied to the `_doc` field to sort by index order
 By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
 To page through more hits, use the `search_after` parameter.
 ** *`search_after` (Optional, number | number | string | boolean | null | User-defined value[])*: Search after definition
-** *`with_limited_by` (Optional, boolean)*: Return the snapshot of the owner user's role descriptors associated with the API key. 
+** *`with_limited_by` (Optional, boolean)*: Return the snapshot of the owner user's role descriptors associated with the API key.
 An API key's actual permission is the intersection of its assigned role descriptors and the owner user's role descriptors.
 
 [discrete]
