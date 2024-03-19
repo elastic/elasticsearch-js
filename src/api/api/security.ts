@@ -1502,7 +1502,7 @@ export default class Security {
   async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryApiKeysResponse>
   async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['query', 'from', 'sort', 'size', 'search_after']
+    const acceptedBody: string[] = ['aggregations', 'aggs', 'query', 'from', 'sort', 'size', 'search_after']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
