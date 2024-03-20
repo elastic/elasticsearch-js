@@ -44,7 +44,7 @@ import {
   Context
 } from '@elastic/transport/lib/types'
 import { RedactionOptions } from '@elastic/transport/lib/Transport'
-import BaseConnection, { prepareHeaders } from '@elastic/transport/lib/connection/BaseConnection'
+import BaseConnection, { prepareHeaders, ConnectionOptions } from '@elastic/transport/lib/connection/BaseConnection'
 import SniffingTransport from './sniffingTransport'
 import Helpers from './helpers'
 import API from './api'
@@ -237,7 +237,35 @@ export default class Client extends API {
         diagnostic: this.diagnostic,
         caFingerprint: options.caFingerprint
       })
-      this.connectionPool.addConnection(options.node ?? options.nodes)
+
+      // ensure default connection values are inherited when creating new connections
+      // see https://github.com/elastic/elasticsearch-js/issues/1791
+      const nodes = options.node ?? options.nodes
+      let nodeOptions: Array<string | ConnectionOptions> = Array.isArray(nodes) ? nodes : [nodes]
+      type ConnectionDefaults = Record<string, any>
+      nodeOptions = nodeOptions.map(opt => {
+        const { tls, headers, auth, requestTimeout: timeout, agent, proxy, caFingerprint } = options
+        let defaults: ConnectionDefaults = { tls, headers, auth, timeout, agent, proxy, caFingerprint }
+
+        // strip undefined values from defaults
+        defaults = Object.keys(defaults).reduce((acc: ConnectionDefaults, key) => {
+          const val = defaults[key]
+          if (val !== undefined) acc[key] = val
+          return acc
+        }, {})
+
+        let newOpts
+        if (typeof opt === 'string') {
+          newOpts = {
+            url: new URL(opt)
+          }
+        } else {
+          newOpts = opt
+        }
+
+        return { ...defaults, ...newOpts }
+      })
+      this.connectionPool.addConnection(nodeOptions)
     }
 
     this.transport = new options.Transport({
@@ -282,7 +310,7 @@ export default class Client extends API {
     // Merge the new options with the initial ones
     // @ts-expect-error kChild symbol is for internal use only
     const options: ClientOptions = Object.assign({}, this[kInitialOptions], opts)
-    // Pass to the child client the parent instances that cannot be overriden
+    // Pass to the child client the parent instances that cannot be overridden
     // @ts-expect-error kInitialOptions symbol is for internal use only
     options[kChild] = {
       connectionPool: this.connectionPool,
