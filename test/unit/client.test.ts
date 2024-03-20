@@ -17,9 +17,11 @@
  * under the License.
  */
 
+import * as http from 'http'
 import { test } from 'tap'
 import { URL } from 'url'
-import { connection } from '../utils'
+import FakeTimers from '@sinonjs/fake-timers'
+import { buildServer, connection } from '../utils'
 import { Client, errors } from '../..'
 import * as symbols from '@elastic/transport/lib/symbols'
 import { BaseConnectionPool, CloudConnectionPool, WeightedConnectionPool } from '@elastic/transport'
@@ -440,4 +442,43 @@ test('user agent is in the correct format', t => {
   t.equal(agentSplit[0].split('/')[0], 'elasticsearch-js')
   t.ok(/^\d+\.\d+\.\d+/.test(agentSplit[0].split('/')[1]))
   t.end()
+})
+
+test('Ensure new client instance stores requestTimeout for each connection', t => {
+  const client = new Client({
+    node: { url: new URL('http://localhost:9200') },
+    requestTimeout: 60000,
+  })
+  t.equal(client.connectionPool.connections[0].timeout, 60000)
+  t.end()
+})
+
+test('Ensure new client does not time out at default (30s) when client sets requestTimeout', async t => {
+  const clock = FakeTimers.install({ toFake: ['setTimeout', 'clearTimeout'] })
+  t.teardown(() => clock.uninstall())
+
+  function handler (_req: http.IncomingMessage, res: http.ServerResponse) {
+    setTimeout(() => {
+      t.pass('timeout ended')
+      res.setHeader('content-type', 'application/json')
+      res.end(JSON.stringify({ success: true }))
+    }, 31000) // default is 30000
+    clock.runToLast()
+  }
+
+  const [{ port }, server] = await buildServer(handler)
+
+  const client = new Client({
+    node: `http://localhost:${port}`,
+    requestTimeout: 60000
+  })
+
+  try {
+    await client.transport.request({ method: 'GET', path: '/' })
+  } catch (error) {
+    t.fail('timeout error hit')
+  } finally {
+    server.stop()
+    t.end()
+  }
 })
