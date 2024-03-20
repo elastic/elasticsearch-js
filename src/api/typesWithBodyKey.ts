@@ -1504,7 +1504,7 @@ export interface SearchInnerHits {
   fields?: Fields
   sort?: Sort
   _source?: SearchSourceConfig
-  stored_field?: Fields
+  stored_fields?: Fields
   track_scores?: boolean
   version?: boolean
 }
@@ -2337,7 +2337,7 @@ export interface InlineGetKeys<TDocument = unknown> {
   _seq_no?: SequenceNumber
   _primary_term?: long
   _routing?: Routing
-  _source: TDocument
+  _source?: TDocument
 }
 export type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument>
 & { [property: string]: any }
@@ -4949,7 +4949,7 @@ export interface MappingDenseVectorIndexOptions {
 
 export interface MappingDenseVectorProperty extends MappingPropertyBase {
   type: 'dense_vector'
-  dims: integer
+  dims?: integer
   similarity?: string
   index?: boolean
   index_options?: MappingDenseVectorIndexOptions
@@ -5050,6 +5050,9 @@ export interface MappingGeoPointProperty extends MappingDocValuesPropertyBase {
   ignore_malformed?: boolean
   ignore_z_value?: boolean
   null_value?: GeoLocation
+  index?: boolean
+  on_script_error?: MappingOnScriptError
+  script?: Script
   type: 'geo_point'
 }
 
@@ -5165,6 +5168,7 @@ export interface MappingNumberPropertyBase extends MappingDocValuesPropertyBase 
 
 export interface MappingObjectProperty extends MappingCorePropertyBase {
   enabled?: boolean
+  subobjects?: boolean
   type?: 'object'
 }
 
@@ -5203,6 +5207,7 @@ export interface MappingRankFeatureProperty extends MappingPropertyBase {
 }
 
 export interface MappingRankFeaturesProperty extends MappingPropertyBase {
+  positive_score_impact?: boolean
   type: 'rank_features'
 }
 
@@ -5338,6 +5343,7 @@ export interface MappingTypeMapping {
   _source?: MappingSourceField
   runtime?: Record<string, MappingRuntimeField>
   enabled?: boolean
+  subobjects?: boolean
   _data_stream_timestamp?: MappingDataStreamTimestamp
 }
 
@@ -9114,7 +9120,7 @@ export interface EnrichExecutePolicyRequest extends RequestBase {
 }
 
 export interface EnrichExecutePolicyResponse {
-  status: EnrichExecutePolicyExecuteEnrichPolicyStatus
+  status?: EnrichExecutePolicyExecuteEnrichPolicyStatus
   task_id?: TaskId
 }
 
@@ -9869,7 +9875,7 @@ export interface IndicesIndexSettingsKeys {
   settings?: IndicesIndexSettings
   time_series?: IndicesIndexSettingsTimeSeries
   queries?: IndicesQueries
-  similarity?: IndicesSettingsSimilarity
+  similarity?: Record<string, IndicesSettingsSimilarity>
   mapping?: IndicesMappingLimitSettings
   'indexing.slowlog'?: IndicesIndexingSlowlogSettings
   indexing_pressure?: IndicesIndexingPressure
@@ -10047,55 +10053,52 @@ export interface IndicesSettingsSearch {
   slowlog?: IndicesSlowlogSettings
 }
 
-export interface IndicesSettingsSimilarity {
-  bm25?: IndicesSettingsSimilarityBm25
-  dfi?: IndicesSettingsSimilarityDfi
-  dfr?: IndicesSettingsSimilarityDfr
-  ib?: IndicesSettingsSimilarityIb
-  lmd?: IndicesSettingsSimilarityLmd
-  lmj?: IndicesSettingsSimilarityLmj
-  scripted_tfidf?: IndicesSettingsSimilarityScriptedTfidf
-}
+export type IndicesSettingsSimilarity = IndicesSettingsSimilarityBm25 | IndicesSettingsSimilarityBoolean | IndicesSettingsSimilarityDfi | IndicesSettingsSimilarityDfr | IndicesSettingsSimilarityIb | IndicesSettingsSimilarityLmd | IndicesSettingsSimilarityLmj | IndicesSettingsSimilarityScripted
 
 export interface IndicesSettingsSimilarityBm25 {
-  b: double
-  discount_overlaps: boolean
-  k1: double
   type: 'BM25'
+  b?: double
+  discount_overlaps?: boolean
+  k1?: double
+}
+
+export interface IndicesSettingsSimilarityBoolean {
+  type: 'boolean'
 }
 
 export interface IndicesSettingsSimilarityDfi {
-  independence_measure: DFIIndependenceMeasure
   type: 'DFI'
+  independence_measure: DFIIndependenceMeasure
 }
 
 export interface IndicesSettingsSimilarityDfr {
+  type: 'DFR'
   after_effect: DFRAfterEffect
   basic_model: DFRBasicModel
   normalization: Normalization
-  type: 'DFR'
 }
 
 export interface IndicesSettingsSimilarityIb {
+  type: 'IB'
   distribution: IBDistribution
   lambda: IBLambda
   normalization: Normalization
-  type: 'IB'
 }
 
 export interface IndicesSettingsSimilarityLmd {
-  mu: integer
   type: 'LMDirichlet'
+  mu?: double
 }
 
 export interface IndicesSettingsSimilarityLmj {
-  lambda: double
   type: 'LMJelinekMercer'
+  lambda?: double
 }
 
-export interface IndicesSettingsSimilarityScriptedTfidf {
-  script: Script
+export interface IndicesSettingsSimilarityScripted {
   type: 'scripted'
+  script: Script
+  weight_script?: Script
 }
 
 export interface IndicesSlowlogSettings {
@@ -10331,7 +10334,7 @@ export interface IndicesDataStreamsStatsDataStreamsStatsItem {
   data_stream: Name
   maximum_timestamp: EpochTime<UnitMillis>
   store_size?: ByteSize
-  store_size_bytes: integer
+  store_size_bytes: long
 }
 
 export interface IndicesDataStreamsStatsRequest extends RequestBase {
@@ -10345,7 +10348,7 @@ export interface IndicesDataStreamsStatsResponse {
   data_stream_count: integer
   data_streams: IndicesDataStreamsStatsDataStreamsStatsItem[]
   total_store_sizes?: ByteSize
-  total_store_size_bytes: integer
+  total_store_size_bytes: long
 }
 
 export interface IndicesDeleteRequest extends RequestBase {
@@ -13400,8 +13403,8 @@ export interface MlTrainedModelLocationIndex {
 }
 
 export interface MlTrainedModelPrefixStrings {
-  ingest: string
-  search: string
+  ingest?: string
+  search?: string
 }
 
 export interface MlTrainedModelSizeStats {
@@ -14413,6 +14416,7 @@ export interface MlPutTrainedModelRequest extends RequestBase {
     model_size_bytes?: long
     platform_architecture?: string
     tags?: string[]
+    prefix_strings?: MlTrainedModelPrefixStrings
   }
 }
 
@@ -16209,7 +16213,7 @@ export interface SecurityRoleDescriptor {
   applications?: SecurityApplicationPrivileges[]
   metadata?: Metadata
   run_as?: string[]
-  transient_metadata?: SecurityTransientMetadataConfig
+  transient_metadata?: Record<string, any>
 }
 
 export interface SecurityRoleDescriptorRead {
@@ -16220,7 +16224,7 @@ export interface SecurityRoleDescriptorRead {
   applications?: SecurityApplicationPrivileges[]
   metadata?: Metadata
   run_as?: string[]
-  transient_metadata?: SecurityTransientMetadataConfig
+  transient_metadata?: Record<string, any>
 }
 
 export interface SecurityRoleMapping {
@@ -16258,10 +16262,6 @@ export interface SecurityRoleTemplateQuery {
 export type SecurityRoleTemplateScript = SecurityRoleTemplateInlineScript | SecurityRoleTemplateInlineQuery | StoredScriptId
 
 export type SecurityTemplateFormat = 'string' | 'json'
-
-export interface SecurityTransientMetadataConfig {
-  enabled: boolean
-}
 
 export interface SecurityUser {
   email?: string | null
@@ -16591,7 +16591,7 @@ export interface SecurityGetRoleRole {
   indices: SecurityIndicesPrivileges[]
   metadata: Metadata
   run_as: string[]
-  transient_metadata: SecurityTransientMetadataConfig
+  transient_metadata?: Record<string, any>
   applications: SecurityApplicationPrivileges[]
   role_templates?: SecurityRoleTemplate[]
   global?: Record<string, Record<string, Record<string, string[]>>>
@@ -16863,7 +16863,7 @@ export interface SecurityPutRoleRequest extends RequestBase {
     indices?: SecurityIndicesPrivileges[]
     metadata?: Metadata
     run_as?: string[]
-    transient_metadata?: SecurityTransientMetadataConfig
+    transient_metadata?: Record<string, any>
   }
 }
 
@@ -16910,11 +16910,52 @@ export interface SecurityPutUserResponse {
   created: boolean
 }
 
+export type SecurityQueryApiKeysAPIKeyAggregate = AggregationsCardinalityAggregate | AggregationsValueCountAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsFilterAggregate | AggregationsFiltersAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsCompositeAggregate
+
+export interface SecurityQueryApiKeysAPIKeyAggregationContainer {
+  aggregations?: Record<string, SecurityQueryApiKeysAPIKeyAggregationContainer>
+  aggs?: Record<string, SecurityQueryApiKeysAPIKeyAggregationContainer>
+  meta?: Metadata
+  cardinality?: AggregationsCardinalityAggregation
+  composite?: AggregationsCompositeAggregation
+  date_range?: AggregationsDateRangeAggregation
+  filter?: SecurityQueryApiKeysAPIKeyQueryContainer
+  filters?: SecurityQueryApiKeysAPIKeyFiltersAggregation
+  missing?: AggregationsMissingAggregation
+  range?: AggregationsRangeAggregation
+  terms?: AggregationsTermsAggregation
+  value_count?: AggregationsValueCountAggregation
+}
+
+export interface SecurityQueryApiKeysAPIKeyFiltersAggregation extends AggregationsBucketAggregationBase {
+  filters?: AggregationsBuckets<SecurityQueryApiKeysAPIKeyQueryContainer>
+  other_bucket?: boolean
+  other_bucket_key?: string
+  keyed?: boolean
+}
+
+export interface SecurityQueryApiKeysAPIKeyQueryContainer {
+  bool?: QueryDslBoolQuery
+  exists?: QueryDslExistsQuery
+  ids?: QueryDslIdsQuery
+  match?: Partial<Record<Field, QueryDslMatchQuery | string | float | boolean>>
+  match_all?: QueryDslMatchAllQuery
+  prefix?: Partial<Record<Field, QueryDslPrefixQuery | string>>
+  range?: Partial<Record<Field, QueryDslRangeQuery>>
+  simple_query_string?: QueryDslSimpleQueryStringQuery
+  term?: Partial<Record<Field, QueryDslTermQuery | FieldValue>>
+  terms?: QueryDslTermsQuery
+  wildcard?: Partial<Record<Field, QueryDslWildcardQuery | string>>
+}
+
 export interface SecurityQueryApiKeysRequest extends RequestBase {
   with_limited_by?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
-    query?: QueryDslQueryContainer
+    aggregations?: Record<string, SecurityQueryApiKeysAPIKeyAggregationContainer>
+    /** @alias aggregations */
+    aggs?: Record<string, SecurityQueryApiKeysAPIKeyAggregationContainer>
+    query?: SecurityQueryApiKeysAPIKeyQueryContainer
     from?: integer
     sort?: Sort
     size?: integer
@@ -16926,6 +16967,7 @@ export interface SecurityQueryApiKeysResponse {
   total: integer
   count: integer
   api_keys: SecurityApiKey[]
+  aggregations?: Record<AggregateName, SecurityQueryApiKeysAPIKeyAggregate>
 }
 
 export interface SecuritySamlAuthenticateRequest extends RequestBase {
@@ -17262,9 +17304,35 @@ export interface SlmStopRequest extends RequestBase {
 
 export type SlmStopResponse = AcknowledgedResponseBase
 
+export interface SnapshotAzureRepository extends SnapshotRepositoryBase {
+  type: 'azure'
+  settings: SnapshotAzureRepositorySettings
+}
+
+export interface SnapshotAzureRepositorySettings extends SnapshotRepositorySettingsBase {
+  client?: string
+  container?: string
+  base_path?: string
+  readonly?: boolean
+  location_mode?: string
+}
+
 export interface SnapshotFileCountSnapshotStats {
   file_count: integer
   size_in_bytes: long
+}
+
+export interface SnapshotGcsRepository extends SnapshotRepositoryBase {
+  type: 'gcs'
+  settings: SnapshotGcsRepositorySettings
+}
+
+export interface SnapshotGcsRepositorySettings extends SnapshotRepositorySettingsBase {
+  bucket: string
+  client?: string
+  base_path?: string
+  readonly?: boolean
+  application_name?: string
 }
 
 export interface SnapshotIndexDetails {
@@ -17279,19 +17347,45 @@ export interface SnapshotInfoFeatureState {
   indices: Indices
 }
 
-export interface SnapshotRepository {
-  type: string
-  uuid?: Uuid
-  settings: SnapshotRepositorySettings
+export interface SnapshotReadOnlyUrlRepository extends SnapshotRepositoryBase {
+  type: 'url'
+  settings: SnapshotReadOnlyUrlRepositorySettings
 }
 
-export interface SnapshotRepositorySettings {
-  chunk_size?: string
-  compress?: string | boolean
-  concurrent_streams?: string | integer
-  location: string
-  read_only?: string | boolean
-  readonly?: string | boolean
+export interface SnapshotReadOnlyUrlRepositorySettings extends SnapshotRepositorySettingsBase {
+  http_max_retries?: integer
+  http_socket_timeout?: Duration
+  max_number_of_snapshots?: integer
+  url: string
+}
+
+export type SnapshotRepository = SnapshotAzureRepository | SnapshotGcsRepository | SnapshotS3Repository | SnapshotSharedFileSystemRepository | SnapshotReadOnlyUrlRepository | SnapshotSourceOnlyRepository
+
+export interface SnapshotRepositoryBase {
+  uuid?: Uuid
+}
+
+export interface SnapshotRepositorySettingsBase {
+  chunk_size?: ByteSize
+  compress?: boolean
+  max_restore_bytes_per_sec?: ByteSize
+  max_snapshot_bytes_per_sec?: ByteSize
+}
+
+export interface SnapshotS3Repository extends SnapshotRepositoryBase {
+  type: 's3'
+  settings: SnapshotS3RepositorySettings
+}
+
+export interface SnapshotS3RepositorySettings extends SnapshotRepositorySettingsBase {
+  bucket: string
+  client?: string
+  base_path?: string
+  readonly?: boolean
+  server_side_encryption?: boolean
+  buffer_size?: ByteSize
+  canned_acl?: string
+  storage_class?: string
 }
 
 export interface SnapshotShardsStats {
@@ -17316,6 +17410,17 @@ export interface SnapshotShardsStatsSummary {
 export interface SnapshotShardsStatsSummaryItem {
   file_count: long
   size_in_bytes: long
+}
+
+export interface SnapshotSharedFileSystemRepository extends SnapshotRepositoryBase {
+  type: 'fs'
+  settings: SnapshotSharedFileSystemRepositorySettings
+}
+
+export interface SnapshotSharedFileSystemRepositorySettings extends SnapshotRepositorySettingsBase {
+  location: string
+  max_number_of_snapshots?: integer
+  readonly?: boolean
 }
 
 export interface SnapshotSnapshotIndexStats {
@@ -17369,6 +17474,18 @@ export interface SnapshotSnapshotStats {
   time?: Duration
   time_in_millis: DurationValue<UnitMillis>
   total: SnapshotFileCountSnapshotStats
+}
+
+export interface SnapshotSourceOnlyRepository extends SnapshotRepositoryBase {
+  type: 'source'
+  settings: SnapshotSourceOnlyRepositorySettings
+}
+
+export interface SnapshotSourceOnlyRepositorySettings extends SnapshotRepositorySettingsBase {
+  delegate_type?: string
+  max_number_of_snapshots?: integer
+  read_only?: boolean
+  readonly?: boolean
 }
 
 export interface SnapshotStatus {
@@ -17437,12 +17554,8 @@ export interface SnapshotCreateRepositoryRequest extends RequestBase {
   master_timeout?: Duration
   timeout?: Duration
   verify?: boolean
-  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
-  body?: {
-    repository?: SnapshotRepository
-    type: string
-    settings: SnapshotRepositorySettings
-  }
+  /** @deprecated The use of the 'body' key has been deprecated, use 'repository' instead. */
+  body?: SnapshotRepository
 }
 
 export type SnapshotCreateRepositoryResponse = AcknowledgedResponseBase
