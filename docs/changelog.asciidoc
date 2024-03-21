@@ -2,6 +2,26 @@
 == Release notes
 
 [discrete]
+=== 8.13.0
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v8.13.0`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.13/release-notes-8.13.0.html[here].
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Ensure new connections inherit client's set defaults https://github.com/elastic/elasticsearch-js/pull/2159[#2159]
+
+When instantiating a client, any connection-related defaults (e.g. `requestTimeout`) set on that client instance would not be inherited by nodes if they were entered as strings rather than a `ConnectionOptions` object.
+
+[discrete]
 === 8.12.2
 
 [discrete]
@@ -27,7 +47,7 @@ The failing state could be reached when a server's response times are slower tha
 === 8.12.0
 
 [discrete]
-=== Features
+==== Features
 
 [discrete]
 ===== Support for Elasticsearch `v8.12.0`
@@ -39,7 +59,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/8.12/release-notes-8.12.
 === 8.11.0
 
 [discrete]
-=== Features
+==== Features
 
 [discrete]
 ===== Support for Elasticsearch `v8.11.0`
@@ -58,7 +78,7 @@ See <<redaction>> for more information.
 === 8.10.0
 
 [discrete]
-=== Features
+==== Features
 
 [discrete]
 ===== Support for Elasticsearch `v8.10.0`
