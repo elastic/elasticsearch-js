@@ -1,0 +1,46 @@
+---
+name: Apply PR changes to serverless
+on:
+  pull_request_target:
+    types:
+      - closed
+      - labeled
+
+jobs:
+  backport:
+    name: Backport
+    runs-on: ubuntu-latest
+    # Only react to merged PRs for security reasons.
+    # See https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target.
+    if: >
+      github.event.pull_request.merged
+      && (
+        (
+          github.event.action == 'closed'
+          && contains(github.event.pull_request.labels.*.name, 'apply-to-serverless')
+        )
+        ||
+        (
+          github.event.action == 'labeled'
+          && github.event.label.name == 'apply-to-serverless'
+        )
+      )
+    steps:
+      # 1. check out elasticsearch-js
+      - uses: actions/checkout@v4
+      - name: Generate patch file
+        run: |
+          git format-patch -1 --stdout ${{ github.event.pull_request.merge_commit_sha }} > /tmp/patch.diff
+      - uses: actions/checkout@v4
+        with:
+          repository: elastic/elasticsearch-serverless-js
+          ref: main
+      - name: Apply patch to serverless
+        run: |
+          git checkout -b apply-patch-${{ github.event.pull_request.id }}
+          git apply -C1 --recount --reject /tmp/patch.diff
+          comment='Patch applied from elastic/elasticsearch-js#${{ github.event.pull_request.id }}'
+          for f in $(find . -name '*.rej'); do
+            comment="$comment\n\n## Rejected patch \`$f`\:\n\`\`\`\n$(cat $f)\n\`\`\`"
+          done
+          gh pr create -t "Apply PR changes from elastic/elasticsearch-js#${{ github.event.pull_request.id }}" --body "$comment"
