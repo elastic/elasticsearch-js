@@ -26,7 +26,6 @@ jobs:
         )
       )
     steps:
-      # 1. check out elasticsearch-js
       - uses: actions/checkout@v4
       - name: Generate patch file
         run: |
