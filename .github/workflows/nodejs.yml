@@ -17,7 +17,7 @@ jobs:
         with:
           filters: |
             src-only:
-              - '!(**/*.{md,asciidoc,txt}|*.{md,asciidoc,txt}|{docs,.ci,.buildkite,scripts}/**/*|catalog-info.yaml)'
+              - '!(**/*.{md,asciidoc,txt}|*.{md,asciidoc,txt}|{docs,.buildkite,scripts}/**/*|catalog-info.yaml)'
               - '.github/workflows/**'
 
   test:
