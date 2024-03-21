@@ -9,7 +9,6 @@
         "\\.md$",
         "\\.asciidoc$",
         "^docs\\/",
-        "^\\.ci\\/",
         "^scripts\\/",
         "^catalog-info\\.yaml$",
         "^test\\/unit\\/",

@@ -64,7 +64,6 @@ test
 scripts
 
 # ci configuration
-.ci
 .travis.yml
 .buildkite
 certs

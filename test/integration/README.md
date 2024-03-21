@@ -23,7 +23,7 @@ The specification does not allow the test to be run in parallel, so it might tak
 ### Running locally
 
 If you want to run the integration tests on your development machine, you must have an Elasticsearch instance running first.
-A local instance can be spun up in a Docker container by running the [`.ci/run-elasticsearch.sh`](/.ci/run-elasticsearch.sh) script.
+A local instance can be spun up in a Docker container by running the [`.buildkite/run-elasticsearch.sh`](/.buildkite/run-elasticsearch.sh) script.
 This is the same script CI jobs use to run Elasticsearch for integration tests, so your results should be relatively consistent.
 
 To simplify the process of starting a container, testing, and cleaning up the container, you can run the `make integration` target:
@@ -35,7 +35,7 @@ export TEST_SUITE=free # can be `free` or `platinum`
 make integration
 ```
 
-If Elasticsearch doesn't come up, run `make integration-cleanup` and then `DETACH=false .ci/run-elasticsearch.sh` manually to read the startup logs.
+If Elasticsearch doesn't come up, run `make integration-cleanup` and then `DETACH=false .buildkite/run-elasticsearch.sh` manually to read the startup logs.
 
 If you get an error about `vm.max_map_count` being too low, run `sudo sysctl -w vm.max_map_count=262144` to update the setting until the next reboot, or `sudo sysctl -w vm.max_map_count=262144; echo 'vm.max_map_count=262144' | sudo tee -a /etc/sysctl.conf` to update the setting permanently.
 
