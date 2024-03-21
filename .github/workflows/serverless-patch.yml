@@ -7,8 +7,8 @@ on:
       - labeled
 
 jobs:
-  backport:
-    name: Backport
+  apply-patch:
+    name: Apply patch
     runs-on: ubuntu-latest
     # Only react to merged PRs for security reasons.
     # See https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target.
@@ -27,6 +27,9 @@ jobs:
       )
     steps:
       - uses: actions/checkout@v4
+        with:
+          repository: elastic/elasticsearch-js
+          ref: main
       - name: Generate patch file
         run: |
           git format-patch -1 --stdout ${{ github.event.pull_request.merge_commit_sha }} > /tmp/patch.diff
