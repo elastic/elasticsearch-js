@@ -30,15 +30,19 @@ jobs:
         with:
           repository: elastic/elasticsearch-js
           ref: '${{ github.event.pull_request.merge_commit_sha }}'
-      - name: Generate patch file
-        run: |
-          git format-patch -1 --stdout ${{ github.event.pull_request.merge_commit_sha }} > /tmp/patch.diff
+          path: elasticsearch-js
       - uses: actions/checkout@v4
         with:
           repository: elastic/elasticsearch-serverless-js
           ref: main
-      - name: Apply patch to serverless
+          path: elasticsearch-serverless-js
+      - name: Generate patch file
         run: |
+          cd $GITHUB_WORKSPACE/elasticsearch-js
+          git format-patch -1 --stdout ${{ github.event.pull_request.merge_commit_sha }} > /tmp/patch.diff
+      - name: Apply patch file
+        run: |
+          cd $GITHUB_WORKSPACE/elasticsearch-serverless-js
           git checkout -b apply-patch-${{ github.event.pull_request.id }}
           git apply -C1 --recount --reject /tmp/patch.diff
           comment='Patch applied from elastic/elasticsearch-js#${{ github.event.pull_request.id }}'
