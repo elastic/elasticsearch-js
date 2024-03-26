@@ -29,13 +29,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: elastic/elasticsearch-js
-          ref: '${{ github.event.pull_request.merge_commit_sha }}'
-          path: elasticsearch-js
+          ref: main
+          path: stack
       - uses: actions/checkout@v4
         with:
           repository: elastic/elasticsearch-serverless-js
           ref: main
-          path: elasticsearch-serverless-js
+          path: serverless
       - name: Apply patch from stack to serverless
         run: |
-          $GITHUB_WORKSPACE/elasticsearch-js/.github/serverless-patch.sh
+          $GITHUB_WORKSPACE/stack/.github/serverless-patch.sh
