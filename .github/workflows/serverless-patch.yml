@@ -37,4 +37,5 @@ jobs:
           ref: main
           path: elasticsearch-serverless-js
       - name: Apply patch from stack to serverless
-        run: ./.github/serverless-patch.sh
+        run: |
+          .$GITHUB_WORKSPACE/.github/serverless-patch.sh
