@@ -4,6 +4,7 @@ set -exuo pipefail
 
 merge_commit_sha=$(jq -r '.pull_request.merge_commit_sha' "$GITHUB_EVENT_PATH")
 pull_request_id=$(jq -r '.pull_request.number' "$GITHUB_EVENT_PATH")
+pr_shortcode="elastic/elasticsearch-js#$pull_request_id"
 
 # generate patch file
 cd "$GITHUB_WORKSPACE/stack"
@@ -12,11 +13,16 @@ git format-patch -1 --stdout "$merge_commit_sha" > /tmp/patch.diff
 # apply patch file
 cd "$GITHUB_WORKSPACE/serverless"
 git checkout -b "apply-patch-$pull_request_id"
-git apply -C1 --recount --reject /tmp/patch.diff || exit 0
+git am -C1 --reject /tmp/patch.diff || git am --quit
 
-comment="Patch applied from elastic/elasticsearch-js#$pull_request_id"
+# commit changes, ignoring rejects
+git add -A
+git reset -- **/*.rej
+git commit -m "Apply changes from $pr_shortcode"
 
-# check for rejected patches
+comment="Patch applied from $pr_shortcode"
+
+# enumerate rejected patches in PR comment
 tick='\`' # just trying to satisfy shellcheck here
 has_rejects=''
 for f in ./**/*.rej; do
@@ -33,6 +39,7 @@ done
 
 # open a PR
 gh pr create \
-  -t "Apply PR changes from elastic/elasticsearch-js#$pull_request_id" \
+  --repo elastic/elasticsearch-serverless-js \
+  -t "Apply PR changes from $pr_shortcode" \
   --body "$comment" \
   "$has_rejects"
