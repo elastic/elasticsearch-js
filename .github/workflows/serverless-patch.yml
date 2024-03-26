@@ -36,17 +36,5 @@ jobs:
           repository: elastic/elasticsearch-serverless-js
           ref: main
           path: elasticsearch-serverless-js
-      - name: Generate patch file
-        run: |
-          cd $GITHUB_WORKSPACE/elasticsearch-js
-          git format-patch -1 --stdout ${{ github.event.pull_request.merge_commit_sha }} > /tmp/patch.diff
-      - name: Apply patch file
-        run: |
-          cd $GITHUB_WORKSPACE/elasticsearch-serverless-js
-          git checkout -b apply-patch-${{ github.event.pull_request.id }}
-          git apply -C1 --recount --reject /tmp/patch.diff || exit 0
-          comment='Patch applied from elastic/elasticsearch-js#${{ github.event.pull_request.id }}'
-          for f in $(find . -name '*.rej'); do
-            comment="$comment\n\n## Rejected patch \`$f`\:\n\`\`\`\n$(cat $f)\n\`\`\`"
-          done
-          gh pr create -t "Apply PR changes from elastic/elasticsearch-js#${{ github.event.pull_request.id }}" --body "$comment"
+      - name: Apply patch from stack to serverless
+        run: ./.github/serverless-patch.sh
