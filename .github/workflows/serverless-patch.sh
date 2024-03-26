@@ -6,11 +6,11 @@ merge_commit_sha=$(jq -r '.pull_request.merge_commit_sha' "$GITHUB_EVENT_PATH")
 pull_request_id=$(jq -r '.pull_request.number' "$GITHUB_EVENT_PATH")
 
 # generate patch file
-cd "$GITHUB_WORKSPACE/elasticsearch-js"
+cd "$GITHUB_WORKSPACE/stack"
 git format-patch -1 --stdout "$merge_commit_sha" > /tmp/patch.diff
 
 # apply patch file
-cd "$GITHUB_WORKSPACE/elasticsearch-serverless-js"
+cd "$GITHUB_WORKSPACE/serverless"
 git checkout -b "apply-patch-$pull_request_id"
 git apply -C1 --recount --reject /tmp/patch.diff || exit 0
 
