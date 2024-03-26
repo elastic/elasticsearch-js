@@ -38,4 +38,4 @@ jobs:
           path: serverless
       - name: Apply patch from stack to serverless
         run: |
-          $GITHUB_WORKSPACE/stack/.github/serverless-patch.sh
+          $GITHUB_WORKSPACE/stack/.github/workflows/serverless-patch.sh
