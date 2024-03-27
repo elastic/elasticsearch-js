@@ -43,7 +43,7 @@ jobs:
       - uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: $GITHUB_WORKSPACE/serverless
+          path: serverless
           title: 'Apply patch from elastic/elasticsearch-js#${{ github.event.pull_request.number }}'
           commit-message: 'Apply patch from elastic/elasticsearch-js#${{ github.event.pull_request.number }}'
           branch-suffix: short-commit-hash
