@@ -15,31 +15,25 @@ cd "$GITHUB_WORKSPACE/serverless"
 git checkout -b "apply-patch-$pull_request_id"
 git am -C1 --reject /tmp/patch.diff || git am --quit
 
-# commit changes, ignoring rejects
-git add -A
-git reset -- **/*.rej
-git commit -m "Apply changes from $pr_shortcode"
-
+# generate PR body comment
 comment="Patch applied from $pr_shortcode"
 
 # enumerate rejected patches in PR comment
-tick='\`' # just trying to satisfy shellcheck here
-has_rejects=''
+has_rejects='false'
 for f in ./**/*.rej; do
-  has_rejects='--draft'
+  has_rejects='true'
   comment="$comment
 
-## Rejected patch $tick$f$tick must be resolved:
+## Rejected patch \`$f\` must be resolved:
 
-$tick$tick$tick
+\`\`\`diff
 $(cat "$f")
-$tick$tick$tick
+\`\`\`
 "
 done
 
-# open a PR
-gh pr create \
-  --repo elastic/elasticsearch-serverless-js \
-  -t "Apply PR changes from $pr_shortcode" \
-  --body "$comment" \
-  "$has_rejects"
+# send data to output parameters
+{
+  echo "PR_BODY='$comment'"
+  echo "PR_DRAFT=$has_rejects"
+} >> "$GITHUB_OUTPUT"
