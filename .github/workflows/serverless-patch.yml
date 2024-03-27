@@ -47,6 +47,6 @@ jobs:
           title: 'Apply patch from elastic/elasticsearch-js#${{ github.event.pull_request.number }}'
           commit-message: 'Apply patch from elastic/elasticsearch-js#${{ github.event.pull_request.number }}'
           branch-suffix: short-commit-hash
-          body: '${{ steps.apply-patch.outputs.PR_BODY }}'
+          body-path: /tmp/pr_body
           draft: '${{ steps.apply-patch.outputs.PR_DRAFT }}'
           add-paths: ':!*.rej'
