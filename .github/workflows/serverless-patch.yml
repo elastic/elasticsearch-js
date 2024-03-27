@@ -37,6 +37,10 @@ jobs:
           repository: elastic/elasticsearch-serverless-js
           ref: main
           path: serverless
+      - name: Set Git user
+        run: |
+          git config --global user.name "Elastic Machine"
+          git confit --global user.email "elasticmachine@users.noreply.github.com"
       - name: Apply patch from stack to serverless
         run: |
           $GITHUB_WORKSPACE/stack/.github/workflows/serverless-patch.sh
