@@ -26,7 +26,7 @@ comment="Patch applied from $pr_shortcode"
 tick='\`' # just trying to satisfy shellcheck here
 has_rejects=''
 for f in ./**/*.rej; do
-  has_rejects=' --draft'
+  has_rejects='--draft'
   comment="$comment
 
 ## Rejected patch $tick$f$tick must be resolved:
