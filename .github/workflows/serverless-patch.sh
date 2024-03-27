@@ -16,7 +16,6 @@ git config --global user.name "Elastic Machine"
 
 # apply patch file
 cd "$GITHUB_WORKSPACE/serverless"
-git checkout -b "apply-patch-$pull_request_id"
 git am -C1 --reject /tmp/patch.diff || git am --quit
 
 # generate PR body comment
