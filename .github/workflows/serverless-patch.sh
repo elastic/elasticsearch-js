@@ -36,6 +36,9 @@ $(cat "$f")
 "
 done
 
+# delete .rej files
+rm -fv ./**/*.rej
+
 # send data to output parameters
 echo "$comment" > /tmp/pr_body
 echo "PR_DRAFT=$has_rejects" >> "$GITHUB_OUTPUT"
