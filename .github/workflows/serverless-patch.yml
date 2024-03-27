@@ -37,11 +37,16 @@ jobs:
           repository: elastic/elasticsearch-serverless-js
           ref: main
           path: serverless
-      - name: Set Git user
-        run: |
-          git config --global user.name "Elastic Machine"
-          git config --global user.email "elasticmachine@users.noreply.github.com"
       - name: Apply patch from stack to serverless
-        env:
-          GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        id: apply-patch
         run: $GITHUB_WORKSPACE/stack/.github/workflows/serverless-patch.sh
+      - uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: $GITHUB_WORKSPACE/serverless
+          title: 'Apply patch from elastic/elasticsearch-js#${{ github.event.pull_request.number }}'
+          commit-message: 'Apply patch from elastic/elasticsearch-js#${{ github.event.pull_request.number }}'
+          branch-suffix: short-commit-hash
+          body: '${{ steps.apply-patch.outputs.PR_BODY }}'
+          draft: '${{ steps.apply-patch.outputs.PR_DRAFT }}'
+          add-paths: ':!*.rej'
