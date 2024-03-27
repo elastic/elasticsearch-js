@@ -10,6 +10,10 @@ pr_shortcode="elastic/elasticsearch-js#$pull_request_id"
 cd "$GITHUB_WORKSPACE/stack"
 git format-patch -1 --stdout "$merge_commit_sha" > /tmp/patch.diff
 
+# set committer info
+git config --global user.email "elasticmachine@users.noreply.github.com"
+git config --global user.name "Elastic Machine"
+
 # apply patch file
 cd "$GITHUB_WORKSPACE/serverless"
 git checkout -b "apply-patch-$pull_request_id"
