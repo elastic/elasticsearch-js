@@ -37,7 +37,5 @@ $(cat "$f")
 done
 
 # send data to output parameters
-{
-  echo "PR_BODY='$comment'"
-  echo "PR_DRAFT=$has_rejects"
-} >> "$GITHUB_OUTPUT"
+echo "$comment" > /tmp/pr_body
+echo "PR_DRAFT=$has_rejects" >> "$GITHUB_OUTPUT"
