@@ -48,3 +48,4 @@ jobs:
           commit-message: 'Apply patch from elastic/elasticsearch-js#${{ github.event.pull_request.number }}'
           body-path: /tmp/pr_body
           draft: '${{ steps.apply-patch.outputs.PR_DRAFT }}'
+          add-paths: ':!*.rej'
