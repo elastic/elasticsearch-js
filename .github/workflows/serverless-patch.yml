@@ -42,5 +42,6 @@ jobs:
           git config --global user.name "Elastic Machine"
           git config --global user.email "elasticmachine@users.noreply.github.com"
       - name: Apply patch from stack to serverless
-        run: |
-          $GITHUB_WORKSPACE/stack/.github/workflows/serverless-patch.sh
+        env:
+          GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        run: $GITHUB_WORKSPACE/stack/.github/workflows/serverless-patch.sh
