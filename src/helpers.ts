@@ -103,6 +103,24 @@ export interface OnDropDocument<TDocument = unknown> {
   retried: boolean
 }
 
+type BulkResponseItem = Partial<Record<T.BulkOperationType, T.BulkResponseItem>>
+
+export interface OnSuccessDocument<TDocument = unknown> {
+  result: BulkResponseItem
+  document?: TDocument
+}
+
+interface ZippedResult<TDocument = unknown> {
+  result: BulkResponseItem
+  raw: {
+    action: string
+    document?: string
+  }
+  // this is a function so that deserialization is only done when needed
+  // to avoid a performance hit
+  document?: () => TDocument
+}
+
 export interface BulkHelperOptions<TDocument = unknown> extends T.BulkRequest {
   datasource: TDocument[] | Buffer | Readable | AsyncIterator<TDocument>
   onDocument: (doc: TDocument) => Action
@@ -112,6 +130,7 @@ export interface BulkHelperOptions<TDocument = unknown> extends T.BulkRequest {
   retries?: number
   wait?: number
   onDrop?: (doc: OnDropDocument<TDocument>) => void
+  onSuccess?: (doc: OnSuccessDocument) => void
   refreshOnCompletion?: boolean | string
 }
 
@@ -551,6 +570,7 @@ export default class Helpers {
       retries = this[kMaxRetries],
       wait = 5000,
       onDrop = noop,
+      onSuccess,
       refreshOnCompletion = false,
       ...bulkOptions
     } = options
@@ -817,57 +837,98 @@ export default class Helpers {
         callback()
       }
 
+      /**
+       * Zips bulk response items (the action's result) with the original document body.
+       * The raw string version of action and document lines are also included.
+       */
+      function zipBulkResults (responseItems: BulkResponseItem[], bulkBody: string[]): ZippedResult[] {
+        const zipped = []
+        let indexSlice = 0
+        for (let i = 0, len = responseItems.length; i < len; i++) {
+          const result = responseItems[i]
+          const operation = Object.keys(result)[0]
+          let zipResult
+
+          if (operation === 'delete') {
+            zipResult = {
+              result,
+              raw: { action: bulkBody[indexSlice] }
+            }
+            indexSlice += 1
+          } else {
+            const document = bulkBody[indexSlice + 1]
+            zipResult = {
+              result,
+              raw: { action: bulkBody[indexSlice], document },
+              // this is a function so that deserialization is only done when needed
+              // to avoid a performance hit
+              document: () => serializer.deserialize(document)
+            }
+            indexSlice += 2
+          }
+
+          zipped.push(zipResult as ZippedResult)
+        }
+
+        return zipped
+      }
+
       function tryBulk (bulkBody: string[], callback: (err: Error | null, bulkBody: string[]) => void): void {
         if (shouldAbort) return callback(null, [])
         client.bulk(Object.assign({}, bulkOptions, { body: bulkBody }), reqOptions as TransportRequestOptionsWithMeta)
           .then(response => {
             const result = response.body
+            const results = zipBulkResults(result.items, bulkBody)
+
             if (!result.errors) {
               stats.successful += result.items.length
-              for (const item of result.items) {
-                if (item.update?.result === 'noop') {
+              for (const item of results) {
+                const { result, document = noop } = item
+                if (result.update?.result === 'noop') {
                   stats.noop++
                 }
+                if (onSuccess != null) onSuccess({ result, document: document() })
               }
               return callback(null, [])
             }
             const retry = []
-            const { items } = result
-            let indexSlice = 0
-            for (let i = 0, len = items.length; i < len; i++) {
-              const action = items[i]
-              const operation = Object.keys(action)[0]
+            for (const item of results) {
+              const { result, raw, document = noop } = item
+              const operation = Object.keys(result)[0]
               // @ts-expect-error
-              const responseItem = action[operation as keyof T.BulkResponseItemContainer]
+              const responseItem = result[operation as keyof T.BulkResponseItemContainer]
               assert(responseItem !== undefined, 'The responseItem is undefined, please file a bug report')
 
               if (responseItem.status >= 400) {
-                // 429 is the only staus code where we might want to retry
+                // 429 is the only status code where we might want to retry
                 // a document, because it was not an error in the document itself,
-                // but the ES node were handling too many operations.
+                // but the ES node was handling too many operations.
                 if (responseItem.status === 429) {
-                  retry.push(bulkBody[indexSlice])
+                  retry.push(raw.action)
                   /* istanbul ignore next */
                   if (operation !== 'delete') {
-                    retry.push(bulkBody[indexSlice + 1])
+                    retry.push(raw.document ?? '')
                   }
                 } else {
                   onDrop({
                     status: responseItem.status,
                     error: responseItem.error ?? null,
-                    operation: serializer.deserialize(bulkBody[indexSlice]),
+                    operation: serializer.deserialize(raw.action),
                     // @ts-expect-error
-                    document: operation !== 'delete'
-                      ? serializer.deserialize(bulkBody[indexSlice + 1])
-                      : null,
+                    document: document(),
                     retried: isRetrying
                   })
                   stats.failed += 1
                 }
               } else {
                 stats.successful += 1
+                if (onSuccess != null) {
+                  onSuccess({
+                    result,
+                    document: document()
+                  })
+                }
               }
-              operation === 'delete' ? indexSlice += 1 : indexSlice += 2
             }
             callback(null, retry)
           })
