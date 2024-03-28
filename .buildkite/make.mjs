@@ -94,7 +94,7 @@ async function bump (args) {
   const pipeline = await readFile(join(import.meta.url, '..', '.buildkite', 'pipeline.yml'), 'utf8')
   await writeFile(
     join(import.meta.url, '..', '.buildkite', 'pipeline.yml'),
-    pipeline.replace(/STACK_VERSION: [0-9]+[0-9\.]*[0-9](?:\-SNAPSHOT)?/, `STACK_VERSION: ${cleanVersion}-SNAPSHOT`),
+    pipeline.replace(/STACK_VERSION: [0-9]+[0-9\.]*[0-9](?:\-SNAPSHOT)?/, `STACK_VERSION: ${cleanVersion}`),
     'utf8'
   )
 }
