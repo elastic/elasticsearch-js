@@ -39,12 +39,9 @@ spec:
       cancel_intermediate_builds: true
       cancel_intermediate_builds_branch_filter: '!main'
       schedules:
-        main_semi_daily:
+        main:
           branch: 'main'
-          cronline: '0 */12 * * *'
-        8_13_semi_daily:
+          cronline: '@daily'
+        8_13:
           branch: '8.13'
-          cronline: '0 */12 * * *'
-        8_12_daily:
-          branch: '8.12'
           cronline: '@daily'
