@@ -81,7 +81,7 @@ async function bump (args) {
   ))
 
   const cleanVersion = semver.clean(version.includes('SNAPSHOT') ? version.split('-')[0] : version)
-  assert(semver.valid(cleanVersion))
+  assert(semver.valid(cleanVersion), `${cleanVersion} is not seen as a valid semver version. raw version: ${version}`)
   packageJson.version = cleanVersion
   packageJson.versionCanary = `${cleanVersion}-canary.0`
 
