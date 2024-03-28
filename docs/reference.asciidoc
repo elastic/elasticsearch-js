@@ -6409,7 +6409,11 @@ or `windows-x86_64`. For portable models (those that work independent of process
 architecture or OS features), leave this field unset.
 ** *`tags` (Optional, string[])*: An array of tags to organize the model.
 ** *`prefix_strings` (Optional, { ingest, search })*: Optional prefix strings applied at inference
-** *`defer_definition_decompression` (Optional, boolean)*: If set to `true` and a `compressed_definition` is provided, the request defers definition decompression and skips relevant validations.
+** *`defer_definition_decompression` (Optional, boolean)*: If set to `true` and a `compressed_definition` is provided,
+the request defers definition decompression and skips relevant
+validations.
+** *`wait_for_completion` (Optional, boolean)*: Whether to wait for all child operations (e.g. model download)
+to complete.
 
 [discrete]
 ==== put_trained_model_alias
