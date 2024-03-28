@@ -14348,6 +14348,7 @@ export interface MlPutTrainedModelPreprocessor {
 export interface MlPutTrainedModelRequest extends RequestBase {
   model_id: Id
   defer_definition_decompression?: boolean
+  wait_for_completion?: boolean
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
     compressed_definition?: string
