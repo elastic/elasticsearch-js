@@ -74,14 +74,15 @@ async function release (args) {
 
 async function bump (args) {
   assert(args.length === 1, 'Bump task expects one parameter')
-  const [version] = args
+  let [version] = args
   const packageJson = JSON.parse(await readFile(
     join(import.meta.url, '..', 'package.json'),
     'utf8'
   ))
 
+  if (version.split('.').length === 2) version = `${version}.0`
   const cleanVersion = semver.clean(version.includes('SNAPSHOT') ? version.split('-')[0] : version)
-  assert(semver.valid(cleanVersion))
+  assert(semver.valid(cleanVersion), `${cleanVersion} is not seen as a valid semver version. raw version: ${version}`)
   packageJson.version = cleanVersion
   packageJson.versionCanary = `${cleanVersion}-canary.0`
 

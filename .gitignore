@@ -63,3 +63,4 @@ test/bundlers/**/bundle.js
 test/bundlers/parcel-test/.parcel-cache
 
 lib
+junit-output
