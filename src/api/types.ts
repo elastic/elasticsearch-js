@@ -14143,6 +14143,7 @@ export interface MlPutTrainedModelPreprocessor {
 export interface MlPutTrainedModelRequest extends RequestBase {
   model_id: Id
   defer_definition_decompression?: boolean
+  wait_for_completion?: boolean
   compressed_definition?: string
   definition?: MlPutTrainedModelDefinition
   description?: string
@@ -16554,31 +16555,31 @@ export interface SecurityPutUserResponse {
   created: boolean
 }
 
-export type SecurityQueryApiKeysAPIKeyAggregate = AggregationsCardinalityAggregate | AggregationsValueCountAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsFilterAggregate | AggregationsFiltersAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsCompositeAggregate
+export type SecurityQueryApiKeysApiKeyAggregate = AggregationsCardinalityAggregate | AggregationsValueCountAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsFilterAggregate | AggregationsFiltersAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsCompositeAggregate
 
-export interface SecurityQueryApiKeysAPIKeyAggregationContainer {
-  aggregations?: Record<string, SecurityQueryApiKeysAPIKeyAggregationContainer>
-  aggs?: Record<string, SecurityQueryApiKeysAPIKeyAggregationContainer>
+export interface SecurityQueryApiKeysApiKeyAggregationContainer {
+  aggregations?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
+  aggs?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
   meta?: Metadata
   cardinality?: AggregationsCardinalityAggregation
   composite?: AggregationsCompositeAggregation
   date_range?: AggregationsDateRangeAggregation
-  filter?: SecurityQueryApiKeysAPIKeyQueryContainer
-  filters?: SecurityQueryApiKeysAPIKeyFiltersAggregation
+  filter?: SecurityQueryApiKeysApiKeyQueryContainer
+  filters?: SecurityQueryApiKeysApiKeyFiltersAggregation
   missing?: AggregationsMissingAggregation
   range?: AggregationsRangeAggregation
   terms?: AggregationsTermsAggregation
   value_count?: AggregationsValueCountAggregation
 }
 
-export interface SecurityQueryApiKeysAPIKeyFiltersAggregation extends AggregationsBucketAggregationBase {
-  filters?: AggregationsBuckets<SecurityQueryApiKeysAPIKeyQueryContainer>
+export interface SecurityQueryApiKeysApiKeyFiltersAggregation extends AggregationsBucketAggregationBase {
+  filters?: AggregationsBuckets<SecurityQueryApiKeysApiKeyQueryContainer>
   other_bucket?: boolean
   other_bucket_key?: string
   keyed?: boolean
 }
 
-export interface SecurityQueryApiKeysAPIKeyQueryContainer {
+export interface SecurityQueryApiKeysApiKeyQueryContainer {
   bool?: QueryDslBoolQuery
   exists?: QueryDslExistsQuery
   ids?: QueryDslIdsQuery
@@ -16594,10 +16595,10 @@ export interface SecurityQueryApiKeysAPIKeyQueryContainer {
 
 export interface SecurityQueryApiKeysRequest extends RequestBase {
   with_limited_by?: boolean
-  aggregations?: Record<string, SecurityQueryApiKeysAPIKeyAggregationContainer>
+  aggregations?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
   /** @alias aggregations */
-  aggs?: Record<string, SecurityQueryApiKeysAPIKeyAggregationContainer>
-  query?: SecurityQueryApiKeysAPIKeyQueryContainer
+  aggs?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
+  query?: SecurityQueryApiKeysApiKeyQueryContainer
   from?: integer
   sort?: Sort
   size?: integer
@@ -16608,7 +16609,7 @@ export interface SecurityQueryApiKeysResponse {
   total: integer
   count: integer
   api_keys: SecurityApiKey[]
-  aggregations?: Record<AggregateName, SecurityQueryApiKeysAPIKeyAggregate>
+  aggregations?: Record<AggregateName, SecurityQueryApiKeysApiKeyAggregate>
 }
 
 export interface SecuritySamlAuthenticateRequest extends RequestBase {
