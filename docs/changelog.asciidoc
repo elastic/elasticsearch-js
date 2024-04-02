@@ -2,6 +2,17 @@
 == Release notes
 
 [discrete]
+=== 8.13.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Upgrade transport version to 8.4.1 https://github.com/elastic/elasticsearch-js/pull/2200[#2200]
+
+v8.13.0 was released depending on v8.4.0 of `@elastic/transport` instead of v8.4.1, which fixes a bug related to data redaction on error objects.
+
+[discrete]
 === 8.13.0
 
 [discrete]
