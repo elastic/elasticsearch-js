@@ -2,6 +2,14 @@
 == Release notes
 
 [discrete]
+=== 8.14.0
+
+[discrete]
+===== `onSuccess` callback added to bulk helper
+
+The bulk helper now supports an `onSuccess` callback that will be called for each successful operation. https://github.com/elastic/elasticsearch-js/pull/2199[#2199]
+
+[discrete]
 === 8.13.0
 
 [discrete]
