@@ -2,6 +2,23 @@
 == Release notes
 
 [discrete]
+=== 8.14.0
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v8.14.0`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.14/release-notes-8.14.0.html[here].
+
+[discrete]
+===== `onSuccess` callback added to bulk helper
+
+The bulk helper now supports an `onSuccess` callback that will be called for each successful operation. https://github.com/elastic/elasticsearch-js/pull/2199[#2199]
+
+[discrete]
 === 8.13.0
 
 [discrete]
