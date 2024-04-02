@@ -570,6 +570,8 @@ export default class Helpers {
       retries = this[kMaxRetries],
       wait = 5000,
       onDrop = noop,
+      // onSuccess does not default to noop, to avoid the performance hit
+      // of deserializing every document in the bulk request
       onSuccess,
       refreshOnCompletion = false,
       ...bulkOptions
@@ -922,12 +924,7 @@ export default class Helpers {
                 }
               } else {
                 stats.successful += 1
-                if (onSuccess != null) {
-                  onSuccess({
-                    result,
-                    document: document()
-                  })
-                }
+                if (onSuccess != null) onSuccess({ result, document: document() })
               }
             }
             callback(null, retry)
