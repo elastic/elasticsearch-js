@@ -98,6 +98,17 @@ const b = client.helpers.bulk({
 })
 ----
 
+|`onSuccess`
+a|A function that is called for each successful operation in the bulk request, which includes the result from Elasticsearch along with the original document that was sent, or `null` for delete operations.
+[source,js]
+----
+const b = client.helpers.bulk({
+  onSuccess ({ result, document }) {
+    console.log(`SUCCESS: Document ${result.index._id} indexed to ${result.index._index}`)
+  } 
+})
+----
+
 |`flushBytes`
 a|The size of the bulk body in bytes to reach before to send it. Default of 5MB. +
 _Default:_ `5000000`
