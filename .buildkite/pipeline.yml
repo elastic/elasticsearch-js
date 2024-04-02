@@ -6,7 +6,7 @@ steps:
     env:
       NODE_VERSION: "{{ matrix.nodejs }}"
       TEST_SUITE: "{{ matrix.suite }}"
-      STACK_VERSION: 8.13.0-SNAPSHOT
+      STACK_VERSION: 8.13.1-SNAPSHOT
     matrix:
       setup:
         suite:
