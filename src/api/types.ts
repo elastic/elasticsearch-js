@@ -373,6 +373,7 @@ export interface GetGetResult<TDocument = unknown> {
 export interface GetRequest extends RequestBase {
   id: Id
   index: IndexName
+  force_synthetic_source?: boolean
   preference?: string
   realtime?: boolean
   refresh?: boolean
@@ -686,6 +687,7 @@ export interface MgetOperation {
 
 export interface MgetRequest extends RequestBase {
   index?: IndexName
+  force_synthetic_source?: boolean
   preference?: string
   realtime?: boolean
   refresh?: boolean
@@ -1146,6 +1148,7 @@ export interface SearchRequest extends RequestBase {
   _source_excludes?: Fields
   _source_includes?: Fields
   q?: string
+  force_synthetic_source?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
   /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
@@ -16595,6 +16598,7 @@ export interface SecurityQueryApiKeysApiKeyQueryContainer {
 
 export interface SecurityQueryApiKeysRequest extends RequestBase {
   with_limited_by?: boolean
+  typed_keys?: boolean
   aggregations?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
   /** @alias aggregations */
   aggs?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
