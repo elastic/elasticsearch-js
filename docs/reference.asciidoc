@@ -418,6 +418,9 @@ client.get({ id, index })
 * *Request (object):*
 ** *`id` (string)*: Unique identifier of the document.
 ** *`index` (string)*: Name of the index that contains the document.
+** *`force_synthetic_source` (Optional, boolean)*: Should this request force synthetic _source?
+Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance.
+Fetches with this enabled will be slower the enabling synthetic source natively in the index.
 ** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on. Random by default.
 ** *`realtime` (Optional, boolean)*: If `true`, the request is real-time as opposed to near-real-time.
 ** *`refresh` (Optional, boolean)*: If true, Elasticsearch refreshes the affected shards to make this operation visible to search. If false, do nothing with refreshes.
@@ -606,6 +609,9 @@ client.mget({ ... })
 ** *`index` (Optional, string)*: Name of the index to retrieve documents from when `ids` are specified, or when a document in the `docs` array does not specify an index.
 ** *`docs` (Optional, { _id, _index, routing, _source, stored_fields, version, version_type }[])*: The documents you want to retrieve. Required if no index is specified in the request URI.
 ** *`ids` (Optional, string | string[])*: The IDs of the documents you want to retrieve. Allowed when the index is specified in the request URI.
+** *`force_synthetic_source` (Optional, boolean)*: Should this request force synthetic _source?
+Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance.
+Fetches with this enabled will be slower the enabling synthetic source natively in the index.
 ** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on. Random by default.
 ** *`realtime` (Optional, boolean)*: If `true`, the request is real-time as opposed to near-real-time.
 ** *`refresh` (Optional, boolean)*: If `true`, the request refreshes relevant shards before retrieving documents.
@@ -1030,6 +1036,9 @@ You can exclude fields from this subset using the `_source_excludes` query param
 If the `_source` parameter is `false`, this parameter is ignored.
 ** *`q` (Optional, string)*: Query in the Lucene query string syntax using query parameter search.
 Query parameter searches do not support the full Elasticsearch Query DSL but are handy for testing.
+** *`force_synthetic_source` (Optional, boolean)*: Should this request force synthetic _source?
+Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance.
+Fetches with this enabled will be slower the enabling synthetic source natively in the index.
 
 [discrete]
 === search_mvt
