@@ -4062,6 +4062,7 @@ export interface AggregationsTopHitsAggregate extends AggregationsAggregateBase 
 export interface AggregationsTopHitsAggregation extends AggregationsMetricAggregationBase {
   docvalue_fields?: Fields
   explain?: boolean
+  fields?: (QueryDslFieldAndFormat | Field)[]
   from?: integer
   highlight?: SearchHighlight
   script_fields?: Record<string, ScriptField>
