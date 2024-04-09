@@ -2,10 +2,21 @@
 == Release notes
 
 [discrete]
+=== 8.11.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Bump @elastic/transport to `~8.4.0`
+
+Switching from `^8.4.0` to `~8.4.0` ensures 8.11 client users are not required to update to Node.js v18+, which is a new requirement set by `@elastic/transport` v8.5.0. See https://github.com/elastic/elastic-transport-js/issues/91[elastic/elastic-transport-js#91] for details.
+
+[discrete]
 === 8.11.0
 
 [discrete]
-=== Features
+==== Features
 
 [discrete]
 ===== Support for Elasticsearch `v8.11.0`
