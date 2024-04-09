@@ -5,9 +5,25 @@
 === 8.14.0
 
 [discrete]
+==== Features
+
+[discrete]
 ===== `onSuccess` callback added to bulk helper
 
 The bulk helper now supports an `onSuccess` callback that will be called for each successful operation. https://github.com/elastic/elasticsearch-js/pull/2199[#2199]
+
+[discrete]
+=== 8.13.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Pin @elastic/transport to `~8.4.1`
+
+Switching from `^8.4.1` to `~8.4.1` ensures 8.13 client users are not required to update to Node.js v18+, which is a new requirement set by `@elastic/transport` v8.5.0. See https://github.com/elastic/elastic-transport-js/issues/91[elastic/elastic-transport-js#91] for details.
+
+v8.13.0 was also released depending on v8.4.0 of `@elastic/transport` instead of v8.4.1, which was unintentional.
 
 [discrete]
 === 8.13.0
@@ -28,6 +44,17 @@ https://www.elastic.co/guide/en/elasticsearch/reference/8.13/release-notes-8.13.
 ===== Ensure new connections inherit client's set defaults https://github.com/elastic/elasticsearch-js/pull/2159[#2159]
 
 When instantiating a client, any connection-related defaults (e.g. `requestTimeout`) set on that client instance would not be inherited by nodes if they were entered as strings rather than a `ConnectionOptions` object.
+
+[discrete]
+=== 8.12.3
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Bump @elastic/transport to `~8.4.1`
+
+Switching from `^8.4.1` to `~8.4.1` ensures 8.12 client users are not required to update to Node.js v18+, which is a new requirement set by `@elastic/transport` v8.5.0. See https://github.com/elastic/elastic-transport-js/issues/91[elastic/elastic-transport-js#91] for details.
 
 [discrete]
 === 8.12.2
@@ -55,13 +82,24 @@ The failing state could be reached when a server's response times are slower tha
 === 8.12.0
 
 [discrete]
-==== Features
+=== Features
 
 [discrete]
 ===== Support for Elasticsearch `v8.12.0`
 
 You can find all the API changes
 https://www.elastic.co/guide/en/elasticsearch/reference/8.12/release-notes-8.12.0.html[here].
+
+[discrete]
+=== 8.11.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Bump @elastic/transport to `~8.4.0`
+
+Switching from `^8.4.0` to `~8.4.0` ensures 8.11 client users are not required to update to Node.js v18+, which is a new requirement set by `@elastic/transport` v8.5.0. See https://github.com/elastic/elastic-transport-js/issues/91[elastic/elastic-transport-js#91] for details.
 
 [discrete]
 === 8.11.0
@@ -83,6 +121,17 @@ https://www.elastic.co/guide/en/elasticsearch/reference/8.11/release-notes-8.11.
 See <<redaction>> for more information.
 
 [discrete]
+=== 8.10.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Bump @elastic/transport to `~8.3.4`
+
+Switching from `^8.3.4` to `~8.3.4` ensures 8.10 client users are not required to update to Node.js v18+, which is a new requirement set by `@elastic/transport` v8.5.0. See https://github.com/elastic/elastic-transport-js/issues/91[elastic/elastic-transport-js#91] for details.
+
+[discrete]
 === 8.10.0
 
 [discrete]
@@ -93,6 +142,17 @@ See <<redaction>> for more information.
 
 You can find all the API changes
 https://www.elastic.co/guide/en/elasticsearch/reference/8.10/release-notes-8.10.0.html[here].
+
+[discrete]
+=== 8.9.2
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Bump @elastic/transport to `~8.3.4`
+
+Switching from `^8.3.4` to `~8.3.4` ensures 8.9 client users are not required to update to Node.js v18+, which is a new requirement set by `@elastic/transport` v8.5.0. See https://github.com/elastic/elastic-transport-js/issues/91[elastic/elastic-transport-js#91] for details.
 
 [discrete]
 === 8.9.1
@@ -129,6 +189,17 @@ In the https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/curre
 ===== Updated `user-agent` header https://github.com/elastic/elasticsearch-js/pull/1954[#1954]
 
 The `user-agent` header the client used to connect to Elasticsearch was using a non-standard format that has been improved.
+
+[discrete]
+=== 8.8.2
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Bump @elastic/transport to `~8.3.2`
+
+Switching from `^8.3.2` to `~8.3.2` ensures 8.8 client users are not required to update to Node.js v18+, which is a new requirement set by `@elastic/transport` v8.5.0. See https://github.com/elastic/elastic-transport-js/issues/91[elastic/elastic-transport-js#91] for details.
 
 [discrete]
 === 8.8.1
@@ -176,6 +247,17 @@ https://www.elastic.co/guide/en/elasticsearch/reference/8.8/release-notes-8.8.0.
 Prior releases contained a bug where type declarations for legacy types that include a `body` key were not actually importing the type that includes the `body` key.
 
 [discrete]
+=== 8.7.3
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Bump @elastic/transport to `~8.3.1`
+
+Switching from `^8.3.1` to `~8.3.1` ensures 8.7 client users are not required to update to Node.js v18+, which is a new requirement set by `@elastic/transport` v8.5.0. See https://github.com/elastic/elastic-transport-js/issues/91[elastic/elastic-transport-js#91] for details.
+
+[discrete]
 === 8.7.0
 
 [discrete]
@@ -183,6 +265,17 @@ Prior releases contained a bug where type declarations for legacy types that inc
 
 You can find all the API changes
 https://www.elastic.co/guide/en/elasticsearch/reference/8.7/release-notes-8.7.0.html[here].
+
+[discrete]
+=== 8.6.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Bump @elastic/transport to `~8.3.1`
+
+Switching from `^8.3.1` to `~8.3.1` ensures 8.6 client users are not required to update to Node.js v18+, which is a new requirement set by `@elastic/transport` v8.5.0. See https://github.com/elastic/elastic-transport-js/issues/91[elastic/elastic-transport-js#91] for details.
 
 [discrete]
 === 8.6.0
