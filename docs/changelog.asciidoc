@@ -2,6 +2,13 @@
 == Release notes
 
 [discrete]
+=== 8.6.1
+
+[discrete]
+===== Bump @elastic/transport to ~8.3.1
+Switching from `^8.3.1` to `~8.3.1` ensures 8.6 client users are not required to update to Node.js v18+, which is a new requirement set by `@elastic/transport` v8.5.0. See https://github.com/elastic/elastic-transport-js/issues/91[elastic/elastic-transport-js#91] for details.
+
+[discrete]
 === 8.6.0
 
 [discrete]
