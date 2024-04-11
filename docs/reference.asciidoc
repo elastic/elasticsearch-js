@@ -3275,7 +3275,7 @@ If no index is specified or the index does not have a default analyzer, the anal
 ** *`analyzer` (Optional, string)*: The name of the analyzer that should be applied to the provided `text`.
 This could be a built-in analyzer, or an analyzer that’s been configured in the index.
 ** *`attributes` (Optional, string[])*: Array of token attributes used to filter the output of the `explain` parameter.
-** *`char_filter` (Optional, string | { type } | { type, mappings, mappings_path } | { type, flags, pattern, replacement } | { type, mode, name } | { type, normalize_kana, normalize_kanji }[])*: Array of character filters used to preprocess characters before the tokenizer.
+** *`char_filter` (Optional, string | { type, escaped_tags } | { type, mappings, mappings_path } | { type, flags, pattern, replacement } | { type, mode, name } | { type, normalize_kana, normalize_kanji }[])*: Array of character filters used to preprocess characters before the tokenizer.
 ** *`explain` (Optional, boolean)*: If `true`, the response includes token attributes and additional details.
 ** *`field` (Optional, string)*: Field used to derive the analyzer.
 To use this parameter, you must specify an index.
