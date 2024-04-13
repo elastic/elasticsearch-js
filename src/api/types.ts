@@ -724,7 +724,7 @@ export interface MsearchMultisearchBody {
   ext?: Record<string, any>
   stored_fields?: Fields
   docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
-  knn?: KnnQuery | KnnQuery[]
+  knn?: KnnSearch | KnnSearch[]
   from?: integer
   highlight?: SearchHighlight
   indices_boost?: Record<IndexName, double>[]
@@ -1160,7 +1160,7 @@ export interface SearchRequest extends RequestBase {
   track_total_hits?: SearchTrackHits
   indices_boost?: Record<IndexName, double>[]
   docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
-  knn?: KnnQuery | KnnQuery[]
+  knn?: KnnSearch | KnnSearch[]
   rank?: RankContainer
   min_score?: double
   post_filter?: QueryDslQueryContainer
@@ -2280,12 +2280,22 @@ export interface InlineScript extends ScriptBase {
 
 export type Ip = string
 
-export interface KnnQuery {
+export interface KnnQuery extends QueryDslQueryBase {
   field: Field
   query_vector?: QueryVector
   query_vector_builder?: QueryVectorBuilder
-  k: long
-  num_candidates: long
+  num_candidates?: long
+  boost?: float
+  filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  similarity?: float
+}
+
+export interface KnnSearch {
+  field: Field
+  query_vector?: QueryVector
+  query_vector_builder?: QueryVectorBuilder
+  k?: long
+  num_candidates?: long
   boost?: float
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   similarity?: float
@@ -6171,7 +6181,7 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   track_total_hits?: SearchTrackHits
   indices_boost?: Record<IndexName, double>[]
   docvalue_fields?: (QueryDslFieldAndFormat | Field)[]
-  knn?: KnnQuery | KnnQuery[]
+  knn?: KnnSearch | KnnSearch[]
   min_score?: double
   post_filter?: QueryDslQueryContainer
   profile?: boolean
