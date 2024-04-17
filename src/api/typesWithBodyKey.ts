@@ -2358,7 +2358,6 @@ export interface KnnQuery extends QueryDslQueryBase {
   query_vector?: QueryVector
   query_vector_builder?: QueryVectorBuilder
   num_candidates?: long
-  boost?: float
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   similarity?: float
 }
@@ -2491,14 +2490,14 @@ export interface PluginStats {
 export type PropertyName = string
 
 export interface QueryCacheStats {
-  cache_count: integer
-  cache_size: integer
-  evictions: integer
-  hit_count: integer
+  cache_count: long
+  cache_size: long
+  evictions: long
+  hit_count: long
   memory_size?: ByteSize
   memory_size_in_bytes: long
-  miss_count: integer
-  total_count: integer
+  miss_count: long
+  total_count: long
 }
 
 export type QueryVector = float[]
@@ -4765,6 +4764,7 @@ export interface AnalysisSynonymGraphTokenFilter extends AnalysisTokenFilterBase
   lenient?: boolean
   synonyms?: string[]
   synonyms_path?: string
+  synonyms_set?: string
   tokenizer?: string
   updateable?: boolean
 }
@@ -4776,6 +4776,7 @@ export interface AnalysisSynonymTokenFilter extends AnalysisTokenFilterBase {
   lenient?: boolean
   synonyms?: string[]
   synonyms_path?: string
+  synonyms_set?: string
   tokenizer?: string
   updateable?: boolean
 }
