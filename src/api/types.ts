@@ -2047,7 +2047,7 @@ export type DataStreamNames = DataStreamName | DataStreamName[]
 
 export type DateFormat = string
 
-export type DateMath = string
+export type DateMath = string | Date
 
 export type DateTime = string | EpochTime<UnitMillis>
 
