@@ -1,6 +1,6 @@
 ---
 name: 💥 Regression Report
-about: Report unexpected behavior that worked in previous versions
+description: Report unexpected behavior that worked in previous versions
 labels: ["Category: Bug"]
 body:
   - type: markdown
@@ -90,4 +90,3 @@ body:
     id: env-info
     attributes:
       label: Any other relevant environment information.
----
