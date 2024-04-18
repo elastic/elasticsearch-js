@@ -25,3 +25,12 @@ jobs:
       - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: |
+          version=$(jq -r .version package.json)
+          gh release create \
+            -n "[Changelog](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/$BRANCH_NAME/changelog-client.html)" \
+            --target "$BRANCH_NAME" \
+            -t "v$version" \
+            "v$version"
+        env:
+          BRANCH_NAME: ${{ github.event.inputs.branch }}
