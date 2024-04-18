@@ -1,6 +1,7 @@
 ---
 name: 💬 Questions / Help
 about: If you have questions, please check our Gitter or Help repo
+labels: ["Category: Question"]
 ---
 
 ## 💬 Questions and Help
