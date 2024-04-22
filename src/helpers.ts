@@ -139,6 +139,24 @@ export interface BulkHelper<T> extends Promise<BulkStats> {
   readonly stats: BulkStats
 }
 
+interface EsqlColumn {
+  name: string
+  type: string
+}
+
+type EsqlValue = any[]
+
+type EsqlRow = EsqlValue[]
+
+interface EsqlResponse {
+  columns: EsqlColumn[]
+  values: EsqlRow[]
+}
+
+export interface EsqlHelper<TDocument = unknown> {
+  toRecords: () => Promise<TDocument[]>
+}
+
 const { ResponseError, ConfigurationError } = errors
 const sleep = promisify(setTimeout)
 const pImmediate = promisify(setImmediate)
@@ -934,6 +952,35 @@ export default class Helpers {
           })
       }
     }
+  }
+
+  esql (params: T.EsqlQueryRequest): EsqlHelper {
+    // force JSON format to make return type predictable
+    params.format = 'json'
+    const client = this[kClient]
+
+    function toRecords<TDocument> (response: EsqlResponse): TDocument[] {
+      const { columns, values } = response
+      return values.map(row => {
+        const doc: Partial<TDocument> = {}
+        row.forEach((cell, index) => {
+          const { name } = columns[index]
+          // @ts-expect-error
+          doc[name] = cell
+        })
+        return doc as TDocument
+      })
+    }
+
+    const helper: EsqlHelper = {
+      async toRecords<TDocument>(): Promise<TDocument[]> {
+        // @ts-expect-error it's typed as ArrayBuffer but we know it will be JSON
+        const response: EsqlResponse = await client.esql.query(params)
+        return toRecords(response)
+      }
+    }
+
+    return helper
   }
 }
 
