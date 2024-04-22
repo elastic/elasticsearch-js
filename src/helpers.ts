@@ -153,8 +153,8 @@ interface EsqlResponse {
   values: EsqlRow[]
 }
 
-export interface EsqlHelper<TDocument = unknown> {
-  toRecords: () => Promise<TDocument[]>
+export interface EsqlHelper {
+  toRecords: <TDocument>() => Promise<TDocument[]>
 }
 
 const { ResponseError, ConfigurationError } = errors
@@ -954,6 +954,11 @@ export default class Helpers {
     }
   }
 
+  /**
+   * Creates an ES|QL helper instance, to help transform the data returned by an ES|QL query into easy-to-use formats.
+   * @param {object} params - Request parameters sent to esql.query()
+   * @returns {object} EsqlHelper instance
+   */
   esql (params: T.EsqlQueryRequest): EsqlHelper {
     // force JSON format to make return type predictable
     params.format = 'json'
