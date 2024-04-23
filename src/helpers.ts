@@ -959,9 +959,12 @@ export default class Helpers {
    * @param {object} params - Request parameters sent to esql.query()
    * @returns {object} EsqlHelper instance
    */
-  esql (params: T.EsqlQueryRequest): EsqlHelper {
-    // force JSON format to make return type predictable
-    params.format = 'json'
+  esql (params: T.EsqlQueryRequest, reqOptions: TransportRequestOptions = {}): EsqlHelper {
+    if (this[kMetaHeader] !== null) {
+      reqOptions.headers = reqOptions.headers ?? {}
+      reqOptions.headers['x-elastic-client-meta'] = `${this[kMetaHeader] as string},h=qo`
+    }
+
     const client = this[kClient]
 
     function toRecords<TDocument> (response: EsqlResponse): TDocument[] {
@@ -979,6 +982,7 @@ export default class Helpers {
 
     const helper: EsqlHelper = {
       async toRecords<TDocument>(): Promise<TDocument[]> {
+        params.format = 'json'
         // @ts-expect-error it's typed as ArrayBuffer but we know it will be JSON
         const response: EsqlResponse = await client.esql.query(params)
         return toRecords(response)

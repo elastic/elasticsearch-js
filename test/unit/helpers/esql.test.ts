@@ -21,7 +21,7 @@ import { test } from 'tap'
 import { connection } from '../../utils'
 import { Client } from '../../../'
 
-test('helpers.esql', t => {
+test('ES|QL helper', t => {
   test('toRecords', t => {
     t.test('Takes an ESQL response and pivots it to an array of records', async t => {
       type MyDoc = {
@@ -74,6 +74,30 @@ test('helpers.esql', t => {
         event_duration: 3450233,
         message: 'Connected to 10.1.0.3'
       })
+      t.end()
+    })
+
+    t.test('ESQL helper uses correct x-elastic-client-meta helper value', async t => {
+      const MockConnection = connection.buildMockConnection({
+        onRequest (params) {
+          const header = params.headers?.['x-elastic-client-meta'] ?? ''
+          t.ok(header.includes('h=qo'))
+          return {
+            body: {
+              columns: [{ name: '@timestamp', type: 'date' }],
+              values: [['2023-10-23T12:15:03.360Z']],
+            }
+          }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      await client.helpers.esql({ query: 'FROM sample_data' }).toRecords()
+      t.end()
     })
 
     t.end()
