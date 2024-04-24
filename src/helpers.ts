@@ -981,6 +981,9 @@ export default class Helpers {
     }
 
     const helper: EsqlHelper = {
+      /**
+       * Pivots ES|QL query results into an array of row objects, rather than the default format where each row is an array of values.
+       */
       async toRecords<TDocument>(): Promise<TDocument[]> {
         params.format = 'json'
         // @ts-expect-error it's typed as ArrayBuffer but we know it will be JSON
