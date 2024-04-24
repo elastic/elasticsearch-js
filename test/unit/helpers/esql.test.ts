@@ -66,7 +66,7 @@ test('ES|QL helper', t => {
       })
 
       const result = await client.helpers.esql({ query: 'FROM sample_data' }).toRecords<MyDoc>()
-      const { records } = result
+      const { records, columns } = result
       t.equal(records.length, 2)
       t.ok(records[0])
       t.same(records[0], {
@@ -75,6 +75,12 @@ test('ES|QL helper', t => {
         event_duration: 3450233,
         message: 'Connected to 10.1.0.3'
       })
+      t.same(columns, [
+        { name: '@timestamp', type: 'date' },
+        { name: 'client_ip', type: 'ip' },
+        { name: 'event_duration', type: 'long' },
+        { name: 'message', type: 'keyword' }
+      ])
       t.end()
     })
 
