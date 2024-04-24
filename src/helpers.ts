@@ -139,22 +139,27 @@ export interface BulkHelper<T> extends Promise<BulkStats> {
   readonly stats: BulkStats
 }
 
-interface EsqlColumn {
+export interface EsqlColumn {
   name: string
   type: string
 }
 
-type EsqlValue = any[]
+export type EsqlValue = any[]
 
-type EsqlRow = EsqlValue[]
+export type EsqlRow = EsqlValue[]
 
-interface EsqlResponse {
+export interface EsqlResponse {
   columns: EsqlColumn[]
   values: EsqlRow[]
 }
 
 export interface EsqlHelper {
-  toRecords: <TDocument>() => Promise<TDocument[]>
+  toRecords: <TDocument>() => Promise<EsqlToRecords<TDocument>>
+}
+
+export interface EsqlToRecords<TDocument> {
+  columns: EsqlColumn[]
+  records: TDocument[]
 }
 
 const { ResponseError, ConfigurationError } = errors
@@ -984,11 +989,13 @@ export default class Helpers {
       /**
        * Pivots ES|QL query results into an array of row objects, rather than the default format where each row is an array of values.
        */
-      async toRecords<TDocument>(): Promise<TDocument[]> {
+      async toRecords<TDocument>(): Promise<EsqlToRecords<TDocument>> {
         params.format = 'json'
         // @ts-expect-error it's typed as ArrayBuffer but we know it will be JSON
-        const response: EsqlResponse = await client.esql.query(params)
-        return toRecords(response)
+        const response: EsqlResponse = await client.esql.query(params, reqOptions)
+        const records: TDocument[] = toRecords(response)
+        const { columns } = response
+        return { records, columns }
       }
     }
 

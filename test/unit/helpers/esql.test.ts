@@ -65,10 +65,11 @@ test('ES|QL helper', t => {
         Connection: MockConnection
       })
 
-      const result: MyDoc[] = await client.helpers.esql({ query: 'FROM sample_data' }).toRecords()
-      t.equal(result.length, 2)
-      t.ok(result[0])
-      t.same(result[0], {
+      const result = await client.helpers.esql({ query: 'FROM sample_data' }).toRecords<MyDoc>()
+      const { records } = result
+      t.equal(records.length, 2)
+      t.ok(records[0])
+      t.same(records[0], {
         '@timestamp': '2023-10-23T12:15:03.360Z',
         client_ip: '172.21.2.162',
         event_duration: 3450233,
@@ -81,7 +82,7 @@ test('ES|QL helper', t => {
       const MockConnection = connection.buildMockConnection({
         onRequest (params) {
           const header = params.headers?.['x-elastic-client-meta'] ?? ''
-          t.ok(header.includes('h=qo'))
+          t.ok(header.includes('h=qo'), `Client meta header does not include ESQL helper value: ${header}`)
           return {
             body: {
               columns: [{ name: '@timestamp', type: 'date' }],
