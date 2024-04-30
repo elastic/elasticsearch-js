@@ -1,7 +1,7 @@
 [[as_stream_examples]]
 === asStream
 
-Instead of getting the parsed body back, you will get the raw Node.js stream of 
+Instead of getting the parsed body back, you will get the raw Node.js stream of
 data.
 
 [source,js]
@@ -57,28 +57,18 @@ async function run () {
     asStream: true
   })
 
-  // stream async iteration, available in Node.js ≥ 10
   let payload = ''
-  body.setEncoding('utf8')
+  result.setEncoding('utf8')
   for await (const chunk of result) {
     payload += chunk
   }
   console.log(JSON.parse(payload))
-
-  // classic stream callback style
-  let payload = ''
-  result.setEncoding('utf8')
-  result.on('data', chunk => { payload += chunk })
-  result.on('error', console.log)
-  result.on('end', () => {
-    console.log(JSON.parse(payload))
-  })
 }
 
 run().catch(console.log)
 ----
 
-TIP: This can be useful if you need to pipe the {es}'s response to a proxy, or 
+TIP: This can be useful if you need to pipe the {es}'s response to a proxy, or
 send it directly to another source.
 
 [source,js]
