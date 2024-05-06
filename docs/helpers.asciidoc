@@ -613,3 +613,97 @@ for await (const doc of scrollSearch) {
   console.log(doc)
 }
 ----
+
+[discrete]
+[[esql-helper]]
+=== ES|QL helper
+
+ES|QL queries can return their results in {ref}/esql-rest.html#esql-rest-format[several formats].
+The default JSON format returned by ES|QL queries contains arrays of values
+for each row, with column names and types returned separately:
+
+[discrete]
+==== Usage
+
+[discrete]
+===== `toRecords`
+
+~Added~ ~in~ ~`v8.14.0`~
+
+The default JSON format returned by ES|QL queries contains arrays of values
+for each row, with column names and types returned separately:
+
+[source,json]
+----
+{
+  "columns": [
+    { "name": "@timestamp", "type": "date" },
+    { "name": "client_ip", "type": "ip" },
+    { "name": "event_duration", "type": "long" },
+    { "name": "message", "type": "keyword" }
+  ],
+  "values": [
+    [
+      "2023-10-23T12:15:03.360Z",
+      "172.21.2.162",
+      3450233,
+      "Connected to 10.1.0.3"
+    ],
+    [
+      "2023-10-23T12:27:28.948Z",
+      "172.21.2.113",
+      2764889,
+      "Connected to 10.1.0.2"
+    ]
+  ]
+}
+----
+
+In many cases, it's preferable to operate on an array of objects, one object per row,
+rather than an array of arrays. The ES|QL `toRecords` helper converts row data into objects.
+
+[source,js]
+----
+await client.helpers
+  .esql({ query: 'FROM sample_data | LIMIT 2' })
+  .toRecords()
+// =>
+// {
+//   "columns": [
+//     { "name": "@timestamp", "type": "date" },
+//     { "name": "client_ip", "type": "ip" },
+//     { "name": "event_duration", "type": "long" },
+//     { "name": "message", "type": "keyword" }
+//   ],
+//   "records": [
+//     {
+//       "@timestamp": "2023-10-23T12:15:03.360Z",
+//       "client_ip": "172.21.2.162",
+//       "event_duration": 3450233,
+//       "message": "Connected to 10.1.0.3"
+//     },
+//     {
+//       "@timestamp": "2023-10-23T12:27:28.948Z",
+//       "client_ip": "172.21.2.113",
+//       "event_duration": 2764889,
+//       "message": "Connected to 10.1.0.2"
+//     },
+//   ]
+// }
+----
+
+In TypeScript, you can declare the type that `toRecords` returns:
+
+[source,ts]
+----
+type EventLog = {
+  '@timestamp': string,
+  client_ip: string,
+  event_duration: number,
+  message: string,
+}
+
+const result = await client.helpers
+  .esql({ query: 'FROM sample_data | LIMIT 2' })
+  .toRecords<EventLog>()
+----

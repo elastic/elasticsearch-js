@@ -139,6 +139,29 @@ export interface BulkHelper<T> extends Promise<BulkStats> {
   readonly stats: BulkStats
 }
 
+export interface EsqlColumn {
+  name: string
+  type: string
+}
+
+export type EsqlValue = any[]
+
+export type EsqlRow = EsqlValue[]
+
+export interface EsqlResponse {
+  columns: EsqlColumn[]
+  values: EsqlRow[]
+}
+
+export interface EsqlHelper {
+  toRecords: <TDocument>() => Promise<EsqlToRecords<TDocument>>
+}
+
+export interface EsqlToRecords<TDocument> {
+  columns: EsqlColumn[]
+  records: TDocument[]
+}
+
 const { ResponseError, ConfigurationError } = errors
 const sleep = promisify(setTimeout)
 const pImmediate = promisify(setImmediate)
@@ -934,6 +957,49 @@ export default class Helpers {
           })
       }
     }
+  }
+
+  /**
+   * Creates an ES|QL helper instance, to help transform the data returned by an ES|QL query into easy-to-use formats.
+   * @param {object} params - Request parameters sent to esql.query()
+   * @returns {object} EsqlHelper instance
+   */
+  esql (params: T.EsqlQueryRequest, reqOptions: TransportRequestOptions = {}): EsqlHelper {
+    if (this[kMetaHeader] !== null) {
+      reqOptions.headers = reqOptions.headers ?? {}
+      reqOptions.headers['x-elastic-client-meta'] = `${this[kMetaHeader] as string},h=qo`
+    }
+
+    const client = this[kClient]
+
+    function toRecords<TDocument> (response: EsqlResponse): TDocument[] {
+      const { columns, values } = response
+      return values.map(row => {
+        const doc: Partial<TDocument> = {}
+        row.forEach((cell, index) => {
+          const { name } = columns[index]
+          // @ts-expect-error
+          doc[name] = cell
+        })
+        return doc as TDocument
+      })
+    }
+
+    const helper: EsqlHelper = {
+      /**
+       * Pivots ES|QL query results into an array of row objects, rather than the default format where each row is an array of values.
+       */
+      async toRecords<TDocument>(): Promise<EsqlToRecords<TDocument>> {
+        params.format = 'json'
+        // @ts-expect-error it's typed as ArrayBuffer but we know it will be JSON
+        const response: EsqlResponse = await client.esql.query(params, reqOptions)
+        const records: TDocument[] = toRecords(response)
+        const { columns } = response
+        return { records, columns }
+      }
+    }
+
+    return helper
   }
 }
 
