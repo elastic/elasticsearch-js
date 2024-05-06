@@ -8,6 +8,12 @@
 ==== Features
 
 [discrete]
+===== ES|QL object API helper
+
+A helper method has been added that parses the response of an ES|QL query and converts it into an array of objects.
+A TypeScript type parameter can also be provided to improve developer experience when working with the result. https://github.com/elastic/elasticsearch-js/pull/2238[#2238]
+
+[discrete]
 ===== `onSuccess` callback added to bulk helper
 
 The bulk helper now supports an `onSuccess` callback that will be called for each successful operation. https://github.com/elastic/elasticsearch-js/pull/2199[#2199]
@@ -461,7 +467,7 @@ client.search({ params }, { options }, (err, result) => {
 client.search({ params }, { options })
   .then(console.log)
   .catch(console.log)
-  
+
 // async-style (sugar syntax on top of promises)
 const response = await client.search({ params }, { options })
 console.log(response)
@@ -621,7 +627,7 @@ If you weren't extending the internals of the client, this won't be a breaking c
 
 *Breaking: Yes* | *Migration effort: Medium*
 
-Currently, every path or query parameter could be expressed in both `snake_case` and `camelCase`. Internally the client will convert everything to `snake_case`. 
+Currently, every path or query parameter could be expressed in both `snake_case` and `camelCase`. Internally the client will convert everything to `snake_case`.
 This was done in an effort to reduce the friction of migrating from the legacy to the new client, but now it no longer makes sense.
 If you are already using `snake_case` keys, this won't be a breaking change for you.
 
