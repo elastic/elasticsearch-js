@@ -15,6 +15,7 @@ steps:
         nodejs:
           - "18"
           - "20"
+          - "22"
     command: ./.buildkite/run-tests.sh
     artifact_paths: "./junit-output/junit-*.xml"
   - wait: ~
@@ -26,6 +27,6 @@ steps:
     plugins:
       - junit-annotate#v2.4.1:
           artifacts: "junit-output/junit-*.xml"
-          job-uuid-file-pattern: 'junit-(.*).xml'
+          job-uuid-file-pattern: "junit-(.*).xml"
           fail-build-on-error: true
           failure-format: file
