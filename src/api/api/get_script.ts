@@ -39,7 +39,7 @@ interface That { transport: Transport }
 
 /**
   * Returns a script.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.14/modules-scripting.html | Elasticsearch API documentation}
   */
 export default async function GetScriptApi (this: That, params: T.GetScriptRequest | TB.GetScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptResponse>
 export default async function GetScriptApi (this: That, params: T.GetScriptRequest | TB.GetScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptResponse, unknown>>
