@@ -1271,7 +1271,7 @@ export default class Indices {
   async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest | TB.IndicesPutIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesPutIndexTemplateResponse>
   async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest | TB.IndicesPutIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta']
+    const acceptedBody: string[] = ['index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta', 'allow_auto_create', 'ignore_missing_component_templates', 'deprecated']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1720,23 +1720,11 @@ export default class Indices {
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest | TB.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateIndexTemplateResponse>
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest | TB.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['allow_auto_create', 'index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body = undefined
 
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
         // @ts-expect-error
@@ -1753,20 +1741,28 @@ export default class Indices {
     * Simulate resolving the given template name or body
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-simulate-template.html | Elasticsearch API documentation}
     */
-  async simulateTemplate (this: That, params: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSimulateTemplateResponse>
-  async simulateTemplate (this: That, params: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSimulateTemplateResponse, unknown>>
-  async simulateTemplate (this: That, params: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateTemplateResponse>
-  async simulateTemplate (this: That, params: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptions): Promise<any> {
+  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSimulateTemplateResponse>
+  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndicesSimulateTemplateResponse, unknown>>
+  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptions): Promise<T.IndicesSimulateTemplateResponse>
+  async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['template']
+    const acceptedBody: string[] = ['allow_auto_create', 'index_patterns', 'composed_of', 'template', 'data_stream', 'priority', 'version', '_meta', 'ignore_missing_component_templates', 'deprecated']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
-    let body: any = params.body ?? undefined
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
+    params = params ?? {}
     for (const key in params) {
       if (acceptedBody.includes(key)) {
+        body = body ?? {}
         // @ts-expect-error
-        body = params[key]
+        body[key] = params[key]
       } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {

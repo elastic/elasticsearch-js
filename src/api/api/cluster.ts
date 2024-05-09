@@ -345,7 +345,7 @@ export default class Cluster {
   async putComponentTemplate (this: That, params: T.ClusterPutComponentTemplateRequest | TB.ClusterPutComponentTemplateRequest, options?: TransportRequestOptions): Promise<T.ClusterPutComponentTemplateResponse>
   async putComponentTemplate (this: That, params: T.ClusterPutComponentTemplateRequest | TB.ClusterPutComponentTemplateRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['allow_auto_create', 'template', 'version', '_meta']
+    const acceptedBody: string[] = ['template', 'version', '_meta', 'deprecated']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

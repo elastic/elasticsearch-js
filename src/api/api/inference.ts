@@ -44,13 +44,13 @@ export default class Inference {
   }
 
   /**
-    * Delete model in the Inference API
+    * Delete an inference endpoint
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-inference-api.html | Elasticsearch API documentation}
     */
-  async deleteModel (this: That, params: T.InferenceDeleteModelRequest | TB.InferenceDeleteModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteModelResponse>
-  async deleteModel (this: That, params: T.InferenceDeleteModelRequest | TB.InferenceDeleteModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDeleteModelResponse, unknown>>
-  async deleteModel (this: That, params: T.InferenceDeleteModelRequest | TB.InferenceDeleteModelRequest, options?: TransportRequestOptions): Promise<T.InferenceDeleteModelResponse>
-  async deleteModel (this: That, params: T.InferenceDeleteModelRequest | TB.InferenceDeleteModelRequest, options?: TransportRequestOptions): Promise<any> {
+  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
+  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDeleteResponse, unknown>>
+  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<T.InferenceDeleteResponse>
+  async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['task_type', 'inference_id']
     const querystring: Record<string, any> = {}
     const body = undefined
@@ -77,17 +77,18 @@ export default class Inference {
   }
 
   /**
-    * Get a model in the Inference API
+    * Get an inference endpoint
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-inference-api.html | Elasticsearch API documentation}
     */
-  async getModel (this: That, params: T.InferenceGetModelRequest | TB.InferenceGetModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetModelResponse>
-  async getModel (this: That, params: T.InferenceGetModelRequest | TB.InferenceGetModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceGetModelResponse, unknown>>
-  async getModel (this: That, params: T.InferenceGetModelRequest | TB.InferenceGetModelRequest, options?: TransportRequestOptions): Promise<T.InferenceGetModelResponse>
-  async getModel (this: That, params: T.InferenceGetModelRequest | TB.InferenceGetModelRequest, options?: TransportRequestOptions): Promise<any> {
+  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
+  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceGetResponse, unknown>>
+  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptions): Promise<T.InferenceGetResponse>
+  async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['task_type', 'inference_id']
     const querystring: Record<string, any> = {}
     const body = undefined
 
+    params = params ?? {}
     for (const key in params) {
       if (acceptedPath.includes(key)) {
         continue
@@ -102,15 +103,18 @@ export default class Inference {
     if (params.task_type != null && params.inference_id != null) {
       method = 'GET'
       path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.inference_id.toString())}`
-    } else {
+    } else if (params.inference_id != null) {
       method = 'GET'
       path = `/_inference/${encodeURIComponent(params.inference_id.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_inference'
     }
     return await this.transport.request({ path, method, querystring, body }, options)
   }
 
   /**
-    * Perform inference on a model
+    * Perform inference
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/post-inference-api.html | Elasticsearch API documentation}
     */
   async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceInferenceResponse>
@@ -118,7 +122,7 @@ export default class Inference {
   async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<T.InferenceInferenceResponse>
   async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['task_type', 'inference_id']
-    const acceptedBody: string[] = ['input', 'task_settings']
+    const acceptedBody: string[] = ['query', 'input', 'task_settings']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -155,15 +159,15 @@ export default class Inference {
   }
 
   /**
-    * Configure a model for use in the Inference API
+    * Configure an inference endpoint for use in the Inference API
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-inference-api.html | Elasticsearch API documentation}
     */
-  async putModel (this: That, params: T.InferencePutModelRequest | TB.InferencePutModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutModelResponse>
-  async putModel (this: That, params: T.InferencePutModelRequest | TB.InferencePutModelRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutModelResponse, unknown>>
-  async putModel (this: That, params: T.InferencePutModelRequest | TB.InferencePutModelRequest, options?: TransportRequestOptions): Promise<T.InferencePutModelResponse>
-  async putModel (this: That, params: T.InferencePutModelRequest | TB.InferencePutModelRequest, options?: TransportRequestOptions): Promise<any> {
+  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
+  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutResponse, unknown>>
+  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptions): Promise<T.InferencePutResponse>
+  async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['task_type', 'inference_id']
-    const acceptedBody: string[] = ['model_config']
+    const acceptedBody: string[] = ['inference_config']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     let body: any = params.body ?? undefined
