@@ -63,6 +63,12 @@ export default class Esql {
       body = userBody != null ? { ...userBody } : undefined
     }
 
+    // a version number is required for all ES|QL queries.
+    // inject a default value if none is provided.
+    if (typeof body === 'object' && body.version == null) {
+      body.version = '2024.04.01'
+    }
+
     for (const key in params) {
       if (acceptedBody.includes(key)) {
         body = body ?? {}
