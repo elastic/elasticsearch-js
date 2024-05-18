@@ -690,8 +690,8 @@ export interface KnnSearchResponse<TDocument = unknown> {
 export interface KnnSearchQuery {
   field: Field
   query_vector: QueryVector
-  k: long
-  num_candidates: long
+  k: integer
+  num_candidates: integer
 }
 
 export interface MgetMultiGetError {
@@ -1221,6 +1221,7 @@ export interface SearchRequest extends RequestBase {
     profile?: boolean
     query?: QueryDslQueryContainer
     rescore?: SearchRescore | SearchRescore[]
+    retriever?: RetrieverContainer
     script_fields?: Record<string, ScriptField>
     search_after?: SortResults
     size?: integer
@@ -2367,8 +2368,17 @@ export interface KnnQuery extends QueryDslQueryBase {
   field: Field
   query_vector?: QueryVector
   query_vector_builder?: QueryVectorBuilder
-  num_candidates?: long
+  num_candidates?: integer
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  similarity?: float
+}
+
+export interface KnnRetriever extends RetrieverBase {
+  field: string
+  query_vector?: QueryVector
+  query_vector_builder?: QueryVectorBuilder
+  k: integer
+  num_candidates: integer
   similarity?: float
 }
 
@@ -2376,8 +2386,8 @@ export interface KnnSearch {
   field: Field
   query_vector?: QueryVector
   query_vector_builder?: QueryVectorBuilder
-  k?: long
-  num_candidates?: long
+  k?: integer
+  num_candidates?: integer
   boost?: float
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   similarity?: float
@@ -2516,6 +2526,12 @@ export interface QueryVectorBuilder {
   text_embedding?: TextEmbedding
 }
 
+export interface RRFRetriever extends RetrieverBase {
+  retrievers: RetrieverContainer[]
+  rank_constant?: integer
+  rank_window_size?: integer
+}
+
 export interface RankBase {
 }
 
@@ -2563,6 +2579,16 @@ export type Result = 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
 export interface Retries {
   bulk: long
   search: long
+}
+
+export interface RetrieverBase {
+  filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+}
+
+export interface RetrieverContainer {
+  standard?: StandardRetriever
+  knn?: KnnRetriever
+  rrf?: RRFRetriever
 }
 
 export type Routing = string
@@ -2719,6 +2745,15 @@ export type SortOptions = SortOptionsKeys
 export type SortOrder = 'asc' | 'desc'
 
 export type SortResults = FieldValue[]
+
+export interface StandardRetriever extends RetrieverBase {
+  query?: QueryDslQueryContainer
+  search_after?: SortResults
+  terminate_after?: integer
+  sort?: Sort
+  min_score?: float
+  collapse?: SearchFieldCollapse
+}
 
 export interface StoreStats {
   size?: ByteSize
