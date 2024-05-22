@@ -3,6 +3,8 @@
 include::{asciidoc-dir}/../../shared/versions/stack/{source_branch}.asciidoc[]
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 
+:es-docs: https://www.elastic.co/guide/en/elasticsearch/reference/{branch} 
+
 include::introduction.asciidoc[]
 include::getting-started.asciidoc[]
 include::changelog.asciidoc[]
@@ -17,6 +19,7 @@ include::integrations.asciidoc[]
 include::observability.asciidoc[]
 include::transport.asciidoc[]
 include::typescript.asciidoc[]
+include::esql.asciidoc[]
 include::reference.asciidoc[]
 include::examples/index.asciidoc[]
 include::helpers.asciidoc[]

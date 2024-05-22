@@ -1,8 +1,9 @@
 [[integrations]]
 == Integrations
 
-The Client offers the following integration options for you:
+The client offers the following integrations:
 
 * <<observability>>
 * <<transport>>
 * <<typescript>>
+* <<esql>>
