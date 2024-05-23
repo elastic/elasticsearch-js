@@ -52,7 +52,7 @@ export default class Esql {
   async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptions): Promise<T.EsqlQueryResponse>
   async query (this: That, params: T.EsqlQueryRequest | TB.EsqlQueryRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
-    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'query', 'version']
+    const acceptedBody: string[] = ['columnar', 'filter', 'locale', 'params', 'query']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -61,12 +61,6 @@ export default class Esql {
       body = userBody
     } else {
       body = userBody != null ? { ...userBody } : undefined
-    }
-
-    // a version number is required for all ES|QL queries.
-    // inject a default value if none is provided.
-    if (typeof body === 'object' && body.version == null) {
-      body.version = '2024.04.01'
     }
 
     for (const key in params) {
