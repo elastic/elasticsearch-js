@@ -9839,12 +9839,6 @@ export type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEven
 
 export type EqlSearchResultPosition = 'tail' | 'head'
 
-export type EsqlBaseServerlessEsqlVersion = '2024.04.01'
-
-export type EsqlBaseStatefulEsqlVersion = '2024.04.01'
-
-export type EsqlEsqlVersion = '2024.04.01'
-
 export interface EsqlQueryRequest extends RequestBase {
   format?: string
   delimiter?: string
@@ -9855,7 +9849,6 @@ export interface EsqlQueryRequest extends RequestBase {
     locale?: string
     params?: ScalarValue[]
     query: string
-    version?: EsqlEsqlVersion
   }
 }
 
@@ -10720,7 +10713,7 @@ export interface IndicesStorage {
   allow_mmap?: boolean
 }
 
-export type IndicesStorageType = 'fs' | '' | 'niofs' | 'mmapfs' | 'hybridfs' | string
+export type IndicesStorageType = 'fs' | 'niofs' | 'mmapfs' | 'hybridfs' | string
 
 export interface IndicesTemplateMapping {
   aliases: Record<IndexName, IndicesAlias>

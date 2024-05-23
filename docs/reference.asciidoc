@@ -2826,7 +2826,6 @@ client.esql.query({ query })
 ** *`filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule_query, script, script_score, shape, simple_query_string, span_containing, field_masking_span, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Specify a Query DSL query in the filter parameter to filter the set of documents that an ES|QL query runs on.
 ** *`locale` (Optional, string)*
 ** *`params` (Optional, number | number | string | boolean | null[])*: To avoid any attempts of hacking or code injection, extract the values in a separate list of parameters. Use question mark placeholders (?) in the query string for each of the parameters.
-** *`version` (Optional, Enum("2024.04.01"))*: The version of the ES|QL language in which the "query" field was written.
 ** *`format` (Optional, string)*: A short version of the Accept header, e.g. json, yaml.
 ** *`delimiter` (Optional, string)*: The character to use between values within a CSV row. Only valid for the CSV format.
 
