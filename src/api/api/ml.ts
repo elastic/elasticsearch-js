@@ -2417,19 +2417,31 @@ export default class Ml {
     * Updates certain properties of trained model deployment.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-trained-model-deployment.html | Elasticsearch API documentation}
     */
-  async updateTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async updateTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async updateTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async updateTrainedModelDeployment (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateTrainedModelDeploymentResponse>
+  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MlUpdateTrainedModelDeploymentResponse, unknown>>
+  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<T.MlUpdateTrainedModelDeploymentResponse>
+  async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['model_id']
+    const acceptedBody: string[] = ['number_of_allocations']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
