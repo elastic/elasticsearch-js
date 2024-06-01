@@ -810,7 +810,7 @@ export interface MsearchTemplateTemplateConfig {
 }
 
 export interface MtermvectorsOperation {
-  _id: Id
+  _id?: Id
   _index?: IndexName
   doc?: any
   fields?: Fields
@@ -1412,7 +1412,7 @@ export type SearchHighlighterType = 'plain' | 'fvh' | 'unified' | string
 
 export interface SearchHit<TDocument = unknown> {
   _index: IndexName
-  _id: Id
+  _id?: Id
   _score?: double | null
   _explanation?: ExplainExplanation
   fields?: Record<string, any>
@@ -4963,7 +4963,7 @@ export interface MappingFieldNamesField {
   enabled: boolean
 }
 
-export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'sparse_vector' | 'match_only_text'
+export type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'version' | 'murmur3' | 'token_count' | 'percolator' | 'integer' | 'long' | 'short' | 'byte' | 'float' | 'half_float' | 'scaled_float' | 'double' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'sparse_vector' | 'match_only_text'
 
 export interface MappingFlattenedProperty extends MappingPropertyBase {
   boost?: double
@@ -5061,6 +5061,8 @@ export interface MappingKeywordProperty extends MappingDocValuesPropertyBase {
   eager_global_ordinals?: boolean
   index?: boolean
   index_options?: MappingIndexOptions
+  script?: Script
+  on_script_error?: MappingOnScriptError
   normalizer?: string
   norms?: boolean
   null_value?: string
@@ -14465,6 +14467,15 @@ export interface MlUpdateModelSnapshotResponse {
   model: MlModelSnapshot
 }
 
+export interface MlUpdateTrainedModelDeploymentRequest extends RequestBase {
+  model_id: Id
+  number_of_allocations?: integer
+}
+
+export interface MlUpdateTrainedModelDeploymentResponse {
+  assignment: MlTrainedModelAssignment
+}
+
 export interface MlUpgradeJobSnapshotRequest extends RequestBase {
   job_id: Id
   snapshot_id: Id
@@ -15145,7 +15156,7 @@ export interface NodesInfoNodeInfoRepositoriesUrl {
 
 export interface NodesInfoNodeInfoScript {
   allowed_types: string
-  disable_max_compilations_rate: string
+  disable_max_compilations_rate?: string
 }
 
 export interface NodesInfoNodeInfoSearch {
@@ -15163,7 +15174,7 @@ export interface NodesInfoNodeInfoSettings {
   repositories?: NodesInfoNodeInfoRepositories
   discovery?: NodesInfoNodeInfoDiscover
   action?: NodesInfoNodeInfoAction
-  client: NodesInfoNodeInfoClient
+  client?: NodesInfoNodeInfoClient
   http: NodesInfoNodeInfoSettingsHttp
   bootstrap?: NodesInfoNodeInfoBootstrap
   transport: NodesInfoNodeInfoSettingsTransport
@@ -15235,7 +15246,7 @@ export interface NodesInfoNodeInfoSettingsIngest {
 }
 
 export interface NodesInfoNodeInfoSettingsNetwork {
-  host: Host
+  host?: Host
 }
 
 export interface NodesInfoNodeInfoSettingsNode {
