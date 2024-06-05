@@ -55,7 +55,7 @@ async function run () {
     source: {
       index: 'game-of-thrones',
       query: {
-        match: { character: 'stark' }
+        match: { house: 'stark' }
       }
     },
     dest: {
