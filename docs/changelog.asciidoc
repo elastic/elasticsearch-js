@@ -8,6 +8,12 @@
 ==== Features
 
 [discrete]
+===== Support for Elasticsearch `v8.14.0`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.14/release-notes-8.14.0.html[here].
+
+[discrete]
 ===== ES|QL object API helper
 
 A helper method has been added that parses the response of an ES|QL query and converts it into an array of objects.
@@ -17,6 +23,12 @@ A TypeScript type parameter can also be provided to improve developer experience
 ===== `onSuccess` callback added to bulk helper
 
 The bulk helper now supports an `onSuccess` callback that will be called for each successful operation. https://github.com/elastic/elasticsearch-js/pull/2199[#2199]
+
+[discrete]
+===== Request retries are more polite
+
+https://github.com/elastic/elastic-transport-js/releases/tag/v8.6.0[`@elastic/transport` v8.6.0] was released, which refactored when and how failed requests are retried. Timed-out requests are no longer retried by default, and retries now use exponential backoff rather than running immediately.
+
 
 [discrete]
 === 8.13.1
