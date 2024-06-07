@@ -5074,7 +5074,6 @@ export interface MappingIcuCollationProperty extends MappingDocValuesPropertyBas
   index_options?: MappingIndexOptions
   index?: boolean
   null_value?: string
-  store?: boolean
   rules?: string
   language?: string
   country?: string
@@ -11909,6 +11908,10 @@ export interface InferenceCompletionResult {
   result: string
 }
 
+export interface InferenceDeleteInferenceEndpointResult extends AcknowledgedResponseBase {
+  pipelines: string[]
+}
+
 export type InferenceDenseByteVector = byte[]
 
 export type InferenceDenseVector = float[]
@@ -11961,9 +11964,11 @@ export interface InferenceTextEmbeddingResult {
 export interface InferenceDeleteRequest extends RequestBase {
   task_type?: InferenceTaskType
   inference_id: Id
+  dry_run?: boolean
+  force?: boolean
 }
 
-export type InferenceDeleteResponse = AcknowledgedResponseBase
+export type InferenceDeleteResponse = InferenceDeleteInferenceEndpointResult
 
 export interface InferenceGetRequest extends RequestBase {
   task_type?: InferenceTaskType
@@ -13305,7 +13310,7 @@ export interface MlInferenceConfigUpdateContainer {
 export interface MlInferenceResponseResult {
   entities?: MlTrainedModelEntities[]
   is_truncated?: boolean
-  predicted_value?: MlPredictedValue[]
+  predicted_value?: MlPredictedValue | MlPredictedValue[]
   predicted_value_sequence?: string
   prediction_probability?: double
   prediction_score?: double
