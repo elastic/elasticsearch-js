@@ -36,7 +36,7 @@
 const { join } = require('path')
 const { writeFileSync } = require('fs')
 const rimraf = require('rimraf')
-const standard = require('standard').default
+const tsStandard = require('ts-standard')
 const dedent = require('dedent')
 
 const docsExamplesDir = join('docs', 'doc_examples')
@@ -140,8 +140,16 @@ console.log(response${getResponsePostfix(i)})
   }
 
   code += '// END\n}'
-  const results = await standard.lintText(code, { fix: true })
-  code = results[0].output
+  const results = await new Promise((resolve, reject) => {
+    tsStandard.lintText(code, {fix: true}, (err, result) => {
+          if (err) {
+              reject(err)
+          } else {
+              resolve(result)
+          }
+      })
+  })
+  code = results.results[0].output
   code = code.slice(code.indexOf('// START\n') + 9, code.indexOf('\n\n// END'))
 
   asciidoc += `[source, js]
