@@ -29,7 +29,7 @@
  * You can run it with the following command:
  *
  * ```bash
- *   $ npx tsx scripts/generate-docs-examples.js
+ *   $ node scripts/generate-docs-examples.js
  * ```
  */
 
