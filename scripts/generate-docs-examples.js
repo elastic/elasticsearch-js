@@ -140,16 +140,16 @@ console.log(response${getResponsePostfix(i)})
   }
 
   code += '// END\n}'
-  const results = await new Promise((resolve, reject) => {
-    tsStandard.lintText(code, {fix: true}, (err, result) => {
-          if (err) {
-              reject(err)
-          } else {
-              resolve(result)
-          }
-      })
+  const { results } = await new Promise((resolve, reject) => {
+    tsStandard.lintText(code, { fix: true }, (err, result) => {
+      if (err) {
+          reject(err)
+      } else {
+          resolve(result)
+      }
+    })
   })
-  code = results.results[0].output
+  code = results[0].output
   code = code.slice(code.indexOf('// START\n') + 9, code.indexOf('\n\n// END'))
 
   asciidoc += `[source, js]
