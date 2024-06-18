@@ -1,24 +1,52 @@
 [[observability]]
 === Observability
 
-The client does not provide a default logger, but instead it offers an event 
-emitter interface to hook into internal events, such as `request` and 
-`response`.
+To observe and measure Elasticsearch client usage, several client features are provided.
 
-Correlating those events can be hard, especially if your applications have a 
-large codebase with many events happening at the same time.
+First, as of 8.15.0, the client provides native support for OpenTelemetry, which allows you to send client usage data to any endpoint that supports OpenTelemetry without having to make any changes to your JavaScript codebase.
 
-To help you with this, the client offers you a correlation id system and other 
-features. Let's see them in action.
+Also, rather than providing a default logger, the clientoffers an event
+emitter interface to hook into internal events, such as `request` and
+`response`, allowing you to log the events you care about, or otherwise react
+to client usage however you might need.
 
+Correlating events can be hard, especially if your applications have a large codebase with many events happening at the same time. To help you with this, the client provides a correlation ID system, and other
+features.
+
+All of these observability features are documented below.
+
+[discrete]
+==== OpenTelemetry
+
+The client supports OpenTelemetry's https://opentelemetry.io/docs/zero-code/js/[zero-code
+instrumentation] to enable tracking each client request as an
+https://opentelemetry.io/docs/concepts/signals/traces/#spans[OpenTelemetry span]. These spans
+follow all of the https://opentelemetry.io/docs/specs/semconv/database/elasticsearch/[semantic
+OpenTelemetry conventions for Elasticsearch] except for `db.query.text`.
+
+To start sending Elasticsearch trace data to your OpenTelemetry endpoint, follow
+https://opentelemetry.io/docs/zero-code/js/[OpenTelemetry's zero-code instrumentation guide],
+or the following steps:
+
+1. Install `@opentelemetry/api` and `@opentelemetry/auto-instrumentations-node` as Node.js dependencies
+2. Export the following environment variables with the appropriate values:
+   - `OTEL_EXPORTER_OTLP_ENDPOINT`
+   - `OTEL_EXPORTER_OTLP_HEADERS`
+   - `OTEL_RESOURCE_ATTRIBUTES`
+   - `OTEL_SERVICE_NAME`
+3. `require` the Node.js auto-instrumentation library at startup:
+[source,bash]
+----
+node --require '@opentelemetry/auto-instrumentations-node/register' index.js
+----
 
 [discrete]
 ==== Events
 
-The client is an event emitter, this means that you can listen for its event and 
-add additional logic to your code, without need to change the client internals 
-or your normal usage. You can find the events names by access the `events` key 
-of the client.
+The client is an event emitter. This means that you can listen for its events to
+add additional logic to your code, without needing to change the client's internals
+or how you use the client. You can find the events' names by accessing the `events` key
+of the client:
 
 [source,js]
 ----
@@ -26,9 +54,8 @@ const { events } = require('@elastic/elasticsearch')
 console.log(events)
 ----
 
-
-The event emitter functionality can be useful if you want to log every request, 
-response and error that is happening during the use of the client.
+The event emitter functionality can be useful if you want to log every request,
+response or error that is created by the client:
 
 [source,js]
 ----
@@ -48,7 +75,6 @@ client.diagnostic.on('response', (err, result) => {
 })
 ----
 
-
 The client emits the following events:
 [cols=2*]
 |===
@@ -59,7 +85,7 @@ a|Emitted before starting serialization and compression. If you want to measure 
 client.diagnostic.on('serialization', (err, result) => {
   console.log(err, result)
 })
-----
+----e
 
 |`request`
 a|Emitted before sending the actual request to {es} _(emitted multiple times in case of retries)_.
@@ -108,7 +134,7 @@ client.diagnostic.on('resurrect', (err, result) => {
 
 |===
 
-The values of `result` in `serialization`, `request`, `deserialization`, 
+The values of `result` in `serialization`, `request`, `deserialization`,
 `response` and `sniff` are:
 
 [source,ts]
@@ -135,7 +161,6 @@ meta: {
 };
 ----
 
-
 While the `result` value in `resurrect` is:
 
 [source,ts]
@@ -152,10 +177,10 @@ request: {
 [discrete]
 ===== Events order
 
-The event order is described in the following graph, in some edge cases, the 
+The event order is described in the following graph, in some edge cases, the
 order is not guaranteed.
-You can find in 
-https://github.com/elastic/elasticsearch-js/blob/main/test/acceptance/events-order.test.js[`test/acceptance/events-order.test.js`] 
+You can find in
+https://github.com/elastic/elasticsearch-js/blob/main/test/acceptance/events-order.test.js[`test/acceptance/events-order.test.js`]
 how the order changes based on the situation.
 
 [source]
@@ -175,12 +200,11 @@ serialization
               └─▶ response
 ----
 
-
 [discrete]
-==== Correlation id
+==== Correlation ID
 
-Correlating events can be hard, especially if there are many events at the same 
-time. The client offers you an automatic (and configurable) system to help you 
+Correlating events can be hard, especially if there are many events at the same
+time. The client offers you an automatic (and configurable) system to help you
 handle this problem.
 
 [source,js]
@@ -211,8 +235,7 @@ client.search({
 }).then(console.log, console.log)
 ----
 
-
-By default the id is an incremental integer, but you can configure it with the 
+By default the ID is an incremental integer, but you can configure it with the
 `generateRequestId` option:
 
 [source,js]
@@ -231,7 +254,7 @@ const client = new Client({
 ----
 
 
-You can also specify a custom id per request:
+You can also specify a custom ID per request:
 
 [source,js]
 ----
@@ -247,8 +270,8 @@ client.search({
 [discrete]
 ==== Context object
 
-Sometimes, you might need to make some custom data available in your events, you 
-can do that via the `context` option of a request: 
+Sometimes, you might need to make some custom data available in your events, you
+can do that via the `context` option of a request:
 
 [source,js]
 ----
@@ -283,7 +306,7 @@ client.search({
 ----
 
 The context object can also be configured as a global option in the client
-configuration. If you provide both, the two context objects will be shallow 
+configuration. If you provide both, the two context objects will be shallow
 merged, and the API level object will take precedence.
 
 [source,js]
@@ -323,9 +346,9 @@ client.search({
 [discrete]
 ==== Client name
 
-If you are using multiple instances of the client or if you are using multiple 
-child clients _(which is the recommended way to have multiple instances of the 
-client)_, you might need to recognize which client you are using. The `name` 
+If you are using multiple instances of the client or if you are using multiple
+child clients _(which is the recommended way to have multiple instances of the
+client)_, you might need to recognize which client you are using. The `name`
 options help you in this regard.
 
 [source,js]
@@ -374,15 +397,15 @@ child.search({
 [discrete]
 ==== X-Opaque-Id support
 
-To improve observability, the client offers an easy way to configure the 
-`X-Opaque-Id` header. If you set the `X-Opaque-Id` in a specific request, this 
-allows you to discover this identifier in the 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/logging.html#deprecation-logging[deprecation logs], 
-helps you with https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-slowlog.html#_identifying_search_slow_log_origin[identifying search slow log origin] 
+To improve observability, the client offers an easy way to configure the
+`X-Opaque-Id` header. If you set the `X-Opaque-Id` in a specific request, this
+allows you to discover this identifier in the
+https://www.elastic.co/guide/en/elasticsearch/reference/current/logging.html#deprecation-logging[deprecation logs],
+helps you with https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-slowlog.html#_identifying_search_slow_log_origin[identifying search slow log origin]
 as well as https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html#_identifying_running_tasks[identifying running tasks].
 
-The `X-Opaque-Id` should be configured in each request, for doing that you can 
-use the `opaqueId` option, as you can see in the following example. The 
+The `X-Opaque-Id` should be configured in each request, for doing that you can
+use the `opaqueId` option, as you can see in the following example. The
 resulting header will be `{ 'X-Opaque-Id': 'my-search' }`.
 
 [source,js]
@@ -401,10 +424,10 @@ client.search({
 }).then(console.log, console.log)
 ----
 
-Sometimes it may be useful to prefix all the `X-Opaque-Id` headers with a 
-specific string, in case you need to identify a specific client or server. For 
-doing this, the client offers a top-level configuration option: 
-`opaqueIdPrefix`. In the following example, the resulting header will be 
+Sometimes it may be useful to prefix all the `X-Opaque-Id` headers with a
+specific string, in case you need to identify a specific client or server. For
+doing this, the client offers a top-level configuration option:
+`opaqueIdPrefix`. In the following example, the resulting header will be
 `{ 'X-Opaque-Id': 'proxy-client::my-search' }`.
 
 [source,js]
