@@ -85,7 +85,7 @@ a|Emitted before starting serialization and compression. If you want to measure 
 client.diagnostic.on('serialization', (err, result) => {
   console.log(err, result)
 })
-----e
+----
 
 |`request`
 a|Emitted before sending the actual request to {es} _(emitted multiple times in case of retries)_.
