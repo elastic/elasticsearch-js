@@ -5,7 +5,7 @@ To observe and measure Elasticsearch client usage, several client features are p
 
 First, as of 8.15.0, the client provides native support for OpenTelemetry, which allows you to send client usage data to any endpoint that supports OpenTelemetry without having to make any changes to your JavaScript codebase.
 
-Also, rather than providing a default logger, the clientoffers an event
+Also, rather than providing a default logger, the client offers an event
 emitter interface to hook into internal events, such as `request` and
 `response`, allowing you to log the events you care about, or otherwise react
 to client usage however you might need.
