@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Git branch to build and publish'
+        description: "Git branch to build and publish"
         required: true
 jobs:
   build:
@@ -17,8 +17,8 @@ jobs:
           ref: ${{ github.event.inputs.branch }}
       - uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
       - run: npm install -g npm
       - run: npm install
       - run: npm test
@@ -34,3 +34,4 @@ jobs:
             "v$version"
         env:
           BRANCH_NAME: ${{ github.event.inputs.branch }}
+          GH_TOKEN: ${{ github.token }}
