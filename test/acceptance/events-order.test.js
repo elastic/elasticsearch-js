@@ -319,7 +319,7 @@ test('Serialization Error', t => {
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: MockConnection,
-    maxRetries: 1,
+    maxRetries: 1
   })
 
   const order = [
