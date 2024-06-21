@@ -49,6 +49,7 @@ interface TransportOptions {
   serializer: Serializer;
   maxRetries: number;
   requestTimeout: number | string;
+  retryOnTimeout?: boolean;
   suggestCompression?: boolean;
   compression?: 'gzip';
   sniffInterval?: number;
