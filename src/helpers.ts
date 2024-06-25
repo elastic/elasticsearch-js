@@ -276,7 +276,7 @@ export default class Helpers {
           rest_total_hits_as_int: params.rest_total_hits_as_int,
           scroll_id
         }, options as TransportRequestOptionsWithMeta)
-        response = r as TransportResult<T.ScrollResponse<TDocument, TAggregations>, unknown>
+        response = r as unknown as TransportResult<T.ScrollResponse<TDocument, TAggregations>, unknown>
         assert(response !== undefined, 'The response is undefined, please file a bug report')
         if (response.statusCode !== 429) break
         await sleep(wait)
