@@ -64,3 +64,5 @@ test/bundlers/parcel-test/.parcel-cache
 
 lib
 junit-output
+
+parsed-alternative-report.json
