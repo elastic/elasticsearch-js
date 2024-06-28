@@ -1025,6 +1025,7 @@ test('Retry mechanism and abort', t => {
       serializer: new Serializer(),
       maxRetries: 2,
       requestTimeout: 100,
+      retryOnTimeout: true,
       sniffInterval: false,
       sniffOnStart: false
     })
@@ -2203,6 +2204,7 @@ test('Compress request', t => {
         serializer: new Serializer(),
         maxRetries: 3,
         requestTimeout: 250,
+        retryOnTimeout: true,
         sniffInterval: false,
         sniffOnStart: false
       })

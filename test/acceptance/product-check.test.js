@@ -680,7 +680,8 @@ test('TimeoutError', t => {
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: MockConnectionTimeout,
-    maxRetries: 0
+    maxRetries: 0,
+    retryOnTimeout: true
   })
 
   client.on('request', (err, event) => {

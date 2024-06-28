@@ -88,7 +88,8 @@ test('Connection error', t => {
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: MockConnectionError,
-    maxRetries: 1
+    maxRetries: 1,
+    retryOnTimeout: true
   })
 
   const order = [
@@ -124,17 +125,17 @@ test('Connection error', t => {
 })
 
 test('TimeoutError error', t => {
-  t.plan(10)
+  t.plan(8)
 
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: MockConnectionTimeout,
-    maxRetries: 1
+    maxRetries: 1,
+    retryOnTimeout: true
   })
 
   const order = [
     events.SERIALIZATION,
-    events.REQUEST,
     events.REQUEST,
     events.RESPONSE
   ]
@@ -170,7 +171,8 @@ test('RequestAbortedError error', t => {
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: MockConnectionTimeout,
-    maxRetries: 1
+    maxRetries: 1,
+    retryOnTimeout: true
   })
 
   const order = [
@@ -221,7 +223,8 @@ test('ResponseError error (no retry)', t => {
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: MockConnection,
-    maxRetries: 1
+    maxRetries: 1,
+    retryOnTimeout: true
   })
 
   const order = [
@@ -373,7 +376,8 @@ test('Deserialization Error', t => {
   const client = new Client({
     node: 'http://localhost:9200',
     Connection: MockConnection,
-    maxRetries: 1
+    maxRetries: 1,
+    retryOnTimeout: true
   })
 
   const order = [
@@ -423,7 +427,11 @@ test('Socket destroyed while reading the body', t => {
   }
 
   buildServer(handler, ({ port }, server) => {
-    const client = new Client({ node: `http://localhost:${port}`, maxRetries: 1 })
+    const client = new Client({
+      node: `http://localhost:${port}`,
+      maxRetries: 1,
+      retryOnTimeout: true
+    })
 
     const order = [
       events.SERIALIZATION,
