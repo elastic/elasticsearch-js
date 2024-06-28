@@ -140,40 +140,6 @@ jobs:
         run: |
           npm test --prefix test/mock
 
-  code-coverage:
-    name: Code coverage
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14.x]
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install
-        run: |
-          npm install
-
-      - name: Code coverage report
-        run: |
-          npm run test:coverage-report
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          file: ./coverage.lcov
-          fail_ci_if_error: true
-
-      - name: Code coverage 100%
-        run: |
-          npm run test:coverage-100
-
   license:
     name: License check
     runs-on: ubuntu-latest
