@@ -2,6 +2,16 @@
 == Release notes
 
 [discrete]
+=== 7.17.14
+
+[discrete]
+==== Fixes
+
+Stops retrying timed-out requests by default.
+Re-enabling the old behavior can be done by providing a `retryOnTimeout` option when instantiating the client.
+https://github.com/elastic/elasticsearch-js/pull/2293[#2293]
+
+[discrete]
 === 7.17.13
 
 [discrete]
@@ -26,7 +36,7 @@ This is the first 7.x release where patch versions of the client will no longer 
 Fixes a type declaration bug that caused TypeScript builds to fail. https://github.com/elastic/elasticsearch-js/pull/1927[#1927]
 
 [discrete]
-===== Add TypeScript type declarations to exports 
+===== Add TypeScript type declarations to exports
 
 Adds TypeScript type declarations file to package.json `exports` https://github.com/elastic/elasticsearch-js/pull/1930[#1930]
 
