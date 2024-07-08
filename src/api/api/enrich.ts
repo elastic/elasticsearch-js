@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -45,7 +46,7 @@ export default class Enrich {
 
   /**
     * Deletes an existing enrich policy and its enrich index.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-enrich-policy-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/delete-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest | TB.EnrichDeletePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichDeletePolicyResponse>
   async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest | TB.EnrichDeletePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichDeletePolicyResponse, unknown>>
@@ -66,12 +67,18 @@ export default class Enrich {
 
     const method = 'DELETE'
     const path = `/_enrich/policy/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'enrich.delete_policy',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Creates the enrich index for an existing enrich policy.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/execute-enrich-policy-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/execute-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async executePolicy (this: That, params: T.EnrichExecutePolicyRequest | TB.EnrichExecutePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichExecutePolicyResponse>
   async executePolicy (this: That, params: T.EnrichExecutePolicyRequest | TB.EnrichExecutePolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichExecutePolicyResponse, unknown>>
@@ -92,12 +99,18 @@ export default class Enrich {
 
     const method = 'PUT'
     const path = `/_enrich/policy/${encodeURIComponent(params.name.toString())}/_execute`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'enrich.execute_policy',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Gets information about an enrich policy.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-enrich-policy-api.html | Elasticsearch API documentation}
+    * Returns information about an enrich policy.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/get-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async getPolicy (this: That, params?: T.EnrichGetPolicyRequest | TB.EnrichGetPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichGetPolicyResponse>
   async getPolicy (this: That, params?: T.EnrichGetPolicyRequest | TB.EnrichGetPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichGetPolicyResponse, unknown>>
@@ -126,12 +139,18 @@ export default class Enrich {
       method = 'GET'
       path = '/_enrich/policy'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'enrich.get_policy',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates a new enrich policy.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-enrich-policy-api.html | Elasticsearch API documentation}
+    * Creates an enrich policy.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/put-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichPutPolicyResponse>
   async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichPutPolicyResponse, unknown>>
@@ -164,12 +183,18 @@ export default class Enrich {
 
     const method = 'PUT'
     const path = `/_enrich/policy/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'enrich.put_policy',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Gets enrich coordinator statistics and information about enrich policies that are currently executing.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/enrich-stats-api.html | Elasticsearch API documentation}
+    * Returns enrich coordinator statistics and information about enrich policies that are currently executing.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/enrich-stats-api.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.EnrichStatsRequest | TB.EnrichStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichStatsResponse>
   async stats (this: That, params?: T.EnrichStatsRequest | TB.EnrichStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.EnrichStatsResponse, unknown>>
@@ -191,6 +216,9 @@ export default class Enrich {
 
     const method = 'GET'
     const path = '/_enrich/_stats'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'enrich.stats'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

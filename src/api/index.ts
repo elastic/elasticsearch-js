@@ -29,6 +29,7 @@
 import AsyncSearchApi from './api/async_search'
 import AutoscalingApi from './api/autoscaling'
 import bulkApi from './api/bulk'
+import capabilitiesApi from './api/capabilities'
 import CatApi from './api/cat'
 import CcrApi from './api/ccr'
 import clearScrollApi from './api/clear_scroll'
@@ -76,8 +77,9 @@ import mtermvectorsApi from './api/mtermvectors'
 import NodesApi from './api/nodes'
 import openPointInTimeApi from './api/open_point_in_time'
 import pingApi from './api/ping'
+import ProfilingApi from './api/profiling'
 import putScriptApi from './api/put_script'
-import QueryRulesetApi from './api/query_ruleset'
+import QueryRulesApi from './api/query_rules'
 import rankEvalApi from './api/rank_eval'
 import reindexApi from './api/reindex'
 import reindexRethrottleApi from './api/reindex_rethrottle'
@@ -93,6 +95,7 @@ import searchTemplateApi from './api/search_template'
 import SearchableSnapshotsApi from './api/searchable_snapshots'
 import SecurityApi from './api/security'
 import ShutdownApi from './api/shutdown'
+import SimulateApi from './api/simulate'
 import SlmApi from './api/slm'
 import SnapshotApi from './api/snapshot'
 import SqlApi from './api/sql'
@@ -114,6 +117,7 @@ export default interface API {
   asyncSearch: AsyncSearchApi
   autoscaling: AutoscalingApi
   bulk: typeof bulkApi
+  capabilities: typeof capabilitiesApi
   cat: CatApi
   ccr: CcrApi
   clearScroll: typeof clearScrollApi
@@ -161,8 +165,9 @@ export default interface API {
   nodes: NodesApi
   openPointInTime: typeof openPointInTimeApi
   ping: typeof pingApi
+  profiling: ProfilingApi
   putScript: typeof putScriptApi
-  queryRuleset: QueryRulesetApi
+  queryRules: QueryRulesApi
   rankEval: typeof rankEvalApi
   reindex: typeof reindexApi
   reindexRethrottle: typeof reindexRethrottleApi
@@ -178,6 +183,7 @@ export default interface API {
   searchableSnapshots: SearchableSnapshotsApi
   security: SecurityApi
   shutdown: ShutdownApi
+  simulate: SimulateApi
   slm: SlmApi
   snapshot: SnapshotApi
   sql: SqlApi
@@ -217,12 +223,14 @@ const kMigration = Symbol('Migration')
 const kMl = Symbol('Ml')
 const kMonitoring = Symbol('Monitoring')
 const kNodes = Symbol('Nodes')
-const kQueryRuleset = Symbol('QueryRuleset')
+const kProfiling = Symbol('Profiling')
+const kQueryRules = Symbol('QueryRules')
 const kRollup = Symbol('Rollup')
 const kSearchApplication = Symbol('SearchApplication')
 const kSearchableSnapshots = Symbol('SearchableSnapshots')
 const kSecurity = Symbol('Security')
 const kShutdown = Symbol('Shutdown')
+const kSimulate = Symbol('Simulate')
 const kSlm = Symbol('Slm')
 const kSnapshot = Symbol('Snapshot')
 const kSql = Symbol('Sql')
@@ -257,12 +265,14 @@ export default class API {
   [kMl]: symbol | null
   [kMonitoring]: symbol | null
   [kNodes]: symbol | null
-  [kQueryRuleset]: symbol | null
+  [kProfiling]: symbol | null
+  [kQueryRules]: symbol | null
   [kRollup]: symbol | null
   [kSearchApplication]: symbol | null
   [kSearchableSnapshots]: symbol | null
   [kSecurity]: symbol | null
   [kShutdown]: symbol | null
+  [kSimulate]: symbol | null
   [kSlm]: symbol | null
   [kSnapshot]: symbol | null
   [kSql]: symbol | null
@@ -296,12 +306,14 @@ export default class API {
     this[kMl] = null
     this[kMonitoring] = null
     this[kNodes] = null
-    this[kQueryRuleset] = null
+    this[kProfiling] = null
+    this[kQueryRules] = null
     this[kRollup] = null
     this[kSearchApplication] = null
     this[kSearchableSnapshots] = null
     this[kSecurity] = null
     this[kShutdown] = null
+    this[kSimulate] = null
     this[kSlm] = null
     this[kSnapshot] = null
     this[kSql] = null
@@ -316,6 +328,7 @@ export default class API {
 }
 
 API.prototype.bulk = bulkApi
+API.prototype.capabilities = capabilitiesApi
 API.prototype.clearScroll = clearScrollApi
 API.prototype.closePointInTime = closePointInTimeApi
 API.prototype.count = countApi
@@ -427,8 +440,11 @@ Object.defineProperties(API.prototype, {
   nodes: {
     get () { return this[kNodes] === null ? (this[kNodes] = new NodesApi(this.transport)) : this[kNodes] }
   },
-  queryRuleset: {
-    get () { return this[kQueryRuleset] === null ? (this[kQueryRuleset] = new QueryRulesetApi(this.transport)) : this[kQueryRuleset] }
+  profiling: {
+    get () { return this[kProfiling] === null ? (this[kProfiling] = new ProfilingApi(this.transport)) : this[kProfiling] }
+  },
+  queryRules: {
+    get () { return this[kQueryRules] === null ? (this[kQueryRules] = new QueryRulesApi(this.transport)) : this[kQueryRules] }
   },
   rollup: {
     get () { return this[kRollup] === null ? (this[kRollup] = new RollupApi(this.transport)) : this[kRollup] }
@@ -444,6 +460,9 @@ Object.defineProperties(API.prototype, {
   },
   shutdown: {
     get () { return this[kShutdown] === null ? (this[kShutdown] = new ShutdownApi(this.transport)) : this[kShutdown] }
+  },
+  simulate: {
+    get () { return this[kSimulate] === null ? (this[kSimulate] = new SimulateApi(this.transport)) : this[kSimulate] }
   },
   slm: {
     get () { return this[kSlm] === null ? (this[kSlm] = new SlmApi(this.transport)) : this[kSlm] }

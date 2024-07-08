@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -39,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Changes the number of requests per second for a particular Delete By Query operation.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/docs-delete-by-query.html | Elasticsearch API documentation}
   */
 export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest | TB.DeleteByQueryRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteByQueryRethrottleResponse>
 export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest | TB.DeleteByQueryRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteByQueryRethrottleResponse, unknown>>
@@ -60,5 +61,11 @@ export default async function DeleteByQueryRethrottleApi (this: That, params: T.
 
   const method = 'POST'
   const path = `/_delete_by_query/${encodeURIComponent(params.task_id.toString())}/_rethrottle`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'delete_by_query_rethrottle',
+    pathParts: {
+      task_id: params.task_id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

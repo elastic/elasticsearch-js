@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -45,7 +46,7 @@ export default class Ssl {
 
   /**
     * Retrieves information about the X.509 certificates used to encrypt communications in the cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-ssl.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/security-api-ssl.html | Elasticsearch API documentation}
     */
   async certificates (this: That, params?: T.SslCertificatesRequest | TB.SslCertificatesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SslCertificatesResponse>
   async certificates (this: That, params?: T.SslCertificatesRequest | TB.SslCertificatesRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SslCertificatesResponse, unknown>>
@@ -67,6 +68,9 @@ export default class Ssl {
 
     const method = 'GET'
     const path = '/_ssl/certificates'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ssl.certificates'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

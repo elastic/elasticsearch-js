@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -45,7 +46,7 @@ export default class Migration {
 
   /**
     * Retrieves information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/migration-api-deprecation.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/migration-api-deprecation.html | Elasticsearch API documentation}
     */
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest | TB.MigrationDeprecationsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MigrationDeprecationsResponse>
   async deprecations (this: That, params?: T.MigrationDeprecationsRequest | TB.MigrationDeprecationsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MigrationDeprecationsResponse, unknown>>
@@ -74,12 +75,18 @@ export default class Migration {
       method = 'GET'
       path = '/_migration/deprecations'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'migration.deprecations',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Find out whether system features need to be upgraded or not
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/migration-api-feature-upgrade.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/migration-api-feature-upgrade.html | Elasticsearch API documentation}
     */
   async getFeatureUpgradeStatus (this: That, params?: T.MigrationGetFeatureUpgradeStatusRequest | TB.MigrationGetFeatureUpgradeStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MigrationGetFeatureUpgradeStatusResponse>
   async getFeatureUpgradeStatus (this: That, params?: T.MigrationGetFeatureUpgradeStatusRequest | TB.MigrationGetFeatureUpgradeStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MigrationGetFeatureUpgradeStatusResponse, unknown>>
@@ -101,12 +108,15 @@ export default class Migration {
 
     const method = 'GET'
     const path = '/_migration/system_features'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'migration.get_feature_upgrade_status'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Begin upgrades for system features
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/migration-api-feature-upgrade.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/migration-api-feature-upgrade.html | Elasticsearch API documentation}
     */
   async postFeatureUpgrade (this: That, params?: T.MigrationPostFeatureUpgradeRequest | TB.MigrationPostFeatureUpgradeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MigrationPostFeatureUpgradeResponse>
   async postFeatureUpgrade (this: That, params?: T.MigrationPostFeatureUpgradeRequest | TB.MigrationPostFeatureUpgradeRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MigrationPostFeatureUpgradeResponse, unknown>>
@@ -128,6 +138,9 @@ export default class Migration {
 
     const method = 'POST'
     const path = '/_migration/system_features'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'migration.post_feature_upgrade'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -45,7 +46,7 @@ export default class Monitoring {
 
   /**
     * Used by the monitoring features to send monitoring data.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/monitor-elasticsearch-cluster.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/monitor-elasticsearch-cluster.html | Elasticsearch API documentation}
     */
   async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.MonitoringBulkResponse>
   async bulk<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.MonitoringBulkRequest<TDocument, TPartialDocument> | TB.MonitoringBulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MonitoringBulkResponse, unknown>>
@@ -71,6 +72,12 @@ export default class Monitoring {
 
     const method = 'POST'
     const path = '/_monitoring/bulk'
-    return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'monitoring.bulk',
+      pathParts: {
+        type: params.type
+      }
+    }
+    return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }
 }

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -39,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Allows to execute several search operations in one request.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/search-multi-search.html | Elasticsearch API documentation}
   */
 export default async function MsearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchRequest | TB.MsearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MsearchResponse<TDocument, TAggregations>>
 export default async function MsearchApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchRequest | TB.MsearchRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MsearchResponse<TDocument, TAggregations>, unknown>>
@@ -72,5 +73,11 @@ export default async function MsearchApi<TDocument = unknown, TAggregations = Re
     method = body != null ? 'POST' : 'GET'
     path = '/_msearch'
   }
-  return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'msearch',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
 }

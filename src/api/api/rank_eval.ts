@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,8 +39,8 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Allows to evaluate the quality of ranked search results over a set of typical search queries
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.html | Elasticsearch API documentation}
+  * Enables you to evaluate the quality of ranked search results over a set of typical search queries.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/search-rank-eval.html | Elasticsearch API documentation}
   */
 export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RankEvalResponse>
 export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RankEvalResponse, unknown>>
@@ -79,5 +80,11 @@ export default async function RankEvalApi (this: That, params: T.RankEvalRequest
     method = body != null ? 'POST' : 'GET'
     path = '/_rank_eval'
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'rank_eval',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }
