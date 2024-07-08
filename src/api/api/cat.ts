@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -74,7 +75,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/aliases'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.aliases',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -108,7 +115,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/allocation'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.allocation',
+      pathParts: {
+        node_id: params.node_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -142,7 +155,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/component_templates'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.component_templates',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -176,7 +195,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/count'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.count',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -210,7 +235,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/fielddata'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.fielddata',
+      pathParts: {
+        fields: params.fields
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -237,7 +268,10 @@ export default class Cat {
 
     const method = 'GET'
     const path = '/_cat/health'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.health'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -264,7 +298,10 @@ export default class Cat {
 
     const method = 'GET'
     const path = '/_cat'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.help'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -298,7 +335,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/indices'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.indices',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -325,7 +368,10 @@ export default class Cat {
 
     const method = 'GET'
     const path = '/_cat/master'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.master'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -359,7 +405,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/ml/data_frame/analytics'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.ml_data_frame_analytics',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -393,7 +445,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/ml/datafeeds'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.ml_datafeeds',
+      pathParts: {
+        datafeed_id: params.datafeed_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -427,7 +485,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/ml/anomaly_detectors'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.ml_jobs',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -461,7 +525,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/ml/trained_models'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.ml_trained_models',
+      pathParts: {
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -488,7 +558,10 @@ export default class Cat {
 
     const method = 'GET'
     const path = '/_cat/nodeattrs'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.nodeattrs'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -515,7 +588,10 @@ export default class Cat {
 
     const method = 'GET'
     const path = '/_cat/nodes'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.nodes'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -542,7 +618,10 @@ export default class Cat {
 
     const method = 'GET'
     const path = '/_cat/pending_tasks'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.pending_tasks'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -569,7 +648,10 @@ export default class Cat {
 
     const method = 'GET'
     const path = '/_cat/plugins'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.plugins'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -603,7 +685,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/recovery'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.recovery',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -630,7 +718,10 @@ export default class Cat {
 
     const method = 'GET'
     const path = '/_cat/repositories'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.repositories'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -664,7 +755,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/segments'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.segments',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -698,7 +795,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/shards'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.shards',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -732,7 +835,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/snapshots'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.snapshots',
+      pathParts: {
+        repository: params.repository
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -759,7 +868,10 @@ export default class Cat {
 
     const method = 'GET'
     const path = '/_cat/tasks'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.tasks'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -793,7 +905,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/templates'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.templates',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -827,7 +945,13 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/thread_pool'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.thread_pool',
+      pathParts: {
+        thread_pool_patterns: params.thread_pool_patterns
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -861,6 +985,12 @@ export default class Cat {
       method = 'GET'
       path = '/_cat/transforms'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cat.transforms',
+      pathParts: {
+        transform_id: params.transform_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

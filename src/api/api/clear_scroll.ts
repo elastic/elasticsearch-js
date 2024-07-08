@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -73,5 +74,11 @@ export default async function ClearScrollApi (this: That, params?: T.ClearScroll
 
   const method = 'DELETE'
   const path = '/_search/scroll'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'clear_scroll',
+    pathParts: {
+      scroll_id: params.scroll_id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

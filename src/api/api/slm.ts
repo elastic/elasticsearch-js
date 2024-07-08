@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class Slm {
 
     const method = 'DELETE'
     const path = `/_slm/policy/${encodeURIComponent(params.policy_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'slm.delete_lifecycle',
+      pathParts: {
+        policy_id: params.policy_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -92,7 +99,13 @@ export default class Slm {
 
     const method = 'PUT'
     const path = `/_slm/policy/${encodeURIComponent(params.policy_id.toString())}/_execute`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'slm.execute_lifecycle',
+      pathParts: {
+        policy_id: params.policy_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -119,7 +132,10 @@ export default class Slm {
 
     const method = 'POST'
     const path = '/_slm/_execute_retention'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'slm.execute_retention'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -153,7 +169,13 @@ export default class Slm {
       method = 'GET'
       path = '/_slm/policy'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'slm.get_lifecycle',
+      pathParts: {
+        policy_id: params.policy_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -180,7 +202,10 @@ export default class Slm {
 
     const method = 'GET'
     const path = '/_slm/stats'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'slm.get_stats'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -207,7 +232,10 @@ export default class Slm {
 
     const method = 'GET'
     const path = '/_slm/status'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'slm.get_status'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -245,7 +273,13 @@ export default class Slm {
 
     const method = 'PUT'
     const path = `/_slm/policy/${encodeURIComponent(params.policy_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'slm.put_lifecycle',
+      pathParts: {
+        policy_id: params.policy_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -272,7 +306,10 @@ export default class Slm {
 
     const method = 'POST'
     const path = '/_slm/start'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'slm.start'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -299,6 +336,9 @@ export default class Slm {
 
     const method = 'POST'
     const path = '/_slm/stop'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'slm.stop'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

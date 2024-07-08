@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -65,7 +66,13 @@ export default class Fleet {
 
     const method = 'DELETE'
     const path = `/_fleet/secret/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'fleet.delete_secret',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -90,7 +97,13 @@ export default class Fleet {
 
     const method = 'GET'
     const path = `/_fleet/secret/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'fleet.get_secret',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -116,7 +129,13 @@ export default class Fleet {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_fleet/global_checkpoints`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'fleet.global_checkpoints',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -153,7 +172,13 @@ export default class Fleet {
       method = body != null ? 'POST' : 'GET'
       path = '/_fleet/_fleet_msearch'
     }
-    return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'fleet.msearch',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }
 
   /**
@@ -178,7 +203,10 @@ export default class Fleet {
 
     const method = 'POST'
     const path = '/_fleet/secret'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'fleet.post_secret'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -215,6 +243,12 @@ export default class Fleet {
 
     const method = body != null ? 'POST' : 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_fleet/_fleet_search`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'fleet.search',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

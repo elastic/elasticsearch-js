@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -72,5 +73,8 @@ export default async function ClosePointInTimeApi (this: That, params: T.ClosePo
 
   const method = 'DELETE'
   const path = '/_pit'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'close_point_in_time'
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -72,5 +73,15 @@ export default async function SearchMvtApi (this: That, params: T.SearchMvtReque
 
   const method = body != null ? 'POST' : 'GET'
   const path = `/${encodeURIComponent(params.index.toString())}/_mvt/${encodeURIComponent(params.field.toString())}/${encodeURIComponent(params.zoom.toString())}/${encodeURIComponent(params.x.toString())}/${encodeURIComponent(params.y.toString())}`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'search_mvt',
+    pathParts: {
+      index: params.index,
+      field: params.field,
+      zoom: params.zoom,
+      x: params.x,
+      y: params.y
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

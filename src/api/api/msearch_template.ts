@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -72,5 +73,11 @@ export default async function MsearchTemplateApi<TDocument = unknown, TAggregati
     method = body != null ? 'POST' : 'GET'
     path = '/_msearch/template'
   }
-  return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'msearch_template',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
 }

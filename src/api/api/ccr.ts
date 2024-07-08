@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class Ccr {
 
     const method = 'DELETE'
     const path = `/_ccr/auto_follow/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.delete_auto_follow_pattern',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -104,7 +111,13 @@ export default class Ccr {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}/_ccr/follow`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.follow',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -130,7 +143,13 @@ export default class Ccr {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_ccr/info`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.follow_info',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -156,7 +175,13 @@ export default class Ccr {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_ccr/stats`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.follow_stats',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -194,7 +219,13 @@ export default class Ccr {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_ccr/forget_follower`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.forget_follower',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -228,7 +259,13 @@ export default class Ccr {
       method = 'GET'
       path = '/_ccr/auto_follow'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.get_auto_follow_pattern',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -254,7 +291,13 @@ export default class Ccr {
 
     const method = 'POST'
     const path = `/_ccr/auto_follow/${encodeURIComponent(params.name.toString())}/pause`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.pause_auto_follow_pattern',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -280,7 +323,13 @@ export default class Ccr {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_ccr/pause_follow`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.pause_follow',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -318,7 +367,13 @@ export default class Ccr {
 
     const method = 'PUT'
     const path = `/_ccr/auto_follow/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.put_auto_follow_pattern',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -344,7 +399,13 @@ export default class Ccr {
 
     const method = 'POST'
     const path = `/_ccr/auto_follow/${encodeURIComponent(params.name.toString())}/resume`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.resume_auto_follow_pattern',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -382,7 +443,13 @@ export default class Ccr {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_ccr/resume_follow`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.resume_follow',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -409,7 +476,10 @@ export default class Ccr {
 
     const method = 'GET'
     const path = '/_ccr/stats'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.stats'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -435,6 +505,12 @@ export default class Ccr {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_ccr/unfollow`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ccr.unfollow',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

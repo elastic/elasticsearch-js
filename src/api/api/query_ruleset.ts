@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class QueryRuleset {
 
     const method = 'DELETE'
     const path = `/_query_rules/${encodeURIComponent(params.ruleset_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'query_ruleset.delete',
+      pathParts: {
+        ruleset_id: params.ruleset_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -92,7 +99,13 @@ export default class QueryRuleset {
 
     const method = 'GET'
     const path = `/_query_rules/${encodeURIComponent(params.ruleset_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'query_ruleset.get',
+      pathParts: {
+        ruleset_id: params.ruleset_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -119,7 +132,10 @@ export default class QueryRuleset {
 
     const method = 'GET'
     const path = '/_query_rules'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'query_ruleset.list'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -157,6 +173,12 @@ export default class QueryRuleset {
 
     const method = 'PUT'
     const path = `/_query_rules/${encodeURIComponent(params.ruleset_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'query_ruleset.put',
+      pathParts: {
+        ruleset_id: params.ruleset_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

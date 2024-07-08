@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -78,7 +79,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/profile/_activate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.activate_user_profile'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -105,7 +109,10 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/_authenticate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.authenticate'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -131,7 +138,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/api_key/_bulk_update'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.bulk_update_api_keys'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -177,7 +187,13 @@ export default class Security {
       method = 'PUT'
       path = '/_security/user/_password'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.change_password',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -203,7 +219,13 @@ export default class Security {
 
     const method = 'POST'
     const path = `/_security/api_key/${encodeURIComponent(params.ids.toString())}/_clear_cache`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.clear_api_key_cache',
+      pathParts: {
+        ids: params.ids
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -229,7 +251,13 @@ export default class Security {
 
     const method = 'POST'
     const path = `/_security/privilege/${encodeURIComponent(params.application.toString())}/_clear_cache`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.clear_cached_privileges',
+      pathParts: {
+        application: params.application
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -255,7 +283,13 @@ export default class Security {
 
     const method = 'POST'
     const path = `/_security/realm/${encodeURIComponent(params.realms.toString())}/_clear_cache`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.clear_cached_realms',
+      pathParts: {
+        realms: params.realms
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -281,7 +315,13 @@ export default class Security {
 
     const method = 'POST'
     const path = `/_security/role/${encodeURIComponent(params.name.toString())}/_clear_cache`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.clear_cached_roles',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -307,7 +347,15 @@ export default class Security {
 
     const method = 'POST'
     const path = `/_security/service/${encodeURIComponent(params.namespace.toString())}/${encodeURIComponent(params.service.toString())}/credential/token/${encodeURIComponent(params.name.toString())}/_clear_cache`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.clear_cached_service_tokens',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -346,7 +394,10 @@ export default class Security {
 
     const method = 'PUT'
     const path = '/_security/api_key'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.create_api_key'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -372,7 +423,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/cross_cluster/api_key'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.create_cross_cluster_api_key'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -405,7 +459,15 @@ export default class Security {
       method = 'POST'
       path = `/_security/service/${encodeURIComponent(params.namespace.toString())}/${encodeURIComponent(params.service.toString())}/credential/token`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.create_service_token',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -431,7 +493,14 @@ export default class Security {
 
     const method = 'DELETE'
     const path = `/_security/privilege/${encodeURIComponent(params.application.toString())}/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.delete_privileges',
+      pathParts: {
+        application: params.application,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -457,7 +526,13 @@ export default class Security {
 
     const method = 'DELETE'
     const path = `/_security/role/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.delete_role',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -483,7 +558,13 @@ export default class Security {
 
     const method = 'DELETE'
     const path = `/_security/role_mapping/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.delete_role_mapping',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -509,7 +590,15 @@ export default class Security {
 
     const method = 'DELETE'
     const path = `/_security/service/${encodeURIComponent(params.namespace.toString())}/${encodeURIComponent(params.service.toString())}/credential/token/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.delete_service_token',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -535,7 +624,13 @@ export default class Security {
 
     const method = 'DELETE'
     const path = `/_security/user/${encodeURIComponent(params.username.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.delete_user',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -561,7 +656,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/user/${encodeURIComponent(params.username.toString())}/_disable`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.disable_user',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -587,7 +688,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/profile/${encodeURIComponent(params.uid.toString())}/_disable`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.disable_user_profile',
+      pathParts: {
+        uid: params.uid
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -613,7 +720,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/user/${encodeURIComponent(params.username.toString())}/_enable`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.enable_user',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -639,7 +752,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/profile/${encodeURIComponent(params.uid.toString())}/_enable`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.enable_user_profile',
+      pathParts: {
+        uid: params.uid
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -666,7 +785,10 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/enroll/kibana'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.enroll_kibana'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -693,7 +815,10 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/enroll/node'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.enroll_node'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -720,7 +845,10 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/api_key'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_api_key'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -747,7 +875,10 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/privilege/_builtin'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_builtin_privileges'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -784,7 +915,14 @@ export default class Security {
       method = 'GET'
       path = '/_security/privilege'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_privileges',
+      pathParts: {
+        application: params.application,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -818,7 +956,13 @@ export default class Security {
       method = 'GET'
       path = '/_security/role'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_role',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -852,7 +996,13 @@ export default class Security {
       method = 'GET'
       path = '/_security/role_mapping'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_role_mapping',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -889,7 +1039,14 @@ export default class Security {
       method = 'GET'
       path = '/_security/service'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_service_accounts',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -915,7 +1072,14 @@ export default class Security {
 
     const method = 'GET'
     const path = `/_security/service/${encodeURIComponent(params.namespace.toString())}/${encodeURIComponent(params.service.toString())}/credential`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_service_credentials',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -941,7 +1105,10 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/settings'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_settings'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -980,7 +1147,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/oauth2/token'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_token'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1014,7 +1184,13 @@ export default class Security {
       method = 'GET'
       path = '/_security/user'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_user',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1041,7 +1217,10 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/user/_privileges'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_user_privileges'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1067,7 +1246,13 @@ export default class Security {
 
     const method = 'GET'
     const path = `/_security/profile/${encodeURIComponent(params.uid.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_user_profile',
+      pathParts: {
+        uid: params.uid
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1105,7 +1290,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/api_key/grant'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.grant_api_key'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1151,7 +1339,13 @@ export default class Security {
       method = body != null ? 'POST' : 'GET'
       path = '/_security/user/_has_privileges'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.has_privileges',
+      pathParts: {
+        user: params.user
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1189,7 +1383,10 @@ export default class Security {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_security/profile/_has_privileges'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.has_privileges_user_profile'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1228,7 +1425,10 @@ export default class Security {
 
     const method = 'DELETE'
     const path = '/_security/api_key'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.invalidate_api_key'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1267,7 +1467,10 @@ export default class Security {
 
     const method = 'DELETE'
     const path = '/_security/oauth2/token'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.invalidate_token'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1293,7 +1496,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/oidc/authenticate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.oidc_authenticate'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1319,7 +1525,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/oidc/logout'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.oidc_logout'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1345,7 +1554,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/oidc/prepare'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.oidc_prepare_authentication'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1376,7 +1588,10 @@ export default class Security {
 
     const method = 'PUT'
     const path = '/_security/privilege'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.put_privileges'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1414,7 +1629,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/role/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.put_role',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1452,7 +1673,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/role_mapping/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.put_role_mapping',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1490,7 +1717,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/user/${encodeURIComponent(params.username.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.put_user',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1529,7 +1762,39 @@ export default class Security {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_security/_query/api_key'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.query_api_keys'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Retrieves information for Users using a subset of query DSL
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-query-user.html | Elasticsearch API documentation}
+    */
+  async queryUser (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async queryUser (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async queryUser (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async queryUser (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = body != null ? 'POST' : 'GET'
+    const path = '/_security/_query/user'
+    const meta: TransportRequestMetadata = {
+      name: 'security.query_user'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1567,7 +1832,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/saml/authenticate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_authenticate'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1605,7 +1873,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/saml/complete_logout'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_complete_logout'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1643,7 +1914,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/saml/invalidate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_invalidate'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1681,7 +1955,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/saml/logout'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_logout'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1720,7 +1997,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/saml/prepare'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_prepare_authentication'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1746,7 +2026,13 @@ export default class Security {
 
     const method = 'GET'
     const path = `/_security/saml/metadata/${encodeURIComponent(params.realm_name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_service_provider_metadata',
+      pathParts: {
+        realm_name: params.realm_name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1785,7 +2071,10 @@ export default class Security {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_security/profile/_suggest'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.suggest_user_profiles'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1823,7 +2112,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/api_key/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.update_api_key',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1849,7 +2144,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/cross_cluster/api_key/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.update_cross_cluster_api_key',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1875,7 +2176,10 @@ export default class Security {
 
     const method = 'PUT'
     const path = '/_security/settings'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.update_settings'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1913,6 +2217,12 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/profile/${encodeURIComponent(params.uid.toString())}/_data`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.update_user_profile_data',
+      pathParts: {
+        uid: params.uid
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

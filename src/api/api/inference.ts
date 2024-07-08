@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -73,7 +74,14 @@ export default class Inference {
       method = 'DELETE'
       path = `/_inference/${encodeURIComponent(params.inference_id.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'inference.delete_model',
+      pathParts: {
+        task_type: params.task_type,
+        inference_id: params.inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -102,11 +110,21 @@ export default class Inference {
     if (params.task_type != null && params.inference_id != null) {
       method = 'GET'
       path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.inference_id.toString())}`
-    } else {
+    } else if (params.inference_id != null) {
       method = 'GET'
       path = `/_inference/${encodeURIComponent(params.inference_id.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_inference'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'inference.get_model',
+      pathParts: {
+        task_type: params.task_type,
+        inference_id: params.inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -151,7 +169,14 @@ export default class Inference {
       method = 'POST'
       path = `/_inference/${encodeURIComponent(params.inference_id.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'inference.inference',
+      pathParts: {
+        task_type: params.task_type,
+        inference_id: params.inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -189,6 +214,13 @@ export default class Inference {
       method = 'PUT'
       path = `/_inference/${encodeURIComponent(params.inference_id.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put_model',
+      pathParts: {
+        task_type: params.task_type,
+        inference_id: params.inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

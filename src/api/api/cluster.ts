@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -79,7 +80,10 @@ export default class Cluster {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_cluster/allocation/explain'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.allocation_explain'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -105,7 +109,13 @@ export default class Cluster {
 
     const method = 'DELETE'
     const path = `/_component_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.delete_component_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -132,7 +142,10 @@ export default class Cluster {
 
     const method = 'DELETE'
     const path = '/_cluster/voting_config_exclusions'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.delete_voting_config_exclusions'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -158,7 +171,13 @@ export default class Cluster {
 
     const method = 'HEAD'
     const path = `/_component_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.exists_component_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -192,7 +211,13 @@ export default class Cluster {
       method = 'GET'
       path = '/_component_template'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.get_component_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -219,7 +244,10 @@ export default class Cluster {
 
     const method = 'GET'
     const path = '/_cluster/settings'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.get_settings'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -253,7 +281,13 @@ export default class Cluster {
       method = 'GET'
       path = '/_cluster/health'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.health',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -279,7 +313,13 @@ export default class Cluster {
 
     const method = 'GET'
     const path = `/_info/${encodeURIComponent(params.target.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.info',
+      pathParts: {
+        target: params.target
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -306,7 +346,10 @@ export default class Cluster {
 
     const method = 'GET'
     const path = '/_cluster/pending_tasks'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.pending_tasks'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -333,7 +376,10 @@ export default class Cluster {
 
     const method = 'POST'
     const path = '/_cluster/voting_config_exclusions'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.post_voting_config_exclusions'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -371,7 +417,13 @@ export default class Cluster {
 
     const method = 'PUT'
     const path = `/_component_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.put_component_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -410,7 +462,10 @@ export default class Cluster {
 
     const method = 'PUT'
     const path = '/_cluster/settings'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.put_settings'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -437,7 +492,10 @@ export default class Cluster {
 
     const method = 'GET'
     const path = '/_remote/info'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.remote_info'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -476,7 +534,10 @@ export default class Cluster {
 
     const method = 'POST'
     const path = '/_cluster/reroute'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.reroute'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -513,7 +574,14 @@ export default class Cluster {
       method = 'GET'
       path = '/_cluster/state'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.state',
+      pathParts: {
+        metric: params.metric,
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -547,6 +615,12 @@ export default class Cluster {
       method = 'GET'
       path = '/_cluster/stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.stats',
+      pathParts: {
+        node_id: params.node_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

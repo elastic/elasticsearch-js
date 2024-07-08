@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -79,5 +80,12 @@ export default async function PutScriptApi (this: That, params: T.PutScriptReque
     method = 'PUT'
     path = `/_scripts/${encodeURIComponent(params.id.toString())}`
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'put_script',
+    pathParts: {
+      id: params.id,
+      context: params.context
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

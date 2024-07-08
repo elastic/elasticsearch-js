@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -61,5 +62,8 @@ export default async function GetScriptContextApi (this: That, params?: T.GetScr
 
   const method = 'GET'
   const path = '/_script_context'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'get_script_context'
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

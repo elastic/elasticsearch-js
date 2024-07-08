@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class Ilm {
 
     const method = 'DELETE'
     const path = `/_ilm/policy/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.delete_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -92,7 +99,13 @@ export default class Ilm {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_ilm/explain`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.explain_lifecycle',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -126,7 +139,13 @@ export default class Ilm {
       method = 'GET'
       path = '/_ilm/policy'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.get_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -153,7 +172,10 @@ export default class Ilm {
 
     const method = 'GET'
     const path = '/_ilm/status'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.get_status'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -192,7 +214,10 @@ export default class Ilm {
 
     const method = 'POST'
     const path = '/_ilm/migrate_to_data_tiers'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.migrate_to_data_tiers'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -230,7 +255,13 @@ export default class Ilm {
 
     const method = 'POST'
     const path = `/_ilm/move/${encodeURIComponent(params.index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.move_to_step',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -268,7 +299,13 @@ export default class Ilm {
 
     const method = 'PUT'
     const path = `/_ilm/policy/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.put_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -294,7 +331,13 @@ export default class Ilm {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_ilm/remove`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.remove_policy',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -320,7 +363,13 @@ export default class Ilm {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_ilm/retry`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.retry',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -347,7 +396,10 @@ export default class Ilm {
 
     const method = 'POST'
     const path = '/_ilm/start'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.start'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -374,6 +426,9 @@ export default class Ilm {
 
     const method = 'POST'
     const path = '/_ilm/stop'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.stop'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

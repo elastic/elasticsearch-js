@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -67,7 +68,10 @@ export default class Features {
 
     const method = 'GET'
     const path = '/_features'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'features.get_features'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -94,6 +98,9 @@ export default class Features {
 
     const method = 'POST'
     const path = '/_features/_reset'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'features.reset_features'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

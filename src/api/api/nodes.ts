@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,14 @@ export default class Nodes {
 
     const method = 'DELETE'
     const path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/_repositories_metering/${encodeURIComponent(params.max_archive_version.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.clear_repositories_metering_archive',
+      pathParts: {
+        node_id: params.node_id,
+        max_archive_version: params.max_archive_version
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -92,7 +100,13 @@ export default class Nodes {
 
     const method = 'GET'
     const path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/_repositories_metering`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.get_repositories_metering_info',
+      pathParts: {
+        node_id: params.node_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -126,7 +140,13 @@ export default class Nodes {
       method = 'GET'
       path = '/_nodes/hot_threads'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.hot_threads',
+      pathParts: {
+        node_id: params.node_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -166,7 +186,14 @@ export default class Nodes {
       method = 'GET'
       path = '/_nodes'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.info',
+      pathParts: {
+        node_id: params.node_id,
+        metric: params.metric
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -212,7 +239,13 @@ export default class Nodes {
       method = 'POST'
       path = '/_nodes/reload_secure_settings'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.reload_secure_settings',
+      pathParts: {
+        node_id: params.node_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -258,7 +291,15 @@ export default class Nodes {
       method = 'GET'
       path = '/_nodes/stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.stats',
+      pathParts: {
+        node_id: params.node_id,
+        metric: params.metric,
+        index_metric: params.index_metric
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -298,6 +339,13 @@ export default class Nodes {
       method = 'GET'
       path = '/_nodes/usage'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.usage',
+      pathParts: {
+        node_id: params.node_id,
+        metric: params.metric
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }
