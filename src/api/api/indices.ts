@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,14 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}/_block/${encodeURIComponent(params.block.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.add_block',
+      pathParts: {
+        index: params.index,
+        block: params.block
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -112,7 +120,13 @@ export default class Indices {
       method = body != null ? 'POST' : 'GET'
       path = '/_analyze'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.analyze',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -146,7 +160,13 @@ export default class Indices {
       method = 'POST'
       path = '/_cache/clear'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.clear_cache',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -184,7 +204,14 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}/_clone/${encodeURIComponent(params.target.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.clone',
+      pathParts: {
+        index: params.index,
+        target: params.target
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -210,7 +237,13 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_close`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.close',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -248,7 +281,13 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.create',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -274,7 +313,13 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.create_data_stream',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -308,7 +353,13 @@ export default class Indices {
       method = 'GET'
       path = '/_data_stream/_stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.data_streams_stats',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -334,7 +385,13 @@ export default class Indices {
 
     const method = 'DELETE'
     const path = `/${encodeURIComponent(params.index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -367,7 +424,14 @@ export default class Indices {
       method = 'DELETE'
       path = `/${encodeURIComponent(params.index.toString())}/_aliases/${encodeURIComponent(params.name.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_alias',
+      pathParts: {
+        index: params.index,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -393,7 +457,13 @@ export default class Indices {
 
     const method = 'DELETE'
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_lifecycle`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_data_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -419,7 +489,13 @@ export default class Indices {
 
     const method = 'DELETE'
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_data_stream',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -445,7 +521,13 @@ export default class Indices {
 
     const method = 'DELETE'
     const path = `/_index_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_index_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -471,7 +553,13 @@ export default class Indices {
 
     const method = 'DELETE'
     const path = `/_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -497,7 +585,13 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_disk_usage`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.disk_usage',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -528,7 +622,14 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_downsample/${encodeURIComponent(params.target_index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.downsample',
+      pathParts: {
+        index: params.index,
+        target_index: params.target_index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -554,7 +655,13 @@ export default class Indices {
 
     const method = 'HEAD'
     const path = `/${encodeURIComponent(params.index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.exists',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -587,7 +694,14 @@ export default class Indices {
       method = 'HEAD'
       path = `/_alias/${encodeURIComponent(params.name.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.exists_alias',
+      pathParts: {
+        name: params.name,
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -613,7 +727,13 @@ export default class Indices {
 
     const method = 'HEAD'
     const path = `/_index_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.exists_index_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -639,7 +759,13 @@ export default class Indices {
 
     const method = 'HEAD'
     const path = `/_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.exists_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -665,7 +791,13 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_lifecycle/explain`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.explain_data_lifecycle',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -691,7 +823,13 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_field_usage_stats`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.field_usage_stats',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -725,7 +863,13 @@ export default class Indices {
       method = body != null ? 'POST' : 'GET'
       path = '/_flush'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.flush',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -759,7 +903,13 @@ export default class Indices {
       method = 'POST'
       path = '/_forcemerge'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.forcemerge',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -785,7 +935,13 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -825,7 +981,14 @@ export default class Indices {
       method = 'GET'
       path = '/_alias'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_alias',
+      pathParts: {
+        name: params.name,
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -851,7 +1014,13 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_lifecycle`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_data_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -885,7 +1054,13 @@ export default class Indices {
       method = 'GET'
       path = '/_data_stream'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_data_stream',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -918,7 +1093,14 @@ export default class Indices {
       method = 'GET'
       path = `/_mapping/field/${encodeURIComponent(params.fields.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_field_mapping',
+      pathParts: {
+        fields: params.fields,
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -952,7 +1134,13 @@ export default class Indices {
       method = 'GET'
       path = '/_index_template'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_index_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -986,7 +1174,13 @@ export default class Indices {
       method = 'GET'
       path = '/_mapping'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_mapping',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1026,7 +1220,14 @@ export default class Indices {
       method = 'GET'
       path = '/_settings'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_settings',
+      pathParts: {
+        index: params.index,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1060,7 +1261,13 @@ export default class Indices {
       method = 'GET'
       path = '/_template'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1086,7 +1293,13 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/_data_stream/_migrate/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.migrate_to_data_stream',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1124,7 +1337,10 @@ export default class Indices {
 
     const method = 'POST'
     const path = '/_data_stream/_modify'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.modify_data_stream'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1150,7 +1366,13 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_open`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.open',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1176,7 +1398,13 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/_data_stream/_promote/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.promote_data_stream',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1221,7 +1449,14 @@ export default class Indices {
       method = 'PUT'
       path = `/${encodeURIComponent(params.index.toString())}/_aliases/${encodeURIComponent(params.name.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_alias',
+      pathParts: {
+        index: params.index,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1259,7 +1494,13 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_lifecycle`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_data_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1297,7 +1538,13 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/_index_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_index_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1335,7 +1582,13 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}/_mapping`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_mapping',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1373,7 +1626,13 @@ export default class Indices {
       method = 'PUT'
       path = '/_settings'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_settings',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1411,7 +1670,13 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1445,7 +1710,13 @@ export default class Indices {
       method = 'GET'
       path = '/_recovery'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.recovery',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1479,7 +1750,13 @@ export default class Indices {
       method = body != null ? 'POST' : 'GET'
       path = '/_refresh'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.refresh',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1505,7 +1782,13 @@ export default class Indices {
 
     const method = body != null ? 'POST' : 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_reload_search_analyzers`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.reload_search_analyzers',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1531,7 +1814,13 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/_resolve/cluster/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.resolve_cluster',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1557,7 +1846,13 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/_resolve/index/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.resolve_index',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1602,7 +1897,14 @@ export default class Indices {
       method = 'POST'
       path = `/${encodeURIComponent(params.alias.toString())}/_rollover`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.rollover',
+      pathParts: {
+        alias: params.alias,
+        new_index: params.new_index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1636,7 +1938,13 @@ export default class Indices {
       method = 'GET'
       path = '/_segments'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.segments',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1670,7 +1978,13 @@ export default class Indices {
       method = 'GET'
       path = '/_shard_stores'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.shard_stores',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1708,7 +2022,14 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}/_shrink/${encodeURIComponent(params.target.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.shrink',
+      pathParts: {
+        index: params.index,
+        target: params.target
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1734,7 +2055,13 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/_index_template/_simulate_index/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.simulate_index_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1780,7 +2107,13 @@ export default class Indices {
       method = 'POST'
       path = '/_index_template/_simulate'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.simulate_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1818,7 +2151,14 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}/_split/${encodeURIComponent(params.target.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.split',
+      pathParts: {
+        index: params.index,
+        target: params.target
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1858,7 +2198,14 @@ export default class Indices {
       method = 'GET'
       path = '/_stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.stats',
+      pathParts: {
+        metric: params.metric,
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1884,7 +2231,13 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_unfreeze`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.unfreeze',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1923,7 +2276,10 @@ export default class Indices {
 
     const method = 'POST'
     const path = '/_aliases'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.update_aliases'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1969,6 +2325,12 @@ export default class Indices {
       method = body != null ? 'POST' : 'GET'
       path = '/_validate/query'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.validate_query',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class Enrich {
 
     const method = 'DELETE'
     const path = `/_enrich/policy/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'enrich.delete_policy',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -92,7 +99,13 @@ export default class Enrich {
 
     const method = 'PUT'
     const path = `/_enrich/policy/${encodeURIComponent(params.name.toString())}/_execute`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'enrich.execute_policy',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -126,7 +139,13 @@ export default class Enrich {
       method = 'GET'
       path = '/_enrich/policy'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'enrich.get_policy',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -164,7 +183,13 @@ export default class Enrich {
 
     const method = 'PUT'
     const path = `/_enrich/policy/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'enrich.put_policy',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -191,6 +216,9 @@ export default class Enrich {
 
     const method = 'GET'
     const path = '/_enrich/_stats'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'enrich.stats'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

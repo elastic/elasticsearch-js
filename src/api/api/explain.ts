@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -72,5 +73,12 @@ export default async function ExplainApi<TDocument = unknown> (this: That, param
 
   const method = body != null ? 'POST' : 'GET'
   const path = `/${encodeURIComponent(params.index.toString())}/_explain/${encodeURIComponent(params.id.toString())}`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'explain',
+    pathParts: {
+      id: params.id,
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class AsyncSearch {
 
     const method = 'DELETE'
     const path = `/_async_search/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'async_search.delete',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -92,7 +99,13 @@ export default class AsyncSearch {
 
     const method = 'GET'
     const path = `/_async_search/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'async_search.get',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -118,7 +131,13 @@ export default class AsyncSearch {
 
     const method = 'GET'
     const path = `/_async_search/status/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'async_search.status',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -170,6 +189,12 @@ export default class AsyncSearch {
       method = 'POST'
       path = '/_async_search'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'async_search.submit',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

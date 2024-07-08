@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -79,5 +80,11 @@ export default async function RankEvalApi (this: That, params: T.RankEvalRequest
     method = body != null ? 'POST' : 'GET'
     path = '/_rank_eval'
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'rank_eval',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

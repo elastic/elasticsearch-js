@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -60,5 +61,11 @@ export default async function DeleteByQueryRethrottleApi (this: That, params: T.
 
   const method = 'POST'
   const path = `/_delete_by_query/${encodeURIComponent(params.task_id.toString())}/_rethrottle`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'delete_by_query_rethrottle',
+    pathParts: {
+      task_id: params.task_id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

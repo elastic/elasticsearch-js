@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -60,5 +61,12 @@ export default async function ExistsApi (this: That, params: T.ExistsRequest | T
 
   const method = 'HEAD'
   const path = `/${encodeURIComponent(params.index.toString())}/_doc/${encodeURIComponent(params.id.toString())}`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'exists',
+    pathParts: {
+      id: params.id,
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

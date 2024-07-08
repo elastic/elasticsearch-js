@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class Eql {
 
     const method = 'DELETE'
     const path = `/_eql/search/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'eql.delete',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -92,7 +99,13 @@ export default class Eql {
 
     const method = 'GET'
     const path = `/_eql/search/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'eql.get',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -118,7 +131,13 @@ export default class Eql {
 
     const method = 'GET'
     const path = `/_eql/search/status/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'eql.get_status',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -156,6 +175,12 @@ export default class Eql {
 
     const method = body != null ? 'POST' : 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_eql/search`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'eql.search',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -78,7 +79,10 @@ export default class Sql {
 
     const method = 'POST'
     const path = '/_sql/close'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'sql.clear_cursor'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -104,7 +108,13 @@ export default class Sql {
 
     const method = 'DELETE'
     const path = `/_sql/async/delete/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'sql.delete_async',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -130,7 +140,13 @@ export default class Sql {
 
     const method = 'GET'
     const path = `/_sql/async/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'sql.get_async',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -156,7 +172,13 @@ export default class Sql {
 
     const method = 'GET'
     const path = `/_sql/async/status/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'sql.get_async_status',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -195,7 +217,10 @@ export default class Sql {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_sql'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'sql.query'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -233,6 +258,9 @@ export default class Sql {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_sql/translate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'sql.translate'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -72,5 +73,11 @@ export default async function DeleteByQueryApi (this: That, params: T.DeleteByQu
 
   const method = 'POST'
   const path = `/${encodeURIComponent(params.index.toString())}/_delete_by_query`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'delete_by_query',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -67,7 +68,10 @@ export default class License {
 
     const method = 'DELETE'
     const path = '/_license'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.delete'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -94,7 +98,10 @@ export default class License {
 
     const method = 'GET'
     const path = '/_license'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.get'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -121,7 +128,10 @@ export default class License {
 
     const method = 'GET'
     const path = '/_license/basic_status'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.get_basic_status'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -148,7 +158,10 @@ export default class License {
 
     const method = 'GET'
     const path = '/_license/trial_status'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.get_trial_status'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -187,7 +200,10 @@ export default class License {
 
     const method = 'PUT'
     const path = '/_license'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.post'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -214,7 +230,10 @@ export default class License {
 
     const method = 'POST'
     const path = '/_license/start_basic'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.post_start_basic'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -241,6 +260,9 @@ export default class License {
 
     const method = 'POST'
     const path = '/_license/start_trial'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.post_start_trial'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

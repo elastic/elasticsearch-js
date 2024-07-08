@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class Transform {
 
     const method = 'DELETE'
     const path = `/_transform/${encodeURIComponent(params.transform_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'transform.delete_transform',
+      pathParts: {
+        transform_id: params.transform_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -100,7 +107,13 @@ export default class Transform {
       method = 'GET'
       path = '/_transform'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'transform.get_transform',
+      pathParts: {
+        transform_id: params.transform_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -126,7 +139,13 @@ export default class Transform {
 
     const method = 'GET'
     const path = `/_transform/${encodeURIComponent(params.transform_id.toString())}/_stats`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'transform.get_transform_stats',
+      pathParts: {
+        transform_id: params.transform_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -172,7 +191,13 @@ export default class Transform {
       method = body != null ? 'POST' : 'GET'
       path = '/_transform/_preview'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'transform.preview_transform',
+      pathParts: {
+        transform_id: params.transform_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -210,7 +235,13 @@ export default class Transform {
 
     const method = 'PUT'
     const path = `/_transform/${encodeURIComponent(params.transform_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'transform.put_transform',
+      pathParts: {
+        transform_id: params.transform_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -236,7 +267,13 @@ export default class Transform {
 
     const method = 'POST'
     const path = `/_transform/${encodeURIComponent(params.transform_id.toString())}/_reset`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'transform.reset_transform',
+      pathParts: {
+        transform_id: params.transform_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -262,7 +299,13 @@ export default class Transform {
 
     const method = 'POST'
     const path = `/_transform/${encodeURIComponent(params.transform_id.toString())}/_schedule_now`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'transform.schedule_now_transform',
+      pathParts: {
+        transform_id: params.transform_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -288,7 +331,13 @@ export default class Transform {
 
     const method = 'POST'
     const path = `/_transform/${encodeURIComponent(params.transform_id.toString())}/_start`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'transform.start_transform',
+      pathParts: {
+        transform_id: params.transform_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -314,7 +363,13 @@ export default class Transform {
 
     const method = 'POST'
     const path = `/_transform/${encodeURIComponent(params.transform_id.toString())}/_stop`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'transform.stop_transform',
+      pathParts: {
+        transform_id: params.transform_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -352,7 +407,13 @@ export default class Transform {
 
     const method = 'POST'
     const path = `/_transform/${encodeURIComponent(params.transform_id.toString())}/_update`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'transform.update_transform',
+      pathParts: {
+        transform_id: params.transform_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -379,6 +440,9 @@ export default class Transform {
 
     const method = 'POST'
     const path = '/_transform/_upgrade'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'transform.upgrade_transforms'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

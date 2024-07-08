@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -74,7 +75,13 @@ export default class SearchableSnapshots {
       method = 'GET'
       path = '/_searchable_snapshots/cache/stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'searchable_snapshots.cache_stats',
+      pathParts: {
+        node_id: params.node_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -108,7 +115,13 @@ export default class SearchableSnapshots {
       method = 'POST'
       path = '/_searchable_snapshots/cache/clear'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'searchable_snapshots.clear_cache',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -146,7 +159,14 @@ export default class SearchableSnapshots {
 
     const method = 'POST'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}/_mount`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'searchable_snapshots.mount',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -180,6 +200,12 @@ export default class SearchableSnapshots {
       method = 'GET'
       path = '/_searchable_snapshots/stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'searchable_snapshots.stats',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

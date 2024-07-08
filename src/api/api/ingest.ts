@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class Ingest {
 
     const method = 'DELETE'
     const path = `/_ingest/pipeline/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.delete_pipeline',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -93,7 +100,10 @@ export default class Ingest {
 
     const method = 'GET'
     const path = '/_ingest/geoip/stats'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.geo_ip_stats'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -127,7 +137,13 @@ export default class Ingest {
       method = 'GET'
       path = '/_ingest/pipeline'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.get_pipeline',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -154,7 +170,10 @@ export default class Ingest {
 
     const method = 'GET'
     const path = '/_ingest/processor/grok'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.processor_grok'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -192,7 +211,13 @@ export default class Ingest {
 
     const method = 'PUT'
     const path = `/_ingest/pipeline/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.put_pipeline',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -238,6 +263,12 @@ export default class Ingest {
       method = body != null ? 'POST' : 'GET'
       path = '/_ingest/pipeline/_simulate'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.simulate',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

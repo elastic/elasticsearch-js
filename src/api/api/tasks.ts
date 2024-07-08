@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -74,7 +75,13 @@ export default class Tasks {
       method = 'POST'
       path = '/_tasks/_cancel'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'tasks.cancel',
+      pathParts: {
+        task_id: params.task_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -100,7 +107,13 @@ export default class Tasks {
 
     const method = 'GET'
     const path = `/_tasks/${encodeURIComponent(params.task_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'tasks.get',
+      pathParts: {
+        task_id: params.task_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -127,6 +140,9 @@ export default class Tasks {
 
     const method = 'GET'
     const path = '/_tasks'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'tasks.list'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

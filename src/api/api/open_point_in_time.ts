@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -60,5 +61,11 @@ export default async function OpenPointInTimeApi (this: That, params: T.OpenPoin
 
   const method = 'POST'
   const path = `/${encodeURIComponent(params.index.toString())}/_pit`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'open_point_in_time',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

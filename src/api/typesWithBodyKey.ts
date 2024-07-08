@@ -3109,7 +3109,7 @@ export type AggregationsBuckets<TBucket = unknown> = Record<string, TBucket> | T
 
 export type AggregationsBucketsPath = string | string[] | Record<string, string>
 
-export type AggregationsCalendarInterval = 'second' | '1s' | 'minute' | '1m' | 'hour' | '1h' | 'day' | '1d' | 'week' | '1w' | 'month' | '1M' | 'quarter' | '1q' | 'year' | '1Y'
+export type AggregationsCalendarInterval = 'second' | '1s' | 'minute' | '1m' | 'hour' | '1h' | 'day' | '1d' | 'week' | '1w' | 'month' | '1M' | 'quarter' | '1q' | 'year' | '1y'
 
 export interface AggregationsCardinalityAggregate extends AggregationsAggregateBase {
   value: long
@@ -4155,6 +4155,7 @@ export interface AggregationsTermsAggregation extends AggregationsBucketAggregat
   value_type?: string
   order?: AggregationsAggregateOrder
   script?: Script
+  shard_min_doc_count?: long
   shard_size?: integer
   show_term_doc_count_error?: boolean
   size?: integer
@@ -5492,7 +5493,7 @@ export interface QueryDslConstantScoreQuery extends QueryDslQueryBase {
 export interface QueryDslDateDecayFunctionKeys extends QueryDslDecayFunctionBase {
 }
 export type QueryDslDateDecayFunction = QueryDslDateDecayFunctionKeys
-& { [property: string]: QueryDslDecayPlacement<DateMath, Duration> | QueryDslMultiValueMode }
+& { [property: string]: QueryDslDecayPlacement | QueryDslMultiValueMode }
 
 export interface QueryDslDateDistanceFeatureQuery extends QueryDslDistanceFeatureQueryBase<DateMath, Duration> {
 }
@@ -5604,7 +5605,7 @@ export type QueryDslGeoBoundingBoxQuery = QueryDslGeoBoundingBoxQueryKeys
 export interface QueryDslGeoDecayFunctionKeys extends QueryDslDecayFunctionBase {
 }
 export type QueryDslGeoDecayFunction = QueryDslGeoDecayFunctionKeys
-& { [property: string]: QueryDslDecayPlacement<GeoLocation, Distance> | QueryDslMultiValueMode }
+& { [property: string]: QueryDslDecayPlacement | QueryDslMultiValueMode }
 
 export interface QueryDslGeoDistanceFeatureQuery extends QueryDslDistanceFeatureQueryBase<GeoLocation, Distance> {
 }
@@ -5864,7 +5865,7 @@ export interface QueryDslNumberRangeQuery extends QueryDslRangeQueryBase {
 export interface QueryDslNumericDecayFunctionKeys extends QueryDslDecayFunctionBase {
 }
 export type QueryDslNumericDecayFunction = QueryDslNumericDecayFunctionKeys
-& { [property: string]: QueryDslDecayPlacement<double, double> | QueryDslMultiValueMode }
+& { [property: string]: QueryDslDecayPlacement | QueryDslMultiValueMode }
 
 export type QueryDslOperator = 'and' | 'AND' | 'or' | 'OR'
 
@@ -10608,6 +10609,7 @@ export interface IndicesMappingLimitSettingsNestedObjects {
 
 export interface IndicesMappingLimitSettingsTotalFields {
   limit?: long
+  ignore_dynamic_beyond_limit?: boolean
 }
 
 export interface IndicesMerge {

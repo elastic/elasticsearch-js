@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -67,7 +68,10 @@ export default class Xpack {
 
     const method = 'GET'
     const path = '/_xpack'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'xpack.info'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -94,6 +98,9 @@ export default class Xpack {
 
     const method = 'GET'
     const path = '/_xpack/usage'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'xpack.usage'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

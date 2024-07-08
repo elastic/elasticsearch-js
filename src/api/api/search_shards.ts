@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -68,5 +69,11 @@ export default async function SearchShardsApi (this: That, params?: T.SearchShar
     method = body != null ? 'POST' : 'GET'
     path = '/_search_shards'
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'search_shards',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

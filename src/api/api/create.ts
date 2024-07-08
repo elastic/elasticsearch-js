@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -65,5 +66,12 @@ export default async function CreateApi<TDocument = unknown> (this: That, params
 
   const method = 'PUT'
   const path = `/${encodeURIComponent(params.index.toString())}/_create/${encodeURIComponent(params.id.toString())}`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'create',
+    pathParts: {
+      id: params.id,
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

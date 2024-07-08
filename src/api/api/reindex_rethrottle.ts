@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -60,5 +61,11 @@ export default async function ReindexRethrottleApi (this: That, params: T.Reinde
 
   const method = 'POST'
   const path = `/_reindex/${encodeURIComponent(params.task_id.toString())}/_rethrottle`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'reindex_rethrottle',
+    pathParts: {
+      task_id: params.task_id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

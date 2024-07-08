@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -73,5 +74,8 @@ export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this
 
   const method = body != null ? 'POST' : 'GET'
   const path = '/_scripts/painless/_execute'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'scripts_painless_execute'
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/deployment/cache/_clear`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.clear_trained_model_deployment_cache',
+      pathParts: {
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -104,7 +111,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_close`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.close_job',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -130,7 +143,13 @@ export default class Ml {
 
     const method = 'DELETE'
     const path = `/_ml/calendars/${encodeURIComponent(params.calendar_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_calendar',
+      pathParts: {
+        calendar_id: params.calendar_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -156,7 +175,14 @@ export default class Ml {
 
     const method = 'DELETE'
     const path = `/_ml/calendars/${encodeURIComponent(params.calendar_id.toString())}/events/${encodeURIComponent(params.event_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_calendar_event',
+      pathParts: {
+        calendar_id: params.calendar_id,
+        event_id: params.event_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -182,7 +208,14 @@ export default class Ml {
 
     const method = 'DELETE'
     const path = `/_ml/calendars/${encodeURIComponent(params.calendar_id.toString())}/jobs/${encodeURIComponent(params.job_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_calendar_job',
+      pathParts: {
+        calendar_id: params.calendar_id,
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -208,7 +241,13 @@ export default class Ml {
 
     const method = 'DELETE'
     const path = `/_ml/data_frame/analytics/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_data_frame_analytics',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -234,7 +273,13 @@ export default class Ml {
 
     const method = 'DELETE'
     const path = `/_ml/datafeeds/${encodeURIComponent(params.datafeed_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_datafeed',
+      pathParts: {
+        datafeed_id: params.datafeed_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -280,7 +325,13 @@ export default class Ml {
       method = 'DELETE'
       path = '/_ml/_delete_expired_data'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_expired_data',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -306,7 +357,13 @@ export default class Ml {
 
     const method = 'DELETE'
     const path = `/_ml/filters/${encodeURIComponent(params.filter_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_filter',
+      pathParts: {
+        filter_id: params.filter_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -339,7 +396,14 @@ export default class Ml {
       method = 'DELETE'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_forecast`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_forecast',
+      pathParts: {
+        job_id: params.job_id,
+        forecast_id: params.forecast_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -365,7 +429,13 @@ export default class Ml {
 
     const method = 'DELETE'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_job',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -391,7 +461,14 @@ export default class Ml {
 
     const method = 'DELETE'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/model_snapshots/${encodeURIComponent(params.snapshot_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_model_snapshot',
+      pathParts: {
+        job_id: params.job_id,
+        snapshot_id: params.snapshot_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -417,7 +494,13 @@ export default class Ml {
 
     const method = 'DELETE'
     const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_trained_model',
+      pathParts: {
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -443,7 +526,14 @@ export default class Ml {
 
     const method = 'DELETE'
     const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/model_aliases/${encodeURIComponent(params.model_alias.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.delete_trained_model_alias',
+      pathParts: {
+        model_alias: params.model_alias,
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -482,7 +572,10 @@ export default class Ml {
 
     const method = 'POST'
     const path = '/_ml/anomaly_detectors/_estimate_model_memory'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.estimate_model_memory'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -520,7 +613,10 @@ export default class Ml {
 
     const method = 'POST'
     const path = '/_ml/data_frame/_evaluate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.evaluate_data_frame'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -566,7 +662,13 @@ export default class Ml {
       method = body != null ? 'POST' : 'GET'
       path = '/_ml/data_frame/analytics/_explain'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.explain_data_frame_analytics',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -604,7 +706,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_flush`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.flush_job',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -642,7 +750,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_forecast`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.forecast',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -687,7 +801,14 @@ export default class Ml {
       method = body != null ? 'POST' : 'GET'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/buckets`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_buckets',
+      pathParts: {
+        job_id: params.job_id,
+        timestamp: params.timestamp
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -713,7 +834,13 @@ export default class Ml {
 
     const method = 'GET'
     const path = `/_ml/calendars/${encodeURIComponent(params.calendar_id.toString())}/events`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_calendar_events',
+      pathParts: {
+        calendar_id: params.calendar_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -759,7 +886,13 @@ export default class Ml {
       method = body != null ? 'POST' : 'GET'
       path = '/_ml/calendars'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_calendars',
+      pathParts: {
+        calendar_id: params.calendar_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -804,7 +937,14 @@ export default class Ml {
       method = body != null ? 'POST' : 'GET'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/categories`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_categories',
+      pathParts: {
+        job_id: params.job_id,
+        category_id: params.category_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -838,7 +978,13 @@ export default class Ml {
       method = 'GET'
       path = '/_ml/data_frame/analytics'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_data_frame_analytics',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -872,7 +1018,13 @@ export default class Ml {
       method = 'GET'
       path = '/_ml/data_frame/analytics/_stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_data_frame_analytics_stats',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -906,7 +1058,13 @@ export default class Ml {
       method = 'GET'
       path = '/_ml/datafeeds/_stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_datafeed_stats',
+      pathParts: {
+        datafeed_id: params.datafeed_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -940,7 +1098,13 @@ export default class Ml {
       method = 'GET'
       path = '/_ml/datafeeds'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_datafeeds',
+      pathParts: {
+        datafeed_id: params.datafeed_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -974,7 +1138,13 @@ export default class Ml {
       method = 'GET'
       path = '/_ml/filters'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_filters',
+      pathParts: {
+        filter_id: params.filter_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1012,7 +1182,13 @@ export default class Ml {
 
     const method = body != null ? 'POST' : 'GET'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/influencers`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_influencers',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1046,7 +1222,13 @@ export default class Ml {
       method = 'GET'
       path = '/_ml/anomaly_detectors/_stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_job_stats',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1080,7 +1262,13 @@ export default class Ml {
       method = 'GET'
       path = '/_ml/anomaly_detectors'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_jobs',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1114,7 +1302,13 @@ export default class Ml {
       method = 'GET'
       path = '/_ml/memory/_stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_memory_stats',
+      pathParts: {
+        node_id: params.node_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1140,7 +1334,14 @@ export default class Ml {
 
     const method = 'GET'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/model_snapshots/${encodeURIComponent(params.snapshot_id.toString())}/_upgrade/_stats`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_model_snapshot_upgrade_stats',
+      pathParts: {
+        job_id: params.job_id,
+        snapshot_id: params.snapshot_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1185,7 +1386,14 @@ export default class Ml {
       method = body != null ? 'POST' : 'GET'
       path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/model_snapshots`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_model_snapshots',
+      pathParts: {
+        job_id: params.job_id,
+        snapshot_id: params.snapshot_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1223,7 +1431,13 @@ export default class Ml {
 
     const method = body != null ? 'POST' : 'GET'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/overall_buckets`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_overall_buckets',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1261,7 +1475,13 @@ export default class Ml {
 
     const method = body != null ? 'POST' : 'GET'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/results/records`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_records',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1295,7 +1515,13 @@ export default class Ml {
       method = 'GET'
       path = '/_ml/trained_models'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_trained_models',
+      pathParts: {
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1329,7 +1555,13 @@ export default class Ml {
       method = 'GET'
       path = '/_ml/trained_models/_stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.get_trained_models_stats',
+      pathParts: {
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1367,7 +1599,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/_infer`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.infer_trained_model',
+      pathParts: {
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1394,7 +1632,10 @@ export default class Ml {
 
     const method = 'GET'
     const path = '/_ml/info'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.info'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1432,7 +1673,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_open`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.open_job',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1470,7 +1717,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/calendars/${encodeURIComponent(params.calendar_id.toString())}/events`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.post_calendar_events',
+      pathParts: {
+        calendar_id: params.calendar_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1501,7 +1754,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_data`
-    return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.post_data',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }
 
   /**
@@ -1547,7 +1806,13 @@ export default class Ml {
       method = body != null ? 'POST' : 'GET'
       path = '/_ml/data_frame/analytics/_preview'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.preview_data_frame_analytics',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1593,7 +1858,13 @@ export default class Ml {
       method = body != null ? 'POST' : 'GET'
       path = '/_ml/datafeeds/_preview'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.preview_datafeed',
+      pathParts: {
+        datafeed_id: params.datafeed_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1631,7 +1902,13 @@ export default class Ml {
 
     const method = 'PUT'
     const path = `/_ml/calendars/${encodeURIComponent(params.calendar_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.put_calendar',
+      pathParts: {
+        calendar_id: params.calendar_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1657,7 +1934,14 @@ export default class Ml {
 
     const method = 'PUT'
     const path = `/_ml/calendars/${encodeURIComponent(params.calendar_id.toString())}/jobs/${encodeURIComponent(params.job_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.put_calendar_job',
+      pathParts: {
+        calendar_id: params.calendar_id,
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1695,7 +1979,13 @@ export default class Ml {
 
     const method = 'PUT'
     const path = `/_ml/data_frame/analytics/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.put_data_frame_analytics',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1733,7 +2023,13 @@ export default class Ml {
 
     const method = 'PUT'
     const path = `/_ml/datafeeds/${encodeURIComponent(params.datafeed_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.put_datafeed',
+      pathParts: {
+        datafeed_id: params.datafeed_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1771,7 +2067,13 @@ export default class Ml {
 
     const method = 'PUT'
     const path = `/_ml/filters/${encodeURIComponent(params.filter_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.put_filter',
+      pathParts: {
+        filter_id: params.filter_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1809,7 +2111,13 @@ export default class Ml {
 
     const method = 'PUT'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.put_job',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1847,7 +2155,13 @@ export default class Ml {
 
     const method = 'PUT'
     const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.put_trained_model',
+      pathParts: {
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1873,7 +2187,14 @@ export default class Ml {
 
     const method = 'PUT'
     const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/model_aliases/${encodeURIComponent(params.model_alias.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.put_trained_model_alias',
+      pathParts: {
+        model_alias: params.model_alias,
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1911,7 +2232,14 @@ export default class Ml {
 
     const method = 'PUT'
     const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/definition/${encodeURIComponent(params.part.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.put_trained_model_definition_part',
+      pathParts: {
+        model_id: params.model_id,
+        part: params.part
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1949,7 +2277,13 @@ export default class Ml {
 
     const method = 'PUT'
     const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/vocabulary`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.put_trained_model_vocabulary',
+      pathParts: {
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1975,7 +2309,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_reset`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.reset_job',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2013,7 +2353,14 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/model_snapshots/${encodeURIComponent(params.snapshot_id.toString())}/_revert`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.revert_model_snapshot',
+      pathParts: {
+        job_id: params.job_id,
+        snapshot_id: params.snapshot_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2040,7 +2387,10 @@ export default class Ml {
 
     const method = 'POST'
     const path = '/_ml/set_upgrade_mode'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.set_upgrade_mode'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2066,7 +2416,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/data_frame/analytics/${encodeURIComponent(params.id.toString())}/_start`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.start_data_frame_analytics',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2104,7 +2460,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/datafeeds/${encodeURIComponent(params.datafeed_id.toString())}/_start`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.start_datafeed',
+      pathParts: {
+        datafeed_id: params.datafeed_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2130,7 +2492,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/deployment/_start`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.start_trained_model_deployment',
+      pathParts: {
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2156,7 +2524,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/data_frame/analytics/${encodeURIComponent(params.id.toString())}/_stop`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.stop_data_frame_analytics',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2194,7 +2568,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/datafeeds/${encodeURIComponent(params.datafeed_id.toString())}/_stop`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.stop_datafeed',
+      pathParts: {
+        datafeed_id: params.datafeed_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2220,7 +2600,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/deployment/_stop`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.stop_trained_model_deployment',
+      pathParts: {
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2258,7 +2644,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/data_frame/analytics/${encodeURIComponent(params.id.toString())}/_update`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.update_data_frame_analytics',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2296,7 +2688,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/datafeeds/${encodeURIComponent(params.datafeed_id.toString())}/_update`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.update_datafeed',
+      pathParts: {
+        datafeed_id: params.datafeed_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2334,7 +2732,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/filters/${encodeURIComponent(params.filter_id.toString())}/_update`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.update_filter',
+      pathParts: {
+        filter_id: params.filter_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2372,7 +2776,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/_update`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.update_job',
+      pathParts: {
+        job_id: params.job_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2410,7 +2820,14 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/model_snapshots/${encodeURIComponent(params.snapshot_id.toString())}/_update`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.update_model_snapshot',
+      pathParts: {
+        job_id: params.job_id,
+        snapshot_id: params.snapshot_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2448,7 +2865,13 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/trained_models/${encodeURIComponent(params.model_id.toString())}/deployment/_update`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.update_trained_model_deployment',
+      pathParts: {
+        model_id: params.model_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2474,7 +2897,14 @@ export default class Ml {
 
     const method = 'POST'
     const path = `/_ml/anomaly_detectors/${encodeURIComponent(params.job_id.toString())}/model_snapshots/${encodeURIComponent(params.snapshot_id.toString())}/_upgrade`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.upgrade_job_snapshot',
+      pathParts: {
+        job_id: params.job_id,
+        snapshot_id: params.snapshot_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2513,7 +2943,10 @@ export default class Ml {
 
     const method = 'POST'
     const path = '/_ml/anomaly_detectors/_validate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.validate'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -2544,6 +2977,9 @@ export default class Ml {
 
     const method = 'POST'
     const path = '/_ml/anomaly_detectors/_validate/detector'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ml.validate_detector'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

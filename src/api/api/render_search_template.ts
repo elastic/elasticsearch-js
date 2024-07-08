@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -80,5 +81,11 @@ export default async function RenderSearchTemplateApi (this: That, params?: T.Re
     method = body != null ? 'POST' : 'GET'
     path = '/_render/template'
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'render_search_template',
+    pathParts: {
+      id: params.id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }
