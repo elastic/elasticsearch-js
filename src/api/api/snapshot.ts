@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -44,8 +45,8 @@ export default class Snapshot {
   }
 
   /**
-    * Removes stale data from repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clean-up-snapshot-repo-api.html | Elasticsearch API documentation}
+    * Triggers the review of a snapshot repository’s contents and deletes any stale data not referenced by existing snapshots.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/clean-up-snapshot-repo-api.html | Elasticsearch API documentation}
     */
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCleanupRepositoryResponse>
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCleanupRepositoryResponse, unknown>>
@@ -66,12 +67,18 @@ export default class Snapshot {
 
     const method = 'POST'
     const path = `/_snapshot/${encodeURIComponent(params.name.toString())}/_cleanup`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.cleanup_repository',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Clones indices from one snapshot into another snapshot in the same repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-snapshots.html | Elasticsearch API documentation}
     */
   async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCloneResponse>
   async clone (this: That, params: T.SnapshotCloneRequest | TB.SnapshotCloneRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCloneResponse, unknown>>
@@ -104,12 +111,20 @@ export default class Snapshot {
 
     const method = 'PUT'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}/_clone/${encodeURIComponent(params.target_snapshot.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.clone',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot,
+        target_snapshot: params.target_snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Creates a snapshot in a repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-snapshots.html | Elasticsearch API documentation}
     */
   async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateResponse>
   async create (this: That, params: T.SnapshotCreateRequest | TB.SnapshotCreateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateResponse, unknown>>
@@ -142,12 +157,19 @@ export default class Snapshot {
 
     const method = 'PUT'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.create',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Creates a repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-snapshots.html | Elasticsearch API documentation}
     */
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCreateRepositoryResponse>
   async createRepository (this: That, params: T.SnapshotCreateRepositoryRequest | TB.SnapshotCreateRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotCreateRepositoryResponse, unknown>>
@@ -173,12 +195,18 @@ export default class Snapshot {
 
     const method = 'PUT'
     const path = `/_snapshot/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.create_repository',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Deletes one or more snapshots.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-snapshots.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteResponse>
   async delete (this: That, params: T.SnapshotDeleteRequest | TB.SnapshotDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteResponse, unknown>>
@@ -199,12 +227,19 @@ export default class Snapshot {
 
     const method = 'DELETE'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.delete',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Deletes a repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-snapshots.html | Elasticsearch API documentation}
     */
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotDeleteRepositoryResponse>
   async deleteRepository (this: That, params: T.SnapshotDeleteRepositoryRequest | TB.SnapshotDeleteRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotDeleteRepositoryResponse, unknown>>
@@ -225,12 +260,18 @@ export default class Snapshot {
 
     const method = 'DELETE'
     const path = `/_snapshot/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.delete_repository',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Returns information about a snapshot.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-snapshots.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetResponse>
   async get (this: That, params: T.SnapshotGetRequest | TB.SnapshotGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetResponse, unknown>>
@@ -251,12 +292,19 @@ export default class Snapshot {
 
     const method = 'GET'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.get',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Returns information about a repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-snapshots.html | Elasticsearch API documentation}
     */
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotGetRepositoryResponse>
   async getRepository (this: That, params?: T.SnapshotGetRepositoryRequest | TB.SnapshotGetRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotGetRepositoryResponse, unknown>>
@@ -285,12 +333,18 @@ export default class Snapshot {
       method = 'GET'
       path = '/_snapshot'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.get_repository',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Analyzes a repository for correctness and performance
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-snapshots.html | Elasticsearch API documentation}
     */
   async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async repositoryAnalyze (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -311,12 +365,18 @@ export default class Snapshot {
 
     const method = 'POST'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/_analyze`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.repository_analyze',
+      pathParts: {
+        repository: params.repository
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Restores a snapshot.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-snapshots.html | Elasticsearch API documentation}
     */
   async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRestoreResponse>
   async restore (this: That, params: T.SnapshotRestoreRequest | TB.SnapshotRestoreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRestoreResponse, unknown>>
@@ -349,12 +409,19 @@ export default class Snapshot {
 
     const method = 'POST'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}/_restore`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.restore',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Returns information about the status of a snapshot.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-snapshots.html | Elasticsearch API documentation}
     */
   async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotStatusResponse>
   async status (this: That, params?: T.SnapshotStatusRequest | TB.SnapshotStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotStatusResponse, unknown>>
@@ -386,12 +453,19 @@ export default class Snapshot {
       method = 'GET'
       path = '/_snapshot/_status'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.status',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Verifies a repository.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-snapshots.html | Elasticsearch API documentation}
     */
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotVerifyRepositoryResponse>
   async verifyRepository (this: That, params: T.SnapshotVerifyRepositoryRequest | TB.SnapshotVerifyRepositoryRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotVerifyRepositoryResponse, unknown>>
@@ -412,6 +486,12 @@ export default class Snapshot {
 
     const method = 'POST'
     const path = `/_snapshot/${encodeURIComponent(params.name.toString())}/_verify`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.verify_repository',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

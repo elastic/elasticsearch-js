@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -45,7 +46,7 @@ export default class Inference {
 
   /**
     * Delete an inference endpoint
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-inference-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/delete-inference-api.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceDeleteResponse>
   async delete (this: That, params: T.InferenceDeleteRequest | TB.InferenceDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceDeleteResponse, unknown>>
@@ -73,12 +74,19 @@ export default class Inference {
       method = 'DELETE'
       path = `/_inference/${encodeURIComponent(params.inference_id.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'inference.delete',
+      pathParts: {
+        task_type: params.task_type,
+        inference_id: params.inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
     * Get an inference endpoint
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-inference-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/get-inference-api.html | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceGetResponse>
   async get (this: That, params?: T.InferenceGetRequest | TB.InferenceGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceGetResponse, unknown>>
@@ -110,12 +118,19 @@ export default class Inference {
       method = 'GET'
       path = '/_inference'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'inference.get',
+      pathParts: {
+        task_type: params.task_type,
+        inference_id: params.inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Perform inference
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/post-inference-api.html | Elasticsearch API documentation}
+    * Perform inference on the service
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/post-inference-api.html | Elasticsearch API documentation}
     */
   async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferenceInferenceResponse>
   async inference (this: That, params: T.InferenceInferenceRequest | TB.InferenceInferenceRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferenceInferenceResponse, unknown>>
@@ -155,12 +170,19 @@ export default class Inference {
       method = 'POST'
       path = `/_inference/${encodeURIComponent(params.inference_id.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'inference.inference',
+      pathParts: {
+        task_type: params.task_type,
+        inference_id: params.inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Configure an inference endpoint for use in the Inference API
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-inference-api.html | Elasticsearch API documentation}
+    * Create an inference endpoint
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/put-inference-api.html | Elasticsearch API documentation}
     */
   async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.InferencePutResponse>
   async put (this: That, params: T.InferencePutRequest | TB.InferencePutRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.InferencePutResponse, unknown>>
@@ -193,6 +215,13 @@ export default class Inference {
       method = 'PUT'
       path = `/_inference/${encodeURIComponent(params.inference_id.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'inference.put',
+      pathParts: {
+        task_type: params.task_type,
+        inference_id: params.inference_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

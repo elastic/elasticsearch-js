@@ -3036,7 +3036,7 @@ export type AggregationsBuckets<TBucket = unknown> = Record<string, TBucket> | T
 
 export type AggregationsBucketsPath = string | string[] | Record<string, string>
 
-export type AggregationsCalendarInterval = 'second' | '1s' | 'minute' | '1m' | 'hour' | '1h' | 'day' | '1d' | 'week' | '1w' | 'month' | '1M' | 'quarter' | '1q' | 'year' | '1Y'
+export type AggregationsCalendarInterval = 'second' | '1s' | 'minute' | '1m' | 'hour' | '1h' | 'day' | '1d' | 'week' | '1w' | 'month' | '1M' | 'quarter' | '1q' | 'year' | '1y'
 
 export interface AggregationsCardinalityAggregate extends AggregationsAggregateBase {
   value: long
@@ -4082,6 +4082,7 @@ export interface AggregationsTermsAggregation extends AggregationsBucketAggregat
   value_type?: string
   order?: AggregationsAggregateOrder
   script?: Script
+  shard_min_doc_count?: long
   shard_size?: integer
   show_term_doc_count_error?: boolean
   size?: integer
@@ -5422,28 +5423,22 @@ export interface QueryDslConstantScoreQuery extends QueryDslQueryBase {
   filter: QueryDslQueryContainer
 }
 
-export interface QueryDslDateDecayFunctionKeys extends QueryDslDecayFunctionBase {
+export interface QueryDslDateDecayFunctionKeys extends QueryDslDecayFunctionBase<DateMath, Duration> {
 }
 export type QueryDslDateDecayFunction = QueryDslDateDecayFunctionKeys
-& { [property: string]: QueryDslDecayPlacement<DateMath, Duration> | QueryDslMultiValueMode }
+& { [property: string]: QueryDslDecayPlacement | QueryDslMultiValueMode }
 
 export interface QueryDslDateDistanceFeatureQuery extends QueryDslDistanceFeatureQueryBase<DateMath, Duration> {
 }
 
-export interface QueryDslDateRangeQuery extends QueryDslRangeQueryBase {
-  gt?: DateMath
-  gte?: DateMath
-  lt?: DateMath
-  lte?: DateMath
-  from?: DateMath | null
-  to?: DateMath | null
+export interface QueryDslDateRangeQuery extends QueryDslRangeQueryBase<DateMath> {
   format?: DateFormat
   time_zone?: TimeZone
 }
 
-export type QueryDslDecayFunction = QueryDslDateDecayFunction | QueryDslNumericDecayFunction | QueryDslGeoDecayFunction
+export type QueryDslDecayFunction = QueryDslUntypedDecayFunction | QueryDslDateDecayFunction | QueryDslNumericDecayFunction | QueryDslGeoDecayFunction
 
-export interface QueryDslDecayFunctionBase {
+export interface QueryDslDecayFunctionBase<TOrigin = unknown, TScale = unknown> {
   multi_value_mode?: QueryDslMultiValueMode
 }
 
@@ -5459,7 +5454,7 @@ export interface QueryDslDisMaxQuery extends QueryDslQueryBase {
   tie_breaker?: double
 }
 
-export type QueryDslDistanceFeatureQuery = QueryDslGeoDistanceFeatureQuery | QueryDslDateDistanceFeatureQuery
+export type QueryDslDistanceFeatureQuery = QueryDslUntypedDistanceFeatureQuery | QueryDslGeoDistanceFeatureQuery | QueryDslDateDistanceFeatureQuery
 
 export interface QueryDslDistanceFeatureQueryBase<TOrigin = unknown, TDistance = unknown> extends QueryDslQueryBase {
   origin: TOrigin
@@ -5534,10 +5529,10 @@ export interface QueryDslGeoBoundingBoxQueryKeys extends QueryDslQueryBase {
 export type QueryDslGeoBoundingBoxQuery = QueryDslGeoBoundingBoxQueryKeys
 & { [property: string]: GeoBounds | QueryDslGeoExecution | QueryDslGeoValidationMethod | boolean | float | string }
 
-export interface QueryDslGeoDecayFunctionKeys extends QueryDslDecayFunctionBase {
+export interface QueryDslGeoDecayFunctionKeys extends QueryDslDecayFunctionBase<GeoLocation, Distance> {
 }
 export type QueryDslGeoDecayFunction = QueryDslGeoDecayFunctionKeys
-& { [property: string]: QueryDslDecayPlacement<GeoLocation, Distance> | QueryDslMultiValueMode }
+& { [property: string]: QueryDslDecayPlacement | QueryDslMultiValueMode }
 
 export interface QueryDslGeoDistanceFeatureQuery extends QueryDslDistanceFeatureQueryBase<GeoLocation, Distance> {
 }
@@ -5785,19 +5780,13 @@ export interface QueryDslNestedQuery extends QueryDslQueryBase {
   score_mode?: QueryDslChildScoreMode
 }
 
-export interface QueryDslNumberRangeQuery extends QueryDslRangeQueryBase {
-  gt?: double
-  gte?: double
-  lt?: double
-  lte?: double
-  from?: double | null
-  to?: double | null
+export interface QueryDslNumberRangeQuery extends QueryDslRangeQueryBase<double> {
 }
 
-export interface QueryDslNumericDecayFunctionKeys extends QueryDslDecayFunctionBase {
+export interface QueryDslNumericDecayFunctionKeys extends QueryDslDecayFunctionBase<double, double> {
 }
 export type QueryDslNumericDecayFunction = QueryDslNumericDecayFunctionKeys
-& { [property: string]: QueryDslDecayPlacement<double, double> | QueryDslMultiValueMode }
+& { [property: string]: QueryDslDecayPlacement | QueryDslMultiValueMode }
 
 export type QueryDslOperator = 'and' | 'AND' | 'or' | 'OR'
 
@@ -5878,7 +5867,7 @@ export interface QueryDslQueryContainer {
   range?: Partial<Record<Field, QueryDslRangeQuery>>
   rank_feature?: QueryDslRankFeatureQuery
   regexp?: Partial<Record<Field, QueryDslRegexpQuery | string>>
-  rule_query?: QueryDslRuleQuery
+  rule?: QueryDslRuleQuery
   script?: QueryDslScriptQuery
   script_score?: QueryDslScriptScoreQuery
   semantic?: QueryDslSemanticQuery
@@ -5893,6 +5882,7 @@ export interface QueryDslQueryContainer {
   span_or?: QueryDslSpanOrQuery
   span_term?: Partial<Record<Field, QueryDslSpanTermQuery | string>>
   span_within?: QueryDslSpanWithinQuery
+  sparse_vector?: QueryDslSparseVectorQuery
   term?: Partial<Record<Field, QueryDslTermQuery | FieldValue>>
   terms?: QueryDslTermsQuery
   terms_set?: Partial<Record<Field, QueryDslTermsSetQuery>>
@@ -5936,10 +5926,16 @@ export interface QueryDslRandomScoreFunction {
   seed?: long | string
 }
 
-export type QueryDslRangeQuery = QueryDslDateRangeQuery | QueryDslNumberRangeQuery | QueryDslTermsRangeQuery
+export type QueryDslRangeQuery = QueryDslUntypedRangeQuery | QueryDslDateRangeQuery | QueryDslNumberRangeQuery | QueryDslTermRangeQuery
 
-export interface QueryDslRangeQueryBase extends QueryDslQueryBase {
+export interface QueryDslRangeQueryBase<T = unknown> extends QueryDslQueryBase {
   relation?: QueryDslRangeRelation
+  gt?: T
+  gte?: T
+  lt?: T
+  lte?: T
+  from?: T | null
+  to?: T | null
 }
 
 export type QueryDslRangeRelation = 'within' | 'contains' | 'intersects'
@@ -5981,7 +5977,7 @@ export interface QueryDslRegexpQuery extends QueryDslQueryBase {
 
 export interface QueryDslRuleQuery extends QueryDslQueryBase {
   organic: QueryDslQueryContainer
-  ruleset_id: Id
+  ruleset_ids: Id[]
   match_criteria: any
 }
 
@@ -6097,9 +6093,21 @@ export interface QueryDslSpanWithinQuery extends QueryDslQueryBase {
   little: QueryDslSpanQuery
 }
 
+export interface QueryDslSparseVectorQuery extends QueryDslQueryBase {
+  field: Field
+  query_vector?: Record<string, float>
+  inference_id?: Id
+  query?: string
+  prune?: boolean
+  pruning_config?: QueryDslTokenPruningConfig
+}
+
 export interface QueryDslTermQuery extends QueryDslQueryBase {
   value: FieldValue
   case_insensitive?: boolean
+}
+
+export interface QueryDslTermRangeQuery extends QueryDslRangeQueryBase<string> {
 }
 
 export interface QueryDslTermsLookup {
@@ -6115,15 +6123,6 @@ export type QueryDslTermsQuery = QueryDslTermsQueryKeys
 & { [property: string]: QueryDslTermsQueryField | float | string }
 
 export type QueryDslTermsQueryField = FieldValue[] | QueryDslTermsLookup
-
-export interface QueryDslTermsRangeQuery extends QueryDslRangeQueryBase {
-  gt?: string
-  gte?: string
-  lt?: string
-  lte?: string
-  from?: string | null
-  to?: string | null
-}
 
 export interface QueryDslTermsSetQuery extends QueryDslQueryBase {
   minimum_should_match_field?: Field
@@ -6147,6 +6146,19 @@ export interface QueryDslTokenPruningConfig {
 
 export interface QueryDslTypeQuery extends QueryDslQueryBase {
   value: string
+}
+
+export interface QueryDslUntypedDecayFunctionKeys extends QueryDslDecayFunctionBase<any, any> {
+}
+export type QueryDslUntypedDecayFunction = QueryDslUntypedDecayFunctionKeys
+& { [property: string]: QueryDslDecayPlacement | QueryDslMultiValueMode }
+
+export interface QueryDslUntypedDistanceFeatureQuery extends QueryDslDistanceFeatureQueryBase<any, any> {
+}
+
+export interface QueryDslUntypedRangeQuery extends QueryDslRangeQueryBase<any> {
+  format?: DateFormat
+  time_zone?: TimeZone
 }
 
 export interface QueryDslWeightedTokensQuery extends QueryDslQueryBase {
@@ -9669,12 +9681,13 @@ export interface EqlHitsEvent<TEvent = unknown> {
   _index: IndexName
   _id: Id
   _source: TEvent
+  missing?: boolean
   fields?: Record<Field, any[]>
 }
 
 export interface EqlHitsSequence<TEvent = unknown> {
   events: EqlHitsEvent<TEvent>[]
-  join_keys: any[]
+  join_keys?: any[]
 }
 
 export interface EqlDeleteRequest extends RequestBase {
@@ -10455,6 +10468,7 @@ export interface IndicesMappingLimitSettingsNestedObjects {
 
 export interface IndicesMappingLimitSettingsTotalFields {
   limit?: long
+  ignore_dynamic_beyond_limit?: boolean
 }
 
 export interface IndicesMerge {
@@ -12227,41 +12241,41 @@ export interface IngestProcessorBase {
 }
 
 export interface IngestProcessorContainer {
-  attachment?: IngestAttachmentProcessor
   append?: IngestAppendProcessor
-  csv?: IngestCsvProcessor
+  attachment?: IngestAttachmentProcessor
+  bytes?: IngestBytesProcessor
+  circle?: IngestCircleProcessor
   convert?: IngestConvertProcessor
+  csv?: IngestCsvProcessor
   date?: IngestDateProcessor
   date_index_name?: IngestDateIndexNameProcessor
+  dissect?: IngestDissectProcessor
   dot_expander?: IngestDotExpanderProcessor
+  drop?: IngestDropProcessor
   enrich?: IngestEnrichProcessor
   fail?: IngestFailProcessor
   foreach?: IngestForeachProcessor
-  json?: IngestJsonProcessor
-  user_agent?: IngestUserAgentProcessor
-  kv?: IngestKeyValueProcessor
   geoip?: IngestGeoIpProcessor
   grok?: IngestGrokProcessor
   gsub?: IngestGsubProcessor
+  inference?: IngestInferenceProcessor
   join?: IngestJoinProcessor
+  json?: IngestJsonProcessor
+  kv?: IngestKeyValueProcessor
   lowercase?: IngestLowercaseProcessor
+  pipeline?: IngestPipelineProcessor
   remove?: IngestRemoveProcessor
   rename?: IngestRenameProcessor
   reroute?: IngestRerouteProcessor
   script?: IngestScriptProcessor
   set?: IngestSetProcessor
+  set_security_user?: IngestSetSecurityUserProcessor
   sort?: IngestSortProcessor
   split?: IngestSplitProcessor
   trim?: IngestTrimProcessor
   uppercase?: IngestUppercaseProcessor
   urldecode?: IngestUrlDecodeProcessor
-  bytes?: IngestBytesProcessor
-  dissect?: IngestDissectProcessor
-  set_security_user?: IngestSetSecurityUserProcessor
-  pipeline?: IngestPipelineProcessor
-  drop?: IngestDropProcessor
-  circle?: IngestCircleProcessor
-  inference?: IngestInferenceProcessor
+  user_agent?: IngestUserAgentProcessor
 }
 
 export interface IngestRemoveProcessor extends IngestProcessorBase {
@@ -16024,66 +16038,93 @@ export interface NodesUsageResponseBase extends NodesNodesResponseBase {
   nodes: Record<string, NodesUsageNodeUsage>
 }
 
-export interface QueryRulesetQueryRule {
+export interface QueryRulesQueryRule {
   rule_id: Id
-  type: QueryRulesetQueryRuleType
-  criteria: QueryRulesetQueryRuleCriteria[]
-  actions: QueryRulesetQueryRuleActions
+  type: QueryRulesQueryRuleType
+  criteria: QueryRulesQueryRuleCriteria[]
+  actions: QueryRulesQueryRuleActions
 }
 
-export interface QueryRulesetQueryRuleActions {
+export interface QueryRulesQueryRuleActions {
   ids?: Id[]
   docs?: QueryDslPinnedDoc[]
 }
 
-export interface QueryRulesetQueryRuleCriteria {
-  type: QueryRulesetQueryRuleCriteriaType
-  metadata: string
+export interface QueryRulesQueryRuleCriteria {
+  type: QueryRulesQueryRuleCriteriaType
+  metadata?: string
   values?: any[]
 }
 
-export type QueryRulesetQueryRuleCriteriaType = 'global' | 'exact' | 'exact_fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte'
+export type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'exact_fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
 
-export type QueryRulesetQueryRuleType = 'pinned'
+export type QueryRulesQueryRuleType = 'pinned'
 
-export interface QueryRulesetQueryRuleset {
+export interface QueryRulesQueryRuleset {
   ruleset_id: Id
-  rules: QueryRulesetQueryRule[]
+  rules: QueryRulesQueryRule[]
 }
 
-export interface QueryRulesetDeleteRequest extends RequestBase {
+export interface QueryRulesDeleteRuleRequest extends RequestBase {
+  ruleset_id: Id
+  rule_id: Id
+}
+
+export type QueryRulesDeleteRuleResponse = AcknowledgedResponseBase
+
+export interface QueryRulesDeleteRulesetRequest extends RequestBase {
   ruleset_id: Id
 }
 
-export type QueryRulesetDeleteResponse = AcknowledgedResponseBase
+export type QueryRulesDeleteRulesetResponse = AcknowledgedResponseBase
 
-export interface QueryRulesetGetRequest extends RequestBase {
+export interface QueryRulesGetRuleRequest extends RequestBase {
+  ruleset_id: Id
+  rule_id: Id
+}
+
+export type QueryRulesGetRuleResponse = QueryRulesQueryRule
+
+export interface QueryRulesGetRulesetRequest extends RequestBase {
   ruleset_id: Id
 }
 
-export type QueryRulesetGetResponse = QueryRulesetQueryRuleset
+export type QueryRulesGetRulesetResponse = QueryRulesQueryRuleset
 
-export interface QueryRulesetListQueryRulesetListItem {
+export interface QueryRulesListRulesetsQueryRulesetListItem {
   ruleset_id: Id
-  rules_count: integer
+  rule_total_count: integer
+  rule_criteria_types_counts: Record<string, string>
 }
 
-export interface QueryRulesetListRequest extends RequestBase {
+export interface QueryRulesListRulesetsRequest extends RequestBase {
   from?: integer
   size?: integer
 }
 
-export interface QueryRulesetListResponse {
+export interface QueryRulesListRulesetsResponse {
   count: long
-  results: QueryRulesetListQueryRulesetListItem[]
+  results: QueryRulesListRulesetsQueryRulesetListItem[]
 }
 
-export interface QueryRulesetPutRequest extends RequestBase {
+export interface QueryRulesPutRuleRequest extends RequestBase {
   ruleset_id: Id
-  rules: QueryRulesetQueryRule[]
+  rule_id: Id
+  type: QueryRulesQueryRuleType
+  criteria: QueryRulesQueryRuleCriteria[]
+  actions: QueryRulesQueryRuleActions
 }
 
-export interface QueryRulesetPutResponse {
+export interface QueryRulesPutRuleResponse {
+  result: Result
+}
+
+export interface QueryRulesPutRulesetRequest extends RequestBase {
+  ruleset_id: Id
+  rules: QueryRulesQueryRule[]
+}
+
+export interface QueryRulesPutRulesetResponse {
   result: Result
 }
 

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -39,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * The terms enum API can be used to discover terms in the index that begin with the provided string. It is designed for low-latency look-ups used in auto-complete scenarios.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-terms-enum.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/search-terms-enum.html | Elasticsearch API documentation}
   */
 export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest | TB.TermsEnumRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.TermsEnumResponse>
 export default async function TermsEnumApi (this: That, params: T.TermsEnumRequest | TB.TermsEnumRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TermsEnumResponse, unknown>>
@@ -72,5 +73,11 @@ export default async function TermsEnumApi (this: That, params: T.TermsEnumReque
 
   const method = body != null ? 'POST' : 'GET'
   const path = `/${encodeURIComponent(params.index.toString())}/_terms_enum`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'terms_enum',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

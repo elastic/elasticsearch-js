@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,8 +39,8 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Allows an arbitrary script to be executed and a result to be returned
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html | Elasticsearch API documentation}
+  * Runs a script and returns a result.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/8.15/painless-execute-api.html | Elasticsearch API documentation}
   */
 export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest | TB.ScriptsPainlessExecuteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ScriptsPainlessExecuteResponse<TResult>>
 export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this: That, params?: T.ScriptsPainlessExecuteRequest | TB.ScriptsPainlessExecuteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ScriptsPainlessExecuteResponse<TResult>, unknown>>
@@ -73,5 +74,8 @@ export default async function ScriptsPainlessExecuteApi<TResult = unknown> (this
 
   const method = body != null ? 'POST' : 'GET'
   const path = '/_scripts/painless/_execute'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'scripts_painless_execute'
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

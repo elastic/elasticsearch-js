@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -39,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Returns all script contexts.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/8.15/painless-contexts.html | Elasticsearch API documentation}
   */
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptContextResponse>
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptContextResponse, unknown>>
@@ -61,5 +62,8 @@ export default async function GetScriptContextApi (this: That, params?: T.GetScr
 
   const method = 'GET'
   const path = '/_script_context'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'get_script_context'
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

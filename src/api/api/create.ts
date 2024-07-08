@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,8 +39,8 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Creates a new document in the index. Returns a 409 response when a document with a same ID already exists in the index.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html | Elasticsearch API documentation}
+  * Adds a JSON document to the specified data stream or index and makes it searchable. If the target is an index and the document already exists, the request updates the document and increments its version.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/docs-index_.html | Elasticsearch API documentation}
   */
 export default async function CreateApi<TDocument = unknown> (this: That, params: T.CreateRequest<TDocument> | TB.CreateRequest<TDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.CreateResponse>
 export default async function CreateApi<TDocument = unknown> (this: That, params: T.CreateRequest<TDocument> | TB.CreateRequest<TDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.CreateResponse, unknown>>
@@ -65,5 +66,12 @@ export default async function CreateApi<TDocument = unknown> (this: That, params
 
   const method = 'PUT'
   const path = `/${encodeURIComponent(params.index.toString())}/_create/${encodeURIComponent(params.id.toString())}`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'create',
+    pathParts: {
+      id: params.id,
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

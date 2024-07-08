@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -44,8 +45,8 @@ export default class Xpack {
   }
 
   /**
-    * Retrieves information about the installed X-Pack features.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/info-api.html | Elasticsearch API documentation}
+    * Provides general information about the installed X-Pack features.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/info-api.html | Elasticsearch API documentation}
     */
   async info (this: That, params?: T.XpackInfoRequest | TB.XpackInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackInfoResponse>
   async info (this: That, params?: T.XpackInfoRequest | TB.XpackInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackInfoResponse, unknown>>
@@ -67,12 +68,15 @@ export default class Xpack {
 
     const method = 'GET'
     const path = '/_xpack'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'xpack.info'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Retrieves usage information about the installed X-Pack features.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/usage-api.html | Elasticsearch API documentation}
+    * This API provides information about which features are currently enabled and available under the current license and some usage statistics.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/usage-api.html | Elasticsearch API documentation}
     */
   async usage (this: That, params?: T.XpackUsageRequest | TB.XpackUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.XpackUsageResponse>
   async usage (this: That, params?: T.XpackUsageRequest | TB.XpackUsageRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.XpackUsageResponse, unknown>>
@@ -94,6 +98,9 @@ export default class Xpack {
 
     const method = 'GET'
     const path = '/_xpack/usage'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'xpack.usage'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

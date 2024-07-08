@@ -39,33 +39,30 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Changes the number of requests per second for a particular Update By Query operation.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/docs-update-by-query.html | Elasticsearch API documentation}
+  * Checks if the specified combination of method, API, parameters, and arbitrary capabilities are supported
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/capabilities.html | Elasticsearch API documentation}
   */
-export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest | TB.UpdateByQueryRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.UpdateByQueryRethrottleResponse>
-export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest | TB.UpdateByQueryRethrottleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.UpdateByQueryRethrottleResponse, unknown>>
-export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest | TB.UpdateByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<T.UpdateByQueryRethrottleResponse>
-export default async function UpdateByQueryRethrottleApi (this: That, params: T.UpdateByQueryRethrottleRequest | TB.UpdateByQueryRethrottleRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['task_id']
+export default async function CapabilitiesApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+export default async function CapabilitiesApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+export default async function CapabilitiesApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+export default async function CapabilitiesApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  const acceptedPath: string[] = []
   const querystring: Record<string, any> = {}
   const body = undefined
 
+  params = params ?? {}
   for (const key in params) {
     if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body') {
-      // @ts-expect-error
       querystring[key] = params[key]
     }
   }
 
-  const method = 'POST'
-  const path = `/_update_by_query/${encodeURIComponent(params.task_id.toString())}/_rethrottle`
+  const method = 'GET'
+  const path = '/_capabilities'
   const meta: TransportRequestMetadata = {
-    name: 'update_by_query_rethrottle',
-    pathParts: {
-      task_id: params.task_id
-    }
+    name: 'capabilities'
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

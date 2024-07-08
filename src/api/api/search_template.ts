@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,8 +39,8 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Allows to use the Mustache language to pre-render a search definition.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html | Elasticsearch API documentation}
+  * Runs a search with a search template.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/search-template.html | Elasticsearch API documentation}
   */
 export default async function SearchTemplateApi<TDocument = unknown> (this: That, params?: T.SearchTemplateRequest | TB.SearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchTemplateResponse<TDocument>>
 export default async function SearchTemplateApi<TDocument = unknown> (this: That, params?: T.SearchTemplateRequest | TB.SearchTemplateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchTemplateResponse<TDocument>, unknown>>
@@ -80,5 +81,11 @@ export default async function SearchTemplateApi<TDocument = unknown> (this: That
     method = body != null ? 'POST' : 'GET'
     path = '/_search/template'
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'search_template',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

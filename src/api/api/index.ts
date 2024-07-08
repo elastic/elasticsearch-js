@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,8 +39,8 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Creates or updates a document in an index.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html | Elasticsearch API documentation}
+  * Adds a JSON document to the specified data stream or index and makes it searchable. If the target is an index and the document already exists, the request updates the document and increments its version.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/docs-index_.html | Elasticsearch API documentation}
   */
 export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument> | TB.IndexRequest<TDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndexResponse>
 export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument> | TB.IndexRequest<TDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndexResponse, unknown>>
@@ -72,5 +73,12 @@ export default async function IndexApi<TDocument = unknown> (this: That, params:
     method = 'POST'
     path = `/${encodeURIComponent(params.index.toString())}/_doc`
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'index',
+    pathParts: {
+      id: params.id,
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

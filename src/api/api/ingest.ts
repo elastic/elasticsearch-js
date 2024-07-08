@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -44,8 +45,8 @@ export default class Ingest {
   }
 
   /**
-    * Deletes a pipeline.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-pipeline-api.html | Elasticsearch API documentation}
+    * Deletes one or more existing ingest pipeline.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/delete-pipeline-api.html | Elasticsearch API documentation}
     */
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest | TB.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeletePipelineResponse>
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest | TB.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestDeletePipelineResponse, unknown>>
@@ -66,12 +67,18 @@ export default class Ingest {
 
     const method = 'DELETE'
     const path = `/_ingest/pipeline/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.delete_pipeline',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns statistical information about geoip databases
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/geoip-processor.html | Elasticsearch API documentation}
+    * Gets download statistics for GeoIP2 databases used with the geoip processor.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/geoip-processor.html | Elasticsearch API documentation}
     */
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest | TB.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGeoIpStatsResponse>
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest | TB.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGeoIpStatsResponse, unknown>>
@@ -93,12 +100,15 @@ export default class Ingest {
 
     const method = 'GET'
     const path = '/_ingest/geoip/stats'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.geo_ip_stats'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns a pipeline.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-pipeline-api.html | Elasticsearch API documentation}
+    * Returns information about one or more ingest pipelines. This API returns a local reference of the pipeline.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/get-pipeline-api.html | Elasticsearch API documentation}
     */
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest | TB.IngestGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetPipelineResponse>
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest | TB.IngestGetPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestGetPipelineResponse, unknown>>
@@ -127,12 +137,18 @@ export default class Ingest {
       method = 'GET'
       path = '/_ingest/pipeline'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.get_pipeline',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns a list of the built-in patterns.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/grok-processor.html | Elasticsearch API documentation}
+    * Extracts structured fields out of a single text field within a document. You choose which field to extract matched fields from, as well as the grok pattern you expect will match. A grok pattern is like a regular expression that supports aliased expressions that can be reused.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/grok-processor.html | Elasticsearch API documentation}
     */
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest | TB.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestProcessorGrokResponse>
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest | TB.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestProcessorGrokResponse, unknown>>
@@ -154,12 +170,15 @@ export default class Ingest {
 
     const method = 'GET'
     const path = '/_ingest/processor/grok'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.processor_grok'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates or updates a pipeline.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ingest.html | Elasticsearch API documentation}
+    * Creates or updates an ingest pipeline. Changes made using this API take effect immediately.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/ingest.html | Elasticsearch API documentation}
     */
   async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutPipelineResponse>
   async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestPutPipelineResponse, unknown>>
@@ -192,12 +211,18 @@ export default class Ingest {
 
     const method = 'PUT'
     const path = `/_ingest/pipeline/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.put_pipeline',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Allows to simulate a pipeline with example documents.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html | Elasticsearch API documentation}
+    * Executes an ingest pipeline against a set of provided documents.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/simulate-pipeline-api.html | Elasticsearch API documentation}
     */
   async simulate (this: That, params?: T.IngestSimulateRequest | TB.IngestSimulateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestSimulateResponse>
   async simulate (this: That, params?: T.IngestSimulateRequest | TB.IngestSimulateRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IngestSimulateResponse, unknown>>
@@ -238,6 +263,12 @@ export default class Ingest {
       method = body != null ? 'POST' : 'GET'
       path = '/_ingest/pipeline/_simulate'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.simulate',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

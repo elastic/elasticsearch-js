@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -39,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Returns multiple termvectors in one request.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/docs-multi-termvectors.html | Elasticsearch API documentation}
   */
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MtermvectorsResponse>
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.MtermvectorsResponse, unknown>>
@@ -80,5 +81,11 @@ export default async function MtermvectorsApi (this: That, params?: T.Mtermvecto
     method = body != null ? 'POST' : 'GET'
     path = '/_mtermvectors'
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'mtermvectors',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

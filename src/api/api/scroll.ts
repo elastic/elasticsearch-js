@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -39,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Allows to retrieve a large numbers of results from a single search request.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/search-request-body.html#request-body-search-scroll | Elasticsearch API documentation}
   */
 export default async function ScrollApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.ScrollRequest | TB.ScrollRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ScrollResponse<TDocument, TAggregations>>
 export default async function ScrollApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.ScrollRequest | TB.ScrollRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ScrollResponse<TDocument, TAggregations>, unknown>>
@@ -72,5 +73,11 @@ export default async function ScrollApi<TDocument = unknown, TAggregations = Rec
 
   const method = body != null ? 'POST' : 'GET'
   const path = '/_search/scroll'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'scroll',
+    pathParts: {
+      scroll_id: params.scroll_id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

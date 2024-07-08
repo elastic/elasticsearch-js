@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,8 +39,8 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Deletes a script.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html | Elasticsearch API documentation}
+  * Deletes a stored script or search template.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/modules-scripting.html | Elasticsearch API documentation}
   */
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteScriptResponse>
 export default async function DeleteScriptApi (this: That, params: T.DeleteScriptRequest | TB.DeleteScriptRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteScriptResponse, unknown>>
@@ -60,5 +61,11 @@ export default async function DeleteScriptApi (this: That, params: T.DeleteScrip
 
   const method = 'DELETE'
   const path = `/_scripts/${encodeURIComponent(params.id.toString())}`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'delete_script',
+    pathParts: {
+      id: params.id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }
