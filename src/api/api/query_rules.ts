@@ -213,7 +213,7 @@ export default class QueryRules {
   async putRule (this: That, params: T.QueryRulesPutRuleRequest | TB.QueryRulesPutRuleRequest, options?: TransportRequestOptions): Promise<T.QueryRulesPutRuleResponse>
   async putRule (this: That, params: T.QueryRulesPutRuleRequest | TB.QueryRulesPutRuleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['ruleset_id', 'rule_id']
-    const acceptedBody: string[] = ['type', 'criteria', 'actions']
+    const acceptedBody: string[] = ['type', 'criteria', 'actions', 'priority']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

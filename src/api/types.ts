@@ -16041,8 +16041,9 @@ export interface NodesUsageResponseBase extends NodesNodesResponseBase {
 export interface QueryRulesQueryRule {
   rule_id: Id
   type: QueryRulesQueryRuleType
-  criteria: QueryRulesQueryRuleCriteria[]
+  criteria: QueryRulesQueryRuleCriteria | QueryRulesQueryRuleCriteria[]
   actions: QueryRulesQueryRuleActions
+  priority?: integer
 }
 
 export interface QueryRulesQueryRuleActions {
@@ -16056,7 +16057,7 @@ export interface QueryRulesQueryRuleCriteria {
   values?: any[]
 }
 
-export type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'exact_fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
+export type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'exact_fuzzy' | 'fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
 
 export type QueryRulesQueryRuleType = 'pinned'
 
@@ -16094,7 +16095,7 @@ export type QueryRulesGetRulesetResponse = QueryRulesQueryRuleset
 export interface QueryRulesListRulesetsQueryRulesetListItem {
   ruleset_id: Id
   rule_total_count: integer
-  rule_criteria_types_counts: Record<string, string>
+  rule_criteria_types_counts: Record<string, integer>
 }
 
 export interface QueryRulesListRulesetsRequest extends RequestBase {
@@ -16111,8 +16112,9 @@ export interface QueryRulesPutRuleRequest extends RequestBase {
   ruleset_id: Id
   rule_id: Id
   type: QueryRulesQueryRuleType
-  criteria: QueryRulesQueryRuleCriteria[]
+  criteria: QueryRulesQueryRuleCriteria | QueryRulesQueryRuleCriteria[]
   actions: QueryRulesQueryRuleActions
+  priority?: integer
 }
 
 export interface QueryRulesPutRuleResponse {
@@ -16121,7 +16123,7 @@ export interface QueryRulesPutRuleResponse {
 
 export interface QueryRulesPutRulesetRequest extends RequestBase {
   ruleset_id: Id
-  rules: QueryRulesQueryRule[]
+  rules: QueryRulesQueryRule | QueryRulesQueryRule[]
 }
 
 export interface QueryRulesPutRulesetResponse {
