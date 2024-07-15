@@ -10168,7 +10168,7 @@ index will not be deleted
 ==== get_node_stats
 Retrieves transform usage information for transform nodes.
 
-{ref}/get-transform-node-stats.html[Endpoint documentation]
+//{ref}/get-transform-node-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.getNodeStats()
