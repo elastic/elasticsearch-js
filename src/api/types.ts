@@ -494,6 +494,7 @@ export interface HealthReportIlmIndicator extends HealthReportBaseIndicator {
 export interface HealthReportIlmIndicatorDetails {
   ilm_status: LifecycleOperationMode
   policies: long
+  stagnating_indices: integer
 }
 
 export interface HealthReportImpact {
@@ -573,6 +574,7 @@ export interface HealthReportShardsAvailabilityIndicator extends HealthReportBas
 
 export interface HealthReportShardsAvailabilityIndicatorDetails {
   creating_primaries: long
+  creating_replicas: long
   initializing_primaries: long
   initializing_replicas: long
   restarting_primaries: long
@@ -604,7 +606,7 @@ export interface HealthReportSlmIndicator extends HealthReportBaseIndicator {
 export interface HealthReportSlmIndicatorDetails {
   slm_status: LifecycleOperationMode
   policies: long
-  unhealthy_policies: HealthReportSlmIndicatorUnhealthyPolicies
+  unhealthy_policies?: HealthReportSlmIndicatorUnhealthyPolicies
 }
 
 export interface HealthReportSlmIndicatorUnhealthyPolicies {
@@ -2175,9 +2177,10 @@ export interface GeoDistanceSortKeys {
   ignore_unmapped?: boolean
   order?: SortOrder
   unit?: DistanceUnit
+  nested?: NestedSortValue
 }
 export type GeoDistanceSort = GeoDistanceSortKeys
-& { [property: string]: GeoLocation | GeoLocation[] | SortMode | GeoDistanceType | boolean | SortOrder | DistanceUnit }
+& { [property: string]: GeoLocation | GeoLocation[] | SortMode | GeoDistanceType | boolean | SortOrder | DistanceUnit | NestedSortValue }
 
 export type GeoDistanceType = 'arc' | 'plane'
 
@@ -4685,7 +4688,7 @@ export type AnalysisSnowballLanguage = 'Armenian' | 'Basque' | 'Catalan' | 'Dani
 
 export interface AnalysisSnowballTokenFilter extends AnalysisTokenFilterBase {
   type: 'snowball'
-  language: AnalysisSnowballLanguage
+  language?: AnalysisSnowballLanguage
 }
 
 export interface AnalysisStandardAnalyzer {
