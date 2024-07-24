@@ -45,6 +45,38 @@ export default class Ingest {
   }
 
   /**
+    * Deletes a geoip database configuration
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/TODO.html | Elasticsearch API documentation}
+    */
+  async deleteGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async deleteGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async deleteGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async deleteGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/_ingest/geoip/database/${encodeURIComponent(params.id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.delete_geoip_database',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Deletes one or more existing ingest pipeline.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/delete-pipeline-api.html | Elasticsearch API documentation}
     */
@@ -102,6 +134,45 @@ export default class Ingest {
     const path = '/_ingest/geoip/stats'
     const meta: TransportRequestMetadata = {
       name: 'ingest.geo_ip_stats'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Returns geoip database configuration.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/TODO.html | Elasticsearch API documentation}
+    */
+  async getGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.id != null) {
+      method = 'GET'
+      path = `/_ingest/geoip/database/${encodeURIComponent(params.id.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_ingest/geoip/database'
+    }
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.get_geoip_database',
+      pathParts: {
+        id: params.id
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
@@ -172,6 +243,38 @@ export default class Ingest {
     const path = '/_ingest/processor/grok'
     const meta: TransportRequestMetadata = {
       name: 'ingest.processor_grok'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Puts the configuration for a geoip database to be downloaded
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.15/TODO.html | Elasticsearch API documentation}
+    */
+  async putGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_ingest/geoip/database/${encodeURIComponent(params.id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.put_geoip_database',
+      pathParts: {
+        id: params.id
+      }
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
