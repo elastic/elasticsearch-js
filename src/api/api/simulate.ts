@@ -38,49 +38,44 @@ import * as T from '../types'
 import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
-export default class Graph {
+export default class Simulate {
   transport: Transport
   constructor (transport: Transport) {
     this.transport = transport
   }
 
   /**
-    * Extracts and summarizes information about the documents and terms in an Elasticsearch data stream or index.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/graph-explore-api.html | Elasticsearch API documentation}
+    * Simulates running ingest with example documents.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-ingest-api.html | Elasticsearch API documentation}
     */
-  async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GraphExploreResponse>
-  async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GraphExploreResponse, unknown>>
-  async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptions): Promise<T.GraphExploreResponse>
-  async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptions): Promise<any> {
+  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['connections', 'controls', 'query', 'vertices']
     const querystring: Record<string, any> = {}
-    // @ts-expect-error
-    const userBody: any = params?.body
-    let body: Record<string, any> | string
-    if (typeof userBody === 'string') {
-      body = userBody
-    } else {
-      body = userBody != null ? { ...userBody } : undefined
-    }
+    const body = undefined
 
+    params = params ?? {}
     for (const key in params) {
-      if (acceptedBody.includes(key)) {
-        body = body ?? {}
-        // @ts-expect-error
-        body[key] = params[key]
-      } else if (acceptedPath.includes(key)) {
+      if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
-        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
 
-    const method = body != null ? 'POST' : 'GET'
-    const path = `/${encodeURIComponent(params.index.toString())}/_graph/explore`
+    let method = ''
+    let path = ''
+    if (params.index != null) {
+      method = body != null ? 'POST' : 'GET'
+      path = `/_ingest/${encodeURIComponent(params.index.toString())}/_simulate`
+    } else {
+      method = body != null ? 'POST' : 'GET'
+      path = '/_ingest/_simulate'
+    }
     const meta: TransportRequestMetadata = {
-      name: 'graph.explore',
+      name: 'simulate.ingest',
       pathParts: {
         index: params.index
       }

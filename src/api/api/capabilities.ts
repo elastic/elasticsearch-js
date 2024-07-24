@@ -39,52 +39,30 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Enables you to evaluate the quality of ranked search results over a set of typical search queries.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.html | Elasticsearch API documentation}
+  * Checks if the specified combination of method, API, parameters, and arbitrary capabilities are supported
+  * @see {@link https://github.com/elastic/elasticsearch/blob/main/rest-api-spec/src/yamlRestTest/resources/rest-api-spec/test/README.asciidoc#require-or-skip-api-capabilities | Elasticsearch API documentation}
   */
-export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RankEvalResponse>
-export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.RankEvalResponse, unknown>>
-export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptions): Promise<T.RankEvalResponse>
-export default async function RankEvalApi (this: That, params: T.RankEvalRequest | TB.RankEvalRequest, options?: TransportRequestOptions): Promise<any> {
-  const acceptedPath: string[] = ['index']
-  const acceptedBody: string[] = ['requests', 'metric']
+export default async function CapabilitiesApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+export default async function CapabilitiesApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+export default async function CapabilitiesApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+export default async function CapabilitiesApi (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  const acceptedPath: string[] = []
   const querystring: Record<string, any> = {}
-  // @ts-expect-error
-  const userBody: any = params?.body
-  let body: Record<string, any> | string
-  if (typeof userBody === 'string') {
-    body = userBody
-  } else {
-    body = userBody != null ? { ...userBody } : undefined
-  }
+  const body = undefined
 
+  params = params ?? {}
   for (const key in params) {
-    if (acceptedBody.includes(key)) {
-      body = body ?? {}
-      // @ts-expect-error
-      body[key] = params[key]
-    } else if (acceptedPath.includes(key)) {
+    if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body') {
-      // @ts-expect-error
       querystring[key] = params[key]
     }
   }
 
-  let method = ''
-  let path = ''
-  if (params.index != null) {
-    method = body != null ? 'POST' : 'GET'
-    path = `/${encodeURIComponent(params.index.toString())}/_rank_eval`
-  } else {
-    method = body != null ? 'POST' : 'GET'
-    path = '/_rank_eval'
-  }
+  const method = 'GET'
+  const path = '/_capabilities'
   const meta: TransportRequestMetadata = {
-    name: 'rank_eval',
-    pathParts: {
-      index: params.index
-    }
+    name: 'capabilities'
   }
   return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

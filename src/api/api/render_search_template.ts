@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Allows to use the Mustache language to pre-render a search definition.
+  * Renders a search template as a search request body.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/render-search-template-api.html | Elasticsearch API documentation}
   */
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RenderSearchTemplateResponse>
@@ -80,5 +81,11 @@ export default async function RenderSearchTemplateApi (this: That, params?: T.Re
     method = body != null ? 'POST' : 'GET'
     path = '/_render/template'
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'render_search_template',
+    pathParts: {
+      id: params.id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

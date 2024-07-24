@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,11 +67,18 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}/_block/${encodeURIComponent(params.block.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.add_block',
+      pathParts: {
+        index: params.index,
+        block: params.block
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Performs the analysis process on a text and return the tokens breakdown of the text.
+    * Performs analysis on a text string and returns the resulting tokens.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html | Elasticsearch API documentation}
     */
   async analyze (this: That, params?: T.IndicesAnalyzeRequest | TB.IndicesAnalyzeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesAnalyzeResponse>
@@ -112,11 +120,17 @@ export default class Indices {
       method = body != null ? 'POST' : 'GET'
       path = '/_analyze'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.analyze',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Clears all or specific caches for one or more indices.
+    * Clears the caches of one or more indices. For data streams, the API clears the caches of the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html | Elasticsearch API documentation}
     */
   async clearCache (this: That, params?: T.IndicesClearCacheRequest | TB.IndicesClearCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesClearCacheResponse>
@@ -146,11 +160,17 @@ export default class Indices {
       method = 'POST'
       path = '/_cache/clear'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.clear_cache',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Clones an index
+    * Clones an existing index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clone-index.html | Elasticsearch API documentation}
     */
   async clone (this: That, params: T.IndicesCloneRequest | TB.IndicesCloneRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCloneResponse>
@@ -184,7 +204,14 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}/_clone/${encodeURIComponent(params.target.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.clone',
+      pathParts: {
+        index: params.index,
+        target: params.target
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -210,11 +237,17 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_close`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.close',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates an index with optional settings and mappings.
+    * Creates a new index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html | Elasticsearch API documentation}
     */
   async create (this: That, params: T.IndicesCreateRequest | TB.IndicesCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateResponse>
@@ -248,11 +281,17 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.create',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates a data stream
+    * Create a data stream. Creates a data stream. You must have a matching index template with data stream enabled.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
     */
   async createDataStream (this: That, params: T.IndicesCreateDataStreamRequest | TB.IndicesCreateDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateDataStreamResponse>
@@ -274,11 +313,17 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.create_data_stream',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Provides statistics on operations happening in a data stream.
+    * Get data stream stats. Retrieves statistics for one or more data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
     */
   async dataStreamsStats (this: That, params?: T.IndicesDataStreamsStatsRequest | TB.IndicesDataStreamsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDataStreamsStatsResponse>
@@ -308,11 +353,17 @@ export default class Indices {
       method = 'GET'
       path = '/_data_stream/_stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.data_streams_stats',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Deletes an index.
+    * Deletes one or more indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.IndicesDeleteRequest | TB.IndicesDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteResponse>
@@ -334,11 +385,17 @@ export default class Indices {
 
     const method = 'DELETE'
     const path = `/${encodeURIComponent(params.index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Deletes an alias.
+    * Removes a data stream or index from an alias.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
   async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest | TB.IndicesDeleteAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteAliasResponse>
@@ -367,11 +424,18 @@ export default class Indices {
       method = 'DELETE'
       path = `/${encodeURIComponent(params.index.toString())}/_aliases/${encodeURIComponent(params.name.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_alias',
+      pathParts: {
+        index: params.index,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Deletes the data stream lifecycle of the selected data streams.
+    * Delete data stream lifecycles. Removes the data stream lifecycle from a data stream, rendering it not managed by the data stream lifecycle.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams-delete-lifecycle.html | Elasticsearch API documentation}
     */
   async deleteDataLifecycle (this: That, params: T.IndicesDeleteDataLifecycleRequest | TB.IndicesDeleteDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataLifecycleResponse>
@@ -393,11 +457,17 @@ export default class Indices {
 
     const method = 'DELETE'
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_lifecycle`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_data_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Deletes a data stream.
+    * Delete data streams. Deletes one or more data streams and their backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
     */
   async deleteDataStream (this: That, params: T.IndicesDeleteDataStreamRequest | TB.IndicesDeleteDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteDataStreamResponse>
@@ -419,11 +489,17 @@ export default class Indices {
 
     const method = 'DELETE'
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_data_stream',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Deletes an index template.
+    * Delete an index template. The provided <index-template> may contain multiple template names separated by a comma. If multiple template names are specified then there is no wildcard support and the provided names should match completely with existing templates.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-template.html | Elasticsearch API documentation}
     */
   async deleteIndexTemplate (this: That, params: T.IndicesDeleteIndexTemplateRequest | TB.IndicesDeleteIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteIndexTemplateResponse>
@@ -445,11 +521,17 @@ export default class Indices {
 
     const method = 'DELETE'
     const path = `/_index_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_index_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Deletes an index template.
+    * Deletes a legacy index template.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-template-v1.html | Elasticsearch API documentation}
     */
   async deleteTemplate (this: That, params: T.IndicesDeleteTemplateRequest | TB.IndicesDeleteTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteTemplateResponse>
@@ -471,11 +553,17 @@ export default class Indices {
 
     const method = 'DELETE'
     const path = `/_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.delete_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Analyzes the disk usage of each field of an index or data stream
+    * Analyzes the disk usage of each field of an index or data stream.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-disk-usage.html | Elasticsearch API documentation}
     */
   async diskUsage (this: That, params: T.IndicesDiskUsageRequest | TB.IndicesDiskUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDiskUsageResponse>
@@ -497,11 +585,17 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_disk_usage`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.disk_usage',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Downsample an index
+    * Aggregates a time series (TSDS) index and stores pre-computed statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`) for each metric field grouped by a configured time interval.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-downsample-data-stream.html | Elasticsearch API documentation}
     */
   async downsample (this: That, params: T.IndicesDownsampleRequest | TB.IndicesDownsampleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDownsampleResponse>
@@ -528,11 +622,18 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_downsample/${encodeURIComponent(params.target_index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.downsample',
+      pathParts: {
+        index: params.index,
+        target_index: params.target_index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns information about whether a particular index exists.
+    * Checks if a data stream, index, or alias exists.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html | Elasticsearch API documentation}
     */
   async exists (this: That, params: T.IndicesExistsRequest | TB.IndicesExistsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsResponse>
@@ -554,11 +655,17 @@ export default class Indices {
 
     const method = 'HEAD'
     const path = `/${encodeURIComponent(params.index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.exists',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns information about whether a particular alias exists.
+    * Checks if an alias exists.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
   async existsAlias (this: That, params: T.IndicesExistsAliasRequest | TB.IndicesExistsAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsAliasResponse>
@@ -587,7 +694,14 @@ export default class Indices {
       method = 'HEAD'
       path = `/_alias/${encodeURIComponent(params.name.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.exists_alias',
+      pathParts: {
+        name: params.name,
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -613,11 +727,17 @@ export default class Indices {
 
     const method = 'HEAD'
     const path = `/_index_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.exists_index_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns information about whether a particular index template exists.
+    * Check existence of index templates. Returns information about whether a particular index template exists.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-template-exists-v1.html | Elasticsearch API documentation}
     */
   async existsTemplate (this: That, params: T.IndicesExistsTemplateRequest | TB.IndicesExistsTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsTemplateResponse>
@@ -639,7 +759,13 @@ export default class Indices {
 
     const method = 'HEAD'
     const path = `/_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.exists_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -665,11 +791,17 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_lifecycle/explain`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.explain_data_lifecycle',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns the field usage stats for each field of an index
+    * Returns field usage information for each shard and field of an index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/field-usage-stats.html | Elasticsearch API documentation}
     */
   async fieldUsageStats (this: That, params: T.IndicesFieldUsageStatsRequest | TB.IndicesFieldUsageStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesFieldUsageStatsResponse>
@@ -691,11 +823,17 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_field_usage_stats`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.field_usage_stats',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Performs the flush operation on one or more indices.
+    * Flushes one or more data streams or indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-flush.html | Elasticsearch API documentation}
     */
   async flush (this: That, params?: T.IndicesFlushRequest | TB.IndicesFlushRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesFlushResponse>
@@ -725,7 +863,13 @@ export default class Indices {
       method = body != null ? 'POST' : 'GET'
       path = '/_flush'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.flush',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -759,11 +903,17 @@ export default class Indices {
       method = 'POST'
       path = '/_forcemerge'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.forcemerge',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns information about one or more indices.
+    * Returns information about one or more indices. For data streams, the API returns information about the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.IndicesGetRequest | TB.IndicesGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetResponse>
@@ -785,11 +935,17 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns an alias.
+    * Retrieves information for one or more aliases.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
   async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetAliasResponse>
@@ -825,11 +981,18 @@ export default class Indices {
       method = 'GET'
       path = '/_alias'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_alias',
+      pathParts: {
+        name: params.name,
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns the data stream lifecycle of the selected data streams.
+    * Get data stream lifecycles. Retrieves the data stream lifecycle configuration of one or more data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams-get-lifecycle.html | Elasticsearch API documentation}
     */
   async getDataLifecycle (this: That, params: T.IndicesGetDataLifecycleRequest | TB.IndicesGetDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataLifecycleResponse>
@@ -851,11 +1014,17 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_lifecycle`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_data_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns data streams.
+    * Get data streams. Retrieves information about one or more data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
     */
   async getDataStream (this: That, params?: T.IndicesGetDataStreamRequest | TB.IndicesGetDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetDataStreamResponse>
@@ -885,11 +1054,17 @@ export default class Indices {
       method = 'GET'
       path = '/_data_stream'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_data_stream',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns mapping for one or more fields.
+    * Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html | Elasticsearch API documentation}
     */
   async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest | TB.IndicesGetFieldMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetFieldMappingResponse>
@@ -918,11 +1093,18 @@ export default class Indices {
       method = 'GET'
       path = `/_mapping/field/${encodeURIComponent(params.fields.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_field_mapping',
+      pathParts: {
+        fields: params.fields,
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns an index template.
+    * Get index templates. Returns information about one or more index templates.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-template.html | Elasticsearch API documentation}
     */
   async getIndexTemplate (this: That, params?: T.IndicesGetIndexTemplateRequest | TB.IndicesGetIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetIndexTemplateResponse>
@@ -952,11 +1134,17 @@ export default class Indices {
       method = 'GET'
       path = '/_index_template'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_index_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns mappings for one or more indices.
+    * Retrieves mapping definitions for one or more indices. For data streams, the API retrieves mappings for the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html | Elasticsearch API documentation}
     */
   async getMapping (this: That, params?: T.IndicesGetMappingRequest | TB.IndicesGetMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMappingResponse>
@@ -986,11 +1174,17 @@ export default class Indices {
       method = 'GET'
       path = '/_mapping'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_mapping',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns settings for one or more indices.
+    * Returns setting information for one or more indices. For data streams, returns setting information for the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-settings.html | Elasticsearch API documentation}
     */
   async getSettings (this: That, params?: T.IndicesGetSettingsRequest | TB.IndicesGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSettingsResponse>
@@ -1026,11 +1220,18 @@ export default class Indices {
       method = 'GET'
       path = '/_settings'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_settings',
+      pathParts: {
+        index: params.index,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns an index template.
+    * Get index templates. Retrieves information about one or more index templates.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-template-v1.html | Elasticsearch API documentation}
     */
   async getTemplate (this: That, params?: T.IndicesGetTemplateRequest | TB.IndicesGetTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetTemplateResponse>
@@ -1060,11 +1261,17 @@ export default class Indices {
       method = 'GET'
       path = '/_template'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.get_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Migrates an alias to a data stream
+    * Convert an index alias to a data stream. Converts an index alias to a data stream. You must have a matching index template that is data stream enabled. The alias must meet the following criteria: The alias must have a write index; All indices for the alias must have a `@timestamp` field mapping of a `date` or `date_nanos` field type; The alias must not have any filters; The alias must not use custom routing. If successful, the request removes the alias and creates a data stream with the same name. The indices for the alias become hidden backing indices for the stream. The write index for the alias becomes the write index for the stream.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
     */
   async migrateToDataStream (this: That, params: T.IndicesMigrateToDataStreamRequest | TB.IndicesMigrateToDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesMigrateToDataStreamResponse>
@@ -1086,11 +1293,17 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/_data_stream/_migrate/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.migrate_to_data_stream',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Modifies a data stream
+    * Update data streams. Performs one or more data stream modification actions in a single atomic operation.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html | Elasticsearch API documentation}
     */
   async modifyDataStream (this: That, params: T.IndicesModifyDataStreamRequest | TB.IndicesModifyDataStreamRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesModifyDataStreamResponse>
@@ -1124,11 +1337,14 @@ export default class Indices {
 
     const method = 'POST'
     const path = '/_data_stream/_modify'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.modify_data_stream'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Opens an index.
+    * Opens a closed index. For data streams, the API opens any closed backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html | Elasticsearch API documentation}
     */
   async open (this: That, params: T.IndicesOpenRequest | TB.IndicesOpenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesOpenResponse>
@@ -1150,7 +1366,13 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_open`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.open',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1176,11 +1398,17 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/_data_stream/_promote/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.promote_data_stream',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates or updates an alias.
+    * Adds a data stream or index to an alias.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
   async putAlias (this: That, params: T.IndicesPutAliasRequest | TB.IndicesPutAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutAliasResponse>
@@ -1221,11 +1449,18 @@ export default class Indices {
       method = 'PUT'
       path = `/${encodeURIComponent(params.index.toString())}/_aliases/${encodeURIComponent(params.name.toString())}`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_alias',
+      pathParts: {
+        index: params.index,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Updates the data stream lifecycle of the selected data streams.
+    * Update data stream lifecycles. Update the data stream lifecycle of the specified data streams.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams-put-lifecycle.html | Elasticsearch API documentation}
     */
   async putDataLifecycle (this: That, params: T.IndicesPutDataLifecycleRequest | TB.IndicesPutDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutDataLifecycleResponse>
@@ -1259,11 +1494,17 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/_data_stream/${encodeURIComponent(params.name.toString())}/_lifecycle`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_data_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates or updates an index template.
+    * Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-template.html | Elasticsearch API documentation}
     */
   async putIndexTemplate (this: That, params: T.IndicesPutIndexTemplateRequest | TB.IndicesPutIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutIndexTemplateResponse>
@@ -1297,11 +1538,17 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/_index_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_index_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Updates the index mappings.
+    * Adds new fields to an existing data stream or index. You can also use this API to change the search settings of existing fields. For data streams, these changes are applied to all backing indices by default.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html | Elasticsearch API documentation}
     */
   async putMapping (this: That, params: T.IndicesPutMappingRequest | TB.IndicesPutMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutMappingResponse>
@@ -1335,11 +1582,17 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}/_mapping`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_mapping',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Updates the index settings.
+    * Changes a dynamic index setting in real time. For data streams, index setting changes are applied to all backing indices by default.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html | Elasticsearch API documentation}
     */
   async putSettings (this: That, params: T.IndicesPutSettingsRequest | TB.IndicesPutSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutSettingsResponse>
@@ -1373,11 +1626,17 @@ export default class Indices {
       method = 'PUT'
       path = '/_settings'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_settings',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates or updates an index template.
+    * Create or update an index template. Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates-v1.html | Elasticsearch API documentation}
     */
   async putTemplate (this: That, params: T.IndicesPutTemplateRequest | TB.IndicesPutTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutTemplateResponse>
@@ -1411,11 +1670,17 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.put_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns information about ongoing index shard recoveries.
+    * Returns information about ongoing and completed shard recoveries for one or more indices. For data streams, the API returns information for the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.html | Elasticsearch API documentation}
     */
   async recovery (this: That, params?: T.IndicesRecoveryRequest | TB.IndicesRecoveryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRecoveryResponse>
@@ -1445,11 +1710,17 @@ export default class Indices {
       method = 'GET'
       path = '/_recovery'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.recovery',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Performs the refresh operation in one or more indices.
+    * A refresh makes recent operations performed on one or more indices available for search. For data streams, the API runs the refresh operation on the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.html | Elasticsearch API documentation}
     */
   async refresh (this: That, params?: T.IndicesRefreshRequest | TB.IndicesRefreshRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRefreshResponse>
@@ -1479,7 +1750,13 @@ export default class Indices {
       method = body != null ? 'POST' : 'GET'
       path = '/_refresh'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.refresh',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1505,11 +1782,17 @@ export default class Indices {
 
     const method = body != null ? 'POST' : 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_reload_search_analyzers`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.reload_search_analyzers',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Resolves the specified index expressions to return information about each cluster, including the local cluster, if included.
+    * Resolves the specified index expressions to return information about each cluster, including the local cluster, if included. Multiple patterns and remote clusters are supported.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-cluster-api.html | Elasticsearch API documentation}
     */
   async resolveCluster (this: That, params: T.IndicesResolveClusterRequest | TB.IndicesResolveClusterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesResolveClusterResponse>
@@ -1531,11 +1814,17 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/_resolve/cluster/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.resolve_cluster',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns information about any matching indices, aliases, and data streams
+    * Resolves the specified name(s) and/or index patterns for indices, aliases, and data streams. Multiple patterns and remote clusters are supported.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-index-api.html | Elasticsearch API documentation}
     */
   async resolveIndex (this: That, params: T.IndicesResolveIndexRequest | TB.IndicesResolveIndexRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesResolveIndexResponse>
@@ -1557,11 +1846,17 @@ export default class Indices {
 
     const method = 'GET'
     const path = `/_resolve/index/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.resolve_index',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Updates an alias to point to a new index when the existing index is considered to be too large or too old.
+    * Creates a new index for a data stream or index alias.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html | Elasticsearch API documentation}
     */
   async rollover (this: That, params: T.IndicesRolloverRequest | TB.IndicesRolloverRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRolloverResponse>
@@ -1602,11 +1897,18 @@ export default class Indices {
       method = 'POST'
       path = `/${encodeURIComponent(params.alias.toString())}/_rollover`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.rollover',
+      pathParts: {
+        alias: params.alias,
+        new_index: params.new_index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Provides low-level information about segments in a Lucene index.
+    * Returns low-level information about the Lucene segments in index shards. For data streams, the API returns information about the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.html | Elasticsearch API documentation}
     */
   async segments (this: That, params?: T.IndicesSegmentsRequest | TB.IndicesSegmentsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSegmentsResponse>
@@ -1636,11 +1938,17 @@ export default class Indices {
       method = 'GET'
       path = '/_segments'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.segments',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Provides store information for shard copies of indices.
+    * Retrieves store information about replica shards in one or more indices. For data streams, the API retrieves store information for the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-stores.html | Elasticsearch API documentation}
     */
   async shardStores (this: That, params?: T.IndicesShardStoresRequest | TB.IndicesShardStoresRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesShardStoresResponse>
@@ -1670,11 +1978,17 @@ export default class Indices {
       method = 'GET'
       path = '/_shard_stores'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.shard_stores',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Allow to shrink an existing index into a new index with fewer primary shards.
+    * Shrinks an existing index into a new index with fewer primary shards.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-index.html | Elasticsearch API documentation}
     */
   async shrink (this: That, params: T.IndicesShrinkRequest | TB.IndicesShrinkRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesShrinkResponse>
@@ -1708,11 +2022,18 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}/_shrink/${encodeURIComponent(params.target.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.shrink',
+      pathParts: {
+        index: params.index,
+        target: params.target
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Simulate matching the given index name against the index templates in the system
+    * Simulate an index. Returns the index configuration that would be applied to the specified index from an existing index template.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-simulate-index.html | Elasticsearch API documentation}
     */
   async simulateIndexTemplate (this: That, params: T.IndicesSimulateIndexTemplateRequest | TB.IndicesSimulateIndexTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSimulateIndexTemplateResponse>
@@ -1734,11 +2055,17 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/_index_template/_simulate_index/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.simulate_index_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Simulate resolving the given template name or body
+    * Simulate an index template. Returns the index configuration that would be applied by a particular index template.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-simulate-template.html | Elasticsearch API documentation}
     */
   async simulateTemplate (this: That, params?: T.IndicesSimulateTemplateRequest | TB.IndicesSimulateTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSimulateTemplateResponse>
@@ -1780,11 +2107,17 @@ export default class Indices {
       method = 'POST'
       path = '/_index_template/_simulate'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.simulate_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Allows you to split an existing index into a new index with more primary shards.
+    * Splits an existing index into a new index with more primary shards.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-split-index.html | Elasticsearch API documentation}
     */
   async split (this: That, params: T.IndicesSplitRequest | TB.IndicesSplitRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesSplitResponse>
@@ -1818,11 +2151,18 @@ export default class Indices {
 
     const method = 'PUT'
     const path = `/${encodeURIComponent(params.index.toString())}/_split/${encodeURIComponent(params.target.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.split',
+      pathParts: {
+        index: params.index,
+        target: params.target
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Provides statistics on operations happening in an index.
+    * Returns statistics for one or more indices. For data streams, the API retrieves statistics for the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.IndicesStatsRequest | TB.IndicesStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesStatsResponse>
@@ -1858,11 +2198,18 @@ export default class Indices {
       method = 'GET'
       path = '/_stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.stats',
+      pathParts: {
+        metric: params.metric,
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Unfreezes an index. When a frozen index is unfrozen, the index goes through the normal recovery process and becomes writeable again.
+    * Unfreezes an index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/unfreeze-index-api.html | Elasticsearch API documentation}
     */
   async unfreeze (this: That, params: T.IndicesUnfreezeRequest | TB.IndicesUnfreezeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUnfreezeResponse>
@@ -1884,11 +2231,17 @@ export default class Indices {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_unfreeze`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.unfreeze',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Updates index aliases.
+    * Adds a data stream or index to an alias.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
   async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest | TB.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUpdateAliasesResponse>
@@ -1923,11 +2276,14 @@ export default class Indices {
 
     const method = 'POST'
     const path = '/_aliases'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.update_aliases'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Allows a user to validate a potentially expensive query without executing it.
+    * Validates a potentially expensive query without executing it.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html | Elasticsearch API documentation}
     */
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesValidateQueryResponse>
@@ -1969,6 +2325,12 @@ export default class Indices {
       method = body != null ? 'POST' : 'GET'
       path = '/_validate/query'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'indices.validate_query',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -44,7 +45,7 @@ export default class Eql {
   }
 
   /**
-    * Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
+    * Deletes an async EQL search or a stored synchronous EQL search. The API also deletes results for the search.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/eql-search-api.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.EqlDeleteRequest | TB.EqlDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlDeleteResponse>
@@ -66,11 +67,17 @@ export default class Eql {
 
     const method = 'DELETE'
     const path = `/_eql/search/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'eql.delete',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns async results from previously executed Event Query Language (EQL) search
+    * Returns the current status and available results for an async EQL search or a stored synchronous EQL search.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-eql-search-api.html | Elasticsearch API documentation}
     */
   async get<TEvent = unknown> (this: That, params: T.EqlGetRequest | TB.EqlGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetResponse<TEvent>>
@@ -92,11 +99,17 @@ export default class Eql {
 
     const method = 'GET'
     const path = `/_eql/search/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'eql.get',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns the status of a previously submitted async or stored Event Query Language (EQL) search
+    * Returns the current status for an async EQL search or a stored synchronous EQL search without returning results.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-eql-status-api.html | Elasticsearch API documentation}
     */
   async getStatus (this: That, params: T.EqlGetStatusRequest | TB.EqlGetStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EqlGetStatusResponse>
@@ -118,7 +131,13 @@ export default class Eql {
 
     const method = 'GET'
     const path = `/_eql/search/status/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'eql.get_status',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -156,6 +175,12 @@ export default class Eql {
 
     const method = body != null ? 'POST' : 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_eql/search`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'eql.search',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

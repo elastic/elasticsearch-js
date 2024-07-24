@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -44,7 +45,7 @@ export default class Nodes {
   }
 
   /**
-    * Removes the archived repositories metering information present in the cluster.
+    * You can use this API to clear the archived repositories metering information in the cluster.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-repositories-metering-archive-api.html | Elasticsearch API documentation}
     */
   async clearRepositoriesMeteringArchive (this: That, params: T.NodesClearRepositoriesMeteringArchiveRequest | TB.NodesClearRepositoriesMeteringArchiveRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesClearRepositoriesMeteringArchiveResponse>
@@ -66,11 +67,18 @@ export default class Nodes {
 
     const method = 'DELETE'
     const path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/_repositories_metering/${encodeURIComponent(params.max_archive_version.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.clear_repositories_metering_archive',
+      pathParts: {
+        node_id: params.node_id,
+        max_archive_version: params.max_archive_version
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns cluster repositories metering information.
+    * You can use the cluster repositories metering API to retrieve repositories metering information in a cluster. This API exposes monotonically non-decreasing counters and it’s expected that clients would durably store the information needed to compute aggregations over a period of time. Additionally, the information exposed by this API is volatile, meaning that it won’t be present after node restarts.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-repositories-metering-api.html | Elasticsearch API documentation}
     */
   async getRepositoriesMeteringInfo (this: That, params: T.NodesGetRepositoriesMeteringInfoRequest | TB.NodesGetRepositoriesMeteringInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesGetRepositoriesMeteringInfoResponse>
@@ -92,11 +100,17 @@ export default class Nodes {
 
     const method = 'GET'
     const path = `/_nodes/${encodeURIComponent(params.node_id.toString())}/_repositories_metering`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.get_repositories_metering_info',
+      pathParts: {
+        node_id: params.node_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns information about hot threads on each node in the cluster.
+    * This API yields a breakdown of the hot threads on each selected node in the cluster. The output is plain text with a breakdown of each node’s top hot threads.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html | Elasticsearch API documentation}
     */
   async hotThreads (this: That, params?: T.NodesHotThreadsRequest | TB.NodesHotThreadsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesHotThreadsResponse>
@@ -126,11 +140,17 @@ export default class Nodes {
       method = 'GET'
       path = '/_nodes/hot_threads'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.hot_threads',
+      pathParts: {
+        node_id: params.node_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns information about nodes in the cluster.
+    * Returns cluster nodes information.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info.html | Elasticsearch API documentation}
     */
   async info (this: That, params?: T.NodesInfoRequest | TB.NodesInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesInfoResponse>
@@ -166,11 +186,18 @@ export default class Nodes {
       method = 'GET'
       path = '/_nodes'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.info',
+      pathParts: {
+        node_id: params.node_id,
+        metric: params.metric
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Reloads secure settings.
+    * Reloads the keystore on nodes in the cluster.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings | Elasticsearch API documentation}
     */
   async reloadSecureSettings (this: That, params?: T.NodesReloadSecureSettingsRequest | TB.NodesReloadSecureSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesReloadSecureSettingsResponse>
@@ -212,11 +239,17 @@ export default class Nodes {
       method = 'POST'
       path = '/_nodes/reload_secure_settings'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.reload_secure_settings',
+      pathParts: {
+        node_id: params.node_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns statistical information about nodes in the cluster.
+    * Returns cluster nodes statistics.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.NodesStatsRequest | TB.NodesStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesStatsResponse>
@@ -258,11 +291,19 @@ export default class Nodes {
       method = 'GET'
       path = '/_nodes/stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.stats',
+      pathParts: {
+        node_id: params.node_id,
+        metric: params.metric,
+        index_metric: params.index_metric
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns low-level information about REST actions usage on nodes.
+    * Returns information on the usage of features.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usage.html | Elasticsearch API documentation}
     */
   async usage (this: That, params?: T.NodesUsageRequest | TB.NodesUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesUsageResponse>
@@ -298,6 +339,13 @@ export default class Nodes {
       method = 'GET'
       path = '/_nodes/usage'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'nodes.usage',
+      pathParts: {
+        node_id: params.node_id,
+        metric: params.metric
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

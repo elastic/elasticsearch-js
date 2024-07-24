@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -72,5 +73,11 @@ export default async function ScrollApi<TDocument = unknown, TAggregations = Rec
 
   const method = body != null ? 'POST' : 'GET'
   const path = '/_search/scroll'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'scroll',
+    pathParts: {
+      scroll_id: params.scroll_id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

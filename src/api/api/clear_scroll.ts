@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Explicitly clears the search context for a scroll.
+  * Clears the search context and results for a scrolling search.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-scroll-api.html | Elasticsearch API documentation}
   */
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest | TB.ClearScrollRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClearScrollResponse>
@@ -73,5 +74,11 @@ export default async function ClearScrollApi (this: That, params?: T.ClearScroll
 
   const method = 'DELETE'
   const path = '/_search/scroll'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'clear_scroll',
+    pathParts: {
+      scroll_id: params.scroll_id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

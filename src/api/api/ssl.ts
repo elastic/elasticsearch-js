@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -67,6 +68,9 @@ export default class Ssl {
 
     const method = 'GET'
     const path = '/_ssl/certificates'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ssl.certificates'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

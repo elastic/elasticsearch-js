@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -44,7 +45,39 @@ export default class Ingest {
   }
 
   /**
-    * Deletes a pipeline.
+    * Deletes a geoip database configuration
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/TODO.html | Elasticsearch API documentation}
+    */
+  async deleteGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async deleteGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async deleteGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async deleteGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/_ingest/geoip/database/${encodeURIComponent(params.id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.delete_geoip_database',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Deletes one or more existing ingest pipeline.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-pipeline-api.html | Elasticsearch API documentation}
     */
   async deletePipeline (this: That, params: T.IngestDeletePipelineRequest | TB.IngestDeletePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestDeletePipelineResponse>
@@ -66,11 +99,17 @@ export default class Ingest {
 
     const method = 'DELETE'
     const path = `/_ingest/pipeline/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.delete_pipeline',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns statistical information about geoip databases
+    * Gets download statistics for GeoIP2 databases used with the geoip processor.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/geoip-processor.html | Elasticsearch API documentation}
     */
   async geoIpStats (this: That, params?: T.IngestGeoIpStatsRequest | TB.IngestGeoIpStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGeoIpStatsResponse>
@@ -93,11 +132,53 @@ export default class Ingest {
 
     const method = 'GET'
     const path = '/_ingest/geoip/stats'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.geo_ip_stats'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns a pipeline.
+    * Returns geoip database configuration.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/TODO.html | Elasticsearch API documentation}
+    */
+  async getGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.id != null) {
+      method = 'GET'
+      path = `/_ingest/geoip/database/${encodeURIComponent(params.id.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_ingest/geoip/database'
+    }
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.get_geoip_database',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Returns information about one or more ingest pipelines. This API returns a local reference of the pipeline.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-pipeline-api.html | Elasticsearch API documentation}
     */
   async getPipeline (this: That, params?: T.IngestGetPipelineRequest | TB.IngestGetPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestGetPipelineResponse>
@@ -127,11 +208,17 @@ export default class Ingest {
       method = 'GET'
       path = '/_ingest/pipeline'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.get_pipeline',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns a list of the built-in patterns.
+    * Extracts structured fields out of a single text field within a document. You choose which field to extract matched fields from, as well as the grok pattern you expect will match. A grok pattern is like a regular expression that supports aliased expressions that can be reused.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/grok-processor.html | Elasticsearch API documentation}
     */
   async processorGrok (this: That, params?: T.IngestProcessorGrokRequest | TB.IngestProcessorGrokRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestProcessorGrokResponse>
@@ -154,11 +241,46 @@ export default class Ingest {
 
     const method = 'GET'
     const path = '/_ingest/processor/grok'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.processor_grok'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates or updates a pipeline.
+    * Puts the configuration for a geoip database to be downloaded
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/TODO.html | Elasticsearch API documentation}
+    */
+  async putGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putGeoipDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_ingest/geoip/database/${encodeURIComponent(params.id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.put_geoip_database',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Creates or updates an ingest pipeline. Changes made using this API take effect immediately.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ingest.html | Elasticsearch API documentation}
     */
   async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestPutPipelineResponse>
@@ -192,11 +314,17 @@ export default class Ingest {
 
     const method = 'PUT'
     const path = `/_ingest/pipeline/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.put_pipeline',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Allows to simulate a pipeline with example documents.
+    * Executes an ingest pipeline against a set of provided documents.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html | Elasticsearch API documentation}
     */
   async simulate (this: That, params?: T.IngestSimulateRequest | TB.IngestSimulateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IngestSimulateResponse>
@@ -238,6 +366,12 @@ export default class Ingest {
       method = body != null ? 'POST' : 'GET'
       path = '/_ingest/pipeline/_simulate'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.simulate',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

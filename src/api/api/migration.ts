@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -74,7 +75,13 @@ export default class Migration {
       method = 'GET'
       path = '/_migration/deprecations'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'migration.deprecations',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -101,7 +108,10 @@ export default class Migration {
 
     const method = 'GET'
     const path = '/_migration/system_features'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'migration.get_feature_upgrade_status'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -128,6 +138,9 @@ export default class Migration {
 
     const method = 'POST'
     const path = '/_migration/system_features'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'migration.post_feature_upgrade'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

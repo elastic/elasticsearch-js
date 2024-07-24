@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class Rollup {
 
     const method = 'DELETE'
     const path = `/_rollup/job/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'rollup.delete_job',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -100,7 +107,13 @@ export default class Rollup {
       method = 'GET'
       path = '/_rollup/job'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'rollup.get_jobs',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -134,11 +147,17 @@ export default class Rollup {
       method = 'GET'
       path = '/_rollup/data'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'rollup.get_rollup_caps',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns the rollup capabilities of all jobs inside of a rollup index (e.g. the index where rollup data is stored).
+    * Returns the rollup capabilities of all jobs inside of a rollup index (for example, the index where rollup data is stored).
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-rollup-index-caps.html | Elasticsearch API documentation}
     */
   async getRollupIndexCaps (this: That, params: T.RollupGetRollupIndexCapsRequest | TB.RollupGetRollupIndexCapsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupGetRollupIndexCapsResponse>
@@ -160,7 +179,13 @@ export default class Rollup {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_rollup/data`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'rollup.get_rollup_index_caps',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -198,11 +223,17 @@ export default class Rollup {
 
     const method = 'PUT'
     const path = `/_rollup/job/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'rollup.put_job',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Enables searching rolled-up data using the standard query DSL.
+    * Enables searching rolled-up data using the standard Query DSL.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-search.html | Elasticsearch API documentation}
     */
   async rollupSearch<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.RollupRollupSearchRequest | TB.RollupRollupSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RollupRollupSearchResponse<TDocument, TAggregations>>
@@ -236,7 +267,13 @@ export default class Rollup {
 
     const method = body != null ? 'POST' : 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_rollup_search`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'rollup.rollup_search',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -262,7 +299,13 @@ export default class Rollup {
 
     const method = 'POST'
     const path = `/_rollup/job/${encodeURIComponent(params.id.toString())}/_start`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'rollup.start_job',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -288,6 +331,12 @@ export default class Rollup {
 
     const method = 'POST'
     const path = `/_rollup/job/${encodeURIComponent(params.id.toString())}/_stop`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'rollup.stop_job',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Changes the number of requests per second for a particular Reindex operation.
+  * Copies documents from a source to a destination.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html | Elasticsearch API documentation}
   */
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest | TB.ReindexRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ReindexRethrottleResponse>
@@ -60,5 +61,11 @@ export default async function ReindexRethrottleApi (this: That, params: T.Reinde
 
   const method = 'POST'
   const path = `/_reindex/${encodeURIComponent(params.task_id.toString())}/_rethrottle`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'reindex_rethrottle',
+    pathParts: {
+      task_id: params.task_id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

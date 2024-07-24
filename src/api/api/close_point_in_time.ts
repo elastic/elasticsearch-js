@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Close a point in time
+  * Closes a point-in-time.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api.html | Elasticsearch API documentation}
   */
 export default async function ClosePointInTimeApi (this: That, params: T.ClosePointInTimeRequest | TB.ClosePointInTimeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClosePointInTimeResponse>
@@ -72,5 +73,8 @@ export default async function ClosePointInTimeApi (this: That, params: T.ClosePo
 
   const method = 'DELETE'
   const path = '/_pit'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'close_point_in_time'
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

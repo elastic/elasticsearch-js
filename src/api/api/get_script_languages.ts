@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -61,5 +62,8 @@ export default async function GetScriptLanguagesApi (this: That, params?: T.GetS
 
   const method = 'GET'
   const path = '/_script_language'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'get_script_languages'
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

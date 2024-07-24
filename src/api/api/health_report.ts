@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -68,5 +69,11 @@ export default async function HealthReportApi (this: That, params?: T.HealthRepo
     method = 'GET'
     path = '/_health_report'
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'health_report',
+    pathParts: {
+      feature: params.feature
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

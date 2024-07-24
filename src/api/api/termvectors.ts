@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -79,5 +80,12 @@ export default async function TermvectorsApi<TDocument = unknown> (this: That, p
     method = body != null ? 'POST' : 'GET'
     path = `/${encodeURIComponent(params.index.toString())}/_termvectors`
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'termvectors',
+    pathParts: {
+      index: params.index,
+      id: params.id
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

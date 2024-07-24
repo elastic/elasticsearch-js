@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -61,5 +62,8 @@ export default async function InfoApi (this: That, params?: T.InfoRequest | TB.I
 
   const method = 'GET'
   const path = '/'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'info'
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

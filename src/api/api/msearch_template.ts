@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Allows to execute several search template operations in one request.
+  * Runs multiple templated searches with a single request.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html | Elasticsearch API documentation}
   */
 export default async function MsearchTemplateApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchTemplateRequest | TB.MsearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MsearchTemplateResponse<TDocument, TAggregations>>
@@ -72,5 +73,11 @@ export default async function MsearchTemplateApi<TDocument = unknown, TAggregati
     method = body != null ? 'POST' : 'GET'
     path = '/_msearch/template'
   }
-  return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'msearch_template',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
 }

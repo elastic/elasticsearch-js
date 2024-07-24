@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -44,7 +45,7 @@ export default class Security {
   }
 
   /**
-    * Creates or updates the user profile on behalf of another user.
+    * Creates or updates a user profile on behalf of another user.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-activate-user-profile.html | Elasticsearch API documentation}
     */
   async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest | TB.SecurityActivateUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityActivateUserProfileResponse>
@@ -78,11 +79,14 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/profile/_activate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.activate_user_profile'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Enables authentication as a user and retrieve information about the authenticated user.
+    * Enables you to submit a request with a basic auth header to authenticate a user and retrieve information about the authenticated user. A successful call returns a JSON structure that shows user information such as their username, the roles that are assigned to the user, any assigned metadata, and information about the realms that authenticated and authorized the user. If the user cannot be authenticated, this API returns a 401 status code.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-authenticate.html | Elasticsearch API documentation}
     */
   async authenticate (this: That, params?: T.SecurityAuthenticateRequest | TB.SecurityAuthenticateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityAuthenticateResponse>
@@ -105,7 +109,92 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/_authenticate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.authenticate'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The bulk delete roles API cannot delete roles that are defined in roles files.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-bulk-delete-role.html | Elasticsearch API documentation}
+    */
+  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest | TB.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityBulkDeleteRoleResponse>
+  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest | TB.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityBulkDeleteRoleResponse, unknown>>
+  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest | TB.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityBulkDeleteRoleResponse>
+  async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest | TB.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['names']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = '/_security/role'
+    const meta: TransportRequestMetadata = {
+      name: 'security.bulk_delete_role'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The bulk create or update roles API cannot update roles that are defined in roles files.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-bulk-put-role.html | Elasticsearch API documentation}
+    */
+  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest | TB.SecurityBulkPutRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityBulkPutRoleResponse>
+  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest | TB.SecurityBulkPutRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityBulkPutRoleResponse, unknown>>
+  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest | TB.SecurityBulkPutRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityBulkPutRoleResponse>
+  async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest | TB.SecurityBulkPutRoleRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['roles']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = '/_security/role'
+    const meta: TransportRequestMetadata = {
+      name: 'security.bulk_put_role'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -131,7 +220,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/api_key/_bulk_update'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.bulk_update_api_keys'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -177,11 +269,17 @@ export default class Security {
       method = 'PUT'
       path = '/_security/user/_password'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.change_password',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Clear a subset or all entries from the API key cache.
+    * Evicts a subset of all entries from the API key cache. The cache is also automatically cleared on state changes of the security index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-clear-api-key-cache.html | Elasticsearch API documentation}
     */
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearApiKeyCacheResponse>
@@ -203,7 +301,13 @@ export default class Security {
 
     const method = 'POST'
     const path = `/_security/api_key/${encodeURIComponent(params.ids.toString())}/_clear_cache`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.clear_api_key_cache',
+      pathParts: {
+        ids: params.ids
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -229,7 +333,13 @@ export default class Security {
 
     const method = 'POST'
     const path = `/_security/privilege/${encodeURIComponent(params.application.toString())}/_clear_cache`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.clear_cached_privileges',
+      pathParts: {
+        application: params.application
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -255,7 +365,13 @@ export default class Security {
 
     const method = 'POST'
     const path = `/_security/realm/${encodeURIComponent(params.realms.toString())}/_clear_cache`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.clear_cached_realms',
+      pathParts: {
+        realms: params.realms
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -281,7 +397,13 @@ export default class Security {
 
     const method = 'POST'
     const path = `/_security/role/${encodeURIComponent(params.name.toString())}/_clear_cache`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.clear_cached_roles',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -307,11 +429,19 @@ export default class Security {
 
     const method = 'POST'
     const path = `/_security/service/${encodeURIComponent(params.namespace.toString())}/${encodeURIComponent(params.service.toString())}/credential/token/${encodeURIComponent(params.name.toString())}/_clear_cache`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.clear_cached_service_tokens',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates an API key for access without requiring basic authentication.
+    * Creates an API key for access without requiring basic authentication. A successful request returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. NOTE: By default, API keys never expire. You can specify expiration information when you create the API keys.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-create-api-key.html | Elasticsearch API documentation}
     */
   async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest | TB.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateApiKeyResponse>
@@ -346,7 +476,10 @@ export default class Security {
 
     const method = 'PUT'
     const path = '/_security/api_key'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.create_api_key'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -372,11 +505,14 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/cross_cluster/api_key'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.create_cross_cluster_api_key'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates a service account token for access without requiring basic authentication.
+    * Creates a service accounts token for access without requiring basic authentication.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-create-service-token.html | Elasticsearch API documentation}
     */
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateServiceTokenResponse>
@@ -405,7 +541,15 @@ export default class Security {
       method = 'POST'
       path = `/_security/service/${encodeURIComponent(params.namespace.toString())}/${encodeURIComponent(params.service.toString())}/credential/token`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.create_service_token',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -431,7 +575,14 @@ export default class Security {
 
     const method = 'DELETE'
     const path = `/_security/privilege/${encodeURIComponent(params.application.toString())}/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.delete_privileges',
+      pathParts: {
+        application: params.application,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -457,7 +608,13 @@ export default class Security {
 
     const method = 'DELETE'
     const path = `/_security/role/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.delete_role',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -483,7 +640,13 @@ export default class Security {
 
     const method = 'DELETE'
     const path = `/_security/role_mapping/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.delete_role_mapping',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -509,7 +672,15 @@ export default class Security {
 
     const method = 'DELETE'
     const path = `/_security/service/${encodeURIComponent(params.namespace.toString())}/${encodeURIComponent(params.service.toString())}/credential/token/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.delete_service_token',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -535,7 +706,13 @@ export default class Security {
 
     const method = 'DELETE'
     const path = `/_security/user/${encodeURIComponent(params.username.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.delete_user',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -561,7 +738,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/user/${encodeURIComponent(params.username.toString())}/_disable`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.disable_user',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -587,7 +770,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/profile/${encodeURIComponent(params.uid.toString())}/_disable`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.disable_user_profile',
+      pathParts: {
+        uid: params.uid
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -613,7 +802,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/user/${encodeURIComponent(params.username.toString())}/_enable`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.enable_user',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -639,11 +834,17 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/profile/${encodeURIComponent(params.uid.toString())}/_enable`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.enable_user_profile',
+      pathParts: {
+        uid: params.uid
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Allows a kibana instance to configure itself to communicate with a secured elasticsearch cluster.
+    * Enables a Kibana instance to configure itself for communication with a secured Elasticsearch cluster.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-kibana-enrollment.html | Elasticsearch API documentation}
     */
   async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollKibanaResponse>
@@ -666,11 +867,14 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/enroll/kibana'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.enroll_kibana'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Allows a new node to enroll to an existing cluster with security enabled.
+    * Allows a new node to join an existing cluster with security features enabled.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-node-enrollment.html | Elasticsearch API documentation}
     */
   async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollNodeResponse>
@@ -693,11 +897,14 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/enroll/node'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.enroll_node'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Retrieves information for one or more API keys.
+    * Retrieves information for one or more API keys. NOTE: If you have only the `manage_own_api_key` privilege, this API returns only the API keys that you own. If you have `read_security`, `manage_api_key` or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-api-key.html | Elasticsearch API documentation}
     */
   async getApiKey (this: That, params?: T.SecurityGetApiKeyRequest | TB.SecurityGetApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetApiKeyResponse>
@@ -720,7 +927,10 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/api_key'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_api_key'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -747,7 +957,10 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/privilege/_builtin'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_builtin_privileges'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -784,11 +997,18 @@ export default class Security {
       method = 'GET'
       path = '/_security/privilege'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_privileges',
+      pathParts: {
+        application: params.application,
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Retrieves roles in the native realm.
+    * The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The get roles API cannot retrieve roles that are defined in roles files.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-role.html | Elasticsearch API documentation}
     */
   async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetRoleResponse>
@@ -818,7 +1038,13 @@ export default class Security {
       method = 'GET'
       path = '/_security/role'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_role',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -852,11 +1078,17 @@ export default class Security {
       method = 'GET'
       path = '/_security/role_mapping'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_role_mapping',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Retrieves information about service accounts.
+    * This API returns a list of service accounts that match the provided path parameter(s).
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-service-accounts.html | Elasticsearch API documentation}
     */
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetServiceAccountsResponse>
@@ -889,7 +1121,14 @@ export default class Security {
       method = 'GET'
       path = '/_security/service'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_service_accounts',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -915,7 +1154,14 @@ export default class Security {
 
     const method = 'GET'
     const path = `/_security/service/${encodeURIComponent(params.namespace.toString())}/${encodeURIComponent(params.service.toString())}/credential`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_service_credentials',
+      pathParts: {
+        namespace: params.namespace,
+        service: params.service
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -941,7 +1187,10 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/settings'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_settings'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -980,7 +1229,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/oauth2/token'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_token'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1014,7 +1266,13 @@ export default class Security {
       method = 'GET'
       path = '/_security/user'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_user',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1041,11 +1299,14 @@ export default class Security {
 
     const method = 'GET'
     const path = '/_security/user/_privileges'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_user_privileges'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Retrieves user profiles for the given unique ID(s).
+    * Retrieves a user's profile using the unique profile ID.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-user-profile.html | Elasticsearch API documentation}
     */
   async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest | TB.SecurityGetUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserProfileResponse>
@@ -1067,11 +1328,17 @@ export default class Security {
 
     const method = 'GET'
     const path = `/_security/profile/${encodeURIComponent(params.uid.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.get_user_profile',
+      pathParts: {
+        uid: params.uid
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates an API key on behalf of another user.
+    * Creates an API key on behalf of another user. This API is similar to Create API keys, however it creates the API key for a user that is different than the user that runs the API. The caller must have authentication credentials (either an access token, or a username and password) for the user on whose behalf the API key will be created. It is not possible to use this API to create an API key without that user’s credentials. The user, for whom the authentication credentials is provided, can optionally "run as" (impersonate) another user. In this case, the API key will be created on behalf of the impersonated user. This API is intended be used by applications that need to create and manage API keys for end users, but cannot guarantee that those users have permission to create API keys on their own behalf. A successful grant API key API call returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. By default, API keys never expire. You can specify expiration information when you create the API keys.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-grant-api-key.html | Elasticsearch API documentation}
     */
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGrantApiKeyResponse>
@@ -1105,7 +1372,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/api_key/grant'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.grant_api_key'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1151,7 +1421,13 @@ export default class Security {
       method = body != null ? 'POST' : 'GET'
       path = '/_security/user/_has_privileges'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.has_privileges',
+      pathParts: {
+        user: params.user
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1189,11 +1465,14 @@ export default class Security {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_security/profile/_has_privileges'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.has_privileges_user_profile'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Invalidates one or more API keys.
+    * Invalidates one or more API keys. The `manage_api_key` privilege allows deleting any API keys. The `manage_own_api_key` only allows deleting API keys that are owned by the user. In addition, with the `manage_own_api_key` privilege, an invalidation request must be issued in one of the three formats: - Set the parameter `owner=true`. - Or, set both `username` and `realm_name` to match the user’s identity. - Or, if the request is issued by an API key, i.e. an API key invalidates itself, specify its ID in the `ids` field.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-invalidate-api-key.html | Elasticsearch API documentation}
     */
   async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest | TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityInvalidateApiKeyResponse>
@@ -1228,7 +1507,10 @@ export default class Security {
 
     const method = 'DELETE'
     const path = '/_security/api_key'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.invalidate_api_key'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1267,7 +1549,10 @@ export default class Security {
 
     const method = 'DELETE'
     const path = '/_security/oauth2/token'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.invalidate_token'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1293,7 +1578,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/oidc/authenticate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.oidc_authenticate'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1319,7 +1607,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/oidc/logout'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.oidc_logout'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1345,7 +1636,10 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/oidc/prepare'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.oidc_prepare_authentication'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1376,11 +1670,14 @@ export default class Security {
 
     const method = 'PUT'
     const path = '/_security/privilege'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.put_privileges'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Adds and updates roles in the native realm.
+    * The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The create or update roles API cannot update roles that are defined in roles files.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-put-role.html | Elasticsearch API documentation}
     */
   async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutRoleResponse>
@@ -1388,7 +1685,7 @@ export default class Security {
   async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleResponse>
   async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['applications', 'cluster', 'global', 'indices', 'metadata', 'run_as', 'transient_metadata']
+    const acceptedBody: string[] = ['applications', 'cluster', 'global', 'indices', 'metadata', 'run_as', 'description', 'transient_metadata']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
@@ -1414,7 +1711,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/role/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.put_role',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1452,7 +1755,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/role_mapping/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.put_role_mapping',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1490,11 +1799,17 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/user/${encodeURIComponent(params.username.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.put_user',
+      pathParts: {
+        username: params.username
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Retrieves information for API keys using a subset of query DSL
+    * Retrieves information for API keys in a paginated manner. You can optionally filter the results with a query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-query-api-key.html | Elasticsearch API documentation}
     */
   async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryApiKeysResponse>
@@ -1529,11 +1844,98 @@ export default class Security {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_security/_query/api_key'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.query_api_keys'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Exchanges a SAML Response message for an Elasticsearch access token and refresh token pair
+    * Retrieves roles in a paginated manner. You can optionally filter the results with a query.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-query-role.html | Elasticsearch API documentation}
+    */
+  async queryRole (this: That, params?: T.SecurityQueryRoleRequest | TB.SecurityQueryRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryRoleResponse>
+  async queryRole (this: That, params?: T.SecurityQueryRoleRequest | TB.SecurityQueryRoleRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryRoleResponse, unknown>>
+  async queryRole (this: That, params?: T.SecurityQueryRoleRequest | TB.SecurityQueryRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryRoleResponse>
+  async queryRole (this: That, params?: T.SecurityQueryRoleRequest | TB.SecurityQueryRoleRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['query', 'from', 'sort', 'size', 'search_after']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = body != null ? 'POST' : 'GET'
+    const path = '/_security/_query/role'
+    const meta: TransportRequestMetadata = {
+      name: 'security.query_role'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Retrieves information for Users in a paginated manner. You can optionally filter the results with a query.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-query-user.html | Elasticsearch API documentation}
+    */
+  async queryUser (this: That, params?: T.SecurityQueryUserRequest | TB.SecurityQueryUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryUserResponse>
+  async queryUser (this: That, params?: T.SecurityQueryUserRequest | TB.SecurityQueryUserRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityQueryUserResponse, unknown>>
+  async queryUser (this: That, params?: T.SecurityQueryUserRequest | TB.SecurityQueryUserRequest, options?: TransportRequestOptions): Promise<T.SecurityQueryUserResponse>
+  async queryUser (this: That, params?: T.SecurityQueryUserRequest | TB.SecurityQueryUserRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['query', 'from', 'sort', 'size', 'search_after']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = body != null ? 'POST' : 'GET'
+    const path = '/_security/_query/user'
+    const meta: TransportRequestMetadata = {
+      name: 'security.query_user'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Submits a SAML Response message to Elasticsearch for consumption.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-authenticate.html | Elasticsearch API documentation}
     */
   async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlAuthenticateResponse>
@@ -1567,11 +1969,14 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/saml/authenticate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_authenticate'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Verifies the logout response sent from the SAML IdP
+    * Verifies the logout response sent from the SAML IdP.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-complete-logout.html | Elasticsearch API documentation}
     */
   async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlCompleteLogoutResponse>
@@ -1605,11 +2010,14 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/saml/complete_logout'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_complete_logout'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Consumes a SAML LogoutRequest
+    * Submits a SAML LogoutRequest message to Elasticsearch for consumption.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-invalidate.html | Elasticsearch API documentation}
     */
   async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlInvalidateResponse>
@@ -1643,11 +2051,14 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/saml/invalidate'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_invalidate'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Invalidates an access token and a refresh token that were generated via the SAML Authenticate API
+    * Submits a request to invalidate an access token and refresh token.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-logout.html | Elasticsearch API documentation}
     */
   async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlLogoutResponse>
@@ -1681,11 +2092,14 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/saml/logout'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_logout'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates a SAML authentication request
+    * Creates a SAML authentication request (<AuthnRequest>) as a URL string, based on the configuration of the respective SAML realm in Elasticsearch.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-prepare-authentication.html | Elasticsearch API documentation}
     */
   async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlPrepareAuthenticationResponse>
@@ -1720,11 +2134,14 @@ export default class Security {
 
     const method = 'POST'
     const path = '/_security/saml/prepare'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_prepare_authentication'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Generates SAML metadata for the Elastic stack SAML 2.0 Service Provider
+    * Generate SAML metadata for a SAML 2.0 Service Provider.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-sp-metadata.html | Elasticsearch API documentation}
     */
   async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlServiceProviderMetadataResponse>
@@ -1746,7 +2163,13 @@ export default class Security {
 
     const method = 'GET'
     const path = `/_security/saml/metadata/${encodeURIComponent(params.realm_name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.saml_service_provider_metadata',
+      pathParts: {
+        realm_name: params.realm_name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1785,11 +2208,14 @@ export default class Security {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_security/profile/_suggest'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.suggest_user_profiles'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Updates attributes of an existing API key.
+    * Updates attributes of an existing API key. Users can only update API keys that they created or that were granted to them. Use this API to update API keys created by the create API Key or grant API Key APIs. If you need to apply the same update to many API keys, you can use bulk update API Keys to reduce overhead. It’s not possible to update expired API keys, or API keys that have been invalidated by invalidate API Key. This API supports updates to an API key’s access scope and metadata. The access scope of an API key is derived from the `role_descriptors` you specify in the request, and a snapshot of the owner user’s permissions at the time of the request. The snapshot of the owner’s permissions is updated automatically on every call. If you don’t specify `role_descriptors` in the request, a call to this API might still change the API key’s access scope. This change can occur if the owner user’s permissions have changed since the API key was created or last modified. To update another user’s API key, use the `run_as` feature to submit a request on behalf of another user. IMPORTANT: It’s not possible to use an API key as the authentication credential for this API. To update an API key, the owner user’s credentials are required.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-update-api-key.html | Elasticsearch API documentation}
     */
   async updateApiKey (this: That, params: T.SecurityUpdateApiKeyRequest | TB.SecurityUpdateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateApiKeyResponse>
@@ -1823,7 +2249,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/api_key/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.update_api_key',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1849,7 +2281,13 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/cross_cluster/api_key/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.update_cross_cluster_api_key',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -1875,11 +2313,14 @@ export default class Security {
 
     const method = 'PUT'
     const path = '/_security/settings'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.update_settings'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Update application specific data for the user profile of the given unique ID.
+    * Updates specific data for the user profile that's associated with the specified unique ID.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-update-user-profile-data.html | Elasticsearch API documentation}
     */
   async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest | TB.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateUserProfileDataResponse>
@@ -1913,6 +2354,12 @@ export default class Security {
 
     const method = 'PUT'
     const path = `/_security/profile/${encodeURIComponent(params.uid.toString())}/_data`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'security.update_user_profile_data',
+      pathParts: {
+        uid: params.uid
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }
