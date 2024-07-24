@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Allows to perform multiple index/update/delete operations in a single request.
+  * Performs multiple indexing or delete operations in a single API call. This reduces overhead and can greatly increase indexing speed.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html | Elasticsearch API documentation}
   */
 export default async function BulkApi<TDocument = unknown, TPartialDocument = unknown> (this: That, params: T.BulkRequest<TDocument, TPartialDocument> | TB.BulkRequest<TDocument, TPartialDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.BulkResponse>
@@ -72,5 +73,11 @@ export default async function BulkApi<TDocument = unknown, TPartialDocument = un
     method = 'POST'
     path = '/_bulk'
   }
-  return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'bulk',
+    pathParts: {
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
 }

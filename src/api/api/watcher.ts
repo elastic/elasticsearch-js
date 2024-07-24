@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -73,7 +74,14 @@ export default class Watcher {
       method = 'PUT'
       path = `/_watcher/watch/${encodeURIComponent(params.watch_id.toString())}/_ack`
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.ack_watch',
+      pathParts: {
+        watch_id: params.watch_id,
+        action_id: params.action_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -99,7 +107,13 @@ export default class Watcher {
 
     const method = 'PUT'
     const path = `/_watcher/watch/${encodeURIComponent(params.watch_id.toString())}/_activate`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.activate_watch',
+      pathParts: {
+        watch_id: params.watch_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -125,7 +139,13 @@ export default class Watcher {
 
     const method = 'PUT'
     const path = `/_watcher/watch/${encodeURIComponent(params.watch_id.toString())}/_deactivate`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.deactivate_watch',
+      pathParts: {
+        watch_id: params.watch_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -151,11 +171,17 @@ export default class Watcher {
 
     const method = 'DELETE'
     const path = `/_watcher/watch/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.delete_watch',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Forces the execution of a stored watch.
+    * This API can be used to force execution of the watch outside of its triggering logic or to simulate the watch execution for debugging purposes. For testing and debugging purposes, you also have fine-grained control on how the watch runs. You can execute the watch without executing all of its actions or alternatively by simulating them. You can also force execution by ignoring the watch condition and control whether a watch record would be written to the watch history after execution.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/watcher-api-execute-watch.html | Elasticsearch API documentation}
     */
   async executeWatch (this: That, params?: T.WatcherExecuteWatchRequest | TB.WatcherExecuteWatchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.WatcherExecuteWatchResponse>
@@ -197,7 +223,13 @@ export default class Watcher {
       method = 'PUT'
       path = '/_watcher/watch/_execute'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.execute_watch',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -223,7 +255,10 @@ export default class Watcher {
 
     const method = 'GET'
     const path = '/_watcher/settings'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.get_settings'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -249,7 +284,13 @@ export default class Watcher {
 
     const method = 'GET'
     const path = `/_watcher/watch/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.get_watch',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -287,7 +328,13 @@ export default class Watcher {
 
     const method = 'PUT'
     const path = `/_watcher/watch/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.put_watch',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -326,7 +373,10 @@ export default class Watcher {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_watcher/_query/watches'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.query_watches'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -353,7 +403,10 @@ export default class Watcher {
 
     const method = 'POST'
     const path = '/_watcher/_start'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.start'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -387,7 +440,13 @@ export default class Watcher {
       method = 'GET'
       path = '/_watcher/stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.stats',
+      pathParts: {
+        metric: params.metric
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -414,7 +473,10 @@ export default class Watcher {
 
     const method = 'POST'
     const path = '/_watcher/_stop'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.stop'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -440,6 +502,9 @@ export default class Watcher {
 
     const method = 'PUT'
     const path = '/_watcher/settings'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'watcher.update_settings'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

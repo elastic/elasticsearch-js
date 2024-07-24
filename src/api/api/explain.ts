@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Returns information about why a specific matches (or doesn't match) a query.
+  * Returns information about why a specific document matches (or doesn’t match) a query.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html | Elasticsearch API documentation}
   */
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest | TB.ExplainRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExplainResponse<TDocument>>
@@ -72,5 +73,12 @@ export default async function ExplainApi<TDocument = unknown> (this: That, param
 
   const method = body != null ? 'POST' : 'GET'
   const path = `/${encodeURIComponent(params.index.toString())}/_explain/${encodeURIComponent(params.id.toString())}`
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'explain',
+    pathParts: {
+      id: params.id,
+      index: params.index
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

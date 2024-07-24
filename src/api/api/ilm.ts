@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -44,7 +45,7 @@ export default class Ilm {
   }
 
   /**
-    * Deletes the specified lifecycle policy definition. A currently used policy cannot be deleted.
+    * Deletes the specified lifecycle policy definition. You cannot delete policies that are currently in use. If the policy is being used to manage any indices, the request fails and returns an error.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-delete-lifecycle.html | Elasticsearch API documentation}
     */
   async deleteLifecycle (this: That, params: T.IlmDeleteLifecycleRequest | TB.IlmDeleteLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmDeleteLifecycleResponse>
@@ -66,11 +67,17 @@ export default class Ilm {
 
     const method = 'DELETE'
     const path = `/_ilm/policy/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.delete_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Retrieves information about the index's current lifecycle state, such as the currently executing phase, action, and step.
+    * Retrieves information about the index’s current lifecycle state, such as the currently executing phase, action, and step. Shows when the index entered each one, the definition of the running phase, and information about any failures.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-explain-lifecycle.html | Elasticsearch API documentation}
     */
   async explainLifecycle (this: That, params: T.IlmExplainLifecycleRequest | TB.IlmExplainLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmExplainLifecycleResponse>
@@ -92,11 +99,17 @@ export default class Ilm {
 
     const method = 'GET'
     const path = `/${encodeURIComponent(params.index.toString())}/_ilm/explain`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.explain_lifecycle',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns the specified policy definition. Includes the policy version and last modified date.
+    * Retrieves a lifecycle policy.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-get-lifecycle.html | Elasticsearch API documentation}
     */
   async getLifecycle (this: That, params?: T.IlmGetLifecycleRequest | TB.IlmGetLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmGetLifecycleResponse>
@@ -126,7 +139,13 @@ export default class Ilm {
       method = 'GET'
       path = '/_ilm/policy'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.get_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -153,11 +172,14 @@ export default class Ilm {
 
     const method = 'GET'
     const path = '/_ilm/status'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.get_status'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Migrates the indices and ILM policies away from custom node attribute allocation routing to data tiers routing
+    * Switches the indices, ILM policies, and legacy, composable and component templates from using custom node attributes and attribute-based allocation filters to using data tiers, and optionally deletes one legacy index template.+ Using node roles enables ILM to automatically move the indices between data tiers.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-migrate-to-data-tiers.html | Elasticsearch API documentation}
     */
   async migrateToDataTiers (this: That, params?: T.IlmMigrateToDataTiersRequest | TB.IlmMigrateToDataTiersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmMigrateToDataTiersResponse>
@@ -192,7 +214,10 @@ export default class Ilm {
 
     const method = 'POST'
     const path = '/_ilm/migrate_to_data_tiers'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.migrate_to_data_tiers'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -230,11 +255,17 @@ export default class Ilm {
 
     const method = 'POST'
     const path = `/_ilm/move/${encodeURIComponent(params.index.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.move_to_step',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates a lifecycle policy
+    * Creates a lifecycle policy. If the specified policy exists, the policy is replaced and the policy version is incremented.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ilm-put-lifecycle.html | Elasticsearch API documentation}
     */
   async putLifecycle (this: That, params: T.IlmPutLifecycleRequest | TB.IlmPutLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IlmPutLifecycleResponse>
@@ -268,7 +299,13 @@ export default class Ilm {
 
     const method = 'PUT'
     const path = `/_ilm/policy/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.put_lifecycle',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -294,7 +331,13 @@ export default class Ilm {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_ilm/remove`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.remove_policy',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -320,7 +363,13 @@ export default class Ilm {
 
     const method = 'POST'
     const path = `/${encodeURIComponent(params.index.toString())}/_ilm/retry`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.retry',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -347,7 +396,10 @@ export default class Ilm {
 
     const method = 'POST'
     const path = '/_ilm/start'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.start'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -374,6 +426,9 @@ export default class Ilm {
 
     const method = 'POST'
     const path = '/_ilm/stop'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'ilm.stop'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

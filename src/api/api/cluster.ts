@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -79,11 +80,14 @@ export default class Cluster {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_cluster/allocation/explain'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.allocation_explain'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Deletes a component template
+    * Deletes component templates. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html | Elasticsearch API documentation}
     */
   async deleteComponentTemplate (this: That, params: T.ClusterDeleteComponentTemplateRequest | TB.ClusterDeleteComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterDeleteComponentTemplateResponse>
@@ -105,7 +109,13 @@ export default class Cluster {
 
     const method = 'DELETE'
     const path = `/_component_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.delete_component_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -132,7 +142,10 @@ export default class Cluster {
 
     const method = 'DELETE'
     const path = '/_cluster/voting_config_exclusions'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.delete_voting_config_exclusions'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -158,11 +171,17 @@ export default class Cluster {
 
     const method = 'HEAD'
     const path = `/_component_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.exists_component_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns one or more component templates
+    * Retrieves information about component templates.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html | Elasticsearch API documentation}
     */
   async getComponentTemplate (this: That, params?: T.ClusterGetComponentTemplateRequest | TB.ClusterGetComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterGetComponentTemplateResponse>
@@ -192,11 +211,17 @@ export default class Cluster {
       method = 'GET'
       path = '/_component_template'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.get_component_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns cluster settings.
+    * Returns cluster-wide settings. By default, it returns only settings that have been explicitly defined.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-get-settings.html | Elasticsearch API documentation}
     */
   async getSettings (this: That, params?: T.ClusterGetSettingsRequest | TB.ClusterGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterGetSettingsResponse>
@@ -219,11 +244,14 @@ export default class Cluster {
 
     const method = 'GET'
     const path = '/_cluster/settings'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.get_settings'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns basic information about the health of the cluster.
+    * The cluster health API returns a simple status on the health of the cluster. You can also use the API to get the health status of only specified data streams and indices. For data streams, the API retrieves the health status of the stream’s backing indices. The cluster health status is: green, yellow or red. On the shard level, a red status indicates that the specific shard is not allocated in the cluster, yellow means that the primary shard is allocated but replicas are not, and green means that all shards are allocated. The index level status is controlled by the worst shard status. The cluster status is controlled by the worst index status.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html | Elasticsearch API documentation}
     */
   async health (this: That, params?: T.ClusterHealthRequest | TB.ClusterHealthRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterHealthResponse>
@@ -253,7 +281,13 @@ export default class Cluster {
       method = 'GET'
       path = '/_cluster/health'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.health',
+      pathParts: {
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -279,11 +313,17 @@ export default class Cluster {
 
     const method = 'GET'
     const path = `/_info/${encodeURIComponent(params.target.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.info',
+      pathParts: {
+        target: params.target
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns a list of any cluster-level changes (e.g. create index, update mapping, allocate or fail shard) which have not yet been executed.
+    * Returns cluster-level changes (such as create index, update mapping, allocate or fail shard) that have not yet been executed. NOTE: This API returns a list of any pending updates to the cluster state. These are distinct from the tasks reported by the Task Management API which include periodic tasks and tasks initiated by the user, such as node stats, search queries, or create index requests. However, if a user-initiated task such as a create index command causes a cluster state update, the activity of this task might be reported by both task api and pending cluster tasks API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.html | Elasticsearch API documentation}
     */
   async pendingTasks (this: That, params?: T.ClusterPendingTasksRequest | TB.ClusterPendingTasksRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterPendingTasksResponse>
@@ -306,7 +346,10 @@ export default class Cluster {
 
     const method = 'GET'
     const path = '/_cluster/pending_tasks'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.pending_tasks'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -333,11 +376,14 @@ export default class Cluster {
 
     const method = 'POST'
     const path = '/_cluster/voting_config_exclusions'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.post_voting_config_exclusions'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates or updates a component template
+    * Creates or updates a component template. Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases. An index template can be composed of multiple component templates. To use a component template, specify it in an index template’s `composed_of` list. Component templates are only applied to new data streams and indices as part of a matching index template. Settings and mappings specified directly in the index template or the create index request override any settings or mappings specified in a component template. Component templates are only used during index creation. For data streams, this includes data stream creation and the creation of a stream’s backing indices. Changes to component templates do not affect existing indices, including a stream’s backing indices. You can use C-style `/* *\/` block comments in component templates. You can include comments anywhere in the request body except before the opening curly bracket.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-template.html | Elasticsearch API documentation}
     */
   async putComponentTemplate (this: That, params: T.ClusterPutComponentTemplateRequest | TB.ClusterPutComponentTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterPutComponentTemplateResponse>
@@ -371,7 +417,13 @@ export default class Cluster {
 
     const method = 'PUT'
     const path = `/_component_template/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.put_component_template',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -410,11 +462,14 @@ export default class Cluster {
 
     const method = 'PUT'
     const path = '/_cluster/settings'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.put_settings'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns the information about configured remote clusters.
+    * The cluster remote info API allows you to retrieve all of the configured remote cluster information. It returns connection and endpoint information keyed by the configured remote cluster alias.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html | Elasticsearch API documentation}
     */
   async remoteInfo (this: That, params?: T.ClusterRemoteInfoRequest | TB.ClusterRemoteInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterRemoteInfoResponse>
@@ -437,7 +492,10 @@ export default class Cluster {
 
     const method = 'GET'
     const path = '/_remote/info'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.remote_info'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -476,7 +534,10 @@ export default class Cluster {
 
     const method = 'POST'
     const path = '/_cluster/reroute'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.reroute'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -513,11 +574,18 @@ export default class Cluster {
       method = 'GET'
       path = '/_cluster/state'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.state',
+      pathParts: {
+        metric: params.metric,
+        index: params.index
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Returns high-level overview of cluster statistics.
+    * Returns cluster statistics. It returns basic index metrics (shard numbers, store size, memory usage) and information about the current nodes that form the cluster (number, roles, os, jvm versions, memory usage, cpu and installed plugins).
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.ClusterStatsRequest | TB.ClusterStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClusterStatsResponse>
@@ -547,6 +615,12 @@ export default class Cluster {
       method = 'GET'
       path = '/_cluster/stats'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'cluster.stats',
+      pathParts: {
+        node_id: params.node_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

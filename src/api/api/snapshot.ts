@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -44,7 +45,7 @@ export default class Snapshot {
   }
 
   /**
-    * Removes stale data from repository.
+    * Triggers the review of a snapshot repository’s contents and deletes any stale data not referenced by existing snapshots.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clean-up-snapshot-repo-api.html | Elasticsearch API documentation}
     */
   async cleanupRepository (this: That, params: T.SnapshotCleanupRepositoryRequest | TB.SnapshotCleanupRepositoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotCleanupRepositoryResponse>
@@ -66,7 +67,13 @@ export default class Snapshot {
 
     const method = 'POST'
     const path = `/_snapshot/${encodeURIComponent(params.name.toString())}/_cleanup`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.cleanup_repository',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -104,7 +111,15 @@ export default class Snapshot {
 
     const method = 'PUT'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}/_clone/${encodeURIComponent(params.target_snapshot.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.clone',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot,
+        target_snapshot: params.target_snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -142,7 +157,14 @@ export default class Snapshot {
 
     const method = 'PUT'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.create',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -173,7 +195,13 @@ export default class Snapshot {
 
     const method = 'PUT'
     const path = `/_snapshot/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.create_repository',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -199,7 +227,14 @@ export default class Snapshot {
 
     const method = 'DELETE'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.delete',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -225,7 +260,13 @@ export default class Snapshot {
 
     const method = 'DELETE'
     const path = `/_snapshot/${encodeURIComponent(params.name.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.delete_repository',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -251,7 +292,14 @@ export default class Snapshot {
 
     const method = 'GET'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.get',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -285,7 +333,13 @@ export default class Snapshot {
       method = 'GET'
       path = '/_snapshot'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.get_repository',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -311,7 +365,13 @@ export default class Snapshot {
 
     const method = 'POST'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/_analyze`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.repository_analyze',
+      pathParts: {
+        repository: params.repository
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -349,7 +409,14 @@ export default class Snapshot {
 
     const method = 'POST'
     const path = `/_snapshot/${encodeURIComponent(params.repository.toString())}/${encodeURIComponent(params.snapshot.toString())}/_restore`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.restore',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -386,7 +453,14 @@ export default class Snapshot {
       method = 'GET'
       path = '/_snapshot/_status'
     }
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.status',
+      pathParts: {
+        repository: params.repository,
+        snapshot: params.snapshot
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -412,6 +486,12 @@ export default class Snapshot {
 
     const method = 'POST'
     const path = `/_snapshot/${encodeURIComponent(params.name.toString())}/_verify`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.verify_repository',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

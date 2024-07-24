@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class DanglingIndices {
 
     const method = 'DELETE'
     const path = `/_dangling/${encodeURIComponent(params.index_uuid.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'dangling_indices.delete_dangling_index',
+      pathParts: {
+        index_uuid: params.index_uuid
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -92,7 +99,13 @@ export default class DanglingIndices {
 
     const method = 'POST'
     const path = `/_dangling/${encodeURIComponent(params.index_uuid.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'dangling_indices.import_dangling_index',
+      pathParts: {
+        index_uuid: params.index_uuid
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -119,6 +132,9 @@ export default class DanglingIndices {
 
     const method = 'GET'
     const path = '/_dangling'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'dangling_indices.list_dangling_indices'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

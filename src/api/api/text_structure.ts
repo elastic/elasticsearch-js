@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -41,6 +42,64 @@ export default class TextStructure {
   transport: Transport
   constructor (transport: Transport) {
     this.transport = transport
+  }
+
+  /**
+    * Finds the structure of a text field in an index.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/find-field-structure.html | Elasticsearch API documentation}
+    */
+  async findFieldStructure (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async findFieldStructure (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async findFieldStructure (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async findFieldStructure (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'GET'
+    const path = '/_text_structure/find_field_structure'
+    const meta: TransportRequestMetadata = {
+      name: 'text_structure.find_field_structure'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Finds the structure of a list of messages. The messages must contain data that is suitable to be ingested into Elasticsearch.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/find-message-structure.html | Elasticsearch API documentation}
+    */
+  async findMessageStructure (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async findMessageStructure (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async findMessageStructure (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async findMessageStructure (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = []
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = body != null ? 'POST' : 'GET'
+    const path = '/_text_structure/find_message_structure'
+    const meta: TransportRequestMetadata = {
+      name: 'text_structure.find_message_structure'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -71,7 +130,10 @@ export default class TextStructure {
 
     const method = 'POST'
     const path = '/_text_structure/find_structure'
-    return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'text_structure.find_structure'
+    }
+    return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }
 
   /**
@@ -109,6 +171,9 @@ export default class TextStructure {
 
     const method = body != null ? 'POST' : 'GET'
     const path = '/_text_structure/test_grok_pattern'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'text_structure.test_grok_pattern'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

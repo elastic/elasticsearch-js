@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -38,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Creates or updates a script.
+  * Creates or updates a stored script or search template.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html | Elasticsearch API documentation}
   */
 export default async function PutScriptApi (this: That, params: T.PutScriptRequest | TB.PutScriptRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.PutScriptResponse>
@@ -79,5 +80,12 @@ export default async function PutScriptApi (this: That, params: T.PutScriptReque
     method = 'PUT'
     path = `/_scripts/${encodeURIComponent(params.id.toString())}`
   }
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'put_script',
+    pathParts: {
+      id: params.id,
+      context: params.context
+    }
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

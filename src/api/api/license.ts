@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -67,11 +68,14 @@ export default class License {
 
     const method = 'DELETE'
     const path = '/_license'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.delete'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Retrieves licensing information for the cluster
+    * This API returns information about the type of license, when it was issued, and when it expires, for example. For more information about the different types of licenses, see https://www.elastic.co/subscriptions.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html | Elasticsearch API documentation}
     */
   async get (this: That, params?: T.LicenseGetRequest | TB.LicenseGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicenseGetResponse>
@@ -94,7 +98,10 @@ export default class License {
 
     const method = 'GET'
     const path = '/_license'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.get'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -121,7 +128,10 @@ export default class License {
 
     const method = 'GET'
     const path = '/_license/basic_status'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.get_basic_status'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -148,7 +158,10 @@ export default class License {
 
     const method = 'GET'
     const path = '/_license/trial_status'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.get_trial_status'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -187,11 +200,14 @@ export default class License {
 
     const method = 'PUT'
     const path = '/_license'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.post'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Starts an indefinite basic license.
+    * The start basic API enables you to initiate an indefinite basic license, which gives access to all the basic features. If the basic license does not support all of the features that are available with your current license, however, you are notified in the response. You must then re-submit the API request with the acknowledge parameter set to true. To check the status of your basic license, use the following API: [Get basic status](https://www.elastic.co/guide/en/elasticsearch/reference/current/get-basic-status.html).
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/start-basic.html | Elasticsearch API documentation}
     */
   async postStartBasic (this: That, params?: T.LicensePostStartBasicRequest | TB.LicensePostStartBasicRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostStartBasicResponse>
@@ -214,11 +230,14 @@ export default class License {
 
     const method = 'POST'
     const path = '/_license/start_basic'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.post_start_basic'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * starts a limited time trial license.
+    * The start trial API enables you to start a 30-day trial, which gives access to all subscription features.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html | Elasticsearch API documentation}
     */
   async postStartTrial (this: That, params?: T.LicensePostStartTrialRequest | TB.LicensePostStartTrialRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.LicensePostStartTrialResponse>
@@ -241,6 +260,9 @@ export default class License {
 
     const method = 'POST'
     const path = '/_license/start_trial'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'license.post_start_trial'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }

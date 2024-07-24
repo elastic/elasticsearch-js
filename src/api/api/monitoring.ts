@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -71,6 +72,12 @@ export default class Monitoring {
 
     const method = 'POST'
     const path = '/_monitoring/bulk'
-    return await this.transport.request({ path, method, querystring, bulkBody: body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'monitoring.bulk',
+      pathParts: {
+        type: params.type
+      }
+    }
+    return await this.transport.request({ path, method, querystring, bulkBody: body, meta }, options)
   }
 }

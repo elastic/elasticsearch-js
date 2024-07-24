@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -72,5 +73,8 @@ export default async function ReindexApi (this: That, params: T.ReindexRequest |
 
   const method = 'POST'
   const path = '/_reindex'
-  return await this.transport.request({ path, method, querystring, body }, options)
+  const meta: TransportRequestMetadata = {
+    name: 'reindex'
+  }
+  return await this.transport.request({ path, method, querystring, body, meta }, options)
 }

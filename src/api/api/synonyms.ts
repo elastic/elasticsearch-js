@@ -28,6 +28,7 @@
 
 import {
   Transport,
+  TransportRequestMetadata,
   TransportRequestOptions,
   TransportRequestOptionsWithMeta,
   TransportRequestOptionsWithOutMeta,
@@ -66,7 +67,13 @@ export default class Synonyms {
 
     const method = 'DELETE'
     const path = `/_synonyms/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'synonyms.delete_synonym',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -92,7 +99,14 @@ export default class Synonyms {
 
     const method = 'DELETE'
     const path = `/_synonyms/${encodeURIComponent(params.set_id.toString())}/${encodeURIComponent(params.rule_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'synonyms.delete_synonym_rule',
+      pathParts: {
+        set_id: params.set_id,
+        rule_id: params.rule_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -118,7 +132,13 @@ export default class Synonyms {
 
     const method = 'GET'
     const path = `/_synonyms/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'synonyms.get_synonym',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -144,7 +164,14 @@ export default class Synonyms {
 
     const method = 'GET'
     const path = `/_synonyms/${encodeURIComponent(params.set_id.toString())}/${encodeURIComponent(params.rule_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'synonyms.get_synonym_rule',
+      pathParts: {
+        set_id: params.set_id,
+        rule_id: params.rule_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -171,11 +198,14 @@ export default class Synonyms {
 
     const method = 'GET'
     const path = '/_synonyms'
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'synonyms.get_synonyms_sets'
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
-    * Creates or updates a synonyms set
+    * Creates or updates a synonym set.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-synonyms-set.html | Elasticsearch API documentation}
     */
   async putSynonym (this: That, params: T.SynonymsPutSynonymRequest | TB.SynonymsPutSynonymRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SynonymsPutSynonymResponse>
@@ -209,7 +239,13 @@ export default class Synonyms {
 
     const method = 'PUT'
     const path = `/_synonyms/${encodeURIComponent(params.id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'synonyms.put_synonym',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 
   /**
@@ -247,6 +283,13 @@ export default class Synonyms {
 
     const method = 'PUT'
     const path = `/_synonyms/${encodeURIComponent(params.set_id.toString())}/${encodeURIComponent(params.rule_id.toString())}`
-    return await this.transport.request({ path, method, querystring, body }, options)
+    const meta: TransportRequestMetadata = {
+      name: 'synonyms.put_synonym_rule',
+      pathParts: {
+        set_id: params.set_id,
+        rule_id: params.rule_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
 }
