@@ -813,7 +813,7 @@ client.reindex({ dest, source })
 ** *`source` ({ index, query, remote, size, slice, sort, _source, runtime_mappings })*: The source you are copying from.
 ** *`conflicts` (Optional, Enum("abort" | "proceed"))*: Set to proceed to continue reindexing even if there are conflicts.
 ** *`max_docs` (Optional, number)*: The maximum number of documents to reindex.
-** *`script` (Optional, { lang, options, source } | { id })*: The script to run to update the document source or metadata when reindexing.
+** *`script` (Optional, { source, id, params, lang, options })*: The script to run to update the document source or metadata when reindexing.
 ** *`size` (Optional, number)*
 ** *`refresh` (Optional, boolean)*: If `true`, the request refreshes affected shards to make this operation visible to search.
 ** *`requests_per_second` (Optional, float)*: The throttle for this request in sub-requests per second.
@@ -882,7 +882,7 @@ client.scriptsPainlessExecute({ ... })
 * *Request (object):*
 ** *`context` (Optional, string)*: The context that the script should run in.
 ** *`context_setup` (Optional, { document, index, query })*: Additional parameters for the `context`.
-** *`script` (Optional, { lang, options, source })*: The Painless script to execute.
+** *`script` (Optional, { source, id, params, lang, options })*: The Painless script to execute.
 
 [discrete]
 === scroll
@@ -1255,7 +1255,7 @@ client.update({ id, index })
 to 'noop' if no change to the document occurred.
 ** *`doc` (Optional, object)*: A partial update to an existing document.
 ** *`doc_as_upsert` (Optional, boolean)*: Set to true to use the contents of 'doc' as the value of 'upsert'
-** *`script` (Optional, { lang, options, source } | { id })*: Script to execute to update the document.
+** *`script` (Optional, { source, id, params, lang, options })*: Script to execute to update the document.
 ** *`scripted_upsert` (Optional, boolean)*: Set to true to execute the script whether or not the document exists.
 ** *`_source` (Optional, boolean | { excludes, includes })*: Set to false to disable source retrieval. You can also specify a comma-separated
 list of the fields you want to retrieve.
@@ -1298,7 +1298,7 @@ Supports wildcards (`*`).
 To search all data streams or indices, omit this parameter or use `*` or `_all`.
 ** *`max_docs` (Optional, number)*: The maximum number of documents to update.
 ** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Specifies the documents to update using the Query DSL.
-** *`script` (Optional, { lang, options, source } | { id })*: The script to run to update the document source or metadata when updating.
+** *`script` (Optional, { source, id, params, lang, options })*: The script to run to update the document source or metadata when updating.
 ** *`slice` (Optional, { field, id, max })*: Slice the request manually using the provided slice ID and total number of slices.
 ** *`conflicts` (Optional, Enum("abort" | "proceed"))*: What to do if update by query hits version conflicts: `abort` or `proceed`.
 ** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
@@ -5085,6 +5085,15 @@ client.inference.put({ inference_id })
 [discrete]
 === ingest
 [discrete]
+==== delete_geoip_database
+Deletes a geoip database configuration
+[source,ts]
+----
+client.ingest.deleteGeoipDatabase()
+----
+
+
+[discrete]
 ==== delete_pipeline
 Deletes one or more existing ingest pipeline.
 
@@ -5113,6 +5122,15 @@ Gets download statistics for GeoIP2 databases used with the geoip processor.
 [source,ts]
 ----
 client.ingest.geoIpStats()
+----
+
+
+[discrete]
+==== get_geoip_database
+Returns geoip database configuration.
+[source,ts]
+----
+client.ingest.getGeoipDatabase()
 ----
 
 
@@ -5148,6 +5166,15 @@ A grok pattern is like a regular expression that supports aliased expressions th
 [source,ts]
 ----
 client.ingest.processorGrok()
+----
+
+
+[discrete]
+==== put_geoip_database
+Puts the configuration for a geoip database to be downloaded
+[source,ts]
+----
+client.ingest.putGeoipDatabase()
 ----
 
 
@@ -8194,6 +8221,42 @@ client.security.authenticate()
 
 
 [discrete]
+==== bulk_delete_role
+The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
+The bulk delete roles API cannot delete roles that are defined in roles files.
+
+{ref}/security-api-bulk-delete-role.html[Endpoint documentation]
+[source,ts]
+----
+client.security.bulkDeleteRole({ names })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`names` (string[])*: An array of role names to delete
+** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+[discrete]
+==== bulk_put_role
+The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
+The bulk create or update roles API cannot update roles that are defined in roles files.
+
+{ref}/security-api-bulk-put-role.html[Endpoint documentation]
+[source,ts]
+----
+client.security.bulkPutRole({ roles })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`roles` (Record<string, { cluster, indices, global, applications, metadata, run_as, description, transient_metadata }>)*: A dictionary of role name to RoleDescriptor objects to add or update
+** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+
+[discrete]
 ==== bulk_update_api_keys
 Updates the attributes of multiple existing API keys.
 
@@ -8332,7 +8395,7 @@ client.security.createApiKey({ ... })
 * *Request (object):*
 ** *`expiration` (Optional, string | -1 | 0)*: Expiration time for the API key. By default, API keys never expire.
 ** *`name` (Optional, string)*: Specifies the name for this API key.
-** *`role_descriptors` (Optional, Record<string, { cluster, indices, global, applications, metadata, run_as, transient_metadata }>)*: An array of role descriptors for this API key. This parameter is optional. When it is not specified or is an empty array, then the API key will have a point in time snapshot of permissions of the authenticated user. If you supply role descriptors then the resultant permissions would be an intersection of API keys permissions and authenticated user’s permissions thereby limiting the access scope for API keys. The structure of role descriptor is the same as the request for create role API. For more details, see create or update roles API.
+** *`role_descriptors` (Optional, Record<string, { cluster, indices, global, applications, metadata, run_as, description, transient_metadata }>)*: An array of role descriptors for this API key. This parameter is optional. When it is not specified or is an empty array, then the API key will have a point in time snapshot of permissions of the authenticated user. If you supply role descriptors then the resultant permissions would be an intersection of API keys permissions and authenticated user’s permissions thereby limiting the access scope for API keys. The structure of role descriptor is the same as the request for create role API. For more details, see create or update roles API.
 ** *`metadata` (Optional, Record<string, User-defined value>)*: Arbitrary metadata that you want to associate with the API key. It supports nested data structure. Within the metadata object, keys beginning with `_` are reserved for system usage.
 ** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
@@ -8961,6 +9024,7 @@ client.security.putRole({ name })
 ** *`indices` (Optional, { field_security, names, privileges, query, allow_restricted_indices }[])*: A list of indices permissions entries.
 ** *`metadata` (Optional, Record<string, User-defined value>)*: Optional metadata. Within the metadata object, keys that begin with an underscore (`_`) are reserved for system use.
 ** *`run_as` (Optional, string[])*: A list of users that the owners of this role can impersonate. *Note*: in Serverless, the run-as feature is disabled. For API compatibility, you can still specify an empty `run_as` field, but a non-empty list will be rejected.
+** *`description` (Optional, string)*: Optional description of the role descriptor
 ** *`transient_metadata` (Optional, Record<string, User-defined value>)*: Indicates roles that might be incompatible with the current cluster license, specifically roles with document and field level security. When the cluster license doesn’t allow certain features for a given role, this parameter is updated dynamically to list the incompatible features. If `enabled` is `false`, the role is ignored, but is still listed in the response from the authenticate API.
 ** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
@@ -9051,15 +9115,64 @@ An API key's actual permission is the intersection of its assigned role descript
 ** *`typed_keys` (Optional, boolean)*: Determines whether aggregation names are prefixed by their respective types in the response.
 
 [discrete]
+==== query_role
+Retrieves roles in a paginated manner. You can optionally filter the results with a query.
+
+{ref}/security-api-query-role.html[Endpoint documentation]
+[source,ts]
+----
+client.security.queryRole({ ... })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`query` (Optional, { bool, exists, ids, match, match_all, prefix, range, simple_query_string, term, terms, wildcard })*: A query to filter which roles to return.
+If the query parameter is missing, it is equivalent to a `match_all` query.
+The query supports a subset of query types, including `match_all`, `bool`, `term`, `terms`, `match`,
+`ids`, `prefix`, `wildcard`, `exists`, `range`, and `simple_query_string`.
+You can query the following information associated with roles: `name`, `description`, `metadata`,
+`applications.application`, `applications.privileges`, `applications.resources`.
+** *`from` (Optional, number)*: Starting document offset.
+By default, you cannot page through more than 10,000 hits using the from and size parameters.
+To page through more hits, use the `search_after` parameter.
+** *`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])*: All public fields of a role are eligible for sorting.
+In addition, sort can also be applied to the `_doc` field to sort by index order.
+** *`size` (Optional, number)*: The number of hits to return.
+By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
+To page through more hits, use the `search_after` parameter.
+** *`search_after` (Optional, number | number | string | boolean | null | User-defined value[])*: Search after definition
+
+[discrete]
 ==== query_user
-Retrieves information for Users using a subset of query DSL
+Retrieves information for Users in a paginated manner. You can optionally filter the results with a query.
 
 {ref}/security-api-query-user.html[Endpoint documentation]
 [source,ts]
 ----
-client.security.queryUser()
+client.security.queryUser({ ... })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`query` (Optional, { ids, bool, exists, match, match_all, prefix, range, simple_query_string, term, terms, wildcard })*: A query to filter which users to return.
+If the query parameter is missing, it is equivalent to a `match_all` query.
+The query supports a subset of query types, including `match_all`, `bool`, `term`, `terms`, `match`,
+`ids`, `prefix`, `wildcard`, `exists`, `range`, and `simple_query_string`.
+You can query the following information associated with user: `username`, `roles`, `enabled`
+** *`from` (Optional, number)*: Starting document offset.
+By default, you cannot page through more than 10,000 hits using the from and size parameters.
+To page through more hits, use the `search_after` parameter.
+** *`sort` (Optional, string | { _score, _doc, _geo_distance, _script } | string | { _score, _doc, _geo_distance, _script }[])*: Fields eligible for sorting are: username, roles, enabled
+In addition, sort can also be applied to the `_doc` field to sort by index order.
+** *`size` (Optional, number)*: The number of hits to return.
+By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
+To page through more hits, use the `search_after` parameter.
+** *`search_after` (Optional, number | number | string | boolean | null | User-defined value[])*: Search after definition
+** *`with_profile_uid` (Optional, boolean)*: If true will return the User Profile ID for the users in the query result, if any.
 
 [discrete]
 ==== saml_authenticate
@@ -9229,7 +9342,7 @@ client.security.updateApiKey({ id })
 
 * *Request (object):*
 ** *`id` (string)*: The ID of the API key to update.
-** *`role_descriptors` (Optional, Record<string, { cluster, indices, global, applications, metadata, run_as, transient_metadata }>)*: An array of role descriptors for this API key. This parameter is optional. When it is not specified or is an empty array, then the API key will have a point in time snapshot of permissions of the authenticated user. If you supply role descriptors then the resultant permissions would be an intersection of API keys permissions and authenticated user’s permissions thereby limiting the access scope for API keys. The structure of role descriptor is the same as the request for create role API. For more details, see create or update roles API.
+** *`role_descriptors` (Optional, Record<string, { cluster, indices, global, applications, metadata, run_as, description, transient_metadata }>)*: An array of role descriptors for this API key. This parameter is optional. When it is not specified or is an empty array, then the API key will have a point in time snapshot of permissions of the authenticated user. If you supply role descriptors then the resultant permissions would be an intersection of API keys permissions and authenticated user’s permissions thereby limiting the access scope for API keys. The structure of role descriptor is the same as the request for create role API. For more details, see create or update roles API.
 ** *`metadata` (Optional, Record<string, User-defined value>)*: Arbitrary metadata that you want to associate with the API key. It supports nested data structure. Within the metadata object, keys beginning with _ are reserved for system usage.
 ** *`expiration` (Optional, string | -1 | 0)*: Expiration time for the API key.
 
@@ -10167,8 +10280,6 @@ index will not be deleted
 [discrete]
 ==== get_node_stats
 Retrieves transform usage information for transform nodes.
-
-//{ref}/get-transform-node-stats.html[Endpoint documentation]
 [source,ts]
 ----
 client.transform.getNodeStats()
