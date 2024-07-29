@@ -3,41 +3,40 @@
 
 [source, js]
 ----
-const response0 = await client.index({
-  index: 'library',
-  refresh: true,
-  body: {
-    title: 'Book #1',
-    rating: 200.1
-  }
-})
-console.log(response0)
+const response = await client.index({
+  index: "library",
+  refresh: "true",
+  document: {
+    title: "Book #1",
+    rating: 200.1,
+  },
+});
+console.log(response);
 
 const response1 = await client.index({
-  index: 'library',
-  refresh: true,
-  body: {
-    title: 'Book #2',
-    rating: 1.7
-  }
-})
-console.log(response1)
+  index: "library",
+  refresh: "true",
+  document: {
+    title: "Book #2",
+    rating: 1.7,
+  },
+});
+console.log(response1);
 
 const response2 = await client.index({
-  index: 'library',
-  refresh: true,
-  body: {
-    title: 'Book #3',
-    rating: 0.1
-  }
-})
-console.log(response2)
+  index: "library",
+  refresh: "true",
+  document: {
+    title: "Book #3",
+    rating: 0.1,
+  },
+});
+console.log(response2);
 
 const response3 = await client.search({
-  filter_path: 'hits.hits._source',
-  _source: 'title',
-  sort: 'rating:desc'
-})
-console.log(response3)
+  filter_path: "hits.hits._source",
+  _source: "title",
+  sort: "rating:desc",
+});
+console.log(response3);
 ----
-

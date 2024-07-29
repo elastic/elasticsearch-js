@@ -4,25 +4,22 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      dis_max: {
-        queries: [
-          {
-            match_phrase_prefix: {
-              subject: 'quick brown f'
-            }
+  query: {
+    dis_max: {
+      queries: [
+        {
+          match_phrase_prefix: {
+            subject: "quick brown f",
           },
-          {
-            match_phrase_prefix: {
-              message: 'quick brown f'
-            }
-          }
-        ]
-      }
-    }
-  }
-})
-console.log(response)
+        },
+        {
+          match_phrase_prefix: {
+            message: "quick brown f",
+          },
+        },
+      ],
+    },
+  },
+});
+console.log(response);
 ----
-

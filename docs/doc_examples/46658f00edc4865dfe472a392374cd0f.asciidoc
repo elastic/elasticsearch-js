@@ -4,9 +4,8 @@
 [source, js]
 ----
 const response = await client.indices.getTemplate({
-  name: 'template_1',
-  filter_path: '*.version'
-})
-console.log(response)
+  name: "template_1",
+  filter_path: "*.version",
+});
+console.log(response);
 ----
-

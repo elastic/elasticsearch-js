@@ -4,18 +4,15 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      constant_score: {
-        filter: {
-          term: {
-            status: 'active'
-          }
-        }
-      }
-    }
-  }
-})
-console.log(response)
+  query: {
+    constant_score: {
+      filter: {
+        term: {
+          status: "active",
+        },
+      },
+    },
+  },
+});
+console.log(response);
 ----
-
