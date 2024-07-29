@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Returns information about why a specific document matches (or doesn’t match) a query.
+  * Explain a document match result. Returns information about why a specific document matches, or doesn’t match, a query.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html | Elasticsearch API documentation}
   */
 export default async function ExplainApi<TDocument = unknown> (this: That, params: T.ExplainRequest | TB.ExplainRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExplainResponse<TDocument>>

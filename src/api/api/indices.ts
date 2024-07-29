@@ -45,7 +45,7 @@ export default class Indices {
   }
 
   /**
-    * Adds a block to an index.
+    * Add an index block. Limits the operations allowed on an index by blocking specific operation types.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-blocks.html | Elasticsearch API documentation}
     */
   async addBlock (this: That, params: T.IndicesAddBlockRequest | TB.IndicesAddBlockRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesAddBlockResponse>
@@ -247,7 +247,7 @@ export default class Indices {
   }
 
   /**
-    * Creates a new index.
+    * Create an index. Creates a new index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html | Elasticsearch API documentation}
     */
   async create (this: That, params: T.IndicesCreateRequest | TB.IndicesCreateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesCreateResponse>
@@ -363,7 +363,7 @@ export default class Indices {
   }
 
   /**
-    * Deletes one or more indices.
+    * Delete indices. Deletes one or more indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.IndicesDeleteRequest | TB.IndicesDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteResponse>
@@ -395,7 +395,7 @@ export default class Indices {
   }
 
   /**
-    * Removes a data stream or index from an alias.
+    * Delete an alias. Removes a data stream or index from an alias.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
   async deleteAlias (this: That, params: T.IndicesDeleteAliasRequest | TB.IndicesDeleteAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesDeleteAliasResponse>
@@ -633,7 +633,7 @@ export default class Indices {
   }
 
   /**
-    * Checks if a data stream, index, or alias exists.
+    * Check indices. Checks if one or more indices, index aliases, or data streams exist.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html | Elasticsearch API documentation}
     */
   async exists (this: That, params: T.IndicesExistsRequest | TB.IndicesExistsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsResponse>
@@ -665,7 +665,7 @@ export default class Indices {
   }
 
   /**
-    * Checks if an alias exists.
+    * Check aliases. Checks if one or more data stream or index aliases exist.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
   async existsAlias (this: That, params: T.IndicesExistsAliasRequest | TB.IndicesExistsAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExistsAliasResponse>
@@ -769,7 +769,7 @@ export default class Indices {
   }
 
   /**
-    * Retrieves information about the index's current data stream lifecycle, such as any potential encountered error, time since creation etc.
+    * Get the status for a data stream lifecycle. Retrieves information about an index or data stream’s current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams-explain-lifecycle.html | Elasticsearch API documentation}
     */
   async explainDataLifecycle (this: That, params: T.IndicesExplainDataLifecycleRequest | TB.IndicesExplainDataLifecycleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesExplainDataLifecycleResponse>
@@ -913,7 +913,7 @@ export default class Indices {
   }
 
   /**
-    * Returns information about one or more indices. For data streams, the API returns information about the stream’s backing indices.
+    * Get index information. Returns information about one or more indices. For data streams, the API returns information about the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.IndicesGetRequest | TB.IndicesGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetResponse>
@@ -945,7 +945,7 @@ export default class Indices {
   }
 
   /**
-    * Retrieves information for one or more aliases.
+    * Get aliases. Retrieves information for one or more data stream or index aliases.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
   async getAlias (this: That, params?: T.IndicesGetAliasRequest | TB.IndicesGetAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetAliasResponse>
@@ -1064,7 +1064,7 @@ export default class Indices {
   }
 
   /**
-    * Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices.
+    * Get mapping definitions. Retrieves mapping definitions for one or more fields. For data streams, the API retrieves field mappings for the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html | Elasticsearch API documentation}
     */
   async getFieldMapping (this: That, params: T.IndicesGetFieldMappingRequest | TB.IndicesGetFieldMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetFieldMappingResponse>
@@ -1144,7 +1144,7 @@ export default class Indices {
   }
 
   /**
-    * Retrieves mapping definitions for one or more indices. For data streams, the API retrieves mappings for the stream’s backing indices.
+    * Get mapping definitions. Retrieves mapping definitions for one or more indices. For data streams, the API retrieves mappings for the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html | Elasticsearch API documentation}
     */
   async getMapping (this: That, params?: T.IndicesGetMappingRequest | TB.IndicesGetMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetMappingResponse>
@@ -1184,7 +1184,7 @@ export default class Indices {
   }
 
   /**
-    * Returns setting information for one or more indices. For data streams, returns setting information for the stream’s backing indices.
+    * Get index settings. Returns setting information for one or more indices. For data streams, returns setting information for the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-settings.html | Elasticsearch API documentation}
     */
   async getSettings (this: That, params?: T.IndicesGetSettingsRequest | TB.IndicesGetSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesGetSettingsResponse>
@@ -1408,7 +1408,7 @@ export default class Indices {
   }
 
   /**
-    * Adds a data stream or index to an alias.
+    * Create or update an alias. Adds a data stream or index to an alias.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
   async putAlias (this: That, params: T.IndicesPutAliasRequest | TB.IndicesPutAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutAliasResponse>
@@ -1548,7 +1548,7 @@ export default class Indices {
   }
 
   /**
-    * Adds new fields to an existing data stream or index. You can also use this API to change the search settings of existing fields. For data streams, these changes are applied to all backing indices by default.
+    * Update field mappings. Adds new fields to an existing data stream or index. You can also use this API to change the search settings of existing fields. For data streams, these changes are applied to all backing indices by default.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html | Elasticsearch API documentation}
     */
   async putMapping (this: That, params: T.IndicesPutMappingRequest | TB.IndicesPutMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutMappingResponse>
@@ -1592,7 +1592,7 @@ export default class Indices {
   }
 
   /**
-    * Changes a dynamic index setting in real time. For data streams, index setting changes are applied to all backing indices by default.
+    * Update index settings. Changes dynamic index settings in real time. For data streams, index setting changes are applied to all backing indices by default.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html | Elasticsearch API documentation}
     */
   async putSettings (this: That, params: T.IndicesPutSettingsRequest | TB.IndicesPutSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesPutSettingsResponse>
@@ -1720,7 +1720,7 @@ export default class Indices {
   }
 
   /**
-    * A refresh makes recent operations performed on one or more indices available for search. For data streams, the API runs the refresh operation on the stream’s backing indices.
+    * Refresh an index. A refresh makes recent operations performed on one or more indices available for search. For data streams, the API runs the refresh operation on the stream’s backing indices.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.html | Elasticsearch API documentation}
     */
   async refresh (this: That, params?: T.IndicesRefreshRequest | TB.IndicesRefreshRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRefreshResponse>
@@ -1856,7 +1856,7 @@ export default class Indices {
   }
 
   /**
-    * Creates a new index for a data stream or index alias.
+    * Roll over to a new index. Creates a new index for a data stream or index alias.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html | Elasticsearch API documentation}
     */
   async rollover (this: That, params: T.IndicesRolloverRequest | TB.IndicesRolloverRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesRolloverResponse>
@@ -2241,7 +2241,7 @@ export default class Indices {
   }
 
   /**
-    * Adds a data stream or index to an alias.
+    * Create or update an alias. Adds a data stream or index to an alias.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html | Elasticsearch API documentation}
     */
   async updateAliases (this: That, params?: T.IndicesUpdateAliasesRequest | TB.IndicesUpdateAliasesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesUpdateAliasesResponse>
@@ -2283,7 +2283,7 @@ export default class Indices {
   }
 
   /**
-    * Validates a potentially expensive query without executing it.
+    * Validate a query. Validates a query without running it.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html | Elasticsearch API documentation}
     */
   async validateQuery (this: That, params?: T.IndicesValidateQueryRequest | TB.IndicesValidateQueryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesValidateQueryResponse>

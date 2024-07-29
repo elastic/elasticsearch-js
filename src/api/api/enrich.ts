@@ -45,7 +45,7 @@ export default class Enrich {
   }
 
   /**
-    * Deletes an existing enrich policy and its enrich index.
+    * Delete an enrich policy. Deletes an existing enrich policy and its enrich index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async deletePolicy (this: That, params: T.EnrichDeletePolicyRequest | TB.EnrichDeletePolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichDeletePolicyResponse>
@@ -109,7 +109,7 @@ export default class Enrich {
   }
 
   /**
-    * Returns information about an enrich policy.
+    * Get an enrich policy. Returns information about an enrich policy.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async getPolicy (this: That, params?: T.EnrichGetPolicyRequest | TB.EnrichGetPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichGetPolicyResponse>
@@ -149,7 +149,7 @@ export default class Enrich {
   }
 
   /**
-    * Creates an enrich policy.
+    * Create an enrich policy. Creates an enrich policy.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-enrich-policy-api.html | Elasticsearch API documentation}
     */
   async putPolicy (this: That, params: T.EnrichPutPolicyRequest | TB.EnrichPutPolicyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichPutPolicyResponse>
@@ -193,7 +193,7 @@ export default class Enrich {
   }
 
   /**
-    * Returns enrich coordinator statistics and information about enrich policies that are currently executing.
+    * Get enrich stats. Returns enrich coordinator statistics and information about enrich policies that are currently executing.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/enrich-stats-api.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.EnrichStatsRequest | TB.EnrichStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.EnrichStatsResponse>
