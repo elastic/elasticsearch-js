@@ -4,22 +4,19 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    suggest: {
-      text: 'tring out Elasticsearch',
-      'my-suggest-1': {
-        term: {
-          field: 'message'
-        }
+  suggest: {
+    text: "tring out Elasticsearch",
+    "my-suggest-1": {
+      term: {
+        field: "message",
       },
-      'my-suggest-2': {
-        term: {
-          field: 'user'
-        }
-      }
-    }
-  }
-})
-console.log(response)
+    },
+    "my-suggest-2": {
+      term: {
+        field: "user",
+      },
+    },
+  },
+});
+console.log(response);
 ----
-

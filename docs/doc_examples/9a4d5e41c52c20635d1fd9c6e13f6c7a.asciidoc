@@ -3,24 +3,23 @@
 
 [source, js]
 ----
-const response0 = await client.index({
-  index: 'metricbeat-2016.05.30',
-  id: '1',
-  refresh: true,
-  body: {
-    'system.cpu.idle.pct': 0.908
-  }
-})
-console.log(response0)
+const response = await client.index({
+  index: "metricbeat-2016.05.30",
+  id: 1,
+  refresh: "true",
+  document: {
+    "system.cpu.idle.pct": 0.908,
+  },
+});
+console.log(response);
 
 const response1 = await client.index({
-  index: 'metricbeat-2016.05.31',
-  id: '1',
-  refresh: true,
-  body: {
-    'system.cpu.idle.pct': 0.105
-  }
-})
-console.log(response1)
+  index: "metricbeat-2016.05.31",
+  id: 1,
+  refresh: "true",
+  document: {
+    "system.cpu.idle.pct": 0.105,
+  },
+});
+console.log(response1);
 ----
-

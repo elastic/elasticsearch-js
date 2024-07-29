@@ -4,20 +4,14 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      multi_match: {
-        query: 'brown fox',
-        type: 'best_fields',
-        fields: [
-          'subject',
-          'message'
-        ],
-        tie_breaker: 0.3
-      }
-    }
-  }
-})
-console.log(response)
+  query: {
+    multi_match: {
+      query: "brown fox",
+      type: "best_fields",
+      fields: ["subject", "message"],
+      tie_breaker: 0.3,
+    },
+  },
+});
+console.log(response);
 ----
-

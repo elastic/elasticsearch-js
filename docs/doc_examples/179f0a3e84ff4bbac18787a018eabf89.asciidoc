@@ -4,21 +4,14 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      multi_match: {
-        query: 'Jon',
-        type: 'cross_fields',
-        analyzer: 'standard',
-        fields: [
-          'first',
-          'last',
-          '*.edge'
-        ]
-      }
-    }
-  }
-})
-console.log(response)
+  query: {
+    multi_match: {
+      query: "Jon",
+      type: "cross_fields",
+      analyzer: "standard",
+      fields: ["first", "last", "*.edge"],
+    },
+  },
+});
+console.log(response);
 ----
-

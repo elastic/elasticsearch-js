@@ -4,9 +4,8 @@
 [source, js]
 ----
 const response = await client.indices.create({
-  index: 'test',
-  wait_for_active_shards: '2'
-})
-console.log(response)
+  index: "test",
+  wait_for_active_shards: 2,
+});
+console.log(response);
 ----
-

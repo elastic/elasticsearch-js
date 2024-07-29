@@ -4,31 +4,25 @@
 [source, js]
 ----
 const response = await client.indices.putTemplate({
-  name: 'template_1',
-  body: {
-    index_patterns: [
-      'te*',
-      'bar*'
-    ],
-    settings: {
-      number_of_shards: 1
+  name: "template_1",
+  index_patterns: ["te*", "bar*"],
+  settings: {
+    number_of_shards: 1,
+  },
+  mappings: {
+    _source: {
+      enabled: false,
     },
-    mappings: {
-      _source: {
-        enabled: false
+    properties: {
+      host_name: {
+        type: "keyword",
       },
-      properties: {
-        host_name: {
-          type: 'keyword'
-        },
-        created_at: {
-          type: 'date',
-          format: 'EEE MMM dd HH:mm:ss Z yyyy'
-        }
-      }
-    }
-  }
-})
-console.log(response)
+      created_at: {
+        type: "date",
+        format: "EEE MMM dd HH:mm:ss Z yyyy",
+      },
+    },
+  },
+});
+console.log(response);
 ----
-

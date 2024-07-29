@@ -3,55 +3,50 @@
 
 [source, js]
 ----
-const response0 = await client.indices.create({
-  index: 'test',
-  body: {
-    mappings: {
-      dynamic: false,
-      properties: {
-        text: {
-          type: 'text'
-        }
-      }
-    }
-  }
-})
-console.log(response0)
-
-const response1 = await client.index({
-  index: 'test',
-  refresh: true,
-  body: {
-    text: 'words words',
-    flag: 'bar'
-  }
-})
-console.log(response1)
-
-const response2 = await client.index({
-  index: 'test',
-  refresh: true,
-  body: {
-    text: 'words words',
-    flag: 'foo'
-  }
-})
-console.log(response2)
-
-const response3 = await client.indices.putMapping({
-  index: 'test',
-  body: {
+const response = await client.indices.create({
+  index: "test",
+  mappings: {
+    dynamic: false,
     properties: {
       text: {
-        type: 'text'
+        type: "text",
       },
-      flag: {
-        type: 'text',
-        analyzer: 'keyword'
-      }
-    }
-  }
-})
-console.log(response3)
-----
+    },
+  },
+});
+console.log(response);
 
+const response1 = await client.index({
+  index: "test",
+  refresh: "true",
+  document: {
+    text: "words words",
+    flag: "bar",
+  },
+});
+console.log(response1);
+
+const response2 = await client.index({
+  index: "test",
+  refresh: "true",
+  document: {
+    text: "words words",
+    flag: "foo",
+  },
+});
+console.log(response2);
+
+const response3 = await client.indices.putMapping({
+  index: "test",
+  properties: {
+    text: {
+      type: "text",
+    },
+    flag: {
+      type: "text",
+      analyzer: "keyword",
+    },
+  },
+});
+console.log(response3);
+----
