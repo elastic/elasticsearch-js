@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Returns a document.
+  * Get a document by its ID. Retrieves the document with the specified ID from an index.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html | Elasticsearch API documentation}
   */
 export default async function GetApi<TDocument = unknown> (this: That, params: T.GetRequest | TB.GetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetResponse<TDocument>>

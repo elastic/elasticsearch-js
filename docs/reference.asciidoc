@@ -27,6 +27,7 @@
 
 [discrete]
 === bulk
+Bulk index or delete documents.
 Performs multiple indexing or delete operations in a single API call.
 This reduces overhead and can greatly increase indexing speed.
 
@@ -130,6 +131,7 @@ Elasticsearch collects documents before sorting.
 
 [discrete]
 === create
+Index a document.
 Adds a JSON document to the specified data stream or index and makes it searchable.
 If the target is an index and the document already exists, the request updates the document and increments its version.
 
@@ -162,6 +164,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 [discrete]
 === delete
+Delete a document.
 Removes a JSON document from the specified index.
 
 {ref}/docs-delete.html[Endpoint documentation]
@@ -189,6 +192,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 [discrete]
 === delete_by_query
+Delete documents.
 Deletes documents that match the specified query.
 
 {ref}/docs-delete-by-query.html[Endpoint documentation]
@@ -268,6 +272,7 @@ client.deleteByQueryRethrottle({ task_id })
 
 [discrete]
 === delete_script
+Delete a script or search template.
 Deletes a stored script or search template.
 
 {ref}/modules-scripting.html[Endpoint documentation]
@@ -287,7 +292,8 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 === exists
-Checks if a document in an index exists.
+Check a document.
+Checks if a specified document exists.
 
 {ref}/docs-get.html[Endpoint documentation]
 [source,ts]
@@ -318,6 +324,7 @@ The specified version must match the current version of the document for the req
 
 [discrete]
 === exists_source
+Check for a document source.
 Checks if a document's `_source` is stored.
 
 {ref}/docs-get.html[Endpoint documentation]
@@ -346,7 +353,8 @@ The specified version must match the current version of the document for the req
 
 [discrete]
 === explain
-Returns information about why a specific document matches (or doesn’t match) a query.
+Explain a document match result.
+Returns information about why a specific document matches, or doesn’t match, a query.
 
 {ref}/search-explain.html[Endpoint documentation]
 [source,ts]
@@ -408,7 +416,8 @@ targeting `foo*,bar*` returns an error if an index starts with foo but no index 
 
 [discrete]
 === get
-Returns a document.
+Get a document by its ID.
+Retrieves the document with the specified ID from an index.
 
 {ref}/docs-get.html[Endpoint documentation]
 [source,ts]
@@ -439,6 +448,7 @@ If this field is specified, the `_source` parameter defaults to false.
 
 [discrete]
 === get_script
+Get a script or search template.
 Retrieves a stored script or search template.
 
 {ref}/modules-scripting.html[Endpoint documentation]
@@ -475,6 +485,7 @@ client.getScriptLanguages()
 
 [discrete]
 === get_source
+Get a document's source.
 Returns the source of a document.
 
 {ref}/docs-get.html[Endpoint documentation]
@@ -519,6 +530,7 @@ client.healthReport({ ... })
 
 [discrete]
 === index
+Index a document.
 Adds a JSON document to the specified data stream or index and makes it searchable.
 If the target is an index and the document already exists, the request updates the document and increments its version.
 
@@ -558,6 +570,7 @@ Set to all or any positive integer up to the total number of shards in the index
 
 [discrete]
 === info
+Get cluster info.
 Returns basic information about the cluster.
 
 {ref}/index.html[Endpoint documentation]
@@ -741,6 +754,7 @@ Supports a list of values, such as `open,hidden`. Valid values are: `all`, `open
 
 [discrete]
 === ping
+Ping the cluster.
 Returns whether the cluster is running.
 
 {ref}/index.html[Endpoint documentation]
@@ -751,6 +765,7 @@ client.ping()
 
 [discrete]
 === put_script
+Create or update a script or search template.
 Creates or updates a stored script or search template.
 
 {ref}/modules-scripting.html[Endpoint documentation]
@@ -796,9 +811,8 @@ To target all data streams and indices in a cluster, omit this parameter or use 
 
 [discrete]
 === reindex
-Allows to copy documents from one index to another, optionally filtering the source
-documents by a query, changing the destination index settings, or fetching the
-documents from a remote cluster.
+Reindex documents.
+Copies documents from a source to a destination. The source can be any existing index, alias, or data stream. The destination must differ from the source. For example, you cannot reindex a data stream into itself.
 
 {ref}/docs-reindex.html[Endpoint documentation]
 [source,ts]
@@ -869,6 +883,7 @@ If no `id` or `<templated-id>` is specified, this parameter is required.
 
 [discrete]
 === scripts_painless_execute
+Run a script.
 Runs a script and returns a result.
 
 {painless}/painless-execute-api.html[Endpoint documentation]
@@ -1054,7 +1069,8 @@ Fetches with this enabled will be slower the enabling synthetic source natively 
 
 [discrete]
 === search_mvt
-Searches a vector tile for geospatial values. Returns results as a binary Mapbox vector tile.
+Search a vector tile.
+Searches a vector tile for geospatial values.
 
 {ref}/search-vector-tile-api.html[Endpoint documentation]
 [source,ts]
@@ -1206,6 +1222,7 @@ client.termsEnum({ index, field })
 
 [discrete]
 === termvectors
+Get term vector information.
 Returns information and statistics about terms in the fields of a particular document.
 
 {ref}/docs-termvectors.html[Endpoint documentation]
@@ -1238,7 +1255,8 @@ Random by default.
 
 [discrete]
 === update
-Updates a document with a script or partial document.
+Update a document.
+Updates a document by running a script or passing a partial document.
 
 {ref}/docs-update.html[Endpoint documentation]
 [source,ts]
@@ -1281,6 +1299,7 @@ Set to 'all' or any positive integer up to the total number of shards in the ind
 
 [discrete]
 === update_by_query
+Update documents.
 Updates documents that match the specified query.
 If no query is specified, performs an update on every document in the data stream or index without modifying the source, which is useful for picking up mapping changes.
 
@@ -1602,9 +1621,11 @@ client.autoscaling.putAutoscalingPolicy({ name })
 === cat
 [discrete]
 ==== aliases
+Get aliases.
 Retrieves the cluster’s index aliases, including filter and routing information.
 The API does not return data stream aliases.
-IMPORTANT: cat APIs are only intended for human consumption using the command line or the Kibana console. They are not intended for use by applications. For application consumption, use the aliases API.
+> info
+> CAT APIs are only intended for human consumption using the command line or the Kibana console. They are not intended for use by applications. For application consumption, use [the /_alias endpoints](#endpoint-alias).
 
 {ref}/cat-alias.html[Endpoint documentation]
 [source,ts]
@@ -1639,10 +1660,12 @@ client.cat.allocation({ ... })
 
 [discrete]
 ==== component_templates
+Get component templates.
 Returns information about component templates in a cluster.
 Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
-IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console.
-They are not intended for use by applications. For application consumption, use the get component template API.
+> info
+> CAT APIs are only intended for human consumption using the command line or Kibana console.
+They are not intended for use by applications. For application consumption, use [the /_component_template endpoints](#endpoint-component-template).
 
 {ref}/cat-component-templates.html[Endpoint documentation]
 [source,ts]
@@ -1658,10 +1681,12 @@ client.cat.componentTemplates({ ... })
 
 [discrete]
 ==== count
-Provides quick access to a document count for a data stream, an index, or an entire cluster.
-NOTE: The document count only includes live documents, not deleted documents which have not yet been removed by the merge process.
-IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console.
-They are not intended for use by applications. For application consumption, use the count API.
+Get a document count.
+Provides quick access to a document count for a data stream, an index, or an entire cluster.n/
+The document count only includes live documents, not deleted documents which have not yet been removed by the merge process.
+> info
+> CAT APIs are only intended for human consumption using the command line or Kibana console.
+They are not intended for use by applications. For application consumption, use [the /_count endpoints](#endpoint-count).
 
 {ref}/cat-count.html[Endpoint documentation]
 [source,ts]
@@ -1724,7 +1749,8 @@ client.cat.health({ ... })
 
 [discrete]
 ==== help
-Returns help for the Cat APIs.
+Get CAT help.
+Returns help for the CAT APIs.
 
 {ref}/cat.html[Endpoint documentation]
 [source,ts]
@@ -1735,12 +1761,21 @@ client.cat.help()
 
 [discrete]
 ==== indices
+Get index information.
 Returns high-level information about indices in a cluster, including backing indices for data streams.
-IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console.
-They are not intended for use by applications. For application consumption, use the get index API.
-Use the cat indices API to get the following information for each index in a cluster: shard count; document count; deleted document count; primary store size; total store size of all shards, including shard replicas.
+> info
+> CAT APIs are only intended for human consumption using the command line or Kibana console.
+They are not intended for use by applications. For application consumption, use an index endpoint.
+
+Use this request to get the following information for each index in a cluster:
+- shard count
+- document count
+- deleted document count
+- primary store size
+- total store size of all shards, including shard replicas
+
 These metrics are retrieved directly from Lucene, which Elasticsearch uses internally to power indexing and search. As a result, all document counts include hidden nested documents.
-To get an accurate count of Elasticsearch documents, use the cat count or count APIs.
+To get an accurate count of Elasticsearch documents, use the [/_cat/count](#operation-cat-count) or [count](#endpoint-count) endpoints.
 
 {ref}/cat-indices.html[Endpoint documentation]
 [source,ts]
@@ -1775,11 +1810,13 @@ client.cat.master()
 
 [discrete]
 ==== ml_data_frame_analytics
+Get data frame analytics jobs.
 Returns configuration and usage information about data frame analytics jobs.
 
-IMPORTANT: cat APIs are only intended for human consumption using the Kibana
+> info
+> CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
-application consumption, use the get data frame analytics jobs statistics API.
+application consumption, use [the /_ml/data_frame/analytics endpoints](#endpoint-ml).
 
 {ref}/cat-dfanalytics.html[Endpoint documentation]
 [source,ts]
@@ -1801,14 +1838,16 @@ response.
 
 [discrete]
 ==== ml_datafeeds
+Get datafeeds.
 Returns configuration and usage information about datafeeds.
 This API returns a maximum of 10,000 datafeeds.
 If the Elasticsearch security features are enabled, you must have `monitor_ml`, `monitor`, `manage_ml`, or `manage`
 cluster privileges to use this API.
 
-IMPORTANT: cat APIs are only intended for human consumption using the Kibana
+> info
+> CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
-application consumption, use the get datafeed statistics API.
+application consumption, use [the /_ml/datafeeds endpoints](#endpoint-ml).
 
 {ref}/cat-datafeeds.html[Endpoint documentation]
 [source,ts]
@@ -1836,14 +1875,16 @@ partial matches.
 
 [discrete]
 ==== ml_jobs
+Get anomaly detection jobs.
 Returns configuration and usage information for anomaly detection jobs.
 This API returns a maximum of 10,000 jobs.
 If the Elasticsearch security features are enabled, you must have `monitor_ml`,
 `monitor`, `manage_ml`, or `manage` cluster privileges to use this API.
 
-IMPORTANT: cat APIs are only intended for human consumption using the Kibana
+> info
+> CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
-application consumption, use the get anomaly detection job statistics API.
+application consumption, use [the /_ml/anomaly_detectors endpoints](#endpoint-ml).
 
 {ref}/cat-anomaly-detectors.html[Endpoint documentation]
 [source,ts]
@@ -1872,11 +1913,13 @@ matches.
 
 [discrete]
 ==== ml_trained_models
+Get trained models.
 Returns configuration and usage information about inference trained models.
 
-IMPORTANT: cat APIs are only intended for human consumption using the Kibana
+> info
+> CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
-application consumption, use the get trained models statistics API.
+application consumption, use [the /_ml/trained_models endpoints](#endpoint-ml).
 
 {ref}/cat-trained-model.html[Endpoint documentation]
 [source,ts]
@@ -2113,11 +2156,13 @@ Accepts wildcard expressions.
 
 [discrete]
 ==== transforms
+Get transforms.
 Returns configuration and usage information about transforms.
 
-IMPORTANT: cat APIs are only intended for human consumption using the Kibana
+> info
+> CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
-application consumption, use the get transform statistics API.
+application consumption, use [the /_transform endpoints](#endpoint-transform).
 
 {ref}/cat-transforms.html[Endpoint documentation]
 [source,ts]
@@ -2412,6 +2457,7 @@ client.cluster.allocationExplain({ ... })
 
 [discrete]
 ==== delete_component_template
+Delete component templates.
 Deletes component templates.
 Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
 
@@ -2454,7 +2500,8 @@ nodes are still in the cluster.
 
 [discrete]
 ==== exists_component_template
-Returns information about whether a particular component template exist
+Check component templates.
+Returns information about whether a particular component template exists.
 
 {ref}/indices-component-template.html[Endpoint documentation]
 [source,ts]
@@ -2476,6 +2523,7 @@ Defaults to false, which means information is retrieved from the master node.
 
 [discrete]
 ==== get_component_template
+Get component templates.
 Retrieves information about component templates.
 
 {ref}/indices-component-template.html[Endpoint documentation]
@@ -2549,7 +2597,8 @@ client.cluster.health({ ... })
 
 [discrete]
 ==== info
-Returns different information about the cluster.
+Get cluster info.
+Returns basic information about the cluster.
 
 {ref}/cluster-info.html[Endpoint documentation]
 [source,ts]
@@ -2610,6 +2659,7 @@ is satisfied, the request fails and returns an error.
 
 [discrete]
 ==== put_component_template
+Create or update a component template.
 Creates or updates a component template.
 Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
 
@@ -2811,6 +2861,7 @@ client.danglingIndices.listDanglingIndices()
 === enrich
 [discrete]
 ==== delete_policy
+Delete an enrich policy.
 Deletes an existing enrich policy and its enrich index.
 
 {ref}/delete-enrich-policy-api.html[Endpoint documentation]
@@ -2844,6 +2895,7 @@ client.enrich.executePolicy({ name })
 
 [discrete]
 ==== get_policy
+Get an enrich policy.
 Returns information about an enrich policy.
 
 {ref}/get-enrich-policy-api.html[Endpoint documentation]
@@ -2861,6 +2913,7 @@ To return information for all enrich policies, omit this parameter.
 
 [discrete]
 ==== put_policy
+Create an enrich policy.
 Creates an enrich policy.
 
 {ref}/put-enrich-policy-api.html[Endpoint documentation]
@@ -2880,6 +2933,7 @@ client.enrich.putPolicy({ name })
 
 [discrete]
 ==== stats
+Get enrich stats.
 Returns enrich coordinator statistics and information about enrich policies that are currently executing.
 
 {ref}/enrich-stats-api.html[Endpoint documentation]
@@ -3443,7 +3497,8 @@ client.ilm.stop({ ... })
 === indices
 [discrete]
 ==== add_block
-Adds a block to an index.
+Add an index block.
+Limits the operations allowed on an index by blocking specific operation types.
 
 {ref}/index-modules-blocks.html[Endpoint documentation]
 [source,ts]
@@ -3581,6 +3636,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 [discrete]
 ==== create
+Create an index.
 Creates a new index.
 
 {ref}/indices-create-index.html[Endpoint documentation]
@@ -3653,6 +3709,7 @@ Supports a list of values, such as `open,hidden`.
 
 [discrete]
 ==== delete
+Delete indices.
 Deletes one or more indices.
 
 {ref}/indices-delete-index.html[Endpoint documentation]
@@ -3683,6 +3740,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== delete_alias
+Delete an alias.
 Removes a data stream or index from an alias.
 
 {ref}/indices-aliases.html[Endpoint documentation]
@@ -3832,7 +3890,8 @@ client.indices.downsample({ index, target_index })
 
 [discrete]
 ==== exists
-Checks if a data stream, index, or alias exists.
+Check indices.
+Checks if one or more indices, index aliases, or data streams exist.
 
 {ref}/indices-exists.html[Endpoint documentation]
 [source,ts]
@@ -3858,7 +3917,8 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 
 [discrete]
 ==== exists_alias
-Checks if an alias exists.
+Check aliases.
+Checks if one or more data stream or index aliases exist.
 
 {ref}/indices-aliases.html[Endpoint documentation]
 [source,ts]
@@ -3921,7 +3981,8 @@ client.indices.existsTemplate({ name })
 
 [discrete]
 ==== explain_data_lifecycle
-Retrieves information about the index's current data stream lifecycle, such as any potential encountered error, time since creation etc.
+Get the status for a data stream lifecycle.
+Retrieves information about an index or data stream’s current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
 
 {ref}/data-streams-explain-lifecycle.html[Endpoint documentation]
 [source,ts]
@@ -4020,6 +4081,7 @@ client.indices.forcemerge({ ... })
 
 [discrete]
 ==== get
+Get index information.
 Returns information about one or more indices. For data streams, the API returns information about the
 stream’s backing indices.
 
@@ -4050,7 +4112,8 @@ such as open,hidden.
 
 [discrete]
 ==== get_alias
-Retrieves information for one or more aliases.
+Get aliases.
+Retrieves information for one or more data stream or index aliases.
 
 {ref}/indices-aliases.html[Endpoint documentation]
 [source,ts]
@@ -4123,6 +4186,7 @@ Supports a list of values, such as `open,hidden`.
 
 [discrete]
 ==== get_field_mapping
+Get mapping definitions.
 Retrieves mapping definitions for one or more fields.
 For data streams, the API retrieves field mappings for the stream’s backing indices.
 
@@ -4173,6 +4237,7 @@ client.indices.getIndexTemplate({ ... })
 
 [discrete]
 ==== get_mapping
+Get mapping definitions.
 Retrieves mapping definitions for one or more indices.
 For data streams, the API retrieves mappings for the stream’s backing indices.
 
@@ -4202,6 +4267,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== get_settings
+Get index settings.
 Returns setting information for one or more indices. For data streams,
 returns setting information for the stream’s backing indices.
 
@@ -4354,6 +4420,7 @@ client.indices.promoteDataStream({ name })
 
 [discrete]
 ==== put_alias
+Create or update an alias.
 Adds a data stream or index to an alias.
 
 {ref}/indices-aliases.html[Endpoint documentation]
@@ -4469,6 +4536,7 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== put_mapping
+Update field mappings.
 Adds new fields to an existing data stream or index.
 You can also use this API to change the search settings of existing fields.
 For data streams, these changes are applied to all backing indices by default.
@@ -4518,7 +4586,8 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== put_settings
-Changes a dynamic index setting in real time. For data streams, index setting
+Update index settings.
+Changes dynamic index settings in real time. For data streams, index setting
 changes are applied to all backing indices by default.
 
 {ref}/indices-update-settings.html[Endpoint documentation]
@@ -4609,6 +4678,7 @@ To target all data streams and indices, omit this parameter or use `*` or `_all`
 
 [discrete]
 ==== refresh
+Refresh an index.
 A refresh makes recent operations performed on one or more indices available for search.
 For data streams, the API runs the refresh operation on the stream’s backing indices.
 
@@ -4704,6 +4774,7 @@ Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 
 [discrete]
 ==== rollover
+Roll over to a new index.
 Creates a new index for a data stream or index alias.
 
 {ref}/indices-rollover-index.html[Endpoint documentation]
@@ -4965,6 +5036,7 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 [discrete]
 ==== update_aliases
+Create or update an alias.
 Adds a data stream or index to an alias.
 
 {ref}/indices-aliases.html[Endpoint documentation]
@@ -4985,7 +5057,8 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 ==== validate_query
-Validates a potentially expensive query without executing it.
+Validate a query.
+Validates a query without running it.
 
 {ref}/search-validate.html[Endpoint documentation]
 [source,ts]
@@ -5257,8 +5330,9 @@ client.license.delete()
 
 [discrete]
 ==== get
-This API returns information about the type of license, when it was issued, and when it expires, for example.
-For more information about the different types of licenses, see https://www.elastic.co/subscriptions.
+Get license information.
+Returns information about your Elastic license, including its type, its status, when it was issued, and when it expires.
+For more information about the different types of licenses, refer to [Elastic Stack subscriptions](https://www.elastic.co/subscriptions).
 
 {ref}/get-license.html[Endpoint documentation]
 [source,ts]
@@ -8226,7 +8300,9 @@ client.security.activateUserProfile({ grant_type })
 
 [discrete]
 ==== authenticate
-Enables you to submit a request with a basic auth header to authenticate a user and retrieve information about the authenticated user.
+Authenticate a user.
+Authenticates a user and returns information about the authenticated user.
+Include the user information in a [basic auth header](https://en.wikipedia.org/wiki/Basic_access_authentication).
 A successful call returns a JSON structure that shows user information such as their username, the roles that are assigned to the user, any assigned metadata, and information about the realms that authenticated and authorized the user.
 If the user cannot be authenticated, this API returns a 401 status code.
 
@@ -8395,6 +8471,7 @@ client.security.clearCachedServiceTokens({ namespace, service, name })
 
 [discrete]
 ==== create_api_key
+Create an API key.
 Creates an API key for access without requiring basic authentication.
 A successful request returns a JSON structure that contains the API key, its unique id, and its name.
 If applicable, it also returns expiration information for the API key in milliseconds.
@@ -8630,6 +8707,7 @@ client.security.enrollNode()
 
 [discrete]
 ==== get_api_key
+Get API key information.
 Retrieves information for one or more API keys.
 NOTE: If you have only the `manage_own_api_key` privilege, this API returns only the API keys that you own.
 If you have `read_security`, `manage_api_key` or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
@@ -8884,6 +8962,7 @@ It is not valid with other grant types.
 
 [discrete]
 ==== has_privileges
+Check user privileges.
 Determines whether the specified user has a specified list of privileges.
 
 {ref}/security-api-has-privileges.html[Endpoint documentation]
@@ -8920,6 +8999,7 @@ client.security.hasPrivilegesUserProfile({ uids, privileges })
 
 [discrete]
 ==== invalidate_api_key
+Invalidate API keys.
 Invalidates one or more API keys.
 The `manage_api_key` privilege allows deleting any API keys.
 The `manage_own_api_key` only allows deleting API keys that are owned by the user.
@@ -9094,7 +9174,8 @@ client.security.putUser({ username })
 
 [discrete]
 ==== query_api_keys
-Retrieves information for API keys in a paginated manner. You can optionally filter the results with a query.
+Query API keys.
+Retrieves a paginated list of API keys and their information. You can optionally filter the results with a query.
 
 {ref}/security-api-query-api-key.html[Endpoint documentation]
 [source,ts]
@@ -9334,6 +9415,7 @@ as long as the profile matches the `name` field query.
 
 [discrete]
 ==== update_api_key
+Update an API key.
 Updates attributes of an existing API key.
 Users can only update API keys that they created or that were granted to them.
 Use this API to update API keys created by the create API Key or grant API Key APIs.
@@ -10158,7 +10240,8 @@ client.tasks.cancel({ ... })
 
 [discrete]
 ==== get
-Returns information about a task.
+Get task information.
+Returns information about the tasks currently executing in the cluster.
 
 {ref}/tasks.html[Endpoint documentation]
 [source,ts]
@@ -10275,6 +10358,7 @@ client.textStructure.testGrokPattern({ grok_pattern, text })
 === transform
 [discrete]
 ==== delete_transform
+Delete a transform.
 Deletes a transform.
 
 {ref}/delete-transform.html[Endpoint documentation]
@@ -10305,6 +10389,7 @@ client.transform.getNodeStats()
 
 [discrete]
 ==== get_transform
+Get transforms.
 Retrieves configuration information for transforms.
 
 {ref}/get-transform.html[Endpoint documentation]
@@ -10337,6 +10422,7 @@ be retrieved and then added to another cluster.
 
 [discrete]
 ==== get_transform_stats
+Get transform stats.
 Retrieves usage information for transforms.
 
 {ref}/get-transform-stats.html[Endpoint documentation]
@@ -10367,7 +10453,8 @@ there are no matches or only partial matches.
 
 [discrete]
 ==== preview_transform
-Previews a transform.
+Preview a transform.
+Generates a preview of the results that you will get when you create a transform with the same configuration.
 
 It returns a maximum of 100 results. The calculations are based on all the current data in the source index. It also
 generates a list of mappings and settings for the destination index. These values are determined based on the field
@@ -10406,6 +10493,7 @@ timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== put_transform
+Create a transform.
 Creates a transform.
 
 A transform copies data from source indices, transforms it, and persists it into an entity-centric destination index. You can also think of the destination index as a two-dimensional tabular data structure (known as
@@ -10463,6 +10551,7 @@ the exception of privilege checks.
 
 [discrete]
 ==== reset_transform
+Reset a transform.
 Resets a transform.
 Before you can reset it, you must stop it; alternatively, use the `force` query parameter.
 If the destination index was created by the transform, it is deleted.
@@ -10484,7 +10573,8 @@ must be stopped before it can be reset.
 
 [discrete]
 ==== schedule_now_transform
-Schedules now a transform.
+Schedule a transform to start now.
+Instantly runs a transform to process data.
 
 If you _schedule_now a transform, it will process the new data instantly,
 without waiting for the configured frequency interval. After _schedule_now API is called,
@@ -10506,6 +10596,7 @@ client.transform.scheduleNowTransform({ transform_id })
 
 [discrete]
 ==== start_transform
+Start a transform.
 Starts a transform.
 
 When you start a transform, it creates the destination index if it does not already exist. The `number_of_shards` is
@@ -10539,6 +10630,7 @@ client.transform.startTransform({ transform_id })
 
 [discrete]
 ==== stop_transform
+Stop transforms.
 Stops one or more transforms.
 
 {ref}/stop-transform.html[Endpoint documentation]
@@ -10572,6 +10664,7 @@ immediately and the indexer is stopped asynchronously in the background.
 
 [discrete]
 ==== update_transform
+Update a transform.
 Updates certain properties of a transform.
 
 All updated properties except `description` do not take effect until after the transform starts the next checkpoint,
