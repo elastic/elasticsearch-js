@@ -3,47 +3,46 @@
 
 [source, js]
 ----
-const response0 = await client.index({
-  index: 'drivers',
-  id: '1',
-  body: {
+const response = await client.index({
+  index: "drivers",
+  id: 1,
+  document: {
     driver: {
-      last_name: 'McQueen',
+      last_name: "McQueen",
       vehicle: [
         {
-          make: 'Powell Motors',
-          model: 'Canyonero'
+          make: "Powell Motors",
+          model: "Canyonero",
         },
         {
-          make: 'Miller-Meteor',
-          model: 'Ecto-1'
-        }
-      ]
-    }
-  }
-})
-console.log(response0)
+          make: "Miller-Meteor",
+          model: "Ecto-1",
+        },
+      ],
+    },
+  },
+});
+console.log(response);
 
 const response1 = await client.index({
-  index: 'drivers',
-  id: '2',
-  refresh: true,
-  body: {
+  index: "drivers",
+  id: 2,
+  refresh: "true",
+  document: {
     driver: {
-      last_name: 'Hudson',
+      last_name: "Hudson",
       vehicle: [
         {
-          make: 'Mifune',
-          model: 'Mach Five'
+          make: "Mifune",
+          model: "Mach Five",
         },
         {
-          make: 'Miller-Meteor',
-          model: 'Ecto-1'
-        }
-      ]
-    }
-  }
-})
-console.log(response1)
+          make: "Miller-Meteor",
+          model: "Ecto-1",
+        },
+      ],
+    },
+  },
+});
+console.log(response1);
 ----
-

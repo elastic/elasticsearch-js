@@ -4,9 +4,8 @@
 [source, js]
 ----
 const response = await client.nodes.stats({
-  metric: 'indices',
-  index_metric: 'search'
-})
-console.log(response)
+  metric: "indices",
+  index_metric: "search",
+});
+console.log(response);
 ----
-

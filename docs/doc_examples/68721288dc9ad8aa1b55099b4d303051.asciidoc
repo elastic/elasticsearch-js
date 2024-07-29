@@ -4,19 +4,13 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      multi_match: {
-        query: 'quick brown f',
-        type: 'bool_prefix',
-        fields: [
-          'subject',
-          'message'
-        ]
-      }
-    }
-  }
-})
-console.log(response)
+  query: {
+    multi_match: {
+      query: "quick brown f",
+      type: "bool_prefix",
+      fields: ["subject", "message"],
+    },
+  },
+});
+console.log(response);
 ----
-

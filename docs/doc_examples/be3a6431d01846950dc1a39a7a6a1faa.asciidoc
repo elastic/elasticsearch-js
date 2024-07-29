@@ -4,8 +4,7 @@
 [source, js]
 ----
 const response = await client.tasks.get({
-  task_id: 'r1A2WoRbTwKZ516z6NEs5A:36619'
-})
-console.log(response)
+  task_id: "r1A2WoRbTwKZ516z6NEs5A:36619",
+});
+console.log(response);
 ----
-

@@ -3,16 +3,15 @@
 
 [source, js]
 ----
-const response0 = await client.get({
-  index: 'metricbeat-2016.05.30-1',
-  id: '1'
-})
-console.log(response0)
+const response = await client.get({
+  index: "metricbeat-2016.05.30-1",
+  id: 1,
+});
+console.log(response);
 
 const response1 = await client.get({
-  index: 'metricbeat-2016.05.31-1',
-  id: '1'
-})
-console.log(response1)
+  index: "metricbeat-2016.05.31-1",
+  id: 1,
+});
+console.log(response1);
 ----
-

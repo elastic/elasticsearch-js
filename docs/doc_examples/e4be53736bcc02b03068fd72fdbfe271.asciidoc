@@ -4,15 +4,12 @@
 [source, js]
 ----
 const response = await client.indices.putMapping({
-  index: 'publications',
-  body: {
-    properties: {
-      title: {
-        type: 'text'
-      }
-    }
-  }
-})
-console.log(response)
+  index: "publications",
+  properties: {
+    title: {
+      type: "text",
+    },
+  },
+});
+console.log(response);
 ----
-

@@ -4,8 +4,7 @@
 [source, js]
 ----
 const response = await client.cluster.state({
-  filter_path: 'metadata.indices.*.stat*'
-})
-console.log(response)
+  filter_path: "metadata.indices.*.stat*",
+});
+console.log(response);
 ----
-

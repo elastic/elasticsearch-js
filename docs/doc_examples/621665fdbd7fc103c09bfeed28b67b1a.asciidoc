@@ -4,8 +4,7 @@
 [source, js]
 ----
 const response = await client.count({
-  filter_path: '-_shards'
-})
-console.log(response)
+  filter_path: "-_shards",
+});
+console.log(response);
 ----
-

@@ -4,18 +4,12 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      multi_match: {
-        query: 'this is a test',
-        fields: [
-          'subject^3',
-          'message'
-        ]
-      }
-    }
-  }
-})
-console.log(response)
+  query: {
+    multi_match: {
+      query: "this is a test",
+      fields: ["subject^3", "message"],
+    },
+  },
+});
+console.log(response);
 ----
-

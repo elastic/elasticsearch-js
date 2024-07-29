@@ -4,30 +4,27 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      term: {
-        product: 'chocolate'
-      }
+  query: {
+    term: {
+      product: "chocolate",
     },
-    sort: [
-      {
-        'offer.price': {
-          mode: 'avg',
-          order: 'asc',
-          nested: {
-            path: 'offer',
-            filter: {
-              term: {
-                'offer.color': 'blue'
-              }
-            }
-          }
-        }
-      }
-    ]
-  }
-})
-console.log(response)
+  },
+  sort: [
+    {
+      "offer.price": {
+        mode: "avg",
+        order: "asc",
+        nested: {
+          path: "offer",
+          filter: {
+            term: {
+              "offer.color": "blue",
+            },
+          },
+        },
+      },
+    },
+  ],
+});
+console.log(response);
 ----
-

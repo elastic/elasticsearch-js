@@ -4,8 +4,7 @@
 [source, js]
 ----
 const response = await client.cluster.state({
-  filter_path: 'routing_table.indices.**.state'
-})
-console.log(response)
+  filter_path: "routing_table.indices.**.state",
+});
+console.log(response);
 ----
-

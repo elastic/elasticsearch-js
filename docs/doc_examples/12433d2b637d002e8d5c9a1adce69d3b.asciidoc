@@ -4,8 +4,7 @@
 [source, js]
 ----
 const response = await client.indices.create({
-  index: 'publications'
-})
-console.log(response)
+  index: "publications",
+});
+console.log(response);
 ----
-
