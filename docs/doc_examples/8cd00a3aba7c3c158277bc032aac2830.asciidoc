@@ -4,77 +4,76 @@
 [source, js]
 ----
 const response = await client.bulk({
-  body: [
+  operations: [
     {
       update: {
-        _id: '1',
-        _index: 'index1',
-        retry_on_conflict: 3
-      }
+        _id: "1",
+        _index: "index1",
+        retry_on_conflict: 3,
+      },
     },
     {
       doc: {
-        field: 'value'
-      }
+        field: "value",
+      },
     },
     {
       update: {
-        _id: '0',
-        _index: 'index1',
-        retry_on_conflict: 3
-      }
+        _id: "0",
+        _index: "index1",
+        retry_on_conflict: 3,
+      },
     },
     {
       script: {
-        source: 'ctx._source.counter += params.param1',
-        lang: 'painless',
+        source: "ctx._source.counter += params.param1",
+        lang: "painless",
         params: {
-          param1: 1
-        }
+          param1: 1,
+        },
       },
       upsert: {
-        counter: 1
-      }
-    },
-    {
-      update: {
-        _id: '2',
-        _index: 'index1',
-        retry_on_conflict: 3
-      }
-    },
-    {
-      doc: {
-        field: 'value'
+        counter: 1,
       },
-      doc_as_upsert: true
     },
     {
       update: {
-        _id: '3',
-        _index: 'index1',
-        _source: true
-      }
-    },
-    {
-      doc: {
-        field: 'value'
-      }
-    },
-    {
-      update: {
-        _id: '4',
-        _index: 'index1'
-      }
-    },
-    {
-      doc: {
-        field: 'value'
+        _id: "2",
+        _index: "index1",
+        retry_on_conflict: 3,
       },
-      _source: true
-    }
-  ]
-})
-console.log(response)
+    },
+    {
+      doc: {
+        field: "value",
+      },
+      doc_as_upsert: true,
+    },
+    {
+      update: {
+        _id: "3",
+        _index: "index1",
+        _source: true,
+      },
+    },
+    {
+      doc: {
+        field: "value",
+      },
+    },
+    {
+      update: {
+        _id: "4",
+        _index: "index1",
+      },
+    },
+    {
+      doc: {
+        field: "value",
+      },
+      _source: true,
+    },
+  ],
+});
+console.log(response);
 ----
-

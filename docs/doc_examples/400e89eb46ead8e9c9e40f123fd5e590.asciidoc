@@ -4,17 +4,14 @@
 [source, js]
 ----
 const response = await client.reindex({
-  body: {
-    source: {
-      index: 'source',
-      size: 100
-    },
-    dest: {
-      index: 'dest',
-      routing: '=cat'
-    }
-  }
-})
-console.log(response)
+  source: {
+    index: "source",
+    size: 100,
+  },
+  dest: {
+    index: "dest",
+    routing: "=cat",
+  },
+});
+console.log(response);
 ----
-

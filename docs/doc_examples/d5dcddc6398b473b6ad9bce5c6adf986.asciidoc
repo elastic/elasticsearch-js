@@ -4,13 +4,8 @@
 [source, js]
 ----
 const response = await client.search({
-  scroll: '1m',
-  body: {
-    sort: [
-      '_doc'
-    ]
-  }
-})
-console.log(response)
+  scroll: "1m",
+  sort: ["_doc"],
+});
+console.log(response);
 ----
-

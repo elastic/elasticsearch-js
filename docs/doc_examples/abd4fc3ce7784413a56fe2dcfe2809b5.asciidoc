@@ -4,16 +4,13 @@
 [source, js]
 ----
 const response = await client.search({
-  index: 'test',
-  filter_path: 'hits.total',
-  body: {
-    query: {
-      match: {
-        flag: 'foo'
-      }
-    }
-  }
-})
-console.log(response)
+  index: "test",
+  filter_path: "hits.total",
+  query: {
+    match: {
+      flag: "foo",
+    },
+  },
+});
+console.log(response);
 ----
-

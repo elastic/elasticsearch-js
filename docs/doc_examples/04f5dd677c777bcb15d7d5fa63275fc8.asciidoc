@@ -4,9 +4,8 @@
 [source, js]
 ----
 const response = await client.cluster.health({
-  wait_for_status: 'yellow',
-  timeout: '50s'
-})
-console.log(response)
+  wait_for_status: "yellow",
+  timeout: "50s",
+});
+console.log(response);
 ----
-

@@ -4,9 +4,8 @@
 [source, js]
 ----
 const response = await client.tasks.list({
-  detailed: 'true',
-  actions: '*byquery'
-})
-console.log(response)
+  detailed: "true",
+  actions: "*byquery",
+});
+console.log(response);
 ----
-

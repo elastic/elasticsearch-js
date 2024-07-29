@@ -4,17 +4,14 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      match: {
-        message: {
-          query: 'ny city',
-          auto_generate_synonyms_phrase_query: false
-        }
-      }
-    }
-  }
-})
-console.log(response)
+  query: {
+    match: {
+      message: {
+        query: "ny city",
+        auto_generate_synonyms_phrase_query: false,
+      },
+    },
+  },
+});
+console.log(response);
 ----
-

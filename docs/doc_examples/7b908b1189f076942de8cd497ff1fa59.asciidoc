@@ -4,20 +4,13 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      multi_match: {
-        query: 'quick brown fox',
-        type: 'most_fields',
-        fields: [
-          'title',
-          'title.original',
-          'title.shingles'
-        ]
-      }
-    }
-  }
-})
-console.log(response)
+  query: {
+    multi_match: {
+      query: "quick brown fox",
+      type: "most_fields",
+      fields: ["title", "title.original", "title.shingles"],
+    },
+  },
+});
+console.log(response);
 ----
-

@@ -4,39 +4,36 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      bool: {
-        must: [
-          {
-            match: {
-              title: 'Search'
-            }
+  query: {
+    bool: {
+      must: [
+        {
+          match: {
+            title: "Search",
           },
-          {
-            match: {
-              content: 'Elasticsearch'
-            }
-          }
-        ],
-        filter: [
-          {
-            term: {
-              status: 'published'
-            }
+        },
+        {
+          match: {
+            content: "Elasticsearch",
           },
-          {
-            range: {
-              publish_date: {
-                gte: '2015-01-01'
-              }
-            }
-          }
-        ]
-      }
-    }
-  }
-})
-console.log(response)
+        },
+      ],
+      filter: [
+        {
+          term: {
+            status: "published",
+          },
+        },
+        {
+          range: {
+            publish_date: {
+              gte: "2015-01-01",
+            },
+          },
+        },
+      ],
+    },
+  },
+});
+console.log(response);
 ----
-

@@ -3,24 +3,21 @@
 
 [source, js]
 ----
-const response0 = await client.updateByQuery({
-  index: 'test',
-  refresh: true,
-  conflicts: 'proceed'
-})
-console.log(response0)
+const response = await client.updateByQuery({
+  index: "test",
+  refresh: "true",
+  conflicts: "proceed",
+});
+console.log(response);
 
 const response1 = await client.search({
-  index: 'test',
-  filter_path: 'hits.total',
-  body: {
-    query: {
-      match: {
-        flag: 'foo'
-      }
-    }
-  }
-})
-console.log(response1)
+  index: "test",
+  filter_path: "hits.total",
+  query: {
+    match: {
+      flag: "foo",
+    },
+  },
+});
+console.log(response1);
 ----
-

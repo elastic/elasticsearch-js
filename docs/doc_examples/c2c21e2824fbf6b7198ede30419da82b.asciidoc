@@ -4,8 +4,7 @@
 [source, js]
 ----
 const response = await client.clearScroll({
-  scroll_id: '_all'
-})
-console.log(response)
+  scroll_id: "_all",
+});
+console.log(response);
 ----
-

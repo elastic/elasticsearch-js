@@ -4,44 +4,43 @@
 [source, js]
 ----
 const response = await client.bulk({
-  body: [
+  operations: [
     {
       index: {
-        _index: 'test',
-        _id: '1'
-      }
+        _index: "test",
+        _id: "1",
+      },
     },
     {
-      field1: 'value1'
+      field1: "value1",
     },
     {
       delete: {
-        _index: 'test',
-        _id: '2'
-      }
+        _index: "test",
+        _id: "2",
+      },
     },
     {
       create: {
-        _index: 'test',
-        _id: '3'
-      }
+        _index: "test",
+        _id: "3",
+      },
     },
     {
-      field1: 'value3'
+      field1: "value3",
     },
     {
       update: {
-        _id: '1',
-        _index: 'test'
-      }
+        _id: "1",
+        _index: "test",
+      },
     },
     {
       doc: {
-        field2: 'value2'
-      }
-    }
-  ]
-})
-console.log(response)
+        field2: "value2",
+      },
+    },
+  ],
+});
+console.log(response);
 ----
-

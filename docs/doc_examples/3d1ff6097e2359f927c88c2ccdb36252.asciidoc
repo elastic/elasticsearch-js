@@ -3,7 +3,6 @@
 
 [source, js]
 ----
-const response = await client.info()
-console.log(response)
+const response = await client.info();
+console.log(response);
 ----
-

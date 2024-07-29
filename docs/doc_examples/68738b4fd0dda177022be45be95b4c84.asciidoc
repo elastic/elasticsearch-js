@@ -4,9 +4,8 @@
 [source, js]
 ----
 const response = await client.reindexRethrottle({
-  task_id: 'r1A2WoRbTwKZ516z6NEs5A:36619',
-  requests_per_second: '-1'
-})
-console.log(response)
+  task_id: "r1A2WoRbTwKZ516z6NEs5A:36619",
+  requests_per_second: "-1",
+});
+console.log(response);
 ----
-

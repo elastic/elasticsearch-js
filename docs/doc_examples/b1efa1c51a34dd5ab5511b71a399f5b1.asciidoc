@@ -4,16 +4,13 @@
 [source, js]
 ----
 const response = await client.reindex({
-  body: {
-    source: {
-      index: 'source'
-    },
-    dest: {
-      index: 'dest',
-      pipeline: 'some_ingest_pipeline'
-    }
-  }
-})
-console.log(response)
+  source: {
+    index: "source",
+  },
+  dest: {
+    index: "dest",
+    pipeline: "some_ingest_pipeline",
+  },
+});
+console.log(response);
 ----
-

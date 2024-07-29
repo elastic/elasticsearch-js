@@ -4,20 +4,14 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      multi_match: {
-        query: 'Will Smith',
-        type: 'best_fields',
-        fields: [
-          'first_name',
-          'last_name'
-        ],
-        operator: 'and'
-      }
-    }
-  }
-})
-console.log(response)
+  query: {
+    multi_match: {
+      query: "Will Smith",
+      type: "best_fields",
+      fields: ["first_name", "last_name"],
+      operator: "and",
+    },
+  },
+});
+console.log(response);
 ----
-

@@ -4,21 +4,18 @@
 [source, js]
 ----
 const response = await client.search({
-  body: {
-    query: {
-      bool: {
-        must: {
-          match_all: {}
+  query: {
+    bool: {
+      must: {
+        match_all: {},
+      },
+      filter: {
+        term: {
+          status: "active",
         },
-        filter: {
-          term: {
-            status: 'active'
-          }
-        }
-      }
-    }
-  }
-})
-console.log(response)
+      },
+    },
+  },
+});
+console.log(response);
 ----
-
