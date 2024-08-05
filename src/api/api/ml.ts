@@ -45,7 +45,7 @@ export default class Ml {
   }
 
   /**
-    * Clears a trained model deployment cache on all nodes where the trained model is assigned. A trained model deployment may have an inference cache enabled. As requests are handled by each allocated node, their responses may be cached on that individual node. Calling this API clears the caches without restarting the deployment.
+    * Clear trained model deployment cache. Cache will be cleared on all nodes where the trained model is assigned. A trained model deployment may have an inference cache enabled. As requests are handled by each allocated node, their responses may be cached on that individual node. Calling this API clears the caches without restarting the deployment.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-trained-model-deployment-cache.html | Elasticsearch API documentation}
     */
   async clearTrainedModelDeploymentCache (this: That, params: T.MlClearTrainedModelDeploymentCacheRequest | TB.MlClearTrainedModelDeploymentCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlClearTrainedModelDeploymentCacheResponse>
@@ -121,7 +121,7 @@ export default class Ml {
   }
 
   /**
-    * Removes all scheduled events from a calendar, then deletes it.
+    * Delete a calendar. Removes all scheduled events from a calendar, then deletes it.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar.html | Elasticsearch API documentation}
     */
   async deleteCalendar (this: That, params: T.MlDeleteCalendarRequest | TB.MlDeleteCalendarRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarResponse>
@@ -153,7 +153,7 @@ export default class Ml {
   }
 
   /**
-    * Deletes scheduled events from a calendar.
+    * Delete events from a calendar.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar-event.html | Elasticsearch API documentation}
     */
   async deleteCalendarEvent (this: That, params: T.MlDeleteCalendarEventRequest | TB.MlDeleteCalendarEventRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarEventResponse>
@@ -186,7 +186,7 @@ export default class Ml {
   }
 
   /**
-    * Deletes anomaly detection jobs from a calendar.
+    * Delete anomaly jobs from a calendar.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-calendar-job.html | Elasticsearch API documentation}
     */
   async deleteCalendarJob (this: That, params: T.MlDeleteCalendarJobRequest | TB.MlDeleteCalendarJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteCalendarJobResponse>
@@ -219,7 +219,7 @@ export default class Ml {
   }
 
   /**
-    * Deletes a data frame analytics job.
+    * Delete a data frame analytics job.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-dfanalytics.html | Elasticsearch API documentation}
     */
   async deleteDataFrameAnalytics (this: That, params: T.MlDeleteDataFrameAnalyticsRequest | TB.MlDeleteDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteDataFrameAnalyticsResponse>
@@ -251,7 +251,7 @@ export default class Ml {
   }
 
   /**
-    * Deletes an existing datafeed.
+    * Delete a datafeed.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-datafeed.html | Elasticsearch API documentation}
     */
   async deleteDatafeed (this: That, params: T.MlDeleteDatafeedRequest | TB.MlDeleteDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteDatafeedResponse>
@@ -283,7 +283,7 @@ export default class Ml {
   }
 
   /**
-    * Deletes expired and unused machine learning data. Deletes all job results, model snapshots and forecast data that have exceeded their retention days period. Machine learning state documents that are not associated with any job are also deleted. You can limit the request to a single or set of anomaly detection jobs by using a job identifier, a group name, a comma-separated list of jobs, or a wildcard expression. You can delete expired data for all anomaly detection jobs by using _all, by specifying * as the <job_id>, or by omitting the <job_id>.
+    * Delete expired ML data. Deletes all job results, model snapshots and forecast data that have exceeded their retention days period. Machine learning state documents that are not associated with any job are also deleted. You can limit the request to a single or set of anomaly detection jobs by using a job identifier, a group name, a comma-separated list of jobs, or a wildcard expression. You can delete expired data for all anomaly detection jobs by using _all, by specifying * as the <job_id>, or by omitting the <job_id>.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-expired-data.html | Elasticsearch API documentation}
     */
   async deleteExpiredData (this: That, params?: T.MlDeleteExpiredDataRequest | TB.MlDeleteExpiredDataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteExpiredDataResponse>
@@ -335,7 +335,7 @@ export default class Ml {
   }
 
   /**
-    * Deletes a filter. If an anomaly detection job references the filter, you cannot delete the filter. You must update or delete the job before you can delete the filter.
+    * Delete a filter. If an anomaly detection job references the filter, you cannot delete the filter. You must update or delete the job before you can delete the filter.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-filter.html | Elasticsearch API documentation}
     */
   async deleteFilter (this: That, params: T.MlDeleteFilterRequest | TB.MlDeleteFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteFilterResponse>
@@ -367,7 +367,7 @@ export default class Ml {
   }
 
   /**
-    * Deletes forecasts from a machine learning job. By default, forecasts are retained for 14 days. You can specify a different retention period with the `expires_in` parameter in the forecast jobs API. The delete forecast API enables you to delete one or more forecasts before they expire.
+    * Delete forecasts from a job. By default, forecasts are retained for 14 days. You can specify a different retention period with the `expires_in` parameter in the forecast jobs API. The delete forecast API enables you to delete one or more forecasts before they expire.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-forecast.html | Elasticsearch API documentation}
     */
   async deleteForecast (this: That, params: T.MlDeleteForecastRequest | TB.MlDeleteForecastRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteForecastResponse>
@@ -439,7 +439,7 @@ export default class Ml {
   }
 
   /**
-    * Deletes an existing model snapshot. You cannot delete the active model snapshot. To delete that snapshot, first revert to a different one. To identify the active model snapshot, refer to the `model_snapshot_id` in the results from the get jobs API.
+    * Delete a model snapshot. You cannot delete the active model snapshot. To delete that snapshot, first revert to a different one. To identify the active model snapshot, refer to the `model_snapshot_id` in the results from the get jobs API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-delete-snapshot.html | Elasticsearch API documentation}
     */
   async deleteModelSnapshot (this: That, params: T.MlDeleteModelSnapshotRequest | TB.MlDeleteModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteModelSnapshotResponse>
@@ -472,7 +472,7 @@ export default class Ml {
   }
 
   /**
-    * Deletes an existing trained inference model that is currently not referenced by an ingest pipeline.
+    * Delete an unreferenced trained model. The request deletes a trained inference model that is not referenced by an ingest pipeline.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-trained-models.html | Elasticsearch API documentation}
     */
   async deleteTrainedModel (this: That, params: T.MlDeleteTrainedModelRequest | TB.MlDeleteTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteTrainedModelResponse>
@@ -504,7 +504,7 @@ export default class Ml {
   }
 
   /**
-    * Deletes a trained model alias. This API deletes an existing model alias that refers to a trained model. If the model alias is missing or refers to a model other than the one identified by the `model_id`, this API returns an error.
+    * Delete a trained model alias. This API deletes an existing model alias that refers to a trained model. If the model alias is missing or refers to a model other than the one identified by the `model_id`, this API returns an error.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-trained-models-aliases.html | Elasticsearch API documentation}
     */
   async deleteTrainedModelAlias (this: That, params: T.MlDeleteTrainedModelAliasRequest | TB.MlDeleteTrainedModelAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlDeleteTrainedModelAliasResponse>
@@ -537,7 +537,7 @@ export default class Ml {
   }
 
   /**
-    * Makes an estimation of the memory usage for an anomaly detection job model. It is based on analysis configuration details for the job and cardinality estimates for the fields it references.
+    * Estimate job model memory usage. Makes an estimation of the memory usage for an anomaly detection job model. It is based on analysis configuration details for the job and cardinality estimates for the fields it references.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-apis.html | Elasticsearch API documentation}
     */
   async estimateModelMemory (this: That, params?: T.MlEstimateModelMemoryRequest | TB.MlEstimateModelMemoryRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlEstimateModelMemoryResponse>
@@ -579,7 +579,7 @@ export default class Ml {
   }
 
   /**
-    * Evaluates the data frame analytics for an annotated index. The API packages together commonly used evaluation metrics for various types of machine learning features. This has been designed for use on indexes created by data frame analytics. Evaluation requires both a ground truth field and an analytics result field to be present.
+    * Evaluate data frame analytics. The API packages together commonly used evaluation metrics for various types of machine learning features. This has been designed for use on indexes created by data frame analytics. Evaluation requires both a ground truth field and an analytics result field to be present.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/evaluate-dfanalytics.html | Elasticsearch API documentation}
     */
   async evaluateDataFrame (this: That, params: T.MlEvaluateDataFrameRequest | TB.MlEvaluateDataFrameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlEvaluateDataFrameResponse>
@@ -620,7 +620,7 @@ export default class Ml {
   }
 
   /**
-    * Explains a data frame analytics config. This API provides explanations for a data frame analytics config that either exists already or one that has not been created yet. The following explanations are provided: * which fields are included or not in the analysis and why, * how much memory is estimated to be required. The estimate can be used when deciding the appropriate value for model_memory_limit setting later on. If you have object fields or fields that are excluded via source filtering, they are not included in the explanation.
+    * Explain data frame analytics config. This API provides explanations for a data frame analytics config that either exists already or one that has not been created yet. The following explanations are provided: * which fields are included or not in the analysis and why, * how much memory is estimated to be required. The estimate can be used when deciding the appropriate value for model_memory_limit setting later on. If you have object fields or fields that are excluded via source filtering, they are not included in the explanation.
     * @see {@link http://www.elastic.co/guide/en/elasticsearch/reference/master/explain-dfanalytics.html | Elasticsearch API documentation}
     */
   async explainDataFrameAnalytics (this: That, params?: T.MlExplainDataFrameAnalyticsRequest | TB.MlExplainDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlExplainDataFrameAnalyticsResponse>
