@@ -35,6 +35,7 @@ import CcrApi from './api/ccr'
 import clearScrollApi from './api/clear_scroll'
 import closePointInTimeApi from './api/close_point_in_time'
 import ClusterApi from './api/cluster'
+import ConnectorApi from './api/connector'
 import countApi from './api/count'
 import createApi from './api/create'
 import DanglingIndicesApi from './api/dangling_indices'
@@ -123,6 +124,7 @@ export default interface API {
   clearScroll: typeof clearScrollApi
   closePointInTime: typeof closePointInTimeApi
   cluster: ClusterApi
+  connector: ConnectorApi
   count: typeof countApi
   create: typeof createApi
   danglingIndices: DanglingIndicesApi
@@ -206,6 +208,7 @@ const kAutoscaling = Symbol('Autoscaling')
 const kCat = Symbol('Cat')
 const kCcr = Symbol('Ccr')
 const kCluster = Symbol('Cluster')
+const kConnector = Symbol('Connector')
 const kDanglingIndices = Symbol('DanglingIndices')
 const kEnrich = Symbol('Enrich')
 const kEql = Symbol('Eql')
@@ -248,6 +251,7 @@ export default class API {
   [kCat]: symbol | null
   [kCcr]: symbol | null
   [kCluster]: symbol | null
+  [kConnector]: symbol | null
   [kDanglingIndices]: symbol | null
   [kEnrich]: symbol | null
   [kEql]: symbol | null
@@ -289,6 +293,7 @@ export default class API {
     this[kCat] = null
     this[kCcr] = null
     this[kCluster] = null
+    this[kConnector] = null
     this[kDanglingIndices] = null
     this[kEnrich] = null
     this[kEql] = null
@@ -388,6 +393,9 @@ Object.defineProperties(API.prototype, {
   },
   cluster: {
     get () { return this[kCluster] === null ? (this[kCluster] = new ClusterApi(this.transport)) : this[kCluster] }
+  },
+  connector: {
+    get () { return this[kConnector] === null ? (this[kConnector] = new ConnectorApi(this.transport)) : this[kConnector] }
   },
   danglingIndices: {
     get () { return this[kDanglingIndices] === null ? (this[kDanglingIndices] = new DanglingIndicesApi(this.transport)) : this[kDanglingIndices] }
