@@ -1624,8 +1624,8 @@ client.autoscaling.putAutoscalingPolicy({ name })
 Get aliases.
 Retrieves the cluster’s index aliases, including filter and routing information.
 The API does not return data stream aliases.
-> info
-> CAT APIs are only intended for human consumption using the command line or the Kibana console. They are not intended for use by applications. For application consumption, use [the /_alias endpoints](#endpoint-alias).
+
+CAT APIs are only intended for human consumption using the command line or the Kibana console. They are not intended for use by applications. For application consumption, use the aliases API.
 
 {ref}/cat-alias.html[Endpoint documentation]
 [source,ts]
@@ -1663,9 +1663,9 @@ client.cat.allocation({ ... })
 Get component templates.
 Returns information about component templates in a cluster.
 Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
-> info
-> CAT APIs are only intended for human consumption using the command line or Kibana console.
-They are not intended for use by applications. For application consumption, use [the /_component_template endpoints](#endpoint-component-template).
+
+CAT APIs are only intended for human consumption using the command line or Kibana console.
+They are not intended for use by applications. For application consumption, use the get component template API.
 
 {ref}/cat-component-templates.html[Endpoint documentation]
 [source,ts]
@@ -1684,9 +1684,9 @@ client.cat.componentTemplates({ ... })
 Get a document count.
 Provides quick access to a document count for a data stream, an index, or an entire cluster.n/
 The document count only includes live documents, not deleted documents which have not yet been removed by the merge process.
-> info
-> CAT APIs are only intended for human consumption using the command line or Kibana console.
-They are not intended for use by applications. For application consumption, use [the /_count endpoints](#endpoint-count).
+
+CAT APIs are only intended for human consumption using the command line or Kibana console.
+They are not intended for use by applications. For application consumption, use the count API.
 
 {ref}/cat-count.html[Endpoint documentation]
 [source,ts]
@@ -1763,9 +1763,6 @@ client.cat.help()
 ==== indices
 Get index information.
 Returns high-level information about indices in a cluster, including backing indices for data streams.
-> info
-> CAT APIs are only intended for human consumption using the command line or Kibana console.
-They are not intended for use by applications. For application consumption, use an index endpoint.
 
 Use this request to get the following information for each index in a cluster:
 - shard count
@@ -1775,7 +1772,10 @@ Use this request to get the following information for each index in a cluster:
 - total store size of all shards, including shard replicas
 
 These metrics are retrieved directly from Lucene, which Elasticsearch uses internally to power indexing and search. As a result, all document counts include hidden nested documents.
-To get an accurate count of Elasticsearch documents, use the [/_cat/count](#operation-cat-count) or [count](#endpoint-count) endpoints.
+To get an accurate count of Elasticsearch documents, use the cat count or count APIs.
+
+CAT APIs are only intended for human consumption using the command line or Kibana console.
+They are not intended for use by applications. For application consumption, use an index endpoint.
 
 {ref}/cat-indices.html[Endpoint documentation]
 [source,ts]
@@ -1813,10 +1813,9 @@ client.cat.master()
 Get data frame analytics jobs.
 Returns configuration and usage information about data frame analytics jobs.
 
-> info
-> CAT APIs are only intended for human consumption using the Kibana
+CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
-application consumption, use [the /_ml/data_frame/analytics endpoints](#endpoint-ml).
+application consumption, use the get data frame analytics jobs statistics API.
 
 {ref}/cat-dfanalytics.html[Endpoint documentation]
 [source,ts]
@@ -1844,10 +1843,9 @@ This API returns a maximum of 10,000 datafeeds.
 If the Elasticsearch security features are enabled, you must have `monitor_ml`, `monitor`, `manage_ml`, or `manage`
 cluster privileges to use this API.
 
-> info
-> CAT APIs are only intended for human consumption using the Kibana
+CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
-application consumption, use [the /_ml/datafeeds endpoints](#endpoint-ml).
+application consumption, use the get datafeed statistics API.
 
 {ref}/cat-datafeeds.html[Endpoint documentation]
 [source,ts]
@@ -1881,10 +1879,9 @@ This API returns a maximum of 10,000 jobs.
 If the Elasticsearch security features are enabled, you must have `monitor_ml`,
 `monitor`, `manage_ml`, or `manage` cluster privileges to use this API.
 
-> info
-> CAT APIs are only intended for human consumption using the Kibana
+CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
-application consumption, use [the /_ml/anomaly_detectors endpoints](#endpoint-ml).
+application consumption, use the get anomaly detection job statistics API.
 
 {ref}/cat-anomaly-detectors.html[Endpoint documentation]
 [source,ts]
@@ -1916,10 +1913,9 @@ matches.
 Get trained models.
 Returns configuration and usage information about inference trained models.
 
-> info
-> CAT APIs are only intended for human consumption using the Kibana
+CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
-application consumption, use [the /_ml/trained_models endpoints](#endpoint-ml).
+application consumption, use the get trained models statistics API.
 
 {ref}/cat-trained-model.html[Endpoint documentation]
 [source,ts]
@@ -2159,10 +2155,9 @@ Accepts wildcard expressions.
 Get transforms.
 Returns configuration and usage information about transforms.
 
-> info
-> CAT APIs are only intended for human consumption using the Kibana
+CAT APIs are only intended for human consumption using the Kibana
 console or command line. They are not intended for use by applications. For
-application consumption, use [the /_transform endpoints](#endpoint-transform).
+application consumption, use the get transform statistics API.
 
 {ref}/cat-transforms.html[Endpoint documentation]
 [source,ts]
@@ -2582,7 +2577,7 @@ client.cluster.health({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string | string[])*: List of data streams, indices, and index aliases used to limit the request. Wildcard expressions (*) are supported. To target all data streams and indices in a cluster, omit this parameter or use _all or *.
+** *`index` (Optional, string | string[])*: List of data streams, indices, and index aliases used to limit the request. Wildcard expressions (`*`) are supported. To target all data streams and indices in a cluster, omit this parameter or use _all or `*`.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 ** *`level` (Optional, Enum("cluster" | "indices" | "shards"))*: Can be one of cluster, indices or shards. Controls the details level of the health information returned.
 ** *`local` (Optional, boolean)*: If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
@@ -2805,6 +2800,481 @@ client.cluster.stats({ ... })
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for each node to respond.
 If a node does not respond before its timeout expires, the response does not include its stats.
 However, timed out nodes are included in the response’s `_nodes.failed` property. Defaults to no timeout.
+
+[discrete]
+=== connector
+[discrete]
+==== check_in
+Updates the last_seen field in the connector, and sets it to current timestamp
+
+{ref}/check-in-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.checkIn({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be checked in
+
+[discrete]
+==== delete
+Deletes a connector.
+
+{ref}/delete-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.delete({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be deleted
+** *`delete_sync_jobs` (Optional, boolean)*: A flag indicating if associated sync jobs should be also removed. Defaults to false.
+
+[discrete]
+==== get
+Retrieves a connector.
+
+{ref}/get-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.get({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector
+
+[discrete]
+==== list
+Returns existing connectors.
+
+{ref}/list-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.list({ ... })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`from` (Optional, number)*: Starting offset (default: 0)
+** *`size` (Optional, number)*: Specifies a max number of results to get
+** *`index_name` (Optional, string | string[])*: A list of connector index names to fetch connector documents for
+** *`connector_name` (Optional, string | string[])*: A list of connector names to fetch connector documents for
+** *`service_type` (Optional, string | string[])*: A list of connector service types to fetch connector documents for
+** *`query` (Optional, string)*: A wildcard query string that filters connectors with matching name, description or index name
+
+[discrete]
+==== post
+Creates a connector.
+
+{ref}/create-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.post({ ... })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`description` (Optional, string)*
+** *`index_name` (Optional, string)*
+** *`is_native` (Optional, boolean)*
+** *`language` (Optional, string)*
+** *`name` (Optional, string)*
+** *`service_type` (Optional, string)*
+
+[discrete]
+==== put
+Creates or updates a connector.
+
+{ref}/create-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.put({ ... })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (Optional, string)*: The unique identifier of the connector to be created or updated. ID is auto-generated if not provided.
+** *`description` (Optional, string)*
+** *`index_name` (Optional, string)*
+** *`is_native` (Optional, boolean)*
+** *`language` (Optional, string)*
+** *`name` (Optional, string)*
+** *`service_type` (Optional, string)*
+
+[discrete]
+==== sync_job_cancel
+Cancels a connector sync job.
+
+{ref}/cancel-connector-sync-job-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobCancel({ connector_sync_job_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_sync_job_id` (string)*: The unique identifier of the connector sync job
+
+[discrete]
+==== sync_job_check_in
+Checks in a connector sync job (refreshes 'last_seen').
+
+{ref}/check-in-connector-sync-job-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobCheckIn()
+----
+
+
+[discrete]
+==== sync_job_claim
+Claims a connector sync job.
+[source,ts]
+----
+client.connector.syncJobClaim()
+----
+
+
+[discrete]
+==== sync_job_delete
+Deletes a connector sync job.
+
+{ref}/delete-connector-sync-job-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobDelete({ connector_sync_job_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_sync_job_id` (string)*: The unique identifier of the connector sync job to be deleted
+
+[discrete]
+==== sync_job_error
+Sets an error for a connector sync job.
+
+{ref}/set-connector-sync-job-error-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobError()
+----
+
+
+[discrete]
+==== sync_job_get
+Retrieves a connector sync job.
+
+{ref}/get-connector-sync-job-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobGet({ connector_sync_job_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_sync_job_id` (string)*: The unique identifier of the connector sync job
+
+[discrete]
+==== sync_job_list
+Lists connector sync jobs.
+
+{ref}/list-connector-sync-jobs-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobList({ ... })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`from` (Optional, number)*: Starting offset (default: 0)
+** *`size` (Optional, number)*: Specifies a max number of results to get
+** *`status` (Optional, Enum("canceling" | "canceled" | "completed" | "error" | "in_progress" | "pending" | "suspended"))*: A sync job status to fetch connector sync jobs for
+** *`connector_id` (Optional, string)*: A connector id to fetch connector sync jobs for
+** *`job_type` (Optional, Enum("full" | "incremental" | "access_control") | Enum("full" | "incremental" | "access_control")[])*: A list of job types to fetch the sync jobs for
+
+[discrete]
+==== sync_job_post
+Creates a connector sync job.
+
+{ref}/create-connector-sync-job-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobPost({ id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`id` (string)*: The id of the associated connector
+** *`job_type` (Optional, Enum("full" | "incremental" | "access_control"))*
+** *`trigger_method` (Optional, Enum("on_demand" | "scheduled"))*
+
+[discrete]
+==== sync_job_update_stats
+Updates the stats fields in the connector sync job document.
+
+{ref}/set-connector-sync-job-stats-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobUpdateStats()
+----
+
+
+[discrete]
+==== update_active_filtering
+Activates the valid draft filtering for a connector.
+
+{ref}/update-connector-filtering-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateActiveFiltering({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+
+[discrete]
+==== update_api_key_id
+Updates the API key id in the connector document
+
+{ref}/update-connector-api-key-id-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateApiKeyId({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`api_key_id` (Optional, string)*
+** *`api_key_secret_id` (Optional, string)*
+
+[discrete]
+==== update_configuration
+Updates the configuration field in the connector document
+
+{ref}/update-connector-configuration-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateConfiguration({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`configuration` (Optional, Record<string, { category, default_value, depends_on, display, label, options, order, placeholder, required, sensitive, tooltip, type, ui_restrictions, validations, value }>)*
+** *`values` (Optional, Record<string, User-defined value>)*
+
+[discrete]
+==== update_error
+Updates the filtering field in the connector document
+
+{ref}/update-connector-error-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateError({ connector_id, error })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`error` (T | null)*
+
+[discrete]
+==== update_features
+Updates the connector features in the connector document.
+
+{ref}/update-connector-features-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateFeatures()
+----
+
+
+[discrete]
+==== update_filtering
+Updates the filtering field in the connector document
+
+{ref}/update-connector-filtering-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateFiltering({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`filtering` (Optional, { active, domain, draft }[])*
+** *`rules` (Optional, { created_at, field, id, order, policy, rule, updated_at, value }[])*
+** *`advanced_snippet` (Optional, { created_at, updated_at, value })*
+
+[discrete]
+==== update_filtering_validation
+Updates the draft filtering validation info for a connector.
+[source,ts]
+----
+client.connector.updateFilteringValidation({ connector_id, validation })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`validation` ({ errors, state })*
+
+[discrete]
+==== update_index_name
+Updates the index_name in the connector document
+
+{ref}/update-connector-index-name-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateIndexName({ connector_id, index_name })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`index_name` (T | null)*
+
+[discrete]
+==== update_name
+Updates the name and description fields in the connector document
+
+{ref}/update-connector-name-description-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateName({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`name` (Optional, string)*
+** *`description` (Optional, string)*
+
+[discrete]
+==== update_native
+Updates the is_native flag in the connector document
+[source,ts]
+----
+client.connector.updateNative({ connector_id, is_native })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`is_native` (boolean)*
+
+[discrete]
+==== update_pipeline
+Updates the pipeline field in the connector document
+
+{ref}/update-connector-pipeline-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updatePipeline({ connector_id, pipeline })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`pipeline` ({ extract_binary_content, name, reduce_whitespace, run_ml_inference })*
+
+[discrete]
+==== update_scheduling
+Updates the scheduling field in the connector document
+
+{ref}/update-connector-scheduling-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateScheduling({ connector_id, scheduling })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`scheduling` ({ access_control, full, incremental })*
+
+[discrete]
+==== update_service_type
+Updates the service type of the connector
+
+{ref}/update-connector-service-type-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateServiceType({ connector_id, service_type })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`service_type` (string)*
+
+[discrete]
+==== update_status
+Updates the status of the connector
+
+{ref}/update-connector-status-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateStatus({ connector_id, status })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`status` (Enum("created" | "needs_configuration" | "configured" | "connected" | "error"))*
 
 [discrete]
 === dangling_indices
@@ -5517,7 +5987,8 @@ client.migration.postFeatureUpgrade()
 === ml
 [discrete]
 ==== clear_trained_model_deployment_cache
-Clears a trained model deployment cache on all nodes where the trained model is assigned.
+Clear trained model deployment cache.
+Cache will be cleared on all nodes where the trained model is assigned.
 A trained model deployment may have an inference cache enabled.
 As requests are handled by each allocated node, their responses may be cached on that individual node.
 Calling this API clears the caches without restarting the deployment.
@@ -5559,6 +6030,7 @@ client.ml.closeJob({ job_id })
 
 [discrete]
 ==== delete_calendar
+Delete a calendar.
 Removes all scheduled events from a calendar, then deletes it.
 
 {ref}/ml-delete-calendar.html[Endpoint documentation]
@@ -5575,7 +6047,7 @@ client.ml.deleteCalendar({ calendar_id })
 
 [discrete]
 ==== delete_calendar_event
-Deletes scheduled events from a calendar.
+Delete events from a calendar.
 
 {ref}/ml-delete-calendar-event.html[Endpoint documentation]
 [source,ts]
@@ -5593,7 +6065,7 @@ You can obtain this identifier by using the get calendar events API.
 
 [discrete]
 ==== delete_calendar_job
-Deletes anomaly detection jobs from a calendar.
+Delete anomaly jobs from a calendar.
 
 {ref}/ml-delete-calendar-job.html[Endpoint documentation]
 [source,ts]
@@ -5611,7 +6083,7 @@ list of jobs or groups.
 
 [discrete]
 ==== delete_data_frame_analytics
-Deletes a data frame analytics job.
+Delete a data frame analytics job.
 
 {ref}/delete-dfanalytics.html[Endpoint documentation]
 [source,ts]
@@ -5629,7 +6101,7 @@ client.ml.deleteDataFrameAnalytics({ id })
 
 [discrete]
 ==== delete_datafeed
-Deletes an existing datafeed.
+Delete a datafeed.
 
 {ref}/ml-delete-datafeed.html[Endpoint documentation]
 [source,ts]
@@ -5650,7 +6122,7 @@ stopping and deleting the datafeed.
 
 [discrete]
 ==== delete_expired_data
-Deletes expired and unused machine learning data.
+Delete expired ML data.
 Deletes all job results, model snapshots and forecast data that have exceeded
 their retention days period. Machine learning state documents that are not
 associated with any job are also deleted.
@@ -5678,7 +6150,7 @@ behavior is no throttling.
 
 [discrete]
 ==== delete_filter
-Deletes a filter.
+Delete a filter.
 If an anomaly detection job references the filter, you cannot delete the
 filter. You must update or delete the job before you can delete the filter.
 
@@ -5696,7 +6168,7 @@ client.ml.deleteFilter({ filter_id })
 
 [discrete]
 ==== delete_forecast
-Deletes forecasts from a machine learning job.
+Delete forecasts from a job.
 By default, forecasts are retained for 14 days. You can specify a
 different retention period with the `expires_in` parameter in the forecast
 jobs API. The delete forecast API enables you to delete one or more
@@ -5755,7 +6227,7 @@ job deletion completes.
 
 [discrete]
 ==== delete_model_snapshot
-Deletes an existing model snapshot.
+Delete a model snapshot.
 You cannot delete the active model snapshot. To delete that snapshot, first
 revert to a different one. To identify the active model snapshot, refer to
 the `model_snapshot_id` in the results from the get jobs API.
@@ -5775,8 +6247,8 @@ client.ml.deleteModelSnapshot({ job_id, snapshot_id })
 
 [discrete]
 ==== delete_trained_model
-Deletes an existing trained inference model that is currently not referenced
-by an ingest pipeline.
+Delete an unreferenced trained model.
+The request deletes a trained inference model that is not referenced by an ingest pipeline.
 
 {ref}/delete-trained-models.html[Endpoint documentation]
 [source,ts]
@@ -5793,7 +6265,7 @@ client.ml.deleteTrainedModel({ model_id })
 
 [discrete]
 ==== delete_trained_model_alias
-Deletes a trained model alias.
+Delete a trained model alias.
 This API deletes an existing model alias that refers to a trained model. If
 the model alias is missing or refers to a model other than the one identified
 by the `model_id`, this API returns an error.
@@ -5813,6 +6285,7 @@ client.ml.deleteTrainedModelAlias({ model_alias, model_id })
 
 [discrete]
 ==== estimate_model_memory
+Estimate job model memory usage.
 Makes an estimation of the memory usage for an anomaly detection job model.
 It is based on analysis configuration details for the job and cardinality
 estimates for the fields it references.
@@ -5844,7 +6317,7 @@ omitted from the request if no detectors have a `by_field_name`,
 
 [discrete]
 ==== evaluate_data_frame
-Evaluates the data frame analytics for an annotated index.
+Evaluate data frame analytics.
 The API packages together commonly used evaluation metrics for various types
 of machine learning features. This has been designed for use on indexes
 created by data frame analytics. Evaluation requires both a ground truth
@@ -5866,7 +6339,7 @@ client.ml.evaluateDataFrame({ evaluation, index })
 
 [discrete]
 ==== explain_data_frame_analytics
-Explains a data frame analytics config.
+Explain data frame analytics config.
 This API provides explanations for a data frame analytics config that either
 exists already or one that has not been created yet. The following
 explanations are provided:
@@ -9096,7 +9569,7 @@ client.security.putPrivileges({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`privileges` (Optional, Record<string, Record<string, User-defined value>>)*
+** *`privileges` (Optional, Record<string, Record<string, { allocate, delete, downsample, freeze, forcemerge, migrate, readonly, rollover, set_priority, searchable_snapshot, shrink, unfollow, wait_for_snapshot }>>)*
 ** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 [discrete]
