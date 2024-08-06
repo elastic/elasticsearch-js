@@ -2757,6 +2757,481 @@ If a node does not respond before its timeout expires, the response does not inc
 However, timed out nodes are included in the response’s `_nodes.failed` property. Defaults to no timeout.
 
 [discrete]
+=== connector
+[discrete]
+==== check_in
+Updates the last_seen field in the connector, and sets it to current timestamp
+
+{ref}/check-in-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.checkIn({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be checked in
+
+[discrete]
+==== delete
+Deletes a connector.
+
+{ref}/delete-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.delete({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be deleted
+** *`delete_sync_jobs` (Optional, boolean)*: A flag indicating if associated sync jobs should be also removed. Defaults to false.
+
+[discrete]
+==== get
+Retrieves a connector.
+
+{ref}/get-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.get({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector
+
+[discrete]
+==== list
+Returns existing connectors.
+
+{ref}/list-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.list({ ... })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`from` (Optional, number)*: Starting offset (default: 0)
+** *`size` (Optional, number)*: Specifies a max number of results to get
+** *`index_name` (Optional, string | string[])*: A list of connector index names to fetch connector documents for
+** *`connector_name` (Optional, string | string[])*: A list of connector names to fetch connector documents for
+** *`service_type` (Optional, string | string[])*: A list of connector service types to fetch connector documents for
+** *`query` (Optional, string)*: A wildcard query string that filters connectors with matching name, description or index name
+
+[discrete]
+==== post
+Creates a connector.
+
+{ref}/create-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.post({ ... })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`description` (Optional, string)*
+** *`index_name` (Optional, string)*
+** *`is_native` (Optional, boolean)*
+** *`language` (Optional, string)*
+** *`name` (Optional, string)*
+** *`service_type` (Optional, string)*
+
+[discrete]
+==== put
+Creates or updates a connector.
+
+{ref}/create-connector-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.put({ ... })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (Optional, string)*: The unique identifier of the connector to be created or updated. ID is auto-generated if not provided.
+** *`description` (Optional, string)*
+** *`index_name` (Optional, string)*
+** *`is_native` (Optional, boolean)*
+** *`language` (Optional, string)*
+** *`name` (Optional, string)*
+** *`service_type` (Optional, string)*
+
+[discrete]
+==== sync_job_cancel
+Cancels a connector sync job.
+
+{ref}/cancel-connector-sync-job-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobCancel({ connector_sync_job_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_sync_job_id` (string)*: The unique identifier of the connector sync job
+
+[discrete]
+==== sync_job_check_in
+Checks in a connector sync job (refreshes 'last_seen').
+
+{ref}/check-in-connector-sync-job-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobCheckIn()
+----
+
+
+[discrete]
+==== sync_job_claim
+Claims a connector sync job.
+[source,ts]
+----
+client.connector.syncJobClaim()
+----
+
+
+[discrete]
+==== sync_job_delete
+Deletes a connector sync job.
+
+{ref}/delete-connector-sync-job-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobDelete({ connector_sync_job_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_sync_job_id` (string)*: The unique identifier of the connector sync job to be deleted
+
+[discrete]
+==== sync_job_error
+Sets an error for a connector sync job.
+
+{ref}/set-connector-sync-job-error-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobError()
+----
+
+
+[discrete]
+==== sync_job_get
+Retrieves a connector sync job.
+
+{ref}/get-connector-sync-job-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobGet({ connector_sync_job_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_sync_job_id` (string)*: The unique identifier of the connector sync job
+
+[discrete]
+==== sync_job_list
+Lists connector sync jobs.
+
+{ref}/list-connector-sync-jobs-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobList({ ... })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`from` (Optional, number)*: Starting offset (default: 0)
+** *`size` (Optional, number)*: Specifies a max number of results to get
+** *`status` (Optional, Enum("canceling" | "canceled" | "completed" | "error" | "in_progress" | "pending" | "suspended"))*: A sync job status to fetch connector sync jobs for
+** *`connector_id` (Optional, string)*: A connector id to fetch connector sync jobs for
+** *`job_type` (Optional, Enum("full" | "incremental" | "access_control") | Enum("full" | "incremental" | "access_control")[])*: A list of job types to fetch the sync jobs for
+
+[discrete]
+==== sync_job_post
+Creates a connector sync job.
+
+{ref}/create-connector-sync-job-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobPost({ id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`id` (string)*: The id of the associated connector
+** *`job_type` (Optional, Enum("full" | "incremental" | "access_control"))*
+** *`trigger_method` (Optional, Enum("on_demand" | "scheduled"))*
+
+[discrete]
+==== sync_job_update_stats
+Updates the stats fields in the connector sync job document.
+
+{ref}/set-connector-sync-job-stats-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.syncJobUpdateStats()
+----
+
+
+[discrete]
+==== update_active_filtering
+Activates the valid draft filtering for a connector.
+
+{ref}/update-connector-filtering-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateActiveFiltering({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+
+[discrete]
+==== update_api_key_id
+Updates the API key id in the connector document
+
+{ref}/update-connector-api-key-id-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateApiKeyId({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`api_key_id` (Optional, string)*
+** *`api_key_secret_id` (Optional, string)*
+
+[discrete]
+==== update_configuration
+Updates the configuration field in the connector document
+
+{ref}/update-connector-configuration-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateConfiguration({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`configuration` (Optional, Record<string, { category, default_value, depends_on, display, label, options, order, placeholder, required, sensitive, tooltip, type, ui_restrictions, validations, value }>)*
+** *`values` (Optional, Record<string, User-defined value>)*
+
+[discrete]
+==== update_error
+Updates the filtering field in the connector document
+
+{ref}/update-connector-error-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateError({ connector_id, error })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`error` (T | null)*
+
+[discrete]
+==== update_features
+Updates the connector features in the connector document.
+
+{ref}/update-connector-features-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateFeatures()
+----
+
+
+[discrete]
+==== update_filtering
+Updates the filtering field in the connector document
+
+{ref}/update-connector-filtering-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateFiltering({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`filtering` (Optional, { active, domain, draft }[])*
+** *`rules` (Optional, { created_at, field, id, order, policy, rule, updated_at, value }[])*
+** *`advanced_snippet` (Optional, { created_at, updated_at, value })*
+
+[discrete]
+==== update_filtering_validation
+Updates the draft filtering validation info for a connector.
+[source,ts]
+----
+client.connector.updateFilteringValidation({ connector_id, validation })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`validation` ({ errors, state })*
+
+[discrete]
+==== update_index_name
+Updates the index_name in the connector document
+
+{ref}/update-connector-index-name-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateIndexName({ connector_id, index_name })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`index_name` (T | null)*
+
+[discrete]
+==== update_name
+Updates the name and description fields in the connector document
+
+{ref}/update-connector-name-description-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateName({ connector_id })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`name` (Optional, string)*
+** *`description` (Optional, string)*
+
+[discrete]
+==== update_native
+Updates the is_native flag in the connector document
+[source,ts]
+----
+client.connector.updateNative({ connector_id, is_native })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`is_native` (boolean)*
+
+[discrete]
+==== update_pipeline
+Updates the pipeline field in the connector document
+
+{ref}/update-connector-pipeline-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updatePipeline({ connector_id, pipeline })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`pipeline` ({ extract_binary_content, name, reduce_whitespace, run_ml_inference })*
+
+[discrete]
+==== update_scheduling
+Updates the scheduling field in the connector document
+
+{ref}/update-connector-scheduling-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateScheduling({ connector_id, scheduling })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`scheduling` ({ access_control, full, incremental })*
+
+[discrete]
+==== update_service_type
+Updates the service type of the connector
+
+{ref}/update-connector-service-type-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateServiceType({ connector_id, service_type })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`service_type` (string)*
+
+[discrete]
+==== update_status
+Updates the status of the connector
+
+{ref}/update-connector-status-api.html[Endpoint documentation]
+[source,ts]
+----
+client.connector.updateStatus({ connector_id, status })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`connector_id` (string)*: The unique identifier of the connector to be updated
+** *`status` (Enum("created" | "needs_configuration" | "configured" | "connected" | "error"))*
+
+[discrete]
 === dangling_indices
 [discrete]
 ==== delete_dangling_index
@@ -8999,7 +9474,7 @@ client.security.putPrivileges({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`privileges` (Optional, Record<string, Record<string, User-defined value>>)*
+** *`privileges` (Optional, Record<string, Record<string, { allocate, delete, downsample, freeze, forcemerge, migrate, readonly, rollover, set_priority, searchable_snapshot, shrink, unfollow, wait_for_snapshot }>>)*
 ** *`refresh` (Optional, Enum(true | false | "wait_for"))*: If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
 
 [discrete]
