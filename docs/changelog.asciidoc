@@ -2,6 +2,17 @@
 == Release notes
 
 [discrete]
+=== 8.14.1
+
+[discrete]
+==== Features
+
+[discrete]
+===== Improved support for Elasticsearch `8.14`
+
+Updated types based on fixes and changes to the Elasticsearch specification.
+
+[discrete]
 === 8.14.0
 
 [discrete]
