@@ -125,6 +125,13 @@ async function codegen (args) {
   await $`cp -R ${join(import.meta.url, '..', '..', 'elastic-client-generator-js', 'output')}/* ${join(import.meta.url, '..', 'src', 'api')}`
   await $`mv ${join(import.meta.url, '..', 'src', 'api', 'reference.asciidoc')} ${join(import.meta.url, '..', 'docs', 'reference.asciidoc')}`
   await $`npm run build`
+
+  // run docs example generation
+  if (version === 'main') {
+    await $`node ./scripts/generate-docs-examples.js`
+  } else {
+    await $`node ./scripts/generate-docs-examples.js ${version.split('.').slice(0, 2).join('.')}`
+  }
 }
 
 function onError (err) {
