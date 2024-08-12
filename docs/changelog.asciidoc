@@ -8,11 +8,28 @@
 ==== Features
 
 [discrete]
+===== Support for Elasticsearch `v8.15.0`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.15/release-notes-8.15.0.html[here].
+
+[discrete]
 ===== OpenTelemetry zero-code instrumentation support
 
 For those that use an observability service that supports OpenTelemetry spans, the client will now automatically generate traces for each Elasticsearch request it makes.
 See {jsclient}/observability.html#_opentelemetry[the docs]
 for more information.
+
+[discrete]
+=== 8.14.1
+
+[discrete]
+==== Features
+
+[discrete]
+===== Improved support for Elasticsearch `8.14`
+
+Updated types based on fixes and changes to the Elasticsearch specification.
 
 [discrete]
 === 8.14.0
