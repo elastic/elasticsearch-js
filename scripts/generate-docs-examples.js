@@ -23,6 +23,7 @@ const fetch = require('node-fetch')
 const rimraf = require('rimraf')
 const ora = require('ora')
 const { convertRequests } = require('@elastic/request-converter')
+const minimist = require('minimist')
 
 const docsExamplesDir = join('docs', 'doc_examples')
 
@@ -56,13 +57,13 @@ async function makeSnippet (example) {
   }
 }
 
-async function generate () {
+async function generate (version) {
   log.start()
 
   rimraf.sync(join(docsExamplesDir, '*'))
 
-  log.text = 'Downloading alternatives report'
-  const examples = await getAlternativesReport()
+  log.text = `Downloading alternatives report for version ${version}`
+  const examples = await getAlternativesReport(version)
 
   let counter = 1
   for (const example of examples) {
@@ -89,7 +90,14 @@ ${source.trim()}
 `
 }
 
-generate()
+const options = minimist(process.argv.slice(2), {
+  string: ['version'],
+  default: {
+    version: 'master'
+  }
+})
+
+generate(options.version)
   .then(() => log.succeed('done!'))
   .catch(err => log.fail(err.message))
   .finally(() => {
