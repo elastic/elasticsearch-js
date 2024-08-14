@@ -1,0 +1,66 @@
+---
+name: 🐛 Bug report
+description: Create a report to help us improve
+labels: ["Category: Bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        It's not uncommon that somebody already opened an issue or in the best case it's already fixed but not merged. That's the reason why you should [search](https://github.com/elastic/elasticsearch-js/issues) at first before submitting a new one.
+
+        **Please read this entire template before posting any issue. If you ignore these instructions
+        and post an issue here that does not follow the instructions, your issue might be closed,
+        locked, and assigned the `Category: Not an issue` label.**
+
+  - type: textarea
+    id: bug-report
+    attributes:
+      label: 🐛 Bug report
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: To reproduce
+      description: Steps to reproduce the behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+
+  - type: input
+    id: node-js-version
+    attributes:
+      label: Node.js version
+      placeholder: 18.x, 20.x, etc.
+    validations:
+      required: true
+
+  - type: input
+    id: client-version
+    attributes:
+      label: "@elastic/elasticsearch version"
+      placeholder: 7.17.0, 8.14.1, etc.
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Ubuntu 22.04, macOS, etc.
+    validations:
+      required: true
+
+  - type: input
+    id: env-info
+    attributes:
+      label: Any other relevant environment information
