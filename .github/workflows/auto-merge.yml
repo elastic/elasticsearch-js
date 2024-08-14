@@ -1,0 +1,17 @@
+name: Automerge
+
+on:
+  pull_request_review:
+    types:
+      - submitted
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: reitermarkus/automerge@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: squash
+          do-not-merge-labels: never-merge
+          pull-request-author-associations: OWNER
