@@ -8,7 +8,7 @@ body:
       value: |
         ### Please note that this issue tracker is not a help forum and this issue may be closed.
 
-        Please check our [community forum](https://discuss.elastic.co/) or contact support if your issue is not specifically related to the documented functionality of this client library.
+        Please check our [community forum](https://discuss.elastic.co/) or [contact Elastic support](https://www.elastic.co/support) if your issue is not specifically related to the documented functionality of this client library.
 
         It's not uncommon that somebody already opened an issue or in the best case it's already fixed but not merged. That's the reason why you should [search](https://github.com/elastic/elasticsearch-js/issues) at first before submitting a new one.
 
