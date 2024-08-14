@@ -17,10 +17,11 @@
  * under the License.
  */
 
-import { ConnectionOptions as TlsConnectionOptions } from 'tls'
-import { URL } from 'url'
-import buffer from 'buffer'
-import os from 'os'
+import process from 'node:process'
+import { ConnectionOptions as TlsConnectionOptions } from 'node:tls'
+import { URL } from 'node:url'
+import buffer from 'node:buffer'
+import os from 'node:os'
 import {
   Transport,
   UndiciConnection,

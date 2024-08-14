@@ -18,12 +18,12 @@
  */
 
 import FakeTimers from '@sinonjs/fake-timers'
-import { AssertionError } from 'assert'
-import { createReadStream } from 'fs'
-import * as http from 'http'
-import { join } from 'path'
+import { AssertionError } from 'node:assert'
+import { createReadStream } from 'node:fs'
+import * as http from 'node:http'
+import { join } from 'node:path'
 import split from 'split2'
-import { Readable } from 'stream'
+import { Readable } from 'node:stream'
 import { test } from 'tap'
 import { Client, errors } from '../../../'
 import { buildServer, connection } from '../../utils'
@@ -936,11 +936,11 @@ test('bulk index', t => {
       onDocument (doc) {
         t.type(doc.user, 'string') // testing that doc is type of Document
         return [
-          { 
-            index: { 
-              _index: 'test' 
-            } 
-          }, 
+          {
+            index: {
+              _index: 'test'
+            }
+          },
           { ...doc, updatedAt }
         ]
       },
@@ -1042,7 +1042,7 @@ test('bulk create', t => {
               _index: 'test',
               _id: String(id++)
             }
-          }, 
+          },
           { ...doc, updatedAt }
         ]
       },

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-import assert from 'assert'
+import assert from 'node:assert'
 import { Transport, SniffOptions } from '@elastic/transport'
 
 export default class SniffingTransport extends Transport {

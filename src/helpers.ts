@@ -21,9 +21,9 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 
-import assert from 'assert'
-import { promisify } from 'util'
-import { Readable } from 'stream'
+import assert from 'node:assert'
+import { promisify } from 'node:util'
+import { Readable } from 'node:stream'
 import { errors, TransportResult, TransportRequestOptions, TransportRequestOptionsWithMeta } from '@elastic/transport'
 import Client from './client'
 import * as T from './api/types'

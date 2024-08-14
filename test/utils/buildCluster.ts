@@ -18,7 +18,7 @@
  */
 
 import Debug from 'debug'
-import * as http from 'http'
+import * as http from 'node:http'
 import buildServer, { ServerHandler } from './buildServer'
 import { StoppableServer } from 'stoppable'
 
