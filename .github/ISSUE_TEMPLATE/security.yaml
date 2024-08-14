@@ -1,0 +1,8 @@
+---
+name: 👮 Security Issue
+description: Responsible disclosure
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If you want to report a security issue, please take a look at [elastic/security](https://www.elastic.co/community/security).
