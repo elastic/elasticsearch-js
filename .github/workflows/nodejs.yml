@@ -12,7 +12,7 @@ jobs:
       src-only: "${{ steps.changes.outputs.src-only }}"
     steps:
       - uses: actions/checkout@v4
-      - uses: dorny/paths-filter/@v2.11.1
+      - uses: dorny/paths-filter/@v3.0.2
         id: changes
         with:
           filters: |
