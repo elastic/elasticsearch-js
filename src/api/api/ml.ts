@@ -672,7 +672,7 @@ export default class Ml {
   }
 
   /**
-    * Forces any buffered data to be processed by the job. The flush jobs API is only applicable when sending data for analysis using the post data API. Depending on the content of the buffer, then it might additionally calculate new results. Both flush and close operations are similar, however the flush is more efficient if you are expecting to send more data for analysis. When flushing, the job remains open and is available to continue analyzing data. A close operation additionally prunes and persists the model state to disk and the job must be opened again before analyzing further data.
+    * Force buffered data to be processed. The flush jobs API is only applicable when sending data for analysis using the post data API. Depending on the content of the buffer, then it might additionally calculate new results. Both flush and close operations are similar, however the flush is more efficient if you are expecting to send more data for analysis. When flushing, the job remains open and is available to continue analyzing data. A close operation additionally prunes and persists the model state to disk and the job must be opened again before analyzing further data.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-flush-job.html | Elasticsearch API documentation}
     */
   async flushJob (this: That, params: T.MlFlushJobRequest | TB.MlFlushJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlFlushJobResponse>
@@ -716,7 +716,7 @@ export default class Ml {
   }
 
   /**
-    * Predicts the future behavior of a time series by using its historical behavior. Forecasts are not supported for jobs that perform population analysis; an error occurs if you try to create a forecast for a job that has an `over_field_name` in its configuration.
+    * Predict future behavior of a time series. Forecasts are not supported for jobs that perform population analysis; an error occurs if you try to create a forecast for a job that has an `over_field_name` in its configuration. Forcasts predict future behavior based on historical data.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-forecast.html | Elasticsearch API documentation}
     */
   async forecast (this: That, params: T.MlForecastRequest | TB.MlForecastRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlForecastResponse>
@@ -760,7 +760,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves anomaly detection job results for one or more buckets. The API presents a chronological view of the records, grouped by bucket.
+    * Get anomaly detection job results for buckets. The API presents a chronological view of the records, grouped by bucket.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-bucket.html | Elasticsearch API documentation}
     */
   async getBuckets (this: That, params: T.MlGetBucketsRequest | TB.MlGetBucketsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetBucketsResponse>
@@ -812,7 +812,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves information about the scheduled events in calendars.
+    * Get info about events in calendars.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-calendar-event.html | Elasticsearch API documentation}
     */
   async getCalendarEvents (this: That, params: T.MlGetCalendarEventsRequest | TB.MlGetCalendarEventsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCalendarEventsResponse>
@@ -844,7 +844,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves configuration information for calendars.
+    * Get calendar configuration info.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-calendar.html | Elasticsearch API documentation}
     */
   async getCalendars (this: That, params?: T.MlGetCalendarsRequest | TB.MlGetCalendarsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCalendarsResponse>
@@ -896,7 +896,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves anomaly detection job results for one or more categories.
+    * Get anomaly detection job results for categories.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-category.html | Elasticsearch API documentation}
     */
   async getCategories (this: That, params: T.MlGetCategoriesRequest | TB.MlGetCategoriesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetCategoriesResponse>
@@ -948,7 +948,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves configuration information for data frame analytics jobs. You can get information for multiple data frame analytics jobs in a single API request by using a comma-separated list of data frame analytics jobs or a wildcard expression.
+    * Get data frame analytics job configuration info. You can get information for multiple data frame analytics jobs in a single API request by using a comma-separated list of data frame analytics jobs or a wildcard expression.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-dfanalytics.html | Elasticsearch API documentation}
     */
   async getDataFrameAnalytics (this: That, params?: T.MlGetDataFrameAnalyticsRequest | TB.MlGetDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsResponse>
@@ -988,7 +988,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves usage information for data frame analytics jobs.
+    * Get data frame analytics jobs usage info.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-dfanalytics-stats.html | Elasticsearch API documentation}
     */
   async getDataFrameAnalyticsStats (this: That, params?: T.MlGetDataFrameAnalyticsStatsRequest | TB.MlGetDataFrameAnalyticsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDataFrameAnalyticsStatsResponse>
@@ -1028,7 +1028,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves usage information for datafeeds. You can get statistics for multiple datafeeds in a single API request by using a comma-separated list of datafeeds or a wildcard expression. You can get statistics for all datafeeds by using `_all`, by specifying `*` as the `<feed_id>`, or by omitting the `<feed_id>`. If the datafeed is stopped, the only information you receive is the `datafeed_id` and the `state`. This API returns a maximum of 10,000 datafeeds.
+    * Get datafeeds usage info. You can get statistics for multiple datafeeds in a single API request by using a comma-separated list of datafeeds or a wildcard expression. You can get statistics for all datafeeds by using `_all`, by specifying `*` as the `<feed_id>`, or by omitting the `<feed_id>`. If the datafeed is stopped, the only information you receive is the `datafeed_id` and the `state`. This API returns a maximum of 10,000 datafeeds.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-datafeed-stats.html | Elasticsearch API documentation}
     */
   async getDatafeedStats (this: That, params?: T.MlGetDatafeedStatsRequest | TB.MlGetDatafeedStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDatafeedStatsResponse>
@@ -1068,7 +1068,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves configuration information for datafeeds. You can get information for multiple datafeeds in a single API request by using a comma-separated list of datafeeds or a wildcard expression. You can get information for all datafeeds by using `_all`, by specifying `*` as the `<feed_id>`, or by omitting the `<feed_id>`. This API returns a maximum of 10,000 datafeeds.
+    * Get datafeeds configuration info. You can get information for multiple datafeeds in a single API request by using a comma-separated list of datafeeds or a wildcard expression. You can get information for all datafeeds by using `_all`, by specifying `*` as the `<feed_id>`, or by omitting the `<feed_id>`. This API returns a maximum of 10,000 datafeeds.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-datafeed.html | Elasticsearch API documentation}
     */
   async getDatafeeds (this: That, params?: T.MlGetDatafeedsRequest | TB.MlGetDatafeedsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetDatafeedsResponse>
@@ -1108,7 +1108,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves filters. You can get a single filter or all filters.
+    * Get filters. You can get a single filter or all filters.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-filter.html | Elasticsearch API documentation}
     */
   async getFilters (this: That, params?: T.MlGetFiltersRequest | TB.MlGetFiltersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetFiltersResponse>
@@ -1148,7 +1148,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves anomaly detection job results for one or more influencers. Influencers are the entities that have contributed to, or are to blame for, the anomalies. Influencer results are available only if an `influencer_field_name` is specified in the job configuration.
+    * Get anomaly detection job results for influencers. Influencers are the entities that have contributed to, or are to blame for, the anomalies. Influencer results are available only if an `influencer_field_name` is specified in the job configuration.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-influencer.html | Elasticsearch API documentation}
     */
   async getInfluencers (this: That, params: T.MlGetInfluencersRequest | TB.MlGetInfluencersRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetInfluencersResponse>
@@ -1192,7 +1192,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves usage information for anomaly detection jobs.
+    * Get anomaly detection jobs usage info.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-job-stats.html | Elasticsearch API documentation}
     */
   async getJobStats (this: That, params?: T.MlGetJobStatsRequest | TB.MlGetJobStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetJobStatsResponse>
@@ -1232,7 +1232,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves configuration information for anomaly detection jobs. You can get information for multiple anomaly detection jobs in a single API request by using a group name, a comma-separated list of jobs, or a wildcard expression. You can get information for all anomaly detection jobs by using `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
+    * Get anomaly detection jobs configuration info. You can get information for multiple anomaly detection jobs in a single API request by using a group name, a comma-separated list of jobs, or a wildcard expression. You can get information for all anomaly detection jobs by using `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-job.html | Elasticsearch API documentation}
     */
   async getJobs (this: That, params?: T.MlGetJobsRequest | TB.MlGetJobsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetJobsResponse>
@@ -1272,7 +1272,7 @@ export default class Ml {
   }
 
   /**
-    * Get information about how machine learning jobs and trained models are using memory, on each node, both within the JVM heap, and natively, outside of the JVM.
+    * Get machine learning memory usage info. Get information about how machine learning jobs and trained models are using memory, on each node, both within the JVM heap, and natively, outside of the JVM.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-ml-memory.html | Elasticsearch API documentation}
     */
   async getMemoryStats (this: That, params?: T.MlGetMemoryStatsRequest | TB.MlGetMemoryStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetMemoryStatsResponse>
@@ -1312,7 +1312,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves usage information for anomaly detection job model snapshot upgrades.
+    * Get anomaly detection job model snapshot upgrade usage info.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-job-model-snapshot-upgrade-stats.html | Elasticsearch API documentation}
     */
   async getModelSnapshotUpgradeStats (this: That, params: T.MlGetModelSnapshotUpgradeStatsRequest | TB.MlGetModelSnapshotUpgradeStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotUpgradeStatsResponse>
@@ -1345,7 +1345,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves information about model snapshots.
+    * Get model snapshots info.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-snapshot.html | Elasticsearch API documentation}
     */
   async getModelSnapshots (this: That, params: T.MlGetModelSnapshotsRequest | TB.MlGetModelSnapshotsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetModelSnapshotsResponse>
@@ -1397,7 +1397,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves overall bucket results that summarize the bucket results of multiple anomaly detection jobs. The `overall_score` is calculated by combining the scores of all the buckets within the overall bucket span. First, the maximum `anomaly_score` per anomaly detection job in the overall bucket is calculated. Then the `top_n` of those scores are averaged to result in the `overall_score`. This means that you can fine-tune the `overall_score` so that it is more or less sensitive to the number of jobs that detect an anomaly at the same time. For example, if you set `top_n` to `1`, the `overall_score` is the maximum bucket score in the overall bucket. Alternatively, if you set `top_n` to the number of jobs, the `overall_score` is high only when all jobs detect anomalies in that overall bucket. If you set the `bucket_span` parameter (to a value greater than its default), the `overall_score` is the maximum `overall_score` of the overall buckets that have a span equal to the jobs' largest bucket span.
+    * Get overall bucket results. Retrievs overall bucket results that summarize the bucket results of multiple anomaly detection jobs. The `overall_score` is calculated by combining the scores of all the buckets within the overall bucket span. First, the maximum `anomaly_score` per anomaly detection job in the overall bucket is calculated. Then the `top_n` of those scores are averaged to result in the `overall_score`. This means that you can fine-tune the `overall_score` so that it is more or less sensitive to the number of jobs that detect an anomaly at the same time. For example, if you set `top_n` to `1`, the `overall_score` is the maximum bucket score in the overall bucket. Alternatively, if you set `top_n` to the number of jobs, the `overall_score` is high only when all jobs detect anomalies in that overall bucket. If you set the `bucket_span` parameter (to a value greater than its default), the `overall_score` is the maximum `overall_score` of the overall buckets that have a span equal to the jobs' largest bucket span.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-overall-buckets.html | Elasticsearch API documentation}
     */
   async getOverallBuckets (this: That, params: T.MlGetOverallBucketsRequest | TB.MlGetOverallBucketsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetOverallBucketsResponse>
@@ -1441,7 +1441,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves anomaly records for an anomaly detection job. Records contain the detailed analytical results. They describe the anomalous activity that has been identified in the input data based on the detector configuration. There can be many anomaly records depending on the characteristics and size of the input data. In practice, there are often too many to be able to manually process them. The machine learning features therefore perform a sophisticated aggregation of the anomaly records into buckets. The number of record results depends on the number of anomalies found in each bucket, which relates to the number of time series being modeled and the number of detectors.
+    * Get anomaly records for an anomaly detection job. Records contain the detailed analytical results. They describe the anomalous activity that has been identified in the input data based on the detector configuration. There can be many anomaly records depending on the characteristics and size of the input data. In practice, there are often too many to be able to manually process them. The machine learning features therefore perform a sophisticated aggregation of the anomaly records into buckets. The number of record results depends on the number of anomalies found in each bucket, which relates to the number of time series being modeled and the number of detectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-get-record.html | Elasticsearch API documentation}
     */
   async getRecords (this: That, params: T.MlGetRecordsRequest | TB.MlGetRecordsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetRecordsResponse>
@@ -1485,7 +1485,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves configuration information for a trained model.
+    * Get trained model configuration info.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trained-models.html | Elasticsearch API documentation}
     */
   async getTrainedModels (this: That, params?: T.MlGetTrainedModelsRequest | TB.MlGetTrainedModelsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetTrainedModelsResponse>
@@ -1525,7 +1525,7 @@ export default class Ml {
   }
 
   /**
-    * Retrieves usage information for trained models. You can get usage information for multiple trained models in a single API request by using a comma-separated list of model IDs or a wildcard expression.
+    * Get trained models usage info. You can get usage information for multiple trained models in a single API request by using a comma-separated list of model IDs or a wildcard expression.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trained-models-stats.html | Elasticsearch API documentation}
     */
   async getTrainedModelsStats (this: That, params?: T.MlGetTrainedModelsStatsRequest | TB.MlGetTrainedModelsStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlGetTrainedModelsStatsResponse>
@@ -1565,7 +1565,7 @@ export default class Ml {
   }
 
   /**
-    * Evaluates a trained model.
+    * Evaluate a trained model.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-model.html | Elasticsearch API documentation}
     */
   async inferTrainedModel (this: That, params: T.MlInferTrainedModelRequest | TB.MlInferTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInferTrainedModelResponse>
@@ -1609,7 +1609,7 @@ export default class Ml {
   }
 
   /**
-    * Returns defaults and limits used by machine learning. This endpoint is designed to be used by a user interface that needs to fully understand machine learning configurations where some options are not specified, meaning that the defaults should be used. This endpoint may be used to find out what those defaults are. It also provides information about the maximum size of machine learning jobs that could run in the current cluster configuration.
+    * Return ML defaults and limits. Returns defaults and limits used by machine learning. This endpoint is designed to be used by a user interface that needs to fully understand machine learning configurations where some options are not specified, meaning that the defaults should be used. This endpoint may be used to find out what those defaults are. It also provides information about the maximum size of machine learning jobs that could run in the current cluster configuration.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-ml-info.html | Elasticsearch API documentation}
     */
   async info (this: That, params?: T.MlInfoRequest | TB.MlInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlInfoResponse>
@@ -1639,7 +1639,7 @@ export default class Ml {
   }
 
   /**
-    * Open anomaly detection jobs. An anomaly detection job must be opened in order for it to be ready to receive and analyze data. It can be opened and closed multiple times throughout its lifecycle. When you open a new job, it starts with an empty model. When you open an existing job, the most recent model state is automatically loaded. The job is ready to resume its analysis from where it left off, once new data is received.
+    * Open anomaly detection jobs. An anomaly detection job must be opened to be ready to receive and analyze data. It can be opened and closed multiple times throughout its lifecycle. When you open a new job, it starts with an empty model. When you open an existing job, the most recent model state is automatically loaded. The job is ready to resume its analysis from where it left off, once new data is received.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-open-job.html | Elasticsearch API documentation}
     */
   async openJob (this: That, params: T.MlOpenJobRequest | TB.MlOpenJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlOpenJobResponse>
@@ -1683,7 +1683,7 @@ export default class Ml {
   }
 
   /**
-    * Adds scheduled events to a calendar.
+    * Add scheduled events to the calendar.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-post-calendar-event.html | Elasticsearch API documentation}
     */
   async postCalendarEvents (this: That, params: T.MlPostCalendarEventsRequest | TB.MlPostCalendarEventsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPostCalendarEventsResponse>
@@ -1727,7 +1727,7 @@ export default class Ml {
   }
 
   /**
-    * Sends data to an anomaly detection job for analysis. IMPORTANT: For each job, data can be accepted from only a single connection at a time. It is not currently possible to post data to multiple jobs using wildcards or a comma-separated list.
+    * Send data to an anomaly detection job for analysis. IMPORTANT: For each job, data can be accepted from only a single connection at a time. It is not currently possible to post data to multiple jobs using wildcards or a comma-separated list.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-post-data.html | Elasticsearch API documentation}
     */
   async postData<TData = unknown> (this: That, params: T.MlPostDataRequest<TData> | TB.MlPostDataRequest<TData>, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPostDataResponse>
@@ -1764,7 +1764,7 @@ export default class Ml {
   }
 
   /**
-    * Previews the extracted features used by a data frame analytics config.
+    * Preview features used by data frame analytics. Previews the extracted features used by a data frame analytics config.
     * @see {@link http://www.elastic.co/guide/en/elasticsearch/reference/master/preview-dfanalytics.html | Elasticsearch API documentation}
     */
   async previewDataFrameAnalytics (this: That, params?: T.MlPreviewDataFrameAnalyticsRequest | TB.MlPreviewDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDataFrameAnalyticsResponse>
@@ -1816,7 +1816,7 @@ export default class Ml {
   }
 
   /**
-    * Previews a datafeed. This API returns the first "page" of search results from a datafeed. You can preview an existing datafeed or provide configuration details for a datafeed and anomaly detection job in the API. The preview shows the structure of the data that will be passed to the anomaly detection engine. IMPORTANT: When Elasticsearch security features are enabled, the preview uses the credentials of the user that called the API. However, when the datafeed starts it uses the roles of the last user that created or updated the datafeed. To get a preview that accurately reflects the behavior of the datafeed, use the appropriate credentials. You can also use secondary authorization headers to supply the credentials.
+    * Preview a datafeed. This API returns the first "page" of search results from a datafeed. You can preview an existing datafeed or provide configuration details for a datafeed and anomaly detection job in the API. The preview shows the structure of the data that will be passed to the anomaly detection engine. IMPORTANT: When Elasticsearch security features are enabled, the preview uses the credentials of the user that called the API. However, when the datafeed starts it uses the roles of the last user that created or updated the datafeed. To get a preview that accurately reflects the behavior of the datafeed, use the appropriate credentials. You can also use secondary authorization headers to supply the credentials.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-preview-datafeed.html | Elasticsearch API documentation}
     */
   async previewDatafeed<TDocument = unknown> (this: That, params?: T.MlPreviewDatafeedRequest | TB.MlPreviewDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPreviewDatafeedResponse<TDocument>>
@@ -1868,7 +1868,7 @@ export default class Ml {
   }
 
   /**
-    * Creates a calendar.
+    * Create a calendar.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-put-calendar.html | Elasticsearch API documentation}
     */
   async putCalendar (this: That, params: T.MlPutCalendarRequest | TB.MlPutCalendarRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutCalendarResponse>
@@ -1912,7 +1912,7 @@ export default class Ml {
   }
 
   /**
-    * Adds an anomaly detection job to a calendar.
+    * Add anomaly detection job to calendar.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-put-calendar-job.html | Elasticsearch API documentation}
     */
   async putCalendarJob (this: That, params: T.MlPutCalendarJobRequest | TB.MlPutCalendarJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutCalendarJobResponse>
@@ -1945,7 +1945,7 @@ export default class Ml {
   }
 
   /**
-    * Instantiates a data frame analytics job. This API creates a data frame analytics job that performs an analysis on the source indices and stores the outcome in a destination index.
+    * Create a data frame analytics job. This API creates a data frame analytics job that performs an analysis on the source indices and stores the outcome in a destination index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-dfanalytics.html | Elasticsearch API documentation}
     */
   async putDataFrameAnalytics (this: That, params: T.MlPutDataFrameAnalyticsRequest | TB.MlPutDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutDataFrameAnalyticsResponse>
@@ -1989,7 +1989,7 @@ export default class Ml {
   }
 
   /**
-    * Instantiates a datafeed. Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job. You can associate only one datafeed with each anomaly detection job. The datafeed contains a query that runs at a defined interval (`frequency`). If you are concerned about delayed data, you can add a delay (`query_delay') at each interval. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead. You must use Kibana, this API, or the create anomaly detection jobs API to create a datafeed. Do not add a datafeed directly to the `.ml-config` index. Do not give users `write` privileges on the `.ml-config` index.
+    * Create a datafeed. Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job. You can associate only one datafeed with each anomaly detection job. The datafeed contains a query that runs at a defined interval (`frequency`). If you are concerned about delayed data, you can add a delay (`query_delay') at each interval. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had at the time of creation and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead. You must use Kibana, this API, or the create anomaly detection jobs API to create a datafeed. Do not add a datafeed directly to the `.ml-config` index. Do not give users `write` privileges on the `.ml-config` index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-put-datafeed.html | Elasticsearch API documentation}
     */
   async putDatafeed (this: That, params: T.MlPutDatafeedRequest | TB.MlPutDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutDatafeedResponse>
@@ -2033,7 +2033,7 @@ export default class Ml {
   }
 
   /**
-    * Instantiates a filter. A filter contains a list of strings. It can be used by one or more anomaly detection jobs. Specifically, filters are referenced in the `custom_rules` property of detector configuration objects.
+    * Create a filter. A filter contains a list of strings. It can be used by one or more anomaly detection jobs. Specifically, filters are referenced in the `custom_rules` property of detector configuration objects.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-put-filter.html | Elasticsearch API documentation}
     */
   async putFilter (this: That, params: T.MlPutFilterRequest | TB.MlPutFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutFilterResponse>
@@ -2121,7 +2121,7 @@ export default class Ml {
   }
 
   /**
-    * Enables you to supply a trained model that is not created by data frame analytics.
+    * Create a trained model. Enable you to supply a trained model that is not created by data frame analytics.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-trained-models.html | Elasticsearch API documentation}
     */
   async putTrainedModel (this: That, params: T.MlPutTrainedModelRequest | TB.MlPutTrainedModelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelResponse>
@@ -2165,7 +2165,7 @@ export default class Ml {
   }
 
   /**
-    * Creates or updates a trained model alias. A trained model alias is a logical name used to reference a single trained model. You can use aliases instead of trained model identifiers to make it easier to reference your models. For example, you can use aliases in inference aggregations and processors. An alias must be unique and refer to only a single trained model. However, you can have multiple aliases for each trained model. If you use this API to update an alias such that it references a different trained model ID and the model uses a different type of data frame analytics, an error occurs. For example, this situation occurs if you have a trained model for regression analysis and a trained model for classification analysis; you cannot reassign an alias from one type of trained model to another. If you use this API to update an alias and there are very few input fields in common between the old and new trained models for the model alias, the API returns a warning.
+    * Create or update a trained model alias. A trained model alias is a logical name used to reference a single trained model. You can use aliases instead of trained model identifiers to make it easier to reference your models. For example, you can use aliases in inference aggregations and processors. An alias must be unique and refer to only a single trained model. However, you can have multiple aliases for each trained model. If you use this API to update an alias such that it references a different trained model ID and the model uses a different type of data frame analytics, an error occurs. For example, this situation occurs if you have a trained model for regression analysis and a trained model for classification analysis; you cannot reassign an alias from one type of trained model to another. If you use this API to update an alias and there are very few input fields in common between the old and new trained models for the model alias, the API returns a warning.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-trained-models-aliases.html | Elasticsearch API documentation}
     */
   async putTrainedModelAlias (this: That, params: T.MlPutTrainedModelAliasRequest | TB.MlPutTrainedModelAliasRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelAliasResponse>
@@ -2198,7 +2198,7 @@ export default class Ml {
   }
 
   /**
-    * Creates part of a trained model definition.
+    * Create part of a trained model definition.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-trained-model-definition-part.html | Elasticsearch API documentation}
     */
   async putTrainedModelDefinitionPart (this: That, params: T.MlPutTrainedModelDefinitionPartRequest | TB.MlPutTrainedModelDefinitionPartRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelDefinitionPartResponse>
@@ -2243,7 +2243,7 @@ export default class Ml {
   }
 
   /**
-    * Creates a trained model vocabulary. This API is supported only for natural language processing (NLP) models. The vocabulary is stored in the index as described in `inference_config.*.vocabulary` of the trained model definition.
+    * Create a trained model vocabulary. This API is supported only for natural language processing (NLP) models. The vocabulary is stored in the index as described in `inference_config.*.vocabulary` of the trained model definition.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-trained-model-vocabulary.html | Elasticsearch API documentation}
     */
   async putTrainedModelVocabulary (this: That, params: T.MlPutTrainedModelVocabularyRequest | TB.MlPutTrainedModelVocabularyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlPutTrainedModelVocabularyResponse>
@@ -2287,7 +2287,7 @@ export default class Ml {
   }
 
   /**
-    * Resets an anomaly detection job. All model state and results are deleted. The job is ready to start over as if it had just been created. It is not currently possible to reset multiple jobs using wildcards or a comma separated list.
+    * Reset an anomaly detection job. All model state and results are deleted. The job is ready to start over as if it had just been created. It is not currently possible to reset multiple jobs using wildcards or a comma separated list.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-reset-job.html | Elasticsearch API documentation}
     */
   async resetJob (this: That, params: T.MlResetJobRequest | TB.MlResetJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlResetJobResponse>
@@ -2319,7 +2319,7 @@ export default class Ml {
   }
 
   /**
-    * Reverts to a specific snapshot. The machine learning features react quickly to anomalous input, learning new behaviors in data. Highly anomalous input increases the variance in the models whilst the system learns whether this is a new step-change in behavior or a one-off event. In the case where this anomalous input is known to be a one-off, then it might be appropriate to reset the model state to a time before this event. For example, you might consider reverting to a saved snapshot after Black Friday or a critical system failure.
+    * Revert to a snapshot. The machine learning features react quickly to anomalous input, learning new behaviors in data. Highly anomalous input increases the variance in the models whilst the system learns whether this is a new step-change in behavior or a one-off event. In the case where this anomalous input is known to be a one-off, then it might be appropriate to reset the model state to a time before this event. For example, you might consider reverting to a saved snapshot after Black Friday or a critical system failure.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-revert-snapshot.html | Elasticsearch API documentation}
     */
   async revertModelSnapshot (this: That, params: T.MlRevertModelSnapshotRequest | TB.MlRevertModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlRevertModelSnapshotResponse>
@@ -2364,7 +2364,7 @@ export default class Ml {
   }
 
   /**
-    * Sets a cluster wide upgrade_mode setting that prepares machine learning indices for an upgrade. When upgrading your cluster, in some circumstances you must restart your nodes and reindex your machine learning indices. In those circumstances, there must be no machine learning jobs running. You can close the machine learning jobs, do the upgrade, then open all the jobs again. Alternatively, you can use this API to temporarily halt tasks associated with the jobs and datafeeds and prevent new jobs from opening. You can also use this API during upgrades that do not require you to reindex your machine learning indices, though stopping jobs is not a requirement in that case. You can see the current value for the upgrade_mode setting by using the get machine learning info API.
+    * Set upgrade_mode for ML indices. Sets a cluster wide upgrade_mode setting that prepares machine learning indices for an upgrade. When upgrading your cluster, in some circumstances you must restart your nodes and reindex your machine learning indices. In those circumstances, there must be no machine learning jobs running. You can close the machine learning jobs, do the upgrade, then open all the jobs again. Alternatively, you can use this API to temporarily halt tasks associated with the jobs and datafeeds and prevent new jobs from opening. You can also use this API during upgrades that do not require you to reindex your machine learning indices, though stopping jobs is not a requirement in that case. You can see the current value for the upgrade_mode setting by using the get machine learning info API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-set-upgrade-mode.html | Elasticsearch API documentation}
     */
   async setUpgradeMode (this: That, params?: T.MlSetUpgradeModeRequest | TB.MlSetUpgradeModeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlSetUpgradeModeResponse>
@@ -2394,7 +2394,7 @@ export default class Ml {
   }
 
   /**
-    * Starts a data frame analytics job. A data frame analytics job can be started and stopped multiple times throughout its lifecycle. If the destination index does not exist, it is created automatically the first time you start the data frame analytics job. The `index.number_of_shards` and `index.number_of_replicas` settings for the destination index are copied from the source index. If there are multiple source indices, the destination index copies the highest setting values. The mappings for the destination index are also copied from the source indices. If there are any mapping conflicts, the job fails to start. If the destination index exists, it is used as is. You can therefore set up the destination index in advance with custom settings and mappings.
+    * Start a data frame analytics job. A data frame analytics job can be started and stopped multiple times throughout its lifecycle. If the destination index does not exist, it is created automatically the first time you start the data frame analytics job. The `index.number_of_shards` and `index.number_of_replicas` settings for the destination index are copied from the source index. If there are multiple source indices, the destination index copies the highest setting values. The mappings for the destination index are also copied from the source indices. If there are any mapping conflicts, the job fails to start. If the destination index exists, it is used as is. You can therefore set up the destination index in advance with custom settings and mappings.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/start-dfanalytics.html | Elasticsearch API documentation}
     */
   async startDataFrameAnalytics (this: That, params: T.MlStartDataFrameAnalyticsRequest | TB.MlStartDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartDataFrameAnalyticsResponse>
@@ -2426,7 +2426,7 @@ export default class Ml {
   }
 
   /**
-    * Starts one or more datafeeds. A datafeed must be started in order to retrieve data from Elasticsearch. A datafeed can be started and stopped multiple times throughout its lifecycle. Before you can start a datafeed, the anomaly detection job must be open. Otherwise, an error occurs. If you restart a stopped datafeed, it continues processing input data from the next millisecond after it was stopped. If new data was indexed for that exact millisecond between stopping and starting, it will be ignored. When Elasticsearch security features are enabled, your datafeed remembers which roles the last user to create or update it had at the time of creation or update and runs the query using those same roles. If you provided secondary authorization headers when you created or updated the datafeed, those credentials are used instead.
+    * Start datafeeds. A datafeed must be started in order to retrieve data from Elasticsearch. A datafeed can be started and stopped multiple times throughout its lifecycle. Before you can start a datafeed, the anomaly detection job must be open. Otherwise, an error occurs. If you restart a stopped datafeed, it continues processing input data from the next millisecond after it was stopped. If new data was indexed for that exact millisecond between stopping and starting, it will be ignored. When Elasticsearch security features are enabled, your datafeed remembers which roles the last user to create or update it had at the time of creation or update and runs the query using those same roles. If you provided secondary authorization headers when you created or updated the datafeed, those credentials are used instead.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-start-datafeed.html | Elasticsearch API documentation}
     */
   async startDatafeed (this: That, params: T.MlStartDatafeedRequest | TB.MlStartDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartDatafeedResponse>
@@ -2470,7 +2470,7 @@ export default class Ml {
   }
 
   /**
-    * Starts a trained model deployment, which allocates the model to every machine learning node.
+    * Start a trained model deployment. It allocates the model to every machine learning node.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trained-model-deployment.html | Elasticsearch API documentation}
     */
   async startTrainedModelDeployment (this: That, params: T.MlStartTrainedModelDeploymentRequest | TB.MlStartTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStartTrainedModelDeploymentResponse>
@@ -2502,7 +2502,7 @@ export default class Ml {
   }
 
   /**
-    * Stops one or more data frame analytics jobs. A data frame analytics job can be started and stopped multiple times throughout its lifecycle.
+    * Stop data frame analytics jobs. A data frame analytics job can be started and stopped multiple times throughout its lifecycle.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/stop-dfanalytics.html | Elasticsearch API documentation}
     */
   async stopDataFrameAnalytics (this: That, params: T.MlStopDataFrameAnalyticsRequest | TB.MlStopDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopDataFrameAnalyticsResponse>
@@ -2534,7 +2534,7 @@ export default class Ml {
   }
 
   /**
-    * Stops one or more datafeeds. A datafeed that is stopped ceases to retrieve data from Elasticsearch. A datafeed can be started and stopped multiple times throughout its lifecycle.
+    * Stop datafeeds. A datafeed that is stopped ceases to retrieve data from Elasticsearch. A datafeed can be started and stopped multiple times throughout its lifecycle.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-stop-datafeed.html | Elasticsearch API documentation}
     */
   async stopDatafeed (this: That, params: T.MlStopDatafeedRequest | TB.MlStopDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopDatafeedResponse>
@@ -2578,7 +2578,7 @@ export default class Ml {
   }
 
   /**
-    * Stops a trained model deployment.
+    * Stop a trained model deployment.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/stop-trained-model-deployment.html | Elasticsearch API documentation}
     */
   async stopTrainedModelDeployment (this: That, params: T.MlStopTrainedModelDeploymentRequest | TB.MlStopTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlStopTrainedModelDeploymentResponse>
@@ -2610,7 +2610,7 @@ export default class Ml {
   }
 
   /**
-    * Updates an existing data frame analytics job.
+    * Update a data frame analytics job.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-dfanalytics.html | Elasticsearch API documentation}
     */
   async updateDataFrameAnalytics (this: That, params: T.MlUpdateDataFrameAnalyticsRequest | TB.MlUpdateDataFrameAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDataFrameAnalyticsResponse>
@@ -2654,7 +2654,7 @@ export default class Ml {
   }
 
   /**
-    * Updates the properties of a datafeed. You must stop and start the datafeed for the changes to be applied. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who updated it had at the time of the update and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead.
+    * Update a datafeed. You must stop and start the datafeed for the changes to be applied. When Elasticsearch security features are enabled, your datafeed remembers which roles the user who updated it had at the time of the update and runs the query using those same roles. If you provide secondary authorization headers, those credentials are used instead.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-update-datafeed.html | Elasticsearch API documentation}
     */
   async updateDatafeed (this: That, params: T.MlUpdateDatafeedRequest | TB.MlUpdateDatafeedRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateDatafeedResponse>
@@ -2698,7 +2698,7 @@ export default class Ml {
   }
 
   /**
-    * Updates the description of a filter, adds items, or removes items from the list.
+    * Update a filter. Updates the description of a filter, adds items, or removes items from the list.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-update-filter.html | Elasticsearch API documentation}
     */
   async updateFilter (this: That, params: T.MlUpdateFilterRequest | TB.MlUpdateFilterRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateFilterResponse>
@@ -2742,7 +2742,7 @@ export default class Ml {
   }
 
   /**
-    * Updates certain properties of an anomaly detection job.
+    * Update an anomaly detection job. Updates certain properties of an anomaly detection job.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-update-job.html | Elasticsearch API documentation}
     */
   async updateJob (this: That, params: T.MlUpdateJobRequest | TB.MlUpdateJobRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateJobResponse>
@@ -2786,7 +2786,7 @@ export default class Ml {
   }
 
   /**
-    * Updates certain properties of a snapshot.
+    * Update a snapshot. Updates certain properties of a snapshot.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-update-snapshot.html | Elasticsearch API documentation}
     */
   async updateModelSnapshot (this: That, params: T.MlUpdateModelSnapshotRequest | TB.MlUpdateModelSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateModelSnapshotResponse>
@@ -2831,7 +2831,7 @@ export default class Ml {
   }
 
   /**
-    * Starts a trained model deployment, which allocates the model to every machine learning node.
+    * Update a trained model deployment.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-trained-model-deployment.html | Elasticsearch API documentation}
     */
   async updateTrainedModelDeployment (this: That, params: T.MlUpdateTrainedModelDeploymentRequest | TB.MlUpdateTrainedModelDeploymentRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpdateTrainedModelDeploymentResponse>
@@ -2875,7 +2875,7 @@ export default class Ml {
   }
 
   /**
-    * Upgrades an anomaly detection model snapshot to the latest major version. Over time, older snapshot formats are deprecated and removed. Anomaly detection jobs support only snapshots that are from the current or previous major version. This API provides a means to upgrade a snapshot to the current major version. This aids in preparing the cluster for an upgrade to the next major version. Only one snapshot per anomaly detection job can be upgraded at a time and the upgraded snapshot cannot be the current snapshot of the anomaly detection job.
+    * Upgrade a snapshot. Upgrades an anomaly detection model snapshot to the latest major version. Over time, older snapshot formats are deprecated and removed. Anomaly detection jobs support only snapshots that are from the current or previous major version. This API provides a means to upgrade a snapshot to the current major version. This aids in preparing the cluster for an upgrade to the next major version. Only one snapshot per anomaly detection job can be upgraded at a time and the upgraded snapshot cannot be the current snapshot of the anomaly detection job.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/ml-upgrade-job-model-snapshot.html | Elasticsearch API documentation}
     */
   async upgradeJobSnapshot (this: That, params: T.MlUpgradeJobSnapshotRequest | TB.MlUpgradeJobSnapshotRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MlUpgradeJobSnapshotResponse>

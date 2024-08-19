@@ -6,6 +6,7 @@
 const response = await client.esql.asyncQueryGet({
   id: "FmNJRUZ1YWZCU3dHY1BIOUhaenVSRkEaaXFlZ3h4c1RTWFNocDdnY2FSaERnUTozNDE=",
   wait_for_completion_timeout: "30s",
+  body: null,
 });
 console.log(response);
 ----

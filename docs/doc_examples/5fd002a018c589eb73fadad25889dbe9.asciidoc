@@ -9,13 +9,13 @@ const response = await client.transport.request({
   body: {
     rules: [
       {
-        rule_id: "my-rule1",
+        rule_id: "rule1",
         type: "pinned",
         criteria: [
           {
-            type: "contains",
-            metadata: "user_query",
-            values: ["pugs", "puggles"],
+            type: "fuzzy",
+            metadata: "query_string",
+            values: ["puggles", "pugs"],
           },
           {
             type: "exact",
@@ -28,23 +28,23 @@ const response = await client.transport.request({
         },
       },
       {
-        rule_id: "my-rule2",
-        type: "pinned",
+        rule_id: "rule2",
+        type: "exclude",
         criteria: [
           {
-            type: "fuzzy",
-            metadata: "user_query",
-            values: ["rescue dogs"],
+            type: "contains",
+            metadata: "query_string",
+            values: ["beagles"],
           },
         ],
         actions: {
           docs: [
             {
-              _index: "index1",
+              _index: "my-index-000001",
               _id: "id3",
             },
             {
-              _index: "index2",
+              _index: "my-index-000002",
               _id: "id4",
             },
           ],
