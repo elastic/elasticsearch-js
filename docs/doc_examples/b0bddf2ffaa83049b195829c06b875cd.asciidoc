@@ -5,6 +5,7 @@
 ----
 const response = await client.searchApplication.renderQuery({
   name: "my_search_application",
+  body: null,
 });
 console.log(response);
 ----

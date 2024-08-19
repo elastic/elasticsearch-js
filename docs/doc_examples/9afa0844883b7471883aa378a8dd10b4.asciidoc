@@ -6,6 +6,36 @@
 const response = await client.searchApplication.postBehavioralAnalyticsEvent({
   collection_name: "my_analytics_collection",
   event_type: "search_click",
+  body: {
+    session: {
+      id: "1797ca95-91c9-4e2e-b1bd-9c38e6f386a9",
+    },
+    user: {
+      id: "5f26f01a-bbee-4202-9298-81261067abbd",
+    },
+    search: {
+      query: "search term",
+      results: {
+        items: [
+          {
+            document: {
+              id: "123",
+              index: "products",
+            },
+          },
+        ],
+        total_results: 10,
+      },
+      sort: {
+        name: "relevance",
+      },
+      search_application: "website",
+    },
+    document: {
+      id: "123",
+      index: "products",
+    },
+  },
 });
 console.log(response);
 ----

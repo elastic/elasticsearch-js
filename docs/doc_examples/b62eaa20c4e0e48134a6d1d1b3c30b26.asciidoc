@@ -211,6 +211,7 @@ console.log(response);
 const response1 = await client.textStructure.findFieldStructure({
   index: "test-logs",
   field: "message",
+  body: null,
 });
 console.log(response1);
 ----

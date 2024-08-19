@@ -3,13 +3,15 @@
 
 [source, js]
 ----
-const response = await client.security.queryUser({
-  with_profile_uid: "true",
+const response = await client.security.queryRole({
   query: {
-    prefix: {
-      roles: "other",
+    match: {
+      description: {
+        query: "user access",
+      },
     },
   },
+  size: 1,
 });
 console.log(response);
 ----

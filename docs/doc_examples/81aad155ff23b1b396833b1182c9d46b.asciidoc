@@ -3,13 +3,14 @@
 
 [source, js]
 ----
-const response = await client.security.queryUser({
-  with_profile_uid: "true",
-  query: {
-    prefix: {
-      roles: "other",
-    },
-  },
+const response = await client.cat.shards({
+  v: "true",
 });
 console.log(response);
+
+const response1 = await client.cat.recovery({
+  v: "true",
+  active_only: "true",
+});
+console.log(response1);
 ----
