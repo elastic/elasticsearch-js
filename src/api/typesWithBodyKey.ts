@@ -18509,7 +18509,7 @@ export interface SynonymsPutSynonymRequest extends RequestBase {
   id: Id
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
-    synonyms_set: SynonymsSynonymRule[]
+    synonyms_set: SynonymsSynonymRule | SynonymsSynonymRule[]
   }
 }
 

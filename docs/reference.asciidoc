@@ -9975,7 +9975,7 @@ client.synonyms.putSynonym({ id, synonyms_set })
 
 * *Request (object):*
 ** *`id` (string)*: The id of the synonyms set to be created or updated
-** *`synonyms_set` ({ id, synonyms }[])*: The synonym set information to update
+** *`synonyms_set` ({ id, synonyms } | { id, synonyms }[])*: The synonym set information to update
 
 [discrete]
 ==== put_synonym_rule
