@@ -18049,7 +18049,7 @@ export interface SynonymsGetSynonymsSetsSynonymsSetItem {
 
 export interface SynonymsPutSynonymRequest extends RequestBase {
   id: Id
-  synonyms_set: SynonymsSynonymRule[]
+  synonyms_set: SynonymsSynonymRule | SynonymsSynonymRule[]
 }
 
 export interface SynonymsPutSynonymResponse {
