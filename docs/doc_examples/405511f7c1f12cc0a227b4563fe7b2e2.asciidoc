@@ -5,6 +5,7 @@
 ----
 const response = await client.esql.asyncQueryGet({
   id: "FkpMRkJGS1gzVDRlM3g4ZzMyRGlLbkEaTXlJZHdNT09TU2VTZVBoNDM3cFZMUToxMDM=",
+  body: null,
 });
 console.log(response);
 ----

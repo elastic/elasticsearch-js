@@ -661,6 +661,12 @@ client.msearch({ ... })
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 ** *`ignore_throttled` (Optional, boolean)*: If true, concrete, expanded or aliased indices are ignored when frozen.
 ** *`ignore_unavailable` (Optional, boolean)*: If true, missing or closed indices are not included in the response.
+** *`include_named_queries_score` (Optional, boolean)*: Indicates whether hit.matched_queries should be rendered as a map that includes
+the name of the matched query associated with its score (true)
+or as an array containing the name of the matched queries (false)
+This functionality reruns each named query on every hit in a search response.
+Typically, this adds a small overhead to a request.
+However, using computationally expensive named queries on a large number of hits may add significant overhead.
 ** *`max_concurrent_searches` (Optional, number)*: Maximum number of concurrent searches the multi search API can execute.
 ** *`max_concurrent_shard_requests` (Optional, number)*: Maximum number of concurrent shard requests that each sub-search request executes per node.
 ** *`pre_filter_shard_size` (Optional, number)*: Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint.
@@ -1018,6 +1024,12 @@ If the request can target data streams, this argument determines whether wildcar
 Supports a list of values, such as `open,hidden`.
 ** *`ignore_throttled` (Optional, boolean)*: If `true`, concrete, expanded or aliased indices will be ignored when frozen.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
+** *`include_named_queries_score` (Optional, boolean)*: Indicates whether hit.matched_queries should be rendered as a map that includes
+the name of the matched query associated with its score (true)
+or as an array containing the name of the matched queries (false)
+This functionality reruns each named query on every hit in a search response.
+Typically, this adds a small overhead to a request.
+However, using computationally expensive named queries on a large number of hits may add significant overhead.
 ** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
 This parameter can only be used when the `q` query string parameter is specified.
 ** *`max_concurrent_shard_requests` (Optional, number)*: Defines the number of concurrent shard requests per node this search executes concurrently.
@@ -1682,7 +1694,7 @@ client.cat.componentTemplates({ ... })
 [discrete]
 ==== count
 Get a document count.
-Provides quick access to a document count for a data stream, an index, or an entire cluster.n/
+Provides quick access to a document count for a data stream, an index, or an entire cluster.
 The document count only includes live documents, not deleted documents which have not yet been removed by the merge process.
 
 CAT APIs are only intended for human consumption using the command line or Kibana console.
@@ -2682,7 +2694,7 @@ client.cluster.putComponentTemplate({ name, template })
 
 * *Request (object):*
 ** *`name` (string)*: Name of the component template to create.
-Elasticsearch includes the following built-in component templates: `logs-mappings`; 'logs-settings`; `metrics-mappings`; `metrics-settings`;`synthetics-mapping`; `synthetics-settings`.
+Elasticsearch includes the following built-in component templates: `logs-mappings`; `logs-settings`; `metrics-mappings`; `metrics-settings`;`synthetics-mapping`; `synthetics-settings`.
 Elastic Agent uses these templates to configure backing indices for its data streams.
 If you use Elastic Agent and want to overwrite one of these templates, set the `version` for your replacement template higher than the current version.
 If you don’t use Elastic Agent and want to disable all built-in component and index templates, set `stack.templates.enabled` to `false` using the cluster update settings API.
@@ -4155,6 +4167,8 @@ Cannot include `\`, `/`, `*`, `?`, `"`, `<`, `>`, `|`, `,`, `#`, `:`, or a space
 Cannot start with `-`, `_`, `+`, or `.ds-`;
 Cannot be `.` or `..`;
 Cannot be longer than 255 bytes. Multi-byte characters count towards this limit faster.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== data_streams_stats
@@ -4268,6 +4282,7 @@ client.indices.deleteDataStream({ name })
 
 * *Request (object):*
 ** *`name` (string | string[])*: List of data streams to delete. Wildcard (`*`) expressions are supported.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of data stream that wildcard patterns can match. Supports a list of values,such as `open,hidden`.
 
 [discrete]
@@ -4632,6 +4647,7 @@ To target all data streams, omit this parameter or use `*` or `_all`.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
 ** *`include_defaults` (Optional, boolean)*: If `true`, return all default settings in the response.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_data_stream
@@ -4653,6 +4669,7 @@ Wildcard (`*`) expressions are supported. If omitted, all data streams are retur
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of data stream that wildcard patterns can match.
 Supports a list of values, such as `open,hidden`.
 ** *`include_defaults` (Optional, boolean)*: If true, returns all relevant default configurations for the index template.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== get_field_mapping
@@ -4820,6 +4837,8 @@ client.indices.migrateToDataStream({ name })
 
 * *Request (object):*
 ** *`name` (string)*: Name of the index alias to convert to a data stream.
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== modify_data_stream
@@ -4887,6 +4906,7 @@ client.indices.promoteDataStream({ name })
 
 * *Request (object):*
 ** *`name` (string)*: The name of the data stream
+** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
 ==== put_alias
@@ -6387,7 +6407,7 @@ learning node capacity for it to be immediately assigned to a node.
 
 [discrete]
 ==== flush_job
-Forces any buffered data to be processed by the job.
+Force buffered data to be processed.
 The flush jobs API is only applicable when sending data for analysis using
 the post data API. Depending on the content of the buffer, then it might
 additionally calculate new results. Both flush and close operations are
@@ -6416,12 +6436,12 @@ client.ml.flushJob({ job_id })
 
 [discrete]
 ==== forecast
-Predicts the future behavior of a time series by using its historical
-behavior.
+Predict future behavior of a time series.
 
 Forecasts are not supported for jobs that perform population analysis; an
 error occurs if you try to create a forecast for a job that has an
-`over_field_name` in its configuration.
+`over_field_name` in its configuration. Forcasts predict future behavior
+based on historical data.
 
 {ref}/ml-forecast.html[Endpoint documentation]
 [source,ts]
@@ -6441,7 +6461,7 @@ create a forecast; otherwise, an error occurs.
 
 [discrete]
 ==== get_buckets
-Retrieves anomaly detection job results for one or more buckets.
+Get anomaly detection job results for buckets.
 The API presents a chronological view of the records, grouped by bucket.
 
 {ref}/ml-get-bucket.html[Endpoint documentation]
@@ -6470,7 +6490,7 @@ parameter, the API returns information about all buckets.
 
 [discrete]
 ==== get_calendar_events
-Retrieves information about the scheduled events in calendars.
+Get info about events in calendars.
 
 {ref}/ml-get-calendar-event.html[Endpoint documentation]
 [source,ts]
@@ -6491,7 +6511,7 @@ client.ml.getCalendarEvents({ calendar_id })
 
 [discrete]
 ==== get_calendars
-Retrieves configuration information for calendars.
+Get calendar configuration info.
 
 {ref}/ml-get-calendar.html[Endpoint documentation]
 [source,ts]
@@ -6510,7 +6530,7 @@ client.ml.getCalendars({ ... })
 
 [discrete]
 ==== get_categories
-Retrieves anomaly detection job results for one or more categories.
+Get anomaly detection job results for categories.
 
 {ref}/ml-get-category.html[Endpoint documentation]
 [source,ts]
@@ -6536,7 +6556,7 @@ This parameter has the `from` and `size` properties.
 
 [discrete]
 ==== get_data_frame_analytics
-Retrieves configuration information for data frame analytics jobs.
+Get data frame analytics job configuration info.
 You can get information for multiple data frame analytics jobs in a single
 API request by using a comma-separated list of data frame analytics jobs or a
 wildcard expression.
@@ -6573,7 +6593,7 @@ be retrieved and then added to another cluster.
 
 [discrete]
 ==== get_data_frame_analytics_stats
-Retrieves usage information for data frame analytics jobs.
+Get data frame analytics jobs usage info.
 
 {ref}/get-dfanalytics-stats.html[Endpoint documentation]
 [source,ts]
@@ -6605,7 +6625,7 @@ there are no matches or only partial matches.
 
 [discrete]
 ==== get_datafeed_stats
-Retrieves usage information for datafeeds.
+Get datafeeds usage info.
 You can get statistics for multiple datafeeds in a single API request by
 using a comma-separated list of datafeeds or a wildcard expression. You can
 get statistics for all datafeeds by using `_all`, by specifying `*` as the
@@ -6639,7 +6659,7 @@ partial matches. If this parameter is `false`, the request returns a
 
 [discrete]
 ==== get_datafeeds
-Retrieves configuration information for datafeeds.
+Get datafeeds configuration info.
 You can get information for multiple datafeeds in a single API request by
 using a comma-separated list of datafeeds or a wildcard expression. You can
 get information for all datafeeds by using `_all`, by specifying `*` as the
@@ -6675,7 +6695,7 @@ be retrieved and then added to another cluster.
 
 [discrete]
 ==== get_filters
-Retrieves filters.
+Get filters.
 You can get a single filter or all filters.
 
 {ref}/ml-get-filter.html[Endpoint documentation]
@@ -6694,7 +6714,7 @@ client.ml.getFilters({ ... })
 
 [discrete]
 ==== get_influencers
-Retrieves anomaly detection job results for one or more influencers.
+Get anomaly detection job results for influencers.
 Influencers are the entities that have contributed to, or are to blame for,
 the anomalies. Influencer results are available only if an
 `influencer_field_name` is specified in the job configuration.
@@ -6729,7 +6749,7 @@ means it is unset and results are not limited to specific timestamps.
 
 [discrete]
 ==== get_job_stats
-Retrieves usage information for anomaly detection jobs.
+Get anomaly detection jobs usage info.
 
 {ref}/ml-get-job-stats.html[Endpoint documentation]
 [source,ts]
@@ -6758,7 +6778,7 @@ code when there are no matches or only partial matches.
 
 [discrete]
 ==== get_jobs
-Retrieves configuration information for anomaly detection jobs.
+Get anomaly detection jobs configuration info.
 You can get information for multiple anomaly detection jobs in a single API
 request by using a group name, a comma-separated list of jobs, or a wildcard
 expression. You can get information for all anomaly detection jobs by using
@@ -6793,6 +6813,7 @@ be retrieved and then added to another cluster.
 
 [discrete]
 ==== get_memory_stats
+Get machine learning memory usage info.
 Get information about how machine learning jobs and trained models are using memory,
 on each node, both within the JVM heap, and natively, outside of the JVM.
 
@@ -6817,7 +6838,7 @@ fails and returns an error.
 
 [discrete]
 ==== get_model_snapshot_upgrade_stats
-Retrieves usage information for anomaly detection job model snapshot upgrades.
+Get anomaly detection job model snapshot upgrade usage info.
 
 {ref}/ml-get-job-model-snapshot-upgrade-stats.html[Endpoint documentation]
 [source,ts]
@@ -6845,7 +6866,7 @@ no matches or only partial matches.
 
 [discrete]
 ==== get_model_snapshots
-Retrieves information about model snapshots.
+Get model snapshots info.
 
 {ref}/ml-get-snapshot.html[Endpoint documentation]
 [source,ts]
@@ -6871,7 +6892,9 @@ by specifying `*` as the snapshot ID, or by omitting the snapshot ID.
 
 [discrete]
 ==== get_overall_buckets
-Retrieves overall bucket results that summarize the bucket results of
+Get overall bucket results.
+
+Retrievs overall bucket results that summarize the bucket results of
 multiple anomaly detection jobs.
 
 The `overall_score` is calculated by combining the scores of all the
@@ -6915,7 +6938,7 @@ using `_all` or by specifying `*` as the `<job_id>`.
 
 [discrete]
 ==== get_records
-Retrieves anomaly records for an anomaly detection job.
+Get anomaly records for an anomaly detection job.
 Records contain the detailed analytical results. They describe the anomalous
 activity that has been identified in the input data based on the detector
 configuration.
@@ -6950,7 +6973,7 @@ client.ml.getRecords({ job_id })
 
 [discrete]
 ==== get_trained_models
-Retrieves configuration information for a trained model.
+Get trained model configuration info.
 
 {ref}/get-trained-models.html[Endpoint documentation]
 [source,ts]
@@ -6990,7 +7013,8 @@ tags are returned.
 
 [discrete]
 ==== get_trained_models_stats
-Retrieves usage information for trained models. You can get usage information for multiple trained
+Get trained models usage info.
+You can get usage information for multiple trained
 models in a single API request by using a comma-separated list of model IDs or a wildcard expression.
 
 {ref}/get-trained-models-stats.html[Endpoint documentation]
@@ -7018,7 +7042,7 @@ subset of results when there are partial matches.
 
 [discrete]
 ==== infer_trained_model
-Evaluates a trained model.
+Evaluate a trained model.
 
 {ref}/infer-trained-model.html[Endpoint documentation]
 [source,ts]
@@ -7039,6 +7063,7 @@ Currently, for NLP models, only a single value is allowed.
 
 [discrete]
 ==== info
+Return ML defaults and limits.
 Returns defaults and limits used by machine learning.
 This endpoint is designed to be used by a user interface that needs to fully
 understand machine learning configurations where some options are not
@@ -7057,9 +7082,8 @@ client.ml.info()
 [discrete]
 ==== open_job
 Open anomaly detection jobs.
-An anomaly detection job must be opened in order for it to be ready to
-receive and analyze data. It can be opened and closed multiple times
-throughout its lifecycle.
+An anomaly detection job must be opened to be ready to receive and analyze
+data. It can be opened and closed multiple times throughout its lifecycle.
 When you open a new job, it starts with an empty model.
 When you open an existing job, the most recent model state is automatically
 loaded. The job is ready to resume its analysis from where it left off, once
@@ -7080,7 +7104,7 @@ client.ml.openJob({ job_id })
 
 [discrete]
 ==== post_calendar_events
-Adds scheduled events to a calendar.
+Add scheduled events to the calendar.
 
 {ref}/ml-post-calendar-event.html[Endpoint documentation]
 [source,ts]
@@ -7097,7 +7121,7 @@ client.ml.postCalendarEvents({ calendar_id, events })
 
 [discrete]
 ==== post_data
-Sends data to an anomaly detection job for analysis.
+Send data to an anomaly detection job for analysis.
 
 IMPORTANT: For each job, data can be accepted from only a single connection at a time.
 It is not currently possible to post data to multiple jobs using wildcards or a comma-separated list.
@@ -7119,6 +7143,7 @@ client.ml.postData({ job_id })
 
 [discrete]
 ==== preview_data_frame_analytics
+Preview features used by data frame analytics.
 Previews the extracted features used by a data frame analytics config.
 
 {ref}/preview-dfanalytics.html[Endpoint documentation]
@@ -7138,7 +7163,7 @@ this API.
 
 [discrete]
 ==== preview_datafeed
-Previews a datafeed.
+Preview a datafeed.
 This API returns the first "page" of search results from a datafeed.
 You can preview an existing datafeed or provide configuration details for a datafeed
 and anomaly detection job in the API. The preview shows the structure of the data
@@ -7172,7 +7197,7 @@ used. You cannot specify a `job_config` object unless you also supply a `datafee
 
 [discrete]
 ==== put_calendar
-Creates a calendar.
+Create a calendar.
 
 {ref}/ml-put-calendar.html[Endpoint documentation]
 [source,ts]
@@ -7190,7 +7215,7 @@ client.ml.putCalendar({ calendar_id })
 
 [discrete]
 ==== put_calendar_job
-Adds an anomaly detection job to a calendar.
+Add anomaly detection job to calendar.
 
 {ref}/ml-put-calendar-job.html[Endpoint documentation]
 [source,ts]
@@ -7207,7 +7232,7 @@ client.ml.putCalendarJob({ calendar_id, job_id })
 
 [discrete]
 ==== put_data_frame_analytics
-Instantiates a data frame analytics job.
+Create a data frame analytics job.
 This API creates a data frame analytics job that performs an analysis on the
 source indices and stores the outcome in a destination index.
 
@@ -7280,7 +7305,7 @@ greater than that setting.
 
 [discrete]
 ==== put_datafeed
-Instantiates a datafeed.
+Create a datafeed.
 Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job.
 You can associate only one datafeed with each anomaly detection job.
 The datafeed contains a query that runs at a defined interval (`frequency`).
@@ -7350,7 +7375,7 @@ whether wildcard expressions match hidden data streams. Supports a list of value
 
 [discrete]
 ==== put_filter
-Instantiates a filter.
+Create a filter.
 A filter contains a list of strings. It can be used by one or more anomaly detection jobs.
 Specifically, filters are referenced in the `custom_rules` property of detector configuration objects.
 
@@ -7403,7 +7428,8 @@ client.ml.putJob({ job_id, analysis_config, data_description })
 
 [discrete]
 ==== put_trained_model
-Enables you to supply a trained model that is not created by data frame analytics.
+Create a trained model.
+Enable you to supply a trained model that is not created by data frame analytics.
 
 {ref}/put-trained-models.html[Endpoint documentation]
 [source,ts]
@@ -7449,8 +7475,9 @@ to complete.
 
 [discrete]
 ==== put_trained_model_alias
-Creates or updates a trained model alias. A trained model alias is a logical
-name used to reference a single trained model.
+Create or update a trained model alias.
+A trained model alias is a logical name used to reference a single trained
+model.
 You can use aliases instead of trained model identifiers to make it easier to
 reference your models. For example, you can use aliases in inference
 aggregations and processors.
@@ -7484,7 +7511,7 @@ already assigned and this parameter is false, the API returns an error.
 
 [discrete]
 ==== put_trained_model_definition_part
-Creates part of a trained model definition.
+Create part of a trained model definition.
 
 {ref}/put-trained-model-definition-part.html[Endpoint documentation]
 [source,ts]
@@ -7505,7 +7532,7 @@ order of their part number. The first part must be `0` and the final part must b
 
 [discrete]
 ==== put_trained_model_vocabulary
-Creates a trained model vocabulary.
+Create a trained model vocabulary.
 This API is supported only for natural language processing (NLP) models.
 The vocabulary is stored in the index as described in `inference_config.*.vocabulary` of the trained model definition.
 
@@ -7526,7 +7553,7 @@ client.ml.putTrainedModelVocabulary({ model_id, vocabulary })
 
 [discrete]
 ==== reset_job
-Resets an anomaly detection job.
+Reset an anomaly detection job.
 All model state and results are deleted. The job is ready to start over as if
 it had just been created.
 It is not currently possible to reset multiple jobs using wildcards or a
@@ -7551,7 +7578,7 @@ reset.
 
 [discrete]
 ==== revert_model_snapshot
-Reverts to a specific snapshot.
+Revert to a snapshot.
 The machine learning features react quickly to anomalous input, learning new
 behaviors in data. Highly anomalous input increases the variance in the
 models whilst the system learns whether this is a new step-change in behavior
@@ -7578,6 +7605,7 @@ scratch when it is started.
 
 [discrete]
 ==== set_upgrade_mode
+Set upgrade_mode for ML indices.
 Sets a cluster wide upgrade_mode setting that prepares machine learning
 indices for an upgrade.
 When upgrading your cluster, in some circumstances you must restart your
@@ -7608,7 +7636,7 @@ starting.
 
 [discrete]
 ==== start_data_frame_analytics
-Starts a data frame analytics job.
+Start a data frame analytics job.
 A data frame analytics job can be started and stopped multiple times
 throughout its lifecycle.
 If the destination index does not exist, it is created automatically the
@@ -7639,7 +7667,7 @@ starts.
 
 [discrete]
 ==== start_datafeed
-Starts one or more datafeeds.
+Start datafeeds.
 
 A datafeed must be started in order to retrieve data from Elasticsearch. A datafeed can be started and stopped
 multiple times throughout its lifecycle.
@@ -7672,7 +7700,8 @@ characters.
 
 [discrete]
 ==== start_trained_model_deployment
-Starts a trained model deployment, which allocates the model to every machine learning node.
+Start a trained model deployment.
+It allocates the model to every machine learning node.
 
 {ref}/start-trained-model-deployment.html[Endpoint documentation]
 [source,ts]
@@ -7708,7 +7737,7 @@ it will automatically be changed to a value less than the number of hardware thr
 
 [discrete]
 ==== stop_data_frame_analytics
-Stops one or more data frame analytics jobs.
+Stop data frame analytics jobs.
 A data frame analytics job can be started and stopped multiple times
 throughout its lifecycle.
 
@@ -7742,7 +7771,7 @@ stops. Defaults to 20 seconds.
 
 [discrete]
 ==== stop_datafeed
-Stops one or more datafeeds.
+Stop datafeeds.
 A datafeed that is stopped ceases to retrieve data from Elasticsearch. A datafeed can be started and stopped
 multiple times throughout its lifecycle.
 
@@ -7765,7 +7794,7 @@ the identifier.
 
 [discrete]
 ==== stop_trained_model_deployment
-Stops a trained model deployment.
+Stop a trained model deployment.
 
 {ref}/stop-trained-model-deployment.html[Endpoint documentation]
 [source,ts]
@@ -7787,7 +7816,7 @@ restart the model deployment.
 
 [discrete]
 ==== update_data_frame_analytics
-Updates an existing data frame analytics job.
+Update a data frame analytics job.
 
 {ref}/update-dfanalytics.html[Endpoint documentation]
 [source,ts]
@@ -7817,7 +7846,7 @@ learning node capacity for it to be immediately assigned to a node.
 
 [discrete]
 ==== update_datafeed
-Updates the properties of a datafeed.
+Update a datafeed.
 You must stop and start the datafeed for the changes to be applied.
 When Elasticsearch security features are enabled, your datafeed remembers which roles the user who updated it had at
 the time of the update and runs the query using those same roles. If you provide secondary authorization headers,
@@ -7890,6 +7919,7 @@ whether wildcard expressions match hidden data streams. Supports a list of value
 
 [discrete]
 ==== update_filter
+Update a filter.
 Updates the description of a filter, adds items, or removes items from the list.
 
 {ref}/ml-update-filter.html[Endpoint documentation]
@@ -7909,6 +7939,7 @@ client.ml.updateFilter({ filter_id })
 
 [discrete]
 ==== update_job
+Update an anomaly detection job.
 Updates certain properties of an anomaly detection job.
 
 {ref}/ml-update-job.html[Endpoint documentation]
@@ -7974,6 +8005,7 @@ value is null, which means all results are retained.
 
 [discrete]
 ==== update_model_snapshot
+Update a snapshot.
 Updates certain properties of a snapshot.
 
 {ref}/ml-update-snapshot.html[Endpoint documentation]
@@ -7995,7 +8027,7 @@ snapshot will be deleted when the job is deleted.
 
 [discrete]
 ==== update_trained_model_deployment
-Starts a trained model deployment, which allocates the model to every machine learning node.
+Update a trained model deployment.
 
 {ref}/update-trained-model-deployment.html[Endpoint documentation]
 [source,ts]
@@ -8017,6 +8049,7 @@ it will automatically be changed to a value less than the number of hardware thr
 
 [discrete]
 ==== upgrade_job_snapshot
+Upgrade a snapshot.
 Upgrades an anomaly detection model snapshot to the latest major version.
 Over time, older snapshot formats are deprecated and removed. Anomaly
 detection jobs support only snapshots that are from the current or previous
@@ -10669,7 +10702,7 @@ client.synonyms.putSynonym({ id, synonyms_set })
 
 * *Request (object):*
 ** *`id` (string)*: The id of the synonyms set to be created or updated
-** *`synonyms_set` ({ id, synonyms }[])*: The synonym set information to update
+** *`synonyms_set` ({ id, synonyms } | { id, synonyms }[])*: The synonym set information to update
 
 [discrete]
 ==== put_synonym_rule

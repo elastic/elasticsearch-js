@@ -3,6 +3,12 @@
 
 [source, js]
 ----
-const response = await client.esql.asyncQuery({});
+const response = await client.esql.asyncQuery({
+  body: {
+    query:
+      "\n    FROM library\n    | EVAL year = DATE_TRUNC(1 YEARS, release_date)\n    | STATS MAX(page_count) BY year\n    | SORT year\n    | LIMIT 5\n  ",
+    wait_for_completion_timeout: "2s",
+  },
+});
 console.log(response);
 ----

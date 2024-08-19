@@ -3,6 +3,12 @@
 
 [source, js]
 ----
-const response = await client.security.oidcPrepareAuthentication({});
+const response = await client.security.oidcPrepareAuthentication({
+  body: {
+    realm: "oidc1",
+    state: "lGYK0EcSLjqH6pkT5EVZjC6eIW5YCGgywj2sxROO",
+    nonce: "zOBXLJGUooRrbLbQk5YCcyC8AXw3iloynvluYhZ5",
+  },
+});
 console.log(response);
 ----

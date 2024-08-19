@@ -5,6 +5,11 @@
 ----
 const response = await client.searchApplication.renderQuery({
   name: "my_search_application",
+  body: {
+    params: {
+      query_string: "rock climbing",
+    },
+  },
 });
 console.log(response);
 ----
