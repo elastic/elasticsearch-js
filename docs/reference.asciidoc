@@ -648,6 +648,12 @@ client.msearch({ ... })
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 ** *`ignore_throttled` (Optional, boolean)*: If true, concrete, expanded or aliased indices are ignored when frozen.
 ** *`ignore_unavailable` (Optional, boolean)*: If true, missing or closed indices are not included in the response.
+** *`include_named_queries_score` (Optional, boolean)*: Indicates whether hit.matched_queries should be rendered as a map that includes
+the name of the matched query associated with its score (true)
+or as an array containing the name of the matched queries (false)
+This functionality reruns each named query on every hit in a search response.
+Typically, this adds a small overhead to a request.
+However, using computationally expensive named queries on a large number of hits may add significant overhead.
 ** *`max_concurrent_searches` (Optional, number)*: Maximum number of concurrent searches the multi search API can execute.
 ** *`max_concurrent_shard_requests` (Optional, number)*: Maximum number of concurrent shard requests that each sub-search request executes per node.
 ** *`pre_filter_shard_size` (Optional, number)*: Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint.
@@ -1003,6 +1009,12 @@ If the request can target data streams, this argument determines whether wildcar
 Supports a list of values, such as `open,hidden`.
 ** *`ignore_throttled` (Optional, boolean)*: If `true`, concrete, expanded or aliased indices will be ignored when frozen.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
+** *`include_named_queries_score` (Optional, boolean)*: Indicates whether hit.matched_queries should be rendered as a map that includes
+the name of the matched query associated with its score (true)
+or as an array containing the name of the matched queries (false)
+This functionality reruns each named query on every hit in a search response.
+Typically, this adds a small overhead to a request.
+However, using computationally expensive named queries on a large number of hits may add significant overhead.
 ** *`lenient` (Optional, boolean)*: If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
 This parameter can only be used when the `q` query string parameter is specified.
 ** *`max_concurrent_shard_requests` (Optional, number)*: Defines the number of concurrent shard requests per node this search executes concurrently.
@@ -2534,7 +2546,7 @@ client.cluster.health({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`index` (Optional, string | string[])*: List of data streams, indices, and index aliases used to limit the request. Wildcard expressions (*) are supported. To target all data streams and indices in a cluster, omit this parameter or use _all or *.
+** *`index` (Optional, string | string[])*: List of data streams, indices, and index aliases used to limit the request. Wildcard expressions (`*`) are supported. To target all data streams and indices in a cluster, omit this parameter or use _all or `*`.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 ** *`level` (Optional, Enum("cluster" | "indices" | "shards"))*: Can be one of cluster, indices or shards. Controls the details level of the health information returned.
 ** *`local` (Optional, boolean)*: If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
@@ -10572,7 +10584,7 @@ client.synonyms.putSynonym({ id, synonyms_set })
 
 * *Request (object):*
 ** *`id` (string)*: The id of the synonyms set to be created or updated
-** *`synonyms_set` ({ id, synonyms }[])*: The synonym set information to update
+** *`synonyms_set` ({ id, synonyms } | { id, synonyms }[])*: The synonym set information to update
 
 [discrete]
 ==== put_synonym_rule

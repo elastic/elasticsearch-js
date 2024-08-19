@@ -19,6 +19,12 @@ const response = await client.security.putRole({
       clusters: ["my_remote_cluster"],
     },
   ],
+  remote_cluster: [
+    {
+      privileges: ["monitor_enrich"],
+      clusters: ["my_remote_cluster"],
+    },
+  ],
 });
 console.log(response);
 ----

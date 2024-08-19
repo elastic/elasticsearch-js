@@ -3,13 +3,8 @@
 
 [source, js]
 ----
-const response = await client.security.queryUser({
-  with_profile_uid: "true",
-  query: {
-    prefix: {
-      roles: "other",
-    },
-  },
+const response = await client.security.bulkDeleteRole({
+  names: ["my_admin_role", "not_an_existing_role"],
 });
 console.log(response);
 ----

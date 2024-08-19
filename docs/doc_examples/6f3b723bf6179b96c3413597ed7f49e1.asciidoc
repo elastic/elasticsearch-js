@@ -3,6 +3,10 @@
 
 [source, js]
 ----
-const response = await client.security.bulkUpdateApiKeys({});
+const response = await client.security.bulkUpdateApiKeys({
+  body: {
+    ids: ["VuaCfGcBCdbkQm-e5aOx", "H3_AhoIBA9hmeQJdg7ij"],
+  },
+});
 console.log(response);
 ----

@@ -773,6 +773,7 @@ export interface MsearchRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
+  include_named_queries_score?: boolean
   max_concurrent_searches?: long
   max_concurrent_shard_requests?: long
   pre_filter_shard_size?: long
@@ -1132,6 +1133,7 @@ export interface SearchRequest extends RequestBase {
   expand_wildcards?: ExpandWildcards
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
+  include_named_queries_score?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: long
   min_compatible_shard_node?: VersionString
@@ -1421,7 +1423,7 @@ export interface SearchHit<TDocument = unknown> {
   fields?: Record<string, any>
   highlight?: Record<string, string[]>
   inner_hits?: Record<string, SearchInnerHitsResult>
-  matched_queries?: string[]
+  matched_queries?: string[] | Record<string, double[]>
   _nested?: SearchNestedIdentity
   _ignored?: string[]
   ignored_field_values?: Record<string, string[]>
@@ -2294,6 +2296,7 @@ export interface KnnQuery extends QueryDslQueryBase {
   query_vector?: QueryVector
   query_vector_builder?: QueryVectorBuilder
   num_candidates?: integer
+  k?: integer
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   similarity?: float
 }
@@ -13859,7 +13862,7 @@ export interface MlTrainedModelDeploymentStats {
   error_count: integer
   inference_count: integer
   model_id: Id
-  nodes: MlTrainedModelDeploymentNodesStats
+  nodes: MlTrainedModelDeploymentNodesStats[]
   number_of_allocations: integer
   queue_capacity: integer
   rejected_execution_count: integer
@@ -13894,7 +13897,7 @@ export interface MlTrainedModelInferenceStats {
   failure_count: integer
   inference_count: integer
   missing_all_fields_count: integer
-  timestamp: DateTime
+  timestamp: EpochTime<UnitMillis>
 }
 
 export interface MlTrainedModelLocation {
@@ -18281,7 +18284,7 @@ export interface SynonymsGetSynonymsSetsSynonymsSetItem {
 
 export interface SynonymsPutSynonymRequest extends RequestBase {
   id: Id
-  synonyms_set: SynonymsSynonymRule[]
+  synonyms_set: SynonymsSynonymRule | SynonymsSynonymRule[]
 }
 
 export interface SynonymsPutSynonymResponse {

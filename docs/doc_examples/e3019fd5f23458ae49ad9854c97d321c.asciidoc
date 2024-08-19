@@ -3,6 +3,10 @@
 
 [source, js]
 ----
-const response = await client.security.oidcPrepareAuthentication({});
+const response = await client.security.oidcPrepareAuthentication({
+  body: {
+    realm: "oidc1",
+  },
+});
 console.log(response);
 ----

@@ -3,13 +3,9 @@
 
 [source, js]
 ----
-const response = await client.security.queryUser({
-  with_profile_uid: "true",
-  query: {
-    prefix: {
-      roles: "other",
-    },
-  },
+const response = await client.ml.startTrainedModelDeployment({
+  model_id: "my_model",
+  deployment_id: "my_model_for_search",
 });
 console.log(response);
 ----

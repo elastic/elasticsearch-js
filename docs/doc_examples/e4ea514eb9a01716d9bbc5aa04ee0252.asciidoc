@@ -3,6 +3,12 @@
 
 [source, js]
 ----
-const response = await client.security.queryUser({});
+const response = await client.security.queryUser({
+  query: {
+    prefix: {
+      roles: "other",
+    },
+  },
+});
 console.log(response);
 ----
