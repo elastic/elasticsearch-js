@@ -14,5 +14,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           merge-method: squash
           do-not-merge-labels: never-merge
-          pull-request-author-associations: OWNER,MEMBER
+          pull-request-author-associations: OWNER,MEMBER,COLLABORATOR
           review-author-associations: OWNER,MEMBER
