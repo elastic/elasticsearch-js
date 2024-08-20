@@ -22,7 +22,7 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 
 import assert from 'node:assert'
-import { promisify } from 'node:util'
+import * as timersPromises from 'node:timers/promises'
 import { Readable } from 'node:stream'
 import { errors, TransportResult, TransportRequestOptions, TransportRequestOptionsWithMeta } from '@elastic/transport'
 import Client from './client'
@@ -163,8 +163,8 @@ export interface EsqlToRecords<TDocument> {
 }
 
 const { ResponseError, ConfigurationError } = errors
-const sleep = promisify(setTimeout)
-const pImmediate = promisify(setImmediate)
+const sleep = timersPromises.setTimeout
+const pImmediate = timersPromises.setImmediate
 /* istanbul ignore next */
 const noop = (): void => {}
 const kClient = Symbol('elasticsearch-client')
