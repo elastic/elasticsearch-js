@@ -19,8 +19,8 @@
 
 'use strict'
 
-const { createReadStream } = require('fs')
-const { join } = require('path')
+const { createReadStream } = require('node:fs')
+const { join } = require('node:path')
 const split = require('split2')
 const { test, beforeEach, afterEach } = require('tap')
 const { waitCluster } = require('../../utils')

@@ -19,7 +19,7 @@
 
 'use strict'
 
-const assert = require('assert')
+const assert = require('node:assert')
 const fetch = require('node-fetch')
 
 function runInParallel (client, operation, options, clientOptions) {

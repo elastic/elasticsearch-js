@@ -109,3 +109,4 @@ test('Merge filter paths (snake_case)', async t => {
     { three: 'three' }
   ])
 })
+
