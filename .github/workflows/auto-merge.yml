@@ -15,4 +15,4 @@ jobs:
           merge-method: squash
           do-not-merge-labels: never-merge
           pull-request-author-associations: OWNER,MEMBER,COLLABORATOR
-          review-author-associations: OWNER,MEMBER
+          review-author-associations: OWNER,MEMBER,CONTRIBUTOR
