@@ -1904,6 +1904,7 @@ export interface UpdateByQueryRequest extends RequestBase {
   lenient?: boolean
   pipeline?: string
   preference?: string
+  q?: string
   refresh?: boolean
   request_cache?: boolean
   requests_per_second?: float
@@ -15674,13 +15675,6 @@ export interface NodesGetRepositoriesMeteringInfoResponseBase extends NodesNodes
   nodes: Record<string, NodesRepositoryMeteringInformation>
 }
 
-export interface NodesHotThreadsHotThread {
-  hosts: Host[]
-  node_id: Id
-  node_name: Name
-  threads: string[]
-}
-
 export interface NodesHotThreadsRequest extends RequestBase {
   node_id?: NodeIds
   ignore_idle_threads?: boolean
@@ -15694,7 +15688,6 @@ export interface NodesHotThreadsRequest extends RequestBase {
 }
 
 export interface NodesHotThreadsResponse {
-  hot_threads: NodesHotThreadsHotThread[]
 }
 
 export interface NodesInfoDeprecationIndexing {
