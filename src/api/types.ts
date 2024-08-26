@@ -361,6 +361,7 @@ export interface FieldCapsResponse {
 export interface GetGetResult<TDocument = unknown> {
   _index: IndexName
   fields?: Record<string, any>
+  _ignored?: string[]
   found: boolean
   _id: Id
   _primary_term?: long
@@ -459,6 +460,16 @@ export interface HealthReportBaseIndicator {
   diagnosis?: HealthReportDiagnosis[]
 }
 
+export interface HealthReportDataStreamLifecycleDetails {
+  stagnating_backing_indices_count: integer
+  total_backing_indices_in_error: integer
+  stagnating_backing_indices?: HealthReportStagnatingBackingIndices[]
+}
+
+export interface HealthReportDataStreamLifecycleIndicator extends HealthReportBaseIndicator {
+  details?: HealthReportDataStreamLifecycleDetails
+}
+
 export interface HealthReportDiagnosis {
   id: string
   action: string
@@ -518,6 +529,7 @@ export interface HealthReportIndicators {
   shards_availability?: HealthReportShardsAvailabilityIndicator
   disk?: HealthReportDiskIndicator
   repository_integrity?: HealthReportRepositoryIntegrityIndicator
+  data_stream_lifecycle?: HealthReportDataStreamLifecycleIndicator
   ilm?: HealthReportIlmIndicator
   slm?: HealthReportSlmIndicator
   shards_capacity?: HealthReportShardsCapacityIndicator
@@ -612,6 +624,12 @@ export interface HealthReportSlmIndicatorDetails {
 export interface HealthReportSlmIndicatorUnhealthyPolicies {
   count: long
   invocations_since_last_success?: Record<string, long>
+}
+
+export interface HealthReportStagnatingBackingIndices {
+  index_name: IndexName
+  first_occurrence_timestamp: long
+  retry_count: integer
 }
 
 export interface IndexRequest<TDocument = unknown> extends RequestBase {
@@ -1402,7 +1420,6 @@ export interface SearchHighlightBase {
 export interface SearchHighlightField extends SearchHighlightBase {
   fragment_offset?: integer
   matched_fields?: Fields
-  analyzer?: AnalysisAnalyzer
 }
 
 export type SearchHighlighterEncoder = 'default' | 'html'
@@ -1904,6 +1921,7 @@ export interface UpdateByQueryRequest extends RequestBase {
   lenient?: boolean
   pipeline?: string
   preference?: string
+  q?: string
   refresh?: boolean
   request_cache?: boolean
   requests_per_second?: float
@@ -4210,11 +4228,59 @@ export interface AggregationsWeightedAverageValue {
 export interface AggregationsWeightedAvgAggregate extends AggregationsSingleMetricAggregateBase {
 }
 
-export type AnalysisAnalyzer = AnalysisCustomAnalyzer | AnalysisFingerprintAnalyzer | AnalysisKeywordAnalyzer | AnalysisLanguageAnalyzer | AnalysisNoriAnalyzer | AnalysisPatternAnalyzer | AnalysisSimpleAnalyzer | AnalysisStandardAnalyzer | AnalysisStopAnalyzer | AnalysisWhitespaceAnalyzer | AnalysisIcuAnalyzer | AnalysisKuromojiAnalyzer | AnalysisSnowballAnalyzer | AnalysisDutchAnalyzer
+export type AnalysisAnalyzer = AnalysisCustomAnalyzer | AnalysisFingerprintAnalyzer | AnalysisKeywordAnalyzer | AnalysisLanguageAnalyzer | AnalysisNoriAnalyzer | AnalysisPatternAnalyzer | AnalysisSimpleAnalyzer | AnalysisStandardAnalyzer | AnalysisStopAnalyzer | AnalysisWhitespaceAnalyzer | AnalysisIcuAnalyzer | AnalysisKuromojiAnalyzer | AnalysisSnowballAnalyzer | AnalysisArabicAnalyzer | AnalysisArmenianAnalyzer | AnalysisBasqueAnalyzer | AnalysisBengaliAnalyzer | AnalysisBrazilianAnalyzer | AnalysisBulgarianAnalyzer | AnalysisCatalanAnalyzer | AnalysisChineseAnalyzer | AnalysisCjkAnalyzer | AnalysisCzechAnalyzer | AnalysisDanishAnalyzer | AnalysisDutchAnalyzer | AnalysisEnglishAnalyzer | AnalysisEstonianAnalyzer | AnalysisFinnishAnalyzer | AnalysisFrenchAnalyzer | AnalysisGalicianAnalyzer | AnalysisGermanAnalyzer | AnalysisGreekAnalyzer | AnalysisHindiAnalyzer | AnalysisHungarianAnalyzer | AnalysisIndonesianAnalyzer | AnalysisIrishAnalyzer | AnalysisItalianAnalyzer | AnalysisLatvianAnalyzer | AnalysisLithuanianAnalyzer | AnalysisNorwegianAnalyzer | AnalysisPersianAnalyzer | AnalysisPortugueseAnalyzer | AnalysisRomanianAnalyzer | AnalysisRussianAnalyzer | AnalysisSerbianAnalyzer | AnalysisSoraniAnalyzer | AnalysisSpanishAnalyzer | AnalysisSwedishAnalyzer | AnalysisTurkishAnalyzer | AnalysisThaiAnalyzer
+
+export interface AnalysisArabicAnalyzer {
+  type: 'arabic'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisArmenianAnalyzer {
+  type: 'armenian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
 
 export interface AnalysisAsciiFoldingTokenFilter extends AnalysisTokenFilterBase {
   type: 'asciifolding'
   preserve_original?: SpecUtilsStringified<boolean>
+}
+
+export interface AnalysisBasqueAnalyzer {
+  type: 'basque'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisBengaliAnalyzer {
+  type: 'bengali'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisBrazilianAnalyzer {
+  type: 'brazilian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+}
+
+export interface AnalysisBulgarianAnalyzer {
+  type: 'bulgarian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisCatalanAnalyzer {
+  type: 'catalan'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
 }
 
 export type AnalysisCharFilter = string | AnalysisCharFilterDefinition
@@ -4229,6 +4295,18 @@ export interface AnalysisCharGroupTokenizer extends AnalysisTokenizerBase {
   type: 'char_group'
   tokenize_on_chars: string[]
   max_token_length?: integer
+}
+
+export interface AnalysisChineseAnalyzer {
+  type: 'chinese'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+}
+
+export interface AnalysisCjkAnalyzer {
+  type: 'cjk'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
 }
 
 export interface AnalysisCommonGramsTokenFilter extends AnalysisTokenFilterBase {
@@ -4270,6 +4348,19 @@ export interface AnalysisCustomNormalizer {
   filter?: string[]
 }
 
+export interface AnalysisCzechAnalyzer {
+  type: 'czech'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisDanishAnalyzer {
+  type: 'danish'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+}
+
 export type AnalysisDelimitedPayloadEncoding = 'int' | 'float' | 'identity'
 
 export interface AnalysisDelimitedPayloadTokenFilter extends AnalysisTokenFilterBase {
@@ -4285,6 +4376,8 @@ export interface AnalysisDictionaryDecompounderTokenFilter extends AnalysisCompo
 export interface AnalysisDutchAnalyzer {
   type: 'dutch'
   stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
 }
 
 export type AnalysisEdgeNGramSide = 'front' | 'back'
@@ -4312,6 +4405,19 @@ export interface AnalysisElisionTokenFilter extends AnalysisTokenFilterBase {
   articles_case?: SpecUtilsStringified<boolean>
 }
 
+export interface AnalysisEnglishAnalyzer {
+  type: 'english'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisEstonianAnalyzer {
+  type: 'estonian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+}
+
 export interface AnalysisFingerprintAnalyzer {
   type: 'fingerprint'
   version?: VersionString
@@ -4328,9 +4434,57 @@ export interface AnalysisFingerprintTokenFilter extends AnalysisTokenFilterBase 
   separator?: string
 }
 
+export interface AnalysisFinnishAnalyzer {
+  type: 'finnish'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisFrenchAnalyzer {
+  type: 'french'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisGalicianAnalyzer {
+  type: 'galician'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisGermanAnalyzer {
+  type: 'german'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisGreekAnalyzer {
+  type: 'greek'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+}
+
+export interface AnalysisHindiAnalyzer {
+  type: 'hindi'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
 export interface AnalysisHtmlStripCharFilter extends AnalysisCharFilterBase {
   type: 'html_strip'
   escaped_tags?: string[]
+}
+
+export interface AnalysisHungarianAnalyzer {
+  type: 'hungarian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
 }
 
 export interface AnalysisHunspellTokenFilter extends AnalysisTokenFilterBase {
@@ -4406,6 +4560,27 @@ export interface AnalysisIcuTransformTokenFilter extends AnalysisTokenFilterBase
   type: 'icu_transform'
   dir?: AnalysisIcuTransformDirection
   id: string
+}
+
+export interface AnalysisIndonesianAnalyzer {
+  type: 'indonesian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisIrishAnalyzer {
+  type: 'irish'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisItalianAnalyzer {
+  type: 'italian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
 }
 
 export interface AnalysisKStemTokenFilter extends AnalysisTokenFilterBase {
@@ -4496,6 +4671,13 @@ export interface AnalysisLanguageAnalyzer {
   stopwords_path?: string
 }
 
+export interface AnalysisLatvianAnalyzer {
+  type: 'latvian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
 export interface AnalysisLengthTokenFilter extends AnalysisTokenFilterBase {
   type: 'length'
   max?: integer
@@ -4510,6 +4692,13 @@ export interface AnalysisLimitTokenCountTokenFilter extends AnalysisTokenFilterB
   type: 'limit'
   consume_all_tokens?: boolean
   max_token_count?: SpecUtilsStringified<integer>
+}
+
+export interface AnalysisLithuanianAnalyzer {
+  type: 'lithuanian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
 }
 
 export interface AnalysisLowercaseNormalizer {
@@ -4577,6 +4766,13 @@ export interface AnalysisNoriTokenizer extends AnalysisTokenizerBase {
 
 export type AnalysisNormalizer = AnalysisLowercaseNormalizer | AnalysisCustomNormalizer
 
+export interface AnalysisNorwegianAnalyzer {
+  type: 'norwegian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
 export interface AnalysisPathHierarchyTokenizer extends AnalysisTokenizerBase {
   type: 'path_hierarchy'
   buffer_size?: SpecUtilsStringified<integer>
@@ -4623,6 +4819,12 @@ export interface AnalysisPatternTokenizer extends AnalysisTokenizerBase {
   pattern?: string
 }
 
+export interface AnalysisPersianAnalyzer {
+  type: 'persian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+}
+
 export type AnalysisPhoneticEncoder = 'metaphone' | 'double_metaphone' | 'soundex' | 'refined_soundex' | 'caverphone1' | 'caverphone2' | 'cologne' | 'nysiis' | 'koelnerphonetik' | 'haasephonetik' | 'beider_morse' | 'daitch_mokotoff'
 
 export type AnalysisPhoneticLanguage = 'any' | 'common' | 'cyrillic' | 'english' | 'french' | 'german' | 'hebrew' | 'hungarian' | 'polish' | 'romanian' | 'russian' | 'spanish'
@@ -4645,6 +4847,13 @@ export interface AnalysisPorterStemTokenFilter extends AnalysisTokenFilterBase {
   type: 'porter_stem'
 }
 
+export interface AnalysisPortugueseAnalyzer {
+  type: 'portuguese'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
 export interface AnalysisPredicateTokenFilter extends AnalysisTokenFilterBase {
   type: 'predicate_token_filter'
   script: Script | string
@@ -4656,6 +4865,27 @@ export interface AnalysisRemoveDuplicatesTokenFilter extends AnalysisTokenFilter
 
 export interface AnalysisReverseTokenFilter extends AnalysisTokenFilterBase {
   type: 'reverse'
+}
+
+export interface AnalysisRomanianAnalyzer {
+  type: 'romanian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisRussianAnalyzer {
+  type: 'russian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisSerbianAnalyzer {
+  type: 'serbian'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
 }
 
 export interface AnalysisShingleTokenFilter extends AnalysisTokenFilterBase {
@@ -4685,6 +4915,20 @@ export type AnalysisSnowballLanguage = 'Armenian' | 'Basque' | 'Catalan' | 'Dani
 export interface AnalysisSnowballTokenFilter extends AnalysisTokenFilterBase {
   type: 'snowball'
   language?: AnalysisSnowballLanguage
+}
+
+export interface AnalysisSoraniAnalyzer {
+  type: 'sorani'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
+export interface AnalysisSpanishAnalyzer {
+  type: 'spanish'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
 }
 
 export interface AnalysisStandardAnalyzer {
@@ -4727,6 +4971,13 @@ export interface AnalysisStopTokenFilter extends AnalysisTokenFilterBase {
 
 export type AnalysisStopWords = string | string[]
 
+export interface AnalysisSwedishAnalyzer {
+  type: 'swedish'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
+}
+
 export type AnalysisSynonymFormat = 'solr' | 'wordnet'
 
 export interface AnalysisSynonymGraphTokenFilter extends AnalysisTokenFilterBase {
@@ -4751,6 +5002,12 @@ export interface AnalysisSynonymTokenFilter extends AnalysisTokenFilterBase {
   synonyms_set?: string
   tokenizer?: string
   updateable?: boolean
+}
+
+export interface AnalysisThaiAnalyzer {
+  type: 'thai'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
 }
 
 export type AnalysisTokenChar = 'letter' | 'digit' | 'whitespace' | 'punctuation' | 'symbol' | 'custom'
@@ -4778,6 +5035,13 @@ export interface AnalysisTrimTokenFilter extends AnalysisTokenFilterBase {
 export interface AnalysisTruncateTokenFilter extends AnalysisTokenFilterBase {
   type: 'truncate'
   length?: integer
+}
+
+export interface AnalysisTurkishAnalyzer {
+  type: 'turkish'
+  stopwords?: AnalysisStopWords
+  stopwords_path?: string
+  stem_exclusion?: string[]
 }
 
 export interface AnalysisUaxEmailUrlTokenizer extends AnalysisTokenizerBase {
@@ -10257,6 +10521,7 @@ export interface IndicesCacheQueries {
 export interface IndicesDataStream {
   _meta?: Metadata
   allow_custom_routing?: boolean
+  failure_store?: IndicesFailureStore
   generation: integer
   hidden: boolean
   ilm_policy?: Name
@@ -10266,6 +10531,7 @@ export interface IndicesDataStream {
   lifecycle?: IndicesDataStreamLifecycleWithRollover
   name: DataStreamName
   replicated?: boolean
+  rollover_on_write: boolean
   status: HealthStatus
   system?: boolean
   template: Name
@@ -10276,8 +10542,8 @@ export interface IndicesDataStreamIndex {
   index_name: IndexName
   index_uuid: Uuid
   ilm_policy?: Name
-  managed_by: IndicesManagedBy
-  prefer_ilm: boolean
+  managed_by?: IndicesManagedBy
+  prefer_ilm?: boolean
 }
 
 export interface IndicesDataStreamLifecycle {
@@ -10323,6 +10589,12 @@ export interface IndicesDownsampleConfig {
 export interface IndicesDownsamplingRound {
   after: Duration
   config: IndicesDownsampleConfig
+}
+
+export interface IndicesFailureStore {
+  enabled: boolean
+  indices: IndicesDataStreamIndex[]
+  rollover_on_write: boolean
 }
 
 export interface IndicesFielddataFrequencyFilter {
@@ -13689,7 +13961,7 @@ export interface MlPerPartitionCategorization {
   stop_on_warn?: boolean
 }
 
-export type MlPredictedValue = string | double | boolean | integer
+export type MlPredictedValue = ScalarValue | ScalarValue[]
 
 export interface MlQuestionAnsweringInferenceOptions {
   num_top_classes?: integer
@@ -15700,13 +15972,6 @@ export interface NodesGetRepositoriesMeteringInfoResponseBase extends NodesNodes
   nodes: Record<string, NodesRepositoryMeteringInformation>
 }
 
-export interface NodesHotThreadsHotThread {
-  hosts: Host[]
-  node_id: Id
-  node_name: Name
-  threads: string[]
-}
-
 export interface NodesHotThreadsRequest extends RequestBase {
   node_id?: NodeIds
   ignore_idle_threads?: boolean
@@ -15720,7 +15985,6 @@ export interface NodesHotThreadsRequest extends RequestBase {
 }
 
 export interface NodesHotThreadsResponse {
-  hot_threads: NodesHotThreadsHotThread[]
 }
 
 export interface NodesInfoDeprecationIndexing {
@@ -16158,7 +16422,7 @@ export interface QueryRulesQueryRuleCriteria {
 
 export type QueryRulesQueryRuleCriteriaType = 'global' | 'exact' | 'exact_fuzzy' | 'fuzzy' | 'prefix' | 'suffix' | 'contains' | 'lt' | 'lte' | 'gt' | 'gte' | 'always'
 
-export type QueryRulesQueryRuleType = 'pinned'
+export type QueryRulesQueryRuleType = 'pinned' | 'exclude'
 
 export interface QueryRulesQueryRuleset {
   ruleset_id: Id
