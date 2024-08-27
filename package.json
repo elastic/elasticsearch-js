@@ -6,8 +6,7 @@
   "main": "./index.js",
   "types": "index.d.ts",
   "exports": {
-    "require": "./index.js",
-    "bun": "./index.ts"
+    "require": "./index.js"
   },
   "scripts": {
     "test": "npm run build && npm run lint && tap test/unit/{*,**/*}.test.ts",
