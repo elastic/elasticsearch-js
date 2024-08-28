@@ -95,6 +95,7 @@ test('Clear a scroll search', async t => {
         'x-elastic-client-meta': `es=${clientVersion},js=${nodeVersion},t=${transportVersion},hc=${nodeVersion},h=s`
       })
       if (params.method === 'DELETE') {
+        // @ts-expect-error
         const body = JSON.parse(params.body)
         t.equal(body.scroll_id, 'id')
       }

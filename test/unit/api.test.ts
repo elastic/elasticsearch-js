@@ -188,6 +188,7 @@ test('Using the body key with a string value', async t => {
     const body = { query: { match_all: {} } }
     await client.search({
       index: 'test',
+      // @ts-expect-error
       body: JSON.stringify(body)
     })
     t.pass('ok!')
