@@ -196,7 +196,7 @@ test('Scroll search (retry throws and maxRetries)', async t => {
   const expectedAttempts = maxRetries + 1
   let count = 0
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       count += 1
       return { body: {}, statusCode: 429 }
     }
@@ -217,8 +217,7 @@ test('Scroll search (retry throws and maxRetries)', async t => {
   })
 
   try {
-    // @ts-expect-error
-    for await (const result of scrollSearch) { // eslint-disable-line
+    for await (const _result of scrollSearch) { // eslint-disable-line
       t.fail('we should not be here')
     }
   } catch (err: any) {
@@ -344,7 +343,7 @@ test('Should not retry if maxRetries = 0', async t => {
   const expectedAttempts = 1
   let count = 0
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       count += 1
       return { body: {}, statusCode: 429 }
     }
@@ -365,8 +364,7 @@ test('Should not retry if maxRetries = 0', async t => {
   })
 
   try {
-    // @ts-expect-error
-    for await (const result of scrollSearch) { // eslint-disable-line
+    for await (const _result of scrollSearch) { // eslint-disable-line
       t.fail('we should not be here')
     }
   } catch (err: any) {

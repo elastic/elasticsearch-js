@@ -73,6 +73,36 @@ jobs:
         run: |
           npm run license-checker
 
+  test-bun:
+    name: Test Bun
+    runs-on: ${{ matrix.os }}
+    needs: paths-filter
+    # only run if code relevant to unit tests was changed
+    if: needs.paths-filter.outputs.src-only == 'true'
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install
+        run: |
+          bun install
+
+      - name: Lint
+        run: |
+          bun run lint
+
+      - name: Unit test
+        run: |
+          bun run test:unit-bun
+
   auto-approve:
     name: Auto-approve
     needs: [test, license]
