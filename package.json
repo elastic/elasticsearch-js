@@ -6,13 +6,12 @@
   "main": "./index.js",
   "types": "index.d.ts",
   "exports": {
-    "require": "./index.js",
-    "bun": "./index.ts"
+    "require": "./index.js"
   },
   "scripts": {
     "test": "npm run build && npm run lint && tap test/unit/{*,**/*}.test.ts",
     "test:unit": "npm run build && tap test/unit/{*,**/*}.test.ts",
-    "test:unit-bun": "bunx tap test/unit/{*,**/*}.test.ts",
+    "test:unit-bun": "bun run build && bunx tap test/unit/{*,**/*}.test.ts",
     "test:coverage-100": "npm run build && tap test/unit/{*,**/*}.test.ts --coverage --100",
     "test:coverage-report": "npm run build && tap test/unit/{*,**/*}.test.ts --coverage && nyc report --reporter=text-lcov > coverage.lcov",
     "test:coverage-ui": "npm run build && tap test/unit/{*,**/*}.test.ts --coverage --coverage-report=html",

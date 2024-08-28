@@ -188,7 +188,6 @@ test('Using the body key with a string value', async t => {
     const body = { query: { match_all: {} } }
     await client.search({
       index: 'test',
-      // @ts-expect-error
       body: JSON.stringify(body)
     })
     t.pass('ok!')
@@ -205,7 +204,7 @@ test('With generic document', async t => {
   }
 
   const Connection = connection.buildMockConnection({
-    onRequest (opts) {
+    onRequest (_opts) {
       return {
         statusCode: 200,
         body: {

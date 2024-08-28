@@ -24,7 +24,7 @@ import FakeTimers from '@sinonjs/fake-timers'
 
 test('Basic', async t => {
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return {
         body: {
           responses: [{
@@ -78,7 +78,7 @@ test('Multiple searches (inside async iterator)', t => {
   t.plan(4)
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return {
         body: {
           responses: [{
@@ -161,7 +161,7 @@ test('Multiple searches (async iterator exits)', t => {
   t.plan(4)
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return {
         body: {
           responses: [{
@@ -242,7 +242,7 @@ test('Multiple searches (async iterator exits)', t => {
 
 test('Stop a msearch processor (promises)', async t => {
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return { body: {} }
     }
   })
@@ -272,7 +272,7 @@ test('Bad header', t => {
   t.plan(1)
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return { body: {} }
     }
   })
@@ -297,7 +297,7 @@ test('Bad body', t => {
   t.plan(1)
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return { body: {} }
     }
   })
@@ -321,7 +321,7 @@ test('Bad body', t => {
 test('Retry on 429', async t => {
   let count = 0
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       if (count++ === 0) {
         return {
           body: {
@@ -384,7 +384,7 @@ test('Retry on 429', async t => {
 
 test('Single search errors', async t => {
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return {
         body: {
           responses: [{
@@ -419,7 +419,7 @@ test('Entire msearch fails', t => {
   t.plan(2)
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return {
         statusCode: 500,
         body: {
@@ -454,7 +454,7 @@ test('Resolves the msearch helper', t => {
   t.plan(1)
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return { body: {} }
     }
   })
@@ -470,17 +470,17 @@ test('Resolves the msearch helper', t => {
 
   m.then(
     () => t.pass('called'),
-    e => t.fail('Should not fail')
+    _e => t.fail('Should not fail')
   )
 
-  m.catch(e => t.fail('Should not fail'))
+  m.catch(_e => t.fail('Should not fail'))
 })
 
 test('Stop the msearch helper with an error', t => {
   t.plan(3)
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return { body: {} }
     }
   })
@@ -511,7 +511,7 @@ test('Multiple searches (concurrency = 1)', t => {
   t.plan(4)
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return {
         body: {
           responses: [{
@@ -587,7 +587,7 @@ test('Flush interval', t => {
   t.teardown(() => clock.uninstall())
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return {
         body: {
           responses: [{
@@ -640,7 +640,7 @@ test('Flush interval - early stop', t => {
   t.plan(2)
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return {
         body: {
           responses: [{
@@ -684,7 +684,7 @@ test('Stop should resolve the helper', t => {
   t.plan(1)
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return {
         body: {
           responses: []
@@ -709,7 +709,7 @@ test('Stop should resolve the helper (error)', t => {
   t.plan(3)
 
   const MockConnection = connection.buildMockConnection({
-    onRequest (params) {
+    onRequest (_params) {
       return {
         body: {
           responses: []
