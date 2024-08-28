@@ -9,12 +9,12 @@
     "require": "./index.js"
   },
   "scripts": {
-    "test": "npm run build && npm run lint && tap test/unit/{*,**/*}.test.ts",
-    "test:unit": "npm run build && tap test/unit/{*,**/*}.test.ts",
-    "test:unit-bun": "bun run build && bunx tap test/unit/{*,**/*}.test.ts",
-    "test:coverage-100": "npm run build && tap test/unit/{*,**/*}.test.ts --coverage --100",
-    "test:coverage-report": "npm run build && tap test/unit/{*,**/*}.test.ts --coverage && nyc report --reporter=text-lcov > coverage.lcov",
-    "test:coverage-ui": "npm run build && tap test/unit/{*,**/*}.test.ts --coverage --coverage-report=html",
+    "test": "npm run build && npm run lint && tap",
+    "test:unit": "npm run build && tap",
+    "test:unit-bun": "bun run build && bunx tap",
+    "test:coverage-100": "npm run build && tap --coverage --100",
+    "test:coverage-report": "npm run build && tap --coverage && nyc report --reporter=text-lcov > coverage.lcov",
+    "test:coverage-ui": "npm run build && tap --coverage --coverage-report=html",
     "test:integration": "tsc && node test/integration/index.js",
     "lint": "ts-standard src",
     "lint:fix": "ts-standard --fix src",
@@ -95,6 +95,7 @@
     "jsx": false,
     "flow": false,
     "coverage": false,
-    "check-coverage": false
+    "check-coverage": false,
+    "files": "test/unit/{*,**/*}.test.ts"
   }
 }
