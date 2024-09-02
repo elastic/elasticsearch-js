@@ -3,16 +3,13 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector/_pipeline",
-  body: {
-    pipeline: {
-      extract_binary_content: true,
-      name: "my-connector-pipeline",
-      reduce_whitespace: true,
-      run_ml_inference: true,
-    },
+const response = await client.connector.updatePipeline({
+  connector_id: "my-connector",
+  pipeline: {
+    extract_binary_content: true,
+    name: "my-connector-pipeline",
+    reduce_whitespace: true,
+    run_ml_inference: true,
   },
 });
 console.log(response);

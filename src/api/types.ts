@@ -1117,7 +1117,7 @@ export interface RenderSearchTemplateResponse {
 export interface ScriptsPainlessExecutePainlessContextSetup {
   document: any
   index: IndexName
-  query: QueryDslQueryContainer
+  query?: QueryDslQueryContainer
 }
 
 export interface ScriptsPainlessExecuteRequest extends RequestBase {
@@ -4836,11 +4836,11 @@ export type AnalysisPhoneticRuleType = 'approx' | 'exact'
 export interface AnalysisPhoneticTokenFilter extends AnalysisTokenFilterBase {
   type: 'phonetic'
   encoder: AnalysisPhoneticEncoder
-  languageset: AnalysisPhoneticLanguage | AnalysisPhoneticLanguage[]
+  languageset?: AnalysisPhoneticLanguage | AnalysisPhoneticLanguage[]
   max_code_len?: integer
-  name_type: AnalysisPhoneticNameType
+  name_type?: AnalysisPhoneticNameType
   replace?: boolean
-  rule_type: AnalysisPhoneticRuleType
+  rule_type?: AnalysisPhoneticRuleType
 }
 
 export interface AnalysisPorterStemTokenFilter extends AnalysisTokenFilterBase {
@@ -12445,6 +12445,11 @@ export interface IngestCsvProcessor extends IngestProcessorBase {
   trim?: boolean
 }
 
+export interface IngestDatabaseConfiguration {
+  name: Name
+  maxmind: IngestMaxmind
+}
+
 export interface IngestDateIndexNameProcessor extends IngestProcessorBase {
   date_formats: string[]
   date_rounding: string
@@ -12523,6 +12528,12 @@ export interface IngestGsubProcessor extends IngestProcessorBase {
   target_field?: Field
 }
 
+export interface IngestHtmlStripProcessor extends IngestProcessorBase {
+  field: Field
+  ignore_missing?: boolean
+  target_field?: Field
+}
+
 export interface IngestInferenceConfig {
   regression?: IngestInferenceConfigRegression
   classification?: IngestInferenceConfigClassification
@@ -12584,6 +12595,10 @@ export interface IngestLowercaseProcessor extends IngestProcessorBase {
   target_field?: Field
 }
 
+export interface IngestMaxmind {
+  account_id: Id
+}
+
 export interface IngestPipeline {
   description?: string
   on_failure?: IngestProcessorContainer[]
@@ -12629,6 +12644,7 @@ export interface IngestProcessorContainer {
   geoip?: IngestGeoIpProcessor
   grok?: IngestGrokProcessor
   gsub?: IngestGsubProcessor
+  html_strip?: IngestHtmlStripProcessor
   inference?: IngestInferenceProcessor
   join?: IngestJoinProcessor
   json?: IngestJsonProcessor
@@ -12646,6 +12662,7 @@ export interface IngestProcessorContainer {
   trim?: IngestTrimProcessor
   uppercase?: IngestUppercaseProcessor
   urldecode?: IngestUrlDecodeProcessor
+  uri_parts?: IngestUriPartsProcessor
   user_agent?: IngestUserAgentProcessor
 }
 
@@ -12716,6 +12733,14 @@ export interface IngestUppercaseProcessor extends IngestProcessorBase {
   target_field?: Field
 }
 
+export interface IngestUriPartsProcessor extends IngestProcessorBase {
+  field: Field
+  ignore_missing?: boolean
+  keep_original?: boolean
+  remove_if_successful?: boolean
+  target_field?: Field
+}
+
 export interface IngestUrlDecodeProcessor extends IngestProcessorBase {
   field: Field
   ignore_missing?: boolean
@@ -12732,6 +12757,14 @@ export interface IngestUserAgentProcessor extends IngestProcessorBase {
 
 export type IngestUserAgentProperty = 'NAME' | 'MAJOR' | 'MINOR' | 'PATCH' | 'OS' | 'OS_NAME' | 'OS_MAJOR' | 'OS_MINOR' | 'DEVICE' | 'BUILD'
 
+export interface IngestDeleteGeoipDatabaseRequest extends RequestBase {
+  id: Ids
+  master_timeout?: Duration
+  timeout?: Duration
+}
+
+export type IngestDeleteGeoipDatabaseResponse = AcknowledgedResponseBase
+
 export interface IngestDeletePipelineRequest extends RequestBase {
   id: Id
   master_timeout?: Duration
@@ -12744,8 +12777,9 @@ export interface IngestGeoIpStatsGeoIpDownloadStatistics {
   successful_downloads: integer
   failed_downloads: integer
   total_download_time: DurationValue<UnitMillis>
-  database_count: integer
+  databases_count: integer
   skipped_updates: integer
+  expired_databases: integer
 }
 
 export interface IngestGeoIpStatsGeoIpNodeDatabaseName {
@@ -12765,6 +12799,22 @@ export interface IngestGeoIpStatsResponse {
   nodes: Record<Id, IngestGeoIpStatsGeoIpNodeDatabases>
 }
 
+export interface IngestGetGeoipDatabaseDatabaseConfigurationMetadata {
+  id: Id
+  version: long
+  modified_date_millis: EpochTime<UnitMillis>
+  database: IngestDatabaseConfiguration
+}
+
+export interface IngestGetGeoipDatabaseRequest extends RequestBase {
+  id?: Ids
+  master_timeout?: Duration
+}
+
+export interface IngestGetGeoipDatabaseResponse {
+  databases: IngestGetGeoipDatabaseDatabaseConfigurationMetadata[]
+}
+
 export interface IngestGetPipelineRequest extends RequestBase {
   id?: Id
   master_timeout?: Duration
@@ -12779,6 +12829,16 @@ export interface IngestProcessorGrokRequest extends RequestBase {
 export interface IngestProcessorGrokResponse {
   patterns: Record<string, string>
 }
+
+export interface IngestPutGeoipDatabaseRequest extends RequestBase {
+  id: Id
+  master_timeout?: Duration
+  timeout?: Duration
+  name: Name
+  maxmind: IngestMaxmind
+}
+
+export type IngestPutGeoipDatabaseResponse = AcknowledgedResponseBase
 
 export interface IngestPutPipelineRequest extends RequestBase {
   id: Id
@@ -12819,21 +12879,29 @@ export interface IngestSimulateIngest {
 
 export interface IngestSimulatePipelineSimulation {
   doc?: IngestSimulateDocumentSimulation
-  processor_results?: IngestSimulatePipelineSimulation[]
   tag?: string
   processor_type?: string
   status?: WatcherActionStatusOptions
+  description?: string
+  ignored_error?: ErrorCause
+  error?: ErrorCause
 }
 
 export interface IngestSimulateRequest extends RequestBase {
   id?: Id
   verbose?: boolean
-  docs?: IngestSimulateDocument[]
+  docs: IngestSimulateDocument[]
   pipeline?: IngestPipeline
 }
 
 export interface IngestSimulateResponse {
-  docs: IngestSimulatePipelineSimulation[]
+  docs: IngestSimulateSimulateDocumentResult[]
+}
+
+export interface IngestSimulateSimulateDocumentResult {
+  doc?: IngestSimulateDocumentSimulation
+  error?: ErrorCause
+  processor_results?: IngestSimulatePipelineSimulation[]
 }
 
 export interface LicenseLicense {

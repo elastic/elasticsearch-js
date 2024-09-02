@@ -3,12 +3,9 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector/_service_type",
-  body: {
-    service_type: "sharepoint_online",
-  },
+const response = await client.connector.updateServiceType({
+  connector_id: "my-connector",
+  service_type: "sharepoint_online",
 });
 console.log(response);
 ----

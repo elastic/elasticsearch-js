@@ -3,8 +3,10 @@
 
 [source, js]
 ----
-const response = await client.connector.list({
-  service_type: "sharepoint_online,google_drive",
+const response = await client.openPointInTime({
+  index: "my-index-000001",
+  keep_alive: "1m",
+  allow_partial_search_results: "true",
 });
 console.log(response);
 ----

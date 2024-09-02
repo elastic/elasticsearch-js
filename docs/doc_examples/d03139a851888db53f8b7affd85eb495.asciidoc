@@ -3,9 +3,8 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector/_check_in",
+const response = await client.connector.checkIn({
+  connector_id: "my-connector",
 });
 console.log(response);
 ----

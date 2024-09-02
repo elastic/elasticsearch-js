@@ -3,12 +3,9 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector/_status",
-  body: {
-    status: "needs_configuration",
-  },
+const response = await client.connector.updateStatus({
+  connector_id: "my-connector",
+  status: "needs_configuration",
 });
 console.log(response);
 ----

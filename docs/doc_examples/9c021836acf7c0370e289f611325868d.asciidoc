@@ -3,17 +3,14 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-spo-connector/_configuration",
-  body: {
-    values: {
-      tenant_id: "my-tenant-id",
-      tenant_name: "my-sharepoint-site",
-      client_id: "foo",
-      secret_value: "bar",
-      site_collections: "*",
-    },
+const response = await client.connector.updateConfiguration({
+  connector_id: "my-spo-connector",
+  values: {
+    tenant_id: "my-tenant-id",
+    tenant_name: "my-sharepoint-site",
+    client_id: "foo",
+    secret_value: "bar",
+    site_collections: "*",
   },
 });
 console.log(response);

@@ -3,13 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector/_name",
-  body: {
-    name: "Custom connector",
-    description: "This is my customized connector",
-  },
+const response = await client.connector.updateName({
+  connector_id: "my-connector",
+  name: "Custom connector",
+  description: "This is my customized connector",
 });
 console.log(response);
 ----

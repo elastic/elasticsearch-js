@@ -3,9 +3,6 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "GET",
-  path: "/_connector",
-});
+const response = await client.connector.list();
 console.log(response);
 ----

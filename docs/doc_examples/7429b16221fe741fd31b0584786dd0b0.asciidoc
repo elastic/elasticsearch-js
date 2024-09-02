@@ -3,15 +3,13 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_inference/text_embedding/my-cohere-endpoint",
-  body: {
-    input:
-      "The sky above the port was the color of television tuned to a dead channel.",
-    task_settings: {
-      input_type: "ingest",
-    },
+const response = await client.inference.inference({
+  task_type: "text_embedding",
+  inference_id: "my-cohere-endpoint",
+  input:
+    "The sky above the port was the color of television tuned to a dead channel.",
+  task_settings: {
+    input_type: "ingest",
   },
 });
 console.log(response);
