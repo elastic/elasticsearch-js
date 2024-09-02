@@ -3,8 +3,9 @@
 
 [source, js]
 ----
-const response = await client.ingest.putGeoipDatabase({
-  id: "my-database-id",
+const response = await client.transport.request({
+  method: "PUT",
+  path: "/_ingest/geoip/database/my-database-id",
   body: {
     name: "GeoIP2-Domain",
     maxmind: {

@@ -3,29 +3,26 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-g-drive-connector/_filtering",
-  body: {
-    rules: [
-      {
-        field: "file_extension",
-        id: "exclude-txt-files",
-        order: 0,
-        policy: "exclude",
-        rule: "equals",
-        value: "txt",
-      },
-      {
-        field: "_",
-        id: "DEFAULT",
-        order: 1,
-        policy: "include",
-        rule: "regex",
-        value: ".*",
-      },
-    ],
-  },
+const response = await client.connector.updateFiltering({
+  connector_id: "my-g-drive-connector",
+  rules: [
+    {
+      field: "file_extension",
+      id: "exclude-txt-files",
+      order: 0,
+      policy: "exclude",
+      rule: "equals",
+      value: "txt",
+    },
+    {
+      field: "_",
+      id: "DEFAULT",
+      order: 1,
+      policy: "include",
+      rule: "regex",
+      value: ".*",
+    },
+  ],
 });
 console.log(response);
 ----

@@ -3,19 +3,16 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-sql-connector/_filtering",
-  body: {
-    advanced_snippet: {
-      value: [
-        {
-          tables: ["users", "orders"],
-          query:
-            "SELECT users.id AS id, orders.order_id AS order_id FROM users JOIN orders ON users.id = orders.user_id",
-        },
-      ],
-    },
+const response = await client.connector.updateFiltering({
+  connector_id: "my-sql-connector",
+  advanced_snippet: {
+    value: [
+      {
+        tables: ["users", "orders"],
+        query:
+          "SELECT users.id AS id, orders.order_id AS order_id FROM users JOIN orders ON users.id = orders.user_id",
+      },
+    ],
   },
 });
 console.log(response);

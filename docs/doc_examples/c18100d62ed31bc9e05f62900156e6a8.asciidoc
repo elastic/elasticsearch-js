@@ -3,12 +3,8 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "GET",
-  path: "/_connector",
-  querystring: {
-    index_name: "search-google-drive",
-  },
+const response = await client.connector.list({
+  index_name: "search-google-drive",
 });
 console.log(response);
 ----
