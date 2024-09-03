@@ -5,14 +5,14 @@
 ----
 const response = await client.inference.put({
   task_type: "text_embedding",
-  inference_id: "google_vertex_ai_embeddings",
+  inference_id: "alibabacloud_ai_search_embeddings",
   inference_config: {
-    service: "googlevertexai",
+    service: "alibabacloud-ai-search",
     service_settings: {
-      service_account_json: "<service_account_json>",
-      model_id: "<model_id>",
-      location: "<location>",
-      project_id: "<project_id>",
+      api_key: "<api_key>",
+      service_id: "ops-text-embedding-001",
+      host: "default-j01.platform-cn-shanghai.opensearch.aliyuncs.com",
+      workspace: "default",
     },
   },
 });

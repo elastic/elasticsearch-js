@@ -3,12 +3,9 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector/_error",
-  body: {
-    error: "Houston, we have a problem!",
-  },
+const response = await client.connector.updateError({
+  connector_id: "my-connector",
+  error: "Houston, we have a problem!",
 });
 console.log(response);
 ----

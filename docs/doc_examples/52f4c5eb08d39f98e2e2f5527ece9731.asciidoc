@@ -4,15 +4,15 @@
 [source, js]
 ----
 const response = await client.inference.put({
-  task_type: "text_embedding",
-  inference_id: "azure_openai_embeddings",
+  task_type: "sparse_embedding",
+  inference_id: "alibabacloud_ai_search_sparse",
   inference_config: {
-    service: "azureopenai",
+    service: "alibabacloud-ai-search",
     service_settings: {
       api_key: "<api_key>",
-      resource_name: "<resource_name>",
-      deployment_id: "<deployment_id>",
-      api_version: "2024-02-01",
+      service_id: "ops-text-sparse-embedding-001",
+      host: "default-j01.platform-cn-shanghai.opensearch.aliyuncs.com",
+      workspace: "default",
     },
   },
 });

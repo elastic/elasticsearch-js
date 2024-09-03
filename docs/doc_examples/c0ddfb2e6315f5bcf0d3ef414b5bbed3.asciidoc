@@ -3,13 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-spo-connector/_configuration",
-  body: {
-    values: {
-      secret_value: "foo-bar",
-    },
+const response = await client.connector.updateConfiguration({
+  connector_id: "my-spo-connector",
+  values: {
+    secret_value: "foo-bar",
   },
 });
 console.log(response);

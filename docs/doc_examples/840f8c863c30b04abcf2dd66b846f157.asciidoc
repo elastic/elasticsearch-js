@@ -3,10 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_inference/text_embedding/my-e5-model",
-  body: {
+const response = await client.inference.put({
+  task_type: "text_embedding",
+  inference_id: "my-e5-model",
+  inference_config: {
     service: "elasticsearch",
     service_settings: {
       adaptive_allocations: {

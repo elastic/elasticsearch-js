@@ -3,10 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_inference/sparse_embedding/my-elser-model",
-  body: {
+const response = await client.inference.put({
+  task_type: "sparse_embedding",
+  inference_id: "my-elser-model",
+  inference_config: {
     service: "elser",
     service_settings: {
       adaptive_allocations: {

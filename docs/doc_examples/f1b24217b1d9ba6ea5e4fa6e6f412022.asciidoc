@@ -3,13 +3,11 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_inference/rerank/cohere_rerank",
-  body: {
-    input: ["luke", "like", "leia", "chewy", "r2d2", "star", "wars"],
-    query: "star wars main character",
-  },
+const response = await client.inference.inference({
+  task_type: "rerank",
+  inference_id: "cohere_rerank",
+  input: ["luke", "like", "leia", "chewy", "r2d2", "star", "wars"],
+  query: "star wars main character",
 });
 console.log(response);
 ----

@@ -3,10 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_inference/rerank/cohere-rerank",
-  body: {
+const response = await client.inference.put({
+  task_type: "rerank",
+  inference_id: "cohere-rerank",
+  inference_config: {
     service: "cohere",
     service_settings: {
       api_key: "<API-KEY>",

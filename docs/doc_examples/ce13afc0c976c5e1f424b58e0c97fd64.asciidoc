@@ -3,16 +3,13 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector",
-  body: {
-    index_name: "search-google-drive",
-    name: "My Connector",
-    description: "My Connector to sync data to Elastic index from Google Drive",
-    service_type: "google_drive",
-    language: "english",
-  },
+const response = await client.connector.put({
+  connector_id: "my-connector",
+  index_name: "search-google-drive",
+  name: "My Connector",
+  description: "My Connector to sync data to Elastic index from Google Drive",
+  service_type: "google_drive",
+  language: "english",
 });
 console.log(response);
 ----

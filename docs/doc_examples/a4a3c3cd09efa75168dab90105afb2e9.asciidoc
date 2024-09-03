@@ -3,9 +3,9 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "GET",
-  path: "/_inference/sparse_embedding/my-elser-model",
+const response = await client.inference.get({
+  task_type: "sparse_embedding",
+  inference_id: "my-elser-model",
 });
 console.log(response);
 ----
