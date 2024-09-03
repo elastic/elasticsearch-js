@@ -12338,8 +12338,9 @@ export interface IngestGeoIpStatsGeoIpDownloadStatistics {
   successful_downloads: integer
   failed_downloads: integer
   total_download_time: DurationValue<UnitMillis>
-  database_count: integer
+  databases_count: integer
   skipped_updates: integer
+  expired_databases: integer
 }
 
 export interface IngestGeoIpStatsGeoIpNodeDatabaseName {
