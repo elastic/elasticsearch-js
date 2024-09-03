@@ -3,9 +3,9 @@
 
 [source, js]
 ----
-const response = await client.ingest.deleteGeoipDatabase({
-  id: "my-database-id",
-  body: null,
+const response = await client.transport.request({
+  method: "DELETE",
+  path: "/_ingest/geoip/database/my-database-id",
 });
 console.log(response);
 ----

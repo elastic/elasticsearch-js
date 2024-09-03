@@ -3,15 +3,12 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector/_scheduling",
-  body: {
-    scheduling: {
-      full: {
-        enabled: true,
-        interval: "0 10 0 * * ?",
-      },
+const response = await client.connector.updateScheduling({
+  connector_id: "my-connector",
+  scheduling: {
+    full: {
+      enabled: true,
+      interval: "0 10 0 * * ?",
     },
   },
 });

@@ -3,10 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_inference/completion/anthropic_completion",
-  body: {
+const response = await client.inference.put({
+  task_type: "completion",
+  inference_id: "anthropic_completion",
+  inference_config: {
     service: "anthropic",
     service_settings: {
       api_key: "<api_key>",

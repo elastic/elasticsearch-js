@@ -5,12 +5,14 @@
 ----
 const response = await client.inference.put({
   task_type: "rerank",
-  inference_id: "google_vertex_ai_rerank",
+  inference_id: "alibabacloud_ai_search_rerank",
   inference_config: {
-    service: "googlevertexai",
+    service: "alibabacloud-ai-search",
     service_settings: {
-      service_account_json: "<service_account_json>",
-      project_id: "<project_id>",
+      api_key: "<api_key>",
+      service_id: "ops-bge-reranker-larger",
+      host: "default-j01.platform-cn-shanghai.opensearch.aliyuncs.com",
+      workspace: "default",
     },
   },
 });

@@ -3,21 +3,18 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector/_last_sync",
-  body: {
-    last_access_control_sync_error: "Houston, we have a problem!",
-    last_access_control_sync_scheduled_at: "2023-11-09T15:13:08.231Z",
-    last_access_control_sync_status: "pending",
-    last_deleted_document_count: 42,
-    last_incremental_sync_scheduled_at: "2023-11-09T15:13:08.231Z",
-    last_indexed_document_count: 42,
-    last_sync_error: "Houston, we have a problem!",
-    last_sync_scheduled_at: "2024-11-09T15:13:08.231Z",
-    last_sync_status: "completed",
-    last_synced: "2024-11-09T15:13:08.231Z",
-  },
+const response = await client.connector.lastSync({
+  connector_id: "my-connector",
+  last_access_control_sync_error: "Houston, we have a problem!",
+  last_access_control_sync_scheduled_at: "2023-11-09T15:13:08.231Z",
+  last_access_control_sync_status: "pending",
+  last_deleted_document_count: 42,
+  last_incremental_sync_scheduled_at: "2023-11-09T15:13:08.231Z",
+  last_indexed_document_count: 42,
+  last_sync_error: "Houston, we have a problem!",
+  last_sync_scheduled_at: "2024-11-09T15:13:08.231Z",
+  last_sync_status: "completed",
+  last_synced: "2024-11-09T15:13:08.231Z",
 });
 console.log(response);
 ----

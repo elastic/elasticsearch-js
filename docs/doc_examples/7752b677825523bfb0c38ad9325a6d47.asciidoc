@@ -3,12 +3,9 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "DELETE",
-  path: "/_connector/another-connector",
-  querystring: {
-    delete_sync_jobs: "true",
-  },
+const response = await client.connector.delete({
+  connector_id: "another-connector",
+  delete_sync_jobs: "true",
 });
 console.log(response);
 ----

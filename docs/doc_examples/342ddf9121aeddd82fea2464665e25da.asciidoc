@@ -3,14 +3,11 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector",
-  body: {
-    index_name: "search-google-drive",
-    name: "My Connector",
-    service_type: "google_drive",
-  },
+const response = await client.connector.put({
+  connector_id: "my-connector",
+  index_name: "search-google-drive",
+  name: "My Connector",
+  service_type: "google_drive",
 });
 console.log(response);
 ----

@@ -10,7 +10,7 @@ const response = await client.inference.put({
     service: "googlevertexai",
     service_settings: {
       service_account_json: "<service_account_json>",
-      model_id: "<model_id>",
+      model_id: "text-embedding-004",
       location: "<location>",
       project_id: "<project_id>",
     },

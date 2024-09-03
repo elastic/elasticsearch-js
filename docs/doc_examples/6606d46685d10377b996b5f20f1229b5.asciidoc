@@ -3,12 +3,9 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector/_index_name",
-  body: {
-    index_name: "data-from-my-google-drive",
-  },
+const response = await client.connector.updateIndexName({
+  connector_id: "my-connector",
+  index_name: "data-from-my-google-drive",
 });
 console.log(response);
 ----

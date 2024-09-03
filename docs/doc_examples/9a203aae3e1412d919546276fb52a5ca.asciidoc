@@ -3,10 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_inference/text_embedding/cohere-embeddings",
-  body: {
+const response = await client.inference.put({
+  task_type: "text_embedding",
+  inference_id: "cohere-embeddings",
+  inference_config: {
     service: "cohere",
     service_settings: {
       api_key: "<api_key>",

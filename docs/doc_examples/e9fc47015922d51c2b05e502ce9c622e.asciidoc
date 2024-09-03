@@ -3,10 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_inference/completion/google_ai_studio_completion",
-  body: {
+const response = await client.inference.put({
+  task_type: "completion",
+  inference_id: "google_ai_studio_completion",
+  inference_config: {
     service: "googleaistudio",
     service_settings: {
       api_key: "<api_key>",

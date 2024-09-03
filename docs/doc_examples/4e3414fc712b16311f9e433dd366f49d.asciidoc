@@ -3,9 +3,9 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "DELETE",
-  path: "/_inference/sparse_embedding/my-elser-model",
+const response = await client.inference.delete({
+  task_type: "sparse_embedding",
+  inference_id: "my-elser-model",
 });
 console.log(response);
 ----

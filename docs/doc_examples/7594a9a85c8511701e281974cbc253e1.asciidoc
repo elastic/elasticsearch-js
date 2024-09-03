@@ -3,10 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_inference/text_embedding/amazon_bedrock_embeddings",
-  body: {
+const response = await client.inference.put({
+  task_type: "text_embedding",
+  inference_id: "amazon_bedrock_embeddings",
+  inference_config: {
     service: "amazonbedrock",
     service_settings: {
       access_key: "<aws_access_key>",

@@ -3,13 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "PUT",
-  path: "/_connector/my-connector/_api_key_id",
-  body: {
-    api_key_id: "my-api-key-id",
-    api_key_secret_id: "my-connector-secret-id",
-  },
+const response = await client.connector.updateApiKeyId({
+  connector_id: "my-connector",
+  api_key_id: "my-api-key-id",
+  api_key_secret_id: "my-connector-secret-id",
 });
 console.log(response);
 ----

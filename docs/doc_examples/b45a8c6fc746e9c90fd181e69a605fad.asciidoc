@@ -3,12 +3,10 @@
 
 [source, js]
 ----
-const response = await client.transport.request({
-  method: "POST",
-  path: "/_inference/completion/openai_chat_completions",
-  body: {
-    input: "What is Elastic?",
-  },
+const response = await client.inference.inference({
+  task_type: "completion",
+  inference_id: "openai_chat_completions",
+  input: "What is Elastic?",
 });
 console.log(response);
 ----
