@@ -1792,9 +1792,21 @@ export interface SearchShardsRequest extends RequestBase {
 }
 
 export interface SearchShardsResponse {
-  nodes: Record<string, NodeAttributes>
+  nodes: Record<NodeId, SearchShardsSearchShardsNodeAttributes>
   shards: NodeShard[][]
   indices: Record<IndexName, SearchShardsShardStoreIndex>
+}
+
+export interface SearchShardsSearchShardsNodeAttributes {
+  name: NodeName
+  ephemeral_id: Id
+  transport_address: TransportAddress
+  external_id: string
+  attributes: Record<string, string>
+  roles: NodeRoles
+  version: VersionString
+  min_index_version: integer
+  max_index_version: integer
 }
 
 export interface SearchShardsShardStoreIndex {
@@ -2299,6 +2311,8 @@ export interface GetStats {
   total: long
 }
 
+export type GrokPattern = string
+
 export type HealthStatus = 'green' | 'GREEN' | 'yellow' | 'YELLOW' | 'red' | 'RED'
 
 export type Host = string
@@ -2453,8 +2467,6 @@ export interface NodeAttributes {
   id?: NodeId
   name: NodeName
   transport_address: TransportAddress
-  roles?: NodeRoles
-  external_id?: string
 }
 
 export type NodeId = string
@@ -2904,7 +2916,7 @@ export interface AggregationsAdjacencyMatrixBucketKeys extends AggregationsMulti
 export type AggregationsAdjacencyMatrixBucket = AggregationsAdjacencyMatrixBucketKeys
 & { [property: string]: AggregationsAggregate | string | long }
 
-export type AggregationsAggregate = AggregationsCardinalityAggregate | AggregationsHdrPercentilesAggregate | AggregationsHdrPercentileRanksAggregate | AggregationsTDigestPercentilesAggregate | AggregationsTDigestPercentileRanksAggregate | AggregationsPercentilesBucketAggregate | AggregationsMedianAbsoluteDeviationAggregate | AggregationsMinAggregate | AggregationsMaxAggregate | AggregationsSumAggregate | AggregationsAvgAggregate | AggregationsWeightedAvgAggregate | AggregationsValueCountAggregate | AggregationsSimpleValueAggregate | AggregationsDerivativeAggregate | AggregationsBucketMetricValueAggregate | AggregationsStatsAggregate | AggregationsStatsBucketAggregate | AggregationsExtendedStatsAggregate | AggregationsExtendedStatsBucketAggregate | AggregationsGeoBoundsAggregate | AggregationsGeoCentroidAggregate | AggregationsHistogramAggregate | AggregationsDateHistogramAggregate | AggregationsAutoDateHistogramAggregate | AggregationsVariableWidthHistogramAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsLongRareTermsAggregate | AggregationsStringRareTermsAggregate | AggregationsUnmappedRareTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsNestedAggregate | AggregationsReverseNestedAggregate | AggregationsGlobalAggregate | AggregationsFilterAggregate | AggregationsChildrenAggregate | AggregationsParentAggregate | AggregationsSamplerAggregate | AggregationsUnmappedSamplerAggregate | AggregationsGeoHashGridAggregate | AggregationsGeoTileGridAggregate | AggregationsGeoHexGridAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsGeoDistanceAggregate | AggregationsIpRangeAggregate | AggregationsIpPrefixAggregate | AggregationsFiltersAggregate | AggregationsAdjacencyMatrixAggregate | AggregationsSignificantLongTermsAggregate | AggregationsSignificantStringTermsAggregate | AggregationsUnmappedSignificantTermsAggregate | AggregationsCompositeAggregate | AggregationsFrequentItemSetsAggregate | AggregationsScriptedMetricAggregate | AggregationsTopHitsAggregate | AggregationsInferenceAggregate | AggregationsStringStatsAggregate | AggregationsBoxPlotAggregate | AggregationsTopMetricsAggregate | AggregationsTTestAggregate | AggregationsRateAggregate | AggregationsCumulativeCardinalityAggregate | AggregationsMatrixStatsAggregate | AggregationsGeoLineAggregate
+export type AggregationsAggregate = AggregationsCardinalityAggregate | AggregationsHdrPercentilesAggregate | AggregationsHdrPercentileRanksAggregate | AggregationsTDigestPercentilesAggregate | AggregationsTDigestPercentileRanksAggregate | AggregationsPercentilesBucketAggregate | AggregationsMedianAbsoluteDeviationAggregate | AggregationsMinAggregate | AggregationsMaxAggregate | AggregationsSumAggregate | AggregationsAvgAggregate | AggregationsWeightedAvgAggregate | AggregationsValueCountAggregate | AggregationsSimpleValueAggregate | AggregationsDerivativeAggregate | AggregationsBucketMetricValueAggregate | AggregationsStatsAggregate | AggregationsStatsBucketAggregate | AggregationsExtendedStatsAggregate | AggregationsExtendedStatsBucketAggregate | AggregationsGeoBoundsAggregate | AggregationsGeoCentroidAggregate | AggregationsHistogramAggregate | AggregationsDateHistogramAggregate | AggregationsAutoDateHistogramAggregate | AggregationsVariableWidthHistogramAggregate | AggregationsStringTermsAggregate | AggregationsLongTermsAggregate | AggregationsDoubleTermsAggregate | AggregationsUnmappedTermsAggregate | AggregationsLongRareTermsAggregate | AggregationsStringRareTermsAggregate | AggregationsUnmappedRareTermsAggregate | AggregationsMultiTermsAggregate | AggregationsMissingAggregate | AggregationsNestedAggregate | AggregationsReverseNestedAggregate | AggregationsGlobalAggregate | AggregationsFilterAggregate | AggregationsChildrenAggregate | AggregationsParentAggregate | AggregationsSamplerAggregate | AggregationsUnmappedSamplerAggregate | AggregationsGeoHashGridAggregate | AggregationsGeoTileGridAggregate | AggregationsGeoHexGridAggregate | AggregationsRangeAggregate | AggregationsDateRangeAggregate | AggregationsGeoDistanceAggregate | AggregationsIpRangeAggregate | AggregationsIpPrefixAggregate | AggregationsFiltersAggregate | AggregationsAdjacencyMatrixAggregate | AggregationsSignificantLongTermsAggregate | AggregationsSignificantStringTermsAggregate | AggregationsUnmappedSignificantTermsAggregate | AggregationsCompositeAggregate | AggregationsFrequentItemSetsAggregate | AggregationsTimeSeriesAggregate | AggregationsScriptedMetricAggregate | AggregationsTopHitsAggregate | AggregationsInferenceAggregate | AggregationsStringStatsAggregate | AggregationsBoxPlotAggregate | AggregationsTopMetricsAggregate | AggregationsTTestAggregate | AggregationsRateAggregate | AggregationsCumulativeCardinalityAggregate | AggregationsMatrixStatsAggregate | AggregationsGeoLineAggregate
 
 export interface AggregationsAggregateBase {
   meta?: Metadata
@@ -2989,6 +3001,7 @@ export interface AggregationsAggregationContainer {
   sum?: AggregationsSumAggregation
   sum_bucket?: AggregationsSumBucketAggregation
   terms?: AggregationsTermsAggregation
+  time_series?: AggregationsTimeSeriesAggregation
   top_hits?: AggregationsTopHitsAggregation
   t_test?: AggregationsTTestAggregation
   top_metrics?: AggregationsTopMetricsAggregation
@@ -4184,6 +4197,20 @@ export interface AggregationsTestPopulation {
   script?: Script | string
   filter?: QueryDslQueryContainer
 }
+
+export interface AggregationsTimeSeriesAggregate extends AggregationsMultiBucketAggregateBase<AggregationsTimeSeriesBucket> {
+}
+
+export interface AggregationsTimeSeriesAggregation extends AggregationsBucketAggregationBase {
+  size?: integer
+  keyed?: boolean
+}
+
+export interface AggregationsTimeSeriesBucketKeys extends AggregationsMultiBucketBase {
+  key: Record<Field, FieldValue>
+}
+export type AggregationsTimeSeriesBucket = AggregationsTimeSeriesBucketKeys
+& { [property: string]: AggregationsAggregate | Record<Field, FieldValue> | long }
 
 export interface AggregationsTopHitsAggregate extends AggregationsAggregateBase {
   hits: SearchHitsMetadata<any>
@@ -6692,6 +6719,7 @@ export interface CatIndicesIndicesRecord {
   ss?: string | null
   storeSize?: string | null
   'pri.store.size'?: string | null
+  'dataset.size'?: string | null
   'completion.size'?: string
   cs?: string
   completionSize?: string
@@ -7809,6 +7837,7 @@ export interface CatShardsShardsRecord {
   dc?: string | null
   store?: string | null
   sto?: string | null
+  dataset?: string | null
   ip?: string | null
   id?: string
   node?: string | null
@@ -9805,7 +9834,9 @@ export interface EnrichStatsCacheStats {
   node_id: Id
   count: integer
   hits: integer
+  hits_time_in_millis: DurationValue<UnitMillis>
   misses: integer
+  misses_time_in_millis: DurationValue<UnitMillis>
   evictions: integer
 }
 
@@ -9914,8 +9945,10 @@ export type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEven
 
 export type EqlSearchResultPosition = 'tail' | 'head'
 
+export type EsqlQueryEsqlFormat = 'csv' | 'json' | 'tsv' | 'txt' | 'yaml' | 'cbor' | 'smile' | 'arrow'
+
 export interface EsqlQueryRequest extends RequestBase {
-  format?: string
+  format?: EsqlQueryEsqlFormat
   delimiter?: string
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
@@ -11736,6 +11769,8 @@ export type IndicesResolveClusterResponse = Record<ClusterAlias, IndicesResolveC
 export interface IndicesResolveIndexRequest extends RequestBase {
   name: Names
   expand_wildcards?: ExpandWildcards
+  ignore_unavailable?: boolean
+  allow_no_indices?: boolean
 }
 
 export interface IndicesResolveIndexResolveIndexAliasItem {
@@ -12431,6 +12466,22 @@ export interface IngestForeachProcessor extends IngestProcessorBase {
   processor: IngestProcessorContainer
 }
 
+export interface IngestGeoGridProcessor extends IngestProcessorBase {
+  field: string
+  tile_type: IngestGeoGridTileType
+  target_field?: Field
+  parent_field?: Field
+  children_field?: Field
+  non_children_field?: Field
+  precision_field?: Field
+  ignore_missing?: boolean
+  target_format?: IngestGeoGridTargetFormat
+}
+
+export type IngestGeoGridTargetFormat = 'geojson' | 'wkt'
+
+export type IngestGeoGridTileType = 'geotile' | 'geohex' | 'geohash'
+
 export interface IngestGeoIpProcessor extends IngestProcessorBase {
   database_file?: string
   field: Field
@@ -12444,7 +12495,7 @@ export interface IngestGrokProcessor extends IngestProcessorBase {
   field: Field
   ignore_missing?: boolean
   pattern_definitions?: Record<string, string>
-  patterns: string[]
+  patterns: GrokPattern[]
   trace_match?: boolean
 }
 
@@ -12569,6 +12620,7 @@ export interface IngestProcessorContainer {
   enrich?: IngestEnrichProcessor
   fail?: IngestFailProcessor
   foreach?: IngestForeachProcessor
+  geo_grid?: IngestGeoGridProcessor
   geoip?: IngestGeoIpProcessor
   grok?: IngestGrokProcessor
   gsub?: IngestGsubProcessor
@@ -12579,6 +12631,7 @@ export interface IngestProcessorContainer {
   kv?: IngestKeyValueProcessor
   lowercase?: IngestLowercaseProcessor
   pipeline?: IngestPipelineProcessor
+  redact?: IngestRedactProcessor
   remove?: IngestRemoveProcessor
   rename?: IngestRenameProcessor
   reroute?: IngestRerouteProcessor
@@ -12592,6 +12645,16 @@ export interface IngestProcessorContainer {
   urldecode?: IngestUrlDecodeProcessor
   uri_parts?: IngestUriPartsProcessor
   user_agent?: IngestUserAgentProcessor
+}
+
+export interface IngestRedactProcessor extends IngestProcessorBase {
+  field: Field
+  patterns: GrokPattern[]
+  pattern_definitions?: Record<string, string>
+  prefix?: string
+  suffix?: string
+  ignore_missing?: boolean
+  skip_if_unlicensed?: boolean
 }
 
 export interface IngestRemoveProcessor extends IngestProcessorBase {
@@ -13186,7 +13249,7 @@ export type MlCategorizationStatus = 'ok' | 'warn'
 export interface MlCategory {
   category_id: ulong
   examples: string[]
-  grok_pattern?: string
+  grok_pattern?: GrokPattern
   job_id: Id
   max_matching_length: ulong
   partition_field_name?: string
@@ -15783,6 +15846,25 @@ export interface NodesHttp {
   current_open?: integer
   total_opened?: long
   clients?: NodesClient[]
+  routes: Record<string, NodesHttpRoute>
+}
+
+export interface NodesHttpRoute {
+  requests: NodesHttpRouteRequests
+  responses: NodesHttpRouteResponses
+}
+
+export interface NodesHttpRouteRequests {
+  count: long
+  total_size_in_bytes: long
+  size_histogram: NodesSizeHttpHistogram[]
+}
+
+export interface NodesHttpRouteResponses {
+  count: long
+  total_size_in_bytes: long
+  handling_time_histogram: NodesTimeHttpHistogram[]
+  size_histogram: NodesSizeHttpHistogram[]
 }
 
 export interface NodesIndexingPressure {
@@ -15797,16 +15879,25 @@ export interface NodesIndexingPressureMemory {
 }
 
 export interface NodesIngest {
-  pipelines?: Record<string, NodesIngestTotal>
+  pipelines?: Record<string, NodesIngestStats>
   total?: NodesIngestTotal
 }
 
+export interface NodesIngestStats {
+  count: long
+  current: long
+  failed: long
+  processors: Record<string, NodesKeyedProcessor>[]
+  time_in_millis: DurationValue<UnitMillis>
+  ingested_as_first_pipeline_in_bytes: long
+  produced_as_first_pipeline_in_bytes: long
+}
+
 export interface NodesIngestTotal {
-  count?: long
-  current?: long
-  failed?: long
-  processors?: Record<string, NodesKeyedProcessor>[]
-  time_in_millis?: DurationValue<UnitMillis>
+  count: long
+  current: long
+  failed: long
+  time_in_millis: DurationValue<UnitMillis>
 }
 
 export interface NodesIoStatDevice {
@@ -16011,6 +16102,12 @@ export interface NodesSerializedClusterStateDetail {
   compressed_size_in_bytes?: long
 }
 
+export interface NodesSizeHttpHistogram {
+  count: long
+  ge_bytes?: long
+  lt_bytes?: long
+}
+
 export interface NodesStats {
   adaptive_selection?: Record<string, NodesAdaptiveSelection>
   breakers?: Record<string, NodesBreaker>
@@ -16043,6 +16140,12 @@ export interface NodesThreadCount {
   queue?: long
   rejected?: long
   threads?: long
+}
+
+export interface NodesTimeHttpHistogram {
+  count: long
+  ge_millis?: long
+  lt_millis?: long
 }
 
 export interface NodesTransport {
@@ -18931,7 +19034,7 @@ export interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
   ecs_compatibility?: string
   explain?: boolean
   format?: string
-  grok_pattern?: string
+  grok_pattern?: GrokPattern
   has_header_row?: boolean
   line_merge_size_limit?: uint
   lines_to_sample?: uint
@@ -18959,7 +19062,7 @@ export interface TextStructureFindStructureResponse {
   num_lines_analyzed: integer
   column_names?: string[]
   explanation?: string[]
-  grok_pattern?: string
+  grok_pattern?: GrokPattern
   multiline_start_pattern?: string
   exclude_lines_pattern?: string
   java_timestamp_formats?: string[]
@@ -18989,7 +19092,7 @@ export interface TextStructureTestGrokPatternRequest extends RequestBase {
   ecs_compatibility?: string
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
-    grok_pattern: string
+    grok_pattern: GrokPattern
     text: string[]
   }
 }
