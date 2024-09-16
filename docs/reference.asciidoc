@@ -402,7 +402,7 @@ client.fieldCaps({ ... })
 ** *`index` (Optional, string | string[])*: List of data streams, indices, and aliases used to limit the request. Supports wildcards (*). To target all data streams and indices, omit this parameter or use * or _all.
 ** *`fields` (Optional, string | string[])*: List of fields to retrieve capabilities for. Wildcard (`*`) expressions are supported.
 ** *`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Allows to filter indices if the provided query rewrites to match_none on every shard.
-** *`runtime_mappings` (Optional, Record<string, { fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines ad-hoc runtime fields in the request similar to the way it is done in search requests.
+** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines ad-hoc runtime fields in the request similar to the way it is done in search requests.
 These fields exist only as part of the query and take precedence over fields defined with the same name in the index mappings.
 ** *`allow_no_indices` (Optional, boolean)*: If false, the request returns an error if any wildcard expression, index alias,
 or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request
@@ -750,6 +750,7 @@ client.openPointInTime({ index, keep_alive })
 * *Request (object):*
 ** *`index` (string | string[])*: A list of index names to open point in time; use `_all` or empty string to perform the operation on all indices
 ** *`keep_alive` (string | -1 | 0)*: Extends the time to live of the corresponding point in time.
+** *`index_filter` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Allows to filter indices if the provided query rewrites to `match_none` on every shard.
 ** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
 ** *`preference` (Optional, string)*: Specifies the node or shard the operation should be performed on.
 Random by default.
@@ -940,7 +941,7 @@ client.search({ ... })
 ** *`index` (Optional, string | string[])*: List of data streams, indices, and aliases to search.
 Supports wildcards (`*`).
 To search all data streams and indices, omit this parameter or use `*` or `_all`.
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Defines the aggregations that are run as part of the search request.
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Defines the aggregations that are run as part of the search request.
 ** *`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })*: Collapses search results the values of the specified field.
 ** *`explain` (Optional, boolean)*: If true, returns detailed information about score computation as part of a hit.
 ** *`ext` (Optional, Record<string, User-defined value>)*: Configuration of search extensions defined by Elasticsearch plugins.
@@ -999,7 +1000,7 @@ If this field is specified, the `_source` parameter defaults to `false`.
 You can pass `_source: true` to return both source fields and stored fields in the search response.
 ** *`pit` (Optional, { id, keep_alive })*: Limits the search to a point in time (PIT).
 If you provide a PIT, you cannot specify an `<index>` in the request path.
-** *`runtime_mappings` (Optional, Record<string, { fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request.
+** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request.
 These fields take precedence over mapped fields with the same name.
 ** *`stats` (Optional, string[])*: Stats groups to associate with the search.
 Each group maintains a statistics aggregation for its associated searches.
@@ -1098,7 +1099,7 @@ client.searchMvt({ index, field, zoom, x, y })
 ** *`zoom` (number)*: Zoom level for the vector tile to search
 ** *`x` (number)*: X coordinate for the vector tile to search
 ** *`y` (number)*: Y coordinate for the vector tile to search
-** *`aggs` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Sub-aggregations for the geotile_grid.
+** *`aggs` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Sub-aggregations for the geotile_grid.
 
 Supports the following aggregation types:
 - avg
@@ -1126,7 +1127,7 @@ each feature represents a geotile_grid cell. If 'grid' each feature is a Polygon
 of the cells bounding box. If 'point' each feature is a Point that is the centroid
 of the cell.
 ** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Query DSL used to filter documents for the search.
-** *`runtime_mappings` (Optional, Record<string, { fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request. These fields take
+** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request. These fields take
 precedence over mapped fields with the same name.
 ** *`size` (Optional, number)*: Maximum number of features to return in the hits layer. Accepts 0-10000.
 If 0, results don’t include the hits layer.
@@ -1477,7 +1478,7 @@ client.asyncSearch.submit({ ... })
 
 * *Request (object):*
 ** *`index` (Optional, string | string[])*: A list of index names to search; use `_all` or empty string to perform the operation on all indices
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*
 ** *`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })*
 ** *`explain` (Optional, boolean)*: If true, returns detailed information about score computation as part of a hit.
 ** *`ext` (Optional, Record<string, User-defined value>)*: Configuration of search extensions defined by Elasticsearch plugins.
@@ -1527,7 +1528,7 @@ parameter defaults to false. You can pass _source: true to return both source fi
 and stored fields in the search response.
 ** *`pit` (Optional, { id, keep_alive })*: Limits the search to a point in time (PIT). If you provide a PIT, you
 cannot specify an <index> in the request path.
-** *`runtime_mappings` (Optional, Record<string, { fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request. These fields take
+** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request. These fields take
 precedence over mapped fields with the same name.
 ** *`stats` (Optional, string[])*: Stats groups to associate with the search. Each group maintains a statistics
 aggregation for its associated searches. You can retrieve these stats using
@@ -3511,7 +3512,7 @@ client.eql.search({ index, query })
 ** *`size` (Optional, number)*: For basic queries, the maximum number of matching events to return. Defaults to 10
 ** *`fields` (Optional, { field, format, include_unmapped } | { field, format, include_unmapped }[])*: Array of wildcard (*) patterns. The response returns values for field names matching these patterns in the fields property of each hit.
 ** *`result_position` (Optional, Enum("tail" | "head"))*
-** *`runtime_mappings` (Optional, Record<string, { fetch_fields, format, input_field, target_field, target_index, script, type }>)*
+** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*
 ** *`allow_no_indices` (Optional, boolean)*
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*
 ** *`ignore_unavailable` (Optional, boolean)*: If true, missing or closed indices are not included in the response.
@@ -3565,7 +3566,7 @@ and its format can change at any time but it can give some insight into the perf
 of each part of the query.
 ** *`tables` (Optional, Record<string, Record<string, { integer, keyword, long, double }>>)*: Tables to use with the LOOKUP operation. The top level key is the table
 name and the next level key is the column name.
-** *`format` (Optional, string)*: A short version of the Accept header, e.g. json, yaml.
+** *`format` (Optional, Enum("csv" | "json" | "tsv" | "txt" | "yaml" | "cbor" | "smile" | "arrow"))*: A short version of the Accept header, e.g. json, yaml.
 ** *`delimiter` (Optional, string)*: The character to use between values within a CSV row. Only valid for the CSV format.
 ** *`drop_null_columns` (Optional, boolean)*: Should columns that are entirely `null` be removed from the `columns` and `values` portion of the results?
 Defaults to `false`. If `true` then the response will include an extra section under the name `all_columns` which has the name of all columns.
@@ -3668,7 +3669,7 @@ client.fleet.search({ index })
 
 * *Request (object):*
 ** *`index` (string | string)*: A single target to search. If the target is an index alias, it must resolve to a single index.
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*
 ** *`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })*
 ** *`explain` (Optional, boolean)*: If true, returns detailed information about score computation as part of a hit.
 ** *`ext` (Optional, Record<string, User-defined value>)*: Configuration of search extensions defined by Elasticsearch plugins.
@@ -3717,7 +3718,7 @@ parameter defaults to false. You can pass _source: true to return both source fi
 and stored fields in the search response.
 ** *`pit` (Optional, { id, keep_alive })*: Limits the search to a point in time (PIT). If you provide a PIT, you
 cannot specify an <index> in the request path.
-** *`runtime_mappings` (Optional, Record<string, { fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request. These fields take
+** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request. These fields take
 precedence over mapped fields with the same name.
 ** *`stats` (Optional, string[])*: Stats groups to associate with the search. Each group maintains a statistics
 aggregation for its associated searches. You can retrieve these stats using
@@ -4030,7 +4031,7 @@ If specified, the `analyzer` parameter overrides this value.
 ** *`normalizer` (Optional, string)*: Normalizer to use to convert text into a single token.
 ** *`text` (Optional, string | string[])*: Text to analyze.
 If an array of strings is provided, it is analyzed as a multi-value field.
-** *`tokenizer` (Optional, string | { type, tokenize_on_chars, max_token_length } | { type, custom_token_chars, max_gram, min_gram, token_chars } | { type, buffer_size } | { type } | { type } | { type, custom_token_chars, max_gram, min_gram, token_chars } | { type, decompound_mode, discard_punctuation, user_dictionary, user_dictionary_rules } | { type, buffer_size, delimiter, replacement, reverse, skip } | { type, max_token_length } | { type, max_token_length } | { type, max_token_length } | { type, discard_punctuation, mode, nbest_cost, nbest_examples, user_dictionary, user_dictionary_rules, discard_compound_token } | { type, flags, group, pattern } | { type, rule_files })*: Tokenizer to use to convert text into tokens.
+** *`tokenizer` (Optional, string | { type, tokenize_on_chars, max_token_length } | { type, max_token_length } | { type, custom_token_chars, max_gram, min_gram, token_chars } | { type, buffer_size } | { type } | { type } | { type, custom_token_chars, max_gram, min_gram, token_chars } | { type, buffer_size, delimiter, replacement, reverse, skip } | { type, flags, group, pattern } | { type, pattern } | { type, pattern } | { type, max_token_length } | { type } | { type, max_token_length } | { type, max_token_length } | { type, rule_files } | { type, discard_punctuation, mode, nbest_cost, nbest_examples, user_dictionary, user_dictionary_rules, discard_compound_token } | { type, decompound_mode, discard_punctuation, user_dictionary, user_dictionary_rules })*: Tokenizer to use to convert text into tokens.
 
 [discrete]
 ==== clear_cache
@@ -4671,6 +4672,7 @@ Wildcard (`*`) expressions are supported. If omitted, all data streams are retur
 Supports a list of values, such as `open,hidden`.
 ** *`include_defaults` (Optional, boolean)*: If true, returns all relevant default configurations for the index template.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
+** *`verbose` (Optional, boolean)*: Whether the maximum timestamp for each data stream should be calculated and returned.
 
 [discrete]
 ==== get_field_mapping
@@ -5061,7 +5063,7 @@ application-specific metadata.
 - Mapping parameters
 ** *`_routing` (Optional, { required })*: Enable making a routing value required on indexed documents.
 ** *`_source` (Optional, { compress, compress_threshold, enabled, excludes, includes, mode })*: Control whether the _source field is enabled on the index.
-** *`runtime` (Optional, Record<string, { fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Mapping of runtime fields for the index.
+** *`runtime` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Mapping of runtime fields for the index.
 ** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
 This behavior applies even if the request targets other open indices.
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of index that wildcard patterns can match.
@@ -5262,6 +5264,10 @@ Resources on remote clusters can be specified using the `<cluster>`:`<name>` syn
 If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
+** *`ignore_unavailable` (Optional, boolean)*: If `false`, the request returns an error if it targets a missing or closed index.
+** *`allow_no_indices` (Optional, boolean)*: If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
+This behavior applies even if the request targets other open indices.
+For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
 
 [discrete]
 ==== rollover
@@ -5805,9 +5811,11 @@ client.ingest.putPipeline({ id })
 ** *`id` (string)*: ID of the ingest pipeline to create or update.
 ** *`_meta` (Optional, Record<string, User-defined value>)*: Optional metadata about the ingest pipeline. May have any contents. This map is not automatically generated by Elasticsearch.
 ** *`description` (Optional, string)*: Description of the ingest pipeline.
-** *`on_failure` (Optional, { append, attachment, bytes, circle, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, foreach, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, pipeline, remove, rename, reroute, script, set, set_security_user, sort, split, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
-** *`processors` (Optional, { append, attachment, bytes, circle, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, foreach, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, pipeline, remove, rename, reroute, script, set, set_security_user, sort, split, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
+** *`on_failure` (Optional, { append, attachment, bytes, circle, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, pipeline, redact, remove, rename, reroute, script, set, set_security_user, sort, split, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
+** *`processors` (Optional, { append, attachment, bytes, circle, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, pipeline, redact, remove, rename, reroute, script, set, set_security_user, sort, split, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
 ** *`version` (Optional, number)*: Version number used by external systems to track ingest pipelines. This parameter is intended for external systems only. Elasticsearch does not use or validate pipeline version numbers.
+** *`deprecated` (Optional, boolean)*: Marks this ingest pipeline as deprecated.
+When a deprecated ingest pipeline is referenced as the default or final pipeline when creating or updating a non-deprecated index template, Elasticsearch will emit a deprecation warning.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`if_version` (Optional, number)*: Required version for optimistic concurrency control for pipeline updates
@@ -5829,7 +5837,7 @@ client.ingest.simulate({ docs })
 ** *`docs` ({ _id, _index, _source }[])*: Sample documents to test in the pipeline.
 ** *`id` (Optional, string)*: Pipeline to test.
 If you don’t specify a `pipeline` in the request body, this parameter is required.
-** *`pipeline` (Optional, { description, on_failure, processors, version, _meta })*: Pipeline to test.
+** *`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta })*: Pipeline to test.
 If you don’t specify the `pipeline` request path parameter, this parameter is required.
 If you specify both this and the request path parameter, the API only uses the request path parameter.
 ** *`verbose` (Optional, boolean)*: If `true`, the response includes output data for each processor in the executed pipeline.
@@ -5990,7 +5998,7 @@ client.logstash.putPipeline({ id })
 
 * *Request (object):*
 ** *`id` (string)*: Identifier for the pipeline.
-** *`pipeline` (Optional, { description, on_failure, processors, version, _meta })*
+** *`pipeline` (Optional, { description, on_failure, processors, version, deprecated, _meta })*
 
 [discrete]
 === migration
@@ -7358,7 +7366,7 @@ client.ml.putDatafeed({ datafeed_id })
 ** *`datafeed_id` (string)*: A numerical character string that uniquely identifies the datafeed.
 This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.
 It must start and end with alphanumeric characters.
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: If set, the datafeed performs aggregation searches.
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: If set, the datafeed performs aggregation searches.
 Support for aggregations is limited and should be used only with low cardinality data.
 ** *`chunking_config` (Optional, { mode, time_span })*: Datafeeds might be required to search over long time periods, for several months or years.
 This search is split into time chunks in order to ensure the load on Elasticsearch is managed.
@@ -7389,7 +7397,7 @@ object is passed verbatim to Elasticsearch.
 not be searchable in Elasticsearch until 10:06 a.m., set this property to 120 seconds. The default
 value is randomly selected between `60s` and `120s`. This randomness improves the query performance
 when there are multiple jobs running on the same node.
-** *`runtime_mappings` (Optional, Record<string, { fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Specifies runtime fields for the datafeed search.
+** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Specifies runtime fields for the datafeed search.
 ** *`script_fields` (Optional, Record<string, { script, ignore_failure }>)*: Specifies scripts that evaluate custom expressions and returns script fields to the datafeed.
 The detector configuration objects in a job can contain functions that use these script fields.
 ** *`scroll_size` (Optional, number)*: The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
@@ -7894,7 +7902,7 @@ client.ml.updateDatafeed({ datafeed_id })
 ** *`datafeed_id` (string)*: A numerical character string that uniquely identifies the datafeed.
 This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.
 It must start and end with alphanumeric characters.
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: If set, the datafeed performs aggregation searches. Support for aggregations is limited and should be used only
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: If set, the datafeed performs aggregation searches. Support for aggregations is limited and should be used only
 with low cardinality data.
 ** *`chunking_config` (Optional, { mode, time_span })*: Datafeeds might search over long time periods, for several months or years. This search is split into time
 chunks in order to ensure the load on Elasticsearch is managed. Chunking configuration controls how the size of
@@ -7928,7 +7936,7 @@ when you are satisfied with the results of the job.
 not be searchable in Elasticsearch until 10:06 a.m., set this property to 120 seconds. The default
 value is randomly selected between `60s` and `120s`. This randomness improves the query performance
 when there are multiple jobs running on the same node.
-** *`runtime_mappings` (Optional, Record<string, { fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Specifies runtime fields for the datafeed search.
+** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Specifies runtime fields for the datafeed search.
 ** *`script_fields` (Optional, Record<string, { script, ignore_failure }>)*: Specifies scripts that evaluate custom expressions and returns script fields to the datafeed.
 The detector configuration objects in a job can contain functions that use these script fields.
 ** *`scroll_size` (Optional, number)*: The size parameter that is used in Elasticsearch searches when the datafeed does not use aggregations.
@@ -8531,7 +8539,7 @@ client.rollup.rollupSearch({ index })
 
 * *Request (object):*
 ** *`index` (string | string[])*: Enables searching rolled-up data using the standard Query DSL.
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Specifies aggregations.
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Specifies aggregations.
 ** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Specifies a DSL query.
 ** *`size` (Optional, number)*: Must be zero if set, as rollups work on pre-aggregated data.
 ** *`rest_total_hits_as_int` (Optional, boolean)*: Indicates whether hits.total should be rendered as an integer or an object in the rest search response
@@ -10588,7 +10596,7 @@ It ignores other request body parameters.
 ** *`page_timeout` (Optional, string | -1 | 0)*: The timeout before a pagination request fails.
 ** *`time_zone` (Optional, string)*: ISO-8601 time zone ID for the search.
 ** *`field_multi_value_leniency` (Optional, boolean)*: Throw an exception when encountering multiple values for a field (default) or be lenient and return the first value from the list (without any guarantees of what that will be - typically the first in natural ascending order).
-** *`runtime_mappings` (Optional, Record<string, { fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request. These fields take
+** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*: Defines one or more runtime fields in the search request. These fields take
 precedence over mapped fields with the same name.
 ** *`wait_for_completion_timeout` (Optional, string | -1 | 0)*: Period to wait for complete results. Defaults to no timeout, meaning the request waits for complete search results. If the search doesn’t finish within this period, the search becomes async.
 ** *`params` (Optional, Record<string, User-defined value>)*: Values for parameters in the query.
