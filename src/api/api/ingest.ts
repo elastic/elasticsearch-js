@@ -301,7 +301,7 @@ export default class Ingest {
   async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptions): Promise<T.IngestPutPipelineResponse>
   async putPipeline (this: That, params: T.IngestPutPipelineRequest | TB.IngestPutPipelineRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
-    const acceptedBody: string[] = ['_meta', 'description', 'on_failure', 'processors', 'version']
+    const acceptedBody: string[] = ['_meta', 'description', 'on_failure', 'processors', 'version', 'deprecated']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

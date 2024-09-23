@@ -47,11 +47,23 @@ export default async function OpenPointInTimeApi (this: That, params: T.OpenPoin
 export default async function OpenPointInTimeApi (this: That, params: T.OpenPointInTimeRequest | TB.OpenPointInTimeRequest, options?: TransportRequestOptions): Promise<T.OpenPointInTimeResponse>
 export default async function OpenPointInTimeApi (this: That, params: T.OpenPointInTimeRequest | TB.OpenPointInTimeRequest, options?: TransportRequestOptions): Promise<any> {
   const acceptedPath: string[] = ['index']
+  const acceptedBody: string[] = ['index_filter']
   const querystring: Record<string, any> = {}
-  const body = undefined
+  // @ts-expect-error
+  const userBody: any = params?.body
+  let body: Record<string, any> | string
+  if (typeof userBody === 'string') {
+    body = userBody
+  } else {
+    body = userBody != null ? { ...userBody } : undefined
+  }
 
   for (const key in params) {
-    if (acceptedPath.includes(key)) {
+    if (acceptedBody.includes(key)) {
+      body = body ?? {}
+      // @ts-expect-error
+      body[key] = params[key]
+    } else if (acceptedPath.includes(key)) {
       continue
     } else if (key !== 'body') {
       // @ts-expect-error
