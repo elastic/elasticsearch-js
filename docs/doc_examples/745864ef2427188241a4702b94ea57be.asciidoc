@@ -11,7 +11,7 @@ const response = await client.search({
       filter: {
         range: {
           price: {
-            to: "500",
+            lte: "500",
           },
         },
       },

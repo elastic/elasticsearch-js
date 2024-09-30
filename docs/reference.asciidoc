@@ -5579,6 +5579,8 @@ client.inference.put({ inference_id })
 [discrete]
 ==== delete_geoip_database
 Deletes a geoip database configuration.
+
+{ref}/delete-geoip-database-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.deleteGeoipDatabase({ id })
@@ -5628,6 +5630,8 @@ client.ingest.geoIpStats()
 [discrete]
 ==== get_geoip_database
 Returns information about one or more geoip database configurations.
+
+{ref}/get-geoip-database-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.getGeoipDatabase({ ... })
@@ -5681,6 +5685,8 @@ client.ingest.processorGrok()
 [discrete]
 ==== put_geoip_database
 Returns information about one or more geoip database configurations.
+
+{ref}/put-geoip-database-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.putGeoipDatabase({ id, name, maxmind })
