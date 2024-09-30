@@ -1685,7 +1685,7 @@ export default class Security {
   async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<T.SecurityPutRoleResponse>
   async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['name']
-    const acceptedBody: string[] = ['applications', 'cluster', 'global', 'indices', 'metadata', 'run_as', 'description', 'transient_metadata']
+    const acceptedBody: string[] = ['applications', 'cluster', 'global', 'indices', 'remote_indices', 'metadata', 'run_as', 'description', 'transient_metadata']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body
