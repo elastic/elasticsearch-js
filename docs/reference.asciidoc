@@ -941,7 +941,7 @@ client.search({ ... })
 ** *`index` (Optional, string | string[])*: List of data streams, indices, and aliases to search.
 Supports wildcards (`*`).
 To search all data streams and indices, omit this parameter or use `*` or `_all`.
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Defines the aggregations that are run as part of the search request.
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Defines the aggregations that are run as part of the search request.
 ** *`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })*: Collapses search results the values of the specified field.
 ** *`explain` (Optional, boolean)*: If true, returns detailed information about score computation as part of a hit.
 ** *`ext` (Optional, Record<string, User-defined value>)*: Configuration of search extensions defined by Elasticsearch plugins.
@@ -1099,7 +1099,7 @@ client.searchMvt({ index, field, zoom, x, y })
 ** *`zoom` (number)*: Zoom level for the vector tile to search
 ** *`x` (number)*: X coordinate for the vector tile to search
 ** *`y` (number)*: Y coordinate for the vector tile to search
-** *`aggs` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Sub-aggregations for the geotile_grid.
+** *`aggs` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Sub-aggregations for the geotile_grid.
 
 Supports the following aggregation types:
 - avg
@@ -1478,7 +1478,7 @@ client.asyncSearch.submit({ ... })
 
 * *Request (object):*
 ** *`index` (Optional, string | string[])*: A list of index names to search; use `_all` or empty string to perform the operation on all indices
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*
 ** *`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })*
 ** *`explain` (Optional, boolean)*: If true, returns detailed information about score computation as part of a hit.
 ** *`ext` (Optional, Record<string, User-defined value>)*: Configuration of search extensions defined by Elasticsearch plugins.
@@ -3669,7 +3669,7 @@ client.fleet.search({ index })
 
 * *Request (object):*
 ** *`index` (string | string)*: A single target to search. If the target is an index alias, it must resolve to a single index.
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*
 ** *`collapse` (Optional, { field, inner_hits, max_concurrent_group_searches, collapse })*
 ** *`explain` (Optional, boolean)*: If true, returns detailed information about score computation as part of a hit.
 ** *`ext` (Optional, Record<string, User-defined value>)*: Configuration of search extensions defined by Elasticsearch plugins.
@@ -5056,7 +5056,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 ** *`numeric_detection` (Optional, boolean)*: Automatically map strings into numeric data types for all fields.
-** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, element_type, dims, similarity, index, index_options } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { type, meta, inference_id } | { type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type } | { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)*: Mapping for a field. For new fields, this mapping can include:
+** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, element_type, dims, similarity, index, index_options } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { type, meta, inference_id } | { type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type } | { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)*: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -5674,6 +5674,8 @@ client.inference.put({ inference_id })
 [discrete]
 ==== delete_geoip_database
 Deletes a geoip database configuration.
+
+{ref}/delete-geoip-database-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.deleteGeoipDatabase({ id })
@@ -5723,6 +5725,8 @@ client.ingest.geoIpStats()
 [discrete]
 ==== get_geoip_database
 Returns information about one or more geoip database configurations.
+
+{ref}/get-geoip-database-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.getGeoipDatabase({ ... })
@@ -5776,6 +5780,8 @@ client.ingest.processorGrok()
 [discrete]
 ==== put_geoip_database
 Returns information about one or more geoip database configurations.
+
+{ref}/put-geoip-database-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.ingest.putGeoipDatabase({ id, name, maxmind })
@@ -7154,7 +7160,7 @@ client.ml.postCalendarEvents({ calendar_id, events })
 
 * *Request (object):*
 ** *`calendar_id` (string)*: A string that uniquely identifies a calendar.
-** *`events` ({ calendar_id, event_id, description, end_time, start_time }[])*: A list of one of more scheduled events. The event’s start and end times can be specified as integer milliseconds since the epoch or as a string in ISO 8601 format.
+** *`events` ({ calendar_id, event_id, description, end_time, start_time, skip_result, skip_model_update, force_time_shift }[])*: A list of one of more scheduled events. The event’s start and end times can be specified as integer milliseconds since the epoch or as a string in ISO 8601 format.
 
 [discrete]
 ==== post_data
@@ -7366,7 +7372,7 @@ client.ml.putDatafeed({ datafeed_id })
 ** *`datafeed_id` (string)*: A numerical character string that uniquely identifies the datafeed.
 This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.
 It must start and end with alphanumeric characters.
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: If set, the datafeed performs aggregation searches.
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: If set, the datafeed performs aggregation searches.
 Support for aggregations is limited and should be used only with low cardinality data.
 ** *`chunking_config` (Optional, { mode, time_span })*: Datafeeds might be required to search over long time periods, for several months or years.
 This search is split into time chunks in order to ensure the load on Elasticsearch is managed.
@@ -7902,7 +7908,7 @@ client.ml.updateDatafeed({ datafeed_id })
 ** *`datafeed_id` (string)*: A numerical character string that uniquely identifies the datafeed.
 This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.
 It must start and end with alphanumeric characters.
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: If set, the datafeed performs aggregation searches. Support for aggregations is limited and should be used only
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: If set, the datafeed performs aggregation searches. Support for aggregations is limited and should be used only
 with low cardinality data.
 ** *`chunking_config` (Optional, { mode, time_span })*: Datafeeds might search over long time periods, for several months or years. This search is split into time
 chunks in order to ensure the load on Elasticsearch is managed. Chunking configuration controls how the size of
@@ -8539,7 +8545,7 @@ client.rollup.rollupSearch({ index })
 
 * *Request (object):*
 ** *`index` (string | string[])*: Enables searching rolled-up data using the standard Query DSL.
-** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Specifies aggregations.
+** *`aggregations` (Optional, Record<string, { aggregations, meta, adjacency_matrix, auto_date_histogram, avg, avg_bucket, boxplot, bucket_script, bucket_selector, bucket_sort, bucket_count_ks_test, bucket_correlation, cardinality, categorize_text, children, composite, cumulative_cardinality, cumulative_sum, date_histogram, date_range, derivative, diversified_sampler, extended_stats, extended_stats_bucket, frequent_item_sets, filter, filters, geo_bounds, geo_centroid, geo_distance, geohash_grid, geo_line, geotile_grid, geohex_grid, global, histogram, ip_range, ip_prefix, inference, line, matrix_stats, max, max_bucket, median_absolute_deviation, min, min_bucket, missing, moving_avg, moving_percentiles, moving_fn, multi_terms, nested, normalize, parent, percentile_ranks, percentiles, percentiles_bucket, range, rare_terms, rate, reverse_nested, random_sampler, sampler, scripted_metric, serial_diff, significant_terms, significant_text, stats, stats_bucket, string_stats, sum, sum_bucket, terms, time_series, top_hits, t_test, top_metrics, value_count, weighted_avg, variable_width_histogram }>)*: Specifies aggregations.
 ** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Specifies a DSL query.
 ** *`size` (Optional, number)*: Must be zero if set, as rollups work on pre-aggregated data.
 ** *`rest_total_hits_as_int` (Optional, boolean)*: Indicates whether hits.total should be rendered as an integer or an object in the rest search response
@@ -8585,7 +8591,8 @@ If set to `false`, the API returns immediately and the indexer is stopped asynch
 === search_application
 [discrete]
 ==== delete
-Deletes a search application.
+Delete a search application.
+Remove a search application and its associated alias. Indices attached to the search application are not removed.
 
 {ref}/delete-search-application.html[Endpoint documentation]
 [source,ts]
@@ -8602,6 +8609,7 @@ client.searchApplication.delete({ name })
 [discrete]
 ==== delete_behavioral_analytics
 Delete a behavioral analytics collection.
+The associated data stream is also deleted.
 
 {ref}/delete-analytics-collection.html[Endpoint documentation]
 [source,ts]
@@ -8617,7 +8625,7 @@ client.searchApplication.deleteBehavioralAnalytics({ name })
 
 [discrete]
 ==== get
-Returns the details about a search application
+Get search application details.
 
 {ref}/get-search-application.html[Endpoint documentation]
 [source,ts]
@@ -8633,7 +8641,7 @@ client.searchApplication.get({ name })
 
 [discrete]
 ==== get_behavioral_analytics
-Returns the existing behavioral analytics collections.
+Get behavioral analytics collections.
 
 {ref}/list-analytics-collection.html[Endpoint documentation]
 [source,ts]
@@ -8678,7 +8686,7 @@ client.searchApplication.postBehavioralAnalyticsEvent()
 
 [discrete]
 ==== put
-Creates or updates a search application.
+Create or update a search application.
 
 {ref}/put-search-application.html[Endpoint documentation]
 [source,ts]
@@ -8696,7 +8704,7 @@ client.searchApplication.put({ name })
 
 [discrete]
 ==== put_behavioral_analytics
-Creates a behavioral analytics collection.
+Create a behavioral analytics collection.
 
 {ref}/put-analytics-collection.html[Endpoint documentation]
 [source,ts]
@@ -8723,7 +8731,9 @@ client.searchApplication.renderQuery()
 
 [discrete]
 ==== search
-Perform a search against a search application.
+Run a search application search.
+Generate and run an Elasticsearch query that uses the specified query parameteter and the search template associated with the search application or default template.
+Unspecified template parameters are assigned their default values if applicable.
 
 {ref}/search-application-search.html[Endpoint documentation]
 [source,ts]
@@ -9662,6 +9672,7 @@ client.security.putRole({ name })
 ** *`cluster` (Optional, Enum("all" | "cancel_task" | "create_snapshot" | "cross_cluster_replication" | "cross_cluster_search" | "delegate_pki" | "grant_api_key" | "manage" | "manage_api_key" | "manage_autoscaling" | "manage_behavioral_analytics" | "manage_ccr" | "manage_data_frame_transforms" | "manage_data_stream_global_retention" | "manage_enrich" | "manage_ilm" | "manage_index_templates" | "manage_inference" | "manage_ingest_pipelines" | "manage_logstash_pipelines" | "manage_ml" | "manage_oidc" | "manage_own_api_key" | "manage_pipeline" | "manage_rollup" | "manage_saml" | "manage_search_application" | "manage_search_query_rules" | "manage_search_synonyms" | "manage_security" | "manage_service_account" | "manage_slm" | "manage_token" | "manage_transform" | "manage_user_profile" | "manage_watcher" | "monitor" | "monitor_data_frame_transforms" | "monitor_data_stream_global_retention" | "monitor_enrich" | "monitor_inference" | "monitor_ml" | "monitor_rollup" | "monitor_snapshot" | "monitor_text_structure" | "monitor_transform" | "monitor_watcher" | "none" | "post_behavioral_analytics_event" | "read_ccr" | "read_fleet_secrets" | "read_ilm" | "read_pipeline" | "read_security" | "read_slm" | "transport_client" | "write_connector_secrets" | "write_fleet_secrets")[])*: A list of cluster privileges. These privileges define the cluster-level actions for users with this role.
 ** *`global` (Optional, Record<string, User-defined value>)*: An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges.
 ** *`indices` (Optional, { field_security, names, privileges, query, allow_restricted_indices }[])*: A list of indices permissions entries.
+** *`remote_indices` (Optional, { clusters, field_security, names, privileges, query, allow_restricted_indices }[])*: A list of remote indices permissions entries.
 ** *`metadata` (Optional, Record<string, User-defined value>)*: Optional metadata. Within the metadata object, keys that begin with an underscore (`_`) are reserved for system use.
 ** *`run_as` (Optional, string[])*: A list of users that the owners of this role can impersonate. *Note*: in Serverless, the run-as feature is disabled. For API compatibility, you can still specify an empty `run_as` field, but a non-empty list will be rejected.
 ** *`description` (Optional, string)*: Optional description of the role descriptor
@@ -10603,7 +10614,7 @@ precedence over mapped fields with the same name.
 ** *`keep_alive` (Optional, string | -1 | 0)*: Retention period for an async or saved synchronous search.
 ** *`keep_on_completion` (Optional, boolean)*: If true, Elasticsearch stores synchronous searches if you also specify the wait_for_completion_timeout parameter. If false, Elasticsearch only stores async searches that don’t finish before the wait_for_completion_timeout.
 ** *`index_using_frozen` (Optional, boolean)*: If true, the search can run on frozen indices. Defaults to false.
-** *`format` (Optional, string)*: Format for the response.
+** *`format` (Optional, Enum("csv" | "json" | "tsv" | "txt" | "yaml" | "cbor" | "smile"))*: Format for the response.
 
 [discrete]
 ==== translate
@@ -11500,7 +11511,7 @@ client.xpack.info({ ... })
 ==== Arguments
 
 * *Request (object):*
-** *`categories` (Optional, string[])*: A list of the information categories to include in the response. For example, `build,license,features`.
+** *`categories` (Optional, Enum("build" | "features" | "license")[])*: A list of the information categories to include in the response. For example, `build,license,features`.
 ** *`accept_enterprise` (Optional, boolean)*: If this param is used it must be set to true
 ** *`human` (Optional, boolean)*: Defines whether additional human-readable information is included in the response. In particular, it adds descriptions and a tag line.
 
