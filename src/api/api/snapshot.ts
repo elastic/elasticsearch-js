@@ -375,6 +375,38 @@ export default class Snapshot {
   }
 
   /**
+    * Verifies the integrity of the contents of a snapshot repository
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
+    */
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SnapshotRepositoryVerifyIntegrityResponse>
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SnapshotRepositoryVerifyIntegrityResponse, unknown>>
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptions): Promise<T.SnapshotRepositoryVerifyIntegrityResponse>
+  async repositoryVerifyIntegrity (this: That, params: T.SnapshotRepositoryVerifyIntegrityRequest | TB.SnapshotRepositoryVerifyIntegrityRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['name']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_snapshot/${encodeURIComponent(params.name.toString())}/_verify_integrity`
+    const meta: TransportRequestMetadata = {
+      name: 'snapshot.repository_verify_integrity',
+      pathParts: {
+        name: params.name
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Restores a snapshot.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html | Elasticsearch API documentation}
     */

@@ -45,7 +45,7 @@ export default class SearchApplication {
   }
 
   /**
-    * Deletes a search application.
+    * Delete a search application. Remove a search application and its associated alias. Indices attached to the search application are not removed.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-search-application.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.SearchApplicationDeleteRequest | TB.SearchApplicationDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationDeleteResponse>
@@ -77,7 +77,7 @@ export default class SearchApplication {
   }
 
   /**
-    * Delete a behavioral analytics collection.
+    * Delete a behavioral analytics collection. The associated data stream is also deleted.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-analytics-collection.html | Elasticsearch API documentation}
     */
   async deleteBehavioralAnalytics (this: That, params: T.SearchApplicationDeleteBehavioralAnalyticsRequest | TB.SearchApplicationDeleteBehavioralAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationDeleteBehavioralAnalyticsResponse>
@@ -109,7 +109,7 @@ export default class SearchApplication {
   }
 
   /**
-    * Returns the details about a search application
+    * Get search application details.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-search-application.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.SearchApplicationGetRequest | TB.SearchApplicationGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationGetResponse>
@@ -141,7 +141,7 @@ export default class SearchApplication {
   }
 
   /**
-    * Returns the existing behavioral analytics collections.
+    * Get behavioral analytics collections.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/list-analytics-collection.html | Elasticsearch API documentation}
     */
   async getBehavioralAnalytics (this: That, params?: T.SearchApplicationGetBehavioralAnalyticsRequest | TB.SearchApplicationGetBehavioralAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationGetBehavioralAnalyticsResponse>
@@ -244,7 +244,7 @@ export default class SearchApplication {
   }
 
   /**
-    * Creates or updates a search application.
+    * Create or update a search application.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-search-application.html | Elasticsearch API documentation}
     */
   async put (this: That, params: T.SearchApplicationPutRequest | TB.SearchApplicationPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationPutResponse>
@@ -281,7 +281,7 @@ export default class SearchApplication {
   }
 
   /**
-    * Creates a behavioral analytics collection.
+    * Create a behavioral analytics collection.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-analytics-collection.html | Elasticsearch API documentation}
     */
   async putBehavioralAnalytics (this: That, params: T.SearchApplicationPutBehavioralAnalyticsRequest | TB.SearchApplicationPutBehavioralAnalyticsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationPutBehavioralAnalyticsResponse>
@@ -345,7 +345,7 @@ export default class SearchApplication {
   }
 
   /**
-    * Perform a search against a search application.
+    * Run a search application search. Generate and run an Elasticsearch query that uses the specified query parameteter and the search template associated with the search application or default template. Unspecified template parameters are assigned their default values if applicable.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-application-search.html | Elasticsearch API documentation}
     */
   async search<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.SearchApplicationSearchRequest | TB.SearchApplicationSearchRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchApplicationSearchResponse<TDocument, TAggregations>>
