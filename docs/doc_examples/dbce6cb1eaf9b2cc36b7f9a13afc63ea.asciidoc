@@ -33,6 +33,25 @@ const response = await client.simulate.ingest({
         ],
       },
     },
+    component_template_substitutions: {
+      "my-component-template": {
+        template: {
+          mappings: {
+            dynamic: "true",
+            properties: {
+              field3: {
+                type: "keyword",
+              },
+            },
+          },
+          settings: {
+            index: {
+              default_pipeline: "my-pipeline",
+            },
+          },
+        },
+      },
+    },
   },
 });
 console.log(response);
