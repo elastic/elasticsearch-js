@@ -9,7 +9,11 @@ const response = await client.inference.put({
   inference_config: {
     service: "elser",
     service_settings: {
-      num_allocations: 1,
+      adaptive_allocations: {
+        enabled: true,
+        min_number_of_allocations: 3,
+        max_number_of_allocations: 10,
+      },
       num_threads: 1,
     },
   },

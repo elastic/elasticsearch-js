@@ -17,7 +17,7 @@ const response = await client.search({
         {
           range: {
             "result.execution_time": {
-              from: "now-10s",
+              gte: "now-10s",
             },
           },
         },
