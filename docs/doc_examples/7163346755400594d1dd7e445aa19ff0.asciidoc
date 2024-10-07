@@ -4,17 +4,7 @@
 [source, js]
 ----
 const response = await client.search({
-  index: "my-index",
-  query: {
-    semantic: {
-      field: "inference_field",
-      query: "mountain lake",
-      inner_hits: {
-        from: 1,
-        size: 1,
-      },
-    },
-  },
+  index: "music",
 });
 console.log(response);
 ----
