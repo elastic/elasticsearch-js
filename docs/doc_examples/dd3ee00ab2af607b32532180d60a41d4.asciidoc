@@ -16,7 +16,7 @@ const response = await client.indices.create({
       filter: {
         my_snow: {
           type: "snowball",
-          language: "Lovins",
+          language: "English",
         },
       },
     },
