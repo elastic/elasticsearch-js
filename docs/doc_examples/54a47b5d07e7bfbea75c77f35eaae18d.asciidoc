@@ -3,13 +3,11 @@
 
 [source, js]
 ----
-const response = await client.search({
-  index: "my-index",
-  query: {
-    semantic: {
-      field: "inference_field",
-      query: "mountain lake",
-      inner_hits: {},
+const response = await client.indices.putMapping({
+  index: ".elastic-connectors-sync-jobs-v1",
+  properties: {
+    job_type: {
+      type: "keyword",
     },
   },
 });
