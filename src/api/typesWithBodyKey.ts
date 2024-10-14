@@ -2815,7 +2815,7 @@ export interface ShardStatistics {
 }
 
 export interface ShardsOperationResponseBase {
-  _shards: ShardStatistics
+  _shards?: ShardStatistics
 }
 
 export interface SlicedScroll {
@@ -3075,6 +3075,7 @@ export interface AggregationsAggregationContainer {
   rare_terms?: AggregationsRareTermsAggregation
   rate?: AggregationsRateAggregation
   reverse_nested?: AggregationsReverseNestedAggregation
+  random_sampler?: AggregationsRandomSamplerAggregation
   sampler?: AggregationsSamplerAggregation
   scripted_metric?: AggregationsScriptedMetricAggregation
   serial_diff?: AggregationsSerialDifferencingAggregation
@@ -3960,6 +3961,12 @@ export interface AggregationsPercentilesBucketAggregation extends AggregationsPi
 export interface AggregationsPipelineAggregationBase extends AggregationsBucketPathAggregation {
   format?: string
   gap_policy?: AggregationsGapPolicy
+}
+
+export interface AggregationsRandomSamplerAggregation extends AggregationsBucketAggregationBase {
+  probability: double
+  seed?: integer
+  shard_seed?: integer
 }
 
 export interface AggregationsRangeAggregate extends AggregationsMultiBucketAggregateBase<AggregationsRangeBucket> {
@@ -10454,16 +10461,16 @@ export interface IlmMoveToStepRequest extends RequestBase {
   index: IndexName
   /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
   body?: {
-    current_step?: IlmMoveToStepStepKey
-    next_step?: IlmMoveToStepStepKey
+    current_step: IlmMoveToStepStepKey
+    next_step: IlmMoveToStepStepKey
   }
 }
 
 export type IlmMoveToStepResponse = AcknowledgedResponseBase
 
 export interface IlmMoveToStepStepKey {
-  action: string
-  name: string
+  action?: string
+  name?: string
   phase: string
 }
 
@@ -10590,6 +10597,7 @@ export interface IndicesDataStreamTimestampField {
 
 export interface IndicesDataStreamVisibility {
   hidden?: boolean
+  allow_custom_routing?: boolean
 }
 
 export interface IndicesDownsampleConfig {
