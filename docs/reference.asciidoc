@@ -2810,7 +2810,7 @@ client.cluster.stats({ ... })
 
 * *Request (object):*
 ** *`node_id` (Optional, string | string[])*: List of node filters used to limit returned information. Defaults to all nodes in the cluster.
-** *`flat_settings` (Optional, boolean)*: If `true`, returns settings in flat format.
+** *`include_remotes` (Optional, boolean)*: Include remote cluster data into the response
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for each node to respond.
 If a node does not respond before its timeout expires, the response does not include its stats.
 However, timed out nodes are included in the response’s `_nodes.failed` property. Defaults to no timeout.
@@ -3882,7 +3882,7 @@ Manually moves an index into the specified step and executes that step.
 {ref}/ilm-move-to-step.html[Endpoint documentation]
 [source,ts]
 ----
-client.ilm.moveToStep({ index })
+client.ilm.moveToStep({ index, current_step, next_step })
 ----
 
 [discrete]
@@ -3890,8 +3890,8 @@ client.ilm.moveToStep({ index })
 
 * *Request (object):*
 ** *`index` (string)*: The name of the index whose lifecycle step is to change
-** *`current_step` (Optional, { action, name, phase })*
-** *`next_step` (Optional, { action, name, phase })*
+** *`current_step` ({ action, name, phase })*
+** *`next_step` ({ action, name, phase })*
 
 [discrete]
 ==== put_lifecycle
@@ -5003,7 +5003,7 @@ client.indices.putIndexTemplate({ name })
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
 ** *`template` (Optional, { aliases, mappings, settings, lifecycle })*: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
-** *`data_stream` (Optional, { hidden })*: If this object is included, the template is used to create data streams and their backing indices.
+** *`data_stream` (Optional, { hidden, allow_custom_routing })*: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
 Data streams require a matching index template with a `data_stream` object.
 ** *`priority` (Optional, number)*: Priority to determine index template precedence when a new data stream or index is created.
@@ -5428,7 +5428,7 @@ If set to `false`, then indices or data streams matching the template must alway
 Component templates are merged in the order specified, meaning that the last component template specified has the highest precedence.
 ** *`template` (Optional, { aliases, mappings, settings, lifecycle })*: Template to be applied.
 It may optionally include an `aliases`, `mappings`, or `settings` configuration.
-** *`data_stream` (Optional, { hidden })*: If this object is included, the template is used to create data streams and their backing indices.
+** *`data_stream` (Optional, { hidden, allow_custom_routing })*: If this object is included, the template is used to create data streams and their backing indices.
 Supports an empty object.
 Data streams require a matching index template with a `data_stream` object.
 ** *`priority` (Optional, number)*: Priority to determine index template precedence when a new data stream or index is created.
