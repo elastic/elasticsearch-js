@@ -2,6 +2,17 @@
 == Release notes
 
 [discrete]
+=== 8.15.1
+
+[discrete]
+==== Features
+
+[discrete]
+===== Improved support for Elasticsearch `v8.15`
+
+Updated TypeScript types based on fixes and improvements to the Elasticsearch specification.
+
+[discrete]
 === 8.15.0
 
 [discrete]
