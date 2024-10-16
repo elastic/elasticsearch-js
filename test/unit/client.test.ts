@@ -482,3 +482,49 @@ test('Ensure new client does not time out at default (30s) when client sets requ
     t.end()
   }
 })
+
+test('Pass disablePrototypePoisoningProtection option to serializer', async t => {
+  let client = new Client({
+    node: 'http://localhost:9200',
+    disablePrototypePoisoningProtection: false
+  })
+  t.same(client.serializer[symbols.kJsonOptions], {
+    protoAction: 'error',
+    constructorAction: 'error'
+  })
+
+  client = new Client({
+    node: 'http://localhost:9200',
+    disablePrototypePoisoningProtection: true
+  })
+  t.same(client.serializer[symbols.kJsonOptions], {
+    protoAction: 'ignore',
+    constructorAction: 'ignore'
+  })
+
+  client = new Client({
+    node: 'http://localhost:9200',
+    disablePrototypePoisoningProtection: 'proto'
+  })
+  t.same(client.serializer[symbols.kJsonOptions], {
+    protoAction: 'error',
+    constructorAction: 'ignore'
+  })
+
+  client = new Client({
+    node: 'http://localhost:9200',
+    disablePrototypePoisoningProtection: 'constructor'
+  })
+  t.same(client.serializer[symbols.kJsonOptions], {
+    protoAction: 'ignore',
+    constructorAction: 'error'
+  })
+})
+
+test('disablePrototypePoisoningProtection is true by default', async t => {
+  const client = new Client({ node: 'http://localhost:9200' })
+  t.same(client.serializer[symbols.kJsonOptions], {
+    protoAction: 'ignore',
+    constructorAction: 'ignore'
+  })
+})
