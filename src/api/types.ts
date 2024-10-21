@@ -9328,7 +9328,7 @@ export interface ConnectorFeatureEnabled {
 export interface ConnectorFilteringAdvancedSnippet {
   created_at?: DateTime
   updated_at?: DateTime
-  value: Record<string, any>
+  value: any
 }
 
 export interface ConnectorFilteringConfig {
@@ -16216,7 +16216,7 @@ export interface NodesInfoNodeInfoXpackLicenseType {
 }
 
 export interface NodesInfoNodeInfoXpackSecurity {
-  http: NodesInfoNodeInfoXpackSecuritySsl
+  http?: NodesInfoNodeInfoXpackSecuritySsl
   enabled: string
   transport?: NodesInfoNodeInfoXpackSecuritySsl
   authc?: NodesInfoNodeInfoXpackSecurityAuthc
@@ -18323,7 +18323,8 @@ export interface SnapshotRestoreRequest extends RequestBase {
 }
 
 export interface SnapshotRestoreResponse {
-  snapshot: SnapshotRestoreSnapshotRestore
+  accepted?: boolean
+  snapshot?: SnapshotRestoreSnapshotRestore
 }
 
 export interface SnapshotRestoreSnapshotRestore {
