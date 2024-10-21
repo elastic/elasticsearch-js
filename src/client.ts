@@ -228,7 +228,21 @@ export default class Client extends API {
       this.diagnostic = opts[kChild].diagnostic
     } else {
       this.diagnostic = new Diagnostic()
-      this.serializer = new options.Serializer()
+
+      let serializerOptions
+      if (opts.disablePrototypePoisoningProtection != null) {
+        if (typeof opts.disablePrototypePoisoningProtection === 'boolean') {
+          serializerOptions = {
+            enablePrototypePoisoningProtection: !opts.disablePrototypePoisoningProtection
+          }
+        } else {
+          serializerOptions = {
+            enablePrototypePoisoningProtection: opts.disablePrototypePoisoningProtection
+          }
+        }
+      }
+      this.serializer = new options.Serializer(serializerOptions)
+
       this.connectionPool = new options.ConnectionPool({
         pingTimeout: options.pingTimeout,
         resurrectStrategy: options.resurrectStrategy,
