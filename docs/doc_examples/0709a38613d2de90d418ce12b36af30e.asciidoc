@@ -3,8 +3,6 @@
 
 [source, js]
 ----
-const response = await client.snapshot.repositoryVerifyIntegrity({
-  name: "my_repository",
-});
+const response = await client.cluster.reroute();
 console.log(response);
 ----

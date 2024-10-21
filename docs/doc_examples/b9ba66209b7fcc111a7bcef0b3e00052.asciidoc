@@ -3,8 +3,15 @@
 
 [source, js]
 ----
-const response = await client.snapshot.repositoryVerifyIntegrity({
-  name: "my_repository",
+const response = await client.index({
+  index: "my-index-000001",
+  id: 1,
+  document: {
+    attributes: {
+      id: "foo",
+    },
+    id: "bar",
+  },
 });
 console.log(response);
 ----
