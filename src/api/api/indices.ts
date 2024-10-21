@@ -78,7 +78,7 @@ export default class Indices {
   }
 
   /**
-    * Performs analysis on a text string and returns the resulting tokens.
+    * Get tokens from text analysis. The analyze API performs [analysis](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html) on a text string and returns the resulting tokens.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html | Elasticsearch API documentation}
     */
   async analyze (this: That, params?: T.IndicesAnalyzeRequest | TB.IndicesAnalyzeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndicesAnalyzeResponse>

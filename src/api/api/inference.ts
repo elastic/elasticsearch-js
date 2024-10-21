@@ -224,4 +224,44 @@ export default class Inference {
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
+
+  /**
+    * Perform streaming inference
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/post-stream-inference-api.html | Elasticsearch API documentation}
+    */
+  async streamInference (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async streamInference (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async streamInference (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async streamInference (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['inference_id', 'task_type']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.task_type != null && params.inference_id != null) {
+      method = 'POST'
+      path = `/_inference/${encodeURIComponent(params.task_type.toString())}/${encodeURIComponent(params.inference_id.toString())}/_stream`
+    } else {
+      method = 'POST'
+      path = `/_inference/${encodeURIComponent(params.inference_id.toString())}/_stream`
+    }
+    const meta: TransportRequestMetadata = {
+      name: 'inference.stream_inference',
+      pathParts: {
+        inference_id: params.inference_id,
+        task_type: params.task_type
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
 }
