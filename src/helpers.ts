@@ -991,6 +991,7 @@ export default class Helpers {
        */
       async toRecords<TDocument>(): Promise<EsqlToRecords<TDocument>> {
         params.format = 'json'
+        params.columnar = false
         // @ts-expect-error it's typed as ArrayBuffer but we know it will be JSON
         const response: EsqlResponse = await client.esql.query(params, reqOptions)
         const records: TDocument[] = toRecords(response)
