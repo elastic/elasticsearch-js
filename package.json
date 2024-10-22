@@ -88,6 +88,7 @@
   },
   "dependencies": {
     "@elastic/transport": "^8.8.1",
+    "@apache-arrow/esnext-cjs": "^17.0.0",
     "tslib": "^2.4.0"
   },
   "tap": {
