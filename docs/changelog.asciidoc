@@ -2,6 +2,26 @@
 == Release notes
 
 [discrete]
+=== 8.16.0
+
+[discrete]
+==== Features
+
+[discrete]
+===== Support for Elasticsearch `v8.16`
+
+You can find all the API changes
+https://www.elastic.co/guide/en/elasticsearch/reference/8.16/release-notes-8.16.0.html[here].
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Pass prototype poisoning options to serializer correctly
+
+The client's `disablePrototypePoisoningProtection` option was set to `true` by default, but when it was set to any other value it was ignored, making it impossible to enable prototype poisoning protection without providing a custom serializer implementation.
+
+[discrete]
 === 8.15.1
 
 [discrete]
