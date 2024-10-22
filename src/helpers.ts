@@ -25,7 +25,7 @@ import assert from 'node:assert'
 import * as timersPromises from 'node:timers/promises'
 import { Readable } from 'node:stream'
 import { errors, TransportResult, TransportRequestOptions, TransportRequestOptionsWithMeta } from '@elastic/transport'
-import { Table, tableFromIPC } from '@apache-arrow/esnext-cjs'
+import { Table, TypeMap, tableFromIPC } from '@apache-arrow/esnext-cjs'
 import Client from './client'
 import * as T from './api/types'
 
@@ -156,7 +156,7 @@ export interface EsqlResponse {
 
 export interface EsqlHelper {
   toRecords: <TDocument>() => Promise<EsqlToRecords<TDocument>>
-  toArrow: () => Promise<Table<any>>
+  toArrow: () => Promise<Table<TypeMap>>
 }
 
 export interface EsqlToRecords<TDocument> {
@@ -1001,7 +1001,7 @@ export default class Helpers {
         return { records, columns }
       },
 
-      async toArrow (): Promise<Table<any>> {
+      async toArrow (): Promise<Table<TypeMap>> {
         params.format = 'arrow'
 
         const response = await client.esql.query(params, reqOptions)
