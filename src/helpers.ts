@@ -967,11 +967,6 @@ export default class Helpers {
    * @returns {object} EsqlHelper instance
    */
   esql (params: T.EsqlQueryRequest, reqOptions: TransportRequestOptions = {}): EsqlHelper {
-    if (this[kMetaHeader] !== null) {
-      reqOptions.headers = reqOptions.headers ?? {}
-      reqOptions.headers['x-elastic-client-meta'] = `${this[kMetaHeader] as string},h=qo`
-    }
-
     const client = this[kClient]
 
     function toRecords<TDocument> (response: EsqlResponse): TDocument[] {
@@ -987,11 +982,18 @@ export default class Helpers {
       })
     }
 
+    const metaHeader = this[kMetaHeader]
+
     const helper: EsqlHelper = {
       /**
        * Pivots ES|QL query results into an array of row objects, rather than the default format where each row is an array of values.
        */
       async toRecords<TDocument>(): Promise<EsqlToRecords<TDocument>> {
+        if (metaHeader !== null) {
+          reqOptions.headers = reqOptions.headers ?? {}
+          reqOptions.headers['x-elastic-client-meta'] = `${metaHeader as string},h=qo`
+        }
+
         params.format = 'json'
         params.columnar = false
         // @ts-expect-error it's typed as ArrayBuffer but we know it will be JSON
@@ -1002,6 +1004,11 @@ export default class Helpers {
       },
 
       async toArrow (): Promise<Table<TypeMap>> {
+        if (metaHeader !== null) {
+          reqOptions.headers = reqOptions.headers ?? {}
+          reqOptions.headers['x-elastic-client-meta'] = `${metaHeader as string},h=qa`
+        }
+
         params.format = 'arrow'
 
         const response = await client.esql.query(params, reqOptions)
