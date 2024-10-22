@@ -18,6 +18,7 @@
  */
 
 import { test } from 'tap'
+import { Table } from '@apache-arrow/esnext-cjs'
 import { connection } from '../../utils'
 import { Client } from '../../../'
 
@@ -104,6 +105,67 @@ test('ES|QL helper', t => {
       })
 
       await client.helpers.esql({ query: 'FROM sample_data' }).toRecords()
+      t.end()
+    })
+
+    t.end()
+  })
+
+  test('toArrow', t => {
+    t.test('Parses a binary response into an Arrow table', async t => {
+      const binaryContent = '/////zABAAAQAAAAAAAKAA4ABgANAAgACgAAAAAABAAQAAAAAAEKAAwAAAAIAAQACgAAAAgAAAAIAAAAAAAAAAIAAAB8AAAABAAAAJ7///8UAAAARAAAAEQAAAAAAAoBRAAAAAEAAAAEAAAAjP///wgAAAAQAAAABAAAAGRhdGUAAAAADAAAAGVsYXN0aWM6dHlwZQAAAAAAAAAAgv///wAAAQAEAAAAZGF0ZQAAEgAYABQAEwASAAwAAAAIAAQAEgAAABQAAABMAAAAVAAAAAAAAwFUAAAAAQAAAAwAAAAIAAwACAAEAAgAAAAIAAAAEAAAAAYAAABkb3VibGUAAAwAAABlbGFzdGljOnR5cGUAAAAAAAAAAAAABgAIAAYABgAAAAAAAgAGAAAAYW1vdW50AAAAAAAA/////7gAAAAUAAAAAAAAAAwAFgAOABUAEAAEAAwAAABgAAAAAAAAAAAABAAQAAAAAAMKABgADAAIAAQACgAAABQAAABYAAAABQAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAQAAAAAAAAAIAAAAAAAAACgAAAAAAAAAMAAAAAAAAAABAAAAAAAAADgAAAAAAAAAKAAAAAAAAAAAAAAAAgAAAAUAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAAAAAAHwAAAAAAAAAAAACgmZkTQAAAAGBmZiBAAAAAAAAAL0AAAADAzMwjQAAAAMDMzCtAHwAAAAAAAADV6yywkgEAANWPBquSAQAA1TPgpZIBAADV17mgkgEAANV7k5uSAQAA/////wAAAAA='
+
+      const MockConnection = connection.buildMockConnection({
+        onRequest (_params) {
+          return {
+            body: Buffer.from(binaryContent, 'base64'),
+            statusCode: 200,
+            headers: {
+              'content-type': 'application/vnd.elasticsearch+arrow+stream'
+            }
+          }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      const result = await client.helpers.esql({ query: 'FROM sample_data' }).toArrow()
+      t.ok(result instanceof Table)
+
+      const table = [...result]
+      t.same(table[0], [
+        ["amount", 4.900000095367432],
+        ["date", 1729532586965],
+      ])
+      t.end()
+    })
+
+    t.test('ESQL helper uses correct x-elastic-client-meta helper value', async t => {
+      const binaryContent = '/////zABAAAQAAAAAAAKAA4ABgANAAgACgAAAAAABAAQAAAAAAEKAAwAAAAIAAQACgAAAAgAAAAIAAAAAAAAAAIAAAB8AAAABAAAAJ7///8UAAAARAAAAEQAAAAAAAoBRAAAAAEAAAAEAAAAjP///wgAAAAQAAAABAAAAGRhdGUAAAAADAAAAGVsYXN0aWM6dHlwZQAAAAAAAAAAgv///wAAAQAEAAAAZGF0ZQAAEgAYABQAEwASAAwAAAAIAAQAEgAAABQAAABMAAAAVAAAAAAAAwFUAAAAAQAAAAwAAAAIAAwACAAEAAgAAAAIAAAAEAAAAAYAAABkb3VibGUAAAwAAABlbGFzdGljOnR5cGUAAAAAAAAAAAAABgAIAAYABgAAAAAAAgAGAAAAYW1vdW50AAAAAAAA/////7gAAAAUAAAAAAAAAAwAFgAOABUAEAAEAAwAAABgAAAAAAAAAAAABAAQAAAAAAMKABgADAAIAAQACgAAABQAAABYAAAABQAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAQAAAAAAAAAIAAAAAAAAACgAAAAAAAAAMAAAAAAAAAABAAAAAAAAADgAAAAAAAAAKAAAAAAAAAAAAAAAAgAAAAUAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAAAAAAHwAAAAAAAAAAAACgmZkTQAAAAGBmZiBAAAAAAAAAL0AAAADAzMwjQAAAAMDMzCtAHwAAAAAAAADV6yywkgEAANWPBquSAQAA1TPgpZIBAADV17mgkgEAANV7k5uSAQAA/////wAAAAA='
+
+      const MockConnection = connection.buildMockConnection({
+        onRequest (params) {
+          const header = params.headers?.['x-elastic-client-meta'] ?? ''
+          t.ok(header.includes('h=qa'), `Client meta header does not include ESQL helper value: ${header}`)
+          return {
+            body: Buffer.from(binaryContent, 'base64'),
+            statusCode: 200,
+            headers: {
+              'content-type': 'application/vnd.elasticsearch+arrow+stream'
+            }
+          }
+        }
+      })
+
+      const client = new Client({
+        node: 'http://localhost:9200',
+        Connection: MockConnection
+      })
+
+      await client.helpers.esql({ query: 'FROM sample_data' }).toArrow()
       t.end()
     })
 
