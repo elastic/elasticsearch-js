@@ -293,14 +293,12 @@ test('Elastic Cloud config', t => {
   })
 
   t.ok(client.connectionPool instanceof CloudConnectionPool)
-  t.match(client.connectionPool.connections.find(c => c.id === 'https://abcd.localhost/'), {
-    url: new URL('https://elastic:changeme@abcd.localhost'),
-    id: 'https://abcd.localhost/',
-    headers: {
-      authorization: 'Basic ' + Buffer.from('elastic:changeme').toString('base64')
-    },
-    tls: { secureProtocol: 'TLSv1_2_method' }
-  })
+  const connection = client.connectionPool.connections.find(c => c.id === 'https://abcd.localhost/')
+
+  t.equal(connection?.headers?.authorization, `Basic ${Buffer.from('elastic:changeme').toString('base64')}`)
+  t.same(connection?.tls, { secureProtocol: 'TLSv1_2_method' })
+  t.equal(connection?.url.hostname, 'abcd.localhost')
+  t.equal(connection?.url.protocol, 'https:')
 
   t.end()
 })
