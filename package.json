@@ -78,7 +78,7 @@
     "semver": "^7.3.7",
     "split2": "^4.1.0",
     "stoppable": "^1.1.0",
-    "tap": "^16.1.0",
+    "tap": "^21.0.1",
     "ts-node": "^10.7.0",
     "ts-standard": "^11.0.0",
     "typescript": "^4.6.4",
@@ -92,11 +92,8 @@
     "tslib": "^2.4.0"
   },
   "tap": {
-    "ts": true,
-    "jsx": false,
-    "flow": false,
-    "coverage": false,
-    "check-coverage": false,
-    "files": "test/unit/{*,**/*}.test.ts"
+    "files": [
+      "test/unit/{*,**/*}.test.ts"
+    ]
   }
 }
