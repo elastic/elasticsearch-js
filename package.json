@@ -92,6 +92,7 @@
     "tslib": "^2.4.0"
   },
   "tap": {
+    "disable-coverage": true,
     "files": [
       "test/unit/{*,**/*}.test.ts"
     ]
