@@ -65,3 +65,5 @@ test/bundlers/parcel-test/.parcel-cache
 lib
 junit-output
 bun.lockb
+test-results
+processinfo
