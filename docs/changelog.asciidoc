@@ -14,6 +14,11 @@ You can find all the API changes
 https://www.elastic.co/guide/en/elasticsearch/reference/8.16/release-notes-8.16.0.html[here].
 
 [discrete]
+===== Support Apache Arrow in ES|QL helper
+
+The ES|QL helper can now return results as an Apache Arrow `Table` or `RecordBatchReader`, which enables high-performance calculations on ES|QL results, even if the response data is larger than the system's available memory. See <<esql-helper>> for more information.
+
+[discrete]
 ==== Fixes
 
 [discrete]
