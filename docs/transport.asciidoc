@@ -1,7 +1,7 @@
 [[transport]]
 === Transport
 
-This class is responsible for performing the request to {es} and handling 
+This class is responsible for performing the request to {es} and handling
 errors, it also handles sniffing.
 
 [source,js]
@@ -20,7 +20,7 @@ const client = new Client({
 })
 ----
 
-Sometimes you need to inject a small snippet of your code and then continue to 
+Sometimes you need to inject a small snippet of your code and then continue to
 use the usual client code. In such cases, call `super.method`:
 
 [source,js]
@@ -35,8 +35,39 @@ class MyTransport extends Transport {
 
 ==== Supported content types
 
-- `application/json`, in this case the transport will return a plain JavaScript object
-- `text/plain`, in this case the transport will return a plain string
-- `application/vnd.mapbox-vector-tile`, in this case the transport will return a Buffer
-- `application/vnd.elasticsearch+json`, in this case the transport will return a plain JavaScript object
+Depending on the `content-type` of the response, the transport will return the body as different types:
 
+[cols="1,1"]
+|===
+|Content-Type |JavaScript type
+
+|`application/json`
+|`object`
+
+|`text/plain`
+|`string`
+
+|`application/vnd.elasticsearch+json`
+|`object`
+
+|`application/vnd.mapbox-vector-tile`
+|`Buffer`
+
+|`application/vnd.apache.arrow.stream`
+|`Buffer`
+
+|`application/vnd.elasticsearch+arrow+stream`
+|`Buffer`
+
+|`application/smile`
+|`Buffer`
+
+|`application/vnd.elasticsearch+smile`
+|`Buffer`
+
+|`application/cbor`
+|`Buffer`
+
+|`application/vnd.elasticsearch+cbor`
+|`Buffer`
+|===
