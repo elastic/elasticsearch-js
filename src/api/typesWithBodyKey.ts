@@ -5412,21 +5412,27 @@ export interface MappingDateRangeProperty extends MappingRangePropertyBase {
   type: 'date_range'
 }
 
+export type MappingDenseVectorElementType = 'bit' | 'byte' | 'float'
+
 export interface MappingDenseVectorIndexOptions {
-  type: string
-  m?: integer
-  ef_construction?: integer
   confidence_interval?: float
+  ef_construction?: integer
+  m?: integer
+  type: MappingDenseVectorIndexOptionsType
 }
+
+export type MappingDenseVectorIndexOptionsType = 'flat' | 'hnsw' | 'int4_flat' | 'int4_hnsw' | 'int8_flat' | 'int8_hnsw'
 
 export interface MappingDenseVectorProperty extends MappingPropertyBase {
   type: 'dense_vector'
-  element_type?: string
   dims?: integer
-  similarity?: string
+  element_type?: MappingDenseVectorElementType
   index?: boolean
   index_options?: MappingDenseVectorIndexOptions
+  similarity?: MappingDenseVectorSimilarity
 }
+
+export type MappingDenseVectorSimilarity = 'cosine' | 'dot_product' | 'l2_norm' | 'max_inner_product'
 
 export interface MappingDocValuesPropertyBase extends MappingCorePropertyBase {
   doc_values?: boolean
@@ -9732,7 +9738,7 @@ export interface ConnectorFeatureEnabled {
 export interface ConnectorFilteringAdvancedSnippet {
   created_at?: DateTime
   updated_at?: DateTime
-  value: Record<string, any>
+  value: any
 }
 
 export interface ConnectorFilteringConfig {
@@ -12708,7 +12714,7 @@ export type InferenceDenseVector = float[]
 export interface InferenceInferenceEndpoint {
   service: string
   service_settings: InferenceServiceSettings
-  task_settings: InferenceTaskSettings
+  task_settings?: InferenceTaskSettings
 }
 
 export interface InferenceInferenceEndpointInfo extends InferenceInferenceEndpoint {
@@ -12822,6 +12828,20 @@ export interface IngestCircleProcessor extends IngestProcessorBase {
   target_field?: Field
 }
 
+export interface IngestCommunityIDProcessor extends IngestProcessorBase {
+  source_ip?: Field
+  source_port?: Field
+  destination_ip?: Field
+  destination_port?: Field
+  iana_number?: Field
+  icmp_type?: Field
+  icmp_code?: Field
+  transport?: Field
+  target_field?: Field
+  seed?: integer
+  ignore_missing?: boolean
+}
+
 export interface IngestConvertProcessor extends IngestProcessorBase {
   field: Field
   ignore_missing?: boolean
@@ -12829,7 +12849,7 @@ export interface IngestConvertProcessor extends IngestProcessorBase {
   type: IngestConvertType
 }
 
-export type IngestConvertType = 'integer' | 'long' | 'float' | 'double' | 'string' | 'boolean' | 'auto'
+export type IngestConvertType = 'integer' | 'long' | 'double' | 'float' | 'boolean' | 'ip' | 'string' | 'auto'
 
 export interface IngestCsvProcessor extends IngestProcessorBase {
   empty_value?: any
@@ -12862,6 +12882,7 @@ export interface IngestDateProcessor extends IngestProcessorBase {
   locale?: string
   target_field?: Field
   timezone?: string
+  output_format?: string
 }
 
 export interface IngestDissectProcessor extends IngestProcessorBase {
@@ -12892,6 +12913,16 @@ export interface IngestEnrichProcessor extends IngestProcessorBase {
 
 export interface IngestFailProcessor extends IngestProcessorBase {
   message: string
+}
+
+export type IngestFingerprintDigest = 'MD5' | 'SHA-1' | 'SHA-256' | 'SHA-512' | 'MurmurHash3'
+
+export interface IngestFingerprintProcessor extends IngestProcessorBase {
+  fields: Fields
+  target_field?: Field
+  salt?: string
+  method?: IngestFingerprintDigest
+  ignore_missing?: boolean
 }
 
 export interface IngestForeachProcessor extends IngestProcessorBase {
@@ -12927,6 +12958,7 @@ export interface IngestGeoIpProcessor extends IngestProcessorBase {
 }
 
 export interface IngestGrokProcessor extends IngestProcessorBase {
+  ecs_compatibility?: string
   field: Field
   ignore_missing?: boolean
   pattern_definitions?: Record<string, string>
@@ -13013,6 +13045,15 @@ export interface IngestMaxmind {
   account_id: Id
 }
 
+export interface IngestNetworkDirectionProcessor extends IngestProcessorBase {
+  source_ip?: Field
+  destination_ip?: Field
+  target_field?: Field
+  internal_networks?: string[]
+  internal_networks_field?: Field
+  ignore_missing?: boolean
+}
+
 export interface IngestPipeline {
   description?: string
   on_failure?: IngestProcessorContainer[]
@@ -13046,6 +13087,7 @@ export interface IngestProcessorContainer {
   attachment?: IngestAttachmentProcessor
   bytes?: IngestBytesProcessor
   circle?: IngestCircleProcessor
+  community_id?: IngestCommunityIDProcessor
   convert?: IngestConvertProcessor
   csv?: IngestCsvProcessor
   date?: IngestDateProcessor
@@ -13055,6 +13097,7 @@ export interface IngestProcessorContainer {
   drop?: IngestDropProcessor
   enrich?: IngestEnrichProcessor
   fail?: IngestFailProcessor
+  fingerprint?: IngestFingerprintProcessor
   foreach?: IngestForeachProcessor
   geo_grid?: IngestGeoGridProcessor
   geoip?: IngestGeoIpProcessor
@@ -13066,8 +13109,10 @@ export interface IngestProcessorContainer {
   json?: IngestJsonProcessor
   kv?: IngestKeyValueProcessor
   lowercase?: IngestLowercaseProcessor
+  network_direction?: IngestNetworkDirectionProcessor
   pipeline?: IngestPipelineProcessor
   redact?: IngestRedactProcessor
+  registered_domain?: IngestRegisteredDomainProcessor
   remove?: IngestRemoveProcessor
   rename?: IngestRenameProcessor
   reroute?: IngestRerouteProcessor
@@ -13076,6 +13121,7 @@ export interface IngestProcessorContainer {
   set_security_user?: IngestSetSecurityUserProcessor
   sort?: IngestSortProcessor
   split?: IngestSplitProcessor
+  terminate?: IngestTerminateProcessor
   trim?: IngestTrimProcessor
   uppercase?: IngestUppercaseProcessor
   urldecode?: IngestUrlDecodeProcessor
@@ -13092,6 +13138,12 @@ export interface IngestRedactProcessor extends IngestProcessorBase {
   ignore_missing?: boolean
   skip_if_unlicensed?: boolean
   trace_redact?: boolean
+}
+
+export interface IngestRegisteredDomainProcessor extends IngestProcessorBase {
+  field: Field
+  target_field?: Field
+  ignore_missing?: boolean
 }
 
 export interface IngestRemoveProcessor extends IngestProcessorBase {
@@ -13147,6 +13199,9 @@ export interface IngestSplitProcessor extends IngestProcessorBase {
   preserve_trailing?: boolean
   separator: string
   target_field?: Field
+}
+
+export interface IngestTerminateProcessor extends IngestProcessorBase {
 }
 
 export interface IngestTrimProcessor extends IngestProcessorBase {
@@ -16883,7 +16938,7 @@ export interface NodesInfoNodeInfoSettingsIngest {
 }
 
 export interface NodesInfoNodeInfoSettingsNetwork {
-  host?: Host
+  host?: Host | Host[]
 }
 
 export interface NodesInfoNodeInfoSettingsNode {
@@ -16916,6 +16971,7 @@ export interface NodesInfoNodeInfoXpack {
   license?: NodesInfoNodeInfoXpackLicense
   security: NodesInfoNodeInfoXpackSecurity
   notification?: Record<string, any>
+  ml?: NodesInfoNodeInfoXpackMl
 }
 
 export interface NodesInfoNodeInfoXpackLicense {
@@ -16926,16 +16982,20 @@ export interface NodesInfoNodeInfoXpackLicenseType {
   type: string
 }
 
+export interface NodesInfoNodeInfoXpackMl {
+  use_auto_machine_memory_percent?: boolean
+}
+
 export interface NodesInfoNodeInfoXpackSecurity {
-  http: NodesInfoNodeInfoXpackSecuritySsl
+  http?: NodesInfoNodeInfoXpackSecuritySsl
   enabled: string
   transport?: NodesInfoNodeInfoXpackSecuritySsl
   authc?: NodesInfoNodeInfoXpackSecurityAuthc
 }
 
 export interface NodesInfoNodeInfoXpackSecurityAuthc {
-  realms: NodesInfoNodeInfoXpackSecurityAuthcRealms
-  token: NodesInfoNodeInfoXpackSecurityAuthcToken
+  realms?: NodesInfoNodeInfoXpackSecurityAuthcRealms
+  token?: NodesInfoNodeInfoXpackSecurityAuthcToken
 }
 
 export interface NodesInfoNodeInfoXpackSecurityAuthcRealms {
@@ -17594,7 +17654,7 @@ export type SecurityIndexPrivilege = 'all' | 'auto_configure' | 'create' | 'crea
 
 export interface SecurityIndicesPrivileges {
   field_security?: SecurityFieldSecurity
-  names: Indices
+  names: IndexName[]
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery
   allow_restricted_indices?: boolean
@@ -17614,7 +17674,7 @@ export interface SecurityRealmInfo {
 export interface SecurityRemoteIndicesPrivileges {
   clusters: Names
   field_security?: SecurityFieldSecurity
-  names: Indices
+  names: IndexName[]
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery
   allow_restricted_indices?: boolean
@@ -17692,7 +17752,7 @@ export interface SecurityUser {
 
 export interface SecurityUserIndicesPrivileges {
   field_security?: SecurityFieldSecurity[]
-  names: Indices
+  names: IndexName[]
   privileges: SecurityIndexPrivilege[]
   query?: SecurityIndicesPrivilegesQuery[]
   allow_restricted_indices: boolean
@@ -18017,7 +18077,7 @@ export interface SecurityGetBuiltinPrivilegesRequest extends RequestBase {
 
 export interface SecurityGetBuiltinPrivilegesResponse {
   cluster: string[]
-  index: Indices
+  index: IndexName[]
 }
 
 export interface SecurityGetPrivilegesRequest extends RequestBase {
@@ -19174,7 +19234,8 @@ export interface SnapshotRestoreRequest extends RequestBase {
 }
 
 export interface SnapshotRestoreResponse {
-  snapshot: SnapshotRestoreSnapshotRestore
+  accepted?: boolean
+  snapshot?: SnapshotRestoreSnapshotRestore
 }
 
 export interface SnapshotRestoreSnapshotRestore {
