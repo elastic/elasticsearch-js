@@ -292,4 +292,48 @@ export default class QueryRules {
     }
     return await this.transport.request({ path, method, querystring, body, meta }, options)
   }
+
+  /**
+    * Creates or updates a query ruleset.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/test-query-ruleset.html | Elasticsearch API documentation}
+    */
+  async test (this: That, params: T.QueryRulesTestRequest | TB.QueryRulesTestRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.QueryRulesTestResponse>
+  async test (this: That, params: T.QueryRulesTestRequest | TB.QueryRulesTestRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.QueryRulesTestResponse, unknown>>
+  async test (this: That, params: T.QueryRulesTestRequest | TB.QueryRulesTestRequest, options?: TransportRequestOptions): Promise<T.QueryRulesTestResponse>
+  async test (this: That, params: T.QueryRulesTestRequest | TB.QueryRulesTestRequest, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['ruleset_id']
+    const acceptedBody: string[] = ['match_criteria']
+    const querystring: Record<string, any> = {}
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
+
+    for (const key in params) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        // @ts-expect-error
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'POST'
+    const path = `/_query_rules/${encodeURIComponent(params.ruleset_id.toString())}/_test`
+    const meta: TransportRequestMetadata = {
+      name: 'query_rules.test',
+      pathParts: {
+        ruleset_id: params.ruleset_id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
 }

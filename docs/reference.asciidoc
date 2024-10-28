@@ -256,7 +256,10 @@ Set to all or any positive integer up to the total number of shards in the index
 
 [discrete]
 === delete_by_query_rethrottle
-Changes the number of requests per second for a particular Delete By Query operation.
+Throttle a delete by query operation.
+
+Change the number of requests per second for a particular delete by query operation.
+Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
 
 {ref}/docs-delete-by-query.html[Endpoint documentation]
 [source,ts]
@@ -465,7 +468,9 @@ client.getScript({ id })
 
 [discrete]
 === get_script_context
-Returns all script contexts.
+Get script contexts.
+
+Get a list of supported script contexts and their methods.
 
 {painless}/painless-contexts.html[Endpoint documentation]
 [source,ts]
@@ -475,7 +480,9 @@ client.getScriptContext()
 
 [discrete]
 === get_script_languages
-Returns available script types, languages and contexts
+Get script languages.
+
+Get a list of available script types, languages, and contexts.
 
 {ref}/modules-scripting.html[Endpoint documentation]
 [source,ts]
@@ -612,7 +619,11 @@ list of queries. If `filter` isn't provided, all documents are allowed to match.
 
 [discrete]
 === mget
-Allows to get multiple documents in one request.
+Get multiple documents.
+
+Get multiple JSON documents by ID from one or more indices.
+If you specify an index in the request URI, you only need to specify the document IDs in the request body.
+To ensure fast responses, this multi get (mget) API responds with partial results if one or more shards fail.
 
 {ref}/docs-multi-get.html[Endpoint documentation]
 [source,ts]
@@ -643,7 +654,23 @@ If the `_source` parameter is `false`, this parameter is ignored.
 
 [discrete]
 === msearch
-Allows to execute several search operations in one request.
+Run multiple searches.
+
+The format of the request is similar to the bulk API format and makes use of the newline delimited JSON (NDJSON) format.
+The structure is as follows:
+
+```
+header\n
+body\n
+header\n
+body\n
+```
+
+This structure is specifically optimized to reduce parsing if a specific search ends up redirected to another node.
+
+IMPORTANT: The final line of data must end with a newline character `\n`.
+Each newline character may be preceded by a carriage return `\r`.
+When sending requests to this endpoint the `Content-Type` header should be set to `application/x-ndjson`.
 
 {ref}/search-multi-search.html[Endpoint documentation]
 [source,ts]
@@ -702,7 +729,12 @@ If `false`, it returns `hits.total` as an object.
 
 [discrete]
 === mtermvectors
-Returns multiple termvectors in one request.
+Get multiple term vectors.
+
+You can specify existing documents by index and ID or provide artificial documents in the body of the request.
+You can specify the index in the request body or request URI.
+The response contains a `docs` array with all the fetched termvectors.
+Each element has the structure provided by the termvectors API.
 
 {ref}/docs-multi-termvectors.html[Endpoint documentation]
 [source,ts]
@@ -850,7 +882,9 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 [discrete]
 === reindex_rethrottle
-Copies documents from a source to a destination.
+Throttle a reindex operation.
+
+Change the number of requests per second for a particular reindex operation.
 
 {ref}/docs-reindex.html[Endpoint documentation]
 [source,ts]
@@ -908,7 +942,20 @@ client.scriptsPainlessExecute({ ... })
 
 [discrete]
 === scroll
-Allows to retrieve a large numbers of results from a single search request.
+Run a scrolling search.
+
+IMPORTANT: The scroll API is no longer recommend for deep pagination. If you need to preserve the index state while paging through more than 10,000 hits, use the `search_after` parameter with a point in time (PIT).
+
+The scroll API gets large sets of results from a single scrolling search request.
+To get the necessary scroll ID, submit a search API request that includes an argument for the `scroll` query parameter.
+The `scroll` parameter indicates how long Elasticsearch should retain the search context for the request.
+The search response returns a scroll ID in the `_scroll_id` response body parameter.
+You can then use the scroll ID with the scroll API to retrieve the next batch of results for the request.
+If the Elasticsearch security features are enabled, the access to the results of a specific scroll ID is restricted to the user or API key that submitted the search.
+
+You can also use the scroll API to specify a new scroll parameter that extends or shortens the retention period for the search context.
+
+IMPORTANT: Results from a scrolling search reflect the state of the index at the time of the initial search request. Subsequent indexing or document changes only affect later search and scroll requests.
 
 {ref}/search-request-body.html[Endpoint documentation]
 [source,ts]
@@ -1213,7 +1260,15 @@ should be maintained for scrolled search.
 
 [discrete]
 === terms_enum
-The terms enum API  can be used to discover terms in the index that begin with the provided string. It is designed for low-latency look-ups used in auto-complete scenarios.
+Get terms in an index.
+
+Discover terms that match a partial string in an index.
+This "terms enum" API is designed for low-latency look-ups used in auto-complete scenarios.
+
+If the `complete` property in the response is false, the returned terms set may be incomplete and should be treated as approximate.
+This can occur due to a few reasons, such as a request timeout or a node error.
+
+NOTE: The terms enum API may return terms from deleted documents. Deleted documents are initially only marked as deleted. It is not until their segments are merged that documents are actually deleted. Until that happens, the terms enum API will return terms from these documents.
 
 {ref}/search-terms-enum.html[Endpoint documentation]
 [source,ts]
@@ -1380,7 +1435,10 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 [discrete]
 === update_by_query_rethrottle
-Changes the number of requests per second for a particular Update By Query operation.
+Throttle an update by query operation.
+
+Change the number of requests per second for a particular update by query operation.
+Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
 
 {ref}/docs-update-by-query.html[Endpoint documentation]
 [source,ts]
@@ -1398,8 +1456,8 @@ client.updateByQueryRethrottle({ task_id })
 === async_search
 [discrete]
 ==== delete
-Deletes an async search by identifier.
-If the search is still running, the search request will be cancelled.
+Delete an async search.
+If the asynchronous search is still running, it is cancelled.
 Otherwise, the saved search results are deleted.
 If the Elasticsearch security features are enabled, the deletion of a specific async search is restricted to: the authenticated user that submitted the original search request; users that have the `cancel_task` cluster privilege.
 
@@ -1417,7 +1475,8 @@ client.asyncSearch.delete({ id })
 
 [discrete]
 ==== get
-Retrieves the results of a previously submitted async search request given its identifier.
+Get async search results.
+Retrieve the results of a previously submitted asynchronous search request.
 If the Elasticsearch security features are enabled, access to the results of a specific async search is restricted to the user or API key that submitted it.
 
 {ref}/async-search.html[Endpoint documentation]
@@ -1443,8 +1502,8 @@ By default no timeout is set meaning that the currently available results will b
 
 [discrete]
 ==== status
-Get async search status
-Retrieves the status of a previously submitted async search request given its identifier, without retrieving search results.
+Get async search status.
+Retrieve the status of a previously submitted async search request given its identifier, without retrieving search results.
 If the Elasticsearch security features are enabled, use of this API is restricted to the `monitoring_user` role.
 
 {ref}/async-search.html[Endpoint documentation]
@@ -1461,10 +1520,12 @@ client.asyncSearch.status({ id })
 
 [discrete]
 ==== submit
-Runs a search request asynchronously.
-When the primary sort of the results is an indexed field, shards get sorted based on minimum and maximum value that they hold for that field, hence partial results become available following the sort criteria that was requested.
-Warning: Async search does not support scroll nor search requests that only include the suggest section.
-By default, Elasticsearch doesn’t allow you to store an async search response larger than 10Mb and an attempt to do this results in an error.
+Run an async search.
+When the primary sort of the results is an indexed field, shards get sorted based on minimum and maximum value that they hold for that field. Partial results become available following the sort criteria that was requested.
+
+Warning: Asynchronous search does not support scroll or search requests that include only the suggest section.
+
+By default, Elasticsearch does not allow you to store an async search response larger than 10Mb and an attempt to do this results in an error.
 The maximum allowed size for a stored async search response can be set by changing the `search.max_async_search_response_size` cluster level setting.
 
 {ref}/async-search.html[Endpoint documentation]
@@ -2219,27 +2280,37 @@ Creates a new follower index configured to follow the referenced leader index.
 {ref}/ccr-put-follow.html[Endpoint documentation]
 [source,ts]
 ----
-client.ccr.follow({ index })
+client.ccr.follow({ index, leader_index, remote_cluster })
 ----
 
 [discrete]
 ==== Arguments
 
 * *Request (object):*
-** *`index` (string)*: The name of the follower index
-** *`leader_index` (Optional, string)*
-** *`max_outstanding_read_requests` (Optional, number)*
-** *`max_outstanding_write_requests` (Optional, number)*
-** *`max_read_request_operation_count` (Optional, number)*
-** *`max_read_request_size` (Optional, string)*
-** *`max_retry_delay` (Optional, string | -1 | 0)*
-** *`max_write_buffer_count` (Optional, number)*
-** *`max_write_buffer_size` (Optional, string)*
-** *`max_write_request_operation_count` (Optional, number)*
-** *`max_write_request_size` (Optional, string)*
-** *`read_poll_timeout` (Optional, string | -1 | 0)*
-** *`remote_cluster` (Optional, string)*
-** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
+** *`index` (string)*: The name of the follower index.
+** *`leader_index` (string)*: The name of the index in the leader cluster to follow.
+** *`remote_cluster` (string)*: The remote cluster containing the leader index.
+** *`data_stream_name` (Optional, string)*: If the leader index is part of a data stream, the name to which the local data stream for the followed index should be renamed.
+** *`max_outstanding_read_requests` (Optional, number)*: The maximum number of outstanding reads requests from the remote cluster.
+** *`max_outstanding_write_requests` (Optional, number)*: The maximum number of outstanding write requests on the follower.
+** *`max_read_request_operation_count` (Optional, number)*: The maximum number of operations to pull per read from the remote cluster.
+** *`max_read_request_size` (Optional, number | string)*: The maximum size in bytes of per read of a batch of operations pulled from the remote cluster.
+** *`max_retry_delay` (Optional, string | -1 | 0)*: The maximum time to wait before retrying an operation that failed exceptionally. An exponential backoff strategy is employed when
+retrying.
+** *`max_write_buffer_count` (Optional, number)*: The maximum number of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will be
+deferred until the number of queued operations goes below the limit.
+** *`max_write_buffer_size` (Optional, number | string)*: The maximum total bytes of operations that can be queued for writing. When this limit is reached, reads from the remote cluster will
+be deferred until the total bytes of queued operations goes below the limit.
+** *`max_write_request_operation_count` (Optional, number)*: The maximum number of operations per bulk write request executed on the follower.
+** *`max_write_request_size` (Optional, number | string)*: The maximum total bytes of operations per bulk write request executed on the follower.
+** *`read_poll_timeout` (Optional, string | -1 | 0)*: The maximum time to wait for new operations on the remote cluster when the follower index is synchronized with the leader index.
+When the timeout has elapsed, the poll for operations will return to the follower so that it can update some statistics.
+Then the follower will immediately attempt to read from the leader again.
+** *`settings` (Optional, { index, mode, routing_path, soft_deletes, sort, number_of_shards, number_of_replicas, number_of_routing_shards, check_on_startup, codec, routing_partition_size, load_fixed_bitset_filters_eagerly, hidden, auto_expand_replicas, merge, search, refresh_interval, max_result_window, max_inner_result_window, max_rescore_window, max_docvalue_fields_search, max_script_fields, max_ngram_diff, max_shingle_diff, blocks, max_refresh_listeners, analyze, highlight, max_terms_count, max_regex_length, routing, gc_deletes, default_pipeline, final_pipeline, lifecycle, provided_name, creation_date, creation_date_string, uuid, version, verified_before_close, format, max_slices_per_scroll, translog, query_string, priority, top_metrics_max_size, analysis, settings, time_series, queries, similarity, mapping, indexing.slowlog, indexing_pressure, store })*: Settings to override from the leader index.
+** *`wait_for_active_shards` (Optional, number | Enum("all" | "index-setting"))*: Specifies the number of shards to wait on being active before responding. This defaults to waiting on none of the shards to be
+active.
+A shard must be restored from the leader index before being active. Restoring a follower shard requires transferring all the
+remote Lucene segment files to the follower index.
 
 [discrete]
 ==== follow_info
@@ -2819,7 +2890,9 @@ However, timed out nodes are included in the response’s `_nodes.failed` proper
 === connector
 [discrete]
 ==== check_in
-Updates the last_seen field in the connector, and sets it to current timestamp
+Check in a connector.
+
+Update the `last_seen` field in the connector and set it to the current timestamp.
 
 {ref}/check-in-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2835,7 +2908,12 @@ client.connector.checkIn({ connector_id })
 
 [discrete]
 ==== delete
-Deletes a connector.
+Delete a connector.
+
+Removes a connector and associated sync jobs.
+This is a destructive action that is not recoverable.
+NOTE: This action doesn’t delete any API keys, ingest pipelines, or data indices associated with the connector.
+These need to be removed manually.
 
 {ref}/delete-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2852,7 +2930,9 @@ client.connector.delete({ connector_id })
 
 [discrete]
 ==== get
-Retrieves a connector.
+Get a connector.
+
+Get the details about a connector.
 
 {ref}/get-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2868,7 +2948,9 @@ client.connector.get({ connector_id })
 
 [discrete]
 ==== list
-Returns existing connectors.
+Get all connectors.
+
+Get information about all connectors.
 
 {ref}/list-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2889,7 +2971,11 @@ client.connector.list({ ... })
 
 [discrete]
 ==== post
-Creates a connector.
+Create a connector.
+
+Connectors are Elasticsearch integrations that bring content from third-party data sources, which can be deployed on Elastic Cloud or hosted on your own infrastructure.
+Elastic managed connectors (Native connectors) are a managed service on Elastic Cloud.
+Self-managed connectors (Connector clients) are self-managed on your infrastructure.
 
 {ref}/create-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2910,7 +2996,7 @@ client.connector.post({ ... })
 
 [discrete]
 ==== put
-Creates or updates a connector.
+Create or update a connector.
 
 {ref}/create-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2932,7 +3018,10 @@ client.connector.put({ ... })
 
 [discrete]
 ==== sync_job_cancel
-Cancels a connector sync job.
+Cancel a connector sync job.
+
+Cancel a connector sync job, which sets the status to cancelling and updates `cancellation_requested_at` to the current time.
+The connector service is then responsible for setting the status of connector sync jobs to cancelled.
 
 {ref}/cancel-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
@@ -2960,6 +3049,8 @@ client.connector.syncJobCheckIn()
 [discrete]
 ==== sync_job_claim
 Claims a connector sync job.
+
+{ref}/claim-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.connector.syncJobClaim()
@@ -2968,7 +3059,10 @@ client.connector.syncJobClaim()
 
 [discrete]
 ==== sync_job_delete
-Deletes a connector sync job.
+Delete a connector sync job.
+
+Remove a connector sync job and its associated data.
+This is a destructive action that is not recoverable.
 
 {ref}/delete-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
@@ -2995,7 +3089,7 @@ client.connector.syncJobError()
 
 [discrete]
 ==== sync_job_get
-Retrieves a connector sync job.
+Get a connector sync job.
 
 {ref}/get-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
@@ -3011,7 +3105,9 @@ client.connector.syncJobGet({ connector_sync_job_id })
 
 [discrete]
 ==== sync_job_list
-Lists connector sync jobs.
+Get all connector sync jobs.
+
+Get information about all stored connector sync jobs listed by their creation date in ascending order.
 
 {ref}/list-connector-sync-jobs-api.html[Endpoint documentation]
 [source,ts]
@@ -3031,7 +3127,9 @@ client.connector.syncJobList({ ... })
 
 [discrete]
 ==== sync_job_post
-Creates a connector sync job.
+Create a connector sync job.
+
+Create a connector sync job document in the internal index and initialize its counters and timestamps with default values.
 
 {ref}/create-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
@@ -3060,6 +3158,8 @@ client.connector.syncJobUpdateStats()
 
 [discrete]
 ==== update_active_filtering
+Activate the connector draft filter.
+
 Activates the valid draft filtering for a connector.
 
 {ref}/update-connector-filtering-api.html[Endpoint documentation]
@@ -3076,7 +3176,12 @@ client.connector.updateActiveFiltering({ connector_id })
 
 [discrete]
 ==== update_api_key_id
-Updates the API key id in the connector document
+Update the connector API key ID.
+
+Update the `api_key_id` and `api_key_secret_id` fields of a connector.
+You can specify the ID of the API key used for authorization and the ID of the connector secret where the API key is stored.
+The connector secret ID is required only for Elastic managed (native) connectors.
+Self-managed connectors (connector clients) do not use this field.
 
 {ref}/update-connector-api-key-id-api.html[Endpoint documentation]
 [source,ts]
@@ -3094,7 +3199,9 @@ client.connector.updateApiKeyId({ connector_id })
 
 [discrete]
 ==== update_configuration
-Updates the configuration field in the connector document
+Update the connector configuration.
+
+Update the configuration field in the connector document.
 
 {ref}/update-connector-configuration-api.html[Endpoint documentation]
 [source,ts]
@@ -3112,7 +3219,11 @@ client.connector.updateConfiguration({ connector_id })
 
 [discrete]
 ==== update_error
-Updates the filtering field in the connector document
+Update the connector error field.
+
+Set the error field for the connector.
+If the error provided in the request body is non-null, the connector’s status is updated to error.
+Otherwise, if the error is reset to null, the connector status is updated to connected.
 
 {ref}/update-connector-error-api.html[Endpoint documentation]
 [source,ts]
@@ -3140,7 +3251,11 @@ client.connector.updateFeatures()
 
 [discrete]
 ==== update_filtering
-Updates the filtering field in the connector document
+Update the connector filtering.
+
+Update the draft filtering configuration of a connector and marks the draft validation state as edited.
+The filtering draft is activated once validated by the running Elastic connector service.
+The filtering property is used to configure sync rules (both basic and advanced) for a connector.
 
 {ref}/update-connector-filtering-api.html[Endpoint documentation]
 [source,ts]
@@ -3159,7 +3274,9 @@ client.connector.updateFiltering({ connector_id })
 
 [discrete]
 ==== update_filtering_validation
-Updates the draft filtering validation info for a connector.
+Update the connector draft filtering validation.
+
+Update the draft filtering validation info for a connector.
 [source,ts]
 ----
 client.connector.updateFilteringValidation({ connector_id, validation })
@@ -3174,7 +3291,9 @@ client.connector.updateFilteringValidation({ connector_id, validation })
 
 [discrete]
 ==== update_index_name
-Updates the index_name in the connector document
+Update the connector index name.
+
+Update the `index_name` field of a connector, specifying the index where the data ingested by the connector is stored.
 
 {ref}/update-connector-index-name-api.html[Endpoint documentation]
 [source,ts]
@@ -3191,7 +3310,7 @@ client.connector.updateIndexName({ connector_id, index_name })
 
 [discrete]
 ==== update_name
-Updates the name and description fields in the connector document
+Update the connector name and description.
 
 {ref}/update-connector-name-description-api.html[Endpoint documentation]
 [source,ts]
@@ -3209,7 +3328,7 @@ client.connector.updateName({ connector_id })
 
 [discrete]
 ==== update_native
-Updates the is_native flag in the connector document
+Update the connector is_native flag.
 [source,ts]
 ----
 client.connector.updateNative({ connector_id, is_native })
@@ -3224,7 +3343,9 @@ client.connector.updateNative({ connector_id, is_native })
 
 [discrete]
 ==== update_pipeline
-Updates the pipeline field in the connector document
+Update the connector pipeline.
+
+When you create a new connector, the configuration of an ingest pipeline is populated with default settings.
 
 {ref}/update-connector-pipeline-api.html[Endpoint documentation]
 [source,ts]
@@ -3241,7 +3362,7 @@ client.connector.updatePipeline({ connector_id, pipeline })
 
 [discrete]
 ==== update_scheduling
-Updates the scheduling field in the connector document
+Update the connector scheduling.
 
 {ref}/update-connector-scheduling-api.html[Endpoint documentation]
 [source,ts]
@@ -3258,7 +3379,7 @@ client.connector.updateScheduling({ connector_id, scheduling })
 
 [discrete]
 ==== update_service_type
-Updates the service type of the connector
+Update the connector service type.
 
 {ref}/update-connector-service-type-api.html[Endpoint documentation]
 [source,ts]
@@ -3275,7 +3396,7 @@ client.connector.updateServiceType({ connector_id, service_type })
 
 [discrete]
 ==== update_status
-Updates the status of the connector
+Update the connector status.
 
 {ref}/update-connector-status-api.html[Endpoint documentation]
 [source,ts]
@@ -3294,7 +3415,10 @@ client.connector.updateStatus({ connector_id, status })
 === dangling_indices
 [discrete]
 ==== delete_dangling_index
-Deletes the specified dangling index
+Delete a dangling index.
+
+If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
+For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
 
 {ref}/modules-gateway-dangling-indices.html[Endpoint documentation]
 [source,ts]
@@ -3306,14 +3430,17 @@ client.danglingIndices.deleteDanglingIndex({ index_uuid, accept_data_loss })
 ==== Arguments
 
 * *Request (object):*
-** *`index_uuid` (string)*: The UUID of the dangling index
-** *`accept_data_loss` (boolean)*: Must be set to true in order to delete the dangling index
+** *`index_uuid` (string)*: The UUID of the index to delete. Use the get dangling indices API to find the UUID.
+** *`accept_data_loss` (boolean)*: This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Specify timeout for connection to master
 ** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
 
 [discrete]
 ==== import_dangling_index
-Imports the specified dangling index
+Import a dangling index.
+
+If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
+For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
 
 {ref}/modules-gateway-dangling-indices.html[Endpoint documentation]
 [source,ts]
@@ -3325,14 +3452,20 @@ client.danglingIndices.importDanglingIndex({ index_uuid, accept_data_loss })
 ==== Arguments
 
 * *Request (object):*
-** *`index_uuid` (string)*: The UUID of the dangling index
-** *`accept_data_loss` (boolean)*: Must be set to true in order to import the dangling index
+** *`index_uuid` (string)*: The UUID of the index to import. Use the get dangling indices API to locate the UUID.
+** *`accept_data_loss` (boolean)*: This parameter must be set to true to import a dangling index.
+Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Specify timeout for connection to master
 ** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
 
 [discrete]
 ==== list_dangling_indices
-Returns all dangling indices.
+Get the dangling indices.
+
+If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
+For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
+
+Use this API to list dangling indices, which you can then import or delete.
 
 {ref}/modules-gateway-dangling-indices.html[Endpoint documentation]
 [source,ts]
@@ -3513,6 +3646,9 @@ client.eql.search({ index, query })
 ** *`fields` (Optional, { field, format, include_unmapped } | { field, format, include_unmapped }[])*: Array of wildcard (*) patterns. The response returns values for field names matching these patterns in the fields property of each hit.
 ** *`result_position` (Optional, Enum("tail" | "head"))*
 ** *`runtime_mappings` (Optional, Record<string, { fields, fetch_fields, format, input_field, target_field, target_index, script, type }>)*
+** *`max_samples_per_key` (Optional, number)*: By default, the response of a sample query contains up to `10` samples, with one sample per unique set of join keys. Use the `size`
+parameter to get a smaller or larger set of samples. To retrieve more than one sample per set of join keys, use the
+`max_samples_per_key` parameter. Pipes are not supported for sample queries.
 ** *`allow_no_indices` (Optional, boolean)*
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*
 ** *`ignore_unavailable` (Optional, boolean)*: If true, missing or closed indices are not included in the response.
@@ -4004,7 +4140,8 @@ client.indices.addBlock({ index, block })
 
 [discrete]
 ==== analyze
-Performs analysis on a text string and returns the resulting tokens.
+Get tokens from text analysis.
+The analyze API performs [analysis](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html) on a text string and returns the resulting tokens.
 
 {ref}/indices-analyze.html[Endpoint documentation]
 [source,ts]
@@ -4968,11 +5105,7 @@ client.indices.putDataLifecycle({ name })
 ** *`name` (string | string[])*: List of data streams used to limit the request.
 Supports wildcards (`*`).
 To target all data streams use `*` or `_all`.
-** *`data_retention` (Optional, string | -1 | 0)*: If defined, every document added to this data stream will be stored at least for this time frame.
-Any time after this duration the document could be deleted.
-When empty, every document in this data stream will be stored indefinitely.
-** *`downsampling` (Optional, { rounds })*: If defined, every backing index will execute the configured downsampling configuration after the backing
-index is not the data stream write index anymore.
+** *`lifecycle` (Optional, { data_retention, downsampling, enabled })*
 ** *`expand_wildcards` (Optional, Enum("all" | "open" | "closed" | "hidden" | "none") | Enum("all" | "open" | "closed" | "hidden" | "none")[])*: Type of data stream that wildcard patterns can match.
 Supports a list of values, such as `open,hidden`.
 Valid values are: `all`, `hidden`, `open`, `closed`, `none`.
@@ -5056,7 +5189,7 @@ a new date field is added instead of string.
 not used at all by Elasticsearch, but can be used to store
 application-specific metadata.
 ** *`numeric_detection` (Optional, boolean)*: Automatically map strings into numeric data types for all fields.
-** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, element_type, dims, similarity, index, index_options } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { type, meta, inference_id } | { type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type } | { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)*: Mapping for a field. For new fields, this mapping can include:
+** *`properties` (Optional, Record<string, { type } | { boost, fielddata, index, null_value, type } | { type, enabled, null_value, boost, coerce, script, on_script_error, ignore_malformed, time_series_metric, analyzer, eager_global_ordinals, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, term_vector, format, precision_step, locale } | { relations, eager_global_ordinals, type } | { boost, eager_global_ordinals, index, index_options, script, on_script_error, normalizer, norms, null_value, similarity, split_queries_on_whitespace, time_series_dimension, type } | { type, fields, meta, copy_to } | { type } | { positive_score_impact, type } | { positive_score_impact, type } | { analyzer, index, index_options, max_shingle_size, norms, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { analyzer, boost, eager_global_ordinals, fielddata, fielddata_frequency_filter, index, index_options, index_phrases, index_prefixes, norms, position_increment_gap, search_analyzer, search_quote_analyzer, similarity, term_vector, type } | { type } | { type, null_value } | { boost, format, ignore_malformed, index, null_value, precision_step, type } | { boost, fielddata, format, ignore_malformed, index, null_value, precision_step, locale, type } | { type, default_metric, metrics, time_series_metric } | { type, dims, element_type, index, index_options, similarity } | { boost, depth_limit, doc_values, eager_global_ordinals, index, index_options, null_value, similarity, split_queries_on_whitespace, type } | { enabled, include_in_parent, include_in_root, type } | { enabled, subobjects, type } | { type, meta, inference_id } | { type } | { analyzer, contexts, max_input_length, preserve_position_increments, preserve_separators, search_analyzer, type } | { value, type } | { path, type } | { ignore_malformed, type } | { boost, index, ignore_malformed, null_value, on_script_error, script, time_series_dimension, type } | { type } | { analyzer, boost, index, null_value, enable_position_increments, type } | { ignore_malformed, ignore_z_value, null_value, index, on_script_error, script, type } | { coerce, ignore_malformed, ignore_z_value, orientation, strategy, type } | { ignore_malformed, ignore_z_value, null_value, type } | { coerce, ignore_malformed, ignore_z_value, orientation, type } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value } | { type, null_value, scaling_factor } | { type, null_value } | { type, null_value } | { format, type } | { type } | { type } | { type } | { type } | { type } | { type, norms, index_options, index, null_value, rules, language, country, variant, strength, decomposition, alternate, case_level, case_first, numeric, variable_top, hiragana_quaternary_mode }>)*: Mapping for a field. For new fields, this mapping can include:
 
 - Field name
 - Field data type
@@ -5670,6 +5803,15 @@ client.inference.put({ inference_id })
 ** *`inference_config` (Optional, { service, service_settings, task_settings })*
 
 [discrete]
+==== stream_inference
+Perform streaming inference
+[source,ts]
+----
+client.inference.streamInference()
+----
+
+
+[discrete]
 === ingest
 [discrete]
 ==== delete_geoip_database
@@ -5817,8 +5959,8 @@ client.ingest.putPipeline({ id })
 ** *`id` (string)*: ID of the ingest pipeline to create or update.
 ** *`_meta` (Optional, Record<string, User-defined value>)*: Optional metadata about the ingest pipeline. May have any contents. This map is not automatically generated by Elasticsearch.
 ** *`description` (Optional, string)*: Description of the ingest pipeline.
-** *`on_failure` (Optional, { append, attachment, bytes, circle, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, pipeline, redact, remove, rename, reroute, script, set, set_security_user, sort, split, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
-** *`processors` (Optional, { append, attachment, bytes, circle, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, pipeline, redact, remove, rename, reroute, script, set, set_security_user, sort, split, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
+** *`on_failure` (Optional, { append, attachment, bytes, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
+** *`processors` (Optional, { append, attachment, bytes, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
 ** *`version` (Optional, number)*: Version number used by external systems to track ingest pipelines. This parameter is intended for external systems only. Elasticsearch does not use or validate pipeline version numbers.
 ** *`deprecated` (Optional, boolean)*: Marks this ingest pipeline as deprecated.
 When a deprecated ingest pipeline is referenced as the default or final pipeline when creating or updating a non-deprecated index template, Elasticsearch will emit a deprecation warning.
@@ -7352,7 +7494,7 @@ Create a datafeed.
 Datafeeds retrieve data from Elasticsearch for analysis by an anomaly detection job.
 You can associate only one datafeed with each anomaly detection job.
 The datafeed contains a query that runs at a defined interval (`frequency`).
-If you are concerned about delayed data, you can add a delay (`query_delay') at each interval.
+If you are concerned about delayed data, you can add a delay (`query_delay`) at each interval.
 When Elasticsearch security features are enabled, your datafeed remembers which roles the user who created it had
 at the time of creation and runs the query using those same roles. If you provide secondary authorization headers,
 those credentials are used instead.
@@ -8421,6 +8563,23 @@ client.queryRules.putRuleset({ ruleset_id, rules })
 ** *`rules` ({ rule_id, type, criteria, actions, priority } | { rule_id, type, criteria, actions, priority }[])*
 
 [discrete]
+==== test
+Creates or updates a query ruleset.
+
+{ref}/test-query-ruleset.html[Endpoint documentation]
+[source,ts]
+----
+client.queryRules.test({ ruleset_id, match_criteria })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`ruleset_id` (string)*: The unique identifier of the query ruleset to be created or updated
+** *`match_criteria` (Record<string, User-defined value>)*
+
+[discrete]
 === rollup
 [discrete]
 ==== delete_job
@@ -8699,7 +8858,7 @@ client.searchApplication.put({ name })
 
 * *Request (object):*
 ** *`name` (string)*: The name of the search application to be created or updated.
-** *`search_application` (Optional, { name, indices, updated_at_millis, analytics_collection_name, template })*
+** *`search_application` (Optional, { indices, analytics_collection_name, template })*
 ** *`create` (Optional, boolean)*: If `true`, this request cannot replace or update existing Search Applications.
 
 [discrete]
@@ -8834,7 +8993,9 @@ client.searchableSnapshots.stats({ ... })
 === security
 [discrete]
 ==== activate_user_profile
-Creates or updates a user profile on behalf of another user.
+Activate a user profile.
+
+Create or update a user profile on behalf of another user.
 
 {ref}/security-api-activate-user-profile.html[Endpoint documentation]
 [source,ts]
@@ -8854,6 +9015,7 @@ client.security.activateUserProfile({ grant_type })
 [discrete]
 ==== authenticate
 Authenticate a user.
+
 Authenticates a user and returns information about the authenticated user.
 Include the user information in a [basic auth header](https://en.wikipedia.org/wiki/Basic_access_authentication).
 A successful call returns a JSON structure that shows user information such as their username, the roles that are assigned to the user, any assigned metadata, and information about the realms that authenticated and authorized the user.
@@ -8868,6 +9030,8 @@ client.security.authenticate()
 
 [discrete]
 ==== bulk_delete_role
+Bulk delete roles.
+
 The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
 The bulk delete roles API cannot delete roles that are defined in roles files.
 
@@ -8886,6 +9050,8 @@ client.security.bulkDeleteRole({ names })
 
 [discrete]
 ==== bulk_put_role
+Bulk create or update roles.
+
 The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
 The bulk create or update roles API cannot update roles that are defined in roles files.
 
@@ -8915,7 +9081,9 @@ client.security.bulkUpdateApiKeys()
 
 [discrete]
 ==== change_password
-Changes the passwords of users in the native realm and built-in users.
+Change passwords.
+
+Change the passwords of users in the native realm and built-in users.
 
 {ref}/security-api-change-password.html[Endpoint documentation]
 [source,ts]
@@ -8938,7 +9106,9 @@ setting.
 
 [discrete]
 ==== clear_api_key_cache
-Evicts a subset of all entries from the API key cache.
+Clear the API key cache.
+
+Evict a subset of all entries from the API key cache.
 The cache is also automatically cleared on state changes of the security index.
 
 {ref}/security-api-clear-api-key-cache.html[Endpoint documentation]
@@ -8957,7 +9127,10 @@ Does not support other wildcard patterns.
 
 [discrete]
 ==== clear_cached_privileges
-Evicts application privileges from the native application privileges cache.
+Clear the privileges cache.
+
+Evict privileges from the native application privilege cache.
+The cache is also automatically cleared for applications that have their privileges updated.
 
 {ref}/security-api-clear-privilege-cache.html[Endpoint documentation]
 [source,ts]
@@ -8973,7 +9146,9 @@ client.security.clearCachedPrivileges({ application })
 
 [discrete]
 ==== clear_cached_realms
-Evicts users from the user cache. Can completely clear the cache or evict specific users.
+Clear the user cache.
+
+Evict users from the user cache. You can completely clear the cache or evict specific users.
 
 {ref}/security-api-clear-cache.html[Endpoint documentation]
 [source,ts]
@@ -8990,7 +9165,9 @@ client.security.clearCachedRealms({ realms })
 
 [discrete]
 ==== clear_cached_roles
-Evicts roles from the native role cache.
+Clear the roles cache.
+
+Evict roles from the native role cache.
 
 {ref}/security-api-clear-role-cache.html[Endpoint documentation]
 [source,ts]
@@ -9006,7 +9183,9 @@ client.security.clearCachedRoles({ name })
 
 [discrete]
 ==== clear_cached_service_tokens
-Evicts tokens from the service account token caches.
+Clear service account token caches.
+
+Evict a subset of all entries from the service account token caches.
 
 {ref}/security-api-clear-service-token-caches.html[Endpoint documentation]
 [source,ts]
@@ -9025,7 +9204,8 @@ client.security.clearCachedServiceTokens({ namespace, service, name })
 [discrete]
 ==== create_api_key
 Create an API key.
-Creates an API key for access without requiring basic authentication.
+
+Create an API key for access without requiring basic authentication.
 A successful request returns a JSON structure that contains the API key, its unique id, and its name.
 If applicable, it also returns expiration information for the API key in milliseconds.
 NOTE: By default, API keys never expire. You can specify expiration information when you create the API keys.
@@ -9059,7 +9239,9 @@ client.security.createCrossClusterApiKey()
 
 [discrete]
 ==== create_service_token
-Creates a service accounts token for access without requiring basic authentication.
+Create a service account token.
+
+Create a service accounts token for access without requiring basic authentication.
 
 {ref}/security-api-create-service-token.html[Endpoint documentation]
 [source,ts]
@@ -9078,7 +9260,7 @@ client.security.createServiceToken({ namespace, service })
 
 [discrete]
 ==== delete_privileges
-Removes application privileges.
+Delete application privileges.
 
 {ref}/security-api-delete-privilege.html[Endpoint documentation]
 [source,ts]
@@ -9096,7 +9278,9 @@ client.security.deletePrivileges({ application, name })
 
 [discrete]
 ==== delete_role
-Removes roles in the native realm.
+Delete roles.
+
+Delete roles in the native realm.
 
 {ref}/security-api-delete-role.html[Endpoint documentation]
 [source,ts]
@@ -9113,7 +9297,7 @@ client.security.deleteRole({ name })
 
 [discrete]
 ==== delete_role_mapping
-Removes role mappings.
+Delete role mappings.
 
 {ref}/security-api-delete-role-mapping.html[Endpoint documentation]
 [source,ts]
@@ -9130,7 +9314,9 @@ client.security.deleteRoleMapping({ name })
 
 [discrete]
 ==== delete_service_token
-Deletes a service account token.
+Delete service account tokens.
+
+Delete service account tokens for a service in a specified namespace.
 
 {ref}/security-api-delete-service-token.html[Endpoint documentation]
 [source,ts]
@@ -9149,7 +9335,9 @@ client.security.deleteServiceToken({ namespace, service, name })
 
 [discrete]
 ==== delete_user
-Deletes users from the native realm.
+Delete users.
+
+Delete users from the native realm.
 
 {ref}/security-api-delete-user.html[Endpoint documentation]
 [source,ts]
@@ -9166,7 +9354,9 @@ client.security.deleteUser({ username })
 
 [discrete]
 ==== disable_user
-Disables users in the native realm.
+Disable users.
+
+Disable users in the native realm.
 
 {ref}/security-api-disable-user.html[Endpoint documentation]
 [source,ts]
@@ -9183,7 +9373,9 @@ client.security.disableUser({ username })
 
 [discrete]
 ==== disable_user_profile
-Disables a user profile so it's not visible in user profile searches.
+Disable a user profile.
+
+Disable user profiles so that they are not visible in user profile searches.
 
 {ref}/security-api-disable-user-profile.html[Endpoint documentation]
 [source,ts]
@@ -9202,7 +9394,9 @@ visible to search, if 'false' do nothing with refreshes.
 
 [discrete]
 ==== enable_user
-Enables users in the native realm.
+Enable users.
+
+Enable users in the native realm.
 
 {ref}/security-api-enable-user.html[Endpoint documentation]
 [source,ts]
@@ -9219,7 +9413,9 @@ client.security.enableUser({ username })
 
 [discrete]
 ==== enable_user_profile
-Enables a user profile so it's visible in user profile searches.
+Enable a user profile.
+
+Enable user profiles to make them visible in user profile searches.
 
 {ref}/security-api-enable-user-profile.html[Endpoint documentation]
 [source,ts]
@@ -9238,7 +9434,9 @@ visible to search, if 'false' do nothing with refreshes.
 
 [discrete]
 ==== enroll_kibana
-Enables a Kibana instance to configure itself for communication with a secured Elasticsearch cluster.
+Enroll Kibana.
+
+Enable a Kibana instance to configure itself for communication with a secured Elasticsearch cluster.
 
 {ref}/security-api-kibana-enrollment.html[Endpoint documentation]
 [source,ts]
@@ -9249,7 +9447,9 @@ client.security.enrollKibana()
 
 [discrete]
 ==== enroll_node
-Allows a new node to join an existing cluster with security features enabled.
+Enroll a node.
+
+Enroll a new node to allow it to join an existing cluster with security features enabled.
 
 {ref}/security-api-node-enrollment.html[Endpoint documentation]
 [source,ts]
@@ -9261,6 +9461,7 @@ client.security.enrollNode()
 [discrete]
 ==== get_api_key
 Get API key information.
+
 Retrieves information for one or more API keys.
 NOTE: If you have only the `manage_own_api_key` privilege, this API returns only the API keys that you own.
 If you have `read_security`, `manage_api_key` or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
@@ -9295,7 +9496,9 @@ descriptors and the owner user's role descriptors.
 
 [discrete]
 ==== get_builtin_privileges
-Retrieves the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
+Get builtin privileges.
+
+Get the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
 
 {ref}/security-api-get-builtin-privileges.html[Endpoint documentation]
 [source,ts]
@@ -9306,7 +9509,7 @@ client.security.getBuiltinPrivileges()
 
 [discrete]
 ==== get_privileges
-Retrieves application privileges.
+Get application privileges.
 
 {ref}/security-api-get-privileges.html[Endpoint documentation]
 [source,ts]
@@ -9323,8 +9526,9 @@ client.security.getPrivileges({ ... })
 
 [discrete]
 ==== get_role
-The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
-The get roles API cannot retrieve roles that are defined in roles files.
+Get roles.
+
+Get roles in the native realm.
 
 {ref}/security-api-get-role.html[Endpoint documentation]
 [source,ts]
@@ -9340,7 +9544,11 @@ client.security.getRole({ ... })
 
 [discrete]
 ==== get_role_mapping
-Retrieves role mappings.
+Get role mappings.
+
+Role mappings define which roles are assigned to each user.
+The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files.
+The get role mappings API cannot retrieve role mappings that are defined in role mapping files.
 
 {ref}/security-api-get-role-mapping.html[Endpoint documentation]
 [source,ts]
@@ -9356,7 +9564,9 @@ client.security.getRoleMapping({ ... })
 
 [discrete]
 ==== get_service_accounts
-This API returns a list of service accounts that match the provided path parameter(s).
+Get service accounts.
+
+Get a list of service accounts that match the provided path parameters.
 
 {ref}/security-api-get-service-accounts.html[Endpoint documentation]
 [source,ts]
@@ -9373,7 +9583,7 @@ client.security.getServiceAccounts({ ... })
 
 [discrete]
 ==== get_service_credentials
-Retrieves information of all service credentials for a service account.
+Get service account credentials.
 
 {ref}/security-api-get-service-credentials.html[Endpoint documentation]
 [source,ts]
@@ -9401,7 +9611,9 @@ client.security.getSettings()
 
 [discrete]
 ==== get_token
-Creates a bearer token for access without requiring basic authentication.
+Get a token.
+
+Create a bearer token for access without requiring basic authentication.
 
 {ref}/security-api-get-token.html[Endpoint documentation]
 [source,ts]
@@ -9422,7 +9634,9 @@ client.security.getToken({ ... })
 
 [discrete]
 ==== get_user
-Retrieves information about users in the native realm and built-in users.
+Get users.
+
+Get information about users in the native realm and built-in users.
 
 {ref}/security-api-get-user.html[Endpoint documentation]
 [source,ts]
@@ -9439,7 +9653,7 @@ client.security.getUser({ ... })
 
 [discrete]
 ==== get_user_privileges
-Retrieves security privileges for the logged in user.
+Get user privileges.
 
 {ref}/security-api-get-user-privileges.html[Endpoint documentation]
 [source,ts]
@@ -9457,7 +9671,9 @@ client.security.getUserPrivileges({ ... })
 
 [discrete]
 ==== get_user_profile
-Retrieves a user's profile using the unique profile ID.
+Get a user profile.
+
+Get a user's profile using the unique profile ID.
 
 {ref}/security-api-get-user-profile.html[Endpoint documentation]
 [source,ts]
@@ -9477,8 +9693,10 @@ By default returns no `data` content.
 
 [discrete]
 ==== grant_api_key
-Creates an API key on behalf of another user.
-This API is similar to Create API keys, however it creates the API key for a user that is different than the user that runs the API.
+Grant an API key.
+
+Create an API key on behalf of another user.
+This API is similar to the create API keys API, however it creates the API key for a user that is different than the user that runs the API.
 The caller must have authentication credentials (either an access token, or a username and password) for the user on whose behalf the API key will be created.
 It is not possible to use this API to create an API key without that user’s credentials.
 The user, for whom the authentication credentials is provided, can optionally "run as" (impersonate) another user.
@@ -9516,7 +9734,8 @@ It is not valid with other grant types.
 [discrete]
 ==== has_privileges
 Check user privileges.
-Determines whether the specified user has a specified list of privileges.
+
+Determine whether the specified user has a specified list of privileges.
 
 {ref}/security-api-has-privileges.html[Endpoint documentation]
 [source,ts]
@@ -9535,7 +9754,9 @@ client.security.hasPrivileges({ ... })
 
 [discrete]
 ==== has_privileges_user_profile
-Determines whether the users associated with the specified profile IDs have all the requested privileges.
+Check user profile privileges.
+
+Determine whether the users associated with the specified user profile IDs have all the requested privileges.
 
 {ref}/security-api-has-privileges-user-profile.html[Endpoint documentation]
 [source,ts]
@@ -9553,13 +9774,15 @@ client.security.hasPrivilegesUserProfile({ uids, privileges })
 [discrete]
 ==== invalidate_api_key
 Invalidate API keys.
-Invalidates one or more API keys.
+
+This API invalidates API keys created by the create API key or grant API key APIs.
+Invalidated API keys fail authentication, but they can still be viewed using the get API key information and query API key information APIs, for at least the configured retention period, until they are automatically deleted.
 The `manage_api_key` privilege allows deleting any API keys.
 The `manage_own_api_key` only allows deleting API keys that are owned by the user.
 In addition, with the `manage_own_api_key` privilege, an invalidation request must be issued in one of the three formats:
 - Set the parameter `owner=true`.
 - Or, set both `username` and `realm_name` to match the user’s identity.
-- Or, if the request is issued by an API key, i.e. an API key invalidates itself, specify its ID in the `ids` field.
+- Or, if the request is issued by an API key, that is to say an API key invalidates itself, specify its ID in the `ids` field.
 
 {ref}/security-api-invalidate-api-key.html[Endpoint documentation]
 [source,ts]
@@ -9585,7 +9808,14 @@ This parameter cannot be used with either `ids` or `name`, or when `owner` flag 
 
 [discrete]
 ==== invalidate_token
-Invalidates one or more access tokens or refresh tokens.
+Invalidate a token.
+
+The access tokens returned by the get token API have a finite period of time for which they are valid.
+After that time period, they can no longer be used.
+The time period is defined by the `xpack.security.authc.token.timeout` setting.
+
+The refresh tokens returned by the get token API are only valid for 24 hours. They can also be used exactly once.
+If you want to invalidate one or more access or refresh tokens immediately, use this invalidate token API.
 
 {ref}/security-api-invalidate-token.html[Endpoint documentation]
 [source,ts]
@@ -9637,7 +9867,7 @@ client.security.oidcPrepareAuthentication()
 
 [discrete]
 ==== put_privileges
-Adds or updates application privileges.
+Create or update application privileges.
 
 {ref}/security-api-put-privileges.html[Endpoint documentation]
 [source,ts]
@@ -9654,8 +9884,11 @@ client.security.putPrivileges({ ... })
 
 [discrete]
 ==== put_role
-The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
+Create or update roles.
+
+The role management APIs are generally the preferred way to manage roles in the native realm, rather than using file-based role management.
 The create or update roles API cannot update roles that are defined in roles files.
+File-based role management is not available in Elastic Serverless.
 
 {ref}/security-api-put-role.html[Endpoint documentation]
 [source,ts]
@@ -9667,7 +9900,7 @@ client.security.putRole({ name })
 ==== Arguments
 
 * *Request (object):*
-** *`name` (string)*: The name of the role.
+** *`name` (string)*: The name of the role that is being created or updated. On Elasticsearch Serverless, the role name must begin with a letter or digit and can only contain letters, digits and the characters '_', '-', and '.'. Each role must have a unique name, as this will serve as the identifier for that role.
 ** *`applications` (Optional, { application, privileges, resources }[])*: A list of application privilege entries.
 ** *`cluster` (Optional, Enum("all" | "cancel_task" | "create_snapshot" | "cross_cluster_replication" | "cross_cluster_search" | "delegate_pki" | "grant_api_key" | "manage" | "manage_api_key" | "manage_autoscaling" | "manage_behavioral_analytics" | "manage_ccr" | "manage_data_frame_transforms" | "manage_data_stream_global_retention" | "manage_enrich" | "manage_ilm" | "manage_index_templates" | "manage_inference" | "manage_ingest_pipelines" | "manage_logstash_pipelines" | "manage_ml" | "manage_oidc" | "manage_own_api_key" | "manage_pipeline" | "manage_rollup" | "manage_saml" | "manage_search_application" | "manage_search_query_rules" | "manage_search_synonyms" | "manage_security" | "manage_service_account" | "manage_slm" | "manage_token" | "manage_transform" | "manage_user_profile" | "manage_watcher" | "monitor" | "monitor_data_frame_transforms" | "monitor_data_stream_global_retention" | "monitor_enrich" | "monitor_inference" | "monitor_ml" | "monitor_rollup" | "monitor_snapshot" | "monitor_text_structure" | "monitor_transform" | "monitor_watcher" | "none" | "post_behavioral_analytics_event" | "read_ccr" | "read_fleet_secrets" | "read_ilm" | "read_pipeline" | "read_security" | "read_slm" | "transport_client" | "write_connector_secrets" | "write_fleet_secrets")[])*: A list of cluster privileges. These privileges define the cluster-level actions for users with this role.
 ** *`global` (Optional, Record<string, User-defined value>)*: An object defining global privileges. A global privilege is a form of cluster privilege that is request-aware. Support for global privileges is currently limited to the management of application privileges.
@@ -9681,7 +9914,14 @@ client.security.putRole({ name })
 
 [discrete]
 ==== put_role_mapping
-Creates and updates role mappings.
+Create or update role mappings.
+
+Role mappings define which roles are assigned to each user.
+Each mapping has rules that identify users and a list of roles that are granted to those users.
+The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files. The create or update role mappings API cannot update role mappings that are defined in role mapping files.
+
+This API does not create roles. Rather, it maps users to existing roles.
+Roles can be created by using the create or update roles API or roles files.
 
 {ref}/security-api-put-role-mapping.html[Endpoint documentation]
 [source,ts]
@@ -9704,7 +9944,10 @@ client.security.putRoleMapping({ name })
 
 [discrete]
 ==== put_user
-Adds and updates users in the native realm. These users are commonly referred to as native users.
+Create or update users.
+
+A password is required for adding a new user but is optional when updating an existing user.
+To change a user’s password without updating any other fields, use the change password API.
 
 {ref}/security-api-put-user.html[Endpoint documentation]
 [source,ts]
@@ -9728,8 +9971,9 @@ client.security.putUser({ username })
 
 [discrete]
 ==== query_api_keys
-Query API keys.
-Retrieves a paginated list of API keys and their information. You can optionally filter the results with a query.
+Find API keys with a query.
+
+Get a paginated list of API keys and their information. You can optionally filter the results with a query.
 
 {ref}/security-api-query-api-key.html[Endpoint documentation]
 [source,ts]
@@ -9768,7 +10012,9 @@ An API key's actual permission is the intersection of its assigned role descript
 
 [discrete]
 ==== query_role
-Retrieves roles in a paginated manner. You can optionally filter the results with a query.
+Find roles with a query.
+
+Get roles in a paginated manner. You can optionally filter the results with a query.
 
 {ref}/security-api-query-role.html[Endpoint documentation]
 [source,ts]
@@ -9798,7 +10044,10 @@ To page through more hits, use the `search_after` parameter.
 
 [discrete]
 ==== query_user
-Retrieves information for Users in a paginated manner. You can optionally filter the results with a query.
+Find users with a query.
+
+Get information for users in a paginated manner.
+You can optionally filter the results with a query.
 
 {ref}/security-api-query-user.html[Endpoint documentation]
 [source,ts]
@@ -9828,7 +10077,9 @@ To page through more hits, use the `search_after` parameter.
 
 [discrete]
 ==== saml_authenticate
-Submits a SAML Response message to Elasticsearch for consumption.
+Authenticate SAML.
+
+Submits a SAML response message to Elasticsearch for consumption.
 
 {ref}/security-api-saml-authenticate.html[Endpoint documentation]
 [source,ts]
@@ -9846,6 +10097,8 @@ client.security.samlAuthenticate({ content, ids })
 
 [discrete]
 ==== saml_complete_logout
+Logout of SAML completely.
+
 Verifies the logout response sent from the SAML IdP.
 
 {ref}/security-api-saml-complete-logout.html[Endpoint documentation]
@@ -9865,6 +10118,8 @@ client.security.samlCompleteLogout({ realm, ids })
 
 [discrete]
 ==== saml_invalidate
+Invalidate SAML.
+
 Submits a SAML LogoutRequest message to Elasticsearch for consumption.
 
 {ref}/security-api-saml-invalidate.html[Endpoint documentation]
@@ -9887,6 +10142,8 @@ The client application must not attempt to parse or process the string in any wa
 
 [discrete]
 ==== saml_logout
+Logout of SAML.
+
 Submits a request to invalidate an access token and refresh token.
 
 {ref}/security-api-saml-logout.html[Endpoint documentation]
@@ -9906,7 +10163,9 @@ Alternatively, the most recent refresh token that was received after refreshing 
 
 [discrete]
 ==== saml_prepare_authentication
-Creates a SAML authentication request (<AuthnRequest>) as a URL string, based on the configuration of the respective SAML realm in Elasticsearch.
+Prepare SAML authentication.
+
+Creates a SAML authentication request (`<AuthnRequest>`) as a URL string, based on the configuration of the respective SAML realm in Elasticsearch.
 
 {ref}/security-api-saml-prepare-authentication.html[Endpoint documentation]
 [source,ts]
@@ -9927,6 +10186,8 @@ If the Authentication Request is signed, this value is used as part of the signa
 
 [discrete]
 ==== saml_service_provider_metadata
+Create SAML service provider metadata.
+
 Generate SAML metadata for a SAML 2.0 Service Provider.
 
 {ref}/security-api-saml-sp-metadata.html[Endpoint documentation]
@@ -9943,6 +10204,8 @@ client.security.samlServiceProviderMetadata({ realm_name })
 
 [discrete]
 ==== suggest_user_profiles
+Suggest a user profile.
+
 Get suggestions for user profiles that match specified search criteria.
 
 {ref}/security-api-suggest-user-profile.html[Endpoint documentation]
@@ -9970,6 +10233,7 @@ as long as the profile matches the `name` field query.
 [discrete]
 ==== update_api_key
 Update an API key.
+
 Updates attributes of an existing API key.
 Users can only update API keys that they created or that were granted to them.
 Use this API to update API keys created by the create API Key or grant API Key APIs.
@@ -10023,7 +10287,9 @@ client.security.updateSettings()
 
 [discrete]
 ==== update_user_profile_data
-Updates specific data for the user profile that's associated with the specified unique ID.
+Update user profile data.
+
+Update specific data for the user profile that is associated with a unique ID.
 
 {ref}/security-api-update-user-profile-data.html[Endpoint documentation]
 [source,ts]
@@ -10639,7 +10905,23 @@ client.sql.translate({ query })
 === ssl
 [discrete]
 ==== certificates
-Retrieves information about the X.509 certificates used to encrypt communications in the cluster.
+Get SSL certificates.
+
+Get information about the X.509 certificates that are used to encrypt communications in the cluster.
+The API returns a list that includes certificates from all TLS contexts including:
+
+- Settings for transport and HTTP interfaces
+- TLS settings that are used within authentication realms
+- TLS settings for remote monitoring exporters
+
+The list includes certificates that are used for configuring trust, such as those configured in the `xpack.security.transport.ssl.truststore` and `xpack.security.transport.ssl.certificate_authorities` settings.
+It also includes certificates that are used for configuring server identity, such as `xpack.security.http.ssl.keystore` and `xpack.security.http.ssl.certificate settings`.
+
+The list does not include certificates that are sourced from the default SSL context of the Java Runtime Environment (JRE), even if those certificates are in use within Elasticsearch.
+
+NOTE: When a PKCS#11 token is configured as the truststore of the JRE, the API returns all the certificates that are included in the PKCS#11 token irrespective of whether these are used in the Elasticsearch TLS configuration.
+
+If Elasticsearch is configured to use a keystore or truststore, the API output includes all certificates in that store, even though some of the certificates might not be in active use within the cluster.
 
 {ref}/security-api-ssl.html[Endpoint documentation]
 [source,ts]
