@@ -3,9 +3,8 @@
 
 [source, js]
 ----
-const response = await client.snapshot.create({
-  repository: "my_repository",
-  snapshot: "_verify_integrity",
+const response = await client.snapshot.repositoryVerifyIntegrity({
+  name: "my_repository",
 });
 console.log(response);
 ----
