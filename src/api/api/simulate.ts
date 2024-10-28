@@ -46,7 +46,7 @@ export default class Simulate {
 
   /**
     * Simulates running ingest with example documents.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-ingest-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/simulate-ingest-api.html | Elasticsearch API documentation}
     */
   async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async ingest (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>

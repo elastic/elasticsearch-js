@@ -46,7 +46,7 @@ export default class Nodes {
 
   /**
     * You can use this API to clear the archived repositories metering information in the cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-repositories-metering-archive-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/clear-repositories-metering-archive-api.html | Elasticsearch API documentation}
     */
   async clearRepositoriesMeteringArchive (this: That, params: T.NodesClearRepositoriesMeteringArchiveRequest | TB.NodesClearRepositoriesMeteringArchiveRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesClearRepositoriesMeteringArchiveResponse>
   async clearRepositoriesMeteringArchive (this: That, params: T.NodesClearRepositoriesMeteringArchiveRequest | TB.NodesClearRepositoriesMeteringArchiveRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.NodesClearRepositoriesMeteringArchiveResponse, unknown>>
@@ -79,7 +79,7 @@ export default class Nodes {
 
   /**
     * You can use the cluster repositories metering API to retrieve repositories metering information in a cluster. This API exposes monotonically non-decreasing counters and it’s expected that clients would durably store the information needed to compute aggregations over a period of time. Additionally, the information exposed by this API is volatile, meaning that it won’t be present after node restarts.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-repositories-metering-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/get-repositories-metering-api.html | Elasticsearch API documentation}
     */
   async getRepositoriesMeteringInfo (this: That, params: T.NodesGetRepositoriesMeteringInfoRequest | TB.NodesGetRepositoriesMeteringInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesGetRepositoriesMeteringInfoResponse>
   async getRepositoriesMeteringInfo (this: That, params: T.NodesGetRepositoriesMeteringInfoRequest | TB.NodesGetRepositoriesMeteringInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.NodesGetRepositoriesMeteringInfoResponse, unknown>>
@@ -111,7 +111,7 @@ export default class Nodes {
 
   /**
     * This API yields a breakdown of the hot threads on each selected node in the cluster. The output is plain text with a breakdown of each node’s top hot threads.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/cluster-nodes-hot-threads.html | Elasticsearch API documentation}
     */
   async hotThreads (this: That, params?: T.NodesHotThreadsRequest | TB.NodesHotThreadsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesHotThreadsResponse>
   async hotThreads (this: That, params?: T.NodesHotThreadsRequest | TB.NodesHotThreadsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.NodesHotThreadsResponse, unknown>>
@@ -151,7 +151,7 @@ export default class Nodes {
 
   /**
     * Returns cluster nodes information.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/cluster-nodes-info.html | Elasticsearch API documentation}
     */
   async info (this: That, params?: T.NodesInfoRequest | TB.NodesInfoRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesInfoResponse>
   async info (this: That, params?: T.NodesInfoRequest | TB.NodesInfoRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.NodesInfoResponse, unknown>>
@@ -198,7 +198,7 @@ export default class Nodes {
 
   /**
     * Reloads the keystore on nodes in the cluster.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/secure-settings.html#reloadable-secure-settings | Elasticsearch API documentation}
     */
   async reloadSecureSettings (this: That, params?: T.NodesReloadSecureSettingsRequest | TB.NodesReloadSecureSettingsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesReloadSecureSettingsResponse>
   async reloadSecureSettings (this: That, params?: T.NodesReloadSecureSettingsRequest | TB.NodesReloadSecureSettingsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.NodesReloadSecureSettingsResponse, unknown>>
@@ -250,7 +250,7 @@ export default class Nodes {
 
   /**
     * Returns cluster nodes statistics.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/cluster-nodes-stats.html | Elasticsearch API documentation}
     */
   async stats (this: That, params?: T.NodesStatsRequest | TB.NodesStatsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesStatsResponse>
   async stats (this: That, params?: T.NodesStatsRequest | TB.NodesStatsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.NodesStatsResponse, unknown>>
@@ -304,7 +304,7 @@ export default class Nodes {
 
   /**
     * Returns information on the usage of features.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usage.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/cluster-nodes-usage.html | Elasticsearch API documentation}
     */
   async usage (this: That, params?: T.NodesUsageRequest | TB.NodesUsageRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.NodesUsageResponse>
   async usage (this: That, params?: T.NodesUsageRequest | TB.NodesUsageRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.NodesUsageResponse, unknown>>

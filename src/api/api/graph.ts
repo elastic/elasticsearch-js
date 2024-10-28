@@ -46,7 +46,7 @@ export default class Graph {
 
   /**
     * Extracts and summarizes information about the documents and terms in an Elasticsearch data stream or index.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/graph-explore-api.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/graph-explore-api.html | Elasticsearch API documentation}
     */
   async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GraphExploreResponse>
   async explore (this: That, params: T.GraphExploreRequest | TB.GraphExploreRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GraphExploreResponse, unknown>>

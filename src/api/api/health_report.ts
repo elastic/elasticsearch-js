@@ -40,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Returns the health of the cluster.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/health-api.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/health-api.html | Elasticsearch API documentation}
   */
 export default async function HealthReportApi (this: That, params?: T.HealthReportRequest | TB.HealthReportRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.HealthReportResponse>
 export default async function HealthReportApi (this: That, params?: T.HealthReportRequest | TB.HealthReportRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.HealthReportResponse, unknown>>

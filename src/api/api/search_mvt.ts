@@ -40,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Search a vector tile. Searches a vector tile for geospatial values.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-vector-tile-api.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/search-vector-tile-api.html | Elasticsearch API documentation}
   */
 export default async function SearchMvtApi (this: That, params: T.SearchMvtRequest | TB.SearchMvtRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchMvtResponse>
 export default async function SearchMvtApi (this: That, params: T.SearchMvtRequest | TB.SearchMvtRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SearchMvtResponse, unknown>>

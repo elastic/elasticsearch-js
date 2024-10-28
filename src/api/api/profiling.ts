@@ -46,7 +46,7 @@ export default class Profiling {
 
   /**
     * Extracts a UI-optimized structure to render flamegraphs from Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/8.16/universal-profiling.html | Elasticsearch API documentation}
     */
   async flamegraph (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async flamegraph (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -75,7 +75,7 @@ export default class Profiling {
 
   /**
     * Extracts raw stacktrace information from Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/8.16/universal-profiling.html | Elasticsearch API documentation}
     */
   async stacktraces (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async stacktraces (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -104,7 +104,7 @@ export default class Profiling {
 
   /**
     * Returns basic information about the status of Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/8.16/universal-profiling.html | Elasticsearch API documentation}
     */
   async status (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async status (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
@@ -133,7 +133,7 @@ export default class Profiling {
 
   /**
     * Extracts a list of topN functions from Universal Profiling.
-    * @see {@link https://www.elastic.co/guide/en/observability/master/universal-profiling.html | Elasticsearch API documentation}
+    * @see {@link https://www.elastic.co/guide/en/observability/8.16/universal-profiling.html | Elasticsearch API documentation}
     */
   async topnFunctions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
   async topnFunctions (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>

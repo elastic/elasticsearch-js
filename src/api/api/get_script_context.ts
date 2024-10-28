@@ -39,8 +39,8 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Returns all script contexts.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html | Elasticsearch API documentation}
+  * Get script contexts. Get a list of supported script contexts and their methods.
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/painless/8.16/painless-contexts.html | Elasticsearch API documentation}
   */
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptContextResponse>
 export default async function GetScriptContextApi (this: That, params?: T.GetScriptContextRequest | TB.GetScriptContextRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.GetScriptContextResponse, unknown>>
