@@ -85,7 +85,7 @@ export default class Ccr {
   async follow (this: That, params: T.CcrFollowRequest | TB.CcrFollowRequest, options?: TransportRequestOptions): Promise<T.CcrFollowResponse>
   async follow (this: That, params: T.CcrFollowRequest | TB.CcrFollowRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['index']
-    const acceptedBody: string[] = ['leader_index', 'max_outstanding_read_requests', 'max_outstanding_write_requests', 'max_read_request_operation_count', 'max_read_request_size', 'max_retry_delay', 'max_write_buffer_count', 'max_write_buffer_size', 'max_write_request_operation_count', 'max_write_request_size', 'read_poll_timeout', 'remote_cluster']
+    const acceptedBody: string[] = ['data_stream_name', 'leader_index', 'max_outstanding_read_requests', 'max_outstanding_write_requests', 'max_read_request_operation_count', 'max_read_request_size', 'max_retry_delay', 'max_write_buffer_count', 'max_write_buffer_size', 'max_write_request_operation_count', 'max_write_request_size', 'read_poll_timeout', 'remote_cluster', 'settings']
     const querystring: Record<string, any> = {}
     // @ts-expect-error
     const userBody: any = params?.body

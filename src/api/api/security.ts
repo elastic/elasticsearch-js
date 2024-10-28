@@ -45,7 +45,7 @@ export default class Security {
   }
 
   /**
-    * Creates or updates a user profile on behalf of another user.
+    * Activate a user profile. Create or update a user profile on behalf of another user.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-activate-user-profile.html | Elasticsearch API documentation}
     */
   async activateUserProfile (this: That, params: T.SecurityActivateUserProfileRequest | TB.SecurityActivateUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityActivateUserProfileResponse>
@@ -116,7 +116,7 @@ export default class Security {
   }
 
   /**
-    * The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The bulk delete roles API cannot delete roles that are defined in roles files.
+    * Bulk delete roles. The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The bulk delete roles API cannot delete roles that are defined in roles files.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-bulk-delete-role.html | Elasticsearch API documentation}
     */
   async bulkDeleteRole (this: That, params: T.SecurityBulkDeleteRoleRequest | TB.SecurityBulkDeleteRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityBulkDeleteRoleResponse>
@@ -157,7 +157,7 @@ export default class Security {
   }
 
   /**
-    * The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The bulk create or update roles API cannot update roles that are defined in roles files.
+    * Bulk create or update roles. The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The bulk create or update roles API cannot update roles that are defined in roles files.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-bulk-put-role.html | Elasticsearch API documentation}
     */
   async bulkPutRole (this: That, params: T.SecurityBulkPutRoleRequest | TB.SecurityBulkPutRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityBulkPutRoleResponse>
@@ -227,7 +227,7 @@ export default class Security {
   }
 
   /**
-    * Changes the passwords of users in the native realm and built-in users.
+    * Change passwords. Change the passwords of users in the native realm and built-in users.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-change-password.html | Elasticsearch API documentation}
     */
   async changePassword (this: That, params?: T.SecurityChangePasswordRequest | TB.SecurityChangePasswordRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityChangePasswordResponse>
@@ -279,7 +279,7 @@ export default class Security {
   }
 
   /**
-    * Evicts a subset of all entries from the API key cache. The cache is also automatically cleared on state changes of the security index.
+    * Clear the API key cache. Evict a subset of all entries from the API key cache. The cache is also automatically cleared on state changes of the security index.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-clear-api-key-cache.html | Elasticsearch API documentation}
     */
   async clearApiKeyCache (this: That, params: T.SecurityClearApiKeyCacheRequest | TB.SecurityClearApiKeyCacheRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearApiKeyCacheResponse>
@@ -311,7 +311,7 @@ export default class Security {
   }
 
   /**
-    * Evicts application privileges from the native application privileges cache.
+    * Clear the privileges cache. Evict privileges from the native application privilege cache. The cache is also automatically cleared for applications that have their privileges updated.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-clear-privilege-cache.html | Elasticsearch API documentation}
     */
   async clearCachedPrivileges (this: That, params: T.SecurityClearCachedPrivilegesRequest | TB.SecurityClearCachedPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedPrivilegesResponse>
@@ -343,7 +343,7 @@ export default class Security {
   }
 
   /**
-    * Evicts users from the user cache. Can completely clear the cache or evict specific users.
+    * Clear the user cache. Evict users from the user cache. You can completely clear the cache or evict specific users.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-clear-cache.html | Elasticsearch API documentation}
     */
   async clearCachedRealms (this: That, params: T.SecurityClearCachedRealmsRequest | TB.SecurityClearCachedRealmsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedRealmsResponse>
@@ -375,7 +375,7 @@ export default class Security {
   }
 
   /**
-    * Evicts roles from the native role cache.
+    * Clear the roles cache. Evict roles from the native role cache.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-clear-role-cache.html | Elasticsearch API documentation}
     */
   async clearCachedRoles (this: That, params: T.SecurityClearCachedRolesRequest | TB.SecurityClearCachedRolesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedRolesResponse>
@@ -407,7 +407,7 @@ export default class Security {
   }
 
   /**
-    * Evicts tokens from the service account token caches.
+    * Clear service account token caches. Evict a subset of all entries from the service account token caches.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-clear-service-token-caches.html | Elasticsearch API documentation}
     */
   async clearCachedServiceTokens (this: That, params: T.SecurityClearCachedServiceTokensRequest | TB.SecurityClearCachedServiceTokensRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityClearCachedServiceTokensResponse>
@@ -441,7 +441,7 @@ export default class Security {
   }
 
   /**
-    * Create an API key. Creates an API key for access without requiring basic authentication. A successful request returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. NOTE: By default, API keys never expire. You can specify expiration information when you create the API keys.
+    * Create an API key. Create an API key for access without requiring basic authentication. A successful request returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. NOTE: By default, API keys never expire. You can specify expiration information when you create the API keys.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-create-api-key.html | Elasticsearch API documentation}
     */
   async createApiKey (this: That, params?: T.SecurityCreateApiKeyRequest | TB.SecurityCreateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateApiKeyResponse>
@@ -512,7 +512,7 @@ export default class Security {
   }
 
   /**
-    * Creates a service accounts token for access without requiring basic authentication.
+    * Create a service account token. Create a service accounts token for access without requiring basic authentication.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-create-service-token.html | Elasticsearch API documentation}
     */
   async createServiceToken (this: That, params: T.SecurityCreateServiceTokenRequest | TB.SecurityCreateServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateServiceTokenResponse>
@@ -553,7 +553,7 @@ export default class Security {
   }
 
   /**
-    * Removes application privileges.
+    * Delete application privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-delete-privilege.html | Elasticsearch API documentation}
     */
   async deletePrivileges (this: That, params: T.SecurityDeletePrivilegesRequest | TB.SecurityDeletePrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeletePrivilegesResponse>
@@ -586,7 +586,7 @@ export default class Security {
   }
 
   /**
-    * Removes roles in the native realm.
+    * Delete roles. Delete roles in the native realm.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-delete-role.html | Elasticsearch API documentation}
     */
   async deleteRole (this: That, params: T.SecurityDeleteRoleRequest | TB.SecurityDeleteRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteRoleResponse>
@@ -618,7 +618,7 @@ export default class Security {
   }
 
   /**
-    * Removes role mappings.
+    * Delete role mappings.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-delete-role-mapping.html | Elasticsearch API documentation}
     */
   async deleteRoleMapping (this: That, params: T.SecurityDeleteRoleMappingRequest | TB.SecurityDeleteRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteRoleMappingResponse>
@@ -650,7 +650,7 @@ export default class Security {
   }
 
   /**
-    * Deletes a service account token.
+    * Delete service account tokens. Delete service account tokens for a service in a specified namespace.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-delete-service-token.html | Elasticsearch API documentation}
     */
   async deleteServiceToken (this: That, params: T.SecurityDeleteServiceTokenRequest | TB.SecurityDeleteServiceTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteServiceTokenResponse>
@@ -684,7 +684,7 @@ export default class Security {
   }
 
   /**
-    * Deletes users from the native realm.
+    * Delete users. Delete users from the native realm.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-delete-user.html | Elasticsearch API documentation}
     */
   async deleteUser (this: That, params: T.SecurityDeleteUserRequest | TB.SecurityDeleteUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDeleteUserResponse>
@@ -716,7 +716,7 @@ export default class Security {
   }
 
   /**
-    * Disables users in the native realm.
+    * Disable users. Disable users in the native realm.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-disable-user.html | Elasticsearch API documentation}
     */
   async disableUser (this: That, params: T.SecurityDisableUserRequest | TB.SecurityDisableUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDisableUserResponse>
@@ -748,7 +748,7 @@ export default class Security {
   }
 
   /**
-    * Disables a user profile so it's not visible in user profile searches.
+    * Disable a user profile. Disable user profiles so that they are not visible in user profile searches.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-disable-user-profile.html | Elasticsearch API documentation}
     */
   async disableUserProfile (this: That, params: T.SecurityDisableUserProfileRequest | TB.SecurityDisableUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityDisableUserProfileResponse>
@@ -780,7 +780,7 @@ export default class Security {
   }
 
   /**
-    * Enables users in the native realm.
+    * Enable users. Enable users in the native realm.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-enable-user.html | Elasticsearch API documentation}
     */
   async enableUser (this: That, params: T.SecurityEnableUserRequest | TB.SecurityEnableUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnableUserResponse>
@@ -812,7 +812,7 @@ export default class Security {
   }
 
   /**
-    * Enables a user profile so it's visible in user profile searches.
+    * Enable a user profile. Enable user profiles to make them visible in user profile searches.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-enable-user-profile.html | Elasticsearch API documentation}
     */
   async enableUserProfile (this: That, params: T.SecurityEnableUserProfileRequest | TB.SecurityEnableUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnableUserProfileResponse>
@@ -844,7 +844,7 @@ export default class Security {
   }
 
   /**
-    * Enables a Kibana instance to configure itself for communication with a secured Elasticsearch cluster.
+    * Enroll Kibana. Enable a Kibana instance to configure itself for communication with a secured Elasticsearch cluster.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-kibana-enrollment.html | Elasticsearch API documentation}
     */
   async enrollKibana (this: That, params?: T.SecurityEnrollKibanaRequest | TB.SecurityEnrollKibanaRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollKibanaResponse>
@@ -874,7 +874,7 @@ export default class Security {
   }
 
   /**
-    * Allows a new node to join an existing cluster with security features enabled.
+    * Enroll a node. Enroll a new node to allow it to join an existing cluster with security features enabled.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-node-enrollment.html | Elasticsearch API documentation}
     */
   async enrollNode (this: That, params?: T.SecurityEnrollNodeRequest | TB.SecurityEnrollNodeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityEnrollNodeResponse>
@@ -934,7 +934,7 @@ export default class Security {
   }
 
   /**
-    * Retrieves the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
+    * Get builtin privileges. Get the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-builtin-privileges.html | Elasticsearch API documentation}
     */
   async getBuiltinPrivileges (this: That, params?: T.SecurityGetBuiltinPrivilegesRequest | TB.SecurityGetBuiltinPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetBuiltinPrivilegesResponse>
@@ -964,7 +964,7 @@ export default class Security {
   }
 
   /**
-    * Retrieves application privileges.
+    * Get application privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-privileges.html | Elasticsearch API documentation}
     */
   async getPrivileges (this: That, params?: T.SecurityGetPrivilegesRequest | TB.SecurityGetPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetPrivilegesResponse>
@@ -1008,7 +1008,7 @@ export default class Security {
   }
 
   /**
-    * The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The get roles API cannot retrieve roles that are defined in roles files.
+    * Get roles. Get roles in the native realm.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-role.html | Elasticsearch API documentation}
     */
   async getRole (this: That, params?: T.SecurityGetRoleRequest | TB.SecurityGetRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetRoleResponse>
@@ -1048,7 +1048,7 @@ export default class Security {
   }
 
   /**
-    * Retrieves role mappings.
+    * Get role mappings. Role mappings define which roles are assigned to each user. The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files. The get role mappings API cannot retrieve role mappings that are defined in role mapping files.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-role-mapping.html | Elasticsearch API documentation}
     */
   async getRoleMapping (this: That, params?: T.SecurityGetRoleMappingRequest | TB.SecurityGetRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetRoleMappingResponse>
@@ -1088,7 +1088,7 @@ export default class Security {
   }
 
   /**
-    * This API returns a list of service accounts that match the provided path parameter(s).
+    * Get service accounts. Get a list of service accounts that match the provided path parameters.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-service-accounts.html | Elasticsearch API documentation}
     */
   async getServiceAccounts (this: That, params?: T.SecurityGetServiceAccountsRequest | TB.SecurityGetServiceAccountsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetServiceAccountsResponse>
@@ -1132,7 +1132,7 @@ export default class Security {
   }
 
   /**
-    * Retrieves information of all service credentials for a service account.
+    * Get service account credentials.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-service-credentials.html | Elasticsearch API documentation}
     */
   async getServiceCredentials (this: That, params: T.SecurityGetServiceCredentialsRequest | TB.SecurityGetServiceCredentialsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetServiceCredentialsResponse>
@@ -1194,7 +1194,7 @@ export default class Security {
   }
 
   /**
-    * Creates a bearer token for access without requiring basic authentication.
+    * Get a token. Create a bearer token for access without requiring basic authentication.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-token.html | Elasticsearch API documentation}
     */
   async getToken (this: That, params?: T.SecurityGetTokenRequest | TB.SecurityGetTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetTokenResponse>
@@ -1236,7 +1236,7 @@ export default class Security {
   }
 
   /**
-    * Retrieves information about users in the native realm and built-in users.
+    * Get users. Get information about users in the native realm and built-in users.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-user.html | Elasticsearch API documentation}
     */
   async getUser (this: That, params?: T.SecurityGetUserRequest | TB.SecurityGetUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserResponse>
@@ -1276,7 +1276,7 @@ export default class Security {
   }
 
   /**
-    * Retrieves security privileges for the logged in user.
+    * Get user privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-user-privileges.html | Elasticsearch API documentation}
     */
   async getUserPrivileges (this: That, params?: T.SecurityGetUserPrivilegesRequest | TB.SecurityGetUserPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserPrivilegesResponse>
@@ -1306,7 +1306,7 @@ export default class Security {
   }
 
   /**
-    * Retrieves a user's profile using the unique profile ID.
+    * Get a user profile. Get a user's profile using the unique profile ID.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-get-user-profile.html | Elasticsearch API documentation}
     */
   async getUserProfile (this: That, params: T.SecurityGetUserProfileRequest | TB.SecurityGetUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGetUserProfileResponse>
@@ -1338,7 +1338,7 @@ export default class Security {
   }
 
   /**
-    * Creates an API key on behalf of another user. This API is similar to Create API keys, however it creates the API key for a user that is different than the user that runs the API. The caller must have authentication credentials (either an access token, or a username and password) for the user on whose behalf the API key will be created. It is not possible to use this API to create an API key without that user’s credentials. The user, for whom the authentication credentials is provided, can optionally "run as" (impersonate) another user. In this case, the API key will be created on behalf of the impersonated user. This API is intended be used by applications that need to create and manage API keys for end users, but cannot guarantee that those users have permission to create API keys on their own behalf. A successful grant API key API call returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. By default, API keys never expire. You can specify expiration information when you create the API keys.
+    * Grant an API key. Create an API key on behalf of another user. This API is similar to the create API keys API, however it creates the API key for a user that is different than the user that runs the API. The caller must have authentication credentials (either an access token, or a username and password) for the user on whose behalf the API key will be created. It is not possible to use this API to create an API key without that user’s credentials. The user, for whom the authentication credentials is provided, can optionally "run as" (impersonate) another user. In this case, the API key will be created on behalf of the impersonated user. This API is intended be used by applications that need to create and manage API keys for end users, but cannot guarantee that those users have permission to create API keys on their own behalf. A successful grant API key API call returns a JSON structure that contains the API key, its unique id, and its name. If applicable, it also returns expiration information for the API key in milliseconds. By default, API keys never expire. You can specify expiration information when you create the API keys.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-grant-api-key.html | Elasticsearch API documentation}
     */
   async grantApiKey (this: That, params: T.SecurityGrantApiKeyRequest | TB.SecurityGrantApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityGrantApiKeyResponse>
@@ -1379,7 +1379,7 @@ export default class Security {
   }
 
   /**
-    * Check user privileges. Determines whether the specified user has a specified list of privileges.
+    * Check user privileges. Determine whether the specified user has a specified list of privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-has-privileges.html | Elasticsearch API documentation}
     */
   async hasPrivileges (this: That, params?: T.SecurityHasPrivilegesRequest | TB.SecurityHasPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityHasPrivilegesResponse>
@@ -1431,7 +1431,7 @@ export default class Security {
   }
 
   /**
-    * Determines whether the users associated with the specified profile IDs have all the requested privileges.
+    * Check user profile privileges. Determine whether the users associated with the specified user profile IDs have all the requested privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-has-privileges-user-profile.html | Elasticsearch API documentation}
     */
   async hasPrivilegesUserProfile (this: That, params: T.SecurityHasPrivilegesUserProfileRequest | TB.SecurityHasPrivilegesUserProfileRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityHasPrivilegesUserProfileResponse>
@@ -1472,7 +1472,7 @@ export default class Security {
   }
 
   /**
-    * Invalidate API keys. Invalidates one or more API keys. The `manage_api_key` privilege allows deleting any API keys. The `manage_own_api_key` only allows deleting API keys that are owned by the user. In addition, with the `manage_own_api_key` privilege, an invalidation request must be issued in one of the three formats: - Set the parameter `owner=true`. - Or, set both `username` and `realm_name` to match the user’s identity. - Or, if the request is issued by an API key, i.e. an API key invalidates itself, specify its ID in the `ids` field.
+    * Invalidate API keys. This API invalidates API keys created by the create API key or grant API key APIs. Invalidated API keys fail authentication, but they can still be viewed using the get API key information and query API key information APIs, for at least the configured retention period, until they are automatically deleted. The `manage_api_key` privilege allows deleting any API keys. The `manage_own_api_key` only allows deleting API keys that are owned by the user. In addition, with the `manage_own_api_key` privilege, an invalidation request must be issued in one of the three formats: - Set the parameter `owner=true`. - Or, set both `username` and `realm_name` to match the user’s identity. - Or, if the request is issued by an API key, that is to say an API key invalidates itself, specify its ID in the `ids` field.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-invalidate-api-key.html | Elasticsearch API documentation}
     */
   async invalidateApiKey (this: That, params?: T.SecurityInvalidateApiKeyRequest | TB.SecurityInvalidateApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityInvalidateApiKeyResponse>
@@ -1514,7 +1514,7 @@ export default class Security {
   }
 
   /**
-    * Invalidates one or more access tokens or refresh tokens.
+    * Invalidate a token. The access tokens returned by the get token API have a finite period of time for which they are valid. After that time period, they can no longer be used. The time period is defined by the `xpack.security.authc.token.timeout` setting. The refresh tokens returned by the get token API are only valid for 24 hours. They can also be used exactly once. If you want to invalidate one or more access or refresh tokens immediately, use this invalidate token API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-invalidate-token.html | Elasticsearch API documentation}
     */
   async invalidateToken (this: That, params?: T.SecurityInvalidateTokenRequest | TB.SecurityInvalidateTokenRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityInvalidateTokenResponse>
@@ -1643,7 +1643,7 @@ export default class Security {
   }
 
   /**
-    * Adds or updates application privileges.
+    * Create or update application privileges.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-put-privileges.html | Elasticsearch API documentation}
     */
   async putPrivileges (this: That, params: T.SecurityPutPrivilegesRequest | TB.SecurityPutPrivilegesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutPrivilegesResponse>
@@ -1677,7 +1677,7 @@ export default class Security {
   }
 
   /**
-    * The role management APIs are generally the preferred way to manage roles, rather than using file-based role management. The create or update roles API cannot update roles that are defined in roles files.
+    * Create or update roles. The role management APIs are generally the preferred way to manage roles in the native realm, rather than using file-based role management. The create or update roles API cannot update roles that are defined in roles files. File-based role management is not available in Elastic Serverless.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-put-role.html | Elasticsearch API documentation}
     */
   async putRole (this: That, params: T.SecurityPutRoleRequest | TB.SecurityPutRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutRoleResponse>
@@ -1721,7 +1721,7 @@ export default class Security {
   }
 
   /**
-    * Creates and updates role mappings.
+    * Create or update role mappings. Role mappings define which roles are assigned to each user. Each mapping has rules that identify users and a list of roles that are granted to those users. The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files. The create or update role mappings API cannot update role mappings that are defined in role mapping files. This API does not create roles. Rather, it maps users to existing roles. Roles can be created by using the create or update roles API or roles files.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-put-role-mapping.html | Elasticsearch API documentation}
     */
   async putRoleMapping (this: That, params: T.SecurityPutRoleMappingRequest | TB.SecurityPutRoleMappingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutRoleMappingResponse>
@@ -1765,7 +1765,7 @@ export default class Security {
   }
 
   /**
-    * Adds and updates users in the native realm. These users are commonly referred to as native users.
+    * Create or update users. A password is required for adding a new user but is optional when updating an existing user. To change a user’s password without updating any other fields, use the change password API.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-put-user.html | Elasticsearch API documentation}
     */
   async putUser (this: That, params: T.SecurityPutUserRequest | TB.SecurityPutUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityPutUserResponse>
@@ -1809,7 +1809,7 @@ export default class Security {
   }
 
   /**
-    * Query API keys. Retrieves a paginated list of API keys and their information. You can optionally filter the results with a query.
+    * Find API keys with a query. Get a paginated list of API keys and their information. You can optionally filter the results with a query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-query-api-key.html | Elasticsearch API documentation}
     */
   async queryApiKeys (this: That, params?: T.SecurityQueryApiKeysRequest | TB.SecurityQueryApiKeysRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryApiKeysResponse>
@@ -1851,7 +1851,7 @@ export default class Security {
   }
 
   /**
-    * Retrieves roles in a paginated manner. You can optionally filter the results with a query.
+    * Find roles with a query. Get roles in a paginated manner. You can optionally filter the results with a query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-query-role.html | Elasticsearch API documentation}
     */
   async queryRole (this: That, params?: T.SecurityQueryRoleRequest | TB.SecurityQueryRoleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryRoleResponse>
@@ -1893,7 +1893,7 @@ export default class Security {
   }
 
   /**
-    * Retrieves information for Users in a paginated manner. You can optionally filter the results with a query.
+    * Find users with a query. Get information for users in a paginated manner. You can optionally filter the results with a query.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-query-user.html | Elasticsearch API documentation}
     */
   async queryUser (this: That, params?: T.SecurityQueryUserRequest | TB.SecurityQueryUserRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityQueryUserResponse>
@@ -1935,7 +1935,7 @@ export default class Security {
   }
 
   /**
-    * Submits a SAML Response message to Elasticsearch for consumption.
+    * Authenticate SAML. Submits a SAML response message to Elasticsearch for consumption.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-authenticate.html | Elasticsearch API documentation}
     */
   async samlAuthenticate (this: That, params: T.SecuritySamlAuthenticateRequest | TB.SecuritySamlAuthenticateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlAuthenticateResponse>
@@ -1976,7 +1976,7 @@ export default class Security {
   }
 
   /**
-    * Verifies the logout response sent from the SAML IdP.
+    * Logout of SAML completely. Verifies the logout response sent from the SAML IdP.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-complete-logout.html | Elasticsearch API documentation}
     */
   async samlCompleteLogout (this: That, params: T.SecuritySamlCompleteLogoutRequest | TB.SecuritySamlCompleteLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlCompleteLogoutResponse>
@@ -2017,7 +2017,7 @@ export default class Security {
   }
 
   /**
-    * Submits a SAML LogoutRequest message to Elasticsearch for consumption.
+    * Invalidate SAML. Submits a SAML LogoutRequest message to Elasticsearch for consumption.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-invalidate.html | Elasticsearch API documentation}
     */
   async samlInvalidate (this: That, params: T.SecuritySamlInvalidateRequest | TB.SecuritySamlInvalidateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlInvalidateResponse>
@@ -2058,7 +2058,7 @@ export default class Security {
   }
 
   /**
-    * Submits a request to invalidate an access token and refresh token.
+    * Logout of SAML. Submits a request to invalidate an access token and refresh token.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-logout.html | Elasticsearch API documentation}
     */
   async samlLogout (this: That, params: T.SecuritySamlLogoutRequest | TB.SecuritySamlLogoutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlLogoutResponse>
@@ -2099,7 +2099,7 @@ export default class Security {
   }
 
   /**
-    * Creates a SAML authentication request (<AuthnRequest>) as a URL string, based on the configuration of the respective SAML realm in Elasticsearch.
+    * Prepare SAML authentication. Creates a SAML authentication request (`<AuthnRequest>`) as a URL string, based on the configuration of the respective SAML realm in Elasticsearch.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-prepare-authentication.html | Elasticsearch API documentation}
     */
   async samlPrepareAuthentication (this: That, params?: T.SecuritySamlPrepareAuthenticationRequest | TB.SecuritySamlPrepareAuthenticationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlPrepareAuthenticationResponse>
@@ -2141,7 +2141,7 @@ export default class Security {
   }
 
   /**
-    * Generate SAML metadata for a SAML 2.0 Service Provider.
+    * Create SAML service provider metadata. Generate SAML metadata for a SAML 2.0 Service Provider.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-saml-sp-metadata.html | Elasticsearch API documentation}
     */
   async samlServiceProviderMetadata (this: That, params: T.SecuritySamlServiceProviderMetadataRequest | TB.SecuritySamlServiceProviderMetadataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySamlServiceProviderMetadataResponse>
@@ -2173,7 +2173,7 @@ export default class Security {
   }
 
   /**
-    * Get suggestions for user profiles that match specified search criteria.
+    * Suggest a user profile. Get suggestions for user profiles that match specified search criteria.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-suggest-user-profile.html | Elasticsearch API documentation}
     */
   async suggestUserProfiles (this: That, params?: T.SecuritySuggestUserProfilesRequest | TB.SecuritySuggestUserProfilesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecuritySuggestUserProfilesResponse>
@@ -2320,7 +2320,7 @@ export default class Security {
   }
 
   /**
-    * Updates specific data for the user profile that's associated with the specified unique ID.
+    * Update user profile data. Update specific data for the user profile that is associated with a unique ID.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-update-user-profile-data.html | Elasticsearch API documentation}
     */
   async updateUserProfileData (this: That, params: T.SecurityUpdateUserProfileDataRequest | TB.SecurityUpdateUserProfileDataRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateUserProfileDataResponse>

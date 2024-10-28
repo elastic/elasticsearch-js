@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Allows to get multiple documents in one request.
+  * Get multiple documents. Get multiple JSON documents by ID from one or more indices. If you specify an index in the request URI, you only need to specify the document IDs in the request body. To ensure fast responses, this multi get (mget) API responds with partial results if one or more shards fail.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html | Elasticsearch API documentation}
   */
 export default async function MgetApi<TDocument = unknown> (this: That, params?: T.MgetRequest | TB.MgetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MgetResponse<TDocument>>
