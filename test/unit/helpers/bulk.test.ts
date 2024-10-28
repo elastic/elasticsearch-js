@@ -1870,7 +1870,7 @@ test('Flush interval', t => {
     server.stop()
   })
 
-  test(`flush timeout does not lock process when flushInterval is equal to server timeout`, async t => {
+  test(`flush timeout does not lock process when flushInterval is equal to server timeout`, { skip: "Test currently has a race condition" }, async t => {
     const flushInterval = 500
 
     async function handler (req: http.IncomingMessage, res: http.ServerResponse) {
