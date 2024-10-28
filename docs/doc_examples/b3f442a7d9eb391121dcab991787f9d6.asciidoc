@@ -5,10 +5,16 @@
 ----
 const response = await client.indices.create({
   index: "idx",
-  mappings: {
-    _source: {
-      mode: "synthetic",
+  settings: {
+    index: {
+      mapping: {
+        source: {
+          mode: "synthetic",
+        },
+      },
     },
+  },
+  mappings: {
     properties: {
       binary: {
         type: "binary",

@@ -3,9 +3,12 @@
 
 [source, js]
 ----
-const response = await client.cat.mlTrainedModels({
-  h: "c,o,l,ct,v",
-  v: "ture",
+const response = await client.transport.request({
+  method: "PUT",
+  path: "/_watcher/settings",
+  body: {
+    "index.routing.allocation.include.role": "watcher",
+  },
 });
 console.log(response);
 ----

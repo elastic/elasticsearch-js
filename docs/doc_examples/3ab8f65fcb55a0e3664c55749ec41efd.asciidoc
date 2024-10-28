@@ -29,6 +29,7 @@ const response = await client.indices.create({
             "arabic_normalization",
             "persian_normalization",
             "persian_stop",
+            "persian_stem",
           ],
         },
       },

@@ -58,6 +58,14 @@ const response = await client.simulate.ingest({
         composed_of: ["component_template_1", "component_template_2"],
       },
     },
+    mapping_addition: {
+      dynamic: "strict",
+      properties: {
+        foo: {
+          type: "keyword",
+        },
+      },
+    },
   },
 });
 console.log(response);
