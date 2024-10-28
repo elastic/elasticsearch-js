@@ -40,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Index a document. Adds a JSON document to the specified data stream or index and makes it searchable. If the target is an index and the document already exists, the request updates the document and increments its version.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/docs-index_.html | Elasticsearch API documentation}
   */
 export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument> | TB.IndexRequest<TDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.IndexResponse>
 export default async function IndexApi<TDocument = unknown> (this: That, params: T.IndexRequest<TDocument> | TB.IndexRequest<TDocument>, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.IndexResponse, unknown>>

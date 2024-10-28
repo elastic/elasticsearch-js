@@ -40,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Check a document. Checks if a specified document exists.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/docs-get.html | Elasticsearch API documentation}
   */
 export default async function ExistsApi (this: That, params: T.ExistsRequest | TB.ExistsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ExistsResponse>
 export default async function ExistsApi (this: That, params: T.ExistsRequest | TB.ExistsRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.ExistsResponse, unknown>>

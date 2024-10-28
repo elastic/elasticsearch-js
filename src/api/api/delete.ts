@@ -40,7 +40,7 @@ interface That { transport: Transport }
 
 /**
   * Delete a document. Removes a JSON document from the specified index.
-  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html | Elasticsearch API documentation}
+  * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/docs-delete.html | Elasticsearch API documentation}
   */
 export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteResponse>
 export default async function DeleteApi (this: That, params: T.DeleteRequest | TB.DeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.DeleteResponse, unknown>>

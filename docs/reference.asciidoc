@@ -465,7 +465,9 @@ client.getScript({ id })
 
 [discrete]
 === get_script_context
-Returns all script contexts.
+Get script contexts.
+
+Get a list of supported script contexts and their methods.
 
 {painless}/painless-contexts.html[Endpoint documentation]
 [source,ts]
@@ -475,7 +477,9 @@ client.getScriptContext()
 
 [discrete]
 === get_script_languages
-Returns available script types, languages and contexts
+Get script languages.
+
+Get a list of available script types, languages, and contexts.
 
 {ref}/modules-scripting.html[Endpoint documentation]
 [source,ts]
@@ -643,7 +647,23 @@ If the `_source` parameter is `false`, this parameter is ignored.
 
 [discrete]
 === msearch
-Allows to execute several search operations in one request.
+Run multiple searches.
+
+The format of the request is similar to the bulk API format and makes use of the newline delimited JSON (NDJSON) format.
+The structure is as follows:
+
+```
+header\n
+body\n
+header\n
+body\n
+```
+
+This structure is specifically optimized to reduce parsing if a specific search ends up redirected to another node.
+
+IMPORTANT: The final line of data must end with a newline character `\n`.
+Each newline character may be preceded by a carriage return `\r`.
+When sending requests to this endpoint the `Content-Type` header should be set to `application/x-ndjson`.
 
 {ref}/search-multi-search.html[Endpoint documentation]
 [source,ts]
@@ -908,7 +928,20 @@ client.scriptsPainlessExecute({ ... })
 
 [discrete]
 === scroll
-Allows to retrieve a large numbers of results from a single search request.
+Run a scrolling search.
+
+IMPORTANT: The scroll API is no longer recommend for deep pagination. If you need to preserve the index state while paging through more than 10,000 hits, use the `search_after` parameter with a point in time (PIT).
+
+The scroll API gets large sets of results from a single scrolling search request.
+To get the necessary scroll ID, submit a search API request that includes an argument for the `scroll` query parameter.
+The `scroll` parameter indicates how long Elasticsearch should retain the search context for the request.
+The search response returns a scroll ID in the `_scroll_id` response body parameter.
+You can then use the scroll ID with the scroll API to retrieve the next batch of results for the request.
+If the Elasticsearch security features are enabled, the access to the results of a specific scroll ID is restricted to the user or API key that submitted the search.
+
+You can also use the scroll API to specify a new scroll parameter that extends or shortens the retention period for the search context.
+
+IMPORTANT: Results from a scrolling search reflect the state of the index at the time of the initial search request. Subsequent indexing or document changes only affect later search and scroll requests.
 
 {ref}/search-request-body.html[Endpoint documentation]
 [source,ts]
@@ -1213,7 +1246,15 @@ should be maintained for scrolled search.
 
 [discrete]
 === terms_enum
-The terms enum API  can be used to discover terms in the index that begin with the provided string. It is designed for low-latency look-ups used in auto-complete scenarios.
+Get terms in an index.
+
+Discover terms that match a partial string in an index.
+This "terms enum" API is designed for low-latency look-ups used in auto-complete scenarios.
+
+If the `complete` property in the response is false, the returned terms set may be incomplete and should be treated as approximate.
+This can occur due to a few reasons, such as a request timeout or a node error.
+
+NOTE: The terms enum API may return terms from deleted documents. Deleted documents are initially only marked as deleted. It is not until their segments are merged that documents are actually deleted. Until that happens, the terms enum API will return terms from these documents.
 
 {ref}/search-terms-enum.html[Endpoint documentation]
 [source,ts]
@@ -1398,8 +1439,8 @@ client.updateByQueryRethrottle({ task_id })
 === async_search
 [discrete]
 ==== delete
-Deletes an async search by identifier.
-If the search is still running, the search request will be cancelled.
+Delete an async search.
+If the asynchronous search is still running, it is cancelled.
 Otherwise, the saved search results are deleted.
 If the Elasticsearch security features are enabled, the deletion of a specific async search is restricted to: the authenticated user that submitted the original search request; users that have the `cancel_task` cluster privilege.
 
@@ -1417,7 +1458,8 @@ client.asyncSearch.delete({ id })
 
 [discrete]
 ==== get
-Retrieves the results of a previously submitted async search request given its identifier.
+Get async search results.
+Retrieve the results of a previously submitted asynchronous search request.
 If the Elasticsearch security features are enabled, access to the results of a specific async search is restricted to the user or API key that submitted it.
 
 {ref}/async-search.html[Endpoint documentation]
@@ -1443,8 +1485,8 @@ By default no timeout is set meaning that the currently available results will b
 
 [discrete]
 ==== status
-Get async search status
-Retrieves the status of a previously submitted async search request given its identifier, without retrieving search results.
+Get async search status.
+Retrieve the status of a previously submitted async search request given its identifier, without retrieving search results.
 If the Elasticsearch security features are enabled, use of this API is restricted to the `monitoring_user` role.
 
 {ref}/async-search.html[Endpoint documentation]
@@ -1461,10 +1503,12 @@ client.asyncSearch.status({ id })
 
 [discrete]
 ==== submit
-Runs a search request asynchronously.
-When the primary sort of the results is an indexed field, shards get sorted based on minimum and maximum value that they hold for that field, hence partial results become available following the sort criteria that was requested.
-Warning: Async search does not support scroll nor search requests that only include the suggest section.
-By default, Elasticsearch doesn’t allow you to store an async search response larger than 10Mb and an attempt to do this results in an error.
+Run an async search.
+When the primary sort of the results is an indexed field, shards get sorted based on minimum and maximum value that they hold for that field. Partial results become available following the sort criteria that was requested.
+
+Warning: Asynchronous search does not support scroll or search requests that include only the suggest section.
+
+By default, Elasticsearch does not allow you to store an async search response larger than 10Mb and an attempt to do this results in an error.
 The maximum allowed size for a stored async search response can be set by changing the `search.max_async_search_response_size` cluster level setting.
 
 {ref}/async-search.html[Endpoint documentation]
@@ -2819,7 +2863,9 @@ However, timed out nodes are included in the response’s `_nodes.failed` proper
 === connector
 [discrete]
 ==== check_in
-Updates the last_seen field in the connector, and sets it to current timestamp
+Check in a connector.
+
+Update the `last_seen` field in the connector and set it to the current timestamp.
 
 {ref}/check-in-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2835,7 +2881,12 @@ client.connector.checkIn({ connector_id })
 
 [discrete]
 ==== delete
-Deletes a connector.
+Delete a connector.
+
+Removes a connector and associated sync jobs.
+This is a destructive action that is not recoverable.
+NOTE: This action doesn’t delete any API keys, ingest pipelines, or data indices associated with the connector.
+These need to be removed manually.
 
 {ref}/delete-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2852,7 +2903,9 @@ client.connector.delete({ connector_id })
 
 [discrete]
 ==== get
-Retrieves a connector.
+Get a connector.
+
+Get the details about a connector.
 
 {ref}/get-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2868,7 +2921,9 @@ client.connector.get({ connector_id })
 
 [discrete]
 ==== list
-Returns existing connectors.
+Get all connectors.
+
+Get information about all connectors.
 
 {ref}/list-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2889,7 +2944,11 @@ client.connector.list({ ... })
 
 [discrete]
 ==== post
-Creates a connector.
+Create a connector.
+
+Connectors are Elasticsearch integrations that bring content from third-party data sources, which can be deployed on Elastic Cloud or hosted on your own infrastructure.
+Elastic managed connectors (Native connectors) are a managed service on Elastic Cloud.
+Self-managed connectors (Connector clients) are self-managed on your infrastructure.
 
 {ref}/create-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2910,7 +2969,7 @@ client.connector.post({ ... })
 
 [discrete]
 ==== put
-Creates or updates a connector.
+Create or update a connector.
 
 {ref}/create-connector-api.html[Endpoint documentation]
 [source,ts]
@@ -2932,7 +2991,10 @@ client.connector.put({ ... })
 
 [discrete]
 ==== sync_job_cancel
-Cancels a connector sync job.
+Cancel a connector sync job.
+
+Cancel a connector sync job, which sets the status to cancelling and updates `cancellation_requested_at` to the current time.
+The connector service is then responsible for setting the status of connector sync jobs to cancelled.
 
 {ref}/cancel-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
@@ -2960,6 +3022,8 @@ client.connector.syncJobCheckIn()
 [discrete]
 ==== sync_job_claim
 Claims a connector sync job.
+
+{ref}/claim-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.connector.syncJobClaim()
@@ -2968,7 +3032,10 @@ client.connector.syncJobClaim()
 
 [discrete]
 ==== sync_job_delete
-Deletes a connector sync job.
+Delete a connector sync job.
+
+Remove a connector sync job and its associated data.
+This is a destructive action that is not recoverable.
 
 {ref}/delete-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
@@ -2995,7 +3062,7 @@ client.connector.syncJobError()
 
 [discrete]
 ==== sync_job_get
-Retrieves a connector sync job.
+Get a connector sync job.
 
 {ref}/get-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
@@ -3011,7 +3078,9 @@ client.connector.syncJobGet({ connector_sync_job_id })
 
 [discrete]
 ==== sync_job_list
-Lists connector sync jobs.
+Get all connector sync jobs.
+
+Get information about all stored connector sync jobs listed by their creation date in ascending order.
 
 {ref}/list-connector-sync-jobs-api.html[Endpoint documentation]
 [source,ts]
@@ -3031,7 +3100,9 @@ client.connector.syncJobList({ ... })
 
 [discrete]
 ==== sync_job_post
-Creates a connector sync job.
+Create a connector sync job.
+
+Create a connector sync job document in the internal index and initialize its counters and timestamps with default values.
 
 {ref}/create-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
@@ -3060,6 +3131,8 @@ client.connector.syncJobUpdateStats()
 
 [discrete]
 ==== update_active_filtering
+Activate the connector draft filter.
+
 Activates the valid draft filtering for a connector.
 
 {ref}/update-connector-filtering-api.html[Endpoint documentation]
@@ -3076,7 +3149,12 @@ client.connector.updateActiveFiltering({ connector_id })
 
 [discrete]
 ==== update_api_key_id
-Updates the API key id in the connector document
+Update the connector API key ID.
+
+Update the `api_key_id` and `api_key_secret_id` fields of a connector.
+You can specify the ID of the API key used for authorization and the ID of the connector secret where the API key is stored.
+The connector secret ID is required only for Elastic managed (native) connectors.
+Self-managed connectors (connector clients) do not use this field.
 
 {ref}/update-connector-api-key-id-api.html[Endpoint documentation]
 [source,ts]
@@ -3094,7 +3172,9 @@ client.connector.updateApiKeyId({ connector_id })
 
 [discrete]
 ==== update_configuration
-Updates the configuration field in the connector document
+Update the connector configuration.
+
+Update the configuration field in the connector document.
 
 {ref}/update-connector-configuration-api.html[Endpoint documentation]
 [source,ts]
@@ -3112,7 +3192,11 @@ client.connector.updateConfiguration({ connector_id })
 
 [discrete]
 ==== update_error
-Updates the filtering field in the connector document
+Update the connector error field.
+
+Set the error field for the connector.
+If the error provided in the request body is non-null, the connector’s status is updated to error.
+Otherwise, if the error is reset to null, the connector status is updated to connected.
 
 {ref}/update-connector-error-api.html[Endpoint documentation]
 [source,ts]
@@ -3140,7 +3224,11 @@ client.connector.updateFeatures()
 
 [discrete]
 ==== update_filtering
-Updates the filtering field in the connector document
+Update the connector filtering.
+
+Update the draft filtering configuration of a connector and marks the draft validation state as edited.
+The filtering draft is activated once validated by the running Elastic connector service.
+The filtering property is used to configure sync rules (both basic and advanced) for a connector.
 
 {ref}/update-connector-filtering-api.html[Endpoint documentation]
 [source,ts]
@@ -3159,7 +3247,9 @@ client.connector.updateFiltering({ connector_id })
 
 [discrete]
 ==== update_filtering_validation
-Updates the draft filtering validation info for a connector.
+Update the connector draft filtering validation.
+
+Update the draft filtering validation info for a connector.
 [source,ts]
 ----
 client.connector.updateFilteringValidation({ connector_id, validation })
@@ -3174,7 +3264,9 @@ client.connector.updateFilteringValidation({ connector_id, validation })
 
 [discrete]
 ==== update_index_name
-Updates the index_name in the connector document
+Update the connector index name.
+
+Update the `index_name` field of a connector, specifying the index where the data ingested by the connector is stored.
 
 {ref}/update-connector-index-name-api.html[Endpoint documentation]
 [source,ts]
@@ -3191,7 +3283,7 @@ client.connector.updateIndexName({ connector_id, index_name })
 
 [discrete]
 ==== update_name
-Updates the name and description fields in the connector document
+Update the connector name and description.
 
 {ref}/update-connector-name-description-api.html[Endpoint documentation]
 [source,ts]
@@ -3209,7 +3301,7 @@ client.connector.updateName({ connector_id })
 
 [discrete]
 ==== update_native
-Updates the is_native flag in the connector document
+Update the connector is_native flag.
 [source,ts]
 ----
 client.connector.updateNative({ connector_id, is_native })
@@ -3224,7 +3316,9 @@ client.connector.updateNative({ connector_id, is_native })
 
 [discrete]
 ==== update_pipeline
-Updates the pipeline field in the connector document
+Update the connector pipeline.
+
+When you create a new connector, the configuration of an ingest pipeline is populated with default settings.
 
 {ref}/update-connector-pipeline-api.html[Endpoint documentation]
 [source,ts]
@@ -3241,7 +3335,7 @@ client.connector.updatePipeline({ connector_id, pipeline })
 
 [discrete]
 ==== update_scheduling
-Updates the scheduling field in the connector document
+Update the connector scheduling.
 
 {ref}/update-connector-scheduling-api.html[Endpoint documentation]
 [source,ts]
@@ -3258,7 +3352,7 @@ client.connector.updateScheduling({ connector_id, scheduling })
 
 [discrete]
 ==== update_service_type
-Updates the service type of the connector
+Update the connector service type.
 
 {ref}/update-connector-service-type-api.html[Endpoint documentation]
 [source,ts]
@@ -3275,7 +3369,7 @@ client.connector.updateServiceType({ connector_id, service_type })
 
 [discrete]
 ==== update_status
-Updates the status of the connector
+Update the connector status.
 
 {ref}/update-connector-status-api.html[Endpoint documentation]
 [source,ts]
@@ -3294,7 +3388,10 @@ client.connector.updateStatus({ connector_id, status })
 === dangling_indices
 [discrete]
 ==== delete_dangling_index
-Deletes the specified dangling index
+Delete a dangling index.
+
+If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
+For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
 
 {ref}/modules-gateway-dangling-indices.html[Endpoint documentation]
 [source,ts]
@@ -3306,14 +3403,17 @@ client.danglingIndices.deleteDanglingIndex({ index_uuid, accept_data_loss })
 ==== Arguments
 
 * *Request (object):*
-** *`index_uuid` (string)*: The UUID of the dangling index
-** *`accept_data_loss` (boolean)*: Must be set to true in order to delete the dangling index
+** *`index_uuid` (string)*: The UUID of the index to delete. Use the get dangling indices API to find the UUID.
+** *`accept_data_loss` (boolean)*: This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Specify timeout for connection to master
 ** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
 
 [discrete]
 ==== import_dangling_index
-Imports the specified dangling index
+Import a dangling index.
+
+If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
+For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
 
 {ref}/modules-gateway-dangling-indices.html[Endpoint documentation]
 [source,ts]
@@ -3325,14 +3425,20 @@ client.danglingIndices.importDanglingIndex({ index_uuid, accept_data_loss })
 ==== Arguments
 
 * *Request (object):*
-** *`index_uuid` (string)*: The UUID of the dangling index
-** *`accept_data_loss` (boolean)*: Must be set to true in order to import the dangling index
+** *`index_uuid` (string)*: The UUID of the index to import. Use the get dangling indices API to locate the UUID.
+** *`accept_data_loss` (boolean)*: This parameter must be set to true to import a dangling index.
+Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Specify timeout for connection to master
 ** *`timeout` (Optional, string | -1 | 0)*: Explicit operation timeout
 
 [discrete]
 ==== list_dangling_indices
-Returns all dangling indices.
+Get the dangling indices.
+
+If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
+For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
+
+Use this API to list dangling indices, which you can then import or delete.
 
 {ref}/modules-gateway-dangling-indices.html[Endpoint documentation]
 [source,ts]
@@ -4004,7 +4110,8 @@ client.indices.addBlock({ index, block })
 
 [discrete]
 ==== analyze
-Performs analysis on a text string and returns the resulting tokens.
+Get tokens from text analysis.
+The analyze API performs [analysis](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html) on a text string and returns the resulting tokens.
 
 {ref}/indices-analyze.html[Endpoint documentation]
 [source,ts]
@@ -5670,6 +5777,15 @@ client.inference.put({ inference_id })
 ** *`inference_config` (Optional, { service, service_settings, task_settings })*
 
 [discrete]
+==== stream_inference
+Perform streaming inference
+[source,ts]
+----
+client.inference.streamInference()
+----
+
+
+[discrete]
 === ingest
 [discrete]
 ==== delete_geoip_database
@@ -5817,8 +5933,8 @@ client.ingest.putPipeline({ id })
 ** *`id` (string)*: ID of the ingest pipeline to create or update.
 ** *`_meta` (Optional, Record<string, User-defined value>)*: Optional metadata about the ingest pipeline. May have any contents. This map is not automatically generated by Elasticsearch.
 ** *`description` (Optional, string)*: Description of the ingest pipeline.
-** *`on_failure` (Optional, { append, attachment, bytes, circle, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, pipeline, redact, remove, rename, reroute, script, set, set_security_user, sort, split, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
-** *`processors` (Optional, { append, attachment, bytes, circle, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, pipeline, redact, remove, rename, reroute, script, set, set_security_user, sort, split, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
+** *`on_failure` (Optional, { append, attachment, bytes, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
+** *`processors` (Optional, { append, attachment, bytes, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
 ** *`version` (Optional, number)*: Version number used by external systems to track ingest pipelines. This parameter is intended for external systems only. Elasticsearch does not use or validate pipeline version numbers.
 ** *`deprecated` (Optional, boolean)*: Marks this ingest pipeline as deprecated.
 When a deprecated ingest pipeline is referenced as the default or final pipeline when creating or updating a non-deprecated index template, Elasticsearch will emit a deprecation warning.
@@ -7160,7 +7276,7 @@ client.ml.postCalendarEvents({ calendar_id, events })
 
 * *Request (object):*
 ** *`calendar_id` (string)*: A string that uniquely identifies a calendar.
-** *`events` ({ calendar_id, event_id, description, end_time, start_time, skip_result, skip_model_update, force_time_shift }[])*: A list of one of more scheduled events. The event’s start and end times can be specified as integer milliseconds since the epoch or as a string in ISO 8601 format.
+** *`events` ({ calendar_id, event_id, description, end_time, start_time }[])*: A list of one of more scheduled events. The event’s start and end times can be specified as integer milliseconds since the epoch or as a string in ISO 8601 format.
 
 [discrete]
 ==== post_data
@@ -8419,6 +8535,23 @@ client.queryRules.putRuleset({ ruleset_id, rules })
 * *Request (object):*
 ** *`ruleset_id` (string)*: The unique identifier of the query ruleset to be created or updated
 ** *`rules` ({ rule_id, type, criteria, actions, priority } | { rule_id, type, criteria, actions, priority }[])*
+
+[discrete]
+==== test
+Creates or updates a query ruleset.
+
+{ref}/test-query-ruleset.html[Endpoint documentation]
+[source,ts]
+----
+client.queryRules.test({ ruleset_id, match_criteria })
+----
+
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`ruleset_id` (string)*: The unique identifier of the query ruleset to be created or updated
+** *`match_criteria` (Record<string, User-defined value>)*
 
 [discrete]
 === rollup
@@ -10639,7 +10772,23 @@ client.sql.translate({ query })
 === ssl
 [discrete]
 ==== certificates
-Retrieves information about the X.509 certificates used to encrypt communications in the cluster.
+Get SSL certificates.
+
+Get information about the X.509 certificates that are used to encrypt communications in the cluster.
+The API returns a list that includes certificates from all TLS contexts including:
+
+- Settings for transport and HTTP interfaces
+- TLS settings that are used within authentication realms
+- TLS settings for remote monitoring exporters
+
+The list includes certificates that are used for configuring trust, such as those configured in the `xpack.security.transport.ssl.truststore` and `xpack.security.transport.ssl.certificate_authorities` settings.
+It also includes certificates that are used for configuring server identity, such as `xpack.security.http.ssl.keystore` and `xpack.security.http.ssl.certificate settings`.
+
+The list does not include certificates that are sourced from the default SSL context of the Java Runtime Environment (JRE), even if those certificates are in use within Elasticsearch.
+
+NOTE: When a PKCS#11 token is configured as the truststore of the JRE, the API returns all the certificates that are included in the PKCS#11 token irrespective of whether these are used in the Elasticsearch TLS configuration.
+
+If Elasticsearch is configured to use a keystore or truststore, the API output includes all certificates in that store, even though some of the certificates might not be in active use within the cluster.
 
 {ref}/security-api-ssl.html[Endpoint documentation]
 [source,ts]

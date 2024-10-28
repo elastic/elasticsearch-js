@@ -45,8 +45,8 @@ export default class AsyncSearch {
   }
 
   /**
-    * Deletes an async search by identifier. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted. If the Elasticsearch security features are enabled, the deletion of a specific async search is restricted to: the authenticated user that submitted the original search request; users that have the `cancel_task` cluster privilege.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html | Elasticsearch API documentation}
+    * Delete an async search. If the asynchronous search is still running, it is cancelled. Otherwise, the saved search results are deleted. If the Elasticsearch security features are enabled, the deletion of a specific async search is restricted to: the authenticated user that submitted the original search request; users that have the `cancel_task` cluster privilege.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/async-search.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.AsyncSearchDeleteRequest | TB.AsyncSearchDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AsyncSearchDeleteResponse>
   async delete (this: That, params: T.AsyncSearchDeleteRequest | TB.AsyncSearchDeleteRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AsyncSearchDeleteResponse, unknown>>
@@ -77,8 +77,8 @@ export default class AsyncSearch {
   }
 
   /**
-    * Retrieves the results of a previously submitted async search request given its identifier. If the Elasticsearch security features are enabled, access to the results of a specific async search is restricted to the user or API key that submitted it.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html | Elasticsearch API documentation}
+    * Get async search results. Retrieve the results of a previously submitted asynchronous search request. If the Elasticsearch security features are enabled, access to the results of a specific async search is restricted to the user or API key that submitted it.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/async-search.html | Elasticsearch API documentation}
     */
   async get<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.AsyncSearchGetRequest | TB.AsyncSearchGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AsyncSearchGetResponse<TDocument, TAggregations>>
   async get<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.AsyncSearchGetRequest | TB.AsyncSearchGetRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AsyncSearchGetResponse<TDocument, TAggregations>, unknown>>
@@ -109,8 +109,8 @@ export default class AsyncSearch {
   }
 
   /**
-    * Get async search status Retrieves the status of a previously submitted async search request given its identifier, without retrieving search results. If the Elasticsearch security features are enabled, use of this API is restricted to the `monitoring_user` role.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html | Elasticsearch API documentation}
+    * Get async search status. Retrieve the status of a previously submitted async search request given its identifier, without retrieving search results. If the Elasticsearch security features are enabled, use of this API is restricted to the `monitoring_user` role.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/async-search.html | Elasticsearch API documentation}
     */
   async status (this: That, params: T.AsyncSearchStatusRequest | TB.AsyncSearchStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AsyncSearchStatusResponse>
   async status (this: That, params: T.AsyncSearchStatusRequest | TB.AsyncSearchStatusRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AsyncSearchStatusResponse, unknown>>
@@ -141,8 +141,8 @@ export default class AsyncSearch {
   }
 
   /**
-    * Runs a search request asynchronously. When the primary sort of the results is an indexed field, shards get sorted based on minimum and maximum value that they hold for that field, hence partial results become available following the sort criteria that was requested. Warning: Async search does not support scroll nor search requests that only include the suggest section. By default, Elasticsearch doesn’t allow you to store an async search response larger than 10Mb and an attempt to do this results in an error. The maximum allowed size for a stored async search response can be set by changing the `search.max_async_search_response_size` cluster level setting.
-    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/async-search.html | Elasticsearch API documentation}
+    * Run an async search. When the primary sort of the results is an indexed field, shards get sorted based on minimum and maximum value that they hold for that field. Partial results become available following the sort criteria that was requested. Warning: Asynchronous search does not support scroll or search requests that include only the suggest section. By default, Elasticsearch does not allow you to store an async search response larger than 10Mb and an attempt to do this results in an error. The maximum allowed size for a stored async search response can be set by changing the `search.max_async_search_response_size` cluster level setting.
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/async-search.html | Elasticsearch API documentation}
     */
   async submit<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.AsyncSearchSubmitRequest | TB.AsyncSearchSubmitRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.AsyncSearchSubmitResponse<TDocument, TAggregations>>
   async submit<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params?: T.AsyncSearchSubmitRequest | TB.AsyncSearchSubmitRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.AsyncSearchSubmitResponse<TDocument, TAggregations>, unknown>>
