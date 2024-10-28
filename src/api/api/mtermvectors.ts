@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Returns multiple termvectors in one request.
+  * Get multiple term vectors. You can specify existing documents by index and ID or provide artificial documents in the body of the request. You can specify the index in the request body or request URI. The response contains a `docs` array with all the fetched termvectors. Each element has the structure provided by the termvectors API.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html | Elasticsearch API documentation}
   */
 export default async function MtermvectorsApi (this: That, params?: T.MtermvectorsRequest | TB.MtermvectorsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MtermvectorsResponse>

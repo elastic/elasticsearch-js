@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Copies documents from a source to a destination.
+  * Throttle a reindex operation. Change the number of requests per second for a particular reindex operation.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html | Elasticsearch API documentation}
   */
 export default async function ReindexRethrottleApi (this: That, params: T.ReindexRethrottleRequest | TB.ReindexRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ReindexRethrottleResponse>
