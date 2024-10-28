@@ -1819,6 +1819,7 @@ test('Flush interval', t => {
     })
 
     server.stop()
+    t.end()
   })
 
   test(`flush timeout does not lock process when flushInterval is greater than server timeout`, async t => {
@@ -1868,6 +1869,7 @@ test('Flush interval', t => {
     })
 
     server.stop()
+    t.end()
   })
 
   test(`flush timeout does not lock process when flushInterval is equal to server timeout`, async t => {
@@ -1917,6 +1919,7 @@ test('Flush interval', t => {
     })
 
     server.stop()
+    t.end()
   })
 
   t.end()
