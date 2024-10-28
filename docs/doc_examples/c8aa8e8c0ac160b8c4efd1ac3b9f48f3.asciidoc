@@ -4,12 +4,17 @@
 [source, js]
 ----
 const response = await client.indices.create({
-  index: "my-index-000001",
+  index: "amazon-reviews",
   mappings: {
     properties: {
-      inference_field: {
-        type: "semantic_text",
-        inference_id: "my-elser-endpoint",
+      review_vector: {
+        type: "dense_vector",
+        dims: 8,
+        index: true,
+        similarity: "cosine",
+      },
+      review_text: {
+        type: "text",
       },
     },
   },

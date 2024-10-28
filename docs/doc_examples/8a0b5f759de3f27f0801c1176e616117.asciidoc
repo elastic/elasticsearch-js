@@ -3,10 +3,14 @@
 
 [source, js]
 ----
-const response = await client.indices.putSettings({
-  index: ".watches",
-  settings: {
-    "index.routing.allocation.include.role": "watcher",
+const response = await client.indices.create({
+  index: "semantic-embeddings",
+  mappings: {
+    properties: {
+      content: {
+        type: "semantic_text",
+      },
+    },
   },
 });
 console.log(response);
