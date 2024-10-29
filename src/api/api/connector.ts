@@ -45,7 +45,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the last_seen field in the connector, and sets it to current timestamp
+    * Check in a connector. Update the `last_seen` field in the connector and set it to the current timestamp.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/check-in-connector-api.html | Elasticsearch API documentation}
     */
   async checkIn (this: That, params: T.ConnectorCheckInRequest | TB.ConnectorCheckInRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorCheckInResponse>
@@ -77,7 +77,7 @@ export default class Connector {
   }
 
   /**
-    * Deletes a connector.
+    * Delete a connector. Removes a connector and associated sync jobs. This is a destructive action that is not recoverable. NOTE: This action doesn’t delete any API keys, ingest pipelines, or data indices associated with the connector. These need to be removed manually.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-connector-api.html | Elasticsearch API documentation}
     */
   async delete (this: That, params: T.ConnectorDeleteRequest | TB.ConnectorDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorDeleteResponse>
@@ -109,7 +109,7 @@ export default class Connector {
   }
 
   /**
-    * Retrieves a connector.
+    * Get a connector. Get the details about a connector.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-connector-api.html | Elasticsearch API documentation}
     */
   async get (this: That, params: T.ConnectorGetRequest | TB.ConnectorGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorGetResponse>
@@ -141,7 +141,7 @@ export default class Connector {
   }
 
   /**
-    * Updates last sync stats in the connector document
+    * Update the connector last sync stats. Update the fields related to the last sync of a connector. This action is used for analytics and monitoring.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-last-sync-api.html | Elasticsearch API documentation}
     */
   async lastSync (this: That, params: T.ConnectorLastSyncRequest | TB.ConnectorLastSyncRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorLastSyncResponse>
@@ -185,7 +185,7 @@ export default class Connector {
   }
 
   /**
-    * Returns existing connectors.
+    * Get all connectors. Get information about all connectors.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/list-connector-api.html | Elasticsearch API documentation}
     */
   async list (this: That, params?: T.ConnectorListRequest | TB.ConnectorListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorListResponse>
@@ -215,7 +215,7 @@ export default class Connector {
   }
 
   /**
-    * Creates a connector.
+    * Create a connector. Connectors are Elasticsearch integrations that bring content from third-party data sources, which can be deployed on Elastic Cloud or hosted on your own infrastructure. Elastic managed connectors (Native connectors) are a managed service on Elastic Cloud. Self-managed connectors (Connector clients) are self-managed on your infrastructure.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/create-connector-api.html | Elasticsearch API documentation}
     */
   async post (this: That, params?: T.ConnectorPostRequest | TB.ConnectorPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorPostResponse>
@@ -257,7 +257,7 @@ export default class Connector {
   }
 
   /**
-    * Creates or updates a connector.
+    * Create or update a connector.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/create-connector-api.html | Elasticsearch API documentation}
     */
   async put (this: That, params?: T.ConnectorPutRequest | TB.ConnectorPutRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorPutResponse>
@@ -430,7 +430,7 @@ export default class Connector {
   }
 
   /**
-    * Cancels a connector sync job.
+    * Cancel a connector sync job. Cancel a connector sync job, which sets the status to cancelling and updates `cancellation_requested_at` to the current time. The connector service is then responsible for setting the status of connector sync jobs to cancelled.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/cancel-connector-sync-job-api.html | Elasticsearch API documentation}
     */
   async syncJobCancel (this: That, params: T.ConnectorSyncJobCancelRequest | TB.ConnectorSyncJobCancelRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobCancelResponse>
@@ -526,7 +526,7 @@ export default class Connector {
   }
 
   /**
-    * Deletes a connector sync job.
+    * Delete a connector sync job. Remove a connector sync job and its associated data. This is a destructive action that is not recoverable.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-connector-sync-job-api.html | Elasticsearch API documentation}
     */
   async syncJobDelete (this: That, params: T.ConnectorSyncJobDeleteRequest | TB.ConnectorSyncJobDeleteRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobDeleteResponse>
@@ -590,7 +590,7 @@ export default class Connector {
   }
 
   /**
-    * Retrieves a connector sync job.
+    * Get a connector sync job.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-connector-sync-job-api.html | Elasticsearch API documentation}
     */
   async syncJobGet (this: That, params: T.ConnectorSyncJobGetRequest | TB.ConnectorSyncJobGetRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobGetResponse>
@@ -622,7 +622,7 @@ export default class Connector {
   }
 
   /**
-    * Lists connector sync jobs.
+    * Get all connector sync jobs. Get information about all stored connector sync jobs listed by their creation date in ascending order.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/list-connector-sync-jobs-api.html | Elasticsearch API documentation}
     */
   async syncJobList (this: That, params?: T.ConnectorSyncJobListRequest | TB.ConnectorSyncJobListRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobListResponse>
@@ -652,7 +652,7 @@ export default class Connector {
   }
 
   /**
-    * Creates a connector sync job.
+    * Create a connector sync job. Create a connector sync job document in the internal index and initialize its counters and timestamps with default values.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/create-connector-sync-job-api.html | Elasticsearch API documentation}
     */
   async syncJobPost (this: That, params: T.ConnectorSyncJobPostRequest | TB.ConnectorSyncJobPostRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorSyncJobPostResponse>
@@ -725,7 +725,7 @@ export default class Connector {
   }
 
   /**
-    * Activates the valid draft filtering for a connector.
+    * Activate the connector draft filter. Activates the valid draft filtering for a connector.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-filtering-api.html | Elasticsearch API documentation}
     */
   async updateActiveFiltering (this: That, params: T.ConnectorUpdateActiveFilteringRequest | TB.ConnectorUpdateActiveFilteringRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateActiveFilteringResponse>
@@ -757,7 +757,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the API key id in the connector document
+    * Update the connector API key ID. Update the `api_key_id` and `api_key_secret_id` fields of a connector. You can specify the ID of the API key used for authorization and the ID of the connector secret where the API key is stored. The connector secret ID is required only for Elastic managed (native) connectors. Self-managed connectors (connector clients) do not use this field.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-api-key-id-api.html | Elasticsearch API documentation}
     */
   async updateApiKeyId (this: That, params: T.ConnectorUpdateApiKeyIdRequest | TB.ConnectorUpdateApiKeyIdRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateApiKeyIdResponse>
@@ -801,7 +801,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the configuration field in the connector document
+    * Update the connector configuration. Update the configuration field in the connector document.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-configuration-api.html | Elasticsearch API documentation}
     */
   async updateConfiguration (this: That, params: T.ConnectorUpdateConfigurationRequest | TB.ConnectorUpdateConfigurationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateConfigurationResponse>
@@ -845,7 +845,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the filtering field in the connector document
+    * Update the connector error field. Set the error field for the connector. If the error provided in the request body is non-null, the connector’s status is updated to error. Otherwise, if the error is reset to null, the connector status is updated to connected.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-error-api.html | Elasticsearch API documentation}
     */
   async updateError (this: That, params: T.ConnectorUpdateErrorRequest | TB.ConnectorUpdateErrorRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateErrorResponse>
@@ -921,7 +921,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the filtering field in the connector document
+    * Update the connector filtering. Update the draft filtering configuration of a connector and marks the draft validation state as edited. The filtering draft is activated once validated by the running Elastic connector service. The filtering property is used to configure sync rules (both basic and advanced) for a connector.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-filtering-api.html | Elasticsearch API documentation}
     */
   async updateFiltering (this: That, params: T.ConnectorUpdateFilteringRequest | TB.ConnectorUpdateFilteringRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFilteringResponse>
@@ -965,7 +965,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the draft filtering validation info for a connector.
+    * Update the connector draft filtering validation. Update the draft filtering validation info for a connector.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-filtering-validation-api.html | Elasticsearch API documentation}
     */
   async updateFilteringValidation (this: That, params: T.ConnectorUpdateFilteringValidationRequest | TB.ConnectorUpdateFilteringValidationRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateFilteringValidationResponse>
@@ -1009,7 +1009,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the index_name in the connector document
+    * Update the connector index name. Update the `index_name` field of a connector, specifying the index where the data ingested by the connector is stored.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-index-name-api.html | Elasticsearch API documentation}
     */
   async updateIndexName (this: That, params: T.ConnectorUpdateIndexNameRequest | TB.ConnectorUpdateIndexNameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateIndexNameResponse>
@@ -1053,7 +1053,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the name and description fields in the connector document
+    * Update the connector name and description.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-name-description-api.html | Elasticsearch API documentation}
     */
   async updateName (this: That, params: T.ConnectorUpdateNameRequest | TB.ConnectorUpdateNameRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNameResponse>
@@ -1097,7 +1097,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the is_native flag in the connector document
+    * Update the connector is_native flag.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-native-api.html | Elasticsearch API documentation}
     */
   async updateNative (this: That, params: T.ConnectorUpdateNativeRequest | TB.ConnectorUpdateNativeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateNativeResponse>
@@ -1141,7 +1141,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the pipeline field in the connector document
+    * Update the connector pipeline. When you create a new connector, the configuration of an ingest pipeline is populated with default settings.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-pipeline-api.html | Elasticsearch API documentation}
     */
   async updatePipeline (this: That, params: T.ConnectorUpdatePipelineRequest | TB.ConnectorUpdatePipelineRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdatePipelineResponse>
@@ -1185,7 +1185,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the scheduling field in the connector document
+    * Update the connector scheduling.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-scheduling-api.html | Elasticsearch API documentation}
     */
   async updateScheduling (this: That, params: T.ConnectorUpdateSchedulingRequest | TB.ConnectorUpdateSchedulingRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateSchedulingResponse>
@@ -1229,7 +1229,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the service type of the connector
+    * Update the connector service type.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-service-type-api.html | Elasticsearch API documentation}
     */
   async updateServiceType (this: That, params: T.ConnectorUpdateServiceTypeRequest | TB.ConnectorUpdateServiceTypeRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateServiceTypeResponse>
@@ -1273,7 +1273,7 @@ export default class Connector {
   }
 
   /**
-    * Updates the status of the connector
+    * Update the connector status.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/update-connector-status-api.html | Elasticsearch API documentation}
     */
   async updateStatus (this: That, params: T.ConnectorUpdateStatusRequest | TB.ConnectorUpdateStatusRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ConnectorUpdateStatusResponse>

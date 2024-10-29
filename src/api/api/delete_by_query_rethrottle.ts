@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Changes the number of requests per second for a particular Delete By Query operation.
+  * Throttle a delete by query operation. Change the number of requests per second for a particular delete by query operation. Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html | Elasticsearch API documentation}
   */
 export default async function DeleteByQueryRethrottleApi (this: That, params: T.DeleteByQueryRethrottleRequest | TB.DeleteByQueryRethrottleRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.DeleteByQueryRethrottleResponse>

@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Returns available script types, languages and contexts
+  * Get script languages. Get a list of available script types, languages, and contexts.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html | Elasticsearch API documentation}
   */
 export default async function GetScriptLanguagesApi (this: That, params?: T.GetScriptLanguagesRequest | TB.GetScriptLanguagesRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.GetScriptLanguagesResponse>
