@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@elastic/request-converter": "8.16.0",
-    "@sinonjs/fake-timers": "github:sinonjs/fake-timers#0bfffc1",
+    "@sinonjs/fake-timers": "github:sinonjs/fake-timers#7861c93",
     "@types/debug": "4.1.12",
     "@types/ms": "0.7.34",
     "@types/node": "18.19.59",
