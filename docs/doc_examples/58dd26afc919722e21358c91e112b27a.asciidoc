@@ -3,12 +3,15 @@
 
 [source, js]
 ----
-const response = await client.reindex({
-  source: {
-    index: "my-index-000001",
-  },
-  dest: {
-    index: "my-index-000002",
+const response = await client.search({
+  index: "cooking_blog",
+  query: {
+    range: {
+      date: {
+        gte: "2023-05-01",
+        lte: "2023-05-31",
+      },
+    },
   },
 });
 console.log(response);

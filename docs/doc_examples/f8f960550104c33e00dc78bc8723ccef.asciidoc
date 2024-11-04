@@ -4,15 +4,7 @@
 [source, js]
 ----
 const response = await client.indices.create({
-  index: "my-index-000002",
-  mappings: {
-    properties: {
-      inference_field: {
-        type: "semantic_text",
-        inference_id: "my-openai-endpoint",
-      },
-    },
-  },
+  index: "cooking_blog",
 });
 console.log(response);
 ----

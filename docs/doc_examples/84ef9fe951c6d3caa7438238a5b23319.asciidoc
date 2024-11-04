@@ -3,10 +3,12 @@
 
 [source, js]
 ----
-const response = await client.indices.putSettings({
-  index: "my-index-000001",
-  settings: {
-    "index.merge.policy.max_merge_at_once_explicit": null,
+const response = await client.search({
+  index: "cooking_blog",
+  query: {
+    term: {
+      "author.keyword": "Maria Rodriguez",
+    },
   },
 });
 console.log(response);
