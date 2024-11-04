@@ -256,7 +256,10 @@ Set to all or any positive integer up to the total number of shards in the index
 
 [discrete]
 === delete_by_query_rethrottle
-Changes the number of requests per second for a particular Delete By Query operation.
+Throttle a delete by query operation.
+
+Change the number of requests per second for a particular delete by query operation.
+Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
 
 {ref}/docs-delete-by-query.html[Endpoint documentation]
 [source,ts]
@@ -616,7 +619,11 @@ list of queries. If `filter` isn't provided, all documents are allowed to match.
 
 [discrete]
 === mget
-Allows to get multiple documents in one request.
+Get multiple documents.
+
+Get multiple JSON documents by ID from one or more indices.
+If you specify an index in the request URI, you only need to specify the document IDs in the request body.
+To ensure fast responses, this multi get (mget) API responds with partial results if one or more shards fail.
 
 {ref}/docs-multi-get.html[Endpoint documentation]
 [source,ts]
@@ -722,7 +729,12 @@ If `false`, it returns `hits.total` as an object.
 
 [discrete]
 === mtermvectors
-Returns multiple termvectors in one request.
+Get multiple term vectors.
+
+You can specify existing documents by index and ID or provide artificial documents in the body of the request.
+You can specify the index in the request body or request URI.
+The response contains a `docs` array with all the fetched termvectors.
+Each element has the structure provided by the termvectors API.
 
 {ref}/docs-multi-termvectors.html[Endpoint documentation]
 [source,ts]
@@ -870,7 +882,9 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 [discrete]
 === reindex_rethrottle
-Copies documents from a source to a destination.
+Throttle a reindex operation.
+
+Change the number of requests per second for a particular reindex operation.
 
 {ref}/docs-reindex.html[Endpoint documentation]
 [source,ts]
@@ -1421,7 +1435,10 @@ Set to `all` or any positive integer up to the total number of shards in the ind
 
 [discrete]
 === update_by_query_rethrottle
-Changes the number of requests per second for a particular Update By Query operation.
+Throttle an update by query operation.
+
+Change the number of requests per second for a particular update by query operation.
+Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
 
 {ref}/docs-update-by-query.html[Endpoint documentation]
 [source,ts]
@@ -8967,7 +8984,9 @@ client.searchableSnapshots.stats({ ... })
 === security
 [discrete]
 ==== activate_user_profile
-Creates or updates a user profile on behalf of another user.
+Activate a user profile.
+
+Create or update a user profile on behalf of another user.
 
 {ref}/security-api-activate-user-profile.html[Endpoint documentation]
 [source,ts]
@@ -8987,6 +9006,7 @@ client.security.activateUserProfile({ grant_type })
 [discrete]
 ==== authenticate
 Authenticate a user.
+
 Authenticates a user and returns information about the authenticated user.
 Include the user information in a [basic auth header](https://en.wikipedia.org/wiki/Basic_access_authentication).
 A successful call returns a JSON structure that shows user information such as their username, the roles that are assigned to the user, any assigned metadata, and information about the realms that authenticated and authorized the user.
@@ -9001,6 +9021,8 @@ client.security.authenticate()
 
 [discrete]
 ==== bulk_delete_role
+Bulk delete roles.
+
 The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
 The bulk delete roles API cannot delete roles that are defined in roles files.
 
@@ -9019,6 +9041,8 @@ client.security.bulkDeleteRole({ names })
 
 [discrete]
 ==== bulk_put_role
+Bulk create or update roles.
+
 The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
 The bulk create or update roles API cannot update roles that are defined in roles files.
 
@@ -9048,7 +9072,9 @@ client.security.bulkUpdateApiKeys()
 
 [discrete]
 ==== change_password
-Changes the passwords of users in the native realm and built-in users.
+Change passwords.
+
+Change the passwords of users in the native realm and built-in users.
 
 {ref}/security-api-change-password.html[Endpoint documentation]
 [source,ts]
@@ -9071,7 +9097,9 @@ setting.
 
 [discrete]
 ==== clear_api_key_cache
-Evicts a subset of all entries from the API key cache.
+Clear the API key cache.
+
+Evict a subset of all entries from the API key cache.
 The cache is also automatically cleared on state changes of the security index.
 
 {ref}/security-api-clear-api-key-cache.html[Endpoint documentation]
@@ -9090,7 +9118,10 @@ Does not support other wildcard patterns.
 
 [discrete]
 ==== clear_cached_privileges
-Evicts application privileges from the native application privileges cache.
+Clear the privileges cache.
+
+Evict privileges from the native application privilege cache.
+The cache is also automatically cleared for applications that have their privileges updated.
 
 {ref}/security-api-clear-privilege-cache.html[Endpoint documentation]
 [source,ts]
@@ -9106,7 +9137,9 @@ client.security.clearCachedPrivileges({ application })
 
 [discrete]
 ==== clear_cached_realms
-Evicts users from the user cache. Can completely clear the cache or evict specific users.
+Clear the user cache.
+
+Evict users from the user cache. You can completely clear the cache or evict specific users.
 
 {ref}/security-api-clear-cache.html[Endpoint documentation]
 [source,ts]
@@ -9123,7 +9156,9 @@ client.security.clearCachedRealms({ realms })
 
 [discrete]
 ==== clear_cached_roles
-Evicts roles from the native role cache.
+Clear the roles cache.
+
+Evict roles from the native role cache.
 
 {ref}/security-api-clear-role-cache.html[Endpoint documentation]
 [source,ts]
@@ -9139,7 +9174,9 @@ client.security.clearCachedRoles({ name })
 
 [discrete]
 ==== clear_cached_service_tokens
-Evicts tokens from the service account token caches.
+Clear service account token caches.
+
+Evict a subset of all entries from the service account token caches.
 
 {ref}/security-api-clear-service-token-caches.html[Endpoint documentation]
 [source,ts]
@@ -9158,7 +9195,8 @@ client.security.clearCachedServiceTokens({ namespace, service, name })
 [discrete]
 ==== create_api_key
 Create an API key.
-Creates an API key for access without requiring basic authentication.
+
+Create an API key for access without requiring basic authentication.
 A successful request returns a JSON structure that contains the API key, its unique id, and its name.
 If applicable, it also returns expiration information for the API key in milliseconds.
 NOTE: By default, API keys never expire. You can specify expiration information when you create the API keys.
@@ -9192,7 +9230,9 @@ client.security.createCrossClusterApiKey()
 
 [discrete]
 ==== create_service_token
-Creates a service accounts token for access without requiring basic authentication.
+Create a service account token.
+
+Create a service accounts token for access without requiring basic authentication.
 
 {ref}/security-api-create-service-token.html[Endpoint documentation]
 [source,ts]
@@ -9211,7 +9251,7 @@ client.security.createServiceToken({ namespace, service })
 
 [discrete]
 ==== delete_privileges
-Removes application privileges.
+Delete application privileges.
 
 {ref}/security-api-delete-privilege.html[Endpoint documentation]
 [source,ts]
@@ -9229,7 +9269,9 @@ client.security.deletePrivileges({ application, name })
 
 [discrete]
 ==== delete_role
-Removes roles in the native realm.
+Delete roles.
+
+Delete roles in the native realm.
 
 {ref}/security-api-delete-role.html[Endpoint documentation]
 [source,ts]
@@ -9246,7 +9288,7 @@ client.security.deleteRole({ name })
 
 [discrete]
 ==== delete_role_mapping
-Removes role mappings.
+Delete role mappings.
 
 {ref}/security-api-delete-role-mapping.html[Endpoint documentation]
 [source,ts]
@@ -9263,7 +9305,9 @@ client.security.deleteRoleMapping({ name })
 
 [discrete]
 ==== delete_service_token
-Deletes a service account token.
+Delete service account tokens.
+
+Delete service account tokens for a service in a specified namespace.
 
 {ref}/security-api-delete-service-token.html[Endpoint documentation]
 [source,ts]
@@ -9282,7 +9326,9 @@ client.security.deleteServiceToken({ namespace, service, name })
 
 [discrete]
 ==== delete_user
-Deletes users from the native realm.
+Delete users.
+
+Delete users from the native realm.
 
 {ref}/security-api-delete-user.html[Endpoint documentation]
 [source,ts]
@@ -9299,7 +9345,9 @@ client.security.deleteUser({ username })
 
 [discrete]
 ==== disable_user
-Disables users in the native realm.
+Disable users.
+
+Disable users in the native realm.
 
 {ref}/security-api-disable-user.html[Endpoint documentation]
 [source,ts]
@@ -9316,7 +9364,9 @@ client.security.disableUser({ username })
 
 [discrete]
 ==== disable_user_profile
-Disables a user profile so it's not visible in user profile searches.
+Disable a user profile.
+
+Disable user profiles so that they are not visible in user profile searches.
 
 {ref}/security-api-disable-user-profile.html[Endpoint documentation]
 [source,ts]
@@ -9335,7 +9385,9 @@ visible to search, if 'false' do nothing with refreshes.
 
 [discrete]
 ==== enable_user
-Enables users in the native realm.
+Enable users.
+
+Enable users in the native realm.
 
 {ref}/security-api-enable-user.html[Endpoint documentation]
 [source,ts]
@@ -9352,7 +9404,9 @@ client.security.enableUser({ username })
 
 [discrete]
 ==== enable_user_profile
-Enables a user profile so it's visible in user profile searches.
+Enable a user profile.
+
+Enable user profiles to make them visible in user profile searches.
 
 {ref}/security-api-enable-user-profile.html[Endpoint documentation]
 [source,ts]
@@ -9371,7 +9425,9 @@ visible to search, if 'false' do nothing with refreshes.
 
 [discrete]
 ==== enroll_kibana
-Enables a Kibana instance to configure itself for communication with a secured Elasticsearch cluster.
+Enroll Kibana.
+
+Enable a Kibana instance to configure itself for communication with a secured Elasticsearch cluster.
 
 {ref}/security-api-kibana-enrollment.html[Endpoint documentation]
 [source,ts]
@@ -9382,7 +9438,9 @@ client.security.enrollKibana()
 
 [discrete]
 ==== enroll_node
-Allows a new node to join an existing cluster with security features enabled.
+Enroll a node.
+
+Enroll a new node to allow it to join an existing cluster with security features enabled.
 
 {ref}/security-api-node-enrollment.html[Endpoint documentation]
 [source,ts]
@@ -9394,6 +9452,7 @@ client.security.enrollNode()
 [discrete]
 ==== get_api_key
 Get API key information.
+
 Retrieves information for one or more API keys.
 NOTE: If you have only the `manage_own_api_key` privilege, this API returns only the API keys that you own.
 If you have `read_security`, `manage_api_key` or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
@@ -9428,7 +9487,9 @@ descriptors and the owner user's role descriptors.
 
 [discrete]
 ==== get_builtin_privileges
-Retrieves the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
+Get builtin privileges.
+
+Get the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
 
 {ref}/security-api-get-builtin-privileges.html[Endpoint documentation]
 [source,ts]
@@ -9439,7 +9500,7 @@ client.security.getBuiltinPrivileges()
 
 [discrete]
 ==== get_privileges
-Retrieves application privileges.
+Get application privileges.
 
 {ref}/security-api-get-privileges.html[Endpoint documentation]
 [source,ts]
@@ -9456,6 +9517,9 @@ client.security.getPrivileges({ ... })
 
 [discrete]
 ==== get_role
+Get roles.
+
+Get roles in the native realm.
 The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
 The get roles API cannot retrieve roles that are defined in roles files.
 
@@ -9473,7 +9537,11 @@ client.security.getRole({ ... })
 
 [discrete]
 ==== get_role_mapping
-Retrieves role mappings.
+Get role mappings.
+
+Role mappings define which roles are assigned to each user.
+The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files.
+The get role mappings API cannot retrieve role mappings that are defined in role mapping files.
 
 {ref}/security-api-get-role-mapping.html[Endpoint documentation]
 [source,ts]
@@ -9489,7 +9557,9 @@ client.security.getRoleMapping({ ... })
 
 [discrete]
 ==== get_service_accounts
-This API returns a list of service accounts that match the provided path parameter(s).
+Get service accounts.
+
+Get a list of service accounts that match the provided path parameters.
 
 {ref}/security-api-get-service-accounts.html[Endpoint documentation]
 [source,ts]
@@ -9506,7 +9576,7 @@ client.security.getServiceAccounts({ ... })
 
 [discrete]
 ==== get_service_credentials
-Retrieves information of all service credentials for a service account.
+Get service account credentials.
 
 {ref}/security-api-get-service-credentials.html[Endpoint documentation]
 [source,ts]
@@ -9534,7 +9604,9 @@ client.security.getSettings()
 
 [discrete]
 ==== get_token
-Creates a bearer token for access without requiring basic authentication.
+Get a token.
+
+Create a bearer token for access without requiring basic authentication.
 
 {ref}/security-api-get-token.html[Endpoint documentation]
 [source,ts]
@@ -9555,7 +9627,9 @@ client.security.getToken({ ... })
 
 [discrete]
 ==== get_user
-Retrieves information about users in the native realm and built-in users.
+Get users.
+
+Get information about users in the native realm and built-in users.
 
 {ref}/security-api-get-user.html[Endpoint documentation]
 [source,ts]
@@ -9572,7 +9646,7 @@ client.security.getUser({ ... })
 
 [discrete]
 ==== get_user_privileges
-Retrieves security privileges for the logged in user.
+Get user privileges.
 
 {ref}/security-api-get-user-privileges.html[Endpoint documentation]
 [source,ts]
@@ -9590,7 +9664,9 @@ client.security.getUserPrivileges({ ... })
 
 [discrete]
 ==== get_user_profile
-Retrieves a user's profile using the unique profile ID.
+Get a user profile.
+
+Get a user's profile using the unique profile ID.
 
 {ref}/security-api-get-user-profile.html[Endpoint documentation]
 [source,ts]
@@ -9610,8 +9686,10 @@ By default returns no `data` content.
 
 [discrete]
 ==== grant_api_key
-Creates an API key on behalf of another user.
-This API is similar to Create API keys, however it creates the API key for a user that is different than the user that runs the API.
+Grant an API key.
+
+Create an API key on behalf of another user.
+This API is similar to the create API keys API, however it creates the API key for a user that is different than the user that runs the API.
 The caller must have authentication credentials (either an access token, or a username and password) for the user on whose behalf the API key will be created.
 It is not possible to use this API to create an API key without that user’s credentials.
 The user, for whom the authentication credentials is provided, can optionally "run as" (impersonate) another user.
@@ -9649,7 +9727,8 @@ It is not valid with other grant types.
 [discrete]
 ==== has_privileges
 Check user privileges.
-Determines whether the specified user has a specified list of privileges.
+
+Determine whether the specified user has a specified list of privileges.
 
 {ref}/security-api-has-privileges.html[Endpoint documentation]
 [source,ts]
@@ -9668,7 +9747,9 @@ client.security.hasPrivileges({ ... })
 
 [discrete]
 ==== has_privileges_user_profile
-Determines whether the users associated with the specified profile IDs have all the requested privileges.
+Check user profile privileges.
+
+Determine whether the users associated with the specified user profile IDs have all the requested privileges.
 
 {ref}/security-api-has-privileges-user-profile.html[Endpoint documentation]
 [source,ts]
@@ -9686,13 +9767,15 @@ client.security.hasPrivilegesUserProfile({ uids, privileges })
 [discrete]
 ==== invalidate_api_key
 Invalidate API keys.
-Invalidates one or more API keys.
+
+This API invalidates API keys created by the create API key or grant API key APIs.
+Invalidated API keys fail authentication, but they can still be viewed using the get API key information and query API key information APIs, for at least the configured retention period, until they are automatically deleted.
 The `manage_api_key` privilege allows deleting any API keys.
 The `manage_own_api_key` only allows deleting API keys that are owned by the user.
 In addition, with the `manage_own_api_key` privilege, an invalidation request must be issued in one of the three formats:
 - Set the parameter `owner=true`.
 - Or, set both `username` and `realm_name` to match the user’s identity.
-- Or, if the request is issued by an API key, i.e. an API key invalidates itself, specify its ID in the `ids` field.
+- Or, if the request is issued by an API key, that is to say an API key invalidates itself, specify its ID in the `ids` field.
 
 {ref}/security-api-invalidate-api-key.html[Endpoint documentation]
 [source,ts]
@@ -9718,7 +9801,14 @@ This parameter cannot be used with either `ids` or `name`, or when `owner` flag 
 
 [discrete]
 ==== invalidate_token
-Invalidates one or more access tokens or refresh tokens.
+Invalidate a token.
+
+The access tokens returned by the get token API have a finite period of time for which they are valid.
+After that time period, they can no longer be used.
+The time period is defined by the `xpack.security.authc.token.timeout` setting.
+
+The refresh tokens returned by the get token API are only valid for 24 hours. They can also be used exactly once.
+If you want to invalidate one or more access or refresh tokens immediately, use this invalidate token API.
 
 {ref}/security-api-invalidate-token.html[Endpoint documentation]
 [source,ts]
@@ -9770,7 +9860,7 @@ client.security.oidcPrepareAuthentication()
 
 [discrete]
 ==== put_privileges
-Adds or updates application privileges.
+Create or update application privileges.
 
 {ref}/security-api-put-privileges.html[Endpoint documentation]
 [source,ts]
@@ -9787,8 +9877,11 @@ client.security.putPrivileges({ ... })
 
 [discrete]
 ==== put_role
-The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
+Create or update roles.
+
+The role management APIs are generally the preferred way to manage roles in the native realm, rather than using file-based role management.
 The create or update roles API cannot update roles that are defined in roles files.
+File-based role management is not available in Elastic Serverless.
 
 {ref}/security-api-put-role.html[Endpoint documentation]
 [source,ts]
@@ -9814,7 +9907,14 @@ client.security.putRole({ name })
 
 [discrete]
 ==== put_role_mapping
-Creates and updates role mappings.
+Create or update role mappings.
+
+Role mappings define which roles are assigned to each user.
+Each mapping has rules that identify users and a list of roles that are granted to those users.
+The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files. The create or update role mappings API cannot update role mappings that are defined in role mapping files.
+
+This API does not create roles. Rather, it maps users to existing roles.
+Roles can be created by using the create or update roles API or roles files.
 
 {ref}/security-api-put-role-mapping.html[Endpoint documentation]
 [source,ts]
@@ -9837,7 +9937,10 @@ client.security.putRoleMapping({ name })
 
 [discrete]
 ==== put_user
-Adds and updates users in the native realm. These users are commonly referred to as native users.
+Create or update users.
+
+A password is required for adding a new user but is optional when updating an existing user.
+To change a user’s password without updating any other fields, use the change password API.
 
 {ref}/security-api-put-user.html[Endpoint documentation]
 [source,ts]
@@ -9861,8 +9964,9 @@ client.security.putUser({ username })
 
 [discrete]
 ==== query_api_keys
-Query API keys.
-Retrieves a paginated list of API keys and their information. You can optionally filter the results with a query.
+Find API keys with a query.
+
+Get a paginated list of API keys and their information. You can optionally filter the results with a query.
 
 {ref}/security-api-query-api-key.html[Endpoint documentation]
 [source,ts]
@@ -9901,7 +10005,9 @@ An API key's actual permission is the intersection of its assigned role descript
 
 [discrete]
 ==== query_role
-Retrieves roles in a paginated manner. You can optionally filter the results with a query.
+Find roles with a query.
+
+Get roles in a paginated manner. You can optionally filter the results with a query.
 
 {ref}/security-api-query-role.html[Endpoint documentation]
 [source,ts]
@@ -9931,7 +10037,10 @@ To page through more hits, use the `search_after` parameter.
 
 [discrete]
 ==== query_user
-Retrieves information for Users in a paginated manner. You can optionally filter the results with a query.
+Find users with a query.
+
+Get information for users in a paginated manner.
+You can optionally filter the results with a query.
 
 {ref}/security-api-query-user.html[Endpoint documentation]
 [source,ts]
@@ -9961,7 +10070,9 @@ To page through more hits, use the `search_after` parameter.
 
 [discrete]
 ==== saml_authenticate
-Submits a SAML Response message to Elasticsearch for consumption.
+Authenticate SAML.
+
+Submits a SAML response message to Elasticsearch for consumption.
 
 {ref}/security-api-saml-authenticate.html[Endpoint documentation]
 [source,ts]
@@ -9979,6 +10090,8 @@ client.security.samlAuthenticate({ content, ids })
 
 [discrete]
 ==== saml_complete_logout
+Logout of SAML completely.
+
 Verifies the logout response sent from the SAML IdP.
 
 {ref}/security-api-saml-complete-logout.html[Endpoint documentation]
@@ -9998,6 +10111,8 @@ client.security.samlCompleteLogout({ realm, ids })
 
 [discrete]
 ==== saml_invalidate
+Invalidate SAML.
+
 Submits a SAML LogoutRequest message to Elasticsearch for consumption.
 
 {ref}/security-api-saml-invalidate.html[Endpoint documentation]
@@ -10020,6 +10135,8 @@ The client application must not attempt to parse or process the string in any wa
 
 [discrete]
 ==== saml_logout
+Logout of SAML.
+
 Submits a request to invalidate an access token and refresh token.
 
 {ref}/security-api-saml-logout.html[Endpoint documentation]
@@ -10039,7 +10156,9 @@ Alternatively, the most recent refresh token that was received after refreshing 
 
 [discrete]
 ==== saml_prepare_authentication
-Creates a SAML authentication request (<AuthnRequest>) as a URL string, based on the configuration of the respective SAML realm in Elasticsearch.
+Prepare SAML authentication.
+
+Creates a SAML authentication request (`<AuthnRequest>`) as a URL string, based on the configuration of the respective SAML realm in Elasticsearch.
 
 {ref}/security-api-saml-prepare-authentication.html[Endpoint documentation]
 [source,ts]
@@ -10060,6 +10179,8 @@ If the Authentication Request is signed, this value is used as part of the signa
 
 [discrete]
 ==== saml_service_provider_metadata
+Create SAML service provider metadata.
+
 Generate SAML metadata for a SAML 2.0 Service Provider.
 
 {ref}/security-api-saml-sp-metadata.html[Endpoint documentation]
@@ -10076,6 +10197,8 @@ client.security.samlServiceProviderMetadata({ realm_name })
 
 [discrete]
 ==== suggest_user_profiles
+Suggest a user profile.
+
 Get suggestions for user profiles that match specified search criteria.
 
 {ref}/security-api-suggest-user-profile.html[Endpoint documentation]
@@ -10103,6 +10226,7 @@ as long as the profile matches the `name` field query.
 [discrete]
 ==== update_api_key
 Update an API key.
+
 Updates attributes of an existing API key.
 Users can only update API keys that they created or that were granted to them.
 Use this API to update API keys created by the create API Key or grant API Key APIs.
@@ -10156,7 +10280,9 @@ client.security.updateSettings()
 
 [discrete]
 ==== update_user_profile_data
-Updates specific data for the user profile that's associated with the specified unique ID.
+Update user profile data.
+
+Update specific data for the user profile that is associated with a unique ID.
 
 {ref}/security-api-update-user-profile-data.html[Endpoint documentation]
 [source,ts]
