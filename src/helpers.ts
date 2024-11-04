@@ -28,6 +28,7 @@ import { errors, TransportResult, TransportRequestOptions, TransportRequestOptio
 import { Table, TypeMap, tableFromIPC } from '@apache-arrow/esnext-cjs'
 import Client from './client'
 import * as T from './api/types'
+import { Id } from './api/types'
 
 export interface HelpersOptions {
   client: Client
@@ -192,12 +193,18 @@ export default class Helpers {
    * @param {object} options - The client optional configuration for this request.
    * @return {array} The documents that matched the request.
    */
-  async search<TDocument = unknown> (params: T.SearchRequest, options: TransportRequestOptions = {}): Promise<TDocument[]> {
-    appendFilterPath('hits.hits._source', params, true)
+  async search<TDocument = unknown> (params: T.SearchRequest, options: TransportRequestOptions = {}): Promise<Array<TDocument & {_id: Id}>> {
+    appendFilterPath('hits.hits._id,hits.hits._source', params, true)
     options.meta = true
     const { body: result } = await this[kClient].search<TDocument>(params, options as TransportRequestOptionsWithMeta)
     if (result.hits?.hits != null) {
-      return result.hits.hits.map(d => d._source as TDocument)
+      return result.hits.hits.map(d => ({
+        // Starting with version 8.14.0, _id is optional, but in our case it's always present.
+        // See @es_quirk documentation in elasticsearch-specification/specification/_global/search/_types/hits.ts
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        _id: d._id!,
+        ...(d._source as TDocument)
+      }))
     }
     return []
   }
