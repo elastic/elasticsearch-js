@@ -25,6 +25,7 @@ import assert from 'node:assert'
 import * as timersPromises from 'node:timers/promises'
 import { Readable } from 'node:stream'
 import { errors, TransportResult, TransportRequestOptions, TransportRequestOptionsWithMeta } from '@elastic/transport'
+import { Table, TypeMap, tableFromIPC, RecordBatchStreamReader } from 'apache-arrow/Arrow.node'
 import Client from './client'
 import * as T from './api/types'
 
@@ -155,6 +156,8 @@ export interface EsqlResponse {
 
 export interface EsqlHelper {
   toRecords: <TDocument>() => Promise<EsqlToRecords<TDocument>>
+  toArrowTable: () => Promise<Table<TypeMap>>
+  toArrowReader: () => Promise<RecordBatchStreamReader>
 }
 
 export interface EsqlToRecords<TDocument> {
@@ -985,6 +988,8 @@ export default class Helpers {
       })
     }
 
+    const metaHeader = this[kMetaHeader]
+
     const helper: EsqlHelper = {
       /**
        * Pivots ES|QL query results into an array of row objects, rather than the default format where each row is an array of values.
@@ -996,6 +1001,31 @@ export default class Helpers {
         const records: TDocument[] = toRecords(response)
         const { columns } = response
         return { records, columns }
+      },
+
+      async toArrowTable (): Promise<Table<TypeMap>> {
+        if (metaHeader !== null) {
+          reqOptions.headers = reqOptions.headers ?? {}
+          reqOptions.headers['x-elastic-client-meta'] = `${metaHeader as string},h=qa`
+        }
+
+        params.format = 'arrow'
+
+        const response = await client.esql.query(params, reqOptions)
+        return tableFromIPC(response)
+      },
+
+      async toArrowReader (): Promise<RecordBatchStreamReader> {
+        if (metaHeader !== null) {
+          reqOptions.headers = reqOptions.headers ?? {}
+          reqOptions.headers['x-elastic-client-meta'] = `${metaHeader as string},h=qa`
+          reqOptions.asStream = true
+        }
+
+        params.format = 'arrow'
+
+        const response = await client.esql.query(params, reqOptions)
+        return RecordBatchStreamReader.from(response)
       }
     }
 
