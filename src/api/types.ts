@@ -2628,12 +2628,14 @@ export interface Retries {
 
 export interface RetrieverBase {
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  min_score?: float
 }
 
 export interface RetrieverContainer {
   standard?: StandardRetriever
   knn?: KnnRetriever
   rrf?: RRFRetriever
+  text_similarity_reranker?: TextSimilarityReranker
 }
 
 export type Routing = string
@@ -2798,7 +2800,6 @@ export interface StandardRetriever extends RetrieverBase {
   search_after?: SortResults
   terminate_after?: integer
   sort?: Sort
-  min_score?: float
   collapse?: SearchFieldCollapse
 }
 
@@ -2833,6 +2834,14 @@ export type TaskId = string | integer
 export interface TextEmbedding {
   model_id: string
   model_text: string
+}
+
+export interface TextSimilarityReranker extends RetrieverBase {
+  retriever: RetrieverContainer
+  rank_window_size?: integer
+  inference_id?: string
+  inference_text?: string
+  field?: string
 }
 
 export type ThreadType = 'cpu' | 'wait' | 'block' | 'gpu' | 'mem'
