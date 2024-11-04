@@ -723,9 +723,11 @@ const reader = await client.helpers
   .esql({ query: 'FROM sample_data' })
   .toArrowReader()
 
-for (let recordBatch of reader) {
-  // prints the first record in each record batch as JSON
-  console.log(recordBatch.get(0).toJSON())
+// print each record as JSON
+for (const recordBatch of reader) {
+  for (const record of recordBatch) {
+    console.log(record.toJSON())
+  }
 }
 ----
 
