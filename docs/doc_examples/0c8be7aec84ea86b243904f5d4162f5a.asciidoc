@@ -3,12 +3,13 @@
 
 [source, js]
 ----
-const response = await client.indices.create({
-  index: "semantic-embeddings",
-  mappings: {
-    properties: {
-      content: {
-        type: "semantic_text",
+const response = await client.search({
+  index: "cooking_blog",
+  query: {
+    match: {
+      title: {
+        query: "fluffy pancakes breakfast",
+        minimum_should_match: 2,
       },
     },
   },

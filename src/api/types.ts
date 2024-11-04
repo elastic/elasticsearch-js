@@ -4667,9 +4667,9 @@ export interface AnalysisNGramTokenFilter extends AnalysisTokenFilterBase {
 export interface AnalysisNGramTokenizer extends AnalysisTokenizerBase {
   type: 'ngram'
   custom_token_chars?: string
-  max_gram: integer
-  min_gram: integer
-  token_chars: AnalysisTokenChar[]
+  max_gram?: integer
+  min_gram?: integer
+  token_chars?: AnalysisTokenChar[]
 }
 
 export interface AnalysisNoriAnalyzer {

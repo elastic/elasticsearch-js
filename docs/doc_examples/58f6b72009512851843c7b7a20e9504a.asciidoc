@@ -7,9 +7,10 @@ const response = await client.indices.create({
   index: "my-index-000002",
   mappings: {
     properties: {
-      datetime: {
-        type: "date",
-        format: "uuuu/MM/dd HH:mm:ss||uuuu/MM/dd||epoch_millis",
+      inference_field: {
+        type: "semantic_text",
+        inference_id: "my-elser-endpoint-for-ingest",
+        search_inference_id: "my-elser-endpoint-for-search",
       },
     },
   },
