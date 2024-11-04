@@ -25,7 +25,7 @@ import assert from 'node:assert'
 import * as timersPromises from 'node:timers/promises'
 import { Readable } from 'node:stream'
 import { errors, TransportResult, TransportRequestOptions, TransportRequestOptionsWithMeta } from '@elastic/transport'
-import { Table, TypeMap, tableFromIPC, RecordBatchStreamReader } from '@apache-arrow/esnext-cjs/Arrow.node'
+import { Table, TypeMap, tableFromIPC, RecordBatchStreamReader } from 'apache-arrow/Arrow.node'
 import Client from './client'
 import * as T from './api/types'
 
