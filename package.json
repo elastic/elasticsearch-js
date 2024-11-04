@@ -57,7 +57,7 @@
     "@sinonjs/fake-timers": "github:sinonjs/fake-timers#0bfffc1",
     "@types/debug": "4.1.12",
     "@types/ms": "0.7.34",
-    "@types/node": "18.19.59",
+    "@types/node": "18.19.64",
     "@types/sinonjs__fake-timers": "8.1.5",
     "@types/split2": "3.2.1",
     "@types/stoppable": "1.1.3",
