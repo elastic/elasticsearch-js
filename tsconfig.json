@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2019",
+    "target": "ES2019",
     "module": "commonjs",
     "moduleResolution": "node",
     "declaration": true,
@@ -21,7 +21,8 @@
     "importHelpers": true,
     "outDir": "lib",
     "lib": [
-      "esnext"
+      "ES2019",
+      "dom"
     ]
   },
   "formatCodeOptions": {

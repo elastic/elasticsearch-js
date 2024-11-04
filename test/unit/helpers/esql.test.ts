@@ -18,7 +18,7 @@
  */
 
 import { test } from 'tap'
-import * as arrow from 'apache-arrow'
+import * as arrow from 'apache-arrow/Arrow.node'
 import { connection } from '../../utils'
 import { Client } from '../../../'
 
