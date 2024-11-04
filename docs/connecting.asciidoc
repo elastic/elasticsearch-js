@@ -1,7 +1,7 @@
 [[client-connecting]]
-== Connecting 
+== Connecting
 
-This page contains the information you need to connect and use the Client with 
+This page contains the information you need to connect and use the Client with
 {es}.
 
 **On this page**
@@ -19,7 +19,7 @@ This page contains the information you need to connect and use the Client with
 [discrete]
 === Authentication
 
-This document contains code snippets to show you how to connect to various {es} 
+This document contains code snippets to show you how to connect to various {es}
 providers.
 
 
@@ -27,18 +27,18 @@ providers.
 [[auth-ec]]
 ==== Elastic Cloud
 
-If you are using https://www.elastic.co/cloud[Elastic Cloud], the client offers 
-an easy way to connect to it via the `cloud` option. You must pass the Cloud ID 
-that you can find in the cloud console, then your username and password inside 
+If you are using https://www.elastic.co/cloud[Elastic Cloud], the client offers
+an easy way to connect to it via the `cloud` option. You must pass the Cloud ID
+that you can find in the cloud console, then your username and password inside
 the `auth` option.
 
-NOTE: When connecting to Elastic Cloud, the client will automatically enable 
-both request and response compression by default, since it yields significant 
-throughput improvements. Moreover, the client will also set the tls option 
-`secureProtocol` to `TLSv1_2_method` unless specified otherwise. You can still 
+NOTE: When connecting to Elastic Cloud, the client will automatically enable
+both request and response compression by default, since it yields significant
+throughput improvements. Moreover, the client will also set the tls option
+`secureProtocol` to `TLSv1_2_method` unless specified otherwise. You can still
 override this option by configuring them.
 
-IMPORTANT: Do not enable sniffing when using Elastic Cloud, since the nodes are 
+IMPORTANT: Do not enable sniffing when using Elastic Cloud, since the nodes are
 behind a load balancer, Elastic Cloud will take care of everything for you.
 Take a look https://www.elastic.co/blog/elasticsearch-sniffing-best-practices-what-when-why-how[here]
 to know more.
@@ -61,18 +61,18 @@ const client = new Client({
 [[connect-self-managed-new]]
 === Connecting to a self-managed cluster
 
-By default {es} will start with security features like authentication and TLS 
-enabled. To connect to the {es} cluster you'll need to configure the Node.js {es} 
-client to use HTTPS with the generated CA certificate in order to make requests 
+By default {es} will start with security features like authentication and TLS
+enabled. To connect to the {es} cluster you'll need to configure the Node.js {es}
+client to use HTTPS with the generated CA certificate in order to make requests
 successfully.
 
-If you're just getting started with {es} we recommend reading the documentation 
-on https://www.elastic.co/guide/en/elasticsearch/reference/current/settings.html[configuring] 
-and 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html[starting {es}] 
+If you're just getting started with {es} we recommend reading the documentation
+on https://www.elastic.co/guide/en/elasticsearch/reference/current/settings.html[configuring]
+and
+https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html[starting {es}]
 to ensure your cluster is running as expected.
 
-When you start {es} for the first time you'll see a distinct block like the one 
+When you start {es} for the first time you'll see a distinct block like the one
 below in the output from {es} (you may have to scroll up if it's been a while):
 
 [source,sh]
@@ -90,24 +90,24 @@ below in the output from {es} (you may have to scroll up if it's been a while):
 
 ----
 
-Depending on the circumstances there are two options for verifying the HTTPS 
-connection, either verifying with the CA certificate itself or via the HTTP CA 
+Depending on the circumstances there are two options for verifying the HTTPS
+connection, either verifying with the CA certificate itself or via the HTTP CA
 certificate fingerprint.
 
 [discrete]
 [[auth-tls]]
 ==== TLS configuration
 
-The generated root CA certificate can be found in the `certs` directory in your 
-{es} config location (`$ES_CONF_PATH/certs/http_ca.crt`). If you're running {es} 
-in Docker there is 
+The generated root CA certificate can be found in the `certs` directory in your
+{es} config location (`$ES_CONF_PATH/certs/http_ca.crt`). If you're running {es}
+in Docker there is
 https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html[additional documentation for retrieving the CA certificate].
 
-Without any additional configuration you can specify `https://` node urls, and 
-the certificates used to sign these requests will be verified. To turn off 
-certificate verification, you must specify an `tls` object in the top level 
-config and set `rejectUnauthorized: false`. The default `tls` values are the 
-same that Node.js's https://nodejs.org/api/tls.html#tls_tls_connect_options_callback[`tls.connect()`] 
+Without any additional configuration you can specify `https://` node urls, and
+the certificates used to sign these requests will be verified. To turn off
+certificate verification, you must specify an `tls` object in the top level
+config and set `rejectUnauthorized: false`. The default `tls` values are the
+same that Node.js's https://nodejs.org/api/tls.html#tls_tls_connect_options_callback[`tls.connect()`]
 uses.
 
 [source,js]
@@ -152,7 +152,7 @@ const client = new Client({
 })
 ----
 
-The certificate fingerprint can be calculated using `openssl x509` with the 
+The certificate fingerprint can be calculated using `openssl x509` with the
 certificate file:
 
 [source,sh]
@@ -160,8 +160,8 @@ certificate file:
 openssl x509 -fingerprint -sha256 -noout -in /path/to/http_ca.crt
 ----
 
-If you don't have access to the generated CA file from {es} you can use the 
-following script to output the root CA fingerprint of the {es} instance with 
+If you don't have access to the generated CA file from {es} you can use the
+following script to output the root CA fingerprint of the {es} instance with
 `openssl s_client`:
 
 [source,sh]
@@ -186,8 +186,8 @@ SHA256 Fingerprint=A5:2D:D9:35:11:E8:C6:04:5E:21:F1:66:54:B7:7C:9E:E0:F3:4A:EA:2
 
 WARNING: Running {es} without security enabled is not recommended.
 
-If your cluster is configured with 
-https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html[security explicitly disabled] 
+If your cluster is configured with
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html[security explicitly disabled]
 then you can connect via HTTP:
 
 [source,js]
@@ -208,14 +208,14 @@ Following you can find all the supported authentication strategies.
 [[auth-apikey]]
 ==== ApiKey authentication
 
-You can use the 
-{ref-7x}/security-api-create-api-key.html[ApiKey] 
-authentication by passing the `apiKey` parameter via the `auth` option. The 
-`apiKey` parameter can be either a base64 encoded string or an object with the 
-values that you can obtain from the 
+You can use the
+{ref-7x}/security-api-create-api-key.html[ApiKey]
+authentication by passing the `apiKey` parameter via the `auth` option. The
+`apiKey` parameter can be either a base64 encoded string or an object with the
+values that you can obtain from the
 {ref-7x}/security-api-create-api-key.html[create api key endpoint].
 
-NOTE: If you provide both basic authentication credentials and the ApiKey 
+NOTE: If you provide both basic authentication credentials and the ApiKey
 configuration, the ApiKey takes precedence.
 
 [source,js]
@@ -268,10 +268,10 @@ const client = new Client({
 [[auth-basic]]
 ==== Basic authentication
 
-You can provide your credentials by passing the `username` and `password` 
+You can provide your credentials by passing the `username` and `password`
 parameters via the `auth` option.
 
-NOTE: If you provide both basic authentication credentials and the Api Key 
+NOTE: If you provide both basic authentication credentials and the Api Key
 configuration, the Api Key will take precedence.
 
 [source,js]
@@ -342,14 +342,14 @@ const result = await client.search({
 }, { meta: true })
 ----
 
-In this case, the result will be: 
+In this case, the result will be:
 [source,ts]
 ----
 {
   body: object | boolean
   statusCode: number
   headers: object
-  warnings: [string],
+  warnings: string[],
   meta: object
 }
 ----
@@ -361,7 +361,7 @@ NOTE: The body is a boolean value when you use `HEAD` APIs.
 
 If needed, you can abort a running request by using the `AbortController` standard.
 
-CAUTION: If you abort a request, the request will fail with a 
+CAUTION: If you abort a request, the request will fail with a
 `RequestAbortedError`.
 
 
@@ -410,19 +410,23 @@ The supported request specific options are:
 [cols=2*]
 |===
 |`ignore`
-|`[number]` -  HTTP status codes which should not be considered errors for this request. +
+|`number[]` -  HTTP status codes which should not be considered errors for this request. +
 _Default:_ `null`
 
 |`requestTimeout`
-|`number` - Max request timeout for the request in milliseconds, it overrides the client default. +
+|`number | string` - Max request timeout for the request in milliseconds, it overrides the client default. +
 _Default:_ `30000`
+
+|`retryOnTimeout`
+|`boolean` - Retry requests that have timed out.
+_Default:_ `false`
 
 |`maxRetries`
 |`number` - Max number of retries for the request, it overrides the client default. +
 _Default:_ `3`
 
 |`compression`
-|`string, boolean` - Enables body compression for the request. +
+|`string | boolean` - Enables body compression for the request. +
 _Options:_ `false`, `'gzip'` +
 _Default:_ `false`
 
@@ -446,6 +450,10 @@ _Default:_ `null`
 |`any` - Custom object per request. _(you can use it to pass data to the clients events)_ +
 _Default:_ `null`
 
+|`opaqueId`
+|`string` - Set the `X-Opaque-Id` HTTP header. See {ref}/api-conventions.html#x-opaque-id
+_Default:_ `null`
+
 |`maxResponseSize`
 |`number` - When configured, it verifies that the uncompressed response size is lower than the configured number, if it's higher it will abort the request. It cannot be higher than buffer.constants.MAX_STRING_LENTGH +
 _Default:_ `null`
@@ -457,6 +465,17 @@ _Default:_ `null`
 |`signal`
 |`AbortSignal` - The AbortSignal instance to allow request abortion. +
 _Default:_ `null`
+
+|`meta`
+|`boolean` - Rather than returning the body, return an object containing `body`, `statusCode`, `headers` and `meta` keys +
+_Default_: `false`
+
+|`redaction`
+|`object` - Options for redacting potentially sensitive data from error metadata. See <<redaction>>.
+
+|`retryBackoff`
+|`(min: number, max: number, attempt: number) => number;` - A function that calculates how long to sleep, in seconds, before the next request retry +
+_Default:_ A built-in function that uses exponential backoff with jitter.
 
 |===
 
@@ -537,8 +556,8 @@ Resources used to assess these recommendations:
 
 ~Added~ ~in~ ~`v7.10.0`~
 
-If you need to pass through an http(s) proxy for connecting to {es}, the client 
-out of the box offers a handy configuration for helping you with it. Under the 
+If you need to pass through an http(s) proxy for connecting to {es}, the client
+out of the box offers a handy configuration for helping you with it. Under the
 hood, it uses the https://github.com/delvedor/hpagent[`hpagent`] module.
 
 IMPORTANT: In versions 8.0+ of the client, the default `Connection` type is set to `UndiciConnection`, which does not support proxy configurations.
@@ -715,5 +734,5 @@ This pre-flight product check allows the client to establish the version of Elas
 that it is communicating with. The product check requires one additional HTTP request to
 be sent to the server as part of the request pipeline before the main API call is sent.
 In most cases, this will succeed during the very first API call that the client sends.
-Once the product check completes, no further product check HTTP requests are sent for 
+Once the product check completes, no further product check HTTP requests are sent for
 subsequent API calls.
