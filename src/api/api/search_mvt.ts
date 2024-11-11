@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Search a vector tile. Searches a vector tile for geospatial values.
+  * Search a vector tile. Search a vector tile for geospatial values.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-vector-tile-api.html | Elasticsearch API documentation}
   */
 export default async function SearchMvtApi (this: That, params: T.SearchMvtRequest | TB.SearchMvtRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchMvtResponse>

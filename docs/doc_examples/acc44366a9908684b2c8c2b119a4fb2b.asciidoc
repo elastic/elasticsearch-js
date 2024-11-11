@@ -5,11 +5,15 @@
 ----
 const response = await client.search({
   index: "my-index-000001",
-  query: {
+  retriever: {
     rule: {
-      organic: {
-        query_string: {
-          query: "puggles",
+      retriever: {
+        standard: {
+          query: {
+            query_string: {
+              query: "puggles",
+            },
+          },
         },
       },
       match_criteria: {
