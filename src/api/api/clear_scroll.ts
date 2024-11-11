@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Clears the search context and results for a scrolling search.
+  * Clear a scrolling search. Clear the search context and results for a scrolling search.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/clear-scroll-api.html | Elasticsearch API documentation}
   */
 export default async function ClearScrollApi (this: That, params?: T.ClearScrollRequest | TB.ClearScrollRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.ClearScrollResponse>
