@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Runs multiple templated searches with a single request.
+  * Run multiple templated searches.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html | Elasticsearch API documentation}
   */
 export default async function MsearchTemplateApi<TDocument = unknown, TAggregations = Record<T.AggregateName, T.AggregationsAggregate>> (this: That, params: T.MsearchTemplateRequest | TB.MsearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.MsearchTemplateResponse<TDocument, TAggregations>>

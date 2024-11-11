@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Runs a search with a search template.
+  * Run a search with a search template.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html | Elasticsearch API documentation}
   */
 export default async function SearchTemplateApi<TDocument = unknown> (this: That, params?: T.SearchTemplateRequest | TB.SearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchTemplateResponse<TDocument>>
