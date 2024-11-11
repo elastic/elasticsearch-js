@@ -27,6 +27,17 @@ The ES|QL helper can now return results as an Apache Arrow `Table` or `RecordBat
 The client's `disablePrototypePoisoningProtection` option was set to `true` by default, but when it was set to any other value it was ignored, making it impossible to enable prototype poisoning protection without providing a custom serializer implementation.
 
 [discrete]
+=== 8.15.2
+
+[discrete]
+==== Features
+
+[discrete]
+===== Improved support for Elasticsearch `v8.15`
+
+Updated TypeScript types based on fixes and improvements to the Elasticsearch specification.
+
+[discrete]
 === 8.15.1
 
 [discrete]
