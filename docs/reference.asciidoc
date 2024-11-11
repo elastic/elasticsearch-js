@@ -58,7 +58,9 @@ Set to all or any positive integer up to the total number of shards in the index
 
 [discrete]
 === clear_scroll
-Clears the search context and results for a scrolling search.
+Clear a scrolling search.
+
+Clear the search context and results for a scrolling search.
 
 {ref}/clear-scroll-api.html[Endpoint documentation]
 [source,ts]
@@ -74,7 +76,12 @@ To clear all scroll IDs, use `_all`.
 
 [discrete]
 === close_point_in_time
-Closes a point-in-time.
+Close a point in time.
+
+A point in time must be opened explicitly before being used in search requests.
+The `keep_alive` parameter tells Elasticsearch how long it should persist.
+A point in time is automatically closed when the `keep_alive` period has elapsed.
+However, keeping points in time has a cost; close them as soon as they are no longer required for search requests.
 
 {ref}/point-in-time-api.html[Endpoint documentation]
 [source,ts]
@@ -389,9 +396,13 @@ Random by default.
 
 [discrete]
 === field_caps
-The field capabilities API returns the information about the capabilities of fields among multiple indices.
-The field capabilities API returns runtime fields like any other field. For example, a runtime field with a type
-of keyword is returned as any other field that belongs to the `keyword` family.
+Get the field capabilities.
+
+Get information about the capabilities of fields among multiple indices.
+
+For data streams, the API returns field capabilities among the stream’s backing indices.
+It returns runtime fields like any other field.
+For example, a runtime field with a type of keyword is returned the same as any other field that belongs to the `keyword` family.
 
 {ref}/search-field-caps.html[Endpoint documentation]
 [source,ts]
@@ -588,7 +599,19 @@ client.info()
 
 [discrete]
 === knn_search
-Performs a kNN search.
+Run a knn search.
+
+NOTE: The kNN search API has been replaced by the `knn` option in the search API.
+
+Perform a k-nearest neighbor (kNN) search on a dense_vector field and return the matching documents.
+Given a query vector, the API finds the k closest vectors and returns those documents as search hits.
+
+Elasticsearch uses the HNSW algorithm to support efficient kNN search.
+Like most kNN algorithms, HNSW is an approximate method that sacrifices result accuracy for improved search speed.
+This means the results returned are not always the true k closest neighbors.
+
+The kNN search API supports restricting the search using a filter.
+The search will return the top k documents that also match the filter query.
 
 {ref}/search-search.html[Endpoint documentation]
 [source,ts]
@@ -704,7 +727,7 @@ However, using computationally expensive named queries on a large number of hits
 
 [discrete]
 === msearch_template
-Runs multiple templated searches with a single request.
+Run multiple templated searches.
 
 {ref}/search-multi-search.html[Endpoint documentation]
 [source,ts]
@@ -764,12 +787,17 @@ Random by default.
 
 [discrete]
 === open_point_in_time
-A search request by default executes against the most recent visible data of the target indices,
+Open a point in time.
+
+A search request by default runs against the most recent visible data of the target indices,
 which is called point in time. Elasticsearch pit (point in time) is a lightweight view into the
 state of the data as it existed when initiated. In some cases, it’s preferred to perform multiple
 search requests using the same point in time. For example, if refreshes happen between
 `search_after` requests, then the results of those requests might not be consistent as changes happening
 between searches are only visible to the more recent point in time.
+
+A point in time must be opened explicitly before being used in search requests.
+The `keep_alive` parameter tells Elasticsearch how long it should persist.
 
 {ref}/point-in-time-api.html[Endpoint documentation]
 [source,ts]
@@ -828,7 +856,9 @@ If no response is received before the timeout expires, the request fails and ret
 
 [discrete]
 === rank_eval
-Enables you to evaluate the quality of ranked search results over a set of typical search queries.
+Evaluate ranked search results.
+
+Evaluate the quality of ranked search results over a set of typical search queries.
 
 {ref}/search-rank-eval.html[Endpoint documentation]
 [source,ts]
@@ -900,7 +930,9 @@ client.reindexRethrottle({ task_id })
 
 [discrete]
 === render_search_template
-Renders a search template as a search request body.
+Render a search template.
+
+Render a search template as a search request body.
 
 {ref}/render-search-template-api.html[Endpoint documentation]
 [source,ts]
@@ -972,7 +1004,9 @@ client.scroll({ scroll_id })
 
 [discrete]
 === search
-Returns search hits that match the query defined in the request.
+Run a search.
+
+Get search hits that match the query defined in the request.
 You can provide search queries using the `q` query string parameter or the request body.
 If both are specified, only the query parameter is used.
 
@@ -1014,7 +1048,7 @@ A post filter has no impact on the aggregation results.
 NOTE: This is a debugging tool and adds significant overhead to search execution.
 ** *`query` (Optional, { bool, boosting, common, combined_fields, constant_score, dis_max, distance_feature, exists, function_score, fuzzy, geo_bounding_box, geo_distance, geo_polygon, geo_shape, has_child, has_parent, ids, intervals, knn, match, match_all, match_bool_prefix, match_none, match_phrase, match_phrase_prefix, more_like_this, multi_match, nested, parent_id, percolate, pinned, prefix, query_string, range, rank_feature, regexp, rule, script, script_score, semantic, shape, simple_query_string, span_containing, span_field_masking, span_first, span_multi, span_near, span_not, span_or, span_term, span_within, sparse_vector, term, terms, terms_set, text_expansion, weighted_tokens, wildcard, wrapper, type })*: Defines the search definition using the Query DSL.
 ** *`rescore` (Optional, { window_size, query, learning_to_rank } | { window_size, query, learning_to_rank }[])*: Can be used to improve precision by reordering just the top (for example 100 - 500) documents returned by the `query` and `post_filter` phases.
-** *`retriever` (Optional, { standard, knn, rrf })*: A retriever is a specification to describe top documents returned from a search. A retriever replaces other elements of the search API that also return top documents such as query and knn.
+** *`retriever` (Optional, { standard, knn, rrf, text_similarity_reranker })*: A retriever is a specification to describe top documents returned from a search. A retriever replaces other elements of the search API that also return top documents such as query and knn.
 ** *`script_fields` (Optional, Record<string, { script, ignore_failure }>)*: Retrieve a script evaluation (based on different fields) for each hit.
 ** *`search_after` (Optional, number | number | string | boolean | null | User-defined value[])*: Used to retrieve the next page of hits using a set of sort values from the previous page.
 ** *`size` (Optional, number)*: The number of hits to return.
@@ -1130,7 +1164,8 @@ Fetches with this enabled will be slower the enabling synthetic source natively 
 [discrete]
 === search_mvt
 Search a vector tile.
-Searches a vector tile for geospatial values.
+
+Search a vector tile for geospatial values.
 
 {ref}/search-vector-tile-api.html[Endpoint documentation]
 [source,ts]
@@ -1189,7 +1224,11 @@ suggested label positions for the original features.
 
 [discrete]
 === search_shards
-Returns information about the indices and shards that a search request would be executed against.
+Get the search shards.
+
+Get the indices and shards that a search request would be run against.
+This information can be useful for working out issues or planning optimizations with routing and shard preferences.
+When filtered aliases are used, the filter is returned as part of the indices section.
 
 {ref}/search-shards.html[Endpoint documentation]
 [source,ts]
@@ -1216,7 +1255,7 @@ Random by default.
 
 [discrete]
 === search_template
-Runs a search with a search template.
+Run a search with a search template.
 
 {ref}/search-template.html[Endpoint documentation]
 [source,ts]
@@ -1291,7 +1330,8 @@ client.termsEnum({ index, field })
 [discrete]
 === termvectors
 Get term vector information.
-Returns information and statistics about terms in the fields of a particular document.
+
+Get information and statistics about terms in the fields of a particular document.
 
 {ref}/docs-termvectors.html[Endpoint documentation]
 [source,ts]
@@ -1457,6 +1497,7 @@ client.updateByQueryRethrottle({ task_id })
 [discrete]
 ==== delete
 Delete an async search.
+
 If the asynchronous search is still running, it is cancelled.
 Otherwise, the saved search results are deleted.
 If the Elasticsearch security features are enabled, the deletion of a specific async search is restricted to: the authenticated user that submitted the original search request; users that have the `cancel_task` cluster privilege.
@@ -1476,6 +1517,7 @@ client.asyncSearch.delete({ id })
 [discrete]
 ==== get
 Get async search results.
+
 Retrieve the results of a previously submitted asynchronous search request.
 If the Elasticsearch security features are enabled, access to the results of a specific async search is restricted to the user or API key that submitted it.
 
@@ -1502,8 +1544,9 @@ By default no timeout is set meaning that the currently available results will b
 
 [discrete]
 ==== status
-Get async search status.
-Retrieve the status of a previously submitted async search request given its identifier, without retrieving search results.
+Get the async search status.
+
+Get the status of a previously submitted async search request given its identifier, without retrieving search results.
 If the Elasticsearch security features are enabled, use of this API is restricted to the `monitoring_user` role.
 
 {ref}/async-search.html[Endpoint documentation]
@@ -1521,6 +1564,7 @@ client.asyncSearch.status({ id })
 [discrete]
 ==== submit
 Run an async search.
+
 When the primary sort of the results is an indexed field, shards get sorted based on minimum and maximum value that they hold for that field. Partial results become available following the sort criteria that was requested.
 
 Warning: Asynchronous search does not support scroll or search requests that include only the suggest section.
@@ -1634,7 +1678,9 @@ A partial reduction is performed every time the coordinating node has received a
 === autoscaling
 [discrete]
 ==== delete_autoscaling_policy
-Deletes an autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+Delete an autoscaling policy.
+
+NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
 
 {ref}/autoscaling-delete-autoscaling-policy.html[Endpoint documentation]
 [source,ts]
@@ -1650,7 +1696,20 @@ client.autoscaling.deleteAutoscalingPolicy({ name })
 
 [discrete]
 ==== get_autoscaling_capacity
-Gets the current autoscaling capacity based on the configured autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+Get the autoscaling capacity.
+
+NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
+
+This API gets the current autoscaling capacity based on the configured autoscaling policy.
+It will return information to size the cluster appropriately to the current workload.
+
+The `required_capacity` is calculated as the maximum of the `required_capacity` result of all individual deciders that are enabled for the policy.
+
+The operator should verify that the `current_nodes` match the operator’s knowledge of the cluster to avoid making autoscaling decisions based on stale or incomplete information.
+
+The response contains decider-specific information you can use to diagnose how and why autoscaling determined a certain capacity was required.
+This information is provided for diagnosis only.
+Do not use this information to make autoscaling decisions.
 
 {ref}/autoscaling-get-autoscaling-capacity.html[Endpoint documentation]
 [source,ts]
@@ -1661,7 +1720,9 @@ client.autoscaling.getAutoscalingCapacity()
 
 [discrete]
 ==== get_autoscaling_policy
-Retrieves an autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+Get an autoscaling policy.
+
+NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
 
 {ref}/autoscaling-get-autoscaling-capacity.html[Endpoint documentation]
 [source,ts]
@@ -1677,7 +1738,9 @@ client.autoscaling.getAutoscalingPolicy({ name })
 
 [discrete]
 ==== put_autoscaling_policy
-Creates a new autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+Create or update an autoscaling policy.
+
+NOTE: This feature is designed for indirect use by Elasticsearch Service, Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not supported.
 
 {ref}/autoscaling-put-autoscaling-policy.html[Endpoint documentation]
 [source,ts]
@@ -3039,8 +3102,6 @@ client.connector.syncJobCheckIn()
 [discrete]
 ==== sync_job_claim
 Claims a connector sync job.
-
-{ref}/claim-connector-sync-job-api.html[Endpoint documentation]
 [source,ts]
 ----
 client.connector.syncJobClaim()
@@ -5950,8 +6011,8 @@ client.ingest.putPipeline({ id })
 ** *`id` (string)*: ID of the ingest pipeline to create or update.
 ** *`_meta` (Optional, Record<string, User-defined value>)*: Optional metadata about the ingest pipeline. May have any contents. This map is not automatically generated by Elasticsearch.
 ** *`description` (Optional, string)*: Description of the ingest pipeline.
-** *`on_failure` (Optional, { append, attachment, bytes, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
-** *`processors` (Optional, { append, attachment, bytes, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
+** *`on_failure` (Optional, { append, attachment, bytes, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, ip_location, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors to run immediately after a processor failure. Each processor supports a processor-level `on_failure` value. If a processor without an `on_failure` value fails, Elasticsearch uses this pipeline-level parameter as a fallback. The processors in this parameter run sequentially in the order specified. Elasticsearch will not attempt to run the pipeline's remaining processors.
+** *`processors` (Optional, { append, attachment, bytes, circle, community_id, convert, csv, date, date_index_name, dissect, dot_expander, drop, enrich, fail, fingerprint, foreach, ip_location, geo_grid, geoip, grok, gsub, html_strip, inference, join, json, kv, lowercase, network_direction, pipeline, redact, registered_domain, remove, rename, reroute, script, set, set_security_user, sort, split, terminate, trim, uppercase, urldecode, uri_parts, user_agent }[])*: Processors used to perform transformations on documents before indexing. Processors run sequentially in the order specified.
 ** *`version` (Optional, number)*: Version number used by external systems to track ingest pipelines. This parameter is intended for external systems only. Elasticsearch does not use or validate pipeline version numbers.
 ** *`deprecated` (Optional, boolean)*: Marks this ingest pipeline as deprecated.
 When a deprecated ingest pipeline is referenced as the default or final pipeline when creating or updating a non-deprecated index template, Elasticsearch will emit a deprecation warning.
@@ -9219,14 +9280,46 @@ client.security.createApiKey({ ... })
 
 [discrete]
 ==== create_cross_cluster_api_key
-Creates a cross-cluster API key for API key based remote cluster access.
+Create a cross-cluster API key.
+
+Create an API key of the `cross_cluster` type for the API key based remote cluster access.
+A `cross_cluster` API key cannot be used to authenticate through the REST interface.
+
+IMPORTANT: To authenticate this request you must use a credential that is not an API key. Even if you use an API key that has the required privilege, the API returns an error.
+
+Cross-cluster API keys are created by the Elasticsearch API key service, which is automatically enabled.
+
+NOTE: Unlike REST API keys, a cross-cluster API key does not capture permissions of the authenticated user. The API key’s effective permission is exactly as specified with the `access` property.
+
+A successful request returns a JSON structure that contains the API key, its unique ID, and its name. If applicable, it also returns expiration information for the API key in milliseconds.
+
+By default, API keys never expire. You can specify expiration information when you create the API keys.
+
+Cross-cluster API keys can only be updated with the update cross-cluster API key API.
+Attempting to update them with the update REST API key API or the bulk update REST API keys API will result in an error.
 
 {ref}/security-api-create-cross-cluster-api-key.html[Endpoint documentation]
 [source,ts]
 ----
-client.security.createCrossClusterApiKey()
+client.security.createCrossClusterApiKey({ access, name })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`access` ({ replication, search })*: The access to be granted to this API key.
+The access is composed of permissions for cross-cluster search and cross-cluster replication.
+At least one of them must be specified.
+
+NOTE: No explicit privileges should be specified for either search or replication access.
+The creation process automatically converts the access specification to a role descriptor which has relevant privileges assigned accordingly.
+** *`name` (string)*: Specifies the name for this API key.
+** *`expiration` (Optional, string | -1 | 0)*: Expiration time for the API key.
+By default, API keys never expire.
+** *`metadata` (Optional, Record<string, User-defined value>)*: Arbitrary metadata that you want to associate with the API key.
+It supports nested data structure.
+Within the metadata object, keys beginning with `_` are reserved for system usage.
 
 [discrete]
 ==== create_service_token
@@ -10258,14 +10351,31 @@ client.security.updateApiKey({ id })
 
 [discrete]
 ==== update_cross_cluster_api_key
-Updates attributes of an existing cross-cluster API key.
+Update a cross-cluster API key.
+
+Update the attributes of an existing cross-cluster API key, which is used for API key based remote cluster access.
 
 {ref}/security-api-update-cross-cluster-api-key.html[Endpoint documentation]
 [source,ts]
 ----
-client.security.updateCrossClusterApiKey()
+client.security.updateCrossClusterApiKey({ id, access })
 ----
 
+[discrete]
+==== Arguments
+
+* *Request (object):*
+** *`id` (string)*: The ID of the cross-cluster API key to update.
+** *`access` ({ replication, search })*: The access to be granted to this API key.
+The access is composed of permissions for cross cluster search and cross cluster replication.
+At least one of them must be specified.
+When specified, the new access assignment fully replaces the previously assigned access.
+** *`expiration` (Optional, string | -1 | 0)*: Expiration time for the API key.
+By default, API keys never expire. This property can be omitted to leave the value unchanged.
+** *`metadata` (Optional, Record<string, User-defined value>)*: Arbitrary metadata that you want to associate with the API key.
+It supports nested data structure.
+Within the metadata object, keys beginning with `_` are reserved for system usage.
+When specified, this information fully replaces metadata previously associated with the API key.
 
 [discrete]
 ==== update_settings

@@ -483,22 +483,34 @@ export default class Security {
   }
 
   /**
-    * Creates a cross-cluster API key for API key based remote cluster access.
+    * Create a cross-cluster API key. Create an API key of the `cross_cluster` type for the API key based remote cluster access. A `cross_cluster` API key cannot be used to authenticate through the REST interface. IMPORTANT: To authenticate this request you must use a credential that is not an API key. Even if you use an API key that has the required privilege, the API returns an error. Cross-cluster API keys are created by the Elasticsearch API key service, which is automatically enabled. NOTE: Unlike REST API keys, a cross-cluster API key does not capture permissions of the authenticated user. The API key’s effective permission is exactly as specified with the `access` property. A successful request returns a JSON structure that contains the API key, its unique ID, and its name. If applicable, it also returns expiration information for the API key in milliseconds. By default, API keys never expire. You can specify expiration information when you create the API keys. Cross-cluster API keys can only be updated with the update cross-cluster API key API. Attempting to update them with the update REST API key API or the bulk update REST API keys API will result in an error.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/security-api-create-cross-cluster-api-key.html | Elasticsearch API documentation}
     */
-  async createCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async createCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async createCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async createCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest | TB.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityCreateCrossClusterApiKeyResponse>
+  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest | TB.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityCreateCrossClusterApiKeyResponse, unknown>>
+  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest | TB.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityCreateCrossClusterApiKeyResponse>
+  async createCrossClusterApiKey (this: That, params: T.SecurityCreateCrossClusterApiKeyRequest | TB.SecurityCreateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = []
+    const acceptedBody: string[] = ['access', 'expiration', 'metadata', 'name']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
@@ -2259,22 +2271,34 @@ export default class Security {
   }
 
   /**
-    * Updates attributes of an existing cross-cluster API key.
+    * Update a cross-cluster API key. Update the attributes of an existing cross-cluster API key, which is used for API key based remote cluster access.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/security-api-update-cross-cluster-api-key.html | Elasticsearch API documentation}
     */
-  async updateCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
-  async updateCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
-  async updateCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
-  async updateCrossClusterApiKey (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest | TB.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SecurityUpdateCrossClusterApiKeyResponse>
+  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest | TB.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.SecurityUpdateCrossClusterApiKeyResponse, unknown>>
+  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest | TB.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<T.SecurityUpdateCrossClusterApiKeyResponse>
+  async updateCrossClusterApiKey (this: That, params: T.SecurityUpdateCrossClusterApiKeyRequest | TB.SecurityUpdateCrossClusterApiKeyRequest, options?: TransportRequestOptions): Promise<any> {
     const acceptedPath: string[] = ['id']
+    const acceptedBody: string[] = ['access', 'expiration', 'metadata']
     const querystring: Record<string, any> = {}
-    const body = undefined
+    // @ts-expect-error
+    const userBody: any = params?.body
+    let body: Record<string, any> | string
+    if (typeof userBody === 'string') {
+      body = userBody
+    } else {
+      body = userBody != null ? { ...userBody } : undefined
+    }
 
-    params = params ?? {}
     for (const key in params) {
-      if (acceptedPath.includes(key)) {
+      if (acceptedBody.includes(key)) {
+        body = body ?? {}
+        // @ts-expect-error
+        body[key] = params[key]
+      } else if (acceptedPath.includes(key)) {
         continue
       } else if (key !== 'body') {
+        // @ts-expect-error
         querystring[key] = params[key]
       }
     }
