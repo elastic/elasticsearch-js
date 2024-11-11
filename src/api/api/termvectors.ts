@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Get term vector information. Returns information and statistics about terms in the fields of a particular document.
+  * Get term vector information. Get information and statistics about terms in the fields of a particular document.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html | Elasticsearch API documentation}
   */
 export default async function TermvectorsApi<TDocument = unknown> (this: That, params: T.TermvectorsRequest<TDocument> | TB.TermvectorsRequest<TDocument>, options?: TransportRequestOptionsWithOutMeta): Promise<T.TermvectorsResponse>

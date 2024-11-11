@@ -1211,7 +1211,6 @@ export interface SearchRequest extends RequestBase {
   include_named_queries_score?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: long
-  min_compatible_shard_node?: VersionString
   preference?: string
   pre_filter_shard_size?: long
   request_cache?: boolean
@@ -2712,6 +2711,7 @@ export interface RetrieverContainer {
   knn?: KnnRetriever
   rrf?: RRFRetriever
   text_similarity_reranker?: TextSimilarityReranker
+  rule?: RuleRetriever
 }
 
 export type Routing = string
@@ -2719,6 +2719,13 @@ export type Routing = string
 export interface RrfRank {
   rank_constant?: long
   rank_window_size?: long
+}
+
+export interface RuleRetriever extends RetrieverBase {
+  ruleset_ids: Id[]
+  match_criteria: any
+  retriever: RetrieverContainer
+  rank_window_size?: integer
 }
 
 export type ScalarValue = long | double | string | boolean | null
@@ -6760,7 +6767,6 @@ export interface AsyncSearchSubmitRequest extends RequestBase {
   ignore_unavailable?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: long
-  min_compatible_shard_node?: VersionString
   preference?: string
   pre_filter_shard_size?: long
   request_cache?: boolean
@@ -6965,6 +6971,7 @@ export interface CatAllocationAllocationRecord {
 export interface CatAllocationRequest extends CatCatRequestBase {
   node_id?: NodeIds
   bytes?: Bytes
+  local?: boolean
 }
 
 export type CatAllocationResponse = CatAllocationAllocationRecord[]
@@ -6981,6 +6988,7 @@ export interface CatComponentTemplatesComponentTemplate {
 
 export interface CatComponentTemplatesRequest extends CatCatRequestBase {
   name?: string
+  local?: boolean
 }
 
 export type CatComponentTemplatesResponse = CatComponentTemplatesComponentTemplate[]
@@ -7406,6 +7414,7 @@ export interface CatMasterMasterRecord {
 }
 
 export interface CatMasterRequest extends CatCatRequestBase {
+  local?: boolean
 }
 
 export type CatMasterResponse = CatMasterMasterRecord[]
@@ -7773,6 +7782,7 @@ export interface CatNodeattrsNodeAttributesRecord {
 }
 
 export interface CatNodeattrsRequest extends CatCatRequestBase {
+  local?: boolean
 }
 
 export type CatNodeattrsResponse = CatNodeattrsNodeAttributesRecord[]
@@ -8067,6 +8077,7 @@ export interface CatPendingTasksPendingTasksRecord {
 }
 
 export interface CatPendingTasksRequest extends CatCatRequestBase {
+  local?: boolean
 }
 
 export type CatPendingTasksResponse = CatPendingTasksPendingTasksRecord[]
@@ -8086,6 +8097,7 @@ export interface CatPluginsPluginsRecord {
 }
 
 export interface CatPluginsRequest extends CatCatRequestBase {
+  local?: boolean
 }
 
 export type CatPluginsResponse = CatPluginsPluginsRecord[]
@@ -8172,6 +8184,7 @@ export type CatRepositoriesResponse = CatRepositoriesRepositoriesRecord[]
 export interface CatSegmentsRequest extends CatCatRequestBase {
   index?: Indices
   bytes?: Bytes
+  local?: boolean
 }
 
 export type CatSegmentsResponse = CatSegmentsSegmentsRecord[]
@@ -8527,6 +8540,7 @@ export interface CatTasksTasksRecord {
 
 export interface CatTemplatesRequest extends CatCatRequestBase {
   name?: Name
+  local?: boolean
 }
 
 export type CatTemplatesResponse = CatTemplatesTemplatesRecord[]
@@ -8548,6 +8562,7 @@ export interface CatTemplatesTemplatesRecord {
 export interface CatThreadPoolRequest extends CatCatRequestBase {
   thread_pool_patterns?: Names
   time?: TimeUnit
+  local?: boolean
 }
 
 export type CatThreadPoolResponse = CatThreadPoolThreadPoolRecord[]
@@ -10466,7 +10481,6 @@ export interface FleetSearchRequest extends RequestBase {
   ignore_unavailable?: boolean
   lenient?: boolean
   max_concurrent_shard_requests?: long
-  min_compatible_shard_node?: VersionString
   preference?: string
   pre_filter_shard_size?: long
   request_cache?: boolean
@@ -11634,7 +11648,6 @@ export interface IndicesExistsAliasRequest extends RequestBase {
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
-  local?: boolean
 }
 
 export type IndicesExistsAliasResponse = boolean
@@ -11789,7 +11802,6 @@ export interface IndicesGetAliasRequest extends RequestBase {
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
-  local?: boolean
 }
 
 export type IndicesGetAliasResponse = Record<IndexName, IndicesGetAliasIndexAliases>
@@ -12297,7 +12309,6 @@ export interface IndicesSegmentsRequest extends RequestBase {
   allow_no_indices?: boolean
   expand_wildcards?: ExpandWildcards
   ignore_unavailable?: boolean
-  verbose?: boolean
 }
 
 export interface IndicesSegmentsResponse {
@@ -13013,6 +13024,16 @@ export interface IngestInferenceProcessor extends IngestProcessorBase {
   inference_config?: IngestInferenceConfig
 }
 
+export interface IngestIpLocationProcessor extends IngestProcessorBase {
+  database_file?: string
+  field: Field
+  first_only?: boolean
+  ignore_missing?: boolean
+  properties?: string[]
+  target_field?: Field
+  download_database_on_pipeline_creation?: boolean
+}
+
 export interface IngestJoinProcessor extends IngestProcessorBase {
   field: Field
   separator: string
@@ -13107,6 +13128,7 @@ export interface IngestProcessorContainer {
   fail?: IngestFailProcessor
   fingerprint?: IngestFingerprintProcessor
   foreach?: IngestForeachProcessor
+  ip_location?: IngestIpLocationProcessor
   geo_grid?: IngestGeoGridProcessor
   geoip?: IngestGeoIpProcessor
   grok?: IngestGrokProcessor
@@ -17614,6 +17636,11 @@ export interface SearchableSnapshotsStatsResponse {
   total: any
 }
 
+export interface SecurityAccess {
+  replication?: SecurityReplicationAccess[]
+  search?: SecuritySearchAccess[]
+}
+
 export interface SecurityApiKey {
   creation?: long
   expiration?: long
@@ -17702,6 +17729,10 @@ export interface SecurityRemoteIndicesPrivileges {
   allow_restricted_indices?: boolean
 }
 
+export interface SecurityReplicationAccess {
+  names: IndexName[]
+}
+
 export interface SecurityRoleDescriptor {
   cluster?: SecurityClusterPrivilege[]
   indices?: SecurityIndicesPrivileges[]
@@ -17758,6 +17789,13 @@ export interface SecurityRoleTemplateScript {
   params?: Record<string, any>
   lang?: ScriptLanguage
   options?: Record<string, string>
+}
+
+export interface SecuritySearchAccess {
+  field_security?: SecurityFieldSecurity
+  names: IndexName[]
+  query?: SecurityIndicesPrivilegesQuery
+  allow_restricted_indices?: boolean
 }
 
 export type SecurityTemplateFormat = 'string' | 'json'
@@ -17952,6 +17990,24 @@ export interface SecurityCreateApiKeyRequest extends RequestBase {
 export interface SecurityCreateApiKeyResponse {
   api_key: string
   expiration?: long
+  id: Id
+  name: Name
+  encoded: string
+}
+
+export interface SecurityCreateCrossClusterApiKeyRequest extends RequestBase {
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    access: SecurityAccess
+    expiration?: Duration
+    metadata?: Metadata
+    name: Name
+  }
+}
+
+export interface SecurityCreateCrossClusterApiKeyResponse {
+  api_key: string
+  expiration?: DurationValue<UnitMillis>
   id: Id
   name: Name
   encoded: string
@@ -18691,6 +18747,20 @@ export interface SecurityUpdateApiKeyRequest extends RequestBase {
 }
 
 export interface SecurityUpdateApiKeyResponse {
+  updated: boolean
+}
+
+export interface SecurityUpdateCrossClusterApiKeyRequest extends RequestBase {
+  id: Id
+  /** @deprecated The use of the 'body' key has been deprecated, move the nested keys to the top level object. */
+  body?: {
+    access: SecurityAccess
+    expiration?: Duration
+    metadata?: Metadata
+  }
+}
+
+export interface SecurityUpdateCrossClusterApiKeyResponse {
   updated: boolean
 }
 
@@ -20666,6 +20736,7 @@ export interface XpackInfoFeatures {
   graph: XpackInfoFeature
   ilm: XpackInfoFeature
   logstash: XpackInfoFeature
+  logsdb: XpackInfoFeature
   ml: XpackInfoFeature
   monitoring: XpackInfoFeature
   rollup: XpackInfoFeature
@@ -21162,7 +21233,6 @@ export interface SpecUtilsCommonCatQueryParameters {
   format?: string
   h?: Names
   help?: boolean
-  local?: boolean
   master_timeout?: Duration
   s?: Names
   v?: boolean

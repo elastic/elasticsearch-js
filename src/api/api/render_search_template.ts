@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Renders a search template as a search request body.
+  * Render a search template. Render a search template as a search request body.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/render-search-template-api.html | Elasticsearch API documentation}
   */
 export default async function RenderSearchTemplateApi (this: That, params?: T.RenderSearchTemplateRequest | TB.RenderSearchTemplateRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.RenderSearchTemplateResponse>
