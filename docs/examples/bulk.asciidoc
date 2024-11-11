@@ -6,8 +6,6 @@ single API call. The `bulk` API significantly increases indexing speed.
 
 NOTE: You can also use the {jsclient}/client-helpers.html[bulk helper].
 
-Here's an example that uses the `bulk` API:
-
 [source,js]
 ----
 'use strict'
