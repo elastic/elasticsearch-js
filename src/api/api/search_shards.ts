@@ -39,7 +39,7 @@ import * as TB from '../typesWithBodyKey'
 interface That { transport: Transport }
 
 /**
-  * Returns information about the indices and shards that a search request would be executed against.
+  * Get the search shards. Get the indices and shards that a search request would be run against. This information can be useful for working out issues or planning optimizations with routing and shard preferences. When filtered aliases are used, the filter is returned as part of the indices section.
   * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/8.16/search-shards.html | Elasticsearch API documentation}
   */
 export default async function SearchShardsApi (this: That, params?: T.SearchShardsRequest | TB.SearchShardsRequest, options?: TransportRequestOptionsWithOutMeta): Promise<T.SearchShardsResponse>
