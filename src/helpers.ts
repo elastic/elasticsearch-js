@@ -194,7 +194,7 @@ export default class Helpers {
    * @param {object} options - The client optional configuration for this request.
    * @return {array} The documents that matched the request.
    */
-  async search<TDocument = unknown> (params: T.SearchRequest, options: TransportRequestOptions = {}): Promise<Array<TDocument & {_id: Id}>> {
+  async search<TDocument = unknown> (params: T.SearchRequest, options: TransportRequestOptions = {}): Promise<Array<TDocument & { _id: Id }>> {
     appendFilterPath('hits.hits._id,hits.hits._source', params, true)
     options.meta = true
     const { body: result } = await this[kClient].search<TDocument>(params, options as TransportRequestOptionsWithMeta)
