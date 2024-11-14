@@ -42,6 +42,9 @@ spec:
         main:
           branch: "main"
           cronline: "@daily"
+        8_x:
+          branch: "8.x"
+          cronline: "@daily"
         8_14:
-          branch: "8.14"
+          branch: "8.16"
           cronline: "@daily"
