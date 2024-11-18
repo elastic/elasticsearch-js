@@ -4,12 +4,18 @@
 [source, js]
 ----
 const response = await client.security.putRole({
-  name: "role_with_remote_indices",
+  name: "only_remote_access_role",
   remote_indices: [
     {
       clusters: ["my_remote"],
       names: ["logs*"],
       privileges: ["read", "read_cross_cluster", "view_index_metadata"],
+    },
+  ],
+  remote_cluster: [
+    {
+      clusters: ["my_remote"],
+      privileges: ["monitor_stats"],
     },
   ],
 });
