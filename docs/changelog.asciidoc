@@ -2,6 +2,17 @@
 == Release notes
 
 [discrete]
+=== 8.16.1
+
+[discrete]
+==== Fixes
+
+[discrete]
+===== Fix ECMAScript imports
+
+Fixed package configuration to correctly support native ECMAScript `import` syntax.
+
+[discrete]
 === 8.16.0
 
 [discrete]
