@@ -10954,6 +10954,8 @@ export interface IndicesIndexTemplate {
   _meta?: Metadata
   allow_auto_create?: boolean
   data_stream?: IndicesIndexTemplateDataStreamConfiguration
+  deprecated?: boolean
+  ignore_missing_component_templates?: Names
 }
 
 export interface IndicesIndexTemplateDataStreamConfiguration {
@@ -13358,6 +13360,7 @@ export interface MigrationDeprecationsRequest extends RequestBase {
 export interface MigrationDeprecationsResponse {
   cluster_settings: MigrationDeprecationsDeprecation[]
   index_settings: Record<string, MigrationDeprecationsDeprecation[]>
+  data_streams: Record<string, MigrationDeprecationsDeprecation[]>
   node_settings: MigrationDeprecationsDeprecation[]
   ml_settings: MigrationDeprecationsDeprecation[]
 }
@@ -17298,7 +17301,7 @@ export interface SecurityClusterNode {
   name: Name
 }
 
-export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_inference' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | string
+export type SecurityClusterPrivilege = 'all' | 'cancel_task' | 'create_snapshot' | 'cross_cluster_replication' | 'cross_cluster_search' | 'delegate_pki' | 'grant_api_key' | 'manage' | 'manage_api_key' | 'manage_autoscaling' | 'manage_behavioral_analytics' | 'manage_ccr' | 'manage_data_frame_transforms' | 'manage_data_stream_global_retention' | 'manage_enrich' | 'manage_ilm' | 'manage_index_templates' | 'manage_inference' | 'manage_ingest_pipelines' | 'manage_logstash_pipelines' | 'manage_ml' | 'manage_oidc' | 'manage_own_api_key' | 'manage_pipeline' | 'manage_rollup' | 'manage_saml' | 'manage_search_application' | 'manage_search_query_rules' | 'manage_search_synonyms' | 'manage_security' | 'manage_service_account' | 'manage_slm' | 'manage_token' | 'manage_transform' | 'manage_user_profile' | 'manage_watcher' | 'monitor' | 'monitor_data_frame_transforms' | 'monitor_data_stream_global_retention' | 'monitor_enrich' | 'monitor_inference' | 'monitor_ml' | 'monitor_rollup' | 'monitor_snapshot' | 'monitor_stats' | 'monitor_text_structure' | 'monitor_transform' | 'monitor_watcher' | 'none' | 'post_behavioral_analytics_event' | 'read_ccr' | 'read_fleet_secrets' | 'read_ilm' | 'read_pipeline' | 'read_security' | 'read_slm' | 'transport_client' | 'write_connector_secrets' | 'write_fleet_secrets' | string
 
 export interface SecurityCreatedStatus {
   created: boolean
@@ -17342,6 +17345,13 @@ export interface SecurityRealmInfo {
   type: string
 }
 
+export type SecurityRemoteClusterPrivilege = 'monitor_enrich' | 'monitor_stats'
+
+export interface SecurityRemoteClusterPrivileges {
+  clusters: Names
+  privileges: SecurityRemoteClusterPrivilege[]
+}
+
 export interface SecurityRemoteIndicesPrivileges {
   clusters: Names
   field_security?: SecurityFieldSecurity
@@ -17353,12 +17363,15 @@ export interface SecurityRemoteIndicesPrivileges {
 
 export interface SecurityReplicationAccess {
   names: IndexName[]
+  allow_restricted_indices?: boolean
 }
 
 export interface SecurityRoleDescriptor {
   cluster?: SecurityClusterPrivilege[]
   indices?: SecurityIndicesPrivileges[]
   index?: SecurityIndicesPrivileges[]
+  remote_indices?: SecurityRemoteIndicesPrivileges[]
+  remote_cluster?: SecurityRemoteClusterPrivileges[]
   global?: SecurityGlobalPrivilege[] | SecurityGlobalPrivilege
   applications?: SecurityApplicationPrivileges[]
   metadata?: Metadata
@@ -17371,6 +17384,8 @@ export interface SecurityRoleDescriptorRead {
   cluster: SecurityClusterPrivilege[]
   indices: SecurityIndicesPrivileges[]
   index: SecurityIndicesPrivileges[]
+  remote_indices?: SecurityRemoteIndicesPrivileges[]
+  remote_cluster?: SecurityRemoteClusterPrivileges[]
   global?: SecurityGlobalPrivilege[] | SecurityGlobalPrivilege
   applications?: SecurityApplicationPrivileges[]
   metadata?: Metadata
@@ -17758,8 +17773,9 @@ export interface SecurityGetBuiltinPrivilegesRequest extends RequestBase {
 }
 
 export interface SecurityGetBuiltinPrivilegesResponse {
-  cluster: string[]
+  cluster: SecurityClusterPrivilege[]
   index: IndexName[]
+  remote_cluster: SecurityRemoteClusterPrivilege[]
 }
 
 export interface SecurityGetPrivilegesRequest extends RequestBase {
@@ -17776,8 +17792,10 @@ export interface SecurityGetRoleRequest extends RequestBase {
 export type SecurityGetRoleResponse = Record<string, SecurityGetRoleRole>
 
 export interface SecurityGetRoleRole {
-  cluster: string[]
+  cluster: SecurityClusterPrivilege[]
   indices: SecurityIndicesPrivileges[]
+  remote_indices?: SecurityRemoteIndicesPrivileges[]
+  remote_cluster?: SecurityRemoteClusterPrivileges[]
   metadata: Metadata
   run_as: string[]
   transient_metadata?: Record<string, any>
@@ -18030,6 +18048,7 @@ export interface SecurityPutRoleRequest extends RequestBase {
   global?: Record<string, any>
   indices?: SecurityIndicesPrivileges[]
   remote_indices?: SecurityRemoteIndicesPrivileges[]
+  remote_cluster?: SecurityRemoteClusterPrivileges[]
   metadata?: Metadata
   run_as?: string[]
   description?: string
@@ -19147,7 +19166,7 @@ export interface TasksListRequest extends RequestBase {
   actions?: string | string[]
   detailed?: boolean
   group_by?: TasksGroupBy
-  node_id?: string[]
+  nodes?: NodeIds
   parent_task_id?: Id
   master_timeout?: Duration
   timeout?: Duration
