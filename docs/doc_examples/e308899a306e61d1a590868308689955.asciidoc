@@ -4,12 +4,14 @@
 [source, js]
 ----
 const response = await client.ingest.putPipeline({
-  id: "geoip",
-  description: "Add geoip info",
+  id: "ip_location",
+  description: "Add ip geolocation info",
   processors: [
     {
-      geoip: {
+      ip_location: {
         field: "ip",
+        target_field: "geo",
+        database_file: "GeoLite2-Country.mmdb",
       },
     },
   ],
@@ -19,9 +21,9 @@ console.log(response);
 const response1 = await client.index({
   index: "my-index-000001",
   id: "my_id",
-  pipeline: "geoip",
+  pipeline: "ip_location",
   document: {
-    ip: "80.231.5.0",
+    ip: "89.160.20.128",
   },
 });
 console.log(response1);

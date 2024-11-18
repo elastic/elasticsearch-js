@@ -5,7 +5,7 @@
 ----
 const response = await client.ingest.putPipeline({
   id: "geoip",
-  description: "Add geoip info",
+  description: "Add ip geolocation info",
   processors: [
     {
       geoip: {
@@ -21,7 +21,7 @@ const response1 = await client.index({
   id: "my_id",
   pipeline: "geoip",
   document: {
-    ip: "89.160.20.128",
+    ip: "80.231.5.0",
   },
 });
 console.log(response1);
