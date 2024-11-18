@@ -5885,6 +5885,17 @@ If no response is received before the timeout expires, the request fails and ret
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
 
 [discrete]
+==== delete_ip_location_database
+Deletes an ip location database configuration
+
+{ref}/delete-ip-location-database-api.html[Endpoint documentation]
+[source,ts]
+----
+client.ingest.deleteIpLocationDatabase()
+----
+
+
+[discrete]
 ==== delete_pipeline
 Deletes one or more existing ingest pipeline.
 
@@ -5935,6 +5946,17 @@ Wildcard (`*`) expressions are supported.
 To get all database configurations, omit this parameter or use `*`.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
+
+[discrete]
+==== get_ip_location_database
+Returns the specified ip location database configuration
+
+{ref}/get-ip-location-database-api.html[Endpoint documentation]
+[source,ts]
+----
+client.ingest.getIpLocationDatabase()
+----
+
 
 [discrete]
 ==== get_pipeline
@@ -5992,6 +6014,17 @@ At present, the only supported provider is maxmind, and the maxmind provider req
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node.
 If no response is received before the timeout expires, the request fails and returns an error.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+
+[discrete]
+==== put_ip_location_database
+Puts the configuration for a ip location database to be downloaded
+
+{ref}/put-ip-location-database-api.html[Endpoint documentation]
+[source,ts]
+----
+client.ingest.putIpLocationDatabase()
+----
+
 
 [discrete]
 ==== put_pipeline
@@ -11214,7 +11247,7 @@ client.tasks.list({ ... })
 ** *`actions` (Optional, string | string[])*: List or wildcard expression of actions used to limit the request.
 ** *`detailed` (Optional, boolean)*: If `true`, the response includes detailed information about shard recoveries.
 ** *`group_by` (Optional, Enum("nodes" | "parents" | "none"))*: Key used to group tasks in the response.
-** *`node_id` (Optional, string[])*: List of node IDs or names used to limit returned information.
+** *`nodes` (Optional, string | string[])*: List of node IDs or names used to limit returned information.
 ** *`parent_task_id` (Optional, string)*: Parent task ID used to limit returned information. To return all tasks, omit this parameter or use a value of `-1`.
 ** *`master_timeout` (Optional, string | -1 | 0)*: Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.
 ** *`timeout` (Optional, string | -1 | 0)*: Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.

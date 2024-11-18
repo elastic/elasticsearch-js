@@ -10932,6 +10932,8 @@ export interface IndicesIndexTemplate {
   _meta?: Metadata
   allow_auto_create?: boolean
   data_stream?: IndicesIndexTemplateDataStreamConfiguration
+  deprecated?: boolean
+  ignore_missing_component_templates?: Names
 }
 
 export interface IndicesIndexTemplateDataStreamConfiguration {
@@ -17336,6 +17338,7 @@ export interface SecurityRemoteIndicesPrivileges {
 
 export interface SecurityReplicationAccess {
   names: IndexName[]
+  allow_restricted_indices?: boolean
 }
 
 export interface SecurityRoleDescriptor {
@@ -19130,7 +19133,7 @@ export interface TasksListRequest extends RequestBase {
   actions?: string | string[]
   detailed?: boolean
   group_by?: TasksGroupBy
-  node_id?: string[]
+  nodes?: NodeIds
   parent_task_id?: Id
   master_timeout?: Duration
   timeout?: Duration

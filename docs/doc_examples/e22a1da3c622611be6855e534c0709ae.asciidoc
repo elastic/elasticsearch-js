@@ -4,12 +4,11 @@
 [source, js]
 ----
 const response = await client.transport.request({
-  method: "PUT",
-  path: "/_ingest/geoip/database/my-database-id",
+  method: "POST",
+  path: "/_query_rules/my-ruleset/_test",
   body: {
-    name: "GeoIP2-Domain",
-    maxmind: {
-      account_id: "1025402",
+    match_criteria: {
+      query_string: "puggles",
     },
   },
 });
