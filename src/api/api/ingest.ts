@@ -77,6 +77,38 @@ export default class Ingest {
   }
 
   /**
+    * Deletes an ip location database configuration
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-ip-location-database-api.html | Elasticsearch API documentation}
+    */
+  async deleteIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async deleteIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async deleteIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async deleteIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'DELETE'
+    const path = `/_ingest/ip_location/database/${encodeURIComponent(params.id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.delete_ip_location_database',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
     * Deletes one or more existing ingest pipeline.
     * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-pipeline-api.html | Elasticsearch API documentation}
     */
@@ -171,6 +203,45 @@ export default class Ingest {
     }
     const meta: TransportRequestMetadata = {
       name: 'ingest.get_geoip_database',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Returns the specified ip location database configuration
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/get-ip-location-database-api.html | Elasticsearch API documentation}
+    */
+  async getIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async getIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async getIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async getIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    let method = ''
+    let path = ''
+    if (params.id != null) {
+      method = 'GET'
+      path = `/_ingest/ip_location/database/${encodeURIComponent(params.id.toString())}`
+    } else {
+      method = 'GET'
+      path = '/_ingest/ip_location/database'
+    }
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.get_ip_location_database',
       pathParts: {
         id: params.id
       }
@@ -285,6 +356,38 @@ export default class Ingest {
     const path = `/_ingest/geoip/database/${encodeURIComponent(params.id.toString())}`
     const meta: TransportRequestMetadata = {
       name: 'ingest.put_geoip_database',
+      pathParts: {
+        id: params.id
+      }
+    }
+    return await this.transport.request({ path, method, querystring, body, meta }, options)
+  }
+
+  /**
+    * Puts the configuration for a ip location database to be downloaded
+    * @see {@link https://www.elastic.co/guide/en/elasticsearch/reference/master/put-ip-location-database-api.html | Elasticsearch API documentation}
+    */
+  async putIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithOutMeta): Promise<T.TODO>
+  async putIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptionsWithMeta): Promise<TransportResult<T.TODO, unknown>>
+  async putIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<T.TODO>
+  async putIpLocationDatabase (this: That, params?: T.TODO | TB.TODO, options?: TransportRequestOptions): Promise<any> {
+    const acceptedPath: string[] = ['id']
+    const querystring: Record<string, any> = {}
+    const body = undefined
+
+    params = params ?? {}
+    for (const key in params) {
+      if (acceptedPath.includes(key)) {
+        continue
+      } else if (key !== 'body') {
+        querystring[key] = params[key]
+      }
+    }
+
+    const method = 'PUT'
+    const path = `/_ingest/ip_location/database/${encodeURIComponent(params.id.toString())}`
+    const meta: TransportRequestMetadata = {
+      name: 'ingest.put_ip_location_database',
       pathParts: {
         id: params.id
       }
