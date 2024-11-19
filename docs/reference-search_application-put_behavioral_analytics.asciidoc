@@ -45,8 +45,8 @@ Create a behavioral analytics collection.
 
 [source,ts]
 ----
-interface SearchApplicationPutBehavioralAnalyticsRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface SearchApplicationPutBehavioralAnalyticsRequest extends <<RequestBase>> {
+  name: <<Name>>
 }
 ----
 

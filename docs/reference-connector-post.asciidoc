@@ -45,9 +45,9 @@ Create a connector. Connectors are Elasticsearch integrations that bring content
 
 [source,ts]
 ----
-interface ConnectorPostRequest extends <<shared-type-request-base, RequestBase>> {
+interface ConnectorPostRequest extends <<RequestBase>> {
   description?: string
-  index_name?: <<shared-type-index-name, IndexName>>
+  index_name?: <<IndexName>>
   is_native?: boolean
   language?: string
   name?: string
@@ -61,8 +61,8 @@ interface ConnectorPostRequest extends <<shared-type-request-base, RequestBase>>
 [source,ts]
 ----
 interface ConnectorPostResponse {
-  result: <<shared-type-result, Result>>
-  id: <<shared-type-id, Id>>
+  result: <<Result>>
+  id: <<Id>>
 }
 ----
 

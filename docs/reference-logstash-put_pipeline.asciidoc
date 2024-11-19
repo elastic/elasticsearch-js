@@ -45,8 +45,8 @@ Creates or updates a pipeline used for Logstash Central Management.
 
 [source,ts]
 ----
-interface LogstashPutPipelineRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface LogstashPutPipelineRequest extends <<RequestBase>> {
+  id: <<Id>>
   pipeline?: LogstashPipeline
 }
 ----

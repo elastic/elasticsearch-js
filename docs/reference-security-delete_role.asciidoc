@@ -45,9 +45,9 @@ Delete roles. Delete roles in the native realm.
 
 [source,ts]
 ----
-interface SecurityDeleteRoleRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityDeleteRoleRequest extends <<RequestBase>> {
+  name: <<Name>>
+  refresh?: <<Refresh>>
 }
 ----
 

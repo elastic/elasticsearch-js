@@ -45,7 +45,7 @@ Clears the SQL cursor
 
 [source,ts]
 ----
-interface SqlClearCursorRequest extends <<shared-type-request-base, RequestBase>> {
+interface SqlClearCursorRequest extends <<RequestBase>> {
   cursor: string
 }
 ----

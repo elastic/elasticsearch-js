@@ -45,9 +45,9 @@ Get application privileges.
 
 [source,ts]
 ----
-interface SecurityGetPrivilegesRequest extends <<shared-type-request-base, RequestBase>> {
-  application?: <<shared-type-name, Name>>
-  name?: <<shared-type-names, Names>>
+interface SecurityGetPrivilegesRequest extends <<RequestBase>> {
+  application?: <<Name>>
+  name?: <<Names>>
 }
 ----
 

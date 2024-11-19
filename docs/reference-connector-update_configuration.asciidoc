@@ -45,8 +45,8 @@ Update the connector configuration. Update the configuration field in the connec
 
 [source,ts]
 ----
-interface ConnectorUpdateConfigurationRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorUpdateConfigurationRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
   configuration?: ConnectorConnectorConfiguration
   values?: Record<string, any>
 }
@@ -58,7 +58,7 @@ interface ConnectorUpdateConfigurationRequest extends <<shared-type-request-base
 [source,ts]
 ----
 interface ConnectorUpdateConfigurationResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

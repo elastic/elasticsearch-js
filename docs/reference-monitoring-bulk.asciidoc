@@ -45,11 +45,11 @@ Used by the monitoring features to send monitoring data.
 
 [source,ts]
 ----
-interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <<shared-type-request-base, RequestBase>> {
+interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <<RequestBase>> {
   type?: string
   system_id: string
   system_api_version: string
-  interval: <<shared-type-duration, Duration>>
+  interval: <<Duration>>
   operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
 }
 ----
@@ -60,10 +60,10 @@ interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = unknown>
 [source,ts]
 ----
 interface MonitoringBulkResponse {
-  error?: <<shared-type-error-cause, ErrorCause>>
+  error?: <<ErrorCause>>
   errors: boolean
   ignored: boolean
-  took: <<shared-type-long, long>>
+  took: <<long>>
 }
 ----
 

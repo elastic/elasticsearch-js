@@ -45,13 +45,13 @@ Get tokens from text analysis. The analyze API performs [analysis](https://www.e
 
 [source,ts]
 ----
-interface IndicesAnalyzeRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-index-name, IndexName>>
+interface IndicesAnalyzeRequest extends <<RequestBase>> {
+  index?: <<IndexName>>
   analyzer?: string
   attributes?: string[]
   char_filter?: AnalysisCharFilter[]
   explain?: boolean
-  field?: <<shared-type-field, Field>>
+  field?: <<Field>>
   filter?: AnalysisTokenFilter[]
   normalizer?: string
   text?: IndicesAnalyzeTextToAnalyze

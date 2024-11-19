@@ -45,8 +45,8 @@ Create a connector sync job. Create a connector sync job document in the interna
 
 [source,ts]
 ----
-interface ConnectorSyncJobPostRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface ConnectorSyncJobPostRequest extends <<RequestBase>> {
+  id: <<Id>>
   job_type?: ConnectorSyncJobType
   trigger_method?: ConnectorSyncJobTriggerMethod
 }
@@ -58,7 +58,7 @@ interface ConnectorSyncJobPostRequest extends <<shared-type-request-base, Reques
 [source,ts]
 ----
 interface ConnectorSyncJobPostResponse {
-  id: <<shared-type-id, Id>>
+  id: <<Id>>
 }
 ----
 

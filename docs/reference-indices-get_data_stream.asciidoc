@@ -45,11 +45,11 @@ Get data streams. Retrieves information about one or more data streams.
 
 [source,ts]
 ----
-interface IndicesGetDataStreamRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-data-stream-names, DataStreamNames>>
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+interface IndicesGetDataStreamRequest extends <<RequestBase>> {
+  name?: <<DataStreamNames>>
+  expand_wildcards?: <<ExpandWildcards>>
   include_defaults?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
   verbose?: boolean
 }
 ----

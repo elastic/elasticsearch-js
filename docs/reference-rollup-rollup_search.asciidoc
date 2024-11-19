@@ -45,15 +45,15 @@ Enables searching rolled-up data using the standard Query DSL.
 
 [source,ts]
 ----
-interface RollupRollupSearchRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
+interface RollupRollupSearchRequest extends <<RequestBase>> {
+  index: <<Indices>>
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
   aggregations?: Record<string, AggregationsAggregationContainer>
   /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   query?: QueryDslQueryContainer
-  size?: <<shared-type-integer, integer>>
+  size?: <<integer>>
 }
 ----
 
@@ -62,11 +62,11 @@ interface RollupRollupSearchRequest extends <<shared-type-request-base, RequestB
 
 [source,ts]
 ----
-interface RollupRollupSearchResponse<TDocument = unknown, TAggregations = Record<<<shared-type-aggregate-name, AggregateName>>, AggregationsAggregate>> {
-  took: <<shared-type-long, long>>
+interface RollupRollupSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> {
+  took: <<long>>
   timed_out: boolean
   terminated_early?: boolean
-  _shards: <<shared-type-shard-statistics, ShardStatistics>>
+  _shards: <<ShardStatistics>>
   hits: SearchHitsMetadata<TDocument>
   aggregations?: TAggregations
 }

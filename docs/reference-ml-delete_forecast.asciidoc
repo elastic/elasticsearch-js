@@ -45,11 +45,11 @@ Delete forecasts from a job. By default, forecasts are retained for 14 days. You
 
 [source,ts]
 ----
-interface MlDeleteForecastRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  forecast_id?: <<shared-type-id, Id>>
+interface MlDeleteForecastRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  forecast_id?: <<Id>>
   allow_no_forecasts?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -58,6 +58,6 @@ interface MlDeleteForecastRequest extends <<shared-type-request-base, RequestBas
 
 [source,ts]
 ----
-type MlDeleteForecastResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlDeleteForecastResponse = <<AcknowledgedResponseBase>>
 ----
 

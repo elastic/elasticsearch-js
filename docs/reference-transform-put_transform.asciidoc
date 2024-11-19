@@ -45,15 +45,15 @@ Create a transform. Creates a transform. A transform copies data from source ind
 
 [source,ts]
 ----
-interface TransformPutTransformRequest extends <<shared-type-request-base, RequestBase>> {
-  transform_id: <<shared-type-id, Id>>
+interface TransformPutTransformRequest extends <<RequestBase>> {
+  transform_id: <<Id>>
   defer_validation?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
   dest: TransformDestination
   description?: string
-  frequency?: <<shared-type-duration, Duration>>
+  frequency?: <<Duration>>
   latest?: TransformLatest
-  _meta?: <<shared-type-metadata, Metadata>>
+  _meta?: <<Metadata>>
   pivot?: TransformPivot
   retention_policy?: TransformRetentionPolicyContainer
   settings?: TransformSettings
@@ -67,6 +67,6 @@ interface TransformPutTransformRequest extends <<shared-type-request-base, Reque
 
 [source,ts]
 ----
-type TransformPutTransformResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type TransformPutTransformResponse = <<AcknowledgedResponseBase>>
 ----
 

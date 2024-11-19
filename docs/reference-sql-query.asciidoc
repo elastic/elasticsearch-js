@@ -45,22 +45,22 @@ Executes a SQL request
 
 [source,ts]
 ----
-interface SqlQueryRequest extends <<shared-type-request-base, RequestBase>> {
+interface SqlQueryRequest extends <<RequestBase>> {
   format?: SqlQuerySqlFormat
   catalog?: string
   columnar?: boolean
   cursor?: string
-  fetch_size?: <<shared-type-integer, integer>>
+  fetch_size?: <<integer>>
   filter?: QueryDslQueryContainer
   query?: string
-  request_timeout?: <<shared-type-duration, Duration>>
-  page_timeout?: <<shared-type-duration, Duration>>
-  time_zone?: <<shared-type-time-zone, TimeZone>>
+  request_timeout?: <<Duration>>
+  page_timeout?: <<Duration>>
+  time_zone?: <<TimeZone>>
   field_multi_value_leniency?: boolean
   runtime_mappings?: MappingRuntimeFields
-  wait_for_completion_timeout?: <<shared-type-duration, Duration>>
+  wait_for_completion_timeout?: <<Duration>>
   params?: Record<string, any>
-  keep_alive?: <<shared-type-duration, Duration>>
+  keep_alive?: <<Duration>>
   keep_on_completion?: boolean
   index_using_frozen?: boolean
 }
@@ -72,7 +72,7 @@ interface SqlQueryRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface SqlQueryResponse {
-  id?: <<shared-type-id, Id>>
+  id?: <<Id>>
   is_running?: boolean
   is_partial?: boolean
   columns?: SqlColumn[]

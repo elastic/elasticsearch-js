@@ -45,8 +45,8 @@ Update the connector API key ID. Update the `api_key_id` and `api_key_secret_id`
 
 [source,ts]
 ----
-interface ConnectorUpdateApiKeyIdRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorUpdateApiKeyIdRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
   api_key_id?: string
   api_key_secret_id?: string
 }
@@ -58,7 +58,7 @@ interface ConnectorUpdateApiKeyIdRequest extends <<shared-type-request-base, Req
 [source,ts]
 ----
 interface ConnectorUpdateApiKeyIdResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

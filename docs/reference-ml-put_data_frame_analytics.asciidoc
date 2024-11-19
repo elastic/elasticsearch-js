@@ -45,18 +45,18 @@ Create a data frame analytics job. This API creates a data frame analytics job t
 
 [source,ts]
 ----
-interface MlPutDataFrameAnalyticsRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface MlPutDataFrameAnalyticsRequest extends <<RequestBase>> {
+  id: <<Id>>
   allow_lazy_start?: boolean
   analysis: MlDataframeAnalysisContainer
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
   description?: string
   dest: MlDataframeAnalyticsDestination
-  max_num_threads?: <<shared-type-integer, integer>>
+  max_num_threads?: <<integer>>
   model_memory_limit?: string
   source: MlDataframeAnalyticsSource
-  headers?: <<shared-type-http-headers, HttpHeaders>>
-  version?: <<shared-type-version-string, VersionString>>
+  headers?: <<HttpHeaders>>
+  version?: <<VersionString>>
 }
 ----
 
@@ -70,14 +70,14 @@ interface MlPutDataFrameAnalyticsResponse {
   allow_lazy_start: boolean
   analysis: MlDataframeAnalysisContainer
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
-  create_time: <<shared-type-epoch-time, EpochTime>><<<shared-type-unit-millis, UnitMillis>>>
+  create_time: <<EpochTime>><<<UnitMillis>>>
   description?: string
   dest: MlDataframeAnalyticsDestination
-  id: <<shared-type-id, Id>>
-  max_num_threads: <<shared-type-integer, integer>>
+  id: <<Id>>
+  max_num_threads: <<integer>>
   model_memory_limit: string
   source: MlDataframeAnalyticsSource
-  version: <<shared-type-version-string, VersionString>>
+  version: <<VersionString>>
 }
 ----
 

@@ -45,8 +45,8 @@ Run a search application search. Generate and run an Elasticsearch query that us
 
 [source,ts]
 ----
-interface SearchApplicationSearchRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface SearchApplicationSearchRequest extends <<RequestBase>> {
+  name: <<Name>>
   typed_keys?: boolean
   params?: Record<string, any>
 }
@@ -57,6 +57,6 @@ interface SearchApplicationSearchRequest extends <<shared-type-request-base, Req
 
 [source,ts]
 ----
-type SearchApplicationSearchResponse<TDocument = unknown, TAggregations = Record<<<shared-type-aggregate-name, AggregateName>>, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
+type SearchApplicationSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
 ----
 

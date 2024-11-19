@@ -45,10 +45,10 @@ Delete application privileges.
 
 [source,ts]
 ----
-interface SecurityDeletePrivilegesRequest extends <<shared-type-request-base, RequestBase>> {
-  application: <<shared-type-name, Name>>
-  name: <<shared-type-names, Names>>
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityDeletePrivilegesRequest extends <<RequestBase>> {
+  application: <<Name>>
+  name: <<Names>>
+  refresh?: <<Refresh>>
 }
 ----
 

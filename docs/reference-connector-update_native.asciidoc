@@ -43,8 +43,8 @@ Update the connector is_native flag.
 
 [source,ts]
 ----
-interface ConnectorUpdateNativeRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorUpdateNativeRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
   is_native: boolean
 }
 ----
@@ -55,7 +55,7 @@ interface ConnectorUpdateNativeRequest extends <<shared-type-request-base, Reque
 [source,ts]
 ----
 interface ConnectorUpdateNativeResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

@@ -45,10 +45,10 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentati
 
 [source,ts]
 ----
-interface ShutdownPutNodeRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id: <<shared-type-node-id, NodeId>>
-  master_timeout?: <<shared-type-time-unit, TimeUnit>>
-  timeout?: <<shared-type-time-unit, TimeUnit>>
+interface ShutdownPutNodeRequest extends <<RequestBase>> {
+  node_id: <<NodeId>>
+  master_timeout?: <<TimeUnit>>
+  timeout?: <<TimeUnit>>
   type: ShutdownType
   reason: string
   allocation_delay?: string
@@ -61,6 +61,6 @@ interface ShutdownPutNodeRequest extends <<shared-type-request-base, RequestBase
 
 [source,ts]
 ----
-type ShutdownPutNodeResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type ShutdownPutNodeResponse = <<AcknowledgedResponseBase>>
 ----
 

@@ -45,9 +45,9 @@ Disable users. Disable users in the native realm.
 
 [source,ts]
 ----
-interface SecurityDisableUserRequest extends <<shared-type-request-base, RequestBase>> {
-  username: <<shared-type-username, Username>>
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityDisableUserRequest extends <<RequestBase>> {
+  username: <<Username>>
+  refresh?: <<Refresh>>
 }
 ----
 

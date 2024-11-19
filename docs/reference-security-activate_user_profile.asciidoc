@@ -45,7 +45,7 @@ Activate a user profile. Create or update a user profile on behalf of another us
 
 [source,ts]
 ----
-interface SecurityActivateUserProfileRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityActivateUserProfileRequest extends <<RequestBase>> {
   access_token?: string
   grant_type: SecurityGrantType
   password?: string

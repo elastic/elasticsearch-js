@@ -45,10 +45,10 @@ Returns the current status and available results for an async EQL search or a st
 
 [source,ts]
 ----
-interface EqlGetRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  keep_alive?: <<shared-type-duration, Duration>>
-  wait_for_completion_timeout?: <<shared-type-duration, Duration>>
+interface EqlGetRequest extends <<RequestBase>> {
+  id: <<Id>>
+  keep_alive?: <<Duration>>
+  wait_for_completion_timeout?: <<Duration>>
 }
 ----
 

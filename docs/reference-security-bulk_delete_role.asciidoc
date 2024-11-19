@@ -45,8 +45,8 @@ Bulk delete roles. The role management APIs are generally the preferred way to m
 
 [source,ts]
 ----
-interface SecurityBulkDeleteRoleRequest extends <<shared-type-request-base, RequestBase>> {
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityBulkDeleteRoleRequest extends <<RequestBase>> {
+  refresh?: <<Refresh>>
   names: string[]
 }
 ----

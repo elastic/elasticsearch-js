@@ -45,7 +45,7 @@ Logout of SAML. Submits a request to invalidate an access token and refresh toke
 
 [source,ts]
 ----
-interface SecuritySamlLogoutRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecuritySamlLogoutRequest extends <<RequestBase>> {
   token: string
   refresh_token?: string
 }

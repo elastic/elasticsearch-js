@@ -45,9 +45,9 @@ Update the connector index name. Update the `index_name` field of a connector, s
 
 [source,ts]
 ----
-interface ConnectorUpdateIndexNameRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
-  index_name: SpecUtilsWithNullValue<<<shared-type-index-name, IndexName>>>
+interface ConnectorUpdateIndexNameRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
+  index_name: SpecUtilsWithNullValue<<<IndexName>>>
 }
 ----
 
@@ -57,7 +57,7 @@ interface ConnectorUpdateIndexNameRequest extends <<shared-type-request-base, Re
 [source,ts]
 ----
 interface ConnectorUpdateIndexNameResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

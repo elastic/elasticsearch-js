@@ -45,10 +45,10 @@ Create or update a connector.
 
 [source,ts]
 ----
-interface ConnectorPutRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id?: <<shared-type-id, Id>>
+interface ConnectorPutRequest extends <<RequestBase>> {
+  connector_id?: <<Id>>
   description?: string
-  index_name?: <<shared-type-index-name, IndexName>>
+  index_name?: <<IndexName>>
   is_native?: boolean
   language?: string
   name?: string
@@ -62,8 +62,8 @@ interface ConnectorPutRequest extends <<shared-type-request-base, RequestBase>> 
 [source,ts]
 ----
 interface ConnectorPutResponse {
-  result: <<shared-type-result, Result>>
-  id: <<shared-type-id, Id>>
+  result: <<Result>>
+  id: <<Id>>
 }
 ----
 

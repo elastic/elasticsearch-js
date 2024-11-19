@@ -45,12 +45,12 @@ Create an API key. Create an API key for access without requiring basic authenti
 
 [source,ts]
 ----
-interface SecurityCreateApiKeyRequest extends <<shared-type-request-base, RequestBase>> {
-  refresh?: <<shared-type-refresh, Refresh>>
-  expiration?: <<shared-type-duration, Duration>>
-  name?: <<shared-type-name, Name>>
+interface SecurityCreateApiKeyRequest extends <<RequestBase>> {
+  refresh?: <<Refresh>>
+  expiration?: <<Duration>>
+  name?: <<Name>>
   role_descriptors?: Record<string, SecurityRoleDescriptor>
-  metadata?: <<shared-type-metadata, Metadata>>
+  metadata?: <<Metadata>>
 }
 ----
 
@@ -61,9 +61,9 @@ interface SecurityCreateApiKeyRequest extends <<shared-type-request-base, Reques
 ----
 interface SecurityCreateApiKeyResponse {
   api_key: string
-  expiration?: <<shared-type-long, long>>
-  id: <<shared-type-id, Id>>
-  name: <<shared-type-name, Name>>
+  expiration?: <<long>>
+  id: <<Id>>
+  name: <<Name>>
   encoded: string
 }
 ----

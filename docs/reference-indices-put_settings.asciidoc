@@ -45,15 +45,15 @@ Update index settings. Changes dynamic index settings in real time. For data str
 
 [source,ts]
 ----
-interface IndicesPutSettingsRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface IndicesPutSettingsRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   flat_settings?: boolean
   ignore_unavailable?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
   preserve_existing?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
   settings?: IndicesIndexSettings
 }
 ----
@@ -63,6 +63,6 @@ interface IndicesPutSettingsRequest extends <<shared-type-request-base, RequestB
 
 [source,ts]
 ----
-type IndicesPutSettingsResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IndicesPutSettingsResponse = <<AcknowledgedResponseBase>>
 ----
 

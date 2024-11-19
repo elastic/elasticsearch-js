@@ -45,15 +45,15 @@ Validate a query. Validates a query without running it.
 
 [source,ts]
 ----
-interface IndicesValidateQueryRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface IndicesValidateQueryRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
   all_shards?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
   default_operator?: QueryDslOperator
   df?: string
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   explain?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
@@ -70,7 +70,7 @@ interface IndicesValidateQueryRequest extends <<shared-type-request-base, Reques
 ----
 interface IndicesValidateQueryResponse {
   explanations?: IndicesValidateQueryIndicesValidationExplanation[]
-  _shards?: <<shared-type-shard-statistics, ShardStatistics>>
+  _shards?: <<ShardStatistics>>
   valid: boolean
   error?: string
 }

@@ -45,8 +45,8 @@ Get users. Get information about users in the native realm and built-in users.
 
 [source,ts]
 ----
-interface SecurityGetUserRequest extends <<shared-type-request-base, RequestBase>> {
-  username?: <<shared-type-username, Username>> | <<shared-type-username, Username>>[]
+interface SecurityGetUserRequest extends <<RequestBase>> {
+  username?: <<Username>> | <<Username>>[]
   with_profile_uid?: boolean
 }
 ----

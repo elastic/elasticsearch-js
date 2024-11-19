@@ -45,8 +45,8 @@ Retrieves information about different cluster, node, and index level settings th
 
 [source,ts]
 ----
-interface MigrationDeprecationsRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-index-name, IndexName>>
+interface MigrationDeprecationsRequest extends <<RequestBase>> {
+  index?: <<IndexName>>
 }
 ----
 

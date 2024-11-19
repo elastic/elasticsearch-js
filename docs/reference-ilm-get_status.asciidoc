@@ -45,7 +45,7 @@ Retrieves the current index lifecycle management (ILM) status.
 
 [source,ts]
 ----
-interface IlmGetStatusRequest extends <<shared-type-request-base, RequestBase>> {
+interface IlmGetStatusRequest extends <<RequestBase>> {
 }
 ----
 
@@ -55,7 +55,7 @@ interface IlmGetStatusRequest extends <<shared-type-request-base, RequestBase>> 
 [source,ts]
 ----
 interface IlmGetStatusResponse {
-  operation_mode: <<shared-type-lifecycle-operation-mode, LifecycleOperationMode>>
+  operation_mode: <<LifecycleOperationMode>>
 }
 ----
 

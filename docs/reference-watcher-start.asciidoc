@@ -45,7 +45,7 @@ Starts Watcher if it is not already running.
 
 [source,ts]
 ----
-interface WatcherStartRequest extends <<shared-type-request-base, RequestBase>> {
+interface WatcherStartRequest extends <<RequestBase>> {
 }
 ----
 
@@ -54,6 +54,6 @@ interface WatcherStartRequest extends <<shared-type-request-base, RequestBase>> 
 
 [source,ts]
 ----
-type WatcherStartResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type WatcherStartResponse = <<AcknowledgedResponseBase>>
 ----
 

@@ -45,7 +45,7 @@ Get cluster info. Returns basic information about the cluster.
 
 [source,ts]
 ----
-interface InfoRequest extends <<shared-type-request-base, RequestBase>> {
+interface InfoRequest extends <<RequestBase>> {
 }
 ----
 
@@ -55,11 +55,11 @@ interface InfoRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface InfoResponse {
-  cluster_name: <<shared-type-name, Name>>
-  cluster_uuid: <<shared-type-uuid, Uuid>>
-  name: <<shared-type-name, Name>>
+  cluster_name: <<Name>>
+  cluster_uuid: <<Uuid>>
+  name: <<Name>>
   tagline: string
-  version: <<shared-type-elasticsearch-version-info, ElasticsearchVersionInfo>>
+  version: <<ElasticsearchVersionInfo>>
 }
 ----
 

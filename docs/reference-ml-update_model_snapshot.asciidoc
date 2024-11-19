@@ -45,9 +45,9 @@ Update a snapshot. Updates certain properties of a snapshot.
 
 [source,ts]
 ----
-interface MlUpdateModelSnapshotRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  snapshot_id: <<shared-type-id, Id>>
+interface MlUpdateModelSnapshotRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  snapshot_id: <<Id>>
   description?: string
   retain?: boolean
 }

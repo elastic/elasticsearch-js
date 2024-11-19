@@ -45,8 +45,8 @@ Activate the connector draft filter. Activates the valid draft filtering for a c
 
 [source,ts]
 ----
-interface ConnectorUpdateActiveFilteringRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorUpdateActiveFilteringRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
 }
 ----
 
@@ -56,7 +56,7 @@ interface ConnectorUpdateActiveFilteringRequest extends <<shared-type-request-ba
 [source,ts]
 ----
 interface ConnectorUpdateActiveFilteringResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

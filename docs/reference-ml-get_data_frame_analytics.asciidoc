@@ -45,11 +45,11 @@ Get data frame analytics job configuration info. You can get information for mul
 
 [source,ts]
 ----
-interface MlGetDataFrameAnalyticsRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-id, Id>>
+interface MlGetDataFrameAnalyticsRequest extends <<RequestBase>> {
+  id?: <<Id>>
   allow_no_match?: boolean
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
+  from?: <<integer>>
+  size?: <<integer>>
   exclude_generated?: boolean
 }
 ----
@@ -60,7 +60,7 @@ interface MlGetDataFrameAnalyticsRequest extends <<shared-type-request-base, Req
 [source,ts]
 ----
 interface MlGetDataFrameAnalyticsResponse {
-  count: <<shared-type-integer, integer>>
+  count: <<integer>>
   data_frame_analytics: MlDataframeAnalyticsSummary[]
 }
 ----

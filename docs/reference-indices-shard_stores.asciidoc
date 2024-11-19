@@ -45,10 +45,10 @@ Retrieves store information about replica shards in one or more indices. For dat
 
 [source,ts]
 ----
-interface IndicesShardStoresRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface IndicesShardStoresRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   status?: IndicesShardStoresShardStoreStatus | IndicesShardStoresShardStoreStatus[]
 }
@@ -60,7 +60,7 @@ interface IndicesShardStoresRequest extends <<shared-type-request-base, RequestB
 [source,ts]
 ----
 interface IndicesShardStoresResponse {
-  indices: Record<<<shared-type-index-name, IndexName>>, IndicesShardStoresIndicesShardStores>
+  indices: Record<<<IndexName>>, IndicesShardStoresIndicesShardStores>
 }
 ----
 

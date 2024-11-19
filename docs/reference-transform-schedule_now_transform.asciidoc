@@ -45,9 +45,9 @@ Schedule a transform to start now. Instantly runs a transform to process data. I
 
 [source,ts]
 ----
-interface TransformScheduleNowTransformRequest extends <<shared-type-request-base, RequestBase>> {
-  transform_id: <<shared-type-id, Id>>
-  timeout?: <<shared-type-duration, Duration>>
+interface TransformScheduleNowTransformRequest extends <<RequestBase>> {
+  transform_id: <<Id>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -56,6 +56,6 @@ interface TransformScheduleNowTransformRequest extends <<shared-type-request-bas
 
 [source,ts]
 ----
-type TransformScheduleNowTransformResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type TransformScheduleNowTransformResponse = <<AcknowledgedResponseBase>>
 ----
 

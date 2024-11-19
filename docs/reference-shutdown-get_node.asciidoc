@@ -45,10 +45,10 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentati
 
 [source,ts]
 ----
-interface ShutdownGetNodeRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id?: <<shared-type-node-ids, NodeIds>>
-  master_timeout?: <<shared-type-time-unit, TimeUnit>>
-  timeout?: <<shared-type-time-unit, TimeUnit>>
+interface ShutdownGetNodeRequest extends <<RequestBase>> {
+  node_id?: <<NodeIds>>
+  master_timeout?: <<TimeUnit>>
+  timeout?: <<TimeUnit>>
 }
 ----
 

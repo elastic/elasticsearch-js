@@ -45,8 +45,8 @@ Retrieves one or more snapshot lifecycle policy definitions and information abou
 
 [source,ts]
 ----
-interface SlmGetLifecycleRequest extends <<shared-type-request-base, RequestBase>> {
-  policy_id?: <<shared-type-names, Names>>
+interface SlmGetLifecycleRequest extends <<RequestBase>> {
+  policy_id?: <<Names>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface SlmGetLifecycleRequest extends <<shared-type-request-base, RequestBase
 
 [source,ts]
 ----
-type SlmGetLifecycleResponse = Record<<<shared-type-id, Id>>, SlmSnapshotLifecycle>
+type SlmGetLifecycleResponse = Record<<<Id>>, SlmSnapshotLifecycle>
 ----
 

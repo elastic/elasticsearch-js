@@ -45,17 +45,17 @@ Get anomaly records for an anomaly detection job. Records contain the detailed a
 
 [source,ts]
 ----
-interface MlGetRecordsRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
+interface MlGetRecordsRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  from?: <<integer>>
+  size?: <<integer>>
   desc?: boolean
-  end?: <<shared-type-date-time, DateTime>>
+  end?: <<DateTime>>
   exclude_interim?: boolean
   page?: MlPage
-  record_score?: <<shared-type-double, double>>
-  sort?: <<shared-type-field, Field>>
-  start?: <<shared-type-date-time, DateTime>>
+  record_score?: <<double>>
+  sort?: <<Field>>
+  start?: <<DateTime>>
 }
 ----
 
@@ -65,7 +65,7 @@ interface MlGetRecordsRequest extends <<shared-type-request-base, RequestBase>> 
 [source,ts]
 ----
 interface MlGetRecordsResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   records: MlAnomaly[]
 }
 ----

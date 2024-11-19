@@ -45,13 +45,13 @@ Get mapping definitions. Retrieves mapping definitions for one or more indices. 
 
 [source,ts]
 ----
-interface IndicesGetMappingRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface IndicesGetMappingRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   local?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
 }
 ----
 
@@ -60,6 +60,6 @@ interface IndicesGetMappingRequest extends <<shared-type-request-base, RequestBa
 
 [source,ts]
 ----
-type IndicesGetMappingResponse = Record<<<shared-type-index-name, IndexName>>, IndicesGetMappingIndexMappingRecord>
+type IndicesGetMappingResponse = Record<<<IndexName>>, IndicesGetMappingIndexMappingRecord>
 ----
 

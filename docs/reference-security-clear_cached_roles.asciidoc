@@ -45,8 +45,8 @@ Clear the roles cache. Evict roles from the native role cache.
 
 [source,ts]
 ----
-interface SecurityClearCachedRolesRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-names, Names>>
+interface SecurityClearCachedRolesRequest extends <<RequestBase>> {
+  name: <<Names>>
 }
 ----
 
@@ -56,8 +56,8 @@ interface SecurityClearCachedRolesRequest extends <<shared-type-request-base, Re
 [source,ts]
 ----
 interface SecurityClearCachedRolesResponse {
-  _nodes: <<shared-type-node-statistics, NodeStatistics>>
-  cluster_name: <<shared-type-name, Name>>
+  _nodes: <<NodeStatistics>>
+  cluster_name: <<Name>>
   nodes: Record<string, SecurityClusterNode>
 }
 ----

@@ -45,7 +45,7 @@ Get the autoscaling capacity. NOTE: This feature is designed for indirect use by
 
 [source,ts]
 ----
-interface AutoscalingGetAutoscalingCapacityRequest extends <<shared-type-request-base, RequestBase>> {
+interface AutoscalingGetAutoscalingCapacityRequest extends <<RequestBase>> {
 }
 ----
 

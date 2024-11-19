@@ -45,9 +45,9 @@ Halts all lifecycle management operations and stops the index lifecycle manageme
 
 [source,ts]
 ----
-interface IlmStopRequest extends <<shared-type-request-base, RequestBase>> {
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface IlmStopRequest extends <<RequestBase>> {
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -56,6 +56,6 @@ interface IlmStopRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type IlmStopResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IlmStopResponse = <<AcknowledgedResponseBase>>
 ----
 

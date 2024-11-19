@@ -45,8 +45,8 @@ Deletes an existing rollup job.
 
 [source,ts]
 ----
-interface RollupDeleteJobRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface RollupDeleteJobRequest extends <<RequestBase>> {
+  id: <<Id>>
 }
 ----
 
@@ -57,7 +57,7 @@ interface RollupDeleteJobRequest extends <<shared-type-request-base, RequestBase
 ----
 interface RollupDeleteJobResponse {
   acknowledged: boolean
-  task_failures?: <<shared-type-task-failure, TaskFailure>>[]
+  task_failures?: <<TaskFailure>>[]
 }
 ----
 

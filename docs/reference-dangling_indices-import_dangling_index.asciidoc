@@ -45,11 +45,11 @@ Import a dangling index. If Elasticsearch encounters index data that is absent f
 
 [source,ts]
 ----
-interface DanglingIndicesImportDanglingIndexRequest extends <<shared-type-request-base, RequestBase>> {
-  index_uuid: <<shared-type-uuid, Uuid>>
+interface DanglingIndicesImportDanglingIndexRequest extends <<RequestBase>> {
+  index_uuid: <<Uuid>>
   accept_data_loss: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -58,6 +58,6 @@ interface DanglingIndicesImportDanglingIndexRequest extends <<shared-type-reques
 
 [source,ts]
 ----
-type DanglingIndicesImportDanglingIndexResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type DanglingIndicesImportDanglingIndexResponse = <<AcknowledgedResponseBase>>
 ----
 

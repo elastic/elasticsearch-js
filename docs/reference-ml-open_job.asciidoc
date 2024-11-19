@@ -45,9 +45,9 @@ Open anomaly detection jobs. An anomaly detection job must be opened to be ready
 
 [source,ts]
 ----
-interface MlOpenJobRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  timeout?: <<shared-type-duration, Duration>>
+interface MlOpenJobRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -58,7 +58,7 @@ interface MlOpenJobRequest extends <<shared-type-request-base, RequestBase>> {
 ----
 interface MlOpenJobResponse {
   opened: boolean
-  node: <<shared-type-node-id, NodeId>>
+  node: <<NodeId>>
 }
 ----
 

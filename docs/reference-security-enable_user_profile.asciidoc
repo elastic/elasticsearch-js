@@ -45,9 +45,9 @@ Enable a user profile. Enable user profiles to make them visible in user profile
 
 [source,ts]
 ----
-interface SecurityEnableUserProfileRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityEnableUserProfileRequest extends <<RequestBase>> {
   uid: SecurityUserProfileId
-  refresh?: <<shared-type-refresh, Refresh>>
+  refresh?: <<Refresh>>
 }
 ----
 
@@ -56,6 +56,6 @@ interface SecurityEnableUserProfileRequest extends <<shared-type-request-base, R
 
 [source,ts]
 ----
-type SecurityEnableUserProfileResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type SecurityEnableUserProfileResponse = <<AcknowledgedResponseBase>>
 ----
 

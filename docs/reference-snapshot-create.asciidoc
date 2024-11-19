@@ -45,16 +45,16 @@ Creates a snapshot in a repository.
 
 [source,ts]
 ----
-interface SnapshotCreateRequest extends <<shared-type-request-base, RequestBase>> {
-  repository: <<shared-type-name, Name>>
-  snapshot: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
+interface SnapshotCreateRequest extends <<RequestBase>> {
+  repository: <<Name>>
+  snapshot: <<Name>>
+  master_timeout?: <<Duration>>
   wait_for_completion?: boolean
   ignore_unavailable?: boolean
   include_global_state?: boolean
-  indices?: <<shared-type-indices, Indices>>
+  indices?: <<Indices>>
   feature_states?: string[]
-  metadata?: <<shared-type-metadata, Metadata>>
+  metadata?: <<Metadata>>
   partial?: boolean
 }
 ----

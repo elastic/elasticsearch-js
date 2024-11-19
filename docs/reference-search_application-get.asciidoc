@@ -45,8 +45,8 @@ Get search application details.
 
 [source,ts]
 ----
-interface SearchApplicationGetRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface SearchApplicationGetRequest extends <<RequestBase>> {
+  name: <<Name>>
 }
 ----
 

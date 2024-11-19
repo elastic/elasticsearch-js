@@ -45,7 +45,7 @@ The start basic API enables you to initiate an indefinite basic license, which g
 
 [source,ts]
 ----
-interface LicensePostStartBasicRequest extends <<shared-type-request-base, RequestBase>> {
+interface LicensePostStartBasicRequest extends <<RequestBase>> {
   acknowledge?: boolean
 }
 ----

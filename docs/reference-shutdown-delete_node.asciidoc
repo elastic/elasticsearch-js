@@ -45,10 +45,10 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentati
 
 [source,ts]
 ----
-interface ShutdownDeleteNodeRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id: <<shared-type-node-id, NodeId>>
-  master_timeout?: <<shared-type-time-unit, TimeUnit>>
-  timeout?: <<shared-type-time-unit, TimeUnit>>
+interface ShutdownDeleteNodeRequest extends <<RequestBase>> {
+  node_id: <<NodeId>>
+  master_timeout?: <<TimeUnit>>
+  timeout?: <<TimeUnit>>
 }
 ----
 
@@ -57,6 +57,6 @@ interface ShutdownDeleteNodeRequest extends <<shared-type-request-base, RequestB
 
 [source,ts]
 ----
-type ShutdownDeleteNodeResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type ShutdownDeleteNodeResponse = <<AcknowledgedResponseBase>>
 ----
 

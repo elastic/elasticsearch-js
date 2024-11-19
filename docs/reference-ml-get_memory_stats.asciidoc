@@ -45,11 +45,11 @@ Get machine learning memory usage info. Get information about how machine learni
 
 [source,ts]
 ----
-interface MlGetMemoryStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id?: <<shared-type-id, Id>>
+interface MlGetMemoryStatsRequest extends <<RequestBase>> {
+  node_id?: <<Id>>
   human?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -59,9 +59,9 @@ interface MlGetMemoryStatsRequest extends <<shared-type-request-base, RequestBas
 [source,ts]
 ----
 interface MlGetMemoryStatsResponse {
-  _nodes: <<shared-type-node-statistics, NodeStatistics>>
-  cluster_name: <<shared-type-name, Name>>
-  nodes: Record<<<shared-type-id, Id>>, MlGetMemoryStatsMemory>
+  _nodes: <<NodeStatistics>>
+  cluster_name: <<Name>>
+  nodes: Record<<<Id>>, MlGetMemoryStatsMemory>
 }
 ----
 

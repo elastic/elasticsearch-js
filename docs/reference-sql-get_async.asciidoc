@@ -45,12 +45,12 @@ Returns the current status and available results for an async SQL search or stor
 
 [source,ts]
 ----
-interface SqlGetAsyncRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface SqlGetAsyncRequest extends <<RequestBase>> {
+  id: <<Id>>
   delimiter?: string
   format?: string
-  keep_alive?: <<shared-type-duration, Duration>>
-  wait_for_completion_timeout?: <<shared-type-duration, Duration>>
+  keep_alive?: <<Duration>>
+  wait_for_completion_timeout?: <<Duration>>
 }
 ----
 
@@ -60,7 +60,7 @@ interface SqlGetAsyncRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface SqlGetAsyncResponse {
-  id: <<shared-type-id, Id>>
+  id: <<Id>>
   is_running: boolean
   is_partial: boolean
   columns?: SqlColumn[]

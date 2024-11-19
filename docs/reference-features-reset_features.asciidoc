@@ -45,7 +45,7 @@ Resets the internal state of features, usually by deleting system indices
 
 [source,ts]
 ----
-interface FeaturesResetFeaturesRequest extends <<shared-type-request-base, RequestBase>> {
+interface FeaturesResetFeaturesRequest extends <<RequestBase>> {
 }
 ----
 

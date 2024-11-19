@@ -45,13 +45,13 @@ Invalidate API keys. This API invalidates API keys created by the create API key
 
 [source,ts]
 ----
-interface SecurityInvalidateApiKeyRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-id, Id>>
-  ids?: <<shared-type-id, Id>>[]
-  name?: <<shared-type-name, Name>>
+interface SecurityInvalidateApiKeyRequest extends <<RequestBase>> {
+  id?: <<Id>>
+  ids?: <<Id>>[]
+  name?: <<Name>>
   owner?: boolean
   realm_name?: string
-  username?: <<shared-type-username, Username>>
+  username?: <<Username>>
 }
 ----
 
@@ -61,8 +61,8 @@ interface SecurityInvalidateApiKeyRequest extends <<shared-type-request-base, Re
 [source,ts]
 ----
 interface SecurityInvalidateApiKeyResponse {
-  error_count: <<shared-type-integer, integer>>
-  error_details?: <<shared-type-error-cause, ErrorCause>>[]
+  error_count: <<integer>>
+  error_details?: <<ErrorCause>>[]
   invalidated_api_keys: string[]
   previously_invalidated_api_keys: string[]
 }

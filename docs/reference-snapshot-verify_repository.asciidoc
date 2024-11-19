@@ -45,10 +45,10 @@ Verifies a repository.
 
 [source,ts]
 ----
-interface SnapshotVerifyRepositoryRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface SnapshotVerifyRepositoryRequest extends <<RequestBase>> {
+  name: <<Name>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 

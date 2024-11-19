@@ -45,20 +45,20 @@ Reindex documents. Copies documents from a source to a destination. The source c
 
 [source,ts]
 ----
-interface ReindexRequest extends <<shared-type-request-base, RequestBase>> {
+interface ReindexRequest extends <<RequestBase>> {
   refresh?: boolean
-  requests_per_second?: <<shared-type-float, float>>
-  scroll?: <<shared-type-duration, Duration>>
-  slices?: <<shared-type-slices, Slices>>
-  timeout?: <<shared-type-duration, Duration>>
-  wait_for_active_shards?: <<shared-type-wait-for-active-shards, WaitForActiveShards>>
+  requests_per_second?: <<float>>
+  scroll?: <<Duration>>
+  slices?: <<Slices>>
+  timeout?: <<Duration>>
+  wait_for_active_shards?: <<WaitForActiveShards>>
   wait_for_completion?: boolean
   require_alias?: boolean
-  conflicts?: <<shared-type-conflicts, Conflicts>>
+  conflicts?: <<Conflicts>>
   dest: ReindexDestination
-  max_docs?: <<shared-type-long, long>>
-  script?: <<shared-type-script, Script>> | string
-  size?: <<shared-type-long, long>>
+  max_docs?: <<long>>
+  script?: <<Script>> | string
+  size?: <<long>>
   source: ReindexSource
 }
 ----
@@ -69,22 +69,22 @@ interface ReindexRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface ReindexResponse {
-  batches?: <<shared-type-long, long>>
-  created?: <<shared-type-long, long>>
-  deleted?: <<shared-type-long, long>>
-  failures?: <<shared-type-bulk-index-by-scroll-failure, BulkIndexByScrollFailure>>[]
-  noops?: <<shared-type-long, long>>
-  retries?: <<shared-type-retries, Retries>>
-  requests_per_second?: <<shared-type-float, float>>
-  slice_id?: <<shared-type-integer, integer>>
-  task?: <<shared-type-task-id, TaskId>>
-  throttled_millis?: <<shared-type-epoch-time, EpochTime>><<<shared-type-unit-millis, UnitMillis>>>
-  throttled_until_millis?: <<shared-type-epoch-time, EpochTime>><<<shared-type-unit-millis, UnitMillis>>>
+  batches?: <<long>>
+  created?: <<long>>
+  deleted?: <<long>>
+  failures?: <<BulkIndexByScrollFailure>>[]
+  noops?: <<long>>
+  retries?: <<Retries>>
+  requests_per_second?: <<float>>
+  slice_id?: <<integer>>
+  task?: <<TaskId>>
+  throttled_millis?: <<EpochTime>><<<UnitMillis>>>
+  throttled_until_millis?: <<EpochTime>><<<UnitMillis>>>
   timed_out?: boolean
-  took?: <<shared-type-duration-value, DurationValue>><<<shared-type-unit-millis, UnitMillis>>>
-  total?: <<shared-type-long, long>>
-  updated?: <<shared-type-long, long>>
-  version_conflicts?: <<shared-type-long, long>>
+  took?: <<DurationValue>><<<UnitMillis>>>
+  total?: <<long>>
+  updated?: <<long>>
+  version_conflicts?: <<long>>
 }
 ----
 

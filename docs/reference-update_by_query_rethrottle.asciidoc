@@ -45,9 +45,9 @@ Throttle an update by query operation. Change the number of requests per second 
 
 [source,ts]
 ----
-interface UpdateByQueryRethrottleRequest extends <<shared-type-request-base, RequestBase>> {
-  task_id: <<shared-type-id, Id>>
-  requests_per_second?: <<shared-type-float, float>>
+interface UpdateByQueryRethrottleRequest extends <<RequestBase>> {
+  task_id: <<Id>>
+  requests_per_second?: <<float>>
 }
 ----
 

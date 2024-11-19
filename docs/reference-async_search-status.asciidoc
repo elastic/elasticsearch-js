@@ -45,8 +45,8 @@ Get the async search status. Get the status of a previously submitted async sear
 
 [source,ts]
 ----
-interface AsyncSearchStatusRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface AsyncSearchStatusRequest extends <<RequestBase>> {
+  id: <<Id>>
 }
 ----
 

@@ -45,11 +45,11 @@ Run multiple templated searches.
 
 [source,ts]
 ----
-interface MsearchTemplateRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface MsearchTemplateRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   ccs_minimize_roundtrips?: boolean
-  max_concurrent_searches?: <<shared-type-long, long>>
-  search_type?: <<shared-type-search-type, SearchType>>
+  max_concurrent_searches?: <<long>>
+  search_type?: <<SearchType>>
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
   search_templates?: MsearchTemplateRequestItem[]
@@ -61,6 +61,6 @@ interface MsearchTemplateRequest extends <<shared-type-request-base, RequestBase
 
 [source,ts]
 ----
-type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<<<shared-type-aggregate-name, AggregateName>>, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
+type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
 ----
 

@@ -46,8 +46,8 @@ Returns thread pool statistics for each node in a cluster. Returned information 
 [source,ts]
 ----
 interface CatThreadPoolRequest extends CatCatRequestBase {
-  thread_pool_patterns?: <<shared-type-names, Names>>
-  time?: <<shared-type-time-unit, TimeUnit>>
+  thread_pool_patterns?: <<Names>>
+  time?: <<TimeUnit>>
 }
 ----
 

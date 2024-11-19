@@ -45,10 +45,10 @@ Estimate job model memory usage. Makes an estimation of the memory usage for an 
 
 [source,ts]
 ----
-interface MlEstimateModelMemoryRequest extends <<shared-type-request-base, RequestBase>> {
+interface MlEstimateModelMemoryRequest extends <<RequestBase>> {
   analysis_config?: MlAnalysisConfig
-  max_bucket_cardinality?: Record<<<shared-type-field, Field>>, <<shared-type-long, long>>>
-  overall_cardinality?: Record<<<shared-type-field, Field>>, <<shared-type-long, long>>>
+  max_bucket_cardinality?: Record<<<Field>>, <<long>>>
+  overall_cardinality?: Record<<<Field>>, <<long>>>
 }
 ----
 

@@ -45,8 +45,8 @@ Create or update an autoscaling policy. NOTE: This feature is designed for indir
 
 [source,ts]
 ----
-interface AutoscalingPutAutoscalingPolicyRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface AutoscalingPutAutoscalingPolicyRequest extends <<RequestBase>> {
+  name: <<Name>>
   policy?: AutoscalingAutoscalingPolicy
 }
 ----
@@ -56,6 +56,6 @@ interface AutoscalingPutAutoscalingPolicyRequest extends <<shared-type-request-b
 
 [source,ts]
 ----
-type AutoscalingPutAutoscalingPolicyResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type AutoscalingPutAutoscalingPolicyResponse = <<AcknowledgedResponseBase>>
 ----
 

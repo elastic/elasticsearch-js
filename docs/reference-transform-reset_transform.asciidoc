@@ -45,8 +45,8 @@ Reset a transform. Resets a transform. Before you can reset it, you must stop it
 
 [source,ts]
 ----
-interface TransformResetTransformRequest extends <<shared-type-request-base, RequestBase>> {
-  transform_id: <<shared-type-id, Id>>
+interface TransformResetTransformRequest extends <<RequestBase>> {
+  transform_id: <<Id>>
   force?: boolean
 }
 ----
@@ -56,6 +56,6 @@ interface TransformResetTransformRequest extends <<shared-type-request-base, Req
 
 [source,ts]
 ----
-type TransformResetTransformResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type TransformResetTransformResponse = <<AcknowledgedResponseBase>>
 ----
 

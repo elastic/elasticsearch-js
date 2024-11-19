@@ -45,9 +45,9 @@ Retrieves a summary of all defined synonym sets
 
 [source,ts]
 ----
-interface SynonymsGetSynonymsSetsRequest extends <<shared-type-request-base, RequestBase>> {
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
+interface SynonymsGetSynonymsSetsRequest extends <<RequestBase>> {
+  from?: <<integer>>
+  size?: <<integer>>
 }
 ----
 
@@ -57,7 +57,7 @@ interface SynonymsGetSynonymsSetsRequest extends <<shared-type-request-base, Req
 [source,ts]
 ----
 interface SynonymsGetSynonymsSetsResponse {
-  count: <<shared-type-integer, integer>>
+  count: <<integer>>
   results: SynonymsGetSynonymsSetsSynonymsSetItem[]
 }
 ----

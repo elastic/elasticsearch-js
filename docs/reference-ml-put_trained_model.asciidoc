@@ -45,8 +45,8 @@ Create a trained model. Enable you to supply a trained model that is not created
 
 [source,ts]
 ----
-interface MlPutTrainedModelRequest extends <<shared-type-request-base, RequestBase>> {
-  model_id: <<shared-type-id, Id>>
+interface MlPutTrainedModelRequest extends <<RequestBase>> {
+  model_id: <<Id>>
   defer_definition_decompression?: boolean
   wait_for_completion?: boolean
   compressed_definition?: string
@@ -56,7 +56,7 @@ interface MlPutTrainedModelRequest extends <<shared-type-request-base, RequestBa
   input?: MlPutTrainedModelInput
   metadata?: any
   model_type?: MlTrainedModelType
-  model_size_bytes?: <<shared-type-long, long>>
+  model_size_bytes?: <<long>>
   platform_architecture?: string
   tags?: string[]
   prefix_strings?: MlTrainedModelPrefixStrings

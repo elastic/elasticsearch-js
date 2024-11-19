@@ -45,8 +45,8 @@ Get datafeeds configuration info. You can get information for multiple datafeeds
 
 [source,ts]
 ----
-interface MlGetDatafeedsRequest extends <<shared-type-request-base, RequestBase>> {
-  datafeed_id?: <<shared-type-ids, Ids>>
+interface MlGetDatafeedsRequest extends <<RequestBase>> {
+  datafeed_id?: <<Ids>>
   allow_no_match?: boolean
   exclude_generated?: boolean
 }
@@ -58,7 +58,7 @@ interface MlGetDatafeedsRequest extends <<shared-type-request-base, RequestBase>
 [source,ts]
 ----
 interface MlGetDatafeedsResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   datafeeds: MlDatafeed[]
 }
 ----

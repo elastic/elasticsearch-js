@@ -45,7 +45,7 @@ Update data streams. Performs one or more data stream modification actions in a 
 
 [source,ts]
 ----
-interface IndicesModifyDataStreamRequest extends <<shared-type-request-base, RequestBase>> {
+interface IndicesModifyDataStreamRequest extends <<RequestBase>> {
   actions: IndicesModifyDataStreamAction[]
 }
 ----
@@ -55,6 +55,6 @@ interface IndicesModifyDataStreamRequest extends <<shared-type-request-base, Req
 
 [source,ts]
 ----
-type IndicesModifyDataStreamResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IndicesModifyDataStreamResponse = <<AcknowledgedResponseBase>>
 ----
 

@@ -45,9 +45,9 @@ Delete users. Delete users from the native realm.
 
 [source,ts]
 ----
-interface SecurityDeleteUserRequest extends <<shared-type-request-base, RequestBase>> {
-  username: <<shared-type-username, Username>>
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityDeleteUserRequest extends <<RequestBase>> {
+  username: <<Username>>
+  refresh?: <<Refresh>>
 }
 ----
 

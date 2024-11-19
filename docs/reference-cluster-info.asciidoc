@@ -45,8 +45,8 @@ Get cluster info. Returns basic information about the cluster.
 
 [source,ts]
 ----
-interface ClusterInfoRequest extends <<shared-type-request-base, RequestBase>> {
-  target: <<shared-type-cluster-info-targets, ClusterInfoTargets>>
+interface ClusterInfoRequest extends <<RequestBase>> {
+  target: <<ClusterInfoTargets>>
 }
 ----
 
@@ -56,7 +56,7 @@ interface ClusterInfoRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface ClusterInfoResponse {
-  cluster_name: <<shared-type-name, Name>>
+  cluster_name: <<Name>>
   http?: NodesHttp
   ingest?: NodesIngest
   thread_pool?: Record<string, NodesThreadCount>

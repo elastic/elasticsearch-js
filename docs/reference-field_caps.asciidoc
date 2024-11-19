@@ -45,16 +45,16 @@ Get the field capabilities. Get information about the capabilities of fields amo
 
 [source,ts]
 ----
-interface FieldCapsRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface FieldCapsRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   include_unmapped?: boolean
   filters?: string
   types?: string[]
   include_empty_fields?: boolean
-  fields?: <<shared-type-fields, Fields>>
+  fields?: <<Fields>>
   index_filter?: QueryDslQueryContainer
   runtime_mappings?: MappingRuntimeFields
 }
@@ -66,8 +66,8 @@ interface FieldCapsRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface FieldCapsResponse {
-  indices: <<shared-type-indices, Indices>>
-  fields: Record<<<shared-type-field, Field>>, Record<string, FieldCapsFieldCapability>>
+  indices: <<Indices>>
+  fields: Record<<<Field>>, Record<string, FieldCapsFieldCapability>>
 }
 ----
 

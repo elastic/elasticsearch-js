@@ -45,7 +45,7 @@ Get script languages. Get a list of available script types, languages, and conte
 
 [source,ts]
 ----
-interface GetScriptLanguagesRequest extends <<shared-type-request-base, RequestBase>> {
+interface GetScriptLanguagesRequest extends <<RequestBase>> {
 }
 ----
 

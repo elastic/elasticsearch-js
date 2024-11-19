@@ -45,11 +45,11 @@ Update user profile data. Update specific data for the user profile that is asso
 
 [source,ts]
 ----
-interface SecurityUpdateUserProfileDataRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityUpdateUserProfileDataRequest extends <<RequestBase>> {
   uid: SecurityUserProfileId
-  if_seq_no?: <<shared-type-sequence-number, SequenceNumber>>
-  if_primary_term?: <<shared-type-long, long>>
-  refresh?: <<shared-type-refresh, Refresh>>
+  if_seq_no?: <<SequenceNumber>>
+  if_primary_term?: <<long>>
+  refresh?: <<Refresh>>
   labels?: Record<string, any>
   data?: Record<string, any>
 }
@@ -60,6 +60,6 @@ interface SecurityUpdateUserProfileDataRequest extends <<shared-type-request-bas
 
 [source,ts]
 ----
-type SecurityUpdateUserProfileDataResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type SecurityUpdateUserProfileDataResponse = <<AcknowledgedResponseBase>>
 ----
 

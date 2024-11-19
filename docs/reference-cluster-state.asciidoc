@@ -45,17 +45,17 @@ Returns a comprehensive information about the state of the cluster.
 
 [source,ts]
 ----
-interface ClusterStateRequest extends <<shared-type-request-base, RequestBase>> {
-  metric?: <<shared-type-metrics, Metrics>>
-  index?: <<shared-type-indices, Indices>>
+interface ClusterStateRequest extends <<RequestBase>> {
+  metric?: <<Metrics>>
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   flat_settings?: boolean
   ignore_unavailable?: boolean
   local?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  wait_for_metadata_version?: <<shared-type-version-number, VersionNumber>>
-  wait_for_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
+  wait_for_metadata_version?: <<VersionNumber>>
+  wait_for_timeout?: <<Duration>>
 }
 ----
 

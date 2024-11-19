@@ -45,9 +45,9 @@ You can use this API to clear the archived repositories metering information in 
 
 [source,ts]
 ----
-interface NodesClearRepositoriesMeteringArchiveRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id: <<shared-type-node-ids, NodeIds>>
-  max_archive_version: <<shared-type-long, long>>
+interface NodesClearRepositoriesMeteringArchiveRequest extends <<RequestBase>> {
+  node_id: <<NodeIds>>
+  max_archive_version: <<long>>
 }
 ----
 

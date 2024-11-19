@@ -45,9 +45,9 @@ Create or update a trained model alias. A trained model alias is a logical name 
 
 [source,ts]
 ----
-interface MlPutTrainedModelAliasRequest extends <<shared-type-request-base, RequestBase>> {
-  model_alias: <<shared-type-name, Name>>
-  model_id: <<shared-type-id, Id>>
+interface MlPutTrainedModelAliasRequest extends <<RequestBase>> {
+  model_alias: <<Name>>
+  model_id: <<Id>>
   reassign?: boolean
 }
 ----
@@ -57,6 +57,6 @@ interface MlPutTrainedModelAliasRequest extends <<shared-type-request-base, Requ
 
 [source,ts]
 ----
-type MlPutTrainedModelAliasResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlPutTrainedModelAliasResponse = <<AcknowledgedResponseBase>>
 ----
 

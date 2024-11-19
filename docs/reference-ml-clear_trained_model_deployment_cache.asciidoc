@@ -45,8 +45,8 @@ Clear trained model deployment cache. Cache will be cleared on all nodes where t
 
 [source,ts]
 ----
-interface MlClearTrainedModelDeploymentCacheRequest extends <<shared-type-request-base, RequestBase>> {
-  model_id: <<shared-type-id, Id>>
+interface MlClearTrainedModelDeploymentCacheRequest extends <<RequestBase>> {
+  model_id: <<Id>>
 }
 ----
 

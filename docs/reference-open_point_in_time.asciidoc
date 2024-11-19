@@ -45,13 +45,13 @@ Open a point in time. A search request by default runs against the most recent v
 
 [source,ts]
 ----
-interface OpenPointInTimeRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
-  keep_alive: <<shared-type-duration, Duration>>
+interface OpenPointInTimeRequest extends <<RequestBase>> {
+  index: <<Indices>>
+  keep_alive: <<Duration>>
   ignore_unavailable?: boolean
   preference?: string
-  routing?: <<shared-type-routing, Routing>>
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  routing?: <<Routing>>
+  expand_wildcards?: <<ExpandWildcards>>
   index_filter?: QueryDslQueryContainer
 }
 ----
@@ -62,8 +62,8 @@ interface OpenPointInTimeRequest extends <<shared-type-request-base, RequestBase
 [source,ts]
 ----
 interface OpenPointInTimeResponse {
-  _shards: <<shared-type-shard-statistics, ShardStatistics>>
-  id: <<shared-type-id, Id>>
+  _shards: <<ShardStatistics>>
+  id: <<Id>>
 }
 ----
 

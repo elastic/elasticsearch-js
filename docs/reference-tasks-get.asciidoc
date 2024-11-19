@@ -45,9 +45,9 @@ Get task information. Returns information about the tasks currently executing in
 
 [source,ts]
 ----
-interface TasksGetRequest extends <<shared-type-request-base, RequestBase>> {
-  task_id: <<shared-type-id, Id>>
-  timeout?: <<shared-type-duration, Duration>>
+interface TasksGetRequest extends <<RequestBase>> {
+  task_id: <<Id>>
+  timeout?: <<Duration>>
   wait_for_completion?: boolean
 }
 ----
@@ -61,7 +61,7 @@ interface TasksGetResponse {
   completed: boolean
   task: TasksTaskInfo
   response?: any
-  error?: <<shared-type-error-cause, ErrorCause>>
+  error?: <<ErrorCause>>
 }
 ----
 

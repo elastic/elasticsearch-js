@@ -45,11 +45,11 @@ Stop transforms. Stops one or more transforms.
 
 [source,ts]
 ----
-interface TransformStopTransformRequest extends <<shared-type-request-base, RequestBase>> {
-  transform_id: <<shared-type-name, Name>>
+interface TransformStopTransformRequest extends <<RequestBase>> {
+  transform_id: <<Name>>
   allow_no_match?: boolean
   force?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
   wait_for_checkpoint?: boolean
   wait_for_completion?: boolean
 }
@@ -60,6 +60,6 @@ interface TransformStopTransformRequest extends <<shared-type-request-base, Requ
 
 [source,ts]
 ----
-type TransformStopTransformResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type TransformStopTransformResponse = <<AcknowledgedResponseBase>>
 ----
 

@@ -45,16 +45,16 @@ Bulk index or delete documents. Performs multiple indexing or delete operations 
 
 [source,ts]
 ----
-interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-index-name, IndexName>>
+interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <<RequestBase>> {
+  index?: <<IndexName>>
   pipeline?: string
-  refresh?: <<shared-type-refresh, Refresh>>
-  routing?: <<shared-type-routing, Routing>>
+  refresh?: <<Refresh>>
+  routing?: <<Routing>>
   _source?: SearchSourceConfigParam
-  _source_excludes?: <<shared-type-fields, Fields>>
-  _source_includes?: <<shared-type-fields, Fields>>
-  timeout?: <<shared-type-duration, Duration>>
-  wait_for_active_shards?: <<shared-type-wait-for-active-shards, WaitForActiveShards>>
+  _source_excludes?: <<Fields>>
+  _source_includes?: <<Fields>>
+  timeout?: <<Duration>>
+  wait_for_active_shards?: <<WaitForActiveShards>>
   require_alias?: boolean
   operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
 }
@@ -68,8 +68,8 @@ interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <
 interface BulkResponse {
   errors: boolean
   items: Partial<Record<BulkOperationType, BulkResponseItem>>[]
-  took: <<shared-type-long, long>>
-  ingest_took?: <<shared-type-long, long>>
+  took: <<long>>
+  ingest_took?: <<long>>
 }
 ----
 

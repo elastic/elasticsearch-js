@@ -45,14 +45,14 @@ Roll over to a new index. Creates a new index for a data stream or index alias.
 
 [source,ts]
 ----
-interface IndicesRolloverRequest extends <<shared-type-request-base, RequestBase>> {
-  alias: <<shared-type-index-alias, IndexAlias>>
-  new_index?: <<shared-type-index-name, IndexName>>
+interface IndicesRolloverRequest extends <<RequestBase>> {
+  alias: <<IndexAlias>>
+  new_index?: <<IndexName>>
   dry_run?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
-  wait_for_active_shards?: <<shared-type-wait-for-active-shards, WaitForActiveShards>>
-  aliases?: Record<<<shared-type-index-name, IndexName>>, IndicesAlias>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
+  wait_for_active_shards?: <<WaitForActiveShards>>
+  aliases?: Record<<<IndexName>>, IndicesAlias>
   conditions?: IndicesRolloverRolloverConditions
   mappings?: MappingTypeMapping
   settings?: Record<string, any>

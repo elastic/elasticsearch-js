@@ -45,8 +45,8 @@ Add scheduled events to the calendar.
 
 [source,ts]
 ----
-interface MlPostCalendarEventsRequest extends <<shared-type-request-base, RequestBase>> {
-  calendar_id: <<shared-type-id, Id>>
+interface MlPostCalendarEventsRequest extends <<RequestBase>> {
+  calendar_id: <<Id>>
   events: MlCalendarEvent[]
 }
 ----

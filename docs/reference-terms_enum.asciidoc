@@ -45,11 +45,11 @@ Get terms in an index. Discover terms that match a partial string in an index. T
 
 [source,ts]
 ----
-interface TermsEnumRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
-  field: <<shared-type-field, Field>>
-  size?: <<shared-type-integer, integer>>
-  timeout?: <<shared-type-duration, Duration>>
+interface TermsEnumRequest extends <<RequestBase>> {
+  index: <<IndexName>>
+  field: <<Field>>
+  size?: <<integer>>
+  timeout?: <<Duration>>
   case_insensitive?: boolean
   index_filter?: QueryDslQueryContainer
   string?: string
@@ -63,7 +63,7 @@ interface TermsEnumRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface TermsEnumResponse {
-  _shards: <<shared-type-shard-statistics, ShardStatistics>>
+  _shards: <<ShardStatistics>>
   terms: string[]
   complete: boolean
 }

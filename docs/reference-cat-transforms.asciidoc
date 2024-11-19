@@ -46,13 +46,13 @@ Get transforms. Returns configuration and usage information about transforms. CA
 [source,ts]
 ----
 interface CatTransformsRequest extends CatCatRequestBase {
-  transform_id?: <<shared-type-id, Id>>
+  transform_id?: <<Id>>
   allow_no_match?: boolean
-  from?: <<shared-type-integer, integer>>
+  from?: <<integer>>
   h?: CatCatTransformColumns
   s?: CatCatTransformColumns
-  time?: <<shared-type-time-unit, TimeUnit>>
-  size?: <<shared-type-integer, integer>>
+  time?: <<TimeUnit>>
+  size?: <<integer>>
 }
 ----
 

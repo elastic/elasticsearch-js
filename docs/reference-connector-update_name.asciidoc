@@ -45,8 +45,8 @@ Update the connector name and description.
 
 [source,ts]
 ----
-interface ConnectorUpdateNameRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorUpdateNameRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
   name?: string
   description?: string
 }
@@ -58,7 +58,7 @@ interface ConnectorUpdateNameRequest extends <<shared-type-request-base, Request
 [source,ts]
 ----
 interface ConnectorUpdateNameResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

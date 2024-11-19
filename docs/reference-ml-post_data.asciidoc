@@ -45,10 +45,10 @@ Send data to an anomaly detection job for analysis. IMPORTANT: For each job, dat
 
 [source,ts]
 ----
-interface MlPostDataRequest<TData = unknown> extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  reset_end?: <<shared-type-date-time, DateTime>>
-  reset_start?: <<shared-type-date-time, DateTime>>
+interface MlPostDataRequest<TData = unknown> extends <<RequestBase>> {
+  job_id: <<Id>>
+  reset_end?: <<DateTime>>
+  reset_start?: <<DateTime>>
   data?: TData[]
 }
 ----
@@ -59,21 +59,21 @@ interface MlPostDataRequest<TData = unknown> extends <<shared-type-request-base,
 [source,ts]
 ----
 interface MlPostDataResponse {
-  bucket_count: <<shared-type-long, long>>
-  earliest_record_timestamp: <<shared-type-long, long>>
-  empty_bucket_count: <<shared-type-long, long>>
-  input_bytes: <<shared-type-long, long>>
-  input_field_count: <<shared-type-long, long>>
-  input_record_count: <<shared-type-long, long>>
-  invalid_date_count: <<shared-type-long, long>>
-  job_id: <<shared-type-id, Id>>
-  last_data_time: <<shared-type-integer, integer>>
-  latest_record_timestamp: <<shared-type-long, long>>
-  missing_field_count: <<shared-type-long, long>>
-  out_of_order_timestamp_count: <<shared-type-long, long>>
-  processed_field_count: <<shared-type-long, long>>
-  processed_record_count: <<shared-type-long, long>>
-  sparse_bucket_count: <<shared-type-long, long>>
+  bucket_count: <<long>>
+  earliest_record_timestamp: <<long>>
+  empty_bucket_count: <<long>>
+  input_bytes: <<long>>
+  input_field_count: <<long>>
+  input_record_count: <<long>>
+  invalid_date_count: <<long>>
+  job_id: <<Id>>
+  last_data_time: <<integer>>
+  latest_record_timestamp: <<long>>
+  missing_field_count: <<long>>
+  out_of_order_timestamp_count: <<long>>
+  processed_field_count: <<long>>
+  processed_record_count: <<long>>
+  sparse_bucket_count: <<long>>
 }
 ----
 

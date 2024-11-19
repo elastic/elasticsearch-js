@@ -45,8 +45,8 @@ Removes the assigned lifecycle policy and stops managing the specified index
 
 [source,ts]
 ----
-interface IlmRemovePolicyRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
+interface IlmRemovePolicyRequest extends <<RequestBase>> {
+  index: <<IndexName>>
 }
 ----
 
@@ -56,7 +56,7 @@ interface IlmRemovePolicyRequest extends <<shared-type-request-base, RequestBase
 [source,ts]
 ----
 interface IlmRemovePolicyResponse {
-  failed_indexes: <<shared-type-index-name, IndexName>>[]
+  failed_indexes: <<IndexName>>[]
   has_failures: boolean
 }
 ----

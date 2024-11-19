@@ -45,11 +45,11 @@ Returns information about one or more geoip database configurations.
 
 [source,ts]
 ----
-interface IngestPutGeoipDatabaseRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
-  name: <<shared-type-name, Name>>
+interface IngestPutGeoipDatabaseRequest extends <<RequestBase>> {
+  id: <<Id>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
+  name: <<Name>>
   maxmind: IngestMaxmind
 }
 ----
@@ -59,6 +59,6 @@ interface IngestPutGeoipDatabaseRequest extends <<shared-type-request-base, Requ
 
 [source,ts]
 ----
-type IngestPutGeoipDatabaseResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IngestPutGeoipDatabaseResponse = <<AcknowledgedResponseBase>>
 ----
 

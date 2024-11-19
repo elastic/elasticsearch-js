@@ -46,8 +46,8 @@ Returns the amount of heap memory currently used by the field data cache on ever
 [source,ts]
 ----
 interface CatFielddataRequest extends CatCatRequestBase {
-  fields?: <<shared-type-fields, Fields>>
-  bytes?: <<shared-type-bytes, Bytes>>
+  fields?: <<Fields>>
+  bytes?: <<Bytes>>
 }
 ----
 

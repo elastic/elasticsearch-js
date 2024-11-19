@@ -45,13 +45,13 @@ Create or update a component template. Creates or updates a component template. 
 
 [source,ts]
 ----
-interface ClusterPutComponentTemplateRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface ClusterPutComponentTemplateRequest extends <<RequestBase>> {
+  name: <<Name>>
   create?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
   template: IndicesIndexState
-  version?: <<shared-type-version-number, VersionNumber>>
-  _meta?: <<shared-type-metadata, Metadata>>
+  version?: <<VersionNumber>>
+  _meta?: <<Metadata>>
   deprecated?: boolean
 }
 ----
@@ -61,6 +61,6 @@ interface ClusterPutComponentTemplateRequest extends <<shared-type-request-base,
 
 [source,ts]
 ----
-type ClusterPutComponentTemplateResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type ClusterPutComponentTemplateResponse = <<AcknowledgedResponseBase>>
 ----
 

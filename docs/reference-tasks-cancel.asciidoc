@@ -45,8 +45,8 @@ Cancels a task, if it can be cancelled through an API.
 
 [source,ts]
 ----
-interface TasksCancelRequest extends <<shared-type-request-base, RequestBase>> {
-  task_id?: <<shared-type-task-id, TaskId>>
+interface TasksCancelRequest extends <<RequestBase>> {
+  task_id?: <<TaskId>>
   actions?: string | string[]
   nodes?: string[]
   parent_task_id?: string

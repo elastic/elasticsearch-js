@@ -45,8 +45,8 @@ Get behavioral analytics collections.
 
 [source,ts]
 ----
-interface SearchApplicationGetBehavioralAnalyticsRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-name, Name>>[]
+interface SearchApplicationGetBehavioralAnalyticsRequest extends <<RequestBase>> {
+  name?: <<Name>>[]
 }
 ----
 
@@ -55,6 +55,6 @@ interface SearchApplicationGetBehavioralAnalyticsRequest extends <<shared-type-r
 
 [source,ts]
 ----
-type SearchApplicationGetBehavioralAnalyticsResponse = Record<<<shared-type-name, Name>>, SearchApplicationAnalyticsCollection>
+type SearchApplicationGetBehavioralAnalyticsResponse = Record<<<Name>>, SearchApplicationAnalyticsCollection>
 ----
 

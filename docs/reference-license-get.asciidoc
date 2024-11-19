@@ -45,7 +45,7 @@ Get license information. Returns information about your Elastic license, includi
 
 [source,ts]
 ----
-interface LicenseGetRequest extends <<shared-type-request-base, RequestBase>> {
+interface LicenseGetRequest extends <<RequestBase>> {
   accept_enterprise?: boolean
   local?: boolean
 }

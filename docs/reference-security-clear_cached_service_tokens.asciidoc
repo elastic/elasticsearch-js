@@ -45,10 +45,10 @@ Clear service account token caches. Evict a subset of all entries from the servi
 
 [source,ts]
 ----
-interface SecurityClearCachedServiceTokensRequest extends <<shared-type-request-base, RequestBase>> {
-  namespace: <<shared-type-namespace, Namespace>>
-  service: <<shared-type-service, Service>>
-  name: <<shared-type-names, Names>>
+interface SecurityClearCachedServiceTokensRequest extends <<RequestBase>> {
+  namespace: <<Namespace>>
+  service: <<Service>>
+  name: <<Names>>
 }
 ----
 
@@ -58,8 +58,8 @@ interface SecurityClearCachedServiceTokensRequest extends <<shared-type-request-
 [source,ts]
 ----
 interface SecurityClearCachedServiceTokensResponse {
-  _nodes: <<shared-type-node-statistics, NodeStatistics>>
-  cluster_name: <<shared-type-name, Name>>
+  _nodes: <<NodeStatistics>>
+  cluster_name: <<Name>>
   nodes: Record<string, SecurityClusterNode>
 }
 ----

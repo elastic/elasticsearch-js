@@ -45,9 +45,9 @@ Returns information about one or more ingest pipelines. This API returns a local
 
 [source,ts]
 ----
-interface IngestGetPipelineRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-id, Id>>
-  master_timeout?: <<shared-type-duration, Duration>>
+interface IngestGetPipelineRequest extends <<RequestBase>> {
+  id?: <<Id>>
+  master_timeout?: <<Duration>>
   summary?: boolean
 }
 ----

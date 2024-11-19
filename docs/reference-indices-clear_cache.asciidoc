@@ -45,12 +45,12 @@ Clears the caches of one or more indices. For data streams, the API clears the c
 
 [source,ts]
 ----
-interface IndicesClearCacheRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface IndicesClearCacheRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   fielddata?: boolean
-  fields?: <<shared-type-fields, Fields>>
+  fields?: <<Fields>>
   ignore_unavailable?: boolean
   query?: boolean
   request?: boolean
@@ -62,6 +62,6 @@ interface IndicesClearCacheRequest extends <<shared-type-request-base, RequestBa
 
 [source,ts]
 ----
-type IndicesClearCacheResponse = <<shared-type-shards-operation-response-base, ShardsOperationResponseBase>>
+type IndicesClearCacheResponse = <<ShardsOperationResponseBase>>
 ----
 

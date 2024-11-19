@@ -45,12 +45,12 @@ Creates or updates a snapshot lifecycle policy.
 
 [source,ts]
 ----
-interface SlmPutLifecycleRequest extends <<shared-type-request-base, RequestBase>> {
-  policy_id: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface SlmPutLifecycleRequest extends <<RequestBase>> {
+  policy_id: <<Name>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   config?: SlmConfiguration
-  name?: <<shared-type-name, Name>>
+  name?: <<Name>>
   repository?: string
   retention?: SlmRetention
   schedule?: WatcherCronExpression
@@ -62,6 +62,6 @@ interface SlmPutLifecycleRequest extends <<shared-type-request-base, RequestBase
 
 [source,ts]
 ----
-type SlmPutLifecycleResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type SlmPutLifecycleResponse = <<AcknowledgedResponseBase>>
 ----
 

@@ -45,20 +45,20 @@ Explain a document match result. Returns information about why a specific docume
 
 [source,ts]
 ----
-interface ExplainRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  index: <<shared-type-index-name, IndexName>>
+interface ExplainRequest extends <<RequestBase>> {
+  id: <<Id>>
+  index: <<IndexName>>
   analyzer?: string
   analyze_wildcard?: boolean
   default_operator?: QueryDslOperator
   df?: string
   lenient?: boolean
   preference?: string
-  routing?: <<shared-type-routing, Routing>>
+  routing?: <<Routing>>
   _source?: SearchSourceConfigParam
-  _source_excludes?: <<shared-type-fields, Fields>>
-  _source_includes?: <<shared-type-fields, Fields>>
-  stored_fields?: <<shared-type-fields, Fields>>
+  _source_excludes?: <<Fields>>
+  _source_includes?: <<Fields>>
+  stored_fields?: <<Fields>>
   q?: string
   query?: QueryDslQueryContainer
 }
@@ -70,11 +70,11 @@ interface ExplainRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface ExplainResponse<TDocument = unknown> {
-  _index: <<shared-type-index-name, IndexName>>
-  _id: <<shared-type-id, Id>>
+  _index: <<IndexName>>
+  _id: <<Id>>
   matched: boolean
   explanation?: ExplainExplanationDetail
-  get?: <<shared-type-inline-get, InlineGet>><TDocument>
+  get?: <<InlineGet>><TDocument>
 }
 ----
 

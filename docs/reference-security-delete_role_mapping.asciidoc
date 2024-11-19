@@ -45,9 +45,9 @@ Delete role mappings.
 
 [source,ts]
 ----
-interface SecurityDeleteRoleMappingRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityDeleteRoleMappingRequest extends <<RequestBase>> {
+  name: <<Name>>
+  refresh?: <<Refresh>>
 }
 ----
 

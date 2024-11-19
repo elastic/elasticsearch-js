@@ -45,9 +45,9 @@ Returns cluster-level changes (such as create index, update mapping, allocate or
 
 [source,ts]
 ----
-interface ClusterPendingTasksRequest extends <<shared-type-request-base, RequestBase>> {
+interface ClusterPendingTasksRequest extends <<RequestBase>> {
   local?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
 }
 ----
 

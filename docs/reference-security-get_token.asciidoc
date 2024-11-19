@@ -45,13 +45,13 @@ Get a token. Create a bearer token for access without requiring basic authentica
 
 [source,ts]
 ----
-interface SecurityGetTokenRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityGetTokenRequest extends <<RequestBase>> {
   grant_type?: SecurityGetTokenAccessTokenGrantType
   scope?: string
-  password?: <<shared-type-password, Password>>
+  password?: <<Password>>
   kerberos_ticket?: string
   refresh_token?: string
-  username?: <<shared-type-username, Username>>
+  username?: <<Username>>
 }
 ----
 
@@ -62,7 +62,7 @@ interface SecurityGetTokenRequest extends <<shared-type-request-base, RequestBas
 ----
 interface SecurityGetTokenResponse {
   access_token: string
-  expires_in: <<shared-type-long, long>>
+  expires_in: <<long>>
   scope?: string
   type: string
   refresh_token?: string

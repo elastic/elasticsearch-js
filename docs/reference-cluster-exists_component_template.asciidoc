@@ -45,9 +45,9 @@ Check component templates. Returns information about whether a particular compon
 
 [source,ts]
 ----
-interface ClusterExistsComponentTemplateRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-names, Names>>
-  master_timeout?: <<shared-type-duration, Duration>>
+interface ClusterExistsComponentTemplateRequest extends <<RequestBase>> {
+  name: <<Names>>
+  master_timeout?: <<Duration>>
   local?: boolean
 }
 ----

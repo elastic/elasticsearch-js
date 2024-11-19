@@ -45,11 +45,11 @@ Close anomaly detection jobs. A job can be opened and closed multiple times thro
 
 [source,ts]
 ----
-interface MlCloseJobRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
+interface MlCloseJobRequest extends <<RequestBase>> {
+  job_id: <<Id>>
   allow_no_match?: boolean
   force?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
 }
 ----
 

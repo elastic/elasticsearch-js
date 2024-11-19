@@ -46,12 +46,12 @@ Get anomaly detection jobs. Returns configuration and usage information for anom
 [source,ts]
 ----
 interface CatMlJobsRequest extends CatCatRequestBase {
-  job_id?: <<shared-type-id, Id>>
+  job_id?: <<Id>>
   allow_no_match?: boolean
-  bytes?: <<shared-type-bytes, Bytes>>
+  bytes?: <<Bytes>>
   h?: CatCatAnonalyDetectorColumns
   s?: CatCatAnonalyDetectorColumns
-  time?: <<shared-type-time-unit, TimeUnit>>
+  time?: <<TimeUnit>>
 }
 ----
 

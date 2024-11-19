@@ -45,18 +45,18 @@ Returns statistics for one or more indices. For data streams, the API retrieves 
 
 [source,ts]
 ----
-interface IndicesStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  metric?: <<shared-type-metrics, Metrics>>
-  index?: <<shared-type-indices, Indices>>
-  completion_fields?: <<shared-type-fields, Fields>>
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
-  fielddata_fields?: <<shared-type-fields, Fields>>
-  fields?: <<shared-type-fields, Fields>>
+interface IndicesStatsRequest extends <<RequestBase>> {
+  metric?: <<Metrics>>
+  index?: <<Indices>>
+  completion_fields?: <<Fields>>
+  expand_wildcards?: <<ExpandWildcards>>
+  fielddata_fields?: <<Fields>>
+  fields?: <<Fields>>
   forbid_closed_indices?: boolean
   groups?: string | string[]
   include_segment_file_sizes?: boolean
   include_unloaded_segments?: boolean
-  level?: <<shared-type-level, Level>>
+  level?: <<Level>>
 }
 ----
 
@@ -67,7 +67,7 @@ interface IndicesStatsRequest extends <<shared-type-request-base, RequestBase>> 
 ----
 interface IndicesStatsResponse {
   indices?: Record<string, IndicesStatsIndicesStats>
-  _shards: <<shared-type-shard-statistics, ShardStatistics>>
+  _shards: <<ShardStatistics>>
   _all: IndicesStatsIndicesStats
 }
 ----

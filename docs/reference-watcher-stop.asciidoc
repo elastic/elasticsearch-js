@@ -45,7 +45,7 @@ Stops Watcher if it is running.
 
 [source,ts]
 ----
-interface WatcherStopRequest extends <<shared-type-request-base, RequestBase>> {
+interface WatcherStopRequest extends <<RequestBase>> {
 }
 ----
 
@@ -54,6 +54,6 @@ interface WatcherStopRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type WatcherStopResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type WatcherStopResponse = <<AcknowledgedResponseBase>>
 ----
 

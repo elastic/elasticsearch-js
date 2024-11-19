@@ -45,9 +45,9 @@ Aggregates a time series (TSDS) index and stores pre-computed statistical summar
 
 [source,ts]
 ----
-interface IndicesDownsampleRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
-  target_index: <<shared-type-index-name, IndexName>>
+interface IndicesDownsampleRequest extends <<RequestBase>> {
+  index: <<IndexName>>
+  target_index: <<IndexName>>
   config?: IndicesDownsampleConfig
 }
 ----

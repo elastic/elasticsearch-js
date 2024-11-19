@@ -45,8 +45,8 @@ Delete a calendar. Removes all scheduled events from a calendar, then deletes it
 
 [source,ts]
 ----
-interface MlDeleteCalendarRequest extends <<shared-type-request-base, RequestBase>> {
-  calendar_id: <<shared-type-id, Id>>
+interface MlDeleteCalendarRequest extends <<RequestBase>> {
+  calendar_id: <<Id>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface MlDeleteCalendarRequest extends <<shared-type-request-base, RequestBas
 
 [source,ts]
 ----
-type MlDeleteCalendarResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlDeleteCalendarResponse = <<AcknowledgedResponseBase>>
 ----
 

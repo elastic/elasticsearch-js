@@ -45,8 +45,8 @@ Delete an async search. If the asynchronous search is still running, it is cance
 
 [source,ts]
 ----
-interface AsyncSearchDeleteRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface AsyncSearchDeleteRequest extends <<RequestBase>> {
+  id: <<Id>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface AsyncSearchDeleteRequest extends <<shared-type-request-base, RequestBa
 
 [source,ts]
 ----
-type AsyncSearchDeleteResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type AsyncSearchDeleteResponse = <<AcknowledgedResponseBase>>
 ----
 

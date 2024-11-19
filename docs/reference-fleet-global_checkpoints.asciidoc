@@ -45,12 +45,12 @@ Returns the current global checkpoints for an index. This API is design for inte
 
 [source,ts]
 ----
-interface FleetGlobalCheckpointsRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>> | <<shared-type-index-alias, IndexAlias>>
+interface FleetGlobalCheckpointsRequest extends <<RequestBase>> {
+  index: <<IndexName>> | <<IndexAlias>>
   wait_for_advance?: boolean
   wait_for_index?: boolean
   checkpoints?: FleetCheckpoint[]
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
 }
 ----
 

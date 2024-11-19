@@ -45,9 +45,9 @@ Retrieve node-level cache statistics about searchable snapshots.
 
 [source,ts]
 ----
-interface SearchableSnapshotsCacheStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id?: <<shared-type-node-ids, NodeIds>>
-  master_timeout?: <<shared-type-duration, Duration>>
+interface SearchableSnapshotsCacheStatsRequest extends <<RequestBase>> {
+  node_id?: <<NodeIds>>
+  master_timeout?: <<Duration>>
 }
 ----
 

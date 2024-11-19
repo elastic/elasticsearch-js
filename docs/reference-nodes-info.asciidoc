@@ -45,12 +45,12 @@ Returns cluster nodes information.
 
 [source,ts]
 ----
-interface NodesInfoRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id?: <<shared-type-node-ids, NodeIds>>
-  metric?: <<shared-type-metrics, Metrics>>
+interface NodesInfoRequest extends <<RequestBase>> {
+  node_id?: <<NodeIds>>
+  metric?: <<Metrics>>
   flat_settings?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 

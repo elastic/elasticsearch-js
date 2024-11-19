@@ -45,10 +45,10 @@ Refresh an index. A refresh makes recent operations performed on one or more ind
 
 [source,ts]
 ----
-interface IndicesRefreshRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface IndicesRefreshRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
 }
 ----
@@ -58,6 +58,6 @@ interface IndicesRefreshRequest extends <<shared-type-request-base, RequestBase>
 
 [source,ts]
 ----
-type IndicesRefreshResponse = <<shared-type-shards-operation-response-base, ShardsOperationResponseBase>>
+type IndicesRefreshResponse = <<ShardsOperationResponseBase>>
 ----
 

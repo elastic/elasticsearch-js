@@ -45,10 +45,10 @@ Reloads the keystore on nodes in the cluster.
 
 [source,ts]
 ----
-interface NodesReloadSecureSettingsRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id?: <<shared-type-node-ids, NodeIds>>
-  timeout?: <<shared-type-duration, Duration>>
-  secure_settings_password?: <<shared-type-password, Password>>
+interface NodesReloadSecureSettingsRequest extends <<RequestBase>> {
+  node_id?: <<NodeIds>>
+  timeout?: <<Duration>>
+  secure_settings_password?: <<Password>>
 }
 ----
 

@@ -45,7 +45,7 @@ Begin upgrades for system features
 
 [source,ts]
 ----
-interface MigrationPostFeatureUpgradeRequest extends <<shared-type-request-base, RequestBase>> {
+interface MigrationPostFeatureUpgradeRequest extends <<RequestBase>> {
 }
 ----
 

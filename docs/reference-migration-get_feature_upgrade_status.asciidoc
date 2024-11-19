@@ -45,7 +45,7 @@ Find out whether system features need to be upgraded or not
 
 [source,ts]
 ----
-interface MigrationGetFeatureUpgradeStatusRequest extends <<shared-type-request-base, RequestBase>> {
+interface MigrationGetFeatureUpgradeStatusRequest extends <<RequestBase>> {
 }
 ----
 

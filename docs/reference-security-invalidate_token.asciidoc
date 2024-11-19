@@ -45,11 +45,11 @@ Invalidate a token. The access tokens returned by the get token API have a finit
 
 [source,ts]
 ----
-interface SecurityInvalidateTokenRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityInvalidateTokenRequest extends <<RequestBase>> {
   token?: string
   refresh_token?: string
-  realm_name?: <<shared-type-name, Name>>
-  username?: <<shared-type-username, Username>>
+  realm_name?: <<Name>>
+  username?: <<Username>>
 }
 ----
 
@@ -59,10 +59,10 @@ interface SecurityInvalidateTokenRequest extends <<shared-type-request-base, Req
 [source,ts]
 ----
 interface SecurityInvalidateTokenResponse {
-  error_count: <<shared-type-long, long>>
-  error_details?: <<shared-type-error-cause, ErrorCause>>[]
-  invalidated_tokens: <<shared-type-long, long>>
-  previously_invalidated_tokens: <<shared-type-long, long>>
+  error_count: <<long>>
+  error_details?: <<ErrorCause>>[]
+  invalidated_tokens: <<long>>
+  previously_invalidated_tokens: <<long>>
 }
 ----
 

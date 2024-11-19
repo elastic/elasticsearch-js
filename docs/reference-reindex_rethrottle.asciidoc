@@ -45,9 +45,9 @@ Throttle a reindex operation. Change the number of requests per second for a par
 
 [source,ts]
 ----
-interface ReindexRethrottleRequest extends <<shared-type-request-base, RequestBase>> {
-  task_id: <<shared-type-id, Id>>
-  requests_per_second?: <<shared-type-float, float>>
+interface ReindexRethrottleRequest extends <<RequestBase>> {
+  task_id: <<Id>>
+  requests_per_second?: <<float>>
 }
 ----
 

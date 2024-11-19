@@ -45,10 +45,10 @@ Convert an index alias to a data stream. Converts an index alias to a data strea
 
 [source,ts]
 ----
-interface IndicesMigrateToDataStreamRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-index-name, IndexName>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface IndicesMigrateToDataStreamRequest extends <<RequestBase>> {
+  name: <<IndexName>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -57,6 +57,6 @@ interface IndicesMigrateToDataStreamRequest extends <<shared-type-request-base, 
 
 [source,ts]
 ----
-type IndicesMigrateToDataStreamResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IndicesMigrateToDataStreamResponse = <<AcknowledgedResponseBase>>
 ----
 

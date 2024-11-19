@@ -45,21 +45,21 @@ Get multiple term vectors. You can specify existing documents by index and ID or
 
 [source,ts]
 ----
-interface MtermvectorsRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-index-name, IndexName>>
-  fields?: <<shared-type-fields, Fields>>
+interface MtermvectorsRequest extends <<RequestBase>> {
+  index?: <<IndexName>>
+  fields?: <<Fields>>
   field_statistics?: boolean
   offsets?: boolean
   payloads?: boolean
   positions?: boolean
   preference?: string
   realtime?: boolean
-  routing?: <<shared-type-routing, Routing>>
+  routing?: <<Routing>>
   term_statistics?: boolean
-  version?: <<shared-type-version-number, VersionNumber>>
-  version_type?: <<shared-type-version-type, VersionType>>
+  version?: <<VersionNumber>>
+  version_type?: <<VersionType>>
   docs?: MtermvectorsOperation[]
-  ids?: <<shared-type-id, Id>>[]
+  ids?: <<Id>>[]
 }
 ----
 

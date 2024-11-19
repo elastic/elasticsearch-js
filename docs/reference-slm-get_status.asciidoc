@@ -45,7 +45,7 @@ Retrieves the status of snapshot lifecycle management (SLM).
 
 [source,ts]
 ----
-interface SlmGetStatusRequest extends <<shared-type-request-base, RequestBase>> {
+interface SlmGetStatusRequest extends <<RequestBase>> {
 }
 ----
 
@@ -55,7 +55,7 @@ interface SlmGetStatusRequest extends <<shared-type-request-base, RequestBase>> 
 [source,ts]
 ----
 interface SlmGetStatusResponse {
-  operation_mode: <<shared-type-lifecycle-operation-mode, LifecycleOperationMode>>
+  operation_mode: <<LifecycleOperationMode>>
 }
 ----
 

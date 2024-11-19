@@ -45,7 +45,7 @@ Retrieves information about the status of the basic license.
 
 [source,ts]
 ----
-interface LicenseGetBasicStatusRequest extends <<shared-type-request-base, RequestBase>> {
+interface LicenseGetBasicStatusRequest extends <<RequestBase>> {
 }
 ----
 

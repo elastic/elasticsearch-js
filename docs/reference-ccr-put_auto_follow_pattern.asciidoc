@@ -45,23 +45,23 @@ Creates a new named collection of auto-follow patterns against a specified remot
 
 [source,ts]
 ----
-interface CcrPutAutoFollowPatternRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface CcrPutAutoFollowPatternRequest extends <<RequestBase>> {
+  name: <<Name>>
   remote_cluster: string
-  follow_index_pattern?: <<shared-type-index-pattern, IndexPattern>>
-  leader_index_patterns?: <<shared-type-index-patterns, IndexPatterns>>
-  leader_index_exclusion_patterns?: <<shared-type-index-patterns, IndexPatterns>>
-  max_outstanding_read_requests?: <<shared-type-integer, integer>>
+  follow_index_pattern?: <<IndexPattern>>
+  leader_index_patterns?: <<IndexPatterns>>
+  leader_index_exclusion_patterns?: <<IndexPatterns>>
+  max_outstanding_read_requests?: <<integer>>
   settings?: Record<string, any>
-  max_outstanding_write_requests?: <<shared-type-integer, integer>>
-  read_poll_timeout?: <<shared-type-duration, Duration>>
-  max_read_request_operation_count?: <<shared-type-integer, integer>>
-  max_read_request_size?: <<shared-type-byte-size, ByteSize>>
-  max_retry_delay?: <<shared-type-duration, Duration>>
-  max_write_buffer_count?: <<shared-type-integer, integer>>
-  max_write_buffer_size?: <<shared-type-byte-size, ByteSize>>
-  max_write_request_operation_count?: <<shared-type-integer, integer>>
-  max_write_request_size?: <<shared-type-byte-size, ByteSize>>
+  max_outstanding_write_requests?: <<integer>>
+  read_poll_timeout?: <<Duration>>
+  max_read_request_operation_count?: <<integer>>
+  max_read_request_size?: <<ByteSize>>
+  max_retry_delay?: <<Duration>>
+  max_write_buffer_count?: <<integer>>
+  max_write_buffer_size?: <<ByteSize>>
+  max_write_request_operation_count?: <<integer>>
+  max_write_request_size?: <<ByteSize>>
 }
 ----
 
@@ -70,6 +70,6 @@ interface CcrPutAutoFollowPatternRequest extends <<shared-type-request-base, Req
 
 [source,ts]
 ----
-type CcrPutAutoFollowPatternResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type CcrPutAutoFollowPatternResponse = <<AcknowledgedResponseBase>>
 ----
 

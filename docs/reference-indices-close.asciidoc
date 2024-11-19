@@ -45,14 +45,14 @@ Closes an index.
 
 [source,ts]
 ----
-interface IndicesCloseRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
+interface IndicesCloseRequest extends <<RequestBase>> {
+  index: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
-  wait_for_active_shards?: <<shared-type-wait-for-active-shards, WaitForActiveShards>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
+  wait_for_active_shards?: <<WaitForActiveShards>>
 }
 ----
 
@@ -63,7 +63,7 @@ interface IndicesCloseRequest extends <<shared-type-request-base, RequestBase>> 
 ----
 interface IndicesCloseResponse {
   acknowledged: boolean
-  indices: Record<<<shared-type-index-name, IndexName>>, IndicesCloseCloseIndexResult>
+  indices: Record<<<IndexName>>, IndicesCloseCloseIndexResult>
   shards_acknowledged: boolean
 }
 ----

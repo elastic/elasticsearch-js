@@ -45,10 +45,10 @@ Updates the cluster settings.
 
 [source,ts]
 ----
-interface ClusterPutSettingsRequest extends <<shared-type-request-base, RequestBase>> {
+interface ClusterPutSettingsRequest extends <<RequestBase>> {
   flat_settings?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   persistent?: Record<string, any>
   transient?: Record<string, any>
 }

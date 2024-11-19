@@ -45,9 +45,9 @@ Evaluate a trained model.
 
 [source,ts]
 ----
-interface MlInferTrainedModelRequest extends <<shared-type-request-base, RequestBase>> {
-  model_id: <<shared-type-id, Id>>
-  timeout?: <<shared-type-duration, Duration>>
+interface MlInferTrainedModelRequest extends <<RequestBase>> {
+  model_id: <<Id>>
+  timeout?: <<Duration>>
   docs: Record<string, any>[]
   inference_config?: MlInferenceConfigUpdateContainer
 }

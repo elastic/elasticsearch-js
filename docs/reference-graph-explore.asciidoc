@@ -45,10 +45,10 @@ Extracts and summarizes information about the documents and terms in an Elastics
 
 [source,ts]
 ----
-interface GraphExploreRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
-  routing?: <<shared-type-routing, Routing>>
-  timeout?: <<shared-type-duration, Duration>>
+interface GraphExploreRequest extends <<RequestBase>> {
+  index: <<Indices>>
+  routing?: <<Routing>>
+  timeout?: <<Duration>>
   connections?: GraphHop
   controls?: GraphExploreControls
   query?: QueryDslQueryContainer
@@ -63,9 +63,9 @@ interface GraphExploreRequest extends <<shared-type-request-base, RequestBase>> 
 ----
 interface GraphExploreResponse {
   connections: GraphConnection[]
-  failures: <<shared-type-shard-failure, ShardFailure>>[]
+  failures: <<ShardFailure>>[]
   timed_out: boolean
-  took: <<shared-type-long, long>>
+  took: <<long>>
   vertices: GraphVertex[]
 }
 ----

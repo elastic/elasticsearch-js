@@ -45,18 +45,18 @@ Creates a new watch, or updates an existing one.
 
 [source,ts]
 ----
-interface WatcherPutWatchRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface WatcherPutWatchRequest extends <<RequestBase>> {
+  id: <<Id>>
   active?: boolean
-  if_primary_term?: <<shared-type-long, long>>
-  if_seq_no?: <<shared-type-sequence-number, SequenceNumber>>
-  version?: <<shared-type-version-number, VersionNumber>>
+  if_primary_term?: <<long>>
+  if_seq_no?: <<SequenceNumber>>
+  version?: <<VersionNumber>>
   actions?: Record<string, WatcherAction>
   condition?: WatcherConditionContainer
   input?: WatcherInputContainer
-  metadata?: <<shared-type-metadata, Metadata>>
+  metadata?: <<Metadata>>
   throttle_period?: string
-  transform?: <<shared-type-transform-container, TransformContainer>>
+  transform?: <<TransformContainer>>
   trigger?: WatcherTriggerContainer
 }
 ----
@@ -68,10 +68,10 @@ interface WatcherPutWatchRequest extends <<shared-type-request-base, RequestBase
 ----
 interface WatcherPutWatchResponse {
   created: boolean
-  _id: <<shared-type-id, Id>>
-  _primary_term: <<shared-type-long, long>>
-  _seq_no: <<shared-type-sequence-number, SequenceNumber>>
-  _version: <<shared-type-version-number, VersionNumber>>
+  _id: <<Id>>
+  _primary_term: <<long>>
+  _seq_no: <<SequenceNumber>>
+  _version: <<VersionNumber>>
 }
 ----
 

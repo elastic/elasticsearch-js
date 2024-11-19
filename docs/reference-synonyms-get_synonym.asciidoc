@@ -45,10 +45,10 @@ Retrieves a synonym set
 
 [source,ts]
 ----
-interface SynonymsGetSynonymRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
+interface SynonymsGetSynonymRequest extends <<RequestBase>> {
+  id: <<Id>>
+  from?: <<integer>>
+  size?: <<integer>>
 }
 ----
 
@@ -58,7 +58,7 @@ interface SynonymsGetSynonymRequest extends <<shared-type-request-base, RequestB
 [source,ts]
 ----
 interface SynonymsGetSynonymResponse {
-  count: <<shared-type-integer, integer>>
+  count: <<integer>>
   synonyms_set: SynonymsSynonymRuleRead[]
 }
 ----

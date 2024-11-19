@@ -45,8 +45,8 @@ Update a filter. Updates the description of a filter, adds items, or removes ite
 
 [source,ts]
 ----
-interface MlUpdateFilterRequest extends <<shared-type-request-base, RequestBase>> {
-  filter_id: <<shared-type-id, Id>>
+interface MlUpdateFilterRequest extends <<RequestBase>> {
+  filter_id: <<Id>>
   add_items?: string[]
   description?: string
   remove_items?: string[]
@@ -60,7 +60,7 @@ interface MlUpdateFilterRequest extends <<shared-type-request-base, RequestBase>
 ----
 interface MlUpdateFilterResponse {
   description: string
-  filter_id: <<shared-type-id, Id>>
+  filter_id: <<Id>>
   items: string[]
 }
 ----

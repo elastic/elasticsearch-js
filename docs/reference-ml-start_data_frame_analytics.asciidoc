@@ -45,9 +45,9 @@ Start a data frame analytics job. A data frame analytics job can be started and 
 
 [source,ts]
 ----
-interface MlStartDataFrameAnalyticsRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  timeout?: <<shared-type-duration, Duration>>
+interface MlStartDataFrameAnalyticsRequest extends <<RequestBase>> {
+  id: <<Id>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -58,7 +58,7 @@ interface MlStartDataFrameAnalyticsRequest extends <<shared-type-request-base, R
 ----
 interface MlStartDataFrameAnalyticsResponse {
   acknowledged: boolean
-  node: <<shared-type-node-id, NodeId>>
+  node: <<NodeId>>
 }
 ----
 

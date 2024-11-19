@@ -45,8 +45,8 @@ Stops the following task associated with a follower index and removes index meta
 
 [source,ts]
 ----
-interface CcrUnfollowRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
+interface CcrUnfollowRequest extends <<RequestBase>> {
+  index: <<IndexName>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface CcrUnfollowRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type CcrUnfollowResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type CcrUnfollowResponse = <<AcknowledgedResponseBase>>
 ----
 

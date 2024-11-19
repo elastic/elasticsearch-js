@@ -45,16 +45,16 @@ Create or update an alias. Adds a data stream or index to an alias.
 
 [source,ts]
 ----
-interface IndicesPutAliasRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
-  name: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface IndicesPutAliasRequest extends <<RequestBase>> {
+  index: <<Indices>>
+  name: <<Name>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   filter?: QueryDslQueryContainer
-  index_routing?: <<shared-type-routing, Routing>>
+  index_routing?: <<Routing>>
   is_write_index?: boolean
-  routing?: <<shared-type-routing, Routing>>
-  search_routing?: <<shared-type-routing, Routing>>
+  routing?: <<Routing>>
+  search_routing?: <<Routing>>
 }
 ----
 
@@ -63,6 +63,6 @@ interface IndicesPutAliasRequest extends <<shared-type-request-base, RequestBase
 
 [source,ts]
 ----
-type IndicesPutAliasResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IndicesPutAliasResponse = <<AcknowledgedResponseBase>>
 ----
 

@@ -45,8 +45,8 @@ This API can be used to force execution of the watch outside of its triggering l
 
 [source,ts]
 ----
-interface WatcherExecuteWatchRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-id, Id>>
+interface WatcherExecuteWatchRequest extends <<RequestBase>> {
+  id?: <<Id>>
   debug?: boolean
   action_modes?: Record<string, WatcherActionExecutionMode>
   alternative_input?: Record<string, any>
@@ -64,7 +64,7 @@ interface WatcherExecuteWatchRequest extends <<shared-type-request-base, Request
 [source,ts]
 ----
 interface WatcherExecuteWatchResponse {
-  _id: <<shared-type-id, Id>>
+  _id: <<Id>>
   watch_record: WatcherExecuteWatchWatchRecord
 }
 ----

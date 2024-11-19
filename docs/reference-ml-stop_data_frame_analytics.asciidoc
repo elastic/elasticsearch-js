@@ -45,11 +45,11 @@ Stop data frame analytics jobs. A data frame analytics job can be started and st
 
 [source,ts]
 ----
-interface MlStopDataFrameAnalyticsRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface MlStopDataFrameAnalyticsRequest extends <<RequestBase>> {
+  id: <<Id>>
   allow_no_match?: boolean
   force?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
 }
 ----
 

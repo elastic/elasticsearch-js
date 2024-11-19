@@ -45,12 +45,12 @@ Get anomaly detection job results for categories.
 
 [source,ts]
 ----
-interface MlGetCategoriesRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  category_id?: <<shared-type-category-id, CategoryId>>
-  from?: <<shared-type-integer, integer>>
+interface MlGetCategoriesRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  category_id?: <<CategoryId>>
+  from?: <<integer>>
   partition_field_value?: string
-  size?: <<shared-type-integer, integer>>
+  size?: <<integer>>
   page?: MlPage
 }
 ----
@@ -62,7 +62,7 @@ interface MlGetCategoriesRequest extends <<shared-type-request-base, RequestBase
 ----
 interface MlGetCategoriesResponse {
   categories: MlCategory[]
-  count: <<shared-type-long, long>>
+  count: <<long>>
 }
 ----
 

@@ -45,8 +45,8 @@ Get an enrich policy. Returns information about an enrich policy.
 
 [source,ts]
 ----
-interface EnrichGetPolicyRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-names, Names>>
+interface EnrichGetPolicyRequest extends <<RequestBase>> {
+  name?: <<Names>>
 }
 ----
 

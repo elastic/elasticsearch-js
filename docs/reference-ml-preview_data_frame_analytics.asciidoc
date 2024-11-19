@@ -45,8 +45,8 @@ Preview features used by data frame analytics. Previews the extracted features u
 
 [source,ts]
 ----
-interface MlPreviewDataFrameAnalyticsRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-id, Id>>
+interface MlPreviewDataFrameAnalyticsRequest extends <<RequestBase>> {
+  id?: <<Id>>
   config?: MlPreviewDataFrameAnalyticsDataframePreviewConfig
 }
 ----
@@ -57,7 +57,7 @@ interface MlPreviewDataFrameAnalyticsRequest extends <<shared-type-request-base,
 [source,ts]
 ----
 interface MlPreviewDataFrameAnalyticsResponse {
-  feature_values: Record<<<shared-type-field, Field>>, string>[]
+  feature_values: Record<<<Field>>, string>[]
 }
 ----
 

@@ -45,8 +45,8 @@ Check in a connector. Update the `last_seen` field in the connector and set it t
 
 [source,ts]
 ----
-interface ConnectorCheckInRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorCheckInRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
 }
 ----
 
@@ -56,7 +56,7 @@ interface ConnectorCheckInRequest extends <<shared-type-request-base, RequestBas
 [source,ts]
 ----
 interface ConnectorCheckInResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

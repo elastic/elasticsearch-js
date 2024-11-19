@@ -45,12 +45,12 @@ Get transform stats. Retrieves usage information for transforms.
 
 [source,ts]
 ----
-interface TransformGetTransformStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  transform_id: <<shared-type-names, Names>>
+interface TransformGetTransformStatsRequest extends <<RequestBase>> {
+  transform_id: <<Names>>
   allow_no_match?: boolean
-  from?: <<shared-type-long, long>>
-  size?: <<shared-type-long, long>>
-  timeout?: <<shared-type-duration, Duration>>
+  from?: <<long>>
+  size?: <<long>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -60,7 +60,7 @@ interface TransformGetTransformStatsRequest extends <<shared-type-request-base, 
 [source,ts]
 ----
 interface TransformGetTransformStatsResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   transforms: TransformGetTransformStatsTransformStats[]
 }
 ----

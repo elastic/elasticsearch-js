@@ -45,7 +45,7 @@ Get the dangling indices. If Elasticsearch encounters index data that is absent 
 
 [source,ts]
 ----
-interface DanglingIndicesListDanglingIndicesRequest extends <<shared-type-request-base, RequestBase>> {
+interface DanglingIndicesListDanglingIndicesRequest extends <<RequestBase>> {
 }
 ----
 

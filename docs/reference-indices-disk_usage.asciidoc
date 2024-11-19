@@ -45,10 +45,10 @@ Analyzes the disk usage of each field of an index or data stream.
 
 [source,ts]
 ----
-interface IndicesDiskUsageRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
+interface IndicesDiskUsageRequest extends <<RequestBase>> {
+  index: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   flush?: boolean
   ignore_unavailable?: boolean
   run_expensive_tasks?: boolean

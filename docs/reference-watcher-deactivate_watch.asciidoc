@@ -45,8 +45,8 @@ Deactivates a currently active watch.
 
 [source,ts]
 ----
-interface WatcherDeactivateWatchRequest extends <<shared-type-request-base, RequestBase>> {
-  watch_id: <<shared-type-name, Name>>
+interface WatcherDeactivateWatchRequest extends <<RequestBase>> {
+  watch_id: <<Name>>
 }
 ----
 

@@ -45,11 +45,11 @@ Delete a transform. Deletes a transform.
 
 [source,ts]
 ----
-interface TransformDeleteTransformRequest extends <<shared-type-request-base, RequestBase>> {
-  transform_id: <<shared-type-id, Id>>
+interface TransformDeleteTransformRequest extends <<RequestBase>> {
+  transform_id: <<Id>>
   force?: boolean
   delete_dest_index?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -58,6 +58,6 @@ interface TransformDeleteTransformRequest extends <<shared-type-request-base, Re
 
 [source,ts]
 ----
-type TransformDeleteTransformResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type TransformDeleteTransformResponse = <<AcknowledgedResponseBase>>
 ----
 

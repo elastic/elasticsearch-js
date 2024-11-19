@@ -45,8 +45,8 @@ Retrieves the configuration, stats, and status of rollup jobs.
 
 [source,ts]
 ----
-interface RollupGetJobsRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-id, Id>>
+interface RollupGetJobsRequest extends <<RequestBase>> {
+  id?: <<Id>>
 }
 ----
 

@@ -45,8 +45,8 @@ Retrieves a watch by its ID.
 
 [source,ts]
 ----
-interface WatcherGetWatchRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-name, Name>>
+interface WatcherGetWatchRequest extends <<RequestBase>> {
+  id: <<Name>>
 }
 ----
 
@@ -57,12 +57,12 @@ interface WatcherGetWatchRequest extends <<shared-type-request-base, RequestBase
 ----
 interface WatcherGetWatchResponse {
   found: boolean
-  _id: <<shared-type-id, Id>>
+  _id: <<Id>>
   status?: WatcherWatchStatus
   watch?: WatcherWatch
-  _primary_term?: <<shared-type-integer, integer>>
-  _seq_no?: <<shared-type-sequence-number, SequenceNumber>>
-  _version?: <<shared-type-version-number, VersionNumber>>
+  _primary_term?: <<integer>>
+  _seq_no?: <<SequenceNumber>>
+  _version?: <<VersionNumber>>
 }
 ----
 

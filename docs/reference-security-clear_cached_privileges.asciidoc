@@ -45,8 +45,8 @@ Clear the privileges cache. Evict privileges from the native application privile
 
 [source,ts]
 ----
-interface SecurityClearCachedPrivilegesRequest extends <<shared-type-request-base, RequestBase>> {
-  application: <<shared-type-name, Name>>
+interface SecurityClearCachedPrivilegesRequest extends <<RequestBase>> {
+  application: <<Name>>
 }
 ----
 
@@ -56,8 +56,8 @@ interface SecurityClearCachedPrivilegesRequest extends <<shared-type-request-bas
 [source,ts]
 ----
 interface SecurityClearCachedPrivilegesResponse {
-  _nodes: <<shared-type-node-statistics, NodeStatistics>>
-  cluster_name: <<shared-type-name, Name>>
+  _nodes: <<NodeStatistics>>
+  cluster_name: <<Name>>
   nodes: Record<string, SecurityClusterNode>
 }
 ----

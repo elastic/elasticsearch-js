@@ -45,11 +45,11 @@ Delete service account tokens. Delete service account tokens for a service in a 
 
 [source,ts]
 ----
-interface SecurityDeleteServiceTokenRequest extends <<shared-type-request-base, RequestBase>> {
-  namespace: <<shared-type-namespace, Namespace>>
-  service: <<shared-type-service, Service>>
-  name: <<shared-type-name, Name>>
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityDeleteServiceTokenRequest extends <<RequestBase>> {
+  namespace: <<Namespace>>
+  service: <<Service>>
+  name: <<Name>>
+  refresh?: <<Refresh>>
 }
 ----
 

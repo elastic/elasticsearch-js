@@ -45,11 +45,11 @@ Update an API key. Updates attributes of an existing API key. Users can only upd
 
 [source,ts]
 ----
-interface SecurityUpdateApiKeyRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface SecurityUpdateApiKeyRequest extends <<RequestBase>> {
+  id: <<Id>>
   role_descriptors?: Record<string, SecurityRoleDescriptor>
-  metadata?: <<shared-type-metadata, Metadata>>
-  expiration?: <<shared-type-duration, Duration>>
+  metadata?: <<Metadata>>
+  expiration?: <<Duration>>
 }
 ----
 

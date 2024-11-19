@@ -45,11 +45,11 @@ Create a service account token. Create a service accounts token for access witho
 
 [source,ts]
 ----
-interface SecurityCreateServiceTokenRequest extends <<shared-type-request-base, RequestBase>> {
-  namespace: <<shared-type-namespace, Namespace>>
-  service: <<shared-type-service, Service>>
-  name?: <<shared-type-name, Name>>
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityCreateServiceTokenRequest extends <<RequestBase>> {
+  namespace: <<Namespace>>
+  service: <<Service>>
+  name?: <<Name>>
+  refresh?: <<Refresh>>
 }
 ----
 

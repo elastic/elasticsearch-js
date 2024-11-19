@@ -45,13 +45,13 @@ Unfreezes an index.
 
 [source,ts]
 ----
-interface IndicesUnfreezeRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
+interface IndicesUnfreezeRequest extends <<RequestBase>> {
+  index: <<IndexName>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   wait_for_active_shards?: string
 }
 ----

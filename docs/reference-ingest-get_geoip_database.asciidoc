@@ -45,9 +45,9 @@ Returns information about one or more geoip database configurations.
 
 [source,ts]
 ----
-interface IngestGetGeoipDatabaseRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-ids, Ids>>
-  master_timeout?: <<shared-type-duration, Duration>>
+interface IngestGetGeoipDatabaseRequest extends <<RequestBase>> {
+  id?: <<Ids>>
+  master_timeout?: <<Duration>>
 }
 ----
 

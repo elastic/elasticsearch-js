@@ -45,8 +45,8 @@ Retries executing the policy for an index that is in the ERROR step.
 
 [source,ts]
 ----
-interface IlmRetryRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
+interface IlmRetryRequest extends <<RequestBase>> {
+  index: <<IndexName>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface IlmRetryRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type IlmRetryResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IlmRetryResponse = <<AcknowledgedResponseBase>>
 ----
 

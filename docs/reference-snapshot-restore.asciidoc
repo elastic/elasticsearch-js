@@ -45,10 +45,10 @@ Restores a snapshot.
 
 [source,ts]
 ----
-interface SnapshotRestoreRequest extends <<shared-type-request-base, RequestBase>> {
-  repository: <<shared-type-name, Name>>
-  snapshot: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
+interface SnapshotRestoreRequest extends <<RequestBase>> {
+  repository: <<Name>>
+  snapshot: <<Name>>
+  master_timeout?: <<Duration>>
   wait_for_completion?: boolean
   feature_states?: string[]
   ignore_index_settings?: string[]
@@ -56,7 +56,7 @@ interface SnapshotRestoreRequest extends <<shared-type-request-base, RequestBase
   include_aliases?: boolean
   include_global_state?: boolean
   index_settings?: IndicesIndexSettings
-  indices?: <<shared-type-indices, Indices>>
+  indices?: <<Indices>>
   partial?: boolean
   rename_pattern?: string
   rename_replacement?: string

@@ -46,8 +46,8 @@ Returns low-level information about the Lucene segments in index shards. For dat
 [source,ts]
 ----
 interface CatSegmentsRequest extends CatCatRequestBase {
-  index?: <<shared-type-indices, Indices>>
-  bytes?: <<shared-type-bytes, Bytes>>
+  index?: <<Indices>>
+  bytes?: <<Bytes>>
 }
 ----
 

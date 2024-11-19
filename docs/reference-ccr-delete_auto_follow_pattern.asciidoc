@@ -45,8 +45,8 @@ Deletes auto-follow patterns.
 
 [source,ts]
 ----
-interface CcrDeleteAutoFollowPatternRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface CcrDeleteAutoFollowPatternRequest extends <<RequestBase>> {
+  name: <<Name>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface CcrDeleteAutoFollowPatternRequest extends <<shared-type-request-base, 
 
 [source,ts]
 ----
-type CcrDeleteAutoFollowPatternResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type CcrDeleteAutoFollowPatternResponse = <<AcknowledgedResponseBase>>
 ----
 

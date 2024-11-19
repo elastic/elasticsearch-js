@@ -45,7 +45,7 @@ Find API keys with a query. Get a paginated list of API keys and their informati
 
 [source,ts]
 ----
-interface SecurityQueryApiKeysRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityQueryApiKeysRequest extends <<RequestBase>> {
   with_limited_by?: boolean
   with_profile_uid?: boolean
   typed_keys?: boolean
@@ -53,10 +53,10 @@ interface SecurityQueryApiKeysRequest extends <<shared-type-request-base, Reques
   /** @alias aggregations */
   aggs?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
   query?: SecurityQueryApiKeysApiKeyQueryContainer
-  from?: <<shared-type-integer, integer>>
-  sort?: <<shared-type-sort, Sort>>
-  size?: <<shared-type-integer, integer>>
-  search_after?: <<shared-type-sort-results, SortResults>>
+  from?: <<integer>>
+  sort?: <<Sort>>
+  size?: <<integer>>
+  search_after?: <<SortResults>>
 }
 ----
 
@@ -66,10 +66,10 @@ interface SecurityQueryApiKeysRequest extends <<shared-type-request-base, Reques
 [source,ts]
 ----
 interface SecurityQueryApiKeysResponse {
-  total: <<shared-type-integer, integer>>
-  count: <<shared-type-integer, integer>>
+  total: <<integer>>
+  count: <<integer>>
   api_keys: SecurityApiKey[]
-  aggregations?: Record<<<shared-type-aggregate-name, AggregateName>>, SecurityQueryApiKeysApiKeyAggregate>
+  aggregations?: Record<<<AggregateName>>, SecurityQueryApiKeysApiKeyAggregate>
 }
 ----
 

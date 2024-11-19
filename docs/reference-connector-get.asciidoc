@@ -45,8 +45,8 @@ Get a connector. Get the details about a connector.
 
 [source,ts]
 ----
-interface ConnectorGetRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorGetRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
 }
 ----
 

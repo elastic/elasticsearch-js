@@ -45,11 +45,11 @@ Check existence of index templates. Returns information about whether a particul
 
 [source,ts]
 ----
-interface IndicesExistsTemplateRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-names, Names>>
+interface IndicesExistsTemplateRequest extends <<RequestBase>> {
+  name: <<Names>>
   flat_settings?: boolean
   local?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
 }
 ----
 

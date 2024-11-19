@@ -45,10 +45,10 @@ Run a script. Runs a script and returns a result.
 
 [source,ts]
 ----
-interface ScriptsPainlessExecuteRequest extends <<shared-type-request-base, RequestBase>> {
+interface ScriptsPainlessExecuteRequest extends <<RequestBase>> {
   context?: string
   context_setup?: ScriptsPainlessExecutePainlessContextSetup
-  script?: <<shared-type-script, Script>> | string
+  script?: <<Script>> | string
 }
 ----
 

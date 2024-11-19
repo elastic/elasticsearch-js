@@ -45,8 +45,8 @@ Deletes an existing snapshot lifecycle policy.
 
 [source,ts]
 ----
-interface SlmDeleteLifecycleRequest extends <<shared-type-request-base, RequestBase>> {
-  policy_id: <<shared-type-name, Name>>
+interface SlmDeleteLifecycleRequest extends <<RequestBase>> {
+  policy_id: <<Name>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface SlmDeleteLifecycleRequest extends <<shared-type-request-base, RequestB
 
 [source,ts]
 ----
-type SlmDeleteLifecycleResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type SlmDeleteLifecycleResponse = <<AcknowledgedResponseBase>>
 ----
 

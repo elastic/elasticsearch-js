@@ -45,9 +45,9 @@ Update a trained model deployment.
 
 [source,ts]
 ----
-interface MlUpdateTrainedModelDeploymentRequest extends <<shared-type-request-base, RequestBase>> {
-  model_id: <<shared-type-id, Id>>
-  number_of_allocations?: <<shared-type-integer, integer>>
+interface MlUpdateTrainedModelDeploymentRequest extends <<RequestBase>> {
+  model_id: <<Id>>
+  number_of_allocations?: <<integer>>
 }
 ----
 

@@ -45,8 +45,8 @@ Activates a currently inactive watch.
 
 [source,ts]
 ----
-interface WatcherActivateWatchRequest extends <<shared-type-request-base, RequestBase>> {
-  watch_id: <<shared-type-name, Name>>
+interface WatcherActivateWatchRequest extends <<RequestBase>> {
+  watch_id: <<Name>>
 }
 ----
 

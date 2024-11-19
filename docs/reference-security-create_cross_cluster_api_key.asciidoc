@@ -45,11 +45,11 @@ Create a cross-cluster API key. Create an API key of the `cross_cluster` type fo
 
 [source,ts]
 ----
-interface SecurityCreateCrossClusterApiKeyRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityCreateCrossClusterApiKeyRequest extends <<RequestBase>> {
   access: SecurityAccess
-  expiration?: <<shared-type-duration, Duration>>
-  metadata?: <<shared-type-metadata, Metadata>>
-  name: <<shared-type-name, Name>>
+  expiration?: <<Duration>>
+  metadata?: <<Metadata>>
+  name: <<Name>>
 }
 ----
 
@@ -60,9 +60,9 @@ interface SecurityCreateCrossClusterApiKeyRequest extends <<shared-type-request-
 ----
 interface SecurityCreateCrossClusterApiKeyResponse {
   api_key: string
-  expiration?: <<shared-type-duration-value, DurationValue>><<<shared-type-unit-millis, UnitMillis>>>
-  id: <<shared-type-id, Id>>
-  name: <<shared-type-name, Name>>
+  expiration?: <<DurationValue>><<<UnitMillis>>>
+  id: <<Id>>
+  name: <<Name>>
   encoded: string
 }
 ----

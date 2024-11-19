@@ -45,21 +45,21 @@ Run a search with a search template.
 
 [source,ts]
 ----
-interface SearchTemplateRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface SearchTemplateRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
   ccs_minimize_roundtrips?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   preference?: string
-  routing?: <<shared-type-routing, Routing>>
-  scroll?: <<shared-type-duration, Duration>>
-  search_type?: <<shared-type-search-type, SearchType>>
+  routing?: <<Routing>>
+  scroll?: <<Duration>>
+  search_type?: <<SearchType>>
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
   explain?: boolean
-  id?: <<shared-type-id, Id>>
+  id?: <<Id>>
   params?: Record<string, any>
   profile?: boolean
   source?: string
@@ -72,19 +72,19 @@ interface SearchTemplateRequest extends <<shared-type-request-base, RequestBase>
 [source,ts]
 ----
 interface SearchTemplateResponse<TDocument = unknown> {
-  took: <<shared-type-long, long>>
+  took: <<long>>
   timed_out: boolean
-  _shards: <<shared-type-shard-statistics, ShardStatistics>>
+  _shards: <<ShardStatistics>>
   hits: SearchHitsMetadata<TDocument>
-  aggregations?: Record<<<shared-type-aggregate-name, AggregateName>>, AggregationsAggregate>
-  _clusters?: <<shared-type-cluster-statistics, ClusterStatistics>>
+  aggregations?: Record<<<AggregateName>>, AggregationsAggregate>
+  _clusters?: <<ClusterStatistics>>
   fields?: Record<string, any>
-  max_score?: <<shared-type-double, double>>
-  num_reduce_phases?: <<shared-type-long, long>>
+  max_score?: <<double>>
+  num_reduce_phases?: <<long>>
   profile?: SearchProfile
-  pit_id?: <<shared-type-id, Id>>
-  _scroll_id?: <<shared-type-scroll-id, ScrollId>>
-  suggest?: Record<<<shared-type-suggestion-name, SuggestionName>>, SearchSuggest<TDocument>[]>
+  pit_id?: <<Id>>
+  _scroll_id?: <<ScrollId>>
+  suggest?: Record<<<SuggestionName>>, SearchSuggest<TDocument>[]>
   terminated_early?: boolean
 }
 ----

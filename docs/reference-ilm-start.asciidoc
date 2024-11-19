@@ -45,9 +45,9 @@ Start the index lifecycle management (ILM) plugin.
 
 [source,ts]
 ----
-interface IlmStartRequest extends <<shared-type-request-base, RequestBase>> {
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface IlmStartRequest extends <<RequestBase>> {
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -56,6 +56,6 @@ interface IlmStartRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type IlmStartResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IlmStartResponse = <<AcknowledgedResponseBase>>
 ----
 

@@ -45,15 +45,15 @@ Returns field usage information for each shard and field of an index.
 
 [source,ts]
 ----
-interface IndicesFieldUsageStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
+interface IndicesFieldUsageStatsRequest extends <<RequestBase>> {
+  index: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
-  fields?: <<shared-type-fields, Fields>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
-  wait_for_active_shards?: <<shared-type-wait-for-active-shards, WaitForActiveShards>>
+  fields?: <<Fields>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
+  wait_for_active_shards?: <<WaitForActiveShards>>
 }
 ----
 

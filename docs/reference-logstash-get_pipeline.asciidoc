@@ -45,8 +45,8 @@ Retrieves pipelines used for Logstash Central Management.
 
 [source,ts]
 ----
-interface LogstashGetPipelineRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-ids, Ids>>
+interface LogstashGetPipelineRequest extends <<RequestBase>> {
+  id?: <<Ids>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface LogstashGetPipelineRequest extends <<shared-type-request-base, Request
 
 [source,ts]
 ----
-type LogstashGetPipelineResponse = Record<<<shared-type-id, Id>>, LogstashPipeline>
+type LogstashGetPipelineResponse = Record<<<Id>>, LogstashPipeline>
 ----
 

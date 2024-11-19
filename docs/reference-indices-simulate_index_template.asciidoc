@@ -45,9 +45,9 @@ Simulate an index. Returns the index configuration that would be applied to the 
 
 [source,ts]
 ----
-interface IndicesSimulateIndexTemplateRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
+interface IndicesSimulateIndexTemplateRequest extends <<RequestBase>> {
+  name: <<Name>>
+  master_timeout?: <<Duration>>
   include_defaults?: boolean
 }
 ----

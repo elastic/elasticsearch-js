@@ -45,11 +45,11 @@ Create a trained model vocabulary. This API is supported only for natural langua
 
 [source,ts]
 ----
-interface MlPutTrainedModelVocabularyRequest extends <<shared-type-request-base, RequestBase>> {
-  model_id: <<shared-type-id, Id>>
+interface MlPutTrainedModelVocabularyRequest extends <<RequestBase>> {
+  model_id: <<Id>>
   vocabulary: string[]
   merges?: string[]
-  scores?: <<shared-type-double, double>>[]
+  scores?: <<double>>[]
 }
 ----
 
@@ -58,6 +58,6 @@ interface MlPutTrainedModelVocabularyRequest extends <<shared-type-request-base,
 
 [source,ts]
 ----
-type MlPutTrainedModelVocabularyResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlPutTrainedModelVocabularyResponse = <<AcknowledgedResponseBase>>
 ----
 

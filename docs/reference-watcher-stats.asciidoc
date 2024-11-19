@@ -45,7 +45,7 @@ Retrieves the current Watcher metrics.
 
 [source,ts]
 ----
-interface WatcherStatsRequest extends <<shared-type-request-base, RequestBase>> {
+interface WatcherStatsRequest extends <<RequestBase>> {
   metric?: WatcherStatsWatcherMetric | WatcherStatsWatcherMetric[]
   emit_stacktraces?: boolean
 }
@@ -57,8 +57,8 @@ interface WatcherStatsRequest extends <<shared-type-request-base, RequestBase>> 
 [source,ts]
 ----
 interface WatcherStatsResponse {
-  _nodes: <<shared-type-node-statistics, NodeStatistics>>
-  cluster_name: <<shared-type-name, Name>>
+  _nodes: <<NodeStatistics>>
+  cluster_name: <<Name>>
   manually_stopped: boolean
   stats: WatcherStatsWatcherNodeStats[]
 }

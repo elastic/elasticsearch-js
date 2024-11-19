@@ -45,8 +45,8 @@ Clear a scrolling search. Clear the search context and results for a scrolling s
 
 [source,ts]
 ----
-interface ClearScrollRequest extends <<shared-type-request-base, RequestBase>> {
-  scroll_id?: <<shared-type-scroll-ids, ScrollIds>>
+interface ClearScrollRequest extends <<RequestBase>> {
+  scroll_id?: <<ScrollIds>>
 }
 ----
 
@@ -57,7 +57,7 @@ interface ClearScrollRequest extends <<shared-type-request-base, RequestBase>> {
 ----
 interface ClearScrollResponse {
   succeeded: boolean
-  num_freed: <<shared-type-integer, integer>>
+  num_freed: <<integer>>
 }
 ----
 

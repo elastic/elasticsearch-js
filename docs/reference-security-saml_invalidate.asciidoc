@@ -45,7 +45,7 @@ Invalidate SAML. Submits a SAML LogoutRequest message to Elasticsearch for consu
 
 [source,ts]
 ----
-interface SecuritySamlInvalidateRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecuritySamlInvalidateRequest extends <<RequestBase>> {
   acs?: string
   query_string: string
   realm?: string
@@ -58,7 +58,7 @@ interface SecuritySamlInvalidateRequest extends <<shared-type-request-base, Requ
 [source,ts]
 ----
 interface SecuritySamlInvalidateResponse {
-  invalidated: <<shared-type-integer, integer>>
+  invalidated: <<integer>>
   realm: string
   redirect: string
 }

@@ -45,8 +45,8 @@ Immediately creates a snapshot according to the lifecycle policy, without waitin
 
 [source,ts]
 ----
-interface SlmExecuteLifecycleRequest extends <<shared-type-request-base, RequestBase>> {
-  policy_id: <<shared-type-name, Name>>
+interface SlmExecuteLifecycleRequest extends <<RequestBase>> {
+  policy_id: <<Name>>
 }
 ----
 
@@ -56,7 +56,7 @@ interface SlmExecuteLifecycleRequest extends <<shared-type-request-base, Request
 [source,ts]
 ----
 interface SlmExecuteLifecycleResponse {
-  snapshot_name: <<shared-type-name, Name>>
+  snapshot_name: <<Name>>
 }
 ----
 

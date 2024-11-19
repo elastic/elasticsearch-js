@@ -46,7 +46,7 @@ Get a document count. Provides quick access to a document count for a data strea
 [source,ts]
 ----
 interface CatCountRequest extends CatCatRequestBase {
-  index?: <<shared-type-indices, Indices>>
+  index?: <<Indices>>
 }
 ----
 

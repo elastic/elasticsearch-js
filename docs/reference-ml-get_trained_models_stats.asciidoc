@@ -45,11 +45,11 @@ Get trained models usage info. You can get usage information for multiple traine
 
 [source,ts]
 ----
-interface MlGetTrainedModelsStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  model_id?: <<shared-type-ids, Ids>>
+interface MlGetTrainedModelsStatsRequest extends <<RequestBase>> {
+  model_id?: <<Ids>>
   allow_no_match?: boolean
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
+  from?: <<integer>>
+  size?: <<integer>>
 }
 ----
 
@@ -59,7 +59,7 @@ interface MlGetTrainedModelsStatsRequest extends <<shared-type-request-base, Req
 [source,ts]
 ----
 interface MlGetTrainedModelsStatsResponse {
-  count: <<shared-type-integer, integer>>
+  count: <<integer>>
   trained_model_stats: MlTrainedModelStats[]
 }
 ----

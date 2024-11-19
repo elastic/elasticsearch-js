@@ -45,11 +45,11 @@ Get mapping definitions. Retrieves mapping definitions for one or more fields. F
 
 [source,ts]
 ----
-interface IndicesGetFieldMappingRequest extends <<shared-type-request-base, RequestBase>> {
-  fields: <<shared-type-fields, Fields>>
-  index?: <<shared-type-indices, Indices>>
+interface IndicesGetFieldMappingRequest extends <<RequestBase>> {
+  fields: <<Fields>>
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   include_defaults?: boolean
   local?: boolean
@@ -61,6 +61,6 @@ interface IndicesGetFieldMappingRequest extends <<shared-type-request-base, Requ
 
 [source,ts]
 ----
-type IndicesGetFieldMappingResponse = Record<<<shared-type-index-name, IndexName>>, IndicesGetFieldMappingTypeFieldMappings>
+type IndicesGetFieldMappingResponse = Record<<<IndexName>>, IndicesGetFieldMappingTypeFieldMappings>
 ----
 

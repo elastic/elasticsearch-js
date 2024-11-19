@@ -45,9 +45,9 @@ Start a transform. Starts a transform. When you start a transform, it creates th
 
 [source,ts]
 ----
-interface TransformStartTransformRequest extends <<shared-type-request-base, RequestBase>> {
-  transform_id: <<shared-type-id, Id>>
-  timeout?: <<shared-type-duration, Duration>>
+interface TransformStartTransformRequest extends <<RequestBase>> {
+  transform_id: <<Id>>
+  timeout?: <<Duration>>
   from?: string
 }
 ----
@@ -57,6 +57,6 @@ interface TransformStartTransformRequest extends <<shared-type-request-base, Req
 
 [source,ts]
 ----
-type TransformStartTransformResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type TransformStartTransformResponse = <<AcknowledgedResponseBase>>
 ----
 

@@ -45,15 +45,15 @@ Get overall bucket results. Retrievs overall bucket results that summarize the b
 
 [source,ts]
 ----
-interface MlGetOverallBucketsRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
+interface MlGetOverallBucketsRequest extends <<RequestBase>> {
+  job_id: <<Id>>
   allow_no_match?: boolean
-  bucket_span?: <<shared-type-duration, Duration>>
-  end?: <<shared-type-date-time, DateTime>>
+  bucket_span?: <<Duration>>
+  end?: <<DateTime>>
   exclude_interim?: boolean
-  overall_score?: <<shared-type-double, double>> | string
-  start?: <<shared-type-date-time, DateTime>>
-  top_n?: <<shared-type-integer, integer>>
+  overall_score?: <<double>> | string
+  start?: <<DateTime>>
+  top_n?: <<integer>>
 }
 ----
 
@@ -63,7 +63,7 @@ interface MlGetOverallBucketsRequest extends <<shared-type-request-base, Request
 [source,ts]
 ----
 interface MlGetOverallBucketsResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   overall_buckets: MlOverallBucket[]
 }
 ----

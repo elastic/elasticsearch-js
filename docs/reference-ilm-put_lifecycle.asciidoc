@@ -45,10 +45,10 @@ Creates a lifecycle policy. If the specified policy exists, the policy is replac
 
 [source,ts]
 ----
-interface IlmPutLifecycleRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface IlmPutLifecycleRequest extends <<RequestBase>> {
+  name: <<Name>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   policy?: IlmPolicy
 }
 ----
@@ -58,6 +58,6 @@ interface IlmPutLifecycleRequest extends <<shared-type-request-base, RequestBase
 
 [source,ts]
 ----
-type IlmPutLifecycleResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IlmPutLifecycleResponse = <<AcknowledgedResponseBase>>
 ----
 

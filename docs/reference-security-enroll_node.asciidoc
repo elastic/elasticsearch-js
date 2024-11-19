@@ -45,7 +45,7 @@ Enroll a node. Enroll a new node to allow it to join an existing cluster with se
 
 [source,ts]
 ----
-interface SecurityEnrollNodeRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityEnrollNodeRequest extends <<RequestBase>> {
 }
 ----
 

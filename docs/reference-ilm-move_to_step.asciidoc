@@ -45,8 +45,8 @@ Manually moves an index into the specified step and executes that step.
 
 [source,ts]
 ----
-interface IlmMoveToStepRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
+interface IlmMoveToStepRequest extends <<RequestBase>> {
+  index: <<IndexName>>
   current_step: IlmMoveToStepStepKey
   next_step: IlmMoveToStepStepKey
 }
@@ -57,6 +57,6 @@ interface IlmMoveToStepRequest extends <<shared-type-request-base, RequestBase>>
 
 [source,ts]
 ----
-type IlmMoveToStepResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IlmMoveToStepResponse = <<AcknowledgedResponseBase>>
 ----
 

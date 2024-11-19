@@ -45,11 +45,11 @@ Stop datafeeds. A datafeed that is stopped ceases to retrieve data from Elastics
 
 [source,ts]
 ----
-interface MlStopDatafeedRequest extends <<shared-type-request-base, RequestBase>> {
-  datafeed_id: <<shared-type-id, Id>>
+interface MlStopDatafeedRequest extends <<RequestBase>> {
+  datafeed_id: <<Id>>
   allow_no_match?: boolean
   force?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
 }
 ----
 

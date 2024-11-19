@@ -45,8 +45,8 @@ Retrieves information about all follower indices, including parameters and statu
 
 [source,ts]
 ----
-interface CcrFollowInfoRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
+interface CcrFollowInfoRequest extends <<RequestBase>> {
+  index: <<Indices>>
 }
 ----
 

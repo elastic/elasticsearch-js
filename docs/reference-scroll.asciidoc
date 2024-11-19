@@ -45,10 +45,10 @@ Run a scrolling search. IMPORTANT: The scroll API is no longer recommend for dee
 
 [source,ts]
 ----
-interface ScrollRequest extends <<shared-type-request-base, RequestBase>> {
-  scroll_id?: <<shared-type-scroll-id, ScrollId>>
+interface ScrollRequest extends <<RequestBase>> {
+  scroll_id?: <<ScrollId>>
   rest_total_hits_as_int?: boolean
-  scroll?: <<shared-type-duration, Duration>>
+  scroll?: <<Duration>>
 }
 ----
 
@@ -57,6 +57,6 @@ interface ScrollRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type ScrollResponse<TDocument = unknown, TAggregations = Record<<<shared-type-aggregate-name, AggregateName>>, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
+type ScrollResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
 ----
 

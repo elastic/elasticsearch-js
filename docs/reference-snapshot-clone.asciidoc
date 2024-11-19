@@ -45,12 +45,12 @@ Clones indices from one snapshot into another snapshot in the same repository.
 
 [source,ts]
 ----
-interface SnapshotCloneRequest extends <<shared-type-request-base, RequestBase>> {
-  repository: <<shared-type-name, Name>>
-  snapshot: <<shared-type-name, Name>>
-  target_snapshot: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface SnapshotCloneRequest extends <<RequestBase>> {
+  repository: <<Name>>
+  snapshot: <<Name>>
+  target_snapshot: <<Name>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   indices: string
 }
 ----
@@ -60,6 +60,6 @@ interface SnapshotCloneRequest extends <<shared-type-request-base, RequestBase>>
 
 [source,ts]
 ----
-type SnapshotCloneResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type SnapshotCloneResponse = <<AcknowledgedResponseBase>>
 ----
 

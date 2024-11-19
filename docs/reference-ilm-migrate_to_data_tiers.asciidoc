@@ -45,7 +45,7 @@ Switches the indices, ILM policies, and legacy, composable and component templat
 
 [source,ts]
 ----
-interface IlmMigrateToDataTiersRequest extends <<shared-type-request-base, RequestBase>> {
+interface IlmMigrateToDataTiersRequest extends <<RequestBase>> {
   dry_run?: boolean
   legacy_template_to_delete?: string
   node_attribute?: string
@@ -61,7 +61,7 @@ interface IlmMigrateToDataTiersResponse {
   dry_run: boolean
   removed_legacy_template: string
   migrated_ilm_policies: string[]
-  migrated_indices: <<shared-type-indices, Indices>>
+  migrated_indices: <<Indices>>
   migrated_legacy_templates: string[]
   migrated_composable_templates: string[]
   migrated_component_templates: string[]

@@ -45,9 +45,9 @@ Get data stream stats. Retrieves statistics for one or more data streams.
 
 [source,ts]
 ----
-interface IndicesDataStreamsStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-index-name, IndexName>>
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+interface IndicesDataStreamsStatsRequest extends <<RequestBase>> {
+  name?: <<IndexName>>
+  expand_wildcards?: <<ExpandWildcards>>
 }
 ----
 
@@ -57,12 +57,12 @@ interface IndicesDataStreamsStatsRequest extends <<shared-type-request-base, Req
 [source,ts]
 ----
 interface IndicesDataStreamsStatsResponse {
-  _shards: <<shared-type-shard-statistics, ShardStatistics>>
-  backing_indices: <<shared-type-integer, integer>>
-  data_stream_count: <<shared-type-integer, integer>>
+  _shards: <<ShardStatistics>>
+  backing_indices: <<integer>>
+  data_stream_count: <<integer>>
   data_streams: IndicesDataStreamsStatsDataStreamsStatsItem[]
-  total_store_sizes?: <<shared-type-byte-size, ByteSize>>
-  total_store_size_bytes: <<shared-type-long, long>>
+  total_store_sizes?: <<ByteSize>>
+  total_store_size_bytes: <<long>>
 }
 ----
 

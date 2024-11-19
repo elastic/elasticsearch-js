@@ -45,10 +45,10 @@ Delete a data frame analytics job.
 
 [source,ts]
 ----
-interface MlDeleteDataFrameAnalyticsRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface MlDeleteDataFrameAnalyticsRequest extends <<RequestBase>> {
+  id: <<Id>>
   force?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -57,6 +57,6 @@ interface MlDeleteDataFrameAnalyticsRequest extends <<shared-type-request-base, 
 
 [source,ts]
 ----
-type MlDeleteDataFrameAnalyticsResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlDeleteDataFrameAnalyticsResponse = <<AcknowledgedResponseBase>>
 ----
 

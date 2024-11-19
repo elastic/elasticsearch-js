@@ -45,15 +45,15 @@ Start a trained model deployment. It allocates the model to every machine learni
 
 [source,ts]
 ----
-interface MlStartTrainedModelDeploymentRequest extends <<shared-type-request-base, RequestBase>> {
-  model_id: <<shared-type-id, Id>>
-  cache_size?: <<shared-type-byte-size, ByteSize>>
+interface MlStartTrainedModelDeploymentRequest extends <<RequestBase>> {
+  model_id: <<Id>>
+  cache_size?: <<ByteSize>>
   deployment_id?: string
-  number_of_allocations?: <<shared-type-integer, integer>>
+  number_of_allocations?: <<integer>>
   priority?: MlTrainingPriority
-  queue_capacity?: <<shared-type-integer, integer>>
-  threads_per_allocation?: <<shared-type-integer, integer>>
-  timeout?: <<shared-type-duration, Duration>>
+  queue_capacity?: <<integer>>
+  threads_per_allocation?: <<integer>>
+  timeout?: <<Duration>>
   wait_for?: MlDeploymentAllocationState
 }
 ----

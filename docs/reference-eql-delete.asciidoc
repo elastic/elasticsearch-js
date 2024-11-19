@@ -45,8 +45,8 @@ Deletes an async EQL search or a stored synchronous EQL search. The API also del
 
 [source,ts]
 ----
-interface EqlDeleteRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface EqlDeleteRequest extends <<RequestBase>> {
+  id: <<Id>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface EqlDeleteRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type EqlDeleteResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type EqlDeleteResponse = <<AcknowledgedResponseBase>>
 ----
 

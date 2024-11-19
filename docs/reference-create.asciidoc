@@ -45,16 +45,16 @@ Index a document. Adds a JSON document to the specified data stream or index and
 
 [source,ts]
 ----
-interface CreateRequest<TDocument = unknown> extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  index: <<shared-type-index-name, IndexName>>
+interface CreateRequest<TDocument = unknown> extends <<RequestBase>> {
+  id: <<Id>>
+  index: <<IndexName>>
   pipeline?: string
-  refresh?: <<shared-type-refresh, Refresh>>
-  routing?: <<shared-type-routing, Routing>>
-  timeout?: <<shared-type-duration, Duration>>
-  version?: <<shared-type-version-number, VersionNumber>>
-  version_type?: <<shared-type-version-type, VersionType>>
-  wait_for_active_shards?: <<shared-type-wait-for-active-shards, WaitForActiveShards>>
+  refresh?: <<Refresh>>
+  routing?: <<Routing>>
+  timeout?: <<Duration>>
+  version?: <<VersionNumber>>
+  version_type?: <<VersionType>>
+  wait_for_active_shards?: <<WaitForActiveShards>>
   document?: TDocument
 }
 ----
@@ -64,6 +64,6 @@ interface CreateRequest<TDocument = unknown> extends <<shared-type-request-base,
 
 [source,ts]
 ----
-type CreateResponse = <<shared-type-write-response-base, WriteResponseBase>>
+type CreateResponse = <<WriteResponseBase>>
 ----
 

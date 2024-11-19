@@ -45,11 +45,11 @@ Get async search results. Retrieve the results of a previously submitted asynchr
 
 [source,ts]
 ----
-interface AsyncSearchGetRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  keep_alive?: <<shared-type-duration, Duration>>
+interface AsyncSearchGetRequest extends <<RequestBase>> {
+  id: <<Id>>
+  keep_alive?: <<Duration>>
   typed_keys?: boolean
-  wait_for_completion_timeout?: <<shared-type-duration, Duration>>
+  wait_for_completion_timeout?: <<Duration>>
 }
 ----
 
@@ -58,6 +58,6 @@ interface AsyncSearchGetRequest extends <<shared-type-request-base, RequestBase>
 
 [source,ts]
 ----
-type AsyncSearchGetResponse<TDocument = unknown, TAggregations = Record<<<shared-type-aggregate-name, AggregateName>>, AggregationsAggregate>> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, TAggregations>
+type AsyncSearchGetResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, TAggregations>
 ----
 

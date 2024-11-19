@@ -45,23 +45,23 @@ Returns results matching a query expressed in Event Query Language (EQL)
 
 [source,ts]
 ----
-interface EqlSearchRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
+interface EqlSearchRequest extends <<RequestBase>> {
+  index: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   query: string
   case_sensitive?: boolean
-  event_category_field?: <<shared-type-field, Field>>
-  tiebreaker_field?: <<shared-type-field, Field>>
-  timestamp_field?: <<shared-type-field, Field>>
-  fetch_size?: <<shared-type-uint, uint>>
+  event_category_field?: <<Field>>
+  tiebreaker_field?: <<Field>>
+  timestamp_field?: <<Field>>
+  fetch_size?: <<uint>>
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
-  keep_alive?: <<shared-type-duration, Duration>>
+  keep_alive?: <<Duration>>
   keep_on_completion?: boolean
-  wait_for_completion_timeout?: <<shared-type-duration, Duration>>
-  size?: <<shared-type-uint, uint>>
-  fields?: QueryDslFieldAndFormat | <<shared-type-field, Field>> | (QueryDslFieldAndFormat | <<shared-type-field, Field>>)[]
+  wait_for_completion_timeout?: <<Duration>>
+  size?: <<uint>>
+  fields?: QueryDslFieldAndFormat | <<Field>> | (QueryDslFieldAndFormat | <<Field>>)[]
   result_position?: EqlSearchResultPosition
   runtime_mappings?: MappingRuntimeFields
 }

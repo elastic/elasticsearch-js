@@ -43,8 +43,8 @@ Update the connector draft filtering validation. Update the draft filtering vali
 
 [source,ts]
 ----
-interface ConnectorUpdateFilteringValidationRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorUpdateFilteringValidationRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
   validation: ConnectorFilteringRulesValidation
 }
 ----
@@ -55,7 +55,7 @@ interface ConnectorUpdateFilteringValidationRequest extends <<shared-type-reques
 [source,ts]
 ----
 interface ConnectorUpdateFilteringValidationResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

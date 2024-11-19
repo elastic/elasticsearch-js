@@ -45,8 +45,8 @@ Delete an autoscaling policy. NOTE: This feature is designed for indirect use by
 
 [source,ts]
 ----
-interface AutoscalingDeleteAutoscalingPolicyRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface AutoscalingDeleteAutoscalingPolicyRequest extends <<RequestBase>> {
+  name: <<Name>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface AutoscalingDeleteAutoscalingPolicyRequest extends <<shared-type-reques
 
 [source,ts]
 ----
-type AutoscalingDeleteAutoscalingPolicyResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type AutoscalingDeleteAutoscalingPolicyResponse = <<AcknowledgedResponseBase>>
 ----
 

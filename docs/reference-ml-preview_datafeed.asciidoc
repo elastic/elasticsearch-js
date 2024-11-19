@@ -45,10 +45,10 @@ Preview a datafeed. This API returns the first "page" of search results from a d
 
 [source,ts]
 ----
-interface MlPreviewDatafeedRequest extends <<shared-type-request-base, RequestBase>> {
-  datafeed_id?: <<shared-type-id, Id>>
-  start?: <<shared-type-date-time, DateTime>>
-  end?: <<shared-type-date-time, DateTime>>
+interface MlPreviewDatafeedRequest extends <<RequestBase>> {
+  datafeed_id?: <<Id>>
+  start?: <<DateTime>>
+  end?: <<DateTime>>
   datafeed_config?: MlDatafeedConfig
   job_config?: MlJobConfig
 }

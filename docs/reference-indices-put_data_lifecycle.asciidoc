@@ -45,12 +45,12 @@ Update data stream lifecycles. Update the data stream lifecycle of the specified
 
 [source,ts]
 ----
-interface IndicesPutDataLifecycleRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-data-stream-names, DataStreamNames>>
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
-  data_retention?: <<shared-type-duration, Duration>>
+interface IndicesPutDataLifecycleRequest extends <<RequestBase>> {
+  name: <<DataStreamNames>>
+  expand_wildcards?: <<ExpandWildcards>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
+  data_retention?: <<Duration>>
   downsampling?: IndicesDataStreamLifecycleDownsampling
 }
 ----
@@ -60,6 +60,6 @@ interface IndicesPutDataLifecycleRequest extends <<shared-type-request-base, Req
 
 [source,ts]
 ----
-type IndicesPutDataLifecycleResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IndicesPutDataLifecycleResponse = <<AcknowledgedResponseBase>>
 ----
 

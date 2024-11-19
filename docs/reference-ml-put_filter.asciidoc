@@ -45,8 +45,8 @@ Create a filter. A filter contains a list of strings. It can be used by one or m
 
 [source,ts]
 ----
-interface MlPutFilterRequest extends <<shared-type-request-base, RequestBase>> {
-  filter_id: <<shared-type-id, Id>>
+interface MlPutFilterRequest extends <<RequestBase>> {
+  filter_id: <<Id>>
   description?: string
   items?: string[]
 }
@@ -59,7 +59,7 @@ interface MlPutFilterRequest extends <<shared-type-request-base, RequestBase>> {
 ----
 interface MlPutFilterResponse {
   description: string
-  filter_id: <<shared-type-id, Id>>
+  filter_id: <<Id>>
   items: string[]
 }
 ----

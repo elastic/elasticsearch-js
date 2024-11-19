@@ -45,12 +45,12 @@ Preview a transform. Generates a preview of the results that you will get when y
 
 [source,ts]
 ----
-interface TransformPreviewTransformRequest extends <<shared-type-request-base, RequestBase>> {
-  transform_id?: <<shared-type-id, Id>>
-  timeout?: <<shared-type-duration, Duration>>
+interface TransformPreviewTransformRequest extends <<RequestBase>> {
+  transform_id?: <<Id>>
+  timeout?: <<Duration>>
   dest?: TransformDestination
   description?: string
-  frequency?: <<shared-type-duration, Duration>>
+  frequency?: <<Duration>>
   pivot?: TransformPivot
   source?: TransformSource
   settings?: TransformSettings

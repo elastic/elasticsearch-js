@@ -45,10 +45,10 @@ Returns information about a repository.
 
 [source,ts]
 ----
-interface SnapshotGetRepositoryRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-names, Names>>
+interface SnapshotGetRepositoryRequest extends <<RequestBase>> {
+  name?: <<Names>>
   local?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
 }
 ----
 

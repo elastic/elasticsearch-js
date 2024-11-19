@@ -45,11 +45,11 @@ Translates SQL into Elasticsearch queries
 
 [source,ts]
 ----
-interface SqlTranslateRequest extends <<shared-type-request-base, RequestBase>> {
-  fetch_size?: <<shared-type-integer, integer>>
+interface SqlTranslateRequest extends <<RequestBase>> {
+  fetch_size?: <<integer>>
   filter?: QueryDslQueryContainer
   query: string
-  time_zone?: <<shared-type-time-zone, TimeZone>>
+  time_zone?: <<TimeZone>>
 }
 ----
 
@@ -60,11 +60,11 @@ interface SqlTranslateRequest extends <<shared-type-request-base, RequestBase>> 
 ----
 interface SqlTranslateResponse {
   aggregations?: Record<string, AggregationsAggregationContainer>
-  size?: <<shared-type-long, long>>
+  size?: <<long>>
   _source?: SearchSourceConfig
-  fields?: (QueryDslFieldAndFormat | <<shared-type-field, Field>>)[]
+  fields?: (QueryDslFieldAndFormat | <<Field>>)[]
   query?: QueryDslQueryContainer
-  sort?: <<shared-type-sort, Sort>>
+  sort?: <<Sort>>
 }
 ----
 

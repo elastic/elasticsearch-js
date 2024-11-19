@@ -45,10 +45,10 @@ Predict future behavior of a time series. Forecasts are not supported for jobs t
 
 [source,ts]
 ----
-interface MlForecastRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  duration?: <<shared-type-duration, Duration>>
-  expires_in?: <<shared-type-duration, Duration>>
+interface MlForecastRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  duration?: <<Duration>>
+  expires_in?: <<Duration>>
   max_model_memory?: string
 }
 ----
@@ -60,7 +60,7 @@ interface MlForecastRequest extends <<shared-type-request-base, RequestBase>> {
 ----
 interface MlForecastResponse {
   acknowledged: boolean
-  forecast_id: <<shared-type-id, Id>>
+  forecast_id: <<Id>>
 }
 ----
 

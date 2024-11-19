@@ -45,10 +45,10 @@ Updates the cluster voting config exclusions by node ids or node names.
 
 [source,ts]
 ----
-interface ClusterPostVotingConfigExclusionsRequest extends <<shared-type-request-base, RequestBase>> {
-  node_names?: <<shared-type-names, Names>>
-  node_ids?: <<shared-type-ids, Ids>>
-  timeout?: <<shared-type-duration, Duration>>
+interface ClusterPostVotingConfigExclusionsRequest extends <<RequestBase>> {
+  node_names?: <<Names>>
+  node_ids?: <<Ids>>
+  timeout?: <<Duration>>
 }
 ----
 

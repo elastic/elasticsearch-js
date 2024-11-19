@@ -45,8 +45,8 @@ Get roles. Get roles in the native realm. The role management APIs are generally
 
 [source,ts]
 ----
-interface SecurityGetRoleRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-names, Names>>
+interface SecurityGetRoleRequest extends <<RequestBase>> {
+  name?: <<Names>>
 }
 ----
 

@@ -45,8 +45,8 @@ Retrieve shard-level statistics about searchable snapshots.
 
 [source,ts]
 ----
-interface SearchableSnapshotsStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface SearchableSnapshotsStatsRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   level?: SearchableSnapshotsStatsLevel
 }
 ----

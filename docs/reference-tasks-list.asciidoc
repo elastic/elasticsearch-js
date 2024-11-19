@@ -45,14 +45,14 @@ The task management API returns information about tasks currently executing on o
 
 [source,ts]
 ----
-interface TasksListRequest extends <<shared-type-request-base, RequestBase>> {
+interface TasksListRequest extends <<RequestBase>> {
   actions?: string | string[]
   detailed?: boolean
   group_by?: TasksGroupBy
-  nodes?: <<shared-type-node-ids, NodeIds>>
-  parent_task_id?: <<shared-type-id, Id>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+  nodes?: <<NodeIds>>
+  parent_task_id?: <<Id>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   wait_for_completion?: boolean
 }
 ----

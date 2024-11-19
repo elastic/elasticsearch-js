@@ -45,14 +45,14 @@ Explain data frame analytics config. This API provides explanations for a data f
 
 [source,ts]
 ----
-interface MlExplainDataFrameAnalyticsRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-id, Id>>
+interface MlExplainDataFrameAnalyticsRequest extends <<RequestBase>> {
+  id?: <<Id>>
   source?: MlDataframeAnalyticsSource
   dest?: MlDataframeAnalyticsDestination
   analysis?: MlDataframeAnalysisContainer
   description?: string
   model_memory_limit?: string
-  max_num_threads?: <<shared-type-integer, integer>>
+  max_num_threads?: <<integer>>
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
   allow_lazy_start?: boolean
 }

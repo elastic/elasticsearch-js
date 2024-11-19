@@ -45,9 +45,9 @@ Create an inference endpoint
 
 [source,ts]
 ----
-interface InferencePutRequest extends <<shared-type-request-base, RequestBase>> {
+interface InferencePutRequest extends <<RequestBase>> {
   task_type?: InferenceTaskType
-  inference_id: <<shared-type-id, Id>>
+  inference_id: <<Id>>
   inference_config?: InferenceInferenceEndpoint
 }
 ----

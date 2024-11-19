@@ -45,9 +45,9 @@ Promotes a data stream from a replicated data stream managed by CCR to a regular
 
 [source,ts]
 ----
-interface IndicesPromoteDataStreamRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-index-name, IndexName>>
-  master_timeout?: <<shared-type-duration, Duration>>
+interface IndicesPromoteDataStreamRequest extends <<RequestBase>> {
+  name: <<IndexName>>
+  master_timeout?: <<Duration>>
 }
 ----
 

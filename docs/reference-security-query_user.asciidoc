@@ -45,13 +45,13 @@ Find users with a query. Get information for users in a paginated manner. You ca
 
 [source,ts]
 ----
-interface SecurityQueryUserRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityQueryUserRequest extends <<RequestBase>> {
   with_profile_uid?: boolean
   query?: SecurityQueryUserUserQueryContainer
-  from?: <<shared-type-integer, integer>>
-  sort?: <<shared-type-sort, Sort>>
-  size?: <<shared-type-integer, integer>>
-  search_after?: <<shared-type-sort-results, SortResults>>
+  from?: <<integer>>
+  sort?: <<Sort>>
+  size?: <<integer>>
+  search_after?: <<SortResults>>
 }
 ----
 
@@ -61,8 +61,8 @@ interface SecurityQueryUserRequest extends <<shared-type-request-base, RequestBa
 [source,ts]
 ----
 interface SecurityQueryUserResponse {
-  total: <<shared-type-integer, integer>>
-  count: <<shared-type-integer, integer>>
+  total: <<integer>>
+  count: <<integer>>
   users: SecurityQueryUserQueryUser[]
 }
 ----

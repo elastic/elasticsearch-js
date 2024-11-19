@@ -46,8 +46,8 @@ Provides a snapshot of the number of shards allocated to each data node and thei
 [source,ts]
 ----
 interface CatAllocationRequest extends CatCatRequestBase {
-  node_id?: <<shared-type-node-ids, NodeIds>>
-  bytes?: <<shared-type-bytes, Bytes>>
+  node_id?: <<NodeIds>>
+  bytes?: <<Bytes>>
 }
 ----
 

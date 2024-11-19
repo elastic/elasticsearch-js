@@ -45,8 +45,8 @@ Delete a search application. Remove a search application and its associated alia
 
 [source,ts]
 ----
-interface SearchApplicationDeleteRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface SearchApplicationDeleteRequest extends <<RequestBase>> {
+  name: <<Name>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface SearchApplicationDeleteRequest extends <<shared-type-request-base, Req
 
 [source,ts]
 ----
-type SearchApplicationDeleteResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type SearchApplicationDeleteResponse = <<AcknowledgedResponseBase>>
 ----
 

@@ -45,9 +45,9 @@ Upgrades all transforms. This API identifies transforms that have a legacy confi
 
 [source,ts]
 ----
-interface TransformUpgradeTransformsRequest extends <<shared-type-request-base, RequestBase>> {
+interface TransformUpgradeTransformsRequest extends <<RequestBase>> {
   dry_run?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -57,9 +57,9 @@ interface TransformUpgradeTransformsRequest extends <<shared-type-request-base, 
 [source,ts]
 ----
 interface TransformUpgradeTransformsResponse {
-  needs_update: <<shared-type-integer, integer>>
-  no_action: <<shared-type-integer, integer>>
-  updated: <<shared-type-integer, integer>>
+  needs_update: <<integer>>
+  no_action: <<integer>>
+  updated: <<integer>>
 }
 ----
 

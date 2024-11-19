@@ -45,11 +45,11 @@ Check aliases. Checks if one or more data stream or index aliases exist.
 
 [source,ts]
 ----
-interface IndicesExistsAliasRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-names, Names>>
-  index?: <<shared-type-indices, Indices>>
+interface IndicesExistsAliasRequest extends <<RequestBase>> {
+  name: <<Names>>
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   local?: boolean
 }

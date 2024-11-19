@@ -45,9 +45,9 @@ Delete an inference endpoint
 
 [source,ts]
 ----
-interface InferenceDeleteRequest extends <<shared-type-request-base, RequestBase>> {
+interface InferenceDeleteRequest extends <<RequestBase>> {
   task_type?: InferenceTaskType
-  inference_id: <<shared-type-id, Id>>
+  inference_id: <<Id>>
   dry_run?: boolean
   force?: boolean
 }

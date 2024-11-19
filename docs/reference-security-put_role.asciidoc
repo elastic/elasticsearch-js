@@ -45,15 +45,15 @@ Create or update roles. The role management APIs are generally the preferred way
 
 [source,ts]
 ----
-interface SecurityPutRoleRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityPutRoleRequest extends <<RequestBase>> {
+  name: <<Name>>
+  refresh?: <<Refresh>>
   applications?: SecurityApplicationPrivileges[]
   cluster?: SecurityClusterPrivilege[]
   global?: Record<string, any>
   indices?: SecurityIndicesPrivileges[]
   remote_indices?: SecurityRemoteIndicesPrivileges[]
-  metadata?: <<shared-type-metadata, Metadata>>
+  metadata?: <<Metadata>>
   run_as?: string[]
   description?: string
   transient_metadata?: Record<string, any>

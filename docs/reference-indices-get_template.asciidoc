@@ -45,11 +45,11 @@ Get index templates. Retrieves information about one or more index templates.
 
 [source,ts]
 ----
-interface IndicesGetTemplateRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-names, Names>>
+interface IndicesGetTemplateRequest extends <<RequestBase>> {
+  name?: <<Names>>
   flat_settings?: boolean
   local?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
 }
 ----
 

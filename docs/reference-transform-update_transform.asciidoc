@@ -45,14 +45,14 @@ Update a transform. Updates certain properties of a transform. All updated prope
 
 [source,ts]
 ----
-interface TransformUpdateTransformRequest extends <<shared-type-request-base, RequestBase>> {
-  transform_id: <<shared-type-id, Id>>
+interface TransformUpdateTransformRequest extends <<RequestBase>> {
+  transform_id: <<Id>>
   defer_validation?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
   dest?: TransformDestination
   description?: string
-  frequency?: <<shared-type-duration, Duration>>
-  _meta?: <<shared-type-metadata, Metadata>>
+  frequency?: <<Duration>>
+  _meta?: <<Metadata>>
   source?: TransformSource
   settings?: TransformSettings
   sync?: TransformSyncContainer
@@ -67,19 +67,19 @@ interface TransformUpdateTransformRequest extends <<shared-type-request-base, Re
 ----
 interface TransformUpdateTransformResponse {
   authorization?: MlTransformAuthorization
-  create_time: <<shared-type-long, long>>
+  create_time: <<long>>
   description: string
   dest: ReindexDestination
-  frequency?: <<shared-type-duration, Duration>>
-  id: <<shared-type-id, Id>>
+  frequency?: <<Duration>>
+  id: <<Id>>
   latest?: TransformLatest
   pivot?: TransformPivot
   retention_policy?: TransformRetentionPolicyContainer
   settings: TransformSettings
   source: ReindexSource
   sync?: TransformSyncContainer
-  version: <<shared-type-version-string, VersionString>>
-  _meta?: <<shared-type-metadata, Metadata>>
+  version: <<VersionString>>
+  _meta?: <<Metadata>>
 }
 ----
 

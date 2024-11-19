@@ -45,12 +45,12 @@ Get all connectors. Get information about all connectors.
 
 [source,ts]
 ----
-interface ConnectorListRequest extends <<shared-type-request-base, RequestBase>> {
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
-  index_name?: <<shared-type-indices, Indices>>
-  connector_name?: <<shared-type-names, Names>>
-  service_type?: <<shared-type-names, Names>>
+interface ConnectorListRequest extends <<RequestBase>> {
+  from?: <<integer>>
+  size?: <<integer>>
+  index_name?: <<Indices>>
+  connector_name?: <<Names>>
+  service_type?: <<Names>>
   query?: string
 }
 ----
@@ -61,7 +61,7 @@ interface ConnectorListRequest extends <<shared-type-request-base, RequestBase>>
 [source,ts]
 ----
 interface ConnectorListResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   results: ConnectorConnector[]
 }
 ----

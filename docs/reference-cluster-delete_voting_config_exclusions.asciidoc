@@ -45,7 +45,7 @@ Clears cluster voting config exclusions.
 
 [source,ts]
 ----
-interface ClusterDeleteVotingConfigExclusionsRequest extends <<shared-type-request-base, RequestBase>> {
+interface ClusterDeleteVotingConfigExclusionsRequest extends <<RequestBase>> {
   wait_for_removal?: boolean
 }
 ----

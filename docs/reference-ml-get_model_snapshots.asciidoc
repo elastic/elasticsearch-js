@@ -45,16 +45,16 @@ Get model snapshots info.
 
 [source,ts]
 ----
-interface MlGetModelSnapshotsRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  snapshot_id?: <<shared-type-id, Id>>
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
+interface MlGetModelSnapshotsRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  snapshot_id?: <<Id>>
+  from?: <<integer>>
+  size?: <<integer>>
   desc?: boolean
-  end?: <<shared-type-date-time, DateTime>>
+  end?: <<DateTime>>
   page?: MlPage
-  sort?: <<shared-type-field, Field>>
-  start?: <<shared-type-date-time, DateTime>>
+  sort?: <<Field>>
+  start?: <<DateTime>>
 }
 ----
 
@@ -64,7 +64,7 @@ interface MlGetModelSnapshotsRequest extends <<shared-type-request-base, Request
 [source,ts]
 ----
 interface MlGetModelSnapshotsResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   model_snapshots: MlModelSnapshot[]
 }
 ----

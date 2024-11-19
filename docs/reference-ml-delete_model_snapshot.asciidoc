@@ -45,9 +45,9 @@ Delete a model snapshot. You cannot delete the active model snapshot. To delete 
 
 [source,ts]
 ----
-interface MlDeleteModelSnapshotRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  snapshot_id: <<shared-type-id, Id>>
+interface MlDeleteModelSnapshotRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  snapshot_id: <<Id>>
 }
 ----
 
@@ -56,6 +56,6 @@ interface MlDeleteModelSnapshotRequest extends <<shared-type-request-base, Reque
 
 [source,ts]
 ----
-type MlDeleteModelSnapshotResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlDeleteModelSnapshotResponse = <<AcknowledgedResponseBase>>
 ----
 

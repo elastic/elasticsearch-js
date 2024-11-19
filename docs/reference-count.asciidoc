@@ -45,21 +45,21 @@ Returns number of documents matching a query.
 
 [source,ts]
 ----
-interface CountRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface CountRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
   default_operator?: QueryDslOperator
   df?: string
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
-  min_score?: <<shared-type-double, double>>
+  min_score?: <<double>>
   preference?: string
-  routing?: <<shared-type-routing, Routing>>
-  terminate_after?: <<shared-type-long, long>>
+  routing?: <<Routing>>
+  terminate_after?: <<long>>
   q?: string
   query?: QueryDslQueryContainer
 }
@@ -71,8 +71,8 @@ interface CountRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface CountResponse {
-  count: <<shared-type-long, long>>
-  _shards: <<shared-type-shard-statistics, ShardStatistics>>
+  count: <<long>>
+  _shards: <<ShardStatistics>>
 }
 ----
 

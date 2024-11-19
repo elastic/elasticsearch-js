@@ -45,10 +45,10 @@ Get calendar configuration info.
 
 [source,ts]
 ----
-interface MlGetCalendarsRequest extends <<shared-type-request-base, RequestBase>> {
-  calendar_id?: <<shared-type-id, Id>>
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
+interface MlGetCalendarsRequest extends <<RequestBase>> {
+  calendar_id?: <<Id>>
+  from?: <<integer>>
+  size?: <<integer>>
   page?: MlPage
 }
 ----
@@ -60,7 +60,7 @@ interface MlGetCalendarsRequest extends <<shared-type-request-base, RequestBase>
 ----
 interface MlGetCalendarsResponse {
   calendars: MlGetCalendarsCalendar[]
-  count: <<shared-type-long, long>>
+  count: <<long>>
 }
 ----
 

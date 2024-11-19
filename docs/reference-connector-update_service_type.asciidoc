@@ -45,8 +45,8 @@ Update the connector service type.
 
 [source,ts]
 ----
-interface ConnectorUpdateServiceTypeRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorUpdateServiceTypeRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
   service_type: string
 }
 ----
@@ -57,7 +57,7 @@ interface ConnectorUpdateServiceTypeRequest extends <<shared-type-request-base, 
 [source,ts]
 ----
 interface ConnectorUpdateServiceTypeResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

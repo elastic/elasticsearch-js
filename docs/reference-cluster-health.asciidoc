@@ -45,19 +45,19 @@ The cluster health API returns a simple status on the health of the cluster. You
 
 [source,ts]
 ----
-interface ClusterHealthRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
-  level?: <<shared-type-level, Level>>
+interface ClusterHealthRequest extends <<RequestBase>> {
+  index?: <<Indices>>
+  expand_wildcards?: <<ExpandWildcards>>
+  level?: <<Level>>
   local?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
-  wait_for_active_shards?: <<shared-type-wait-for-active-shards, WaitForActiveShards>>
-  wait_for_events?: <<shared-type-wait-for-events, WaitForEvents>>
-  wait_for_nodes?: string | <<shared-type-integer, integer>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
+  wait_for_active_shards?: <<WaitForActiveShards>>
+  wait_for_events?: <<WaitForEvents>>
+  wait_for_nodes?: string | <<integer>>
   wait_for_no_initializing_shards?: boolean
   wait_for_no_relocating_shards?: boolean
-  wait_for_status?: <<shared-type-health-status, HealthStatus>>
+  wait_for_status?: <<HealthStatus>>
 }
 ----
 

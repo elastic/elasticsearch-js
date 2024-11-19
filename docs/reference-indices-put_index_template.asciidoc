@@ -45,18 +45,18 @@ Create or update an index template. Index templates define settings, mappings, a
 
 [source,ts]
 ----
-interface IndicesPutIndexTemplateRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface IndicesPutIndexTemplateRequest extends <<RequestBase>> {
+  name: <<Name>>
   create?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
   cause?: string
-  index_patterns?: <<shared-type-indices, Indices>>
-  composed_of?: <<shared-type-name, Name>>[]
+  index_patterns?: <<Indices>>
+  composed_of?: <<Name>>[]
   template?: IndicesPutIndexTemplateIndexTemplateMapping
   data_stream?: IndicesDataStreamVisibility
-  priority?: <<shared-type-long, long>>
-  version?: <<shared-type-version-number, VersionNumber>>
-  _meta?: <<shared-type-metadata, Metadata>>
+  priority?: <<long>>
+  version?: <<VersionNumber>>
+  _meta?: <<Metadata>>
   allow_auto_create?: boolean
   ignore_missing_component_templates?: string[]
   deprecated?: boolean
@@ -68,6 +68,6 @@ interface IndicesPutIndexTemplateRequest extends <<shared-type-request-base, Req
 
 [source,ts]
 ----
-type IndicesPutIndexTemplateResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IndicesPutIndexTemplateResponse = <<AcknowledgedResponseBase>>
 ----
 

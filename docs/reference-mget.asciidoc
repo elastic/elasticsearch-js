@@ -45,19 +45,19 @@ Get multiple documents. Get multiple JSON documents by ID from one or more indic
 
 [source,ts]
 ----
-interface MgetRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-index-name, IndexName>>
+interface MgetRequest extends <<RequestBase>> {
+  index?: <<IndexName>>
   force_synthetic_source?: boolean
   preference?: string
   realtime?: boolean
   refresh?: boolean
-  routing?: <<shared-type-routing, Routing>>
+  routing?: <<Routing>>
   _source?: SearchSourceConfigParam
-  _source_excludes?: <<shared-type-fields, Fields>>
-  _source_includes?: <<shared-type-fields, Fields>>
-  stored_fields?: <<shared-type-fields, Fields>>
+  _source_excludes?: <<Fields>>
+  _source_includes?: <<Fields>>
+  stored_fields?: <<Fields>>
   docs?: MgetOperation[]
-  ids?: <<shared-type-ids, Ids>>
+  ids?: <<Ids>>
 }
 ----
 

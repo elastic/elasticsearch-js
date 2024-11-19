@@ -45,12 +45,12 @@ Create or update a script or search template. Creates or updates a stored script
 
 [source,ts]
 ----
-interface PutScriptRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  context?: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
-  script: <<shared-type-stored-script, StoredScript>>
+interface PutScriptRequest extends <<RequestBase>> {
+  id: <<Id>>
+  context?: <<Name>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
+  script: <<StoredScript>>
 }
 ----
 
@@ -59,6 +59,6 @@ interface PutScriptRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type PutScriptResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type PutScriptResponse = <<AcknowledgedResponseBase>>
 ----
 

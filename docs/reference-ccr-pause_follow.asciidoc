@@ -45,8 +45,8 @@ Pauses a follower index. The follower index will not fetch any additional operat
 
 [source,ts]
 ----
-interface CcrPauseFollowRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
+interface CcrPauseFollowRequest extends <<RequestBase>> {
+  index: <<IndexName>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface CcrPauseFollowRequest extends <<shared-type-request-base, RequestBase>
 
 [source,ts]
 ----
-type CcrPauseFollowResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type CcrPauseFollowResponse = <<AcknowledgedResponseBase>>
 ----
 

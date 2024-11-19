@@ -45,10 +45,10 @@ Check indices. Checks if one or more indices, index aliases, or data streams exi
 
 [source,ts]
 ----
-interface IndicesExistsRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
+interface IndicesExistsRequest extends <<RequestBase>> {
+  index: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   flat_settings?: boolean
   ignore_unavailable?: boolean
   include_defaults?: boolean

@@ -45,9 +45,9 @@ Delete events from a calendar.
 
 [source,ts]
 ----
-interface MlDeleteCalendarEventRequest extends <<shared-type-request-base, RequestBase>> {
-  calendar_id: <<shared-type-id, Id>>
-  event_id: <<shared-type-id, Id>>
+interface MlDeleteCalendarEventRequest extends <<RequestBase>> {
+  calendar_id: <<Id>>
+  event_id: <<Id>>
 }
 ----
 
@@ -56,6 +56,6 @@ interface MlDeleteCalendarEventRequest extends <<shared-type-request-base, Reque
 
 [source,ts]
 ----
-type MlDeleteCalendarEventResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlDeleteCalendarEventResponse = <<AcknowledgedResponseBase>>
 ----
 

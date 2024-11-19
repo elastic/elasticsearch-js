@@ -45,8 +45,8 @@ Returns the capabilities of any rollup jobs that have been configured for a spec
 
 [source,ts]
 ----
-interface RollupGetRollupCapsRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-id, Id>>
+interface RollupGetRollupCapsRequest extends <<RequestBase>> {
+  id?: <<Id>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface RollupGetRollupCapsRequest extends <<shared-type-request-base, Request
 
 [source,ts]
 ----
-type RollupGetRollupCapsResponse = Record<<<shared-type-index-name, IndexName>>, RollupGetRollupCapsRollupCapabilities>
+type RollupGetRollupCapsResponse = Record<<<IndexName>>, RollupGetRollupCapsRollupCapabilities>
 ----
 

@@ -45,11 +45,11 @@ Returns cluster-wide settings. By default, it returns only settings that have be
 
 [source,ts]
 ----
-interface ClusterGetSettingsRequest extends <<shared-type-request-base, RequestBase>> {
+interface ClusterGetSettingsRequest extends <<RequestBase>> {
   flat_settings?: boolean
   include_defaults?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 

@@ -45,8 +45,8 @@ Delete an anomaly detection job. All job configuration, model state and results 
 
 [source,ts]
 ----
-interface MlDeleteJobRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
+interface MlDeleteJobRequest extends <<RequestBase>> {
+  job_id: <<Id>>
   force?: boolean
   delete_user_annotations?: boolean
   wait_for_completion?: boolean
@@ -58,6 +58,6 @@ interface MlDeleteJobRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type MlDeleteJobResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlDeleteJobResponse = <<AcknowledgedResponseBase>>
 ----
 

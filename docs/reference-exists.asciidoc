@@ -45,19 +45,19 @@ Check a document. Checks if a specified document exists.
 
 [source,ts]
 ----
-interface ExistsRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  index: <<shared-type-index-name, IndexName>>
+interface ExistsRequest extends <<RequestBase>> {
+  id: <<Id>>
+  index: <<IndexName>>
   preference?: string
   realtime?: boolean
   refresh?: boolean
-  routing?: <<shared-type-routing, Routing>>
+  routing?: <<Routing>>
   _source?: SearchSourceConfigParam
-  _source_excludes?: <<shared-type-fields, Fields>>
-  _source_includes?: <<shared-type-fields, Fields>>
-  stored_fields?: <<shared-type-fields, Fields>>
-  version?: <<shared-type-version-number, VersionNumber>>
-  version_type?: <<shared-type-version-type, VersionType>>
+  _source_excludes?: <<Fields>>
+  _source_includes?: <<Fields>>
+  stored_fields?: <<Fields>>
+  version?: <<VersionNumber>>
+  version_type?: <<VersionType>>
 }
 ----
 

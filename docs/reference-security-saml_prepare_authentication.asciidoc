@@ -45,7 +45,7 @@ Prepare SAML authentication. Creates a SAML authentication request (`<AuthnReque
 
 [source,ts]
 ----
-interface SecuritySamlPrepareAuthenticationRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecuritySamlPrepareAuthenticationRequest extends <<RequestBase>> {
   acs?: string
   realm?: string
   relay_state?: string
@@ -58,7 +58,7 @@ interface SecuritySamlPrepareAuthenticationRequest extends <<shared-type-request
 [source,ts]
 ----
 interface SecuritySamlPrepareAuthenticationResponse {
-  id: <<shared-type-id, Id>>
+  id: <<Id>>
   realm: string
   redirect: string
 }

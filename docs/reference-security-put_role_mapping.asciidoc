@@ -45,11 +45,11 @@ Create or update role mappings. Role mappings define which roles are assigned to
 
 [source,ts]
 ----
-interface SecurityPutRoleMappingRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityPutRoleMappingRequest extends <<RequestBase>> {
+  name: <<Name>>
+  refresh?: <<Refresh>>
   enabled?: boolean
-  metadata?: <<shared-type-metadata, Metadata>>
+  metadata?: <<Metadata>>
   roles?: string[]
   role_templates?: SecurityRoleTemplate[]
   rules?: SecurityRoleMappingRule

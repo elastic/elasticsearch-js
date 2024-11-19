@@ -45,8 +45,8 @@ Clear the user cache. Evict users from the user cache. You can completely clear 
 
 [source,ts]
 ----
-interface SecurityClearCachedRealmsRequest extends <<shared-type-request-base, RequestBase>> {
-  realms: <<shared-type-names, Names>>
+interface SecurityClearCachedRealmsRequest extends <<RequestBase>> {
+  realms: <<Names>>
   usernames?: string[]
 }
 ----
@@ -57,8 +57,8 @@ interface SecurityClearCachedRealmsRequest extends <<shared-type-request-base, R
 [source,ts]
 ----
 interface SecurityClearCachedRealmsResponse {
-  _nodes: <<shared-type-node-statistics, NodeStatistics>>
-  cluster_name: <<shared-type-name, Name>>
+  _nodes: <<NodeStatistics>>
+  cluster_name: <<Name>>
   nodes: Record<string, SecurityClusterNode>
 }
 ----

@@ -45,8 +45,8 @@ Bulk create or update roles. The role management APIs are generally the preferre
 
 [source,ts]
 ----
-interface SecurityBulkPutRoleRequest extends <<shared-type-request-base, RequestBase>> {
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityBulkPutRoleRequest extends <<RequestBase>> {
+  refresh?: <<Refresh>>
   roles: Record<string, SecurityRoleDescriptor>
 }
 ----

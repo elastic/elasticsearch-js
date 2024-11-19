@@ -45,11 +45,11 @@ Update a data frame analytics job.
 
 [source,ts]
 ----
-interface MlUpdateDataFrameAnalyticsRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface MlUpdateDataFrameAnalyticsRequest extends <<RequestBase>> {
+  id: <<Id>>
   description?: string
   model_memory_limit?: string
-  max_num_threads?: <<shared-type-integer, integer>>
+  max_num_threads?: <<integer>>
   allow_lazy_start?: boolean
 }
 ----
@@ -64,14 +64,14 @@ interface MlUpdateDataFrameAnalyticsResponse {
   allow_lazy_start: boolean
   analysis: MlDataframeAnalysisContainer
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
-  create_time: <<shared-type-long, long>>
+  create_time: <<long>>
   description?: string
   dest: MlDataframeAnalyticsDestination
-  id: <<shared-type-id, Id>>
-  max_num_threads: <<shared-type-integer, integer>>
+  id: <<Id>>
+  max_num_threads: <<integer>>
   model_memory_limit: string
   source: MlDataframeAnalyticsSource
-  version: <<shared-type-version-string, VersionString>>
+  version: <<VersionString>>
 }
 ----
 

@@ -45,17 +45,17 @@ Delete a document. Removes a JSON document from the specified index.
 
 [source,ts]
 ----
-interface DeleteRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  index: <<shared-type-index-name, IndexName>>
-  if_primary_term?: <<shared-type-long, long>>
-  if_seq_no?: <<shared-type-sequence-number, SequenceNumber>>
-  refresh?: <<shared-type-refresh, Refresh>>
-  routing?: <<shared-type-routing, Routing>>
-  timeout?: <<shared-type-duration, Duration>>
-  version?: <<shared-type-version-number, VersionNumber>>
-  version_type?: <<shared-type-version-type, VersionType>>
-  wait_for_active_shards?: <<shared-type-wait-for-active-shards, WaitForActiveShards>>
+interface DeleteRequest extends <<RequestBase>> {
+  id: <<Id>>
+  index: <<IndexName>>
+  if_primary_term?: <<long>>
+  if_seq_no?: <<SequenceNumber>>
+  refresh?: <<Refresh>>
+  routing?: <<Routing>>
+  timeout?: <<Duration>>
+  version?: <<VersionNumber>>
+  version_type?: <<VersionType>>
+  wait_for_active_shards?: <<WaitForActiveShards>>
 }
 ----
 
@@ -64,6 +64,6 @@ interface DeleteRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type DeleteResponse = <<shared-type-write-response-base, WriteResponseBase>>
+type DeleteResponse = <<WriteResponseBase>>
 ----
 

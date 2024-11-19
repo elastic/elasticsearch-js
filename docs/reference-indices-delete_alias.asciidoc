@@ -45,11 +45,11 @@ Delete an alias. Removes a data stream or index from an alias.
 
 [source,ts]
 ----
-interface IndicesDeleteAliasRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
-  name: <<shared-type-names, Names>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface IndicesDeleteAliasRequest extends <<RequestBase>> {
+  index: <<Indices>>
+  name: <<Names>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -58,6 +58,6 @@ interface IndicesDeleteAliasRequest extends <<shared-type-request-base, RequestB
 
 [source,ts]
 ----
-type IndicesDeleteAliasResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IndicesDeleteAliasResponse = <<AcknowledgedResponseBase>>
 ----
 

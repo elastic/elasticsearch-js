@@ -45,9 +45,9 @@ Authenticate SAML. Submits a SAML response message to Elasticsearch for consumpt
 
 [source,ts]
 ----
-interface SecuritySamlAuthenticateRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecuritySamlAuthenticateRequest extends <<RequestBase>> {
   content: string
-  ids: <<shared-type-ids, Ids>>
+  ids: <<Ids>>
   realm?: string
 }
 ----
@@ -60,7 +60,7 @@ interface SecuritySamlAuthenticateRequest extends <<shared-type-request-base, Re
 interface SecuritySamlAuthenticateResponse {
   access_token: string
   username: string
-  expires_in: <<shared-type-integer, integer>>
+  expires_in: <<integer>>
   refresh_token: string
   realm: string
 }

@@ -45,8 +45,8 @@ Delete an enrich policy. Deletes an existing enrich policy and its enrich index.
 
 [source,ts]
 ----
-interface EnrichDeletePolicyRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface EnrichDeletePolicyRequest extends <<RequestBase>> {
+  name: <<Name>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface EnrichDeletePolicyRequest extends <<shared-type-request-base, RequestB
 
 [source,ts]
 ----
-type EnrichDeletePolicyResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type EnrichDeletePolicyResponse = <<AcknowledgedResponseBase>>
 ----
 

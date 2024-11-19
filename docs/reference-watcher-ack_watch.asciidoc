@@ -45,9 +45,9 @@ Acknowledges a watch, manually throttling the execution of the watch's actions.
 
 [source,ts]
 ----
-interface WatcherAckWatchRequest extends <<shared-type-request-base, RequestBase>> {
-  watch_id: <<shared-type-name, Name>>
-  action_id?: <<shared-type-names, Names>>
+interface WatcherAckWatchRequest extends <<RequestBase>> {
+  watch_id: <<Name>>
+  action_id?: <<Names>>
 }
 ----
 

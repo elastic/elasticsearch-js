@@ -45,13 +45,13 @@ Performs the force merge operation on one or more indices.
 
 [source,ts]
 ----
-interface IndicesForcemergeRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface IndicesForcemergeRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   flush?: boolean
   ignore_unavailable?: boolean
-  max_num_segments?: <<shared-type-long, long>>
+  max_num_segments?: <<long>>
   only_expunge_deletes?: boolean
   wait_for_completion?: boolean
 }

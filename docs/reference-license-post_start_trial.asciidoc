@@ -45,7 +45,7 @@ The start trial API enables you to start a 30-day trial, which gives access to a
 
 [source,ts]
 ----
-interface LicensePostStartTrialRequest extends <<shared-type-request-base, RequestBase>> {
+interface LicensePostStartTrialRequest extends <<RequestBase>> {
   acknowledge?: boolean
   type_query_string?: string
 }

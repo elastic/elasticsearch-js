@@ -45,13 +45,13 @@ Provides explanations for shard allocations in the cluster.
 
 [source,ts]
 ----
-interface ClusterAllocationExplainRequest extends <<shared-type-request-base, RequestBase>> {
+interface ClusterAllocationExplainRequest extends <<RequestBase>> {
   include_disk_info?: boolean
   include_yes_decisions?: boolean
   current_node?: string
-  index?: <<shared-type-index-name, IndexName>>
+  index?: <<IndexName>>
   primary?: boolean
-  shard?: <<shared-type-integer, integer>>
+  shard?: <<integer>>
 }
 ----
 
@@ -62,8 +62,8 @@ interface ClusterAllocationExplainRequest extends <<shared-type-request-base, Re
 ----
 interface ClusterAllocationExplainResponse {
   allocate_explanation?: string
-  allocation_delay?: <<shared-type-duration, Duration>>
-  allocation_delay_in_millis?: <<shared-type-duration-value, DurationValue>><<<shared-type-unit-millis, UnitMillis>>>
+  allocation_delay?: <<Duration>>
+  allocation_delay_in_millis?: <<DurationValue>><<<UnitMillis>>>
   can_allocate?: ClusterAllocationExplainDecision
   can_move_to_other_node?: ClusterAllocationExplainDecision
   can_rebalance_cluster?: ClusterAllocationExplainDecision
@@ -72,18 +72,18 @@ interface ClusterAllocationExplainResponse {
   can_remain_decisions?: ClusterAllocationExplainAllocationDecision[]
   can_remain_on_current_node?: ClusterAllocationExplainDecision
   cluster_info?: ClusterAllocationExplainClusterInfo
-  configured_delay?: <<shared-type-duration, Duration>>
-  configured_delay_in_millis?: <<shared-type-duration-value, DurationValue>><<<shared-type-unit-millis, UnitMillis>>>
+  configured_delay?: <<Duration>>
+  configured_delay_in_millis?: <<DurationValue>><<<UnitMillis>>>
   current_node?: ClusterAllocationExplainCurrentNode
   current_state: string
-  index: <<shared-type-index-name, IndexName>>
+  index: <<IndexName>>
   move_explanation?: string
   node_allocation_decisions?: ClusterAllocationExplainNodeAllocationExplanation[]
   primary: boolean
   rebalance_explanation?: string
-  remaining_delay?: <<shared-type-duration, Duration>>
-  remaining_delay_in_millis?: <<shared-type-duration-value, DurationValue>><<<shared-type-unit-millis, UnitMillis>>>
-  shard: <<shared-type-integer, integer>>
+  remaining_delay?: <<Duration>>
+  remaining_delay_in_millis?: <<DurationValue>><<<UnitMillis>>>
+  shard: <<integer>>
   unassigned_info?: ClusterAllocationExplainUnassignedInformation
   note?: string
 }

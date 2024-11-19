@@ -45,8 +45,8 @@ Update the connector scheduling.
 
 [source,ts]
 ----
-interface ConnectorUpdateSchedulingRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorUpdateSchedulingRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
   scheduling: ConnectorSchedulingConfiguration
 }
 ----
@@ -57,7 +57,7 @@ interface ConnectorUpdateSchedulingRequest extends <<shared-type-request-base, R
 [source,ts]
 ----
 interface ConnectorUpdateSchedulingResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

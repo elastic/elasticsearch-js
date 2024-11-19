@@ -45,9 +45,9 @@ Deletes a query rule within a query ruleset.
 
 [source,ts]
 ----
-interface QueryRulesDeleteRuleRequest extends <<shared-type-request-base, RequestBase>> {
-  ruleset_id: <<shared-type-id, Id>>
-  rule_id: <<shared-type-id, Id>>
+interface QueryRulesDeleteRuleRequest extends <<RequestBase>> {
+  ruleset_id: <<Id>>
+  rule_id: <<Id>>
 }
 ----
 
@@ -56,6 +56,6 @@ interface QueryRulesDeleteRuleRequest extends <<shared-type-request-base, Reques
 
 [source,ts]
 ----
-type QueryRulesDeleteRuleResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type QueryRulesDeleteRuleResponse = <<AcknowledgedResponseBase>>
 ----
 

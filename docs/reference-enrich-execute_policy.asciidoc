@@ -45,8 +45,8 @@ Creates the enrich index for an existing enrich policy.
 
 [source,ts]
 ----
-interface EnrichExecutePolicyRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface EnrichExecutePolicyRequest extends <<RequestBase>> {
+  name: <<Name>>
   wait_for_completion?: boolean
 }
 ----
@@ -58,7 +58,7 @@ interface EnrichExecutePolicyRequest extends <<shared-type-request-base, Request
 ----
 interface EnrichExecutePolicyResponse {
   status?: EnrichExecutePolicyExecuteEnrichPolicyStatus
-  task_id?: <<shared-type-task-id, TaskId>>
+  task_id?: <<TaskId>>
 }
 ----
 

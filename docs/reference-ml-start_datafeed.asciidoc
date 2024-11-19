@@ -45,11 +45,11 @@ Start datafeeds. A datafeed must be started in order to retrieve data from Elast
 
 [source,ts]
 ----
-interface MlStartDatafeedRequest extends <<shared-type-request-base, RequestBase>> {
-  datafeed_id: <<shared-type-id, Id>>
-  end?: <<shared-type-date-time, DateTime>>
-  start?: <<shared-type-date-time, DateTime>>
-  timeout?: <<shared-type-duration, Duration>>
+interface MlStartDatafeedRequest extends <<RequestBase>> {
+  datafeed_id: <<Id>>
+  end?: <<DateTime>>
+  start?: <<DateTime>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -59,7 +59,7 @@ interface MlStartDatafeedRequest extends <<shared-type-request-base, RequestBase
 [source,ts]
 ----
 interface MlStartDatafeedResponse {
-  node: <<shared-type-node-ids, NodeIds>>
+  node: <<NodeIds>>
   started: boolean
 }
 ----

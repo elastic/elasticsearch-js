@@ -45,9 +45,9 @@ Returns information about whether a particular index template exists.
 
 [source,ts]
 ----
-interface IndicesExistsIndexTemplateRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
+interface IndicesExistsIndexTemplateRequest extends <<RequestBase>> {
+  name: <<Name>>
+  master_timeout?: <<Duration>>
 }
 ----
 

@@ -45,9 +45,9 @@ Evaluate data frame analytics. The API packages together commonly used evaluatio
 
 [source,ts]
 ----
-interface MlEvaluateDataFrameRequest extends <<shared-type-request-base, RequestBase>> {
+interface MlEvaluateDataFrameRequest extends <<RequestBase>> {
   evaluation: MlDataframeEvaluationContainer
-  index: <<shared-type-index-name, IndexName>>
+  index: <<IndexName>>
   query?: QueryDslQueryContainer
 }
 ----

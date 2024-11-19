@@ -45,9 +45,9 @@ Throttle a delete by query operation. Change the number of requests per second f
 
 [source,ts]
 ----
-interface DeleteByQueryRethrottleRequest extends <<shared-type-request-base, RequestBase>> {
-  task_id: <<shared-type-task-id, TaskId>>
-  requests_per_second?: <<shared-type-float, float>>
+interface DeleteByQueryRethrottleRequest extends <<RequestBase>> {
+  task_id: <<TaskId>>
+  requests_per_second?: <<float>>
 }
 ----
 

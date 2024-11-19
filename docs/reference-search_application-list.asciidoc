@@ -45,10 +45,10 @@ Returns the existing search applications.
 
 [source,ts]
 ----
-interface SearchApplicationListRequest extends <<shared-type-request-base, RequestBase>> {
+interface SearchApplicationListRequest extends <<RequestBase>> {
   q?: string
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
+  from?: <<integer>>
+  size?: <<integer>>
 }
 ----
 
@@ -58,7 +58,7 @@ interface SearchApplicationListRequest extends <<shared-type-request-base, Reque
 [source,ts]
 ----
 interface SearchApplicationListResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   results: SearchApplicationListSearchApplicationListItem[]
 }
 ----

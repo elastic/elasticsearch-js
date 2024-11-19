@@ -45,11 +45,11 @@ Removes the follower retention leases from the leader.
 
 [source,ts]
 ----
-interface CcrForgetFollowerRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
+interface CcrForgetFollowerRequest extends <<RequestBase>> {
+  index: <<IndexName>>
   follower_cluster?: string
-  follower_index?: <<shared-type-index-name, IndexName>>
-  follower_index_uuid?: <<shared-type-uuid, Uuid>>
+  follower_index?: <<IndexName>>
+  follower_index_uuid?: <<Uuid>>
   leader_remote_cluster?: string
 }
 ----
@@ -60,7 +60,7 @@ interface CcrForgetFollowerRequest extends <<shared-type-request-base, RequestBa
 [source,ts]
 ----
 interface CcrForgetFollowerResponse {
-  _shards: <<shared-type-shard-statistics, ShardStatistics>>
+  _shards: <<ShardStatistics>>
 }
 ----
 

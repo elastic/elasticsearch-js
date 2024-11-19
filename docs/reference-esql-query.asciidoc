@@ -45,14 +45,14 @@ Executes an ES|QL request
 
 [source,ts]
 ----
-interface EsqlQueryRequest extends <<shared-type-request-base, RequestBase>> {
+interface EsqlQueryRequest extends <<RequestBase>> {
   format?: EsqlQueryEsqlFormat
   delimiter?: string
   drop_null_columns?: boolean
   columnar?: boolean
   filter?: QueryDslQueryContainer
   locale?: string
-  params?: <<shared-type-field-value, FieldValue>>[]
+  params?: <<FieldValue>>[]
   profile?: boolean
   query: string
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
@@ -64,6 +64,6 @@ interface EsqlQueryRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type EsqlQueryResponse = <<shared-type-esql-columns, EsqlColumns>>
+type EsqlQueryResponse = <<EsqlColumns>>
 ----
 

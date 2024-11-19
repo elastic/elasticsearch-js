@@ -45,8 +45,8 @@ Creates or updates a query ruleset.
 
 [source,ts]
 ----
-interface QueryRulesPutRulesetRequest extends <<shared-type-request-base, RequestBase>> {
-  ruleset_id: <<shared-type-id, Id>>
+interface QueryRulesPutRulesetRequest extends <<RequestBase>> {
+  ruleset_id: <<Id>>
   rules: QueryRulesQueryRule | QueryRulesQueryRule[]
 }
 ----
@@ -57,7 +57,7 @@ interface QueryRulesPutRulesetRequest extends <<shared-type-request-base, Reques
 [source,ts]
 ----
 interface QueryRulesPutRulesetResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

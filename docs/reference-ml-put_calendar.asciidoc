@@ -45,9 +45,9 @@ Create a calendar.
 
 [source,ts]
 ----
-interface MlPutCalendarRequest extends <<shared-type-request-base, RequestBase>> {
-  calendar_id: <<shared-type-id, Id>>
-  job_ids?: <<shared-type-id, Id>>[]
+interface MlPutCalendarRequest extends <<RequestBase>> {
+  calendar_id: <<Id>>
+  job_ids?: <<Id>>[]
   description?: string
 }
 ----
@@ -58,9 +58,9 @@ interface MlPutCalendarRequest extends <<shared-type-request-base, RequestBase>>
 [source,ts]
 ----
 interface MlPutCalendarResponse {
-  calendar_id: <<shared-type-id, Id>>
+  calendar_id: <<Id>>
   description?: string
-  job_ids: <<shared-type-ids, Ids>>
+  job_ids: <<Ids>>
 }
 ----
 

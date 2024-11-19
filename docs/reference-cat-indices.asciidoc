@@ -46,13 +46,13 @@ Get index information. Returns high-level information about indices in a cluster
 [source,ts]
 ----
 interface CatIndicesRequest extends CatCatRequestBase {
-  index?: <<shared-type-indices, Indices>>
-  bytes?: <<shared-type-bytes, Bytes>>
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
-  health?: <<shared-type-health-status, HealthStatus>>
+  index?: <<Indices>>
+  bytes?: <<Bytes>>
+  expand_wildcards?: <<ExpandWildcards>>
+  health?: <<HealthStatus>>
   include_unloaded_segments?: boolean
   pri?: boolean
-  time?: <<shared-type-time-unit, TimeUnit>>
+  time?: <<TimeUnit>>
 }
 ----
 

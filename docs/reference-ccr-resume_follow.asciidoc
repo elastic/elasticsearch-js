@@ -45,18 +45,18 @@ Resumes a follower index that has been paused
 
 [source,ts]
 ----
-interface CcrResumeFollowRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
-  max_outstanding_read_requests?: <<shared-type-long, long>>
-  max_outstanding_write_requests?: <<shared-type-long, long>>
-  max_read_request_operation_count?: <<shared-type-long, long>>
+interface CcrResumeFollowRequest extends <<RequestBase>> {
+  index: <<IndexName>>
+  max_outstanding_read_requests?: <<long>>
+  max_outstanding_write_requests?: <<long>>
+  max_read_request_operation_count?: <<long>>
   max_read_request_size?: string
-  max_retry_delay?: <<shared-type-duration, Duration>>
-  max_write_buffer_count?: <<shared-type-long, long>>
+  max_retry_delay?: <<Duration>>
+  max_write_buffer_count?: <<long>>
   max_write_buffer_size?: string
-  max_write_request_operation_count?: <<shared-type-long, long>>
+  max_write_request_operation_count?: <<long>>
   max_write_request_size?: string
-  read_poll_timeout?: <<shared-type-duration, Duration>>
+  read_poll_timeout?: <<Duration>>
 }
 ----
 
@@ -65,6 +65,6 @@ interface CcrResumeFollowRequest extends <<shared-type-request-base, RequestBase
 
 [source,ts]
 ----
-type CcrResumeFollowResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type CcrResumeFollowResponse = <<AcknowledgedResponseBase>>
 ----
 

@@ -45,8 +45,8 @@ Returns the current status for an async EQL search or a stored synchronous EQL s
 
 [source,ts]
 ----
-interface EqlGetStatusRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface EqlGetStatusRequest extends <<RequestBase>> {
+  id: <<Id>>
 }
 ----
 
@@ -56,12 +56,12 @@ interface EqlGetStatusRequest extends <<shared-type-request-base, RequestBase>> 
 [source,ts]
 ----
 interface EqlGetStatusResponse {
-  id: <<shared-type-id, Id>>
+  id: <<Id>>
   is_partial: boolean
   is_running: boolean
-  start_time_in_millis?: <<shared-type-epoch-time, EpochTime>><<<shared-type-unit-millis, UnitMillis>>>
-  expiration_time_in_millis?: <<shared-type-epoch-time, EpochTime>><<<shared-type-unit-millis, UnitMillis>>>
-  completion_status?: <<shared-type-integer, integer>>
+  start_time_in_millis?: <<EpochTime>><<<UnitMillis>>>
+  expiration_time_in_millis?: <<EpochTime>><<<UnitMillis>>>
+  completion_status?: <<integer>>
 }
 ----
 

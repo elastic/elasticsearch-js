@@ -45,12 +45,12 @@ Retrieves information about the index’s current lifecycle state, such as the c
 
 [source,ts]
 ----
-interface IlmExplainLifecycleRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
+interface IlmExplainLifecycleRequest extends <<RequestBase>> {
+  index: <<IndexName>>
   only_errors?: boolean
   only_managed?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -60,7 +60,7 @@ interface IlmExplainLifecycleRequest extends <<shared-type-request-base, Request
 [source,ts]
 ----
 interface IlmExplainLifecycleResponse {
-  indices: Record<<<shared-type-index-name, IndexName>>, IlmExplainLifecycleLifecycleExplain>
+  indices: Record<<<IndexName>>, IlmExplainLifecycleLifecycleExplain>
 }
 ----
 

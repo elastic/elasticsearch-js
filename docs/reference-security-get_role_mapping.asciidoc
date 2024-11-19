@@ -45,8 +45,8 @@ Get role mappings. Role mappings define which roles are assigned to each user. T
 
 [source,ts]
 ----
-interface SecurityGetRoleMappingRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-names, Names>>
+interface SecurityGetRoleMappingRequest extends <<RequestBase>> {
+  name?: <<Names>>
 }
 ----
 

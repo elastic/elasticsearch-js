@@ -45,20 +45,20 @@ Run multiple searches. The format of the request is similar to the bulk API form
 
 [source,ts]
 ----
-interface MsearchRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface MsearchRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
   ccs_minimize_roundtrips?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   include_named_queries_score?: boolean
-  max_concurrent_searches?: <<shared-type-long, long>>
-  max_concurrent_shard_requests?: <<shared-type-long, long>>
-  pre_filter_shard_size?: <<shared-type-long, long>>
+  max_concurrent_searches?: <<long>>
+  max_concurrent_shard_requests?: <<long>>
+  pre_filter_shard_size?: <<long>>
   rest_total_hits_as_int?: boolean
-  routing?: <<shared-type-routing, Routing>>
-  search_type?: <<shared-type-search-type, SearchType>>
+  routing?: <<Routing>>
+  search_type?: <<SearchType>>
   typed_keys?: boolean
   searches?: MsearchRequestItem[]
 }
@@ -69,6 +69,6 @@ interface MsearchRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type MsearchResponse<TDocument = unknown, TAggregations = Record<<<shared-type-aggregate-name, AggregateName>>, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
+type MsearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
 ----
 

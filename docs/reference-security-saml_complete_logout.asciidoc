@@ -45,9 +45,9 @@ Logout of SAML completely. Verifies the logout response sent from the SAML IdP.
 
 [source,ts]
 ----
-interface SecuritySamlCompleteLogoutRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecuritySamlCompleteLogoutRequest extends <<RequestBase>> {
   realm: string
-  ids: <<shared-type-ids, Ids>>
+  ids: <<Ids>>
   query_string?: string
   content?: string
 }

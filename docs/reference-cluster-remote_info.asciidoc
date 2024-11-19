@@ -45,7 +45,7 @@ The cluster remote info API allows you to retrieve all of the configured remote 
 
 [source,ts]
 ----
-interface ClusterRemoteInfoRequest extends <<shared-type-request-base, RequestBase>> {
+interface ClusterRemoteInfoRequest extends <<RequestBase>> {
 }
 ----
 

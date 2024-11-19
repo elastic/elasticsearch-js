@@ -45,8 +45,8 @@ Removes a watch from Watcher.
 
 [source,ts]
 ----
-interface WatcherDeleteWatchRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-name, Name>>
+interface WatcherDeleteWatchRequest extends <<RequestBase>> {
+  id: <<Name>>
 }
 ----
 
@@ -57,8 +57,8 @@ interface WatcherDeleteWatchRequest extends <<shared-type-request-base, RequestB
 ----
 interface WatcherDeleteWatchResponse {
   found: boolean
-  _id: <<shared-type-id, Id>>
-  _version: <<shared-type-version-number, VersionNumber>>
+  _id: <<Id>>
+  _version: <<VersionNumber>>
 }
 ----
 

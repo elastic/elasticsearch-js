@@ -45,8 +45,8 @@ Delete a connector. Removes a connector and associated sync jobs. This is a dest
 
 [source,ts]
 ----
-interface ConnectorDeleteRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorDeleteRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
   delete_sync_jobs?: boolean
 }
 ----
@@ -56,6 +56,6 @@ interface ConnectorDeleteRequest extends <<shared-type-request-base, RequestBase
 
 [source,ts]
 ----
-type ConnectorDeleteResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type ConnectorDeleteResponse = <<AcknowledgedResponseBase>>
 ----
 

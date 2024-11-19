@@ -45,13 +45,13 @@ Force buffered data to be processed. The flush jobs API is only applicable when 
 
 [source,ts]
 ----
-interface MlFlushJobRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  advance_time?: <<shared-type-date-time, DateTime>>
+interface MlFlushJobRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  advance_time?: <<DateTime>>
   calc_interim?: boolean
-  end?: <<shared-type-date-time, DateTime>>
-  skip_time?: <<shared-type-date-time, DateTime>>
-  start?: <<shared-type-date-time, DateTime>>
+  end?: <<DateTime>>
+  skip_time?: <<DateTime>>
+  start?: <<DateTime>>
 }
 ----
 
@@ -62,7 +62,7 @@ interface MlFlushJobRequest extends <<shared-type-request-base, RequestBase>> {
 ----
 interface MlFlushJobResponse {
   flushed: boolean
-  last_finalized_bucket_end?: <<shared-type-integer, integer>>
+  last_finalized_bucket_end?: <<integer>>
 }
 ----
 

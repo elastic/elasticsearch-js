@@ -45,16 +45,16 @@ This API yields a breakdown of the hot threads on each selected node in the clus
 
 [source,ts]
 ----
-interface NodesHotThreadsRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id?: <<shared-type-node-ids, NodeIds>>
+interface NodesHotThreadsRequest extends <<RequestBase>> {
+  node_id?: <<NodeIds>>
   ignore_idle_threads?: boolean
-  interval?: <<shared-type-duration, Duration>>
-  snapshots?: <<shared-type-long, long>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  threads?: <<shared-type-long, long>>
-  timeout?: <<shared-type-duration, Duration>>
-  type?: <<shared-type-thread-type, ThreadType>>
-  sort?: <<shared-type-thread-type, ThreadType>>
+  interval?: <<Duration>>
+  snapshots?: <<long>>
+  master_timeout?: <<Duration>>
+  threads?: <<long>>
+  timeout?: <<Duration>>
+  type?: <<ThreadType>>
+  sort?: <<ThreadType>>
 }
 ----
 

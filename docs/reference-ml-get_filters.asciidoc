@@ -45,10 +45,10 @@ Get filters. You can get a single filter or all filters.
 
 [source,ts]
 ----
-interface MlGetFiltersRequest extends <<shared-type-request-base, RequestBase>> {
-  filter_id?: <<shared-type-ids, Ids>>
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
+interface MlGetFiltersRequest extends <<RequestBase>> {
+  filter_id?: <<Ids>>
+  from?: <<integer>>
+  size?: <<integer>>
 }
 ----
 
@@ -58,7 +58,7 @@ interface MlGetFiltersRequest extends <<shared-type-request-base, RequestBase>> 
 [source,ts]
 ----
 interface MlGetFiltersResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   filters: MlFilter[]
 }
 ----

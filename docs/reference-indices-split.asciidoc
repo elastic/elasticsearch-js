@@ -45,13 +45,13 @@ Splits an existing index into a new index with more primary shards.
 
 [source,ts]
 ----
-interface IndicesSplitRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
-  target: <<shared-type-index-name, IndexName>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
-  wait_for_active_shards?: <<shared-type-wait-for-active-shards, WaitForActiveShards>>
-  aliases?: Record<<<shared-type-index-name, IndexName>>, IndicesAlias>
+interface IndicesSplitRequest extends <<RequestBase>> {
+  index: <<IndexName>>
+  target: <<IndexName>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
+  wait_for_active_shards?: <<WaitForActiveShards>>
+  aliases?: Record<<<IndexName>>, IndicesAlias>
   settings?: Record<string, any>
 }
 ----
@@ -64,7 +64,7 @@ interface IndicesSplitRequest extends <<shared-type-request-base, RequestBase>> 
 interface IndicesSplitResponse {
   acknowledged: boolean
   shards_acknowledged: boolean
-  index: <<shared-type-index-name, IndexName>>
+  index: <<IndexName>>
 }
 ----
 

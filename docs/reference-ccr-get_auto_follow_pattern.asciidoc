@@ -45,8 +45,8 @@ Gets configured auto-follow patterns. Returns the specified auto-follow pattern 
 
 [source,ts]
 ----
-interface CcrGetAutoFollowPatternRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-name, Name>>
+interface CcrGetAutoFollowPatternRequest extends <<RequestBase>> {
+  name?: <<Name>>
 }
 ----
 

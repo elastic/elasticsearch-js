@@ -45,8 +45,8 @@ Update the connector status.
 
 [source,ts]
 ----
-interface ConnectorUpdateStatusRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorUpdateStatusRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
   status: ConnectorConnectorStatus
 }
 ----
@@ -57,7 +57,7 @@ interface ConnectorUpdateStatusRequest extends <<shared-type-request-base, Reque
 [source,ts]
 ----
 interface ConnectorUpdateStatusResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

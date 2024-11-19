@@ -45,19 +45,19 @@ Simulate an index template. Returns the index configuration that would be applie
 
 [source,ts]
 ----
-interface IndicesSimulateTemplateRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-name, Name>>
+interface IndicesSimulateTemplateRequest extends <<RequestBase>> {
+  name?: <<Name>>
   create?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
   include_defaults?: boolean
   allow_auto_create?: boolean
-  index_patterns?: <<shared-type-indices, Indices>>
-  composed_of?: <<shared-type-name, Name>>[]
+  index_patterns?: <<Indices>>
+  composed_of?: <<Name>>[]
   template?: IndicesPutIndexTemplateIndexTemplateMapping
   data_stream?: IndicesDataStreamVisibility
-  priority?: <<shared-type-long, long>>
-  version?: <<shared-type-version-number, VersionNumber>>
-  _meta?: <<shared-type-metadata, Metadata>>
+  priority?: <<long>>
+  version?: <<VersionNumber>>
+  _meta?: <<Metadata>>
   ignore_missing_component_templates?: string[]
   deprecated?: boolean
 }

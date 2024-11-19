@@ -45,11 +45,11 @@ Returns information about the status of a snapshot.
 
 [source,ts]
 ----
-interface SnapshotStatusRequest extends <<shared-type-request-base, RequestBase>> {
-  repository?: <<shared-type-name, Name>>
-  snapshot?: <<shared-type-names, Names>>
+interface SnapshotStatusRequest extends <<RequestBase>> {
+  repository?: <<Name>>
+  snapshot?: <<Names>>
   ignore_unavailable?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
 }
 ----
 

@@ -45,7 +45,7 @@ Turns on snapshot lifecycle management (SLM).
 
 [source,ts]
 ----
-interface SlmStartRequest extends <<shared-type-request-base, RequestBase>> {
+interface SlmStartRequest extends <<RequestBase>> {
 }
 ----
 
@@ -54,6 +54,6 @@ interface SlmStartRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type SlmStartResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type SlmStartResponse = <<AcknowledgedResponseBase>>
 ----
 

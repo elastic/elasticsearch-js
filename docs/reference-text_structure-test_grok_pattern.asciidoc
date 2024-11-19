@@ -45,9 +45,9 @@ Tests a Grok pattern on some text.
 
 [source,ts]
 ----
-interface TextStructureTestGrokPatternRequest extends <<shared-type-request-base, RequestBase>> {
+interface TextStructureTestGrokPatternRequest extends <<RequestBase>> {
   ecs_compatibility?: string
-  grok_pattern: <<shared-type-grok-pattern, GrokPattern>>
+  grok_pattern: <<GrokPattern>>
   text: string[]
 }
 ----

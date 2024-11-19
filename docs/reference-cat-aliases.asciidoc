@@ -46,8 +46,8 @@ Get aliases. Retrieves the cluster’s index aliases, including filter and routi
 [source,ts]
 ----
 interface CatAliasesRequest extends CatCatRequestBase {
-  name?: <<shared-type-names, Names>>
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  name?: <<Names>>
+  expand_wildcards?: <<ExpandWildcards>>
 }
 ----
 

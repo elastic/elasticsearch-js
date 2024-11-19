@@ -45,10 +45,10 @@ Get user privileges.
 
 [source,ts]
 ----
-interface SecurityGetUserPrivilegesRequest extends <<shared-type-request-base, RequestBase>> {
-  application?: <<shared-type-name, Name>>
-  priviledge?: <<shared-type-name, Name>>
-  username?: <<shared-type-name, Name>> | null
+interface SecurityGetUserPrivilegesRequest extends <<RequestBase>> {
+  application?: <<Name>>
+  priviledge?: <<Name>>
+  username?: <<Name>> | null
 }
 ----
 

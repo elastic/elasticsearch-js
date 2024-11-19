@@ -45,8 +45,8 @@ You can use the cluster repositories metering API to retrieve repositories meter
 
 [source,ts]
 ----
-interface NodesGetRepositoriesMeteringInfoRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id: <<shared-type-node-ids, NodeIds>>
+interface NodesGetRepositoriesMeteringInfoRequest extends <<RequestBase>> {
+  node_id: <<NodeIds>>
 }
 ----
 

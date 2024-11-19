@@ -45,12 +45,12 @@ Retrieves stored watches.
 
 [source,ts]
 ----
-interface WatcherQueryWatchesRequest extends <<shared-type-request-base, RequestBase>> {
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
+interface WatcherQueryWatchesRequest extends <<RequestBase>> {
+  from?: <<integer>>
+  size?: <<integer>>
   query?: QueryDslQueryContainer
-  sort?: <<shared-type-sort, Sort>>
-  search_after?: <<shared-type-sort-results, SortResults>>
+  sort?: <<Sort>>
+  search_after?: <<SortResults>>
 }
 ----
 
@@ -60,7 +60,7 @@ interface WatcherQueryWatchesRequest extends <<shared-type-request-base, Request
 [source,ts]
 ----
 interface WatcherQueryWatchesResponse {
-  count: <<shared-type-integer, integer>>
+  count: <<integer>>
   watches: WatcherQueryWatch[]
 }
 ----

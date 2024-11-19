@@ -45,9 +45,9 @@ Retrieves a synonym rule from a synonym set
 
 [source,ts]
 ----
-interface SynonymsGetSynonymRuleRequest extends <<shared-type-request-base, RequestBase>> {
-  set_id: <<shared-type-id, Id>>
-  rule_id: <<shared-type-id, Id>>
+interface SynonymsGetSynonymRuleRequest extends <<RequestBase>> {
+  set_id: <<Id>>
+  rule_id: <<Id>>
 }
 ----
 

@@ -45,8 +45,8 @@ Deletes an async SQL search or a stored synchronous SQL search. If the search is
 
 [source,ts]
 ----
-interface SqlDeleteAsyncRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface SqlDeleteAsyncRequest extends <<RequestBase>> {
+  id: <<Id>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface SqlDeleteAsyncRequest extends <<shared-type-request-base, RequestBase>
 
 [source,ts]
 ----
-type SqlDeleteAsyncResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type SqlDeleteAsyncResponse = <<AcknowledgedResponseBase>>
 ----
 

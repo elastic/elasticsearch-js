@@ -45,10 +45,10 @@ Retrieves a lifecycle policy.
 
 [source,ts]
 ----
-interface IlmGetLifecycleRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface IlmGetLifecycleRequest extends <<RequestBase>> {
+  name?: <<Name>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 

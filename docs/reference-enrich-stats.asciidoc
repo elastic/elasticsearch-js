@@ -45,7 +45,7 @@ Get enrich stats. Returns enrich coordinator statistics and information about en
 
 [source,ts]
 ----
-interface EnrichStatsRequest extends <<shared-type-request-base, RequestBase>> {
+interface EnrichStatsRequest extends <<RequestBase>> {
 }
 ----
 

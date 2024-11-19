@@ -46,7 +46,7 @@ Returns the health status of a cluster, similar to the cluster health API. IMPOR
 [source,ts]
 ----
 interface CatHealthRequest extends CatCatRequestBase {
-  time?: <<shared-type-time-unit, TimeUnit>>
+  time?: <<TimeUnit>>
   ts?: boolean
 }
 ----

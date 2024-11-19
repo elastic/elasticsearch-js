@@ -45,14 +45,14 @@ Mount a snapshot as a searchable index.
 
 [source,ts]
 ----
-interface SearchableSnapshotsMountRequest extends <<shared-type-request-base, RequestBase>> {
-  repository: <<shared-type-name, Name>>
-  snapshot: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
+interface SearchableSnapshotsMountRequest extends <<RequestBase>> {
+  repository: <<Name>>
+  snapshot: <<Name>>
+  master_timeout?: <<Duration>>
   wait_for_completion?: boolean
   storage?: string
-  index: <<shared-type-index-name, IndexName>>
-  renamed_index?: <<shared-type-index-name, IndexName>>
+  index: <<IndexName>>
+  renamed_index?: <<IndexName>>
   index_settings?: Record<string, any>
   ignore_index_settings?: string[]
 }

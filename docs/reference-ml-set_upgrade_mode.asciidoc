@@ -45,9 +45,9 @@ Set upgrade_mode for ML indices. Sets a cluster wide upgrade_mode setting that p
 
 [source,ts]
 ----
-interface MlSetUpgradeModeRequest extends <<shared-type-request-base, RequestBase>> {
+interface MlSetUpgradeModeRequest extends <<RequestBase>> {
   enabled?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -56,6 +56,6 @@ interface MlSetUpgradeModeRequest extends <<shared-type-request-base, RequestBas
 
 [source,ts]
 ----
-type MlSetUpgradeModeResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlSetUpgradeModeResponse = <<AcknowledgedResponseBase>>
 ----
 

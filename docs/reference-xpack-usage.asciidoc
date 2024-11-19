@@ -45,8 +45,8 @@ This API provides information about which features are currently enabled and ava
 
 [source,ts]
 ----
-interface XpackUsageRequest extends <<shared-type-request-base, RequestBase>> {
-  master_timeout?: <<shared-type-duration, Duration>>
+interface XpackUsageRequest extends <<RequestBase>> {
+  master_timeout?: <<Duration>>
 }
 ----
 

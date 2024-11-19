@@ -45,19 +45,19 @@ Get anomaly detection job results for buckets. The API presents a chronological 
 
 [source,ts]
 ----
-interface MlGetBucketsRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  timestamp?: <<shared-type-date-time, DateTime>>
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
-  anomaly_score?: <<shared-type-double, double>>
+interface MlGetBucketsRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  timestamp?: <<DateTime>>
+  from?: <<integer>>
+  size?: <<integer>>
+  anomaly_score?: <<double>>
   desc?: boolean
-  end?: <<shared-type-date-time, DateTime>>
+  end?: <<DateTime>>
   exclude_interim?: boolean
   expand?: boolean
   page?: MlPage
-  sort?: <<shared-type-field, Field>>
-  start?: <<shared-type-date-time, DateTime>>
+  sort?: <<Field>>
+  start?: <<DateTime>>
 }
 ----
 
@@ -68,7 +68,7 @@ interface MlGetBucketsRequest extends <<shared-type-request-base, RequestBase>> 
 ----
 interface MlGetBucketsResponse {
   buckets: MlBucketSummary[]
-  count: <<shared-type-long, long>>
+  count: <<long>>
 }
 ----
 

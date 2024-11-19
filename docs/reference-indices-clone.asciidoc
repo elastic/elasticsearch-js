@@ -45,13 +45,13 @@ Clones an existing index.
 
 [source,ts]
 ----
-interface IndicesCloneRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
-  target: <<shared-type-name, Name>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
-  wait_for_active_shards?: <<shared-type-wait-for-active-shards, WaitForActiveShards>>
-  aliases?: Record<<<shared-type-index-name, IndexName>>, IndicesAlias>
+interface IndicesCloneRequest extends <<RequestBase>> {
+  index: <<IndexName>>
+  target: <<Name>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
+  wait_for_active_shards?: <<WaitForActiveShards>>
+  aliases?: Record<<<IndexName>>, IndicesAlias>
   settings?: Record<string, any>
 }
 ----
@@ -63,7 +63,7 @@ interface IndicesCloneRequest extends <<shared-type-request-base, RequestBase>> 
 ----
 interface IndicesCloneResponse {
   acknowledged: boolean
-  index: <<shared-type-index-name, IndexName>>
+  index: <<IndexName>>
   shards_acknowledged: boolean
 }
 ----

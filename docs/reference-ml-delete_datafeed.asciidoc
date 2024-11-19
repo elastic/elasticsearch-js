@@ -45,8 +45,8 @@ Delete a datafeed.
 
 [source,ts]
 ----
-interface MlDeleteDatafeedRequest extends <<shared-type-request-base, RequestBase>> {
-  datafeed_id: <<shared-type-id, Id>>
+interface MlDeleteDatafeedRequest extends <<RequestBase>> {
+  datafeed_id: <<Id>>
   force?: boolean
 }
 ----
@@ -56,6 +56,6 @@ interface MlDeleteDatafeedRequest extends <<shared-type-request-base, RequestBas
 
 [source,ts]
 ----
-type MlDeleteDatafeedResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlDeleteDatafeedResponse = <<AcknowledgedResponseBase>>
 ----
 

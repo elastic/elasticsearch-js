@@ -45,7 +45,7 @@ Get builtin privileges. Get the list of cluster privileges and index privileges 
 
 [source,ts]
 ----
-interface SecurityGetBuiltinPrivilegesRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityGetBuiltinPrivilegesRequest extends <<RequestBase>> {
 }
 ----
 
@@ -56,7 +56,7 @@ interface SecurityGetBuiltinPrivilegesRequest extends <<shared-type-request-base
 ----
 interface SecurityGetBuiltinPrivilegesResponse {
   cluster: string[]
-  index: <<shared-type-indices, Indices>>
+  index: <<Indices>>
 }
 ----
 

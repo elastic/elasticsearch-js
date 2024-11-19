@@ -45,9 +45,9 @@ Resolves the specified name(s) and/or index patterns for indices, aliases, and d
 
 [source,ts]
 ----
-interface IndicesResolveIndexRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-names, Names>>
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+interface IndicesResolveIndexRequest extends <<RequestBase>> {
+  name: <<Names>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   allow_no_indices?: boolean
 }

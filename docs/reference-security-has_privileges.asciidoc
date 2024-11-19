@@ -45,8 +45,8 @@ Check user privileges. Determine whether the specified user has a specified list
 
 [source,ts]
 ----
-interface SecurityHasPrivilegesRequest extends <<shared-type-request-base, RequestBase>> {
-  user?: <<shared-type-name, Name>>
+interface SecurityHasPrivilegesRequest extends <<RequestBase>> {
+  user?: <<Name>>
   application?: SecurityHasPrivilegesApplicationPrivilegesCheck[]
   cluster?: SecurityClusterPrivilege[]
   index?: SecurityHasPrivilegesIndexPrivilegesCheck[]
@@ -62,8 +62,8 @@ interface SecurityHasPrivilegesResponse {
   application: SecurityHasPrivilegesApplicationsPrivileges
   cluster: Record<string, boolean>
   has_all_requested: boolean
-  index: Record<<<shared-type-index-name, IndexName>>, SecurityHasPrivilegesPrivileges>
-  username: <<shared-type-username, Username>>
+  index: Record<<<IndexName>>, SecurityHasPrivilegesPrivileges>
+  username: <<Username>>
 }
 ----
 

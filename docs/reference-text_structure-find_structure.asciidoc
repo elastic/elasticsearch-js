@@ -52,14 +52,14 @@ interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
   ecs_compatibility?: string
   explain?: boolean
   format?: string
-  grok_pattern?: <<shared-type-grok-pattern, GrokPattern>>
+  grok_pattern?: <<GrokPattern>>
   has_header_row?: boolean
-  line_merge_size_limit?: <<shared-type-uint, uint>>
-  lines_to_sample?: <<shared-type-uint, uint>>
+  line_merge_size_limit?: <<uint>>
+  lines_to_sample?: <<uint>>
   quote?: string
   should_trim_fields?: boolean
-  timeout?: <<shared-type-duration, Duration>>
-  timestamp_field?: <<shared-type-field, Field>>
+  timeout?: <<Duration>>
+  timestamp_field?: <<Field>>
   timestamp_format?: string
   text_files?: TJsonDocument[]
 }
@@ -73,24 +73,24 @@ interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
 interface TextStructureFindStructureResponse {
   charset: string
   has_header_row?: boolean
-  has_<<shared-type-byte, byte>>_order_marker: boolean
+  has_<<byte>>_order_marker: boolean
   format: string
-  field_stats: Record<<<shared-type-field, Field>>, TextStructureFindStructureFieldStat>
+  field_stats: Record<<<Field>>, TextStructureFindStructureFieldStat>
   sample_start: string
-  num_messages_analyzed: <<shared-type-integer, integer>>
+  num_messages_analyzed: <<integer>>
   mappings: MappingTypeMapping
   quote?: string
   delimiter?: string
   need_client_timezone: boolean
-  num_lines_analyzed: <<shared-type-integer, integer>>
+  num_lines_analyzed: <<integer>>
   column_names?: string[]
   explanation?: string[]
-  grok_pattern?: <<shared-type-grok-pattern, GrokPattern>>
+  grok_pattern?: <<GrokPattern>>
   multiline_start_pattern?: string
   exclude_lines_pattern?: string
   java_timestamp_formats?: string[]
   joda_timestamp_formats?: string[]
-  timestamp_field?: <<shared-type-field, Field>>
+  timestamp_field?: <<Field>>
   should_trim_fields?: boolean
   ingest_pipeline: IngestPipelineConfig
 }

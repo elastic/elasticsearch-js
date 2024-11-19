@@ -45,8 +45,8 @@ Retrieves follower stats. return shard-level stats about the following tasks ass
 
 [source,ts]
 ----
-interface CcrFollowStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
+interface CcrFollowStatsRequest extends <<RequestBase>> {
+  index: <<Indices>>
 }
 ----
 

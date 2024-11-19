@@ -45,7 +45,7 @@ Turns off snapshot lifecycle management (SLM).
 
 [source,ts]
 ----
-interface SlmStopRequest extends <<shared-type-request-base, RequestBase>> {
+interface SlmStopRequest extends <<RequestBase>> {
 }
 ----
 
@@ -54,6 +54,6 @@ interface SlmStopRequest extends <<shared-type-request-base, RequestBase>> {
 
 [source,ts]
 ----
-type SlmStopResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type SlmStopResponse = <<AcknowledgedResponseBase>>
 ----
 

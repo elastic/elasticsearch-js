@@ -45,8 +45,8 @@ Close a point in time. A point in time must be opened explicitly before being us
 
 [source,ts]
 ----
-interface ClosePointInTimeRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface ClosePointInTimeRequest extends <<RequestBase>> {
+  id: <<Id>>
 }
 ----
 
@@ -57,7 +57,7 @@ interface ClosePointInTimeRequest extends <<shared-type-request-base, RequestBas
 ----
 interface ClosePointInTimeResponse {
   succeeded: boolean
-  num_freed: <<shared-type-integer, integer>>
+  num_freed: <<integer>>
 }
 ----
 

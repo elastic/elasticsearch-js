@@ -45,39 +45,39 @@ Run an async search. When the primary sort of the results is an indexed field, s
 
 [source,ts]
 ----
-interface AsyncSearchSubmitRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
-  wait_for_completion_timeout?: <<shared-type-duration, Duration>>
+interface AsyncSearchSubmitRequest extends <<RequestBase>> {
+  index?: <<Indices>>
+  wait_for_completion_timeout?: <<Duration>>
   keep_on_completion?: boolean
-  keep_alive?: <<shared-type-duration, Duration>>
+  keep_alive?: <<Duration>>
   allow_no_indices?: boolean
   allow_partial_search_results?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
-  batched_reduce_size?: <<shared-type-long, long>>
+  batched_reduce_size?: <<long>>
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
-  max_concurrent_shard_requests?: <<shared-type-long, long>>
-  min_compatible_shard_node?: <<shared-type-version-string, VersionString>>
+  max_concurrent_shard_requests?: <<long>>
+  min_compatible_shard_node?: <<VersionString>>
   preference?: string
-  pre_filter_shard_size?: <<shared-type-long, long>>
+  pre_filter_shard_size?: <<long>>
   request_cache?: boolean
-  routing?: <<shared-type-routing, Routing>>
-  scroll?: <<shared-type-duration, Duration>>
-  search_type?: <<shared-type-search-type, SearchType>>
-  suggest_field?: <<shared-type-field, Field>>
-  suggest_mode?: <<shared-type-suggest-mode, SuggestMode>>
-  suggest_size?: <<shared-type-long, long>>
+  routing?: <<Routing>>
+  scroll?: <<Duration>>
+  search_type?: <<SearchType>>
+  suggest_field?: <<Field>>
+  suggest_mode?: <<SuggestMode>>
+  suggest_size?: <<long>>
   suggest_text?: string
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
-  _source_excludes?: <<shared-type-fields, Fields>>
-  _source_includes?: <<shared-type-fields, Fields>>
+  _source_excludes?: <<Fields>>
+  _source_includes?: <<Fields>>
   q?: string
   aggregations?: Record<string, AggregationsAggregationContainer>
   /** @alias aggregations */
@@ -85,31 +85,31 @@ interface AsyncSearchSubmitRequest extends <<shared-type-request-base, RequestBa
   collapse?: SearchFieldCollapse
   explain?: boolean
   ext?: Record<string, any>
-  from?: <<shared-type-integer, integer>>
+  from?: <<integer>>
   highlight?: SearchHighlight
   track_total_hits?: SearchTrackHits
-  indices_boost?: Record<<<shared-type-index-name, IndexName>>, <<shared-type-double, double>>>[]
-  docvalue_fields?: (QueryDslFieldAndFormat | <<shared-type-field, Field>>)[]
-  knn?: <<shared-type-knn-search, KnnSearch>> | <<shared-type-knn-search, KnnSearch>>[]
-  min_score?: <<shared-type-double, double>>
+  indices_boost?: Record<<<IndexName>>, <<double>>>[]
+  docvalue_fields?: (QueryDslFieldAndFormat | <<Field>>)[]
+  knn?: <<KnnSearch>> | <<KnnSearch>>[]
+  min_score?: <<double>>
   post_filter?: QueryDslQueryContainer
   profile?: boolean
   query?: QueryDslQueryContainer
   rescore?: SearchRescore | SearchRescore[]
-  script_fields?: Record<string, <<shared-type-script-field, ScriptField>>>
-  search_after?: <<shared-type-sort-results, SortResults>>
-  size?: <<shared-type-integer, integer>>
-  slice?: <<shared-type-sliced-scroll, SlicedScroll>>
-  sort?: <<shared-type-sort, Sort>>
+  script_fields?: Record<string, <<ScriptField>>>
+  search_after?: <<SortResults>>
+  size?: <<integer>>
+  slice?: <<SlicedScroll>>
+  sort?: <<Sort>>
   _source?: SearchSourceConfig
-  fields?: (QueryDslFieldAndFormat | <<shared-type-field, Field>>)[]
+  fields?: (QueryDslFieldAndFormat | <<Field>>)[]
   suggest?: SearchSuggester
-  terminate_after?: <<shared-type-long, long>>
+  terminate_after?: <<long>>
   timeout?: string
   track_scores?: boolean
   version?: boolean
   seq_no_primary_term?: boolean
-  stored_fields?: <<shared-type-fields, Fields>>
+  stored_fields?: <<Fields>>
   pit?: SearchPointInTimeReference
   runtime_mappings?: MappingRuntimeFields
   stats?: string[]
@@ -121,6 +121,6 @@ interface AsyncSearchSubmitRequest extends <<shared-type-request-base, RequestBa
 
 [source,ts]
 ----
-type AsyncSearchSubmitResponse<TDocument = unknown, TAggregations = Record<<<shared-type-aggregate-name, AggregateName>>, AggregationsAggregate>> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, TAggregations>
+type AsyncSearchSubmitResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, TAggregations>
 ----
 

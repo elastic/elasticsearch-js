@@ -45,7 +45,7 @@ Get a user profile. Get a user's profile using the unique profile ID.
 
 [source,ts]
 ----
-interface SecurityGetUserProfileRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityGetUserProfileRequest extends <<RequestBase>> {
   uid: SecurityUserProfileId | SecurityUserProfileId[]
   data?: string | string[]
 }

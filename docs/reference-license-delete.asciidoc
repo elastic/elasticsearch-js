@@ -45,7 +45,7 @@ Deletes licensing information for the cluster
 
 [source,ts]
 ----
-interface LicenseDeleteRequest extends <<shared-type-request-base, RequestBase>> {
+interface LicenseDeleteRequest extends <<RequestBase>> {
 }
 ----
 
@@ -54,6 +54,6 @@ interface LicenseDeleteRequest extends <<shared-type-request-base, RequestBase>>
 
 [source,ts]
 ----
-type LicenseDeleteResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type LicenseDeleteResponse = <<AcknowledgedResponseBase>>
 ----
 

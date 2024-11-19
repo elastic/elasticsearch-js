@@ -45,10 +45,10 @@ Returns information on the usage of features.
 
 [source,ts]
 ----
-interface NodesUsageRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id?: <<shared-type-node-ids, NodeIds>>
-  metric?: <<shared-type-metrics, Metrics>>
-  timeout?: <<shared-type-duration, Duration>>
+interface NodesUsageRequest extends <<RequestBase>> {
+  node_id?: <<NodeIds>>
+  metric?: <<Metrics>>
+  timeout?: <<Duration>>
 }
 ----
 

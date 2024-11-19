@@ -45,8 +45,8 @@ Update the connector filtering. Update the draft filtering configuration of a co
 
 [source,ts]
 ----
-interface ConnectorUpdateFilteringRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorUpdateFilteringRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
   filtering?: ConnectorFilteringConfig[]
   rules?: ConnectorFilteringRule[]
   advanced_snippet?: ConnectorFilteringAdvancedSnippet
@@ -59,7 +59,7 @@ interface ConnectorUpdateFilteringRequest extends <<shared-type-request-base, Re
 [source,ts]
 ----
 interface ConnectorUpdateFilteringResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

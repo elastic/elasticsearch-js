@@ -45,10 +45,10 @@ Create a data stream. Creates a data stream. You must have a matching index temp
 
 [source,ts]
 ----
-interface IndicesCreateDataStreamRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-data-stream-name, DataStreamName>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface IndicesCreateDataStreamRequest extends <<RequestBase>> {
+  name: <<DataStreamName>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -57,6 +57,6 @@ interface IndicesCreateDataStreamRequest extends <<shared-type-request-base, Req
 
 [source,ts]
 ----
-type IndicesCreateDataStreamResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IndicesCreateDataStreamResponse = <<AcknowledgedResponseBase>>
 ----
 

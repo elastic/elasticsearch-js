@@ -45,9 +45,9 @@ Add anomaly detection job to calendar.
 
 [source,ts]
 ----
-interface MlPutCalendarJobRequest extends <<shared-type-request-base, RequestBase>> {
-  calendar_id: <<shared-type-id, Id>>
-  job_id: <<shared-type-ids, Ids>>
+interface MlPutCalendarJobRequest extends <<RequestBase>> {
+  calendar_id: <<Id>>
+  job_id: <<Ids>>
 }
 ----
 
@@ -57,9 +57,9 @@ interface MlPutCalendarJobRequest extends <<shared-type-request-base, RequestBas
 [source,ts]
 ----
 interface MlPutCalendarJobResponse {
-  calendar_id: <<shared-type-id, Id>>
+  calendar_id: <<Id>>
   description?: string
-  job_ids: <<shared-type-ids, Ids>>
+  job_ids: <<Ids>>
 }
 ----
 

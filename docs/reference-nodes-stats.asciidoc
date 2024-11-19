@@ -45,18 +45,18 @@ Returns cluster nodes statistics.
 
 [source,ts]
 ----
-interface NodesStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id?: <<shared-type-node-ids, NodeIds>>
-  metric?: <<shared-type-metrics, Metrics>>
-  index_metric?: <<shared-type-metrics, Metrics>>
-  completion_fields?: <<shared-type-fields, Fields>>
-  fielddata_fields?: <<shared-type-fields, Fields>>
-  fields?: <<shared-type-fields, Fields>>
+interface NodesStatsRequest extends <<RequestBase>> {
+  node_id?: <<NodeIds>>
+  metric?: <<Metrics>>
+  index_metric?: <<Metrics>>
+  completion_fields?: <<Fields>>
+  fielddata_fields?: <<Fields>>
+  fields?: <<Fields>>
   groups?: boolean
   include_segment_file_sizes?: boolean
-  level?: <<shared-type-level, Level>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+  level?: <<Level>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   types?: string[]
   include_unloaded_segments?: boolean
 }

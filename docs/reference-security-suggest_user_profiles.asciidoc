@@ -45,9 +45,9 @@ Suggest a user profile. Get suggestions for user profiles that match specified s
 
 [source,ts]
 ----
-interface SecuritySuggestUserProfilesRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecuritySuggestUserProfilesRequest extends <<RequestBase>> {
   name?: string
-  size?: <<shared-type-long, long>>
+  size?: <<long>>
   data?: string | string[]
   hint?: SecuritySuggestUserProfilesHint
 }
@@ -60,7 +60,7 @@ interface SecuritySuggestUserProfilesRequest extends <<shared-type-request-base,
 ----
 interface SecuritySuggestUserProfilesResponse {
   total: SecuritySuggestUserProfilesTotalUserProfiles
-  took: <<shared-type-long, long>>
+  took: <<long>>
   profiles: SecurityUserProfile[]
 }
 ----

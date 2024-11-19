@@ -45,7 +45,7 @@ Authenticate a user. Authenticates a user and returns information about the auth
 
 [source,ts]
 ----
-interface SecurityAuthenticateRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityAuthenticateRequest extends <<RequestBase>> {
 }
 ----
 
@@ -58,11 +58,11 @@ interface SecurityAuthenticateResponse {
   api_key?: SecurityApiKey
   authentication_realm: SecurityRealmInfo
   email?: string | null
-  full_name?: <<shared-type-name, Name>> | null
+  full_name?: <<Name>> | null
   lookup_realm: SecurityRealmInfo
-  metadata: <<shared-type-metadata, Metadata>>
+  metadata: <<Metadata>>
   roles: string[]
-  username: <<shared-type-username, Username>>
+  username: <<Username>>
   enabled: boolean
   authentication_type: string
   token?: SecurityAuthenticateToken

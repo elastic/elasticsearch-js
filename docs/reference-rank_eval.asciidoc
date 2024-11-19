@@ -45,10 +45,10 @@ Evaluate ranked search results. Evaluate the quality of ranked search results ov
 
 [source,ts]
 ----
-interface RankEvalRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface RankEvalRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   search_type?: string
   requests: RankEvalRankEvalRequestItem[]
@@ -62,8 +62,8 @@ interface RankEvalRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface RankEvalResponse {
-  metric_score: <<shared-type-double, double>>
-  details: Record<<<shared-type-id, Id>>, RankEvalRankEvalMetricDetail>
+  metric_score: <<double>>
+  details: Record<<<Id>>, RankEvalRankEvalMetricDetail>
   failures: Record<string, any>
 }
 ----

@@ -45,8 +45,8 @@ Create an enrich policy. Creates an enrich policy.
 
 [source,ts]
 ----
-interface EnrichPutPolicyRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface EnrichPutPolicyRequest extends <<RequestBase>> {
+  name: <<Name>>
   geo_match?: EnrichPolicy
   match?: EnrichPolicy
   range?: EnrichPolicy
@@ -58,6 +58,6 @@ interface EnrichPutPolicyRequest extends <<shared-type-request-base, RequestBase
 
 [source,ts]
 ----
-type EnrichPutPolicyResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type EnrichPutPolicyResponse = <<AcknowledgedResponseBase>>
 ----
 

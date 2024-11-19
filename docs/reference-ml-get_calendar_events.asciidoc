@@ -45,13 +45,13 @@ Get info about events in calendars.
 
 [source,ts]
 ----
-interface MlGetCalendarEventsRequest extends <<shared-type-request-base, RequestBase>> {
-  calendar_id: <<shared-type-id, Id>>
-  end?: <<shared-type-date-time, DateTime>>
-  from?: <<shared-type-integer, integer>>
-  job_id?: <<shared-type-id, Id>>
-  size?: <<shared-type-integer, integer>>
-  start?: <<shared-type-date-time, DateTime>>
+interface MlGetCalendarEventsRequest extends <<RequestBase>> {
+  calendar_id: <<Id>>
+  end?: <<DateTime>>
+  from?: <<integer>>
+  job_id?: <<Id>>
+  size?: <<integer>>
+  start?: <<DateTime>>
 }
 ----
 
@@ -61,7 +61,7 @@ interface MlGetCalendarEventsRequest extends <<shared-type-request-base, Request
 [source,ts]
 ----
 interface MlGetCalendarEventsResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   events: MlCalendarEvent[]
 }
 ----

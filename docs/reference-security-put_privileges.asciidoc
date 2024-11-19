@@ -45,8 +45,8 @@ Create or update application privileges.
 
 [source,ts]
 ----
-interface SecurityPutPrivilegesRequest extends <<shared-type-request-base, RequestBase>> {
-  refresh?: <<shared-type-refresh, Refresh>>
+interface SecurityPutPrivilegesRequest extends <<RequestBase>> {
+  refresh?: <<Refresh>>
   privileges?: Record<string, Record<string, SecurityPutPrivilegesActions>>
 }
 ----

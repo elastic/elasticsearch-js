@@ -45,16 +45,16 @@ Creates a rollup job.
 
 [source,ts]
 ----
-interface RollupPutJobRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface RollupPutJobRequest extends <<RequestBase>> {
+  id: <<Id>>
   cron: string
   groups: RollupGroupings
   index_pattern: string
   metrics?: RollupFieldMetric[]
-  page_size: <<shared-type-integer, integer>>
-  rollup_index: <<shared-type-index-name, IndexName>>
-  timeout?: <<shared-type-duration, Duration>>
-  headers?: <<shared-type-http-headers, HttpHeaders>>
+  page_size: <<integer>>
+  rollup_index: <<IndexName>>
+  timeout?: <<Duration>>
+  headers?: <<HttpHeaders>>
 }
 ----
 
@@ -63,6 +63,6 @@ interface RollupPutJobRequest extends <<shared-type-request-base, RequestBase>> 
 
 [source,ts]
 ----
-type RollupPutJobResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type RollupPutJobResponse = <<AcknowledgedResponseBase>>
 ----
 

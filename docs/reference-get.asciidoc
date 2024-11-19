@@ -45,20 +45,20 @@ Get a document by its ID. Retrieves the document with the specified ID from an i
 
 [source,ts]
 ----
-interface GetRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  index: <<shared-type-index-name, IndexName>>
+interface GetRequest extends <<RequestBase>> {
+  id: <<Id>>
+  index: <<IndexName>>
   force_synthetic_source?: boolean
   preference?: string
   realtime?: boolean
   refresh?: boolean
-  routing?: <<shared-type-routing, Routing>>
+  routing?: <<Routing>>
   _source?: SearchSourceConfigParam
-  _source_excludes?: <<shared-type-fields, Fields>>
-  _source_includes?: <<shared-type-fields, Fields>>
-  stored_fields?: <<shared-type-fields, Fields>>
-  version?: <<shared-type-version-number, VersionNumber>>
-  version_type?: <<shared-type-version-type, VersionType>>
+  _source_excludes?: <<Fields>>
+  _source_includes?: <<Fields>>
+  stored_fields?: <<Fields>>
+  version?: <<VersionNumber>>
+  version_type?: <<VersionType>>
 }
 ----
 

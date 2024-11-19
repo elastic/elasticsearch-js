@@ -45,8 +45,8 @@ Clear the API key cache. Evict a subset of all entries from the API key cache. T
 
 [source,ts]
 ----
-interface SecurityClearApiKeyCacheRequest extends <<shared-type-request-base, RequestBase>> {
-  ids: <<shared-type-ids, Ids>>
+interface SecurityClearApiKeyCacheRequest extends <<RequestBase>> {
+  ids: <<Ids>>
 }
 ----
 
@@ -56,8 +56,8 @@ interface SecurityClearApiKeyCacheRequest extends <<shared-type-request-base, Re
 [source,ts]
 ----
 interface SecurityClearApiKeyCacheResponse {
-  _nodes: <<shared-type-node-statistics, NodeStatistics>>
-  cluster_name: <<shared-type-name, Name>>
+  _nodes: <<NodeStatistics>>
+  cluster_name: <<Name>>
   nodes: Record<string, SecurityClusterNode>
 }
 ----

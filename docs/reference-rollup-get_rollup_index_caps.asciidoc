@@ -45,8 +45,8 @@ Returns the rollup capabilities of all jobs inside of a rollup index (for exampl
 
 [source,ts]
 ----
-interface RollupGetRollupIndexCapsRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-ids, Ids>>
+interface RollupGetRollupIndexCapsRequest extends <<RequestBase>> {
+  index: <<Ids>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface RollupGetRollupIndexCapsRequest extends <<shared-type-request-base, Re
 
 [source,ts]
 ----
-type RollupGetRollupIndexCapsResponse = Record<<<shared-type-index-name, IndexName>>, RollupGetRollupIndexCapsIndexCapabilities>
+type RollupGetRollupIndexCapsResponse = Record<<<IndexName>>, RollupGetRollupIndexCapsIndexCapabilities>
 ----
 

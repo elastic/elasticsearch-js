@@ -45,8 +45,8 @@ Starts an existing, stopped rollup job.
 
 [source,ts]
 ----
-interface RollupStartJobRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface RollupStartJobRequest extends <<RequestBase>> {
+  id: <<Id>>
 }
 ----
 

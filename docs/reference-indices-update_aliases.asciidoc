@@ -45,9 +45,9 @@ Create or update an alias. Adds a data stream or index to an alias.
 
 [source,ts]
 ----
-interface IndicesUpdateAliasesRequest extends <<shared-type-request-base, RequestBase>> {
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface IndicesUpdateAliasesRequest extends <<RequestBase>> {
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   actions?: IndicesUpdateAliasesAction[]
 }
 ----
@@ -57,6 +57,6 @@ interface IndicesUpdateAliasesRequest extends <<shared-type-request-base, Reques
 
 [source,ts]
 ----
-type IndicesUpdateAliasesResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IndicesUpdateAliasesResponse = <<AcknowledgedResponseBase>>
 ----
 

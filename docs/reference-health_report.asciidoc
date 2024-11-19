@@ -45,11 +45,11 @@ Returns the health of the cluster.
 
 [source,ts]
 ----
-interface HealthReportRequest extends <<shared-type-request-base, RequestBase>> {
+interface HealthReportRequest extends <<RequestBase>> {
   feature?: string | string[]
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
   verbose?: boolean
-  size?: <<shared-type-integer, integer>>
+  size?: <<integer>>
 }
 ----
 

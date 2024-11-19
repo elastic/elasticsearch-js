@@ -45,8 +45,8 @@ Returns information about ongoing and completed shard recoveries for one or more
 
 [source,ts]
 ----
-interface IndicesRecoveryRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface IndicesRecoveryRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   active_only?: boolean
   detailed?: boolean
 }
@@ -57,6 +57,6 @@ interface IndicesRecoveryRequest extends <<shared-type-request-base, RequestBase
 
 [source,ts]
 ----
-type IndicesRecoveryResponse = Record<<<shared-type-index-name, IndexName>>, IndicesRecoveryRecoveryStatus>
+type IndicesRecoveryResponse = Record<<<IndexName>>, IndicesRecoveryRecoveryStatus>
 ----
 

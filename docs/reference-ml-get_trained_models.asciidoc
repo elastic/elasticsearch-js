@@ -45,14 +45,14 @@ Get trained model configuration info.
 
 [source,ts]
 ----
-interface MlGetTrainedModelsRequest extends <<shared-type-request-base, RequestBase>> {
-  model_id?: <<shared-type-ids, Ids>>
+interface MlGetTrainedModelsRequest extends <<RequestBase>> {
+  model_id?: <<Ids>>
   allow_no_match?: boolean
   decompress_definition?: boolean
   exclude_generated?: boolean
-  from?: <<shared-type-integer, integer>>
+  from?: <<integer>>
   include?: MlInclude
-  size?: <<shared-type-integer, integer>>
+  size?: <<integer>>
   tags?: string | string[]
 }
 ----
@@ -63,7 +63,7 @@ interface MlGetTrainedModelsRequest extends <<shared-type-request-base, RequestB
 [source,ts]
 ----
 interface MlGetTrainedModelsResponse {
-  count: <<shared-type-integer, integer>>
+  count: <<integer>>
   trained_model_configs: MlTrainedModelConfig[]
 }
 ----

@@ -45,7 +45,7 @@ Ping the cluster. Returns whether the cluster is running.
 
 [source,ts]
 ----
-interface PingRequest extends <<shared-type-request-base, RequestBase>> {
+interface PingRequest extends <<RequestBase>> {
 }
 ----
 

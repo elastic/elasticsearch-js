@@ -45,8 +45,8 @@ Pauses an auto-follow pattern
 
 [source,ts]
 ----
-interface CcrPauseAutoFollowPatternRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface CcrPauseAutoFollowPatternRequest extends <<RequestBase>> {
+  name: <<Name>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface CcrPauseAutoFollowPatternRequest extends <<shared-type-request-base, R
 
 [source,ts]
 ----
-type CcrPauseAutoFollowPatternResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type CcrPauseAutoFollowPatternResponse = <<AcknowledgedResponseBase>>
 ----
 

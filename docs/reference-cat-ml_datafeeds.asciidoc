@@ -46,11 +46,11 @@ Get datafeeds. Returns configuration and usage information about datafeeds. This
 [source,ts]
 ----
 interface CatMlDatafeedsRequest extends CatCatRequestBase {
-  datafeed_id?: <<shared-type-id, Id>>
+  datafeed_id?: <<Id>>
   allow_no_match?: boolean
   h?: CatCatDatafeedColumns
   s?: CatCatDatafeedColumns
-  time?: <<shared-type-time-unit, TimeUnit>>
+  time?: <<TimeUnit>>
 }
 ----
 

@@ -45,8 +45,8 @@ Delete a filter. If an anomaly detection job references the filter, you cannot d
 
 [source,ts]
 ----
-interface MlDeleteFilterRequest extends <<shared-type-request-base, RequestBase>> {
-  filter_id: <<shared-type-id, Id>>
+interface MlDeleteFilterRequest extends <<RequestBase>> {
+  filter_id: <<Id>>
 }
 ----
 
@@ -55,6 +55,6 @@ interface MlDeleteFilterRequest extends <<shared-type-request-base, RequestBase>
 
 [source,ts]
 ----
-type MlDeleteFilterResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlDeleteFilterResponse = <<AcknowledgedResponseBase>>
 ----
 

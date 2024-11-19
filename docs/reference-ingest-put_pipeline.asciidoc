@@ -45,16 +45,16 @@ Creates or updates an ingest pipeline. Changes made using this API take effect i
 
 [source,ts]
 ----
-interface IngestPutPipelineRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
-  if_version?: <<shared-type-version-number, VersionNumber>>
-  _meta?: <<shared-type-metadata, Metadata>>
+interface IngestPutPipelineRequest extends <<RequestBase>> {
+  id: <<Id>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
+  if_version?: <<VersionNumber>>
+  _meta?: <<Metadata>>
   description?: string
   on_failure?: IngestProcessorContainer[]
   processors?: IngestProcessorContainer[]
-  version?: <<shared-type-version-number, VersionNumber>>
+  version?: <<VersionNumber>>
   deprecated?: boolean
 }
 ----
@@ -64,6 +64,6 @@ interface IngestPutPipelineRequest extends <<shared-type-request-base, RequestBa
 
 [source,ts]
 ----
-type IngestPutPipelineResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IngestPutPipelineResponse = <<AcknowledgedResponseBase>>
 ----
 

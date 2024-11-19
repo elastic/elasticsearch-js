@@ -45,9 +45,9 @@ Stops an existing, started rollup job.
 
 [source,ts]
 ----
-interface RollupStopJobRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  timeout?: <<shared-type-duration, Duration>>
+interface RollupStopJobRequest extends <<RequestBase>> {
+  id: <<Id>>
+  timeout?: <<Duration>>
   wait_for_completion?: boolean
 }
 ----

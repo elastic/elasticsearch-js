@@ -45,9 +45,9 @@ Returns summarized information about existing query rulesets.
 
 [source,ts]
 ----
-interface QueryRulesListRulesetsRequest extends <<shared-type-request-base, RequestBase>> {
-  from?: <<shared-type-integer, integer>>
-  size?: <<shared-type-integer, integer>>
+interface QueryRulesListRulesetsRequest extends <<RequestBase>> {
+  from?: <<integer>>
+  size?: <<integer>>
 }
 ----
 
@@ -57,7 +57,7 @@ interface QueryRulesListRulesetsRequest extends <<shared-type-request-base, Requ
 [source,ts]
 ----
 interface QueryRulesListRulesetsResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   results: QueryRulesListRulesetsQueryRulesetListItem[]
 }
 ----

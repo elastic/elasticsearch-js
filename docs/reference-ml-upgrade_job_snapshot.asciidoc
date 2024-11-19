@@ -45,11 +45,11 @@ Upgrade a snapshot. Upgrades an anomaly detection model snapshot to the latest m
 
 [source,ts]
 ----
-interface MlUpgradeJobSnapshotRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  snapshot_id: <<shared-type-id, Id>>
+interface MlUpgradeJobSnapshotRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  snapshot_id: <<Id>>
   wait_for_completion?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -59,7 +59,7 @@ interface MlUpgradeJobSnapshotRequest extends <<shared-type-request-base, Reques
 [source,ts]
 ----
 interface MlUpgradeJobSnapshotResponse {
-  node: <<shared-type-node-id, NodeId>>
+  node: <<NodeId>>
   completed: boolean
 }
 ----

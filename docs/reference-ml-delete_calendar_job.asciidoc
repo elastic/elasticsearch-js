@@ -45,9 +45,9 @@ Delete anomaly jobs from a calendar.
 
 [source,ts]
 ----
-interface MlDeleteCalendarJobRequest extends <<shared-type-request-base, RequestBase>> {
-  calendar_id: <<shared-type-id, Id>>
-  job_id: <<shared-type-ids, Ids>>
+interface MlDeleteCalendarJobRequest extends <<RequestBase>> {
+  calendar_id: <<Id>>
+  job_id: <<Ids>>
 }
 ----
 
@@ -57,9 +57,9 @@ interface MlDeleteCalendarJobRequest extends <<shared-type-request-base, Request
 [source,ts]
 ----
 interface MlDeleteCalendarJobResponse {
-  calendar_id: <<shared-type-id, Id>>
+  calendar_id: <<Id>>
   description?: string
-  job_ids: <<shared-type-ids, Ids>>
+  job_ids: <<Ids>>
 }
 ----
 

@@ -45,12 +45,12 @@ Create part of a trained model definition.
 
 [source,ts]
 ----
-interface MlPutTrainedModelDefinitionPartRequest extends <<shared-type-request-base, RequestBase>> {
-  model_id: <<shared-type-id, Id>>
-  part: <<shared-type-integer, integer>>
+interface MlPutTrainedModelDefinitionPartRequest extends <<RequestBase>> {
+  model_id: <<Id>>
+  part: <<integer>>
   definition: string
-  total_definition_length: <<shared-type-long, long>>
-  total_parts: <<shared-type-integer, integer>>
+  total_definition_length: <<long>>
+  total_parts: <<integer>>
 }
 ----
 
@@ -59,6 +59,6 @@ interface MlPutTrainedModelDefinitionPartRequest extends <<shared-type-request-b
 
 [source,ts]
 ----
-type MlPutTrainedModelDefinitionPartResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlPutTrainedModelDefinitionPartResponse = <<AcknowledgedResponseBase>>
 ----
 

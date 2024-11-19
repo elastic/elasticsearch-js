@@ -45,11 +45,11 @@ Delete data stream lifecycles. Removes the data stream lifecycle from a data str
 
 [source,ts]
 ----
-interface IndicesDeleteDataLifecycleRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-data-stream-names, DataStreamNames>>
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+interface IndicesDeleteDataLifecycleRequest extends <<RequestBase>> {
+  name: <<DataStreamNames>>
+  expand_wildcards?: <<ExpandWildcards>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
 }
 ----
 
@@ -58,6 +58,6 @@ interface IndicesDeleteDataLifecycleRequest extends <<shared-type-request-base, 
 
 [source,ts]
 ----
-type IndicesDeleteDataLifecycleResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type IndicesDeleteDataLifecycleResponse = <<AcknowledgedResponseBase>>
 ----
 

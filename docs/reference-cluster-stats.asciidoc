@@ -45,10 +45,10 @@ Returns cluster statistics. It returns basic index metrics (shard numbers, store
 
 [source,ts]
 ----
-interface ClusterStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  node_id?: <<shared-type-node-ids, NodeIds>>
+interface ClusterStatsRequest extends <<RequestBase>> {
+  node_id?: <<NodeIds>>
   include_remotes?: boolean
-  timeout?: <<shared-type-duration, Duration>>
+  timeout?: <<Duration>>
 }
 ----
 

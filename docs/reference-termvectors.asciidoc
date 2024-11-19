@@ -45,23 +45,23 @@ Get term vector information. Get information and statistics about terms in the f
 
 [source,ts]
 ----
-interface TermvectorsRequest<TDocument = unknown> extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
-  id?: <<shared-type-id, Id>>
-  fields?: <<shared-type-fields, Fields>>
+interface TermvectorsRequest<TDocument = unknown> extends <<RequestBase>> {
+  index: <<IndexName>>
+  id?: <<Id>>
+  fields?: <<Fields>>
   field_statistics?: boolean
   offsets?: boolean
   payloads?: boolean
   positions?: boolean
   preference?: string
   realtime?: boolean
-  routing?: <<shared-type-routing, Routing>>
+  routing?: <<Routing>>
   term_statistics?: boolean
-  version?: <<shared-type-version-number, VersionNumber>>
-  version_type?: <<shared-type-version-type, VersionType>>
+  version?: <<VersionNumber>>
+  version_type?: <<VersionType>>
   doc?: TDocument
   filter?: TermvectorsFilter
-  per_field_analyzer?: Record<<<shared-type-field, Field>>, string>
+  per_field_analyzer?: Record<<<Field>>, string>
 }
 ----
 
@@ -72,11 +72,11 @@ interface TermvectorsRequest<TDocument = unknown> extends <<shared-type-request-
 ----
 interface TermvectorsResponse {
   found: boolean
-  _id?: <<shared-type-id, Id>>
-  _index: <<shared-type-index-name, IndexName>>
-  term_vectors?: Record<<<shared-type-field, Field>>, TermvectorsTermVector>
-  took: <<shared-type-long, long>>
-  _version: <<shared-type-version-number, VersionNumber>>
+  _id?: <<Id>>
+  _index: <<IndexName>>
+  term_vectors?: Record<<<Field>>, TermvectorsTermVector>
+  took: <<long>>
+  _version: <<VersionNumber>>
 }
 ----
 

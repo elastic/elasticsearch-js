@@ -45,9 +45,9 @@ Revert to a snapshot. The machine learning features react quickly to anomalous i
 
 [source,ts]
 ----
-interface MlRevertModelSnapshotRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  snapshot_id: <<shared-type-id, Id>>
+interface MlRevertModelSnapshotRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  snapshot_id: <<Id>>
   delete_intervening_results?: boolean
 }
 ----

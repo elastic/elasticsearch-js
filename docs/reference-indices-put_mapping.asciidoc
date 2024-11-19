@@ -45,22 +45,22 @@ Update field mappings. Adds new fields to an existing data stream or index. You 
 
 [source,ts]
 ----
-interface IndicesPutMappingRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
+interface IndicesPutMappingRequest extends <<RequestBase>> {
+  index: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   write_index_only?: boolean
   date_detection?: boolean
   dynamic?: MappingDynamicMapping
   dynamic_date_formats?: string[]
   dynamic_templates?: Record<string, MappingDynamicTemplate> | Record<string, MappingDynamicTemplate>[]
   _field_names?: MappingFieldNamesField
-  _meta?: <<shared-type-metadata, Metadata>>
+  _meta?: <<Metadata>>
   numeric_detection?: boolean
-  properties?: Record<<<shared-type-property-name, PropertyName>>, MappingProperty>
+  properties?: Record<<<PropertyName>>, MappingProperty>
   _routing?: MappingRoutingField
   _source?: MappingSourceField
   runtime?: MappingRuntimeFields
@@ -72,6 +72,6 @@ interface IndicesPutMappingRequest extends <<shared-type-request-base, RequestBa
 
 [source,ts]
 ----
-type IndicesPutMappingResponse = <<shared-type-indices-response-base, IndicesResponseBase>>
+type IndicesPutMappingResponse = <<IndicesResponseBase>>
 ----
 

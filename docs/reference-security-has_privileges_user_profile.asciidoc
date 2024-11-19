@@ -45,7 +45,7 @@ Check user profile privileges. Determine whether the users associated with the s
 
 [source,ts]
 ----
-interface SecurityHasPrivilegesUserProfileRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityHasPrivilegesUserProfileRequest extends <<RequestBase>> {
   uids: SecurityUserProfileId[]
   privileges: SecurityHasPrivilegesUserProfilePrivilegesCheck
 }

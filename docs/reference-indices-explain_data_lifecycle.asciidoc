@@ -45,10 +45,10 @@ Get the status for a data stream lifecycle. Retrieves information about an index
 
 [source,ts]
 ----
-interface IndicesExplainDataLifecycleRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-indices, Indices>>
+interface IndicesExplainDataLifecycleRequest extends <<RequestBase>> {
+  index: <<Indices>>
   include_defaults?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
 }
 ----
 
@@ -58,7 +58,7 @@ interface IndicesExplainDataLifecycleRequest extends <<shared-type-request-base,
 [source,ts]
 ----
 interface IndicesExplainDataLifecycleResponse {
-  indices: Record<<<shared-type-index-name, IndexName>>, IndicesExplainDataLifecycleDataStreamLifecycleExplain>
+  indices: Record<<<IndexName>>, IndicesExplainDataLifecycleDataStreamLifecycleExplain>
 }
 ----
 

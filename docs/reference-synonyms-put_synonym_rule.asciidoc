@@ -45,9 +45,9 @@ Creates or updates a synonym rule in a synonym set
 
 [source,ts]
 ----
-interface SynonymsPutSynonymRuleRequest extends <<shared-type-request-base, RequestBase>> {
-  set_id: <<shared-type-id, Id>>
-  rule_id: <<shared-type-id, Id>>
+interface SynonymsPutSynonymRuleRequest extends <<RequestBase>> {
+  set_id: <<Id>>
+  rule_id: <<Id>>
   synonyms: SynonymsSynonymString
 }
 ----

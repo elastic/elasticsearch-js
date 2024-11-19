@@ -45,7 +45,7 @@ Get script contexts. Get a list of supported script contexts and their methods.
 
 [source,ts]
 ----
-interface GetScriptContextRequest extends <<shared-type-request-base, RequestBase>> {
+interface GetScriptContextRequest extends <<RequestBase>> {
 }
 ----
 

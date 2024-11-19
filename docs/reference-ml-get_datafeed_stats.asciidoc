@@ -45,8 +45,8 @@ Get datafeeds usage info. You can get statistics for multiple datafeeds in a sin
 
 [source,ts]
 ----
-interface MlGetDatafeedStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  datafeed_id?: <<shared-type-ids, Ids>>
+interface MlGetDatafeedStatsRequest extends <<RequestBase>> {
+  datafeed_id?: <<Ids>>
   allow_no_match?: boolean
 }
 ----
@@ -57,7 +57,7 @@ interface MlGetDatafeedStatsRequest extends <<shared-type-request-base, RequestB
 [source,ts]
 ----
 interface MlGetDatafeedStatsResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   datafeeds: MlDatafeedStats[]
 }
 ----

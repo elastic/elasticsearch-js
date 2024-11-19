@@ -45,8 +45,8 @@ Delete an unreferenced trained model. The request deletes a trained inference mo
 
 [source,ts]
 ----
-interface MlDeleteTrainedModelRequest extends <<shared-type-request-base, RequestBase>> {
-  model_id: <<shared-type-id, Id>>
+interface MlDeleteTrainedModelRequest extends <<RequestBase>> {
+  model_id: <<Id>>
   force?: boolean
 }
 ----
@@ -56,6 +56,6 @@ interface MlDeleteTrainedModelRequest extends <<shared-type-request-base, Reques
 
 [source,ts]
 ----
-type MlDeleteTrainedModelResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type MlDeleteTrainedModelResponse = <<AcknowledgedResponseBase>>
 ----
 

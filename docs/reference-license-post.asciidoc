@@ -45,7 +45,7 @@ Updates the license for the cluster.
 
 [source,ts]
 ----
-interface LicensePostRequest extends <<shared-type-request-base, RequestBase>> {
+interface LicensePostRequest extends <<RequestBase>> {
   acknowledge?: boolean
   license?: LicenseLicense
   licenses?: LicenseLicense[]

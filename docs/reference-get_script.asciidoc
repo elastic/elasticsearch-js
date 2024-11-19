@@ -45,9 +45,9 @@ Get a script or search template. Retrieves a stored script or search template.
 
 [source,ts]
 ----
-interface GetScriptRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
-  master_timeout?: <<shared-type-duration, Duration>>
+interface GetScriptRequest extends <<RequestBase>> {
+  id: <<Id>>
+  master_timeout?: <<Duration>>
 }
 ----
 
@@ -57,9 +57,9 @@ interface GetScriptRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface GetScriptResponse {
-  _id: <<shared-type-id, Id>>
+  _id: <<Id>>
   found: boolean
-  script?: <<shared-type-stored-script, StoredScript>>
+  script?: <<StoredScript>>
 }
 ----
 

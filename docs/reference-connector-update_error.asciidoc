@@ -45,8 +45,8 @@ Update the connector error field. Set the error field for the connector. If the 
 
 [source,ts]
 ----
-interface ConnectorUpdateErrorRequest extends <<shared-type-request-base, RequestBase>> {
-  connector_id: <<shared-type-id, Id>>
+interface ConnectorUpdateErrorRequest extends <<RequestBase>> {
+  connector_id: <<Id>>
   error: SpecUtilsWithNullValue<string>
 }
 ----
@@ -57,7 +57,7 @@ interface ConnectorUpdateErrorRequest extends <<shared-type-request-base, Reques
 [source,ts]
 ----
 interface ConnectorUpdateErrorResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 

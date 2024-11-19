@@ -45,8 +45,8 @@ Creates or updates a synonym set.
 
 [source,ts]
 ----
-interface SynonymsPutSynonymRequest extends <<shared-type-request-base, RequestBase>> {
-  id: <<shared-type-id, Id>>
+interface SynonymsPutSynonymRequest extends <<RequestBase>> {
+  id: <<Id>>
   synonyms_set: SynonymsSynonymRule | SynonymsSynonymRule[]
 }
 ----
@@ -57,7 +57,7 @@ interface SynonymsPutSynonymRequest extends <<shared-type-request-base, RequestB
 [source,ts]
 ----
 interface SynonymsPutSynonymResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
   reload_analyzers_details: IndicesReloadSearchAnalyzersReloadResult
 }
 ----

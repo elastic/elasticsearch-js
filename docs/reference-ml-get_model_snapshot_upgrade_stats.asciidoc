@@ -45,9 +45,9 @@ Get anomaly detection job model snapshot upgrade usage info.
 
 [source,ts]
 ----
-interface MlGetModelSnapshotUpgradeStatsRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id: <<shared-type-id, Id>>
-  snapshot_id: <<shared-type-id, Id>>
+interface MlGetModelSnapshotUpgradeStatsRequest extends <<RequestBase>> {
+  job_id: <<Id>>
+  snapshot_id: <<Id>>
   allow_no_match?: boolean
 }
 ----
@@ -58,7 +58,7 @@ interface MlGetModelSnapshotUpgradeStatsRequest extends <<shared-type-request-ba
 [source,ts]
 ----
 interface MlGetModelSnapshotUpgradeStatsResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   model_snapshot_upgrades: MlModelSnapshotUpgrade[]
 }
 ----

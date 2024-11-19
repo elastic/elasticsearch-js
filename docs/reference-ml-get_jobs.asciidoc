@@ -45,8 +45,8 @@ Get anomaly detection jobs configuration info. You can get information for multi
 
 [source,ts]
 ----
-interface MlGetJobsRequest extends <<shared-type-request-base, RequestBase>> {
-  job_id?: <<shared-type-ids, Ids>>
+interface MlGetJobsRequest extends <<RequestBase>> {
+  job_id?: <<Ids>>
   allow_no_match?: boolean
   exclude_generated?: boolean
 }
@@ -58,7 +58,7 @@ interface MlGetJobsRequest extends <<shared-type-request-base, RequestBase>> {
 [source,ts]
 ----
 interface MlGetJobsResponse {
-  count: <<shared-type-long, long>>
+  count: <<long>>
   jobs: MlJob[]
 }
 ----

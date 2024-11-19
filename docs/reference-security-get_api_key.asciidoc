@@ -45,12 +45,12 @@ Get API key information. Retrieves information for one or more API keys. NOTE: I
 
 [source,ts]
 ----
-interface SecurityGetApiKeyRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-id, Id>>
-  name?: <<shared-type-name, Name>>
+interface SecurityGetApiKeyRequest extends <<RequestBase>> {
+  id?: <<Id>>
+  name?: <<Name>>
   owner?: boolean
-  realm_name?: <<shared-type-name, Name>>
-  username?: <<shared-type-username, Username>>
+  realm_name?: <<Name>>
+  username?: <<Username>>
   with_limited_by?: boolean
   active_only?: boolean
   with_profile_uid?: boolean

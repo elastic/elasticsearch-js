@@ -45,8 +45,8 @@ Render a search template. Render a search template as a search request body.
 
 [source,ts]
 ----
-interface RenderSearchTemplateRequest extends <<shared-type-request-base, RequestBase>> {
-  id?: <<shared-type-id, Id>>
+interface RenderSearchTemplateRequest extends <<RequestBase>> {
+  id?: <<Id>>
   file?: string
   params?: Record<string, any>
   source?: string

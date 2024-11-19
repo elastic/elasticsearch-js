@@ -45,7 +45,7 @@ Return ML defaults and limits. Returns defaults and limits used by machine learn
 
 [source,ts]
 ----
-interface MlInfoRequest extends <<shared-type-request-base, RequestBase>> {
+interface MlInfoRequest extends <<RequestBase>> {
 }
 ----
 

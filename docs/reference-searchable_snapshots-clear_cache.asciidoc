@@ -45,9 +45,9 @@ Clear the cache of searchable snapshots.
 
 [source,ts]
 ----
-interface SearchableSnapshotsClearCacheRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+interface SearchableSnapshotsClearCacheRequest extends <<RequestBase>> {
+  index?: <<Indices>>
+  expand_wildcards?: <<ExpandWildcards>>
   allow_no_indices?: boolean
   ignore_unavailable?: boolean
   pretty?: boolean

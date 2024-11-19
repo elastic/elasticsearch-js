@@ -45,14 +45,14 @@ Get the search shards. Get the indices and shards that a search request would be
 
 [source,ts]
 ----
-interface SearchShardsRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
+interface SearchShardsRequest extends <<RequestBase>> {
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   local?: boolean
   preference?: string
-  routing?: <<shared-type-routing, Routing>>
+  routing?: <<Routing>>
 }
 ----
 
@@ -62,9 +62,9 @@ interface SearchShardsRequest extends <<shared-type-request-base, RequestBase>> 
 [source,ts]
 ----
 interface SearchShardsResponse {
-  nodes: Record<<<shared-type-node-id, NodeId>>, SearchShardsSearchShardsNodeAttributes>
-  shards: <<shared-type-node-shard, NodeShard>>[][]
-  indices: Record<<<shared-type-index-name, IndexName>>, SearchShardsShardStoreIndex>
+  nodes: Record<<<NodeId>>, SearchShardsSearchShardsNodeAttributes>
+  shards: <<NodeShard>>[][]
+  indices: Record<<<IndexName>>, SearchShardsShardStoreIndex>
 }
 ----
 

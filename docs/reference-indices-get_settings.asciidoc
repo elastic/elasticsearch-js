@@ -45,16 +45,16 @@ Get index settings. Returns setting information for one or more indices. For dat
 
 [source,ts]
 ----
-interface IndicesGetSettingsRequest extends <<shared-type-request-base, RequestBase>> {
-  index?: <<shared-type-indices, Indices>>
-  name?: <<shared-type-names, Names>>
+interface IndicesGetSettingsRequest extends <<RequestBase>> {
+  index?: <<Indices>>
+  name?: <<Names>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   flat_settings?: boolean
   ignore_unavailable?: boolean
   include_defaults?: boolean
   local?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
 }
 ----
 
@@ -63,6 +63,6 @@ interface IndicesGetSettingsRequest extends <<shared-type-request-base, RequestB
 
 [source,ts]
 ----
-type IndicesGetSettingsResponse = Record<<<shared-type-index-name, IndexName>>, IndicesIndexState>
+type IndicesGetSettingsResponse = Record<<<IndexName>>, IndicesIndexState>
 ----
 

@@ -45,11 +45,11 @@ Get aliases. Retrieves information for one or more data stream or index aliases.
 
 [source,ts]
 ----
-interface IndicesGetAliasRequest extends <<shared-type-request-base, RequestBase>> {
-  name?: <<shared-type-names, Names>>
-  index?: <<shared-type-indices, Indices>>
+interface IndicesGetAliasRequest extends <<RequestBase>> {
+  name?: <<Names>>
+  index?: <<Indices>>
   allow_no_indices?: boolean
-  expand_wildcards?: <<shared-type-expand-wildcards, ExpandWildcards>>
+  expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   local?: boolean
 }
@@ -60,6 +60,6 @@ interface IndicesGetAliasRequest extends <<shared-type-request-base, RequestBase
 
 [source,ts]
 ----
-type IndicesGetAliasResponse = Record<<<shared-type-index-name, IndexName>>, IndicesGetAliasIndexAliases>
+type IndicesGetAliasResponse = Record<<<IndexName>>, IndicesGetAliasIndexAliases>
 ----
 

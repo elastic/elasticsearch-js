@@ -45,8 +45,8 @@ Stop a trained model deployment.
 
 [source,ts]
 ----
-interface MlStopTrainedModelDeploymentRequest extends <<shared-type-request-base, RequestBase>> {
-  model_id: <<shared-type-id, Id>>
+interface MlStopTrainedModelDeploymentRequest extends <<RequestBase>> {
+  model_id: <<Id>>
   allow_no_match?: boolean
   force?: boolean
 }

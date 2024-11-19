@@ -45,13 +45,13 @@ Allows to manually change the allocation of individual shards in the cluster.
 
 [source,ts]
 ----
-interface ClusterRerouteRequest extends <<shared-type-request-base, RequestBase>> {
+interface ClusterRerouteRequest extends <<RequestBase>> {
   dry_run?: boolean
   explain?: boolean
-  metric?: <<shared-type-metrics, Metrics>>
+  metric?: <<Metrics>>
   retry_failed?: boolean
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
   commands?: ClusterRerouteCommand[]
 }
 ----

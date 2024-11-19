@@ -45,12 +45,12 @@ Find roles with a query. Get roles in a paginated manner. You can optionally fil
 
 [source,ts]
 ----
-interface SecurityQueryRoleRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityQueryRoleRequest extends <<RequestBase>> {
   query?: SecurityQueryRoleRoleQueryContainer
-  from?: <<shared-type-integer, integer>>
-  sort?: <<shared-type-sort, Sort>>
-  size?: <<shared-type-integer, integer>>
-  search_after?: <<shared-type-sort-results, SortResults>>
+  from?: <<integer>>
+  sort?: <<Sort>>
+  size?: <<integer>>
+  search_after?: <<SortResults>>
 }
 ----
 
@@ -60,8 +60,8 @@ interface SecurityQueryRoleRequest extends <<shared-type-request-base, RequestBa
 [source,ts]
 ----
 interface SecurityQueryRoleResponse {
-  total: <<shared-type-integer, integer>>
-  count: <<shared-type-integer, integer>>
+  total: <<integer>>
+  count: <<integer>>
   roles: SecurityQueryRoleQueryRole[]
 }
 ----

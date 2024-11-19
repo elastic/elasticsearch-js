@@ -45,12 +45,12 @@ Create an index. Creates a new index.
 
 [source,ts]
 ----
-interface IndicesCreateRequest extends <<shared-type-request-base, RequestBase>> {
-  index: <<shared-type-index-name, IndexName>>
-  master_timeout?: <<shared-type-duration, Duration>>
-  timeout?: <<shared-type-duration, Duration>>
-  wait_for_active_shards?: <<shared-type-wait-for-active-shards, WaitForActiveShards>>
-  aliases?: Record<<<shared-type-name, Name>>, IndicesAlias>
+interface IndicesCreateRequest extends <<RequestBase>> {
+  index: <<IndexName>>
+  master_timeout?: <<Duration>>
+  timeout?: <<Duration>>
+  wait_for_active_shards?: <<WaitForActiveShards>>
+  aliases?: Record<<<Name>>, IndicesAlias>
   mappings?: MappingTypeMapping
   settings?: IndicesIndexSettings
 }
@@ -62,7 +62,7 @@ interface IndicesCreateRequest extends <<shared-type-request-base, RequestBase>>
 [source,ts]
 ----
 interface IndicesCreateResponse {
-  index: <<shared-type-index-name, IndexName>>
+  index: <<IndexName>>
   shards_acknowledged: boolean
   acknowledged: boolean
 }

@@ -45,9 +45,9 @@ Disable a user profile. Disable user profiles so that they are not visible in us
 
 [source,ts]
 ----
-interface SecurityDisableUserProfileRequest extends <<shared-type-request-base, RequestBase>> {
+interface SecurityDisableUserProfileRequest extends <<RequestBase>> {
   uid: SecurityUserProfileId
-  refresh?: <<shared-type-refresh, Refresh>>
+  refresh?: <<Refresh>>
 }
 ----
 
@@ -56,6 +56,6 @@ interface SecurityDisableUserProfileRequest extends <<shared-type-request-base, 
 
 [source,ts]
 ----
-type SecurityDisableUserProfileResponse = <<shared-type-acknowledged-response-base, AcknowledgedResponseBase>>
+type SecurityDisableUserProfileResponse = <<AcknowledgedResponseBase>>
 ----
 

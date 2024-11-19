@@ -45,8 +45,8 @@ Create or update a search application.
 
 [source,ts]
 ----
-interface SearchApplicationPutRequest extends <<shared-type-request-base, RequestBase>> {
-  name: <<shared-type-name, Name>>
+interface SearchApplicationPutRequest extends <<RequestBase>> {
+  name: <<Name>>
   create?: boolean
   search_application?: SearchApplicationSearchApplication
 }
@@ -58,7 +58,7 @@ interface SearchApplicationPutRequest extends <<shared-type-request-base, Reques
 [source,ts]
 ----
 interface SearchApplicationPutResponse {
-  result: <<shared-type-result, Result>>
+  result: <<Result>>
 }
 ----
 
