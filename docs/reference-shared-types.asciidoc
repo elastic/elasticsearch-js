@@ -1,8 +1,8 @@
 [[reference-shared-types]]
-= Types
+== Shared types
 
 [[shared-type-acknowledged-response-base]]
-== AcknowledgedResponseBase
+=== AcknowledgedResponseBase
 
 [source,ts]
 ---
@@ -13,7 +13,7 @@ interface AcknowledgedResponseBase {
 ---
 
 [[shared-type-aggregate-name]]
-== AggregateName
+=== AggregateName
 
 [source,ts]
 ---
@@ -21,7 +21,7 @@ type AggregateName = string
 ---
 
 [[shared-type-bulk-index-by-scroll-failure]]
-== BulkIndexByScrollFailure
+=== BulkIndexByScrollFailure
 
 [source,ts]
 ---
@@ -35,7 +35,7 @@ interface BulkIndexByScrollFailure {
 ---
 
 [[shared-type-bulk-stats]]
-== BulkStats
+=== BulkStats
 
 [source,ts]
 ---
@@ -53,7 +53,7 @@ interface BulkStats {
 ---
 
 [[shared-type-byte-size]]
-== ByteSize
+=== ByteSize
 
 [source,ts]
 ---
@@ -61,7 +61,7 @@ type ByteSize = long | string
 ---
 
 [[shared-type-bytes]]
-== Bytes
+=== Bytes
 
 [source,ts]
 ---
@@ -69,7 +69,7 @@ type Bytes = 'b' | 'kb' | 'mb' | 'gb' | 'tb' | 'pb'
 ---
 
 [[shared-type-category-id]]
-== CategoryId
+=== CategoryId
 
 [source,ts]
 ---
@@ -77,7 +77,7 @@ type CategoryId = string
 ---
 
 [[shared-type-cluster-alias]]
-== ClusterAlias
+=== ClusterAlias
 
 [source,ts]
 ---
@@ -85,7 +85,7 @@ type ClusterAlias = string
 ---
 
 [[shared-type-cluster-details]]
-== ClusterDetails
+=== ClusterDetails
 
 [source,ts]
 ---
@@ -100,7 +100,7 @@ interface ClusterDetails {
 ---
 
 [[shared-type-cluster-info-target]]
-== ClusterInfoTarget
+=== ClusterInfoTarget
 
 [source,ts]
 ---
@@ -108,7 +108,7 @@ type ClusterInfoTarget = '_all' | 'http' | 'ingest' | 'thread_pool' | 'script'
 ---
 
 [[shared-type-cluster-info-targets]]
-== ClusterInfoTargets
+=== ClusterInfoTargets
 
 [source,ts]
 ---
@@ -116,7 +116,7 @@ type ClusterInfoTargets = ClusterInfoTarget | ClusterInfoTarget[]
 ---
 
 [[shared-type-cluster-search-status]]
-== ClusterSearchStatus
+=== ClusterSearchStatus
 
 [source,ts]
 ---
@@ -124,7 +124,7 @@ type ClusterSearchStatus = 'running' | 'successful' | 'partial' | 'skipped' | 'f
 ---
 
 [[shared-type-cluster-statistics]]
-== ClusterStatistics
+=== ClusterStatistics
 
 [source,ts]
 ---
@@ -140,7 +140,7 @@ interface ClusterStatistics {
 ---
 
 [[shared-type-completion-stats]]
-== CompletionStats
+=== CompletionStats
 
 [source,ts]
 ---
@@ -154,7 +154,7 @@ interface CompletionStats {
 ---
 
 [[shared-type-conflicts]]
-== Conflicts
+=== Conflicts
 
 [source,ts]
 ---
@@ -162,7 +162,7 @@ type Conflicts = 'abort' | 'proceed'
 ---
 
 [[shared-type-coords-geo-bounds]]
-== CoordsGeoBounds
+=== CoordsGeoBounds
 
 [source,ts]
 ---
@@ -175,7 +175,7 @@ interface CoordsGeoBounds {
 ---
 
 [[shared-type-d-f-i-independence-measure]]
-== DFIIndependenceMeasure
+=== DFIIndependenceMeasure
 
 [source,ts]
 ---
@@ -183,7 +183,7 @@ type DFIIndependenceMeasure = 'standardized' | 'saturated' | 'chisquared'
 ---
 
 [[shared-type-d-f-r-after-effect]]
-== DFRAfterEffect
+=== DFRAfterEffect
 
 [source,ts]
 ---
@@ -191,7 +191,7 @@ type DFRAfterEffect = 'no' | 'b' | 'l'
 ---
 
 [[shared-type-d-f-r-basic-model]]
-== DFRBasicModel
+=== DFRBasicModel
 
 [source,ts]
 ---
@@ -199,7 +199,7 @@ type DFRBasicModel = 'be' | 'd' | 'g' | 'if' | 'in' | 'ine' | 'p'
 ---
 
 [[shared-type-data-stream-name]]
-== DataStreamName
+=== DataStreamName
 
 [source,ts]
 ---
@@ -207,7 +207,7 @@ type DataStreamName = string
 ---
 
 [[shared-type-data-stream-names]]
-== DataStreamNames
+=== DataStreamNames
 
 [source,ts]
 ---
@@ -215,7 +215,7 @@ type DataStreamNames = DataStreamName | DataStreamName[]
 ---
 
 [[shared-type-date-format]]
-== DateFormat
+=== DateFormat
 
 [source,ts]
 ---
@@ -223,7 +223,7 @@ type DateFormat = string
 ---
 
 [[shared-type-date-math]]
-== DateMath
+=== DateMath
 
 [source,ts]
 ---
@@ -231,7 +231,7 @@ type DateMath = string | Date
 ---
 
 [[shared-type-date-time]]
-== DateTime
+=== DateTime
 
 [source,ts]
 ---
@@ -239,7 +239,7 @@ type DateTime = string | EpochTime<UnitMillis> | Date
 ---
 
 [[shared-type-distance]]
-== Distance
+=== Distance
 
 [source,ts]
 ---
@@ -247,7 +247,7 @@ type Distance = string
 ---
 
 [[shared-type-distance-unit]]
-== DistanceUnit
+=== DistanceUnit
 
 [source,ts]
 ---
@@ -255,7 +255,7 @@ type DistanceUnit = 'in' | 'ft' | 'yd' | 'mi' | 'nmi' | 'km' | 'm' | 'cm' | 'mm'
 ---
 
 [[shared-type-doc-stats]]
-== DocStats
+=== DocStats
 
 [source,ts]
 ---
@@ -268,7 +268,7 @@ interface DocStats {
 ---
 
 [[shared-type-duration]]
-== Duration
+=== Duration
 
 [source,ts]
 ---
@@ -276,7 +276,7 @@ type Duration = string | -1 | 0
 ---
 
 [[shared-type-duration-large]]
-== DurationLarge
+=== DurationLarge
 
 [source,ts]
 ---
@@ -284,7 +284,7 @@ type DurationLarge = string
 ---
 
 [[shared-type-duration-value]]
-== DurationValue
+=== DurationValue
 
 [source,ts]
 ---
@@ -292,7 +292,7 @@ type DurationValue<Unit = unknown> = Unit
 ---
 
 [[shared-type-elasticsearch-version-info]]
-== ElasticsearchVersionInfo
+=== ElasticsearchVersionInfo
 
 [source,ts]
 ---
@@ -310,7 +310,7 @@ interface ElasticsearchVersionInfo {
 ---
 
 [[shared-type-elasticsearch-version-min-info]]
-== ElasticsearchVersionMinInfo
+=== ElasticsearchVersionMinInfo
 
 [source,ts]
 ---
@@ -323,7 +323,7 @@ interface ElasticsearchVersionMinInfo {
 ---
 
 [[shared-type-empty-object]]
-== EmptyObject
+=== EmptyObject
 
 [source,ts]
 ---
@@ -332,7 +332,7 @@ interface EmptyObject {
 ---
 
 [[shared-type-epoch-time]]
-== EpochTime
+=== EpochTime
 
 [source,ts]
 ---
@@ -340,7 +340,7 @@ type EpochTime<Unit = unknown> = Unit
 ---
 
 [[shared-type-error-cause]]
-== ErrorCause
+=== ErrorCause
 
 [source,ts]
 ---
@@ -357,7 +357,7 @@ export type ErrorCause = ErrorCauseKeys
 ---
 
 [[shared-type-error-response-base]]
-== ErrorResponseBase
+=== ErrorResponseBase
 
 [source,ts]
 ---
@@ -368,7 +368,7 @@ interface ErrorResponseBase {
 ---
 
 [[shared-type-esql-columns]]
-== EsqlColumns
+=== EsqlColumns
 
 [source,ts]
 ---
@@ -376,7 +376,7 @@ type EsqlColumns = ArrayBuffer
 ---
 
 [[shared-type-expand-wildcard]]
-== ExpandWildcard
+=== ExpandWildcard
 
 [source,ts]
 ---
@@ -384,7 +384,7 @@ type ExpandWildcard = 'all' | 'open' | 'closed' | 'hidden' | 'none'
 ---
 
 [[shared-type-expand-wildcards]]
-== ExpandWildcards
+=== ExpandWildcards
 
 [source,ts]
 ---
@@ -392,7 +392,7 @@ type ExpandWildcards = ExpandWildcard | ExpandWildcard[]
 ---
 
 [[shared-type-field]]
-== Field
+=== Field
 
 [source,ts]
 ---
@@ -400,7 +400,7 @@ type Field = string
 ---
 
 [[shared-type-field-memory-usage]]
-== FieldMemoryUsage
+=== FieldMemoryUsage
 
 [source,ts]
 ---
@@ -411,7 +411,7 @@ interface FieldMemoryUsage {
 ---
 
 [[shared-type-field-size-usage]]
-== FieldSizeUsage
+=== FieldSizeUsage
 
 [source,ts]
 ---
@@ -422,7 +422,7 @@ interface FieldSizeUsage {
 ---
 
 [[shared-type-field-sort]]
-== FieldSort
+=== FieldSort
 
 [source,ts]
 ---
@@ -438,7 +438,7 @@ interface FieldSort {
 ---
 
 [[shared-type-field-sort-numeric-type]]
-== FieldSortNumericType
+=== FieldSortNumericType
 
 [source,ts]
 ---
@@ -446,7 +446,7 @@ type FieldSortNumericType = 'long' | 'double' | 'date' | 'date_nanos'
 ---
 
 [[shared-type-field-value]]
-== FieldValue
+=== FieldValue
 
 [source,ts]
 ---
@@ -454,7 +454,7 @@ type FieldValue = long | double | string | boolean | null | any
 ---
 
 [[shared-type-fielddata-stats]]
-== FielddataStats
+=== FielddataStats
 
 [source,ts]
 ---
@@ -467,7 +467,7 @@ interface FielddataStats {
 ---
 
 [[shared-type-fields]]
-== Fields
+=== Fields
 
 [source,ts]
 ---
@@ -475,7 +475,7 @@ type Fields = Field | Field[]
 ---
 
 [[shared-type-flush-stats]]
-== FlushStats
+=== FlushStats
 
 [source,ts]
 ---
@@ -488,7 +488,7 @@ interface FlushStats {
 ---
 
 [[shared-type-fuzziness]]
-== Fuzziness
+=== Fuzziness
 
 [source,ts]
 ---
@@ -496,7 +496,7 @@ type Fuzziness = string | integer
 ---
 
 [[shared-type-geo-bounds]]
-== GeoBounds
+=== GeoBounds
 
 [source,ts]
 ---
@@ -504,7 +504,7 @@ type GeoBounds = CoordsGeoBounds | TopLeftBottomRightGeoBounds | TopRightBottomL
 ---
 
 [[shared-type-geo-distance-sort]]
-== GeoDistanceSort
+=== GeoDistanceSort
 
 [source,ts]
 ---
@@ -521,7 +521,7 @@ export type GeoDistanceSort = GeoDistanceSortKeys
 ---
 
 [[shared-type-geo-distance-type]]
-== GeoDistanceType
+=== GeoDistanceType
 
 [source,ts]
 ---
@@ -529,7 +529,7 @@ type GeoDistanceType = 'arc' | 'plane'
 ---
 
 [[shared-type-geo-hash]]
-== GeoHash
+=== GeoHash
 
 [source,ts]
 ---
@@ -537,7 +537,7 @@ type GeoHash = string
 ---
 
 [[shared-type-geo-hash-location]]
-== GeoHashLocation
+=== GeoHashLocation
 
 [source,ts]
 ---
@@ -547,7 +547,7 @@ interface GeoHashLocation {
 ---
 
 [[shared-type-geo-hash-precision]]
-== GeoHashPrecision
+=== GeoHashPrecision
 
 [source,ts]
 ---
@@ -555,7 +555,7 @@ type GeoHashPrecision = number | string
 ---
 
 [[shared-type-geo-hex-cell]]
-== GeoHexCell
+=== GeoHexCell
 
 [source,ts]
 ---
@@ -563,7 +563,7 @@ type GeoHexCell = string
 ---
 
 [[shared-type-geo-line]]
-== GeoLine
+=== GeoLine
 
 [source,ts]
 ---
@@ -576,7 +576,7 @@ interface GeoLine {
 ---
 
 [[shared-type-geo-location]]
-== GeoLocation
+=== GeoLocation
 
 [source,ts]
 ---
@@ -584,7 +584,7 @@ type GeoLocation = LatLonGeoLocation | GeoHashLocation | double[] | string
 ---
 
 [[shared-type-geo-shape]]
-== GeoShape
+=== GeoShape
 
 [source,ts]
 ---
@@ -592,7 +592,7 @@ type GeoShape = any
 ---
 
 [[shared-type-geo-shape-relation]]
-== GeoShapeRelation
+=== GeoShapeRelation
 
 [source,ts]
 ---
@@ -600,7 +600,7 @@ type GeoShapeRelation = 'intersects' | 'disjoint' | 'within' | 'contains'
 ---
 
 [[shared-type-geo-tile]]
-== GeoTile
+=== GeoTile
 
 [source,ts]
 ---
@@ -608,7 +608,7 @@ type GeoTile = string
 ---
 
 [[shared-type-geo-tile-precision]]
-== GeoTilePrecision
+=== GeoTilePrecision
 
 [source,ts]
 ---
@@ -616,7 +616,7 @@ type GeoTilePrecision = number
 ---
 
 [[shared-type-get-stats]]
-== GetStats
+=== GetStats
 
 [source,ts]
 ---
@@ -635,7 +635,7 @@ interface GetStats {
 ---
 
 [[shared-type-grok-pattern]]
-== GrokPattern
+=== GrokPattern
 
 [source,ts]
 ---
@@ -643,7 +643,7 @@ type GrokPattern = string
 ---
 
 [[shared-type-health-status]]
-== HealthStatus
+=== HealthStatus
 
 [source,ts]
 ---
@@ -651,7 +651,7 @@ type HealthStatus = 'green' | 'GREEN' | 'yellow' | 'YELLOW' | 'red' | 'RED'
 ---
 
 [[shared-type-host]]
-== Host
+=== Host
 
 [source,ts]
 ---
@@ -659,7 +659,7 @@ type Host = string
 ---
 
 [[shared-type-http-headers]]
-== HttpHeaders
+=== HttpHeaders
 
 [source,ts]
 ---
@@ -667,7 +667,7 @@ type HttpHeaders = Record<string, string | string[]>
 ---
 
 [[shared-type-i-b-distribution]]
-== IBDistribution
+=== IBDistribution
 
 [source,ts]
 ---
@@ -675,7 +675,7 @@ type IBDistribution = 'll' | 'spl'
 ---
 
 [[shared-type-i-b-lambda]]
-== IBLambda
+=== IBLambda
 
 [source,ts]
 ---
@@ -683,7 +683,7 @@ type IBLambda = 'df' | 'ttf'
 ---
 
 [[shared-type-id]]
-== Id
+=== Id
 
 [source,ts]
 ---
@@ -691,7 +691,7 @@ type Id = string
 ---
 
 [[shared-type-ids]]
-== Ids
+=== Ids
 
 [source,ts]
 ---
@@ -699,7 +699,7 @@ type Ids = Id | Id[]
 ---
 
 [[shared-type-index-alias]]
-== IndexAlias
+=== IndexAlias
 
 [source,ts]
 ---
@@ -707,7 +707,7 @@ type IndexAlias = string
 ---
 
 [[shared-type-index-name]]
-== IndexName
+=== IndexName
 
 [source,ts]
 ---
@@ -715,7 +715,7 @@ type IndexName = string
 ---
 
 [[shared-type-index-pattern]]
-== IndexPattern
+=== IndexPattern
 
 [source,ts]
 ---
@@ -723,7 +723,7 @@ type IndexPattern = string
 ---
 
 [[shared-type-index-patterns]]
-== IndexPatterns
+=== IndexPatterns
 
 [source,ts]
 ---
@@ -731,7 +731,7 @@ type IndexPatterns = IndexPattern[]
 ---
 
 [[shared-type-indexing-stats]]
-== IndexingStats
+=== IndexingStats
 
 [source,ts]
 ---
@@ -755,7 +755,7 @@ interface IndexingStats {
 ---
 
 [[shared-type-indices]]
-== Indices
+=== Indices
 
 [source,ts]
 ---
@@ -763,7 +763,7 @@ type Indices = IndexName | IndexName[]
 ---
 
 [[shared-type-indices-options]]
-== IndicesOptions
+=== IndicesOptions
 
 [source,ts]
 ---
@@ -780,7 +780,7 @@ interface IndicesOptions {
 ---
 
 [[shared-type-indices-response-base]]
-== IndicesResponseBase
+=== IndicesResponseBase
 
 [source,ts]
 ---
@@ -790,7 +790,7 @@ interface IndicesResponseBase extends AcknowledgedResponseBase {
 ---
 
 [[shared-type-inline-get]]
-== InlineGet
+=== InlineGet
 
 [source,ts]
 ---
@@ -807,7 +807,7 @@ export type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument>
 ---
 
 [[shared-type-ip]]
-== Ip
+=== Ip
 
 [source,ts]
 ---
@@ -815,7 +815,7 @@ type Ip = string
 ---
 
 [[shared-type-knn-query]]
-== KnnQuery
+=== KnnQuery
 
 [source,ts]
 ---
@@ -838,7 +838,7 @@ interface KnnQuery extends QueryDslQueryBase {
 ---
 
 [[shared-type-knn-retriever]]
-== KnnRetriever
+=== KnnRetriever
 
 [source,ts]
 ---
@@ -859,7 +859,7 @@ interface KnnRetriever extends RetrieverBase {
 ---
 
 [[shared-type-knn-search]]
-== KnnSearch
+=== KnnSearch
 
 [source,ts]
 ---
@@ -886,7 +886,7 @@ interface KnnSearch {
 ---
 
 [[shared-type-lat-lon-geo-location]]
-== LatLonGeoLocation
+=== LatLonGeoLocation
 
 [source,ts]
 ---
@@ -899,7 +899,7 @@ interface LatLonGeoLocation {
 ---
 
 [[shared-type-level]]
-== Level
+=== Level
 
 [source,ts]
 ---
@@ -907,7 +907,7 @@ type Level = 'cluster' | 'indices' | 'shards'
 ---
 
 [[shared-type-lifecycle-operation-mode]]
-== LifecycleOperationMode
+=== LifecycleOperationMode
 
 [source,ts]
 ---
@@ -915,7 +915,7 @@ type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 ---
 
 [[shared-type-mapbox-vector-tiles]]
-== MapboxVectorTiles
+=== MapboxVectorTiles
 
 [source,ts]
 ---
@@ -923,7 +923,7 @@ type MapboxVectorTiles = ArrayBuffer
 ---
 
 [[shared-type-merges-stats]]
-== MergesStats
+=== MergesStats
 
 [source,ts]
 ---
@@ -948,7 +948,7 @@ interface MergesStats {
 ---
 
 [[shared-type-metadata]]
-== Metadata
+=== Metadata
 
 [source,ts]
 ---
@@ -956,7 +956,7 @@ type Metadata = Record<string, any>
 ---
 
 [[shared-type-metrics]]
-== Metrics
+=== Metrics
 
 [source,ts]
 ---
@@ -964,7 +964,7 @@ type Metrics = string | string[]
 ---
 
 [[shared-type-minimum-should-match]]
-== MinimumShouldMatch
+=== MinimumShouldMatch
 
 [source,ts]
 ---
@@ -972,7 +972,7 @@ type MinimumShouldMatch = integer | string
 ---
 
 [[shared-type-multi-term-query-rewrite]]
-== MultiTermQueryRewrite
+=== MultiTermQueryRewrite
 
 [source,ts]
 ---
@@ -980,7 +980,7 @@ type MultiTermQueryRewrite = string
 ---
 
 [[shared-type-name]]
-== Name
+=== Name
 
 [source,ts]
 ---
@@ -988,7 +988,7 @@ type Name = string
 ---
 
 [[shared-type-names]]
-== Names
+=== Names
 
 [source,ts]
 ---
@@ -996,7 +996,7 @@ type Names = Name | Name[]
 ---
 
 [[shared-type-namespace]]
-== Namespace
+=== Namespace
 
 [source,ts]
 ---
@@ -1004,7 +1004,7 @@ type Namespace = string
 ---
 
 [[shared-type-nested-sort-value]]
-== NestedSortValue
+=== NestedSortValue
 
 [source,ts]
 ---
@@ -1017,7 +1017,7 @@ interface NestedSortValue {
 ---
 
 [[shared-type-node-attributes]]
-== NodeAttributes
+=== NodeAttributes
 
 [source,ts]
 ---
@@ -1036,7 +1036,7 @@ interface NodeAttributes {
 ---
 
 [[shared-type-node-id]]
-== NodeId
+=== NodeId
 
 [source,ts]
 ---
@@ -1044,7 +1044,7 @@ type NodeId = string
 ---
 
 [[shared-type-node-ids]]
-== NodeIds
+=== NodeIds
 
 [source,ts]
 ---
@@ -1052,7 +1052,7 @@ type NodeIds = NodeId | NodeId[]
 ---
 
 [[shared-type-node-name]]
-== NodeName
+=== NodeName
 
 [source,ts]
 ---
@@ -1060,7 +1060,7 @@ type NodeName = string
 ---
 
 [[shared-type-node-role]]
-== NodeRole
+=== NodeRole
 
 [source,ts]
 ---
@@ -1068,7 +1068,7 @@ type NodeRole = 'master' | 'data' | 'data_cold' | 'data_content' | 'data_frozen'
 ---
 
 [[shared-type-node-roles]]
-== NodeRoles
+=== NodeRoles
 
 [source,ts]
 ---
@@ -1076,7 +1076,7 @@ type NodeRoles = NodeRole[]
 ---
 
 [[shared-type-node-shard]]
-== NodeShard
+=== NodeShard
 
 [source,ts]
 ---
@@ -1095,7 +1095,7 @@ interface NodeShard {
 ---
 
 [[shared-type-node-statistics]]
-== NodeStatistics
+=== NodeStatistics
 
 [source,ts]
 ---
@@ -1111,7 +1111,7 @@ interface NodeStatistics {
 ---
 
 [[shared-type-normalization]]
-== Normalization
+=== Normalization
 
 [source,ts]
 ---
@@ -1119,7 +1119,7 @@ type Normalization = 'no' | 'h1' | 'h2' | 'h3' | 'z'
 ---
 
 [[shared-type-op-type]]
-== OpType
+=== OpType
 
 [source,ts]
 ---
@@ -1127,7 +1127,7 @@ type OpType = 'index' | 'create'
 ---
 
 [[shared-type-password]]
-== Password
+=== Password
 
 [source,ts]
 ---
@@ -1135,7 +1135,7 @@ type Password = string
 ---
 
 [[shared-type-percentage]]
-== Percentage
+=== Percentage
 
 [source,ts]
 ---
@@ -1143,7 +1143,7 @@ type Percentage = string | float
 ---
 
 [[shared-type-pipeline-name]]
-== PipelineName
+=== PipelineName
 
 [source,ts]
 ---
@@ -1151,7 +1151,7 @@ type PipelineName = string
 ---
 
 [[shared-type-plugin-stats]]
-== PluginStats
+=== PluginStats
 
 [source,ts]
 ---
@@ -1169,7 +1169,7 @@ interface PluginStats {
 ---
 
 [[shared-type-property-name]]
-== PropertyName
+=== PropertyName
 
 [source,ts]
 ---
@@ -1177,7 +1177,7 @@ type PropertyName = string
 ---
 
 [[shared-type-query-cache-stats]]
-== QueryCacheStats
+=== QueryCacheStats
 
 [source,ts]
 ---
@@ -1202,7 +1202,7 @@ interface QueryCacheStats {
 ---
 
 [[shared-type-query-vector]]
-== QueryVector
+=== QueryVector
 
 [source,ts]
 ---
@@ -1210,7 +1210,7 @@ type QueryVector = float[]
 ---
 
 [[shared-type-query-vector-builder]]
-== QueryVectorBuilder
+=== QueryVectorBuilder
 
 [source,ts]
 ---
@@ -1220,7 +1220,7 @@ interface QueryVectorBuilder {
 ---
 
 [[shared-type-r-r-f-retriever]]
-== RRFRetriever
+=== RRFRetriever
 
 [source,ts]
 ---
@@ -1235,7 +1235,7 @@ interface RRFRetriever extends RetrieverBase {
 ---
 
 [[shared-type-rank-base]]
-== RankBase
+=== RankBase
 
 [source,ts]
 ---
@@ -1244,7 +1244,7 @@ interface RankBase {
 ---
 
 [[shared-type-rank-container]]
-== RankContainer
+=== RankContainer
 
 [source,ts]
 ---
@@ -1255,7 +1255,7 @@ interface RankContainer {
 ---
 
 [[shared-type-recovery-stats]]
-== RecoveryStats
+=== RecoveryStats
 
 [source,ts]
 ---
@@ -1268,7 +1268,7 @@ interface RecoveryStats {
 ---
 
 [[shared-type-refresh]]
-== Refresh
+=== Refresh
 
 [source,ts]
 ---
@@ -1276,7 +1276,7 @@ type Refresh = boolean | 'true' | 'false' | 'wait_for'
 ---
 
 [[shared-type-refresh-stats]]
-== RefreshStats
+=== RefreshStats
 
 [source,ts]
 ---
@@ -1291,7 +1291,7 @@ interface RefreshStats {
 ---
 
 [[shared-type-relation-name]]
-== RelationName
+=== RelationName
 
 [source,ts]
 ---
@@ -1299,7 +1299,7 @@ type RelationName = string
 ---
 
 [[shared-type-relocation-failure-info]]
-== RelocationFailureInfo
+=== RelocationFailureInfo
 
 [source,ts]
 ---
@@ -1309,7 +1309,7 @@ interface RelocationFailureInfo {
 ---
 
 [[shared-type-request-base]]
-== RequestBase
+=== RequestBase
 
 [source,ts]
 ---
@@ -1318,7 +1318,7 @@ interface RequestBase extends SpecUtilsCommonQueryParameters {
 ---
 
 [[shared-type-request-cache-stats]]
-== RequestCacheStats
+=== RequestCacheStats
 
 [source,ts]
 ---
@@ -1332,7 +1332,7 @@ interface RequestCacheStats {
 ---
 
 [[shared-type-result]]
-== Result
+=== Result
 
 [source,ts]
 ---
@@ -1340,7 +1340,7 @@ type Result = 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
 ---
 
 [[shared-type-retries]]
-== Retries
+=== Retries
 
 [source,ts]
 ---
@@ -1351,7 +1351,7 @@ interface Retries {
 ---
 
 [[shared-type-retriever-base]]
-== RetrieverBase
+=== RetrieverBase
 
 [source,ts]
 ---
@@ -1364,7 +1364,7 @@ interface RetrieverBase {
 ---
 
 [[shared-type-retriever-container]]
-== RetrieverContainer
+=== RetrieverContainer
 
 [source,ts]
 ---
@@ -1381,7 +1381,7 @@ interface RetrieverContainer {
 ---
 
 [[shared-type-routing]]
-== Routing
+=== Routing
 
 [source,ts]
 ---
@@ -1389,7 +1389,7 @@ type Routing = string
 ---
 
 [[shared-type-rrf-rank]]
-== RrfRank
+=== RrfRank
 
 [source,ts]
 ---
@@ -1402,7 +1402,7 @@ interface RrfRank {
 ---
 
 [[shared-type-scalar-value]]
-== ScalarValue
+=== ScalarValue
 
 [source,ts]
 ---
@@ -1410,7 +1410,7 @@ type ScalarValue = long | double | string | boolean | null
 ---
 
 [[shared-type-score-sort]]
-== ScoreSort
+=== ScoreSort
 
 [source,ts]
 ---
@@ -1420,7 +1420,7 @@ interface ScoreSort {
 ---
 
 [[shared-type-script]]
-== Script
+=== Script
 
 [source,ts]
 ---
@@ -1438,7 +1438,7 @@ interface Script {
 ---
 
 [[shared-type-script-field]]
-== ScriptField
+=== ScriptField
 
 [source,ts]
 ---
@@ -1449,7 +1449,7 @@ interface ScriptField {
 ---
 
 [[shared-type-script-language]]
-== ScriptLanguage
+=== ScriptLanguage
 
 [source,ts]
 ---
@@ -1457,7 +1457,7 @@ type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java' | string
 ---
 
 [[shared-type-script-sort]]
-== ScriptSort
+=== ScriptSort
 
 [source,ts]
 ---
@@ -1471,7 +1471,7 @@ interface ScriptSort {
 ---
 
 [[shared-type-script-sort-type]]
-== ScriptSortType
+=== ScriptSortType
 
 [source,ts]
 ---
@@ -1479,7 +1479,7 @@ type ScriptSortType = 'string' | 'number' | 'version'
 ---
 
 [[shared-type-script-transform]]
-== ScriptTransform
+=== ScriptTransform
 
 [source,ts]
 ---
@@ -1492,7 +1492,7 @@ interface ScriptTransform {
 ---
 
 [[shared-type-scroll-id]]
-== ScrollId
+=== ScrollId
 
 [source,ts]
 ---
@@ -1500,7 +1500,7 @@ type ScrollId = string
 ---
 
 [[shared-type-scroll-ids]]
-== ScrollIds
+=== ScrollIds
 
 [source,ts]
 ---
@@ -1508,7 +1508,7 @@ type ScrollIds = ScrollId | ScrollId[]
 ---
 
 [[shared-type-search-stats]]
-== SearchStats
+=== SearchStats
 
 [source,ts]
 ---
@@ -1535,7 +1535,7 @@ interface SearchStats {
 ---
 
 [[shared-type-search-transform]]
-== SearchTransform
+=== SearchTransform
 
 [source,ts]
 ---
@@ -1546,7 +1546,7 @@ interface SearchTransform {
 ---
 
 [[shared-type-search-type]]
-== SearchType
+=== SearchType
 
 [source,ts]
 ---
@@ -1554,7 +1554,7 @@ type SearchType = 'query_then_fetch' | 'dfs_query_then_fetch'
 ---
 
 [[shared-type-segments-stats]]
-== SegmentsStats
+=== SegmentsStats
 
 [source,ts]
 ---
@@ -1609,7 +1609,7 @@ interface SegmentsStats {
 ---
 
 [[shared-type-sequence-number]]
-== SequenceNumber
+=== SequenceNumber
 
 [source,ts]
 ---
@@ -1617,7 +1617,7 @@ type SequenceNumber = long
 ---
 
 [[shared-type-service]]
-== Service
+=== Service
 
 [source,ts]
 ---
@@ -1625,7 +1625,7 @@ type Service = string
 ---
 
 [[shared-type-shard-failure]]
-== ShardFailure
+=== ShardFailure
 
 [source,ts]
 ---
@@ -1639,7 +1639,7 @@ interface ShardFailure {
 ---
 
 [[shared-type-shard-statistics]]
-== ShardStatistics
+=== ShardStatistics
 
 [source,ts]
 ---
@@ -1655,7 +1655,7 @@ interface ShardStatistics {
 ---
 
 [[shared-type-shards-operation-response-base]]
-== ShardsOperationResponseBase
+=== ShardsOperationResponseBase
 
 [source,ts]
 ---
@@ -1665,7 +1665,7 @@ interface ShardsOperationResponseBase {
 ---
 
 [[shared-type-sliced-scroll]]
-== SlicedScroll
+=== SlicedScroll
 
 [source,ts]
 ---
@@ -1677,7 +1677,7 @@ interface SlicedScroll {
 ---
 
 [[shared-type-slices]]
-== Slices
+=== Slices
 
 [source,ts]
 ---
@@ -1685,7 +1685,7 @@ type Slices = integer | SlicesCalculation
 ---
 
 [[shared-type-slices-calculation]]
-== SlicesCalculation
+=== SlicesCalculation
 
 [source,ts]
 ---
@@ -1693,7 +1693,7 @@ type SlicesCalculation = 'auto'
 ---
 
 [[shared-type-sort]]
-== Sort
+=== Sort
 
 [source,ts]
 ---
@@ -1701,7 +1701,7 @@ type Sort = SortCombinations | SortCombinations[]
 ---
 
 [[shared-type-sort-combinations]]
-== SortCombinations
+=== SortCombinations
 
 [source,ts]
 ---
@@ -1709,7 +1709,7 @@ type SortCombinations = Field | SortOptions
 ---
 
 [[shared-type-sort-mode]]
-== SortMode
+=== SortMode
 
 [source,ts]
 ---
@@ -1717,7 +1717,7 @@ type SortMode = 'min' | 'max' | 'sum' | 'avg' | 'median'
 ---
 
 [[shared-type-sort-options]]
-== SortOptions
+=== SortOptions
 
 [source,ts]
 ---
@@ -1732,7 +1732,7 @@ export type SortOptions = SortOptionsKeys
 ---
 
 [[shared-type-sort-order]]
-== SortOrder
+=== SortOrder
 
 [source,ts]
 ---
@@ -1740,7 +1740,7 @@ type SortOrder = 'asc' | 'desc'
 ---
 
 [[shared-type-sort-results]]
-== SortResults
+=== SortResults
 
 [source,ts]
 ---
@@ -1748,7 +1748,7 @@ type SortResults = FieldValue[]
 ---
 
 [[shared-type-standard-retriever]]
-== StandardRetriever
+=== StandardRetriever
 
 [source,ts]
 ---
@@ -1767,7 +1767,7 @@ interface StandardRetriever extends RetrieverBase {
 ---
 
 [[shared-type-store-stats]]
-== StoreStats
+=== StoreStats
 
 [source,ts]
 ---
@@ -1788,7 +1788,7 @@ interface StoreStats {
 ---
 
 [[shared-type-stored-script]]
-== StoredScript
+=== StoredScript
 
 [source,ts]
 ---
@@ -1802,7 +1802,7 @@ interface StoredScript {
 ---
 
 [[shared-type-suggest-mode]]
-== SuggestMode
+=== SuggestMode
 
 [source,ts]
 ---
@@ -1810,7 +1810,7 @@ type SuggestMode = 'missing' | 'popular' | 'always'
 ---
 
 [[shared-type-suggestion-name]]
-== SuggestionName
+=== SuggestionName
 
 [source,ts]
 ---
@@ -1818,7 +1818,7 @@ type SuggestionName = string
 ---
 
 [[shared-type-task-failure]]
-== TaskFailure
+=== TaskFailure
 
 [source,ts]
 ---
@@ -1831,7 +1831,7 @@ interface TaskFailure {
 ---
 
 [[shared-type-task-id]]
-== TaskId
+=== TaskId
 
 [source,ts]
 ---
@@ -1839,7 +1839,7 @@ type TaskId = string | integer
 ---
 
 [[shared-type-text-embedding]]
-== TextEmbedding
+=== TextEmbedding
 
 [source,ts]
 ---
@@ -1850,7 +1850,7 @@ interface TextEmbedding {
 ---
 
 [[shared-type-text-similarity-reranker]]
-== TextSimilarityReranker
+=== TextSimilarityReranker
 
 [source,ts]
 ---
@@ -1869,7 +1869,7 @@ interface TextSimilarityReranker extends RetrieverBase {
 ---
 
 [[shared-type-thread-type]]
-== ThreadType
+=== ThreadType
 
 [source,ts]
 ---
@@ -1877,7 +1877,7 @@ type ThreadType = 'cpu' | 'wait' | 'block' | 'gpu' | 'mem'
 ---
 
 [[shared-type-time-of-day]]
-== TimeOfDay
+=== TimeOfDay
 
 [source,ts]
 ---
@@ -1885,7 +1885,7 @@ type TimeOfDay = string
 ---
 
 [[shared-type-time-unit]]
-== TimeUnit
+=== TimeUnit
 
 [source,ts]
 ---
@@ -1893,7 +1893,7 @@ type TimeUnit = 'nanos' | 'micros' | 'ms' | 's' | 'm' | 'h' | 'd'
 ---
 
 [[shared-type-time-zone]]
-== TimeZone
+=== TimeZone
 
 [source,ts]
 ---
@@ -1901,7 +1901,7 @@ type TimeZone = string
 ---
 
 [[shared-type-top-left-bottom-right-geo-bounds]]
-== TopLeftBottomRightGeoBounds
+=== TopLeftBottomRightGeoBounds
 
 [source,ts]
 ---
@@ -1912,7 +1912,7 @@ interface TopLeftBottomRightGeoBounds {
 ---
 
 [[shared-type-top-right-bottom-left-geo-bounds]]
-== TopRightBottomLeftGeoBounds
+=== TopRightBottomLeftGeoBounds
 
 [source,ts]
 ---
@@ -1923,7 +1923,7 @@ interface TopRightBottomLeftGeoBounds {
 ---
 
 [[shared-type-transform-container]]
-== TransformContainer
+=== TransformContainer
 
 [source,ts]
 ---
@@ -1935,7 +1935,7 @@ interface TransformContainer {
 ---
 
 [[shared-type-translog-stats]]
-== TranslogStats
+=== TranslogStats
 
 [source,ts]
 ---
@@ -1951,7 +1951,7 @@ interface TranslogStats {
 ---
 
 [[shared-type-transport-address]]
-== TransportAddress
+=== TransportAddress
 
 [source,ts]
 ---
@@ -1959,7 +1959,7 @@ type TransportAddress = string
 ---
 
 [[shared-type-unit-float-millis]]
-== UnitFloatMillis
+=== UnitFloatMillis
 
 [source,ts]
 ---
@@ -1967,7 +1967,7 @@ type UnitFloatMillis = double
 ---
 
 [[shared-type-unit-millis]]
-== UnitMillis
+=== UnitMillis
 
 [source,ts]
 ---
@@ -1975,7 +1975,7 @@ type UnitMillis = long
 ---
 
 [[shared-type-unit-nanos]]
-== UnitNanos
+=== UnitNanos
 
 [source,ts]
 ---
@@ -1983,7 +1983,7 @@ type UnitNanos = long
 ---
 
 [[shared-type-unit-seconds]]
-== UnitSeconds
+=== UnitSeconds
 
 [source,ts]
 ---
@@ -1991,7 +1991,7 @@ type UnitSeconds = long
 ---
 
 [[shared-type-username]]
-== Username
+=== Username
 
 [source,ts]
 ---
@@ -1999,7 +1999,7 @@ type Username = string
 ---
 
 [[shared-type-uuid]]
-== Uuid
+=== Uuid
 
 [source,ts]
 ---
@@ -2007,7 +2007,7 @@ type Uuid = string
 ---
 
 [[shared-type-version-number]]
-== VersionNumber
+=== VersionNumber
 
 [source,ts]
 ---
@@ -2015,7 +2015,7 @@ type VersionNumber = long
 ---
 
 [[shared-type-version-string]]
-== VersionString
+=== VersionString
 
 [source,ts]
 ---
@@ -2023,7 +2023,7 @@ type VersionString = string
 ---
 
 [[shared-type-version-type]]
-== VersionType
+=== VersionType
 
 [source,ts]
 ---
@@ -2031,7 +2031,7 @@ type VersionType = 'internal' | 'external' | 'external_gte' | 'force'
 ---
 
 [[shared-type-wait-for-active-shard-options]]
-== WaitForActiveShardOptions
+=== WaitForActiveShardOptions
 
 [source,ts]
 ---
@@ -2039,7 +2039,7 @@ type WaitForActiveShardOptions = 'all' | 'index-setting'
 ---
 
 [[shared-type-wait-for-active-shards]]
-== WaitForActiveShards
+=== WaitForActiveShards
 
 [source,ts]
 ---
@@ -2047,7 +2047,7 @@ type WaitForActiveShards = integer | WaitForActiveShardOptions
 ---
 
 [[shared-type-wait-for-events]]
-== WaitForEvents
+=== WaitForEvents
 
 [source,ts]
 ---
@@ -2055,7 +2055,7 @@ type WaitForEvents = 'immediate' | 'urgent' | 'high' | 'normal' | 'low' | 'langu
 ---
 
 [[shared-type-warmer-stats]]
-== WarmerStats
+=== WarmerStats
 
 [source,ts]
 ---
@@ -2068,7 +2068,7 @@ interface WarmerStats {
 ---
 
 [[shared-type-wkt-geo-bounds]]
-== WktGeoBounds
+=== WktGeoBounds
 
 [source,ts]
 ---
@@ -2078,7 +2078,7 @@ interface WktGeoBounds {
 ---
 
 [[shared-type-write-response-base]]
-== WriteResponseBase
+=== WriteResponseBase
 
 [source,ts]
 ---
@@ -2095,7 +2095,7 @@ interface WriteResponseBase {
 ---
 
 [[shared-type-byte]]
-== byte
+=== byte
 
 [source,ts]
 ---
@@ -2103,7 +2103,7 @@ type byte = number
 ---
 
 [[shared-type-double]]
-== double
+=== double
 
 [source,ts]
 ---
@@ -2111,7 +2111,7 @@ type double = number
 ---
 
 [[shared-type-float]]
-== float
+=== float
 
 [source,ts]
 ---
@@ -2119,7 +2119,7 @@ type float = number
 ---
 
 [[shared-type-integer]]
-== integer
+=== integer
 
 [source,ts]
 ---
@@ -2127,7 +2127,7 @@ type integer = number
 ---
 
 [[shared-type-long]]
-== long
+=== long
 
 [source,ts]
 ---
@@ -2135,7 +2135,7 @@ type long = number
 ---
 
 [[shared-type-short]]
-== short
+=== short
 
 [source,ts]
 ---
@@ -2143,7 +2143,7 @@ type short = number
 ---
 
 [[shared-type-uint]]
-== uint
+=== uint
 
 [source,ts]
 ---
@@ -2151,7 +2151,7 @@ type uint = number
 ---
 
 [[shared-type-ulong]]
-== ulong
+=== ulong
 
 [source,ts]
 ---
@@ -2159,7 +2159,7 @@ type ulong = number
 ---
 
 [[shared-type-spec-utils-base-node]]
-== SpecUtilsBaseNode
+=== SpecUtilsBaseNode
 
 [source,ts]
 ---
@@ -2174,7 +2174,7 @@ interface SpecUtilsBaseNode {
 ---
 
 [[shared-type-spec-utils-null-value]]
-== SpecUtilsNullValue
+=== SpecUtilsNullValue
 
 [source,ts]
 ---
@@ -2182,7 +2182,7 @@ type SpecUtilsNullValue = null
 ---
 
 [[shared-type-spec-utils-pipe-separated-flags]]
-== SpecUtilsPipeSeparatedFlags
+=== SpecUtilsPipeSeparatedFlags
 
 [source,ts]
 ---
@@ -2190,7 +2190,7 @@ type SpecUtilsPipeSeparatedFlags<T = unknown> = T | string
 ---
 
 [[shared-type-spec-utils-stringified]]
-== SpecUtilsStringified
+=== SpecUtilsStringified
 
 [source,ts]
 ---
@@ -2198,7 +2198,7 @@ type SpecUtilsStringified<T = unknown> = T | string
 ---
 
 [[shared-type-spec-utils-void]]
-== SpecUtilsVoid
+=== SpecUtilsVoid
 
 [source,ts]
 ---
@@ -2206,7 +2206,7 @@ type SpecUtilsStringified<T = unknown> = T | string
 ---
 
 [[shared-type-spec-utils-with-null-value]]
-== SpecUtilsWithNullValue
+=== SpecUtilsWithNullValue
 
 [source,ts]
 ---
@@ -2214,7 +2214,7 @@ type SpecUtilsWithNullValue<T = unknown> = T | SpecUtilsNullValue
 ---
 
 [[shared-type-spec-utils-additional-properties]]
-== SpecUtilsAdditionalProperties
+=== SpecUtilsAdditionalProperties
 
 [source,ts]
 ---
@@ -2223,7 +2223,7 @@ interface SpecUtilsAdditionalProperties<TKey = unknown, TValue = unknown> {
 ---
 
 [[shared-type-spec-utils-additional-property]]
-== SpecUtilsAdditionalProperty
+=== SpecUtilsAdditionalProperty
 
 [source,ts]
 ---
@@ -2232,7 +2232,7 @@ interface SpecUtilsAdditionalProperty<TKey = unknown, TValue = unknown> {
 ---
 
 [[shared-type-spec-utils-common-query-parameters]]
-== SpecUtilsCommonQueryParameters
+=== SpecUtilsCommonQueryParameters
 
 [source,ts]
 ---
@@ -2249,7 +2249,7 @@ interface SpecUtilsCommonQueryParameters {
 ---
 
 [[shared-type-spec-utils-common-cat-query-parameters]]
-== SpecUtilsCommonCatQueryParameters
+=== SpecUtilsCommonCatQueryParameters
 
 [source,ts]
 ---
@@ -2272,7 +2272,7 @@ interface SpecUtilsCommonCatQueryParameters {
 ---
 
 [[shared-type-spec-utils-overload-of]]
-== SpecUtilsOverloadOf
+=== SpecUtilsOverloadOf
 
 [source,ts]
 ---

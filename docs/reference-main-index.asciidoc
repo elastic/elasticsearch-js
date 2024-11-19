@@ -1,5 +1,5 @@
 [[reference-main-index]]
-= API reference
+== API reference
 
 include::reference-shared-types.asciidoc[]
 include::reference-async_search-delete.asciidoc[]
