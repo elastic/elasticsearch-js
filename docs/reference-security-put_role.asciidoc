@@ -41,10 +41,12 @@ Create or update roles. The role management APIs are generally the preferred way
 ----
 
 [discrete]
-===== `SecurityPutRoleRequest`
+==== SecurityPutRoleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityPutRoleRequest extends <<RequestBase>> {
   name: <<Name>>
   refresh?: <<Refresh>>
@@ -58,15 +60,23 @@ interface SecurityPutRoleRequest extends <<RequestBase>> {
   description?: string
   transient_metadata?: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityPutRoleResponse`
+==== SecurityPutRoleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityPutRoleResponse {
   role: SecurityCreatedStatus
 }
-----
 
+[pass]
+++++
+</pre>
+++++

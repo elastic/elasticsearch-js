@@ -41,28 +41,38 @@ Find roles with a query. Get roles in a paginated manner. You can optionally fil
 ----
 
 [discrete]
-===== `SecurityQueryRoleRequest`
+==== SecurityQueryRoleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityQueryRoleRequest extends <<RequestBase>> {
   query?: SecurityQueryRoleRoleQueryContainer
-  from?: <<integer>>
+  from?: number
   sort?: <<Sort>>
-  size?: <<integer>>
+  size?: number
   search_after?: <<SortResults>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityQueryRoleResponse`
+==== SecurityQueryRoleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityQueryRoleResponse {
-  total: <<integer>>
-  count: <<integer>>
+  total: number
+  count: number
   roles: SecurityQueryRoleQueryRole[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

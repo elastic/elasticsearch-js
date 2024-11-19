@@ -41,22 +41,32 @@ Delete an index template. The provided <index-template> may contain multiple tem
 ----
 
 [discrete]
-===== `IndicesDeleteIndexTemplateRequest`
+==== IndicesDeleteIndexTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesDeleteIndexTemplateRequest extends <<RequestBase>> {
   name: <<Names>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesDeleteIndexTemplateResponse`
+==== IndicesDeleteIndexTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesDeleteIndexTemplateResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,20 +41,30 @@ Get role mappings. Role mappings define which roles are assigned to each user. T
 ----
 
 [discrete]
-===== `SecurityGetRoleMappingRequest`
+==== SecurityGetRoleMappingRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityGetRoleMappingRequest extends <<RequestBase>> {
   name?: <<Names>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityGetRoleMappingResponse`
+==== SecurityGetRoleMappingResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SecurityGetRoleMappingResponse = Record<string, SecurityRoleMapping>
-----
 
+[pass]
+++++
+</pre>
+++++

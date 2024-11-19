@@ -41,25 +41,35 @@ Get datafeeds configuration info. You can get information for multiple datafeeds
 ----
 
 [discrete]
-===== `MlGetDatafeedsRequest`
+==== MlGetDatafeedsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetDatafeedsRequest extends <<RequestBase>> {
   datafeed_id?: <<Ids>>
   allow_no_match?: boolean
   exclude_generated?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetDatafeedsResponse`
+==== MlGetDatafeedsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetDatafeedsResponse {
-  count: <<long>>
+  count: number
   datafeeds: MlDatafeed[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,24 +41,34 @@ Return ML defaults and limits. Returns defaults and limits used by machine learn
 ----
 
 [discrete]
-===== `MlInfoRequest`
+==== MlInfoRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlInfoRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlInfoResponse`
+==== MlInfoResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlInfoResponse {
   defaults: MlInfoDefaults
   limits: MlInfoLimits
   upgrade_mode: boolean
   native_code: MlInfoNativeCode
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,21 +41,31 @@ Promotes a data stream from a replicated data stream managed by CCR to a regular
 ----
 
 [discrete]
-===== `IndicesPromoteDataStreamRequest`
+==== IndicesPromoteDataStreamRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesPromoteDataStreamRequest extends <<RequestBase>> {
   name: <<IndexName>>
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesPromoteDataStreamResponse`
+==== IndicesPromoteDataStreamResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesPromoteDataStreamResponse = any
-----
 
+[pass]
+++++
+</pre>
+++++

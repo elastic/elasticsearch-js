@@ -41,22 +41,32 @@ Returns information about the nodes in a cluster. IMPORTANT: cat APIs are only i
 ----
 
 [discrete]
-===== `CatNodesRequest`
+==== CatNodesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatNodesRequest extends CatCatRequestBase {
   bytes?: <<Bytes>>
   full_id?: boolean | string
   include_unloaded_segments?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatNodesResponse`
+==== CatNodesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatNodesResponse = CatNodesNodesRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

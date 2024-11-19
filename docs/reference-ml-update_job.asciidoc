@@ -41,10 +41,12 @@ Update an anomaly detection job. Updates certain properties of an anomaly detect
 ----
 
 [discrete]
-===== `MlUpdateJobRequest`
+==== MlUpdateJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpdateJobRequest extends <<RequestBase>> {
   job_id: <<Id>>
   allow_lazy_open?: boolean
@@ -55,21 +57,26 @@ interface MlUpdateJobRequest extends <<RequestBase>> {
   description?: string
   model_plot_config?: MlModelPlotConfig
   model_prune_window?: <<Duration>>
-  daily_model_snapshot_retention_after_days?: <<long>>
-  model_snapshot_retention_days?: <<long>>
-  renormalization_window_days?: <<long>>
-  results_retention_days?: <<long>>
+  daily_model_snapshot_retention_after_days?: number
+  model_snapshot_retention_days?: number
+  renormalization_window_days?: number
+  results_retention_days?: number
   groups?: string[]
   detectors?: MlDetector[]
   per_partition_categorization?: MlPerPartitionCategorization
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlUpdateJobResponse`
+==== MlUpdateJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpdateJobResponse {
   allow_lazy_open: boolean
   analysis_config: MlAnalysisConfigRead
@@ -78,7 +85,7 @@ interface MlUpdateJobResponse {
   create_time: <<EpochTime>><<<UnitMillis>>>
   finished_time?: <<EpochTime>><<<UnitMillis>>>
   custom_settings?: Record<string, string>
-  daily_model_snapshot_retention_after_days: <<long>>
+  daily_model_snapshot_retention_after_days: number
   data_description: MlDataDescription
   datafeed_config?: MlDatafeed
   description?: string
@@ -88,10 +95,13 @@ interface MlUpdateJobResponse {
   job_version: <<VersionString>>
   model_plot_config?: MlModelPlotConfig
   model_snapshot_id?: <<Id>>
-  model_snapshot_retention_days: <<long>>
-  renormalization_window_days?: <<long>>
+  model_snapshot_retention_days: number
+  renormalization_window_days?: number
   results_index_name: <<IndexName>>
-  results_retention_days?: <<long>>
+  results_retention_days?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

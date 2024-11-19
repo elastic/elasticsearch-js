@@ -41,27 +41,37 @@ Performs the force merge operation on one or more indices.
 ----
 
 [discrete]
-===== `IndicesForcemergeRequest`
+==== IndicesForcemergeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesForcemergeRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
   expand_wildcards?: <<ExpandWildcards>>
   flush?: boolean
   ignore_unavailable?: boolean
-  max_num_segments?: <<long>>
+  max_num_segments?: number
   only_expunge_deletes?: boolean
   wait_for_completion?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesForcemergeResponse`
+==== IndicesForcemergeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesForcemergeResponse = IndicesForcemergeForceMergeResponseBody
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentati
 ----
 
 [discrete]
-===== `ShutdownPutNodeRequest`
+==== ShutdownPutNodeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ShutdownPutNodeRequest extends <<RequestBase>> {
   node_id: <<NodeId>>
   master_timeout?: <<TimeUnit>>
@@ -54,13 +56,21 @@ interface ShutdownPutNodeRequest extends <<RequestBase>> {
   allocation_delay?: string
   target_node_name?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ShutdownPutNodeResponse`
+==== ShutdownPutNodeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ShutdownPutNodeResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

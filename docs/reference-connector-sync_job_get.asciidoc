@@ -41,20 +41,30 @@ Get a connector sync job.
 ----
 
 [discrete]
-===== `ConnectorSyncJobGetRequest`
+==== ConnectorSyncJobGetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorSyncJobGetRequest extends <<RequestBase>> {
   connector_sync_job_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorSyncJobGetResponse`
+==== ConnectorSyncJobGetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ConnectorSyncJobGetResponse = ConnectorConnectorSyncJob
-----
 
+[pass]
+++++
+</pre>
+++++

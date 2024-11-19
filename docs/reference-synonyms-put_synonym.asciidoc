@@ -41,24 +41,34 @@ Creates or updates a synonym set.
 ----
 
 [discrete]
-===== `SynonymsPutSynonymRequest`
+==== SynonymsPutSynonymRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SynonymsPutSynonymRequest extends <<RequestBase>> {
   id: <<Id>>
   synonyms_set: SynonymsSynonymRule | SynonymsSynonymRule[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SynonymsPutSynonymResponse`
+==== SynonymsPutSynonymResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SynonymsPutSynonymResponse {
   result: <<Result>>
   reload_analyzers_details: IndicesReloadSearchAnalyzersReloadResult
 }
-----
 
+[pass]
+++++
+</pre>
+++++

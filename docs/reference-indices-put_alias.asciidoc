@@ -41,10 +41,12 @@ Create or update an alias. Adds a data stream or index to an alias.
 ----
 
 [discrete]
-===== `IndicesPutAliasRequest`
+==== IndicesPutAliasRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesPutAliasRequest extends <<RequestBase>> {
   index: <<Indices>>
   name: <<Name>>
@@ -56,13 +58,21 @@ interface IndicesPutAliasRequest extends <<RequestBase>> {
   routing?: <<Routing>>
   search_routing?: <<Routing>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesPutAliasResponse`
+==== IndicesPutAliasResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesPutAliasResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

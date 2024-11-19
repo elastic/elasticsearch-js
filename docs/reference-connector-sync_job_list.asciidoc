@@ -41,27 +41,37 @@ Get all connector sync jobs. Get information about all stored connector sync job
 ----
 
 [discrete]
-===== `ConnectorSyncJobListRequest`
+==== ConnectorSyncJobListRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorSyncJobListRequest extends <<RequestBase>> {
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
   status?: ConnectorSyncStatus
   connector_id?: <<Id>>
   job_type?: ConnectorSyncJobType | ConnectorSyncJobType[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorSyncJobListResponse`
+==== ConnectorSyncJobListResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorSyncJobListResponse {
-  count: <<long>>
+  count: number
   results: ConnectorConnectorSyncJob[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

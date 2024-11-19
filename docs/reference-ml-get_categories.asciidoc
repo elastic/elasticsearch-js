@@ -41,28 +41,38 @@ Get anomaly detection job results for categories.
 ----
 
 [discrete]
-===== `MlGetCategoriesRequest`
+==== MlGetCategoriesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetCategoriesRequest extends <<RequestBase>> {
   job_id: <<Id>>
   category_id?: <<CategoryId>>
-  from?: <<integer>>
+  from?: number
   partition_field_value?: string
-  size?: <<integer>>
+  size?: number
   page?: MlPage
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetCategoriesResponse`
+==== MlGetCategoriesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetCategoriesResponse {
   categories: MlCategory[]
-  count: <<long>>
+  count: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

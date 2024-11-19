@@ -41,27 +41,37 @@ Get transforms. Retrieves configuration information for transforms.
 ----
 
 [discrete]
-===== `TransformGetTransformRequest`
+==== TransformGetTransformRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformGetTransformRequest extends <<RequestBase>> {
   transform_id?: <<Names>>
   allow_no_match?: boolean
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
   exclude_generated?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TransformGetTransformResponse`
+==== TransformGetTransformResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformGetTransformResponse {
-  count: <<long>>
+  count: number
   transforms: TransformGetTransformTransformSummary[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

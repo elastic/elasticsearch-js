@@ -41,23 +41,33 @@ Preview features used by data frame analytics. Previews the extracted features u
 ----
 
 [discrete]
-===== `MlPreviewDataFrameAnalyticsRequest`
+==== MlPreviewDataFrameAnalyticsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPreviewDataFrameAnalyticsRequest extends <<RequestBase>> {
   id?: <<Id>>
   config?: MlPreviewDataFrameAnalyticsDataframePreviewConfig
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlPreviewDataFrameAnalyticsResponse`
+==== MlPreviewDataFrameAnalyticsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPreviewDataFrameAnalyticsResponse {
   feature_values: Record<<<Field>>, string>[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

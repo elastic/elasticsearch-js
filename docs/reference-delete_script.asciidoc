@@ -41,22 +41,32 @@ Delete a script or search template. Deletes a stored script or search template.
 ----
 
 [discrete]
-===== `DeleteScriptRequest`
+==== DeleteScriptRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface DeleteScriptRequest extends <<RequestBase>> {
   id: <<Id>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `DeleteScriptResponse`
+==== DeleteScriptResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type DeleteScriptResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

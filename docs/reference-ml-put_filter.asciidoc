@@ -41,26 +41,36 @@ Create a filter. A filter contains a list of strings. It can be used by one or m
 ----
 
 [discrete]
-===== `MlPutFilterRequest`
+==== MlPutFilterRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPutFilterRequest extends <<RequestBase>> {
   filter_id: <<Id>>
   description?: string
   items?: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlPutFilterResponse`
+==== MlPutFilterResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPutFilterResponse {
   description: string
   filter_id: <<Id>>
   items: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

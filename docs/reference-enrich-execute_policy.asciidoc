@@ -41,24 +41,34 @@ Creates the enrich index for an existing enrich policy.
 ----
 
 [discrete]
-===== `EnrichExecutePolicyRequest`
+==== EnrichExecutePolicyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface EnrichExecutePolicyRequest extends <<RequestBase>> {
   name: <<Name>>
   wait_for_completion?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `EnrichExecutePolicyResponse`
+==== EnrichExecutePolicyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface EnrichExecutePolicyResponse {
   status?: EnrichExecutePolicyExecuteEnrichPolicyStatus
   task_id?: <<TaskId>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

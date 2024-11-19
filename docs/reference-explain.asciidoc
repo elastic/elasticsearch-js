@@ -41,10 +41,12 @@ Explain a document match result. Returns information about why a specific docume
 ----
 
 [discrete]
-===== `ExplainRequest`
+==== ExplainRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ExplainRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -62,13 +64,18 @@ interface ExplainRequest extends <<RequestBase>> {
   q?: string
   query?: QueryDslQueryContainer
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ExplainResponse`
+==== ExplainResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ExplainResponse<TDocument = unknown> {
   _index: <<IndexName>>
   _id: <<Id>>
@@ -76,5 +83,8 @@ interface ExplainResponse<TDocument = unknown> {
   explanation?: ExplainExplanationDetail
   get?: <<InlineGet>><TDocument>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

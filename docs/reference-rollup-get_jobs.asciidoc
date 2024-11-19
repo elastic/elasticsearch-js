@@ -41,22 +41,32 @@ Retrieves the configuration, stats, and status of rollup jobs.
 ----
 
 [discrete]
-===== `RollupGetJobsRequest`
+==== RollupGetJobsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupGetJobsRequest extends <<RequestBase>> {
   id?: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `RollupGetJobsResponse`
+==== RollupGetJobsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupGetJobsResponse {
   jobs: RollupGetJobsRollupJob[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

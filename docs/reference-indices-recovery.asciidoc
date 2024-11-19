@@ -41,22 +41,32 @@ Returns information about ongoing and completed shard recoveries for one or more
 ----
 
 [discrete]
-===== `IndicesRecoveryRequest`
+==== IndicesRecoveryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesRecoveryRequest extends <<RequestBase>> {
   index?: <<Indices>>
   active_only?: boolean
   detailed?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesRecoveryResponse`
+==== IndicesRecoveryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesRecoveryResponse = Record<<<IndexName>>, IndicesRecoveryRecoveryStatus>
-----
 
+[pass]
+++++
+</pre>
+++++

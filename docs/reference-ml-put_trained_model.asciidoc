@@ -41,10 +41,12 @@ Create a trained model. Enable you to supply a trained model that is not created
 ----
 
 [discrete]
-===== `MlPutTrainedModelRequest`
+==== MlPutTrainedModelRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPutTrainedModelRequest extends <<RequestBase>> {
   model_id: <<Id>>
   defer_definition_decompression?: boolean
@@ -56,18 +58,26 @@ interface MlPutTrainedModelRequest extends <<RequestBase>> {
   input?: MlPutTrainedModelInput
   metadata?: any
   model_type?: MlTrainedModelType
-  model_size_bytes?: <<long>>
+  model_size_bytes?: number
   platform_architecture?: string
   tags?: string[]
   prefix_strings?: MlTrainedModelPrefixStrings
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlPutTrainedModelResponse`
+==== MlPutTrainedModelResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlPutTrainedModelResponse = MlTrainedModelConfig
-----
 
+[pass]
+++++
+</pre>
+++++

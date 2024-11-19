@@ -41,10 +41,12 @@ Force buffered data to be processed. The flush jobs API is only applicable when 
 ----
 
 [discrete]
-===== `MlFlushJobRequest`
+==== MlFlushJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlFlushJobRequest extends <<RequestBase>> {
   job_id: <<Id>>
   advance_time?: <<DateTime>>
@@ -53,16 +55,24 @@ interface MlFlushJobRequest extends <<RequestBase>> {
   skip_time?: <<DateTime>>
   start?: <<DateTime>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlFlushJobResponse`
+==== MlFlushJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlFlushJobResponse {
   flushed: boolean
-  last_finalized_bucket_end?: <<integer>>
+  last_finalized_bucket_end?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,28 +41,38 @@ Get info about events in calendars.
 ----
 
 [discrete]
-===== `MlGetCalendarEventsRequest`
+==== MlGetCalendarEventsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetCalendarEventsRequest extends <<RequestBase>> {
   calendar_id: <<Id>>
   end?: <<DateTime>>
-  from?: <<integer>>
+  from?: number
   job_id?: <<Id>>
-  size?: <<integer>>
+  size?: number
   start?: <<DateTime>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetCalendarEventsResponse`
+==== MlGetCalendarEventsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetCalendarEventsResponse {
-  count: <<long>>
+  count: number
   events: MlCalendarEvent[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

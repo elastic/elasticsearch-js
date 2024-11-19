@@ -41,20 +41,30 @@ Resumes an auto-follow pattern that has been paused
 ----
 
 [discrete]
-===== `CcrResumeAutoFollowPatternRequest`
+==== CcrResumeAutoFollowPatternRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrResumeAutoFollowPatternRequest extends <<RequestBase>> {
   name: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrResumeAutoFollowPatternResponse`
+==== CcrResumeAutoFollowPatternResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CcrResumeAutoFollowPatternResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

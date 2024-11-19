@@ -41,25 +41,35 @@ Retrieves information about different cluster, node, and index level settings th
 ----
 
 [discrete]
-===== `MigrationDeprecationsRequest`
+==== MigrationDeprecationsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MigrationDeprecationsRequest extends <<RequestBase>> {
   index?: <<IndexName>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MigrationDeprecationsResponse`
+==== MigrationDeprecationsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MigrationDeprecationsResponse {
   cluster_settings: MigrationDeprecationsDeprecation[]
   index_settings: Record<string, MigrationDeprecationsDeprecation[]>
   node_settings: MigrationDeprecationsDeprecation[]
   ml_settings: MigrationDeprecationsDeprecation[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

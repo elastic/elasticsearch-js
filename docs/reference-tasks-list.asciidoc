@@ -41,10 +41,12 @@ The task management API returns information about tasks currently executing on o
 ----
 
 [discrete]
-===== `TasksListRequest`
+==== TasksListRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TasksListRequest extends <<RequestBase>> {
   actions?: string | string[]
   detailed?: boolean
@@ -55,13 +57,21 @@ interface TasksListRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   wait_for_completion?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TasksListResponse`
+==== TasksListResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type TasksListResponse = TasksTaskListResponseBase
-----
 
+[pass]
+++++
+</pre>
+++++

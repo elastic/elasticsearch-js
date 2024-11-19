@@ -41,25 +41,35 @@ Stop datafeeds. A datafeed that is stopped ceases to retrieve data from Elastics
 ----
 
 [discrete]
-===== `MlStopDatafeedRequest`
+==== MlStopDatafeedRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlStopDatafeedRequest extends <<RequestBase>> {
   datafeed_id: <<Id>>
   allow_no_match?: boolean
   force?: boolean
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlStopDatafeedResponse`
+==== MlStopDatafeedResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlStopDatafeedResponse {
   stopped: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

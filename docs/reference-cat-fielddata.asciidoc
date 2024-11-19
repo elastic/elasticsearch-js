@@ -41,21 +41,31 @@ Returns the amount of heap memory currently used by the field data cache on ever
 ----
 
 [discrete]
-===== `CatFielddataRequest`
+==== CatFielddataRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatFielddataRequest extends CatCatRequestBase {
   fields?: <<Fields>>
   bytes?: <<Bytes>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatFielddataResponse`
+==== CatFielddataResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatFielddataResponse = CatFielddataFielddataRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

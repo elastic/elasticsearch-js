@@ -41,22 +41,32 @@ Activate the connector draft filter. Activates the valid draft filtering for a c
 ----
 
 [discrete]
-===== `ConnectorUpdateActiveFilteringRequest`
+==== ConnectorUpdateActiveFilteringRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateActiveFilteringRequest extends <<RequestBase>> {
   connector_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdateActiveFilteringResponse`
+==== ConnectorUpdateActiveFilteringResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateActiveFilteringResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

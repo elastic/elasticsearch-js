@@ -41,10 +41,12 @@ Create or update an index template. Index templates define settings, mappings, a
 ----
 
 [discrete]
-===== `IndicesPutTemplateRequest`
+==== IndicesPutTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesPutTemplateRequest extends <<RequestBase>> {
   name: <<Name>>
   create?: boolean
@@ -53,17 +55,25 @@ interface IndicesPutTemplateRequest extends <<RequestBase>> {
   aliases?: Record<<<IndexName>>, IndicesAlias>
   index_patterns?: string | string[]
   mappings?: MappingTypeMapping
-  order?: <<integer>>
+  order?: number
   settings?: IndicesIndexSettings
   version?: <<VersionNumber>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesPutTemplateResponse`
+==== IndicesPutTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesPutTemplateResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

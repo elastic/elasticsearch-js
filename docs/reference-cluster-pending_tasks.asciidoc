@@ -41,23 +41,33 @@ Returns cluster-level changes (such as create index, update mapping, allocate or
 ----
 
 [discrete]
-===== `ClusterPendingTasksRequest`
+==== ClusterPendingTasksRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterPendingTasksRequest extends <<RequestBase>> {
   local?: boolean
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterPendingTasksResponse`
+==== ClusterPendingTasksResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterPendingTasksResponse {
   tasks: ClusterPendingTasksPendingTask[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

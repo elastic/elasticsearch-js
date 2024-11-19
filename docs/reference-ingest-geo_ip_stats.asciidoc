@@ -41,22 +41,32 @@ Gets download statistics for GeoIP2 databases used with the geoip processor.
 ----
 
 [discrete]
-===== `IngestGeoIpStatsRequest`
+==== IngestGeoIpStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestGeoIpStatsRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IngestGeoIpStatsResponse`
+==== IngestGeoIpStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestGeoIpStatsResponse {
   stats: IngestGeoIpStatsGeoIpDownloadStatistics
   nodes: Record<<<Id>>, IngestGeoIpStatsGeoIpNodeDatabases>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

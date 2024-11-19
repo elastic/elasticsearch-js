@@ -41,23 +41,33 @@ Get license information. Returns information about your Elastic license, includi
 ----
 
 [discrete]
-===== `LicenseGetRequest`
+==== LicenseGetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicenseGetRequest extends <<RequestBase>> {
   accept_enterprise?: boolean
   local?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `LicenseGetResponse`
+==== LicenseGetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicenseGetResponse {
   license: LicenseGetLicenseInformation
 }
-----
 
+[pass]
+++++
+</pre>
+++++

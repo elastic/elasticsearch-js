@@ -40,20 +40,3 @@ Executes an ESQL request asynchronously
 (EsqlAsyncQueryRequest, options?): Promise<EsqlAsyncQueryResponse>
 ----
 
-[discrete]
-===== `EsqlAsyncQueryRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `EsqlAsyncQueryResponse`
-
-[source,ts]
-----
-n/a
-----
-

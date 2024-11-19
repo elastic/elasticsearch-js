@@ -41,20 +41,30 @@ Get the async search status. Get the status of a previously submitted async sear
 ----
 
 [discrete]
-===== `AsyncSearchStatusRequest`
+==== AsyncSearchStatusRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface AsyncSearchStatusRequest extends <<RequestBase>> {
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `AsyncSearchStatusResponse`
+==== AsyncSearchStatusResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type AsyncSearchStatusResponse = AsyncSearchStatusStatusResponseBase
-----
 
+[pass]
+++++
+</pre>
+++++

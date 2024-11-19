@@ -41,21 +41,31 @@ Throttle a delete by query operation. Change the number of requests per second f
 ----
 
 [discrete]
-===== `DeleteByQueryRethrottleRequest`
+==== DeleteByQueryRethrottleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface DeleteByQueryRethrottleRequest extends <<RequestBase>> {
   task_id: <<TaskId>>
-  requests_per_second?: <<float>>
+  requests_per_second?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `DeleteByQueryRethrottleResponse`
+==== DeleteByQueryRethrottleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type DeleteByQueryRethrottleResponse = TasksTaskListResponseBase
-----
 
+[pass]
+++++
+</pre>
+++++

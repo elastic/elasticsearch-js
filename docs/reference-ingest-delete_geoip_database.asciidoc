@@ -41,22 +41,32 @@ Deletes a geoip database configuration.
 ----
 
 [discrete]
-===== `IngestDeleteGeoipDatabaseRequest`
+==== IngestDeleteGeoipDatabaseRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestDeleteGeoipDatabaseRequest extends <<RequestBase>> {
   id: <<Ids>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IngestDeleteGeoipDatabaseResponse`
+==== IngestDeleteGeoipDatabaseResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IngestDeleteGeoipDatabaseResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

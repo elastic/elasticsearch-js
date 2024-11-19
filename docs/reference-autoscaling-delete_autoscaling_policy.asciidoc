@@ -41,20 +41,30 @@ Delete an autoscaling policy. NOTE: This feature is designed for indirect use by
 ----
 
 [discrete]
-===== `AutoscalingDeleteAutoscalingPolicyRequest`
+==== AutoscalingDeleteAutoscalingPolicyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface AutoscalingDeleteAutoscalingPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `AutoscalingDeleteAutoscalingPolicyResponse`
+==== AutoscalingDeleteAutoscalingPolicyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type AutoscalingDeleteAutoscalingPolicyResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

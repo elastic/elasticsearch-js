@@ -41,10 +41,12 @@ Check indices. Checks if one or more indices, index aliases, or data streams exi
 ----
 
 [discrete]
-===== `IndicesExistsRequest`
+==== IndicesExistsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesExistsRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -54,13 +56,21 @@ interface IndicesExistsRequest extends <<RequestBase>> {
   include_defaults?: boolean
   local?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesExistsResponse`
+==== IndicesExistsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesExistsResponse = boolean
-----
 
+[pass]
+++++
+</pre>
+++++

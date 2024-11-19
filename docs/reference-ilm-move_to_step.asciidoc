@@ -41,22 +41,32 @@ Manually moves an index into the specified step and executes that step.
 ----
 
 [discrete]
-===== `IlmMoveToStepRequest`
+==== IlmMoveToStepRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmMoveToStepRequest extends <<RequestBase>> {
   index: <<IndexName>>
   current_step: IlmMoveToStepStepKey
   next_step: IlmMoveToStepStepKey
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IlmMoveToStepResponse`
+==== IlmMoveToStepResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IlmMoveToStepResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

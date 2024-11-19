@@ -41,19 +41,29 @@ Returns information about the master node, including the ID, bound IP address, a
 ----
 
 [discrete]
-===== `CatMasterRequest`
+==== CatMasterRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatMasterRequest extends CatCatRequestBase {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatMasterResponse`
+==== CatMasterResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatMasterResponse = CatMasterMasterRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

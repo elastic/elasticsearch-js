@@ -40,20 +40,3 @@ Creates an OAuth 2.0 authentication request as a URL string
 (SecurityOidcPrepareAuthenticationRequest, options?): Promise<SecurityOidcPrepareAuthenticationResponse>
 ----
 
-[discrete]
-===== `SecurityOidcPrepareAuthenticationRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `SecurityOidcPrepareAuthenticationResponse`
-
-[source,ts]
-----
-n/a
-----
-

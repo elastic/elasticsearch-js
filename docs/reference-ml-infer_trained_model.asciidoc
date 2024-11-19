@@ -41,25 +41,35 @@ Evaluate a trained model.
 ----
 
 [discrete]
-===== `MlInferTrainedModelRequest`
+==== MlInferTrainedModelRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlInferTrainedModelRequest extends <<RequestBase>> {
   model_id: <<Id>>
   timeout?: <<Duration>>
   docs: Record<string, any>[]
   inference_config?: MlInferenceConfigUpdateContainer
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlInferTrainedModelResponse`
+==== MlInferTrainedModelResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlInferTrainedModelResponse {
   inference_results: MlInferenceResponseResult[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

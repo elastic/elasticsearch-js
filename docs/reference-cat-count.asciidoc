@@ -41,20 +41,30 @@ Get a document count. Provides quick access to a document count for a data strea
 ----
 
 [discrete]
-===== `CatCountRequest`
+==== CatCountRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatCountRequest extends CatCatRequestBase {
   index?: <<Indices>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatCountResponse`
+==== CatCountResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatCountResponse = CatCountCountRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

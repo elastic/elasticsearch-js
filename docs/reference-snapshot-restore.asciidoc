@@ -41,10 +41,12 @@ Restores a snapshot.
 ----
 
 [discrete]
-===== `SnapshotRestoreRequest`
+==== SnapshotRestoreRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotRestoreRequest extends <<RequestBase>> {
   repository: <<Name>>
   snapshot: <<Name>>
@@ -61,16 +63,24 @@ interface SnapshotRestoreRequest extends <<RequestBase>> {
   rename_pattern?: string
   rename_replacement?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SnapshotRestoreResponse`
+==== SnapshotRestoreResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotRestoreResponse {
   accepted?: boolean
   snapshot?: SnapshotRestoreSnapshotRestore
 }
-----
 
+[pass]
+++++
+</pre>
+++++

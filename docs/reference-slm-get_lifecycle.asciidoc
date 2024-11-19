@@ -41,20 +41,30 @@ Retrieves one or more snapshot lifecycle policy definitions and information abou
 ----
 
 [discrete]
-===== `SlmGetLifecycleRequest`
+==== SlmGetLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SlmGetLifecycleRequest extends <<RequestBase>> {
   policy_id?: <<Names>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SlmGetLifecycleResponse`
+==== SlmGetLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SlmGetLifecycleResponse = Record<<<Id>>, SlmSnapshotLifecycle>
-----
 
+[pass]
+++++
+</pre>
+++++

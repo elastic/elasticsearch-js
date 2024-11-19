@@ -41,26 +41,36 @@ Predict future behavior of a time series. Forecasts are not supported for jobs t
 ----
 
 [discrete]
-===== `MlForecastRequest`
+==== MlForecastRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlForecastRequest extends <<RequestBase>> {
   job_id: <<Id>>
   duration?: <<Duration>>
   expires_in?: <<Duration>>
   max_model_memory?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlForecastResponse`
+==== MlForecastResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlForecastResponse {
   acknowledged: boolean
   forecast_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

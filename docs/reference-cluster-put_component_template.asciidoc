@@ -41,10 +41,12 @@ Create or update a component template. Creates or updates a component template. 
 ----
 
 [discrete]
-===== `ClusterPutComponentTemplateRequest`
+==== ClusterPutComponentTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterPutComponentTemplateRequest extends <<RequestBase>> {
   name: <<Name>>
   create?: boolean
@@ -54,13 +56,21 @@ interface ClusterPutComponentTemplateRequest extends <<RequestBase>> {
   _meta?: <<Metadata>>
   deprecated?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterPutComponentTemplateResponse`
+==== ClusterPutComponentTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ClusterPutComponentTemplateResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

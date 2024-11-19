@@ -41,21 +41,31 @@ Returns information about the shards in a cluster. For data streams, the API ret
 ----
 
 [discrete]
-===== `CatShardsRequest`
+==== CatShardsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatShardsRequest extends CatCatRequestBase {
   index?: <<Indices>>
   bytes?: <<Bytes>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatShardsResponse`
+==== CatShardsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatShardsResponse = CatShardsShardsRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

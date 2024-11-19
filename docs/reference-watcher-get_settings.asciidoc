@@ -40,20 +40,3 @@ Retrieve settings for the watcher system index
 (WatcherGetSettingsRequest, options?): Promise<WatcherGetSettingsResponse>
 ----
 
-[discrete]
-===== `WatcherGetSettingsRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `WatcherGetSettingsResponse`
-
-[source,ts]
-----
-n/a
-----
-

@@ -41,23 +41,33 @@ Update a trained model deployment.
 ----
 
 [discrete]
-===== `MlUpdateTrainedModelDeploymentRequest`
+==== MlUpdateTrainedModelDeploymentRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpdateTrainedModelDeploymentRequest extends <<RequestBase>> {
   model_id: <<Id>>
-  number_of_allocations?: <<integer>>
+  number_of_allocations?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlUpdateTrainedModelDeploymentResponse`
+==== MlUpdateTrainedModelDeploymentResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpdateTrainedModelDeploymentResponse {
   assignment: MlTrainedModelAssignment
 }
-----
 
+[pass]
+++++
+</pre>
+++++

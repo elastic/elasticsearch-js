@@ -41,32 +41,42 @@ Get anomaly records for an anomaly detection job. Records contain the detailed a
 ----
 
 [discrete]
-===== `MlGetRecordsRequest`
+==== MlGetRecordsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetRecordsRequest extends <<RequestBase>> {
   job_id: <<Id>>
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
   desc?: boolean
   end?: <<DateTime>>
   exclude_interim?: boolean
   page?: MlPage
-  record_score?: <<double>>
+  record_score?: number
   sort?: <<Field>>
   start?: <<DateTime>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetRecordsResponse`
+==== MlGetRecordsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetRecordsResponse {
-  count: <<long>>
+  count: number
   records: MlAnomaly[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

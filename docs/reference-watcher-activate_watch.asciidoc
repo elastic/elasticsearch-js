@@ -41,22 +41,32 @@ Activates a currently inactive watch.
 ----
 
 [discrete]
-===== `WatcherActivateWatchRequest`
+==== WatcherActivateWatchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherActivateWatchRequest extends <<RequestBase>> {
   watch_id: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `WatcherActivateWatchResponse`
+==== WatcherActivateWatchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherActivateWatchResponse {
   status: WatcherActivationStatus
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,23 +41,33 @@ Delete an alias. Removes a data stream or index from an alias.
 ----
 
 [discrete]
-===== `IndicesDeleteAliasRequest`
+==== IndicesDeleteAliasRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesDeleteAliasRequest extends <<RequestBase>> {
   index: <<Indices>>
   name: <<Names>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesDeleteAliasResponse`
+==== IndicesDeleteAliasResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesDeleteAliasResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

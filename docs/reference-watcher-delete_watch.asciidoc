@@ -41,24 +41,34 @@ Removes a watch from Watcher.
 ----
 
 [discrete]
-===== `WatcherDeleteWatchRequest`
+==== WatcherDeleteWatchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherDeleteWatchRequest extends <<RequestBase>> {
   id: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `WatcherDeleteWatchResponse`
+==== WatcherDeleteWatchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherDeleteWatchResponse {
   found: boolean
   _id: <<Id>>
   _version: <<VersionNumber>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

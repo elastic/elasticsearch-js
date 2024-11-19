@@ -41,23 +41,33 @@ Logout of SAML completely. Verifies the logout response sent from the SAML IdP.
 ----
 
 [discrete]
-===== `SecuritySamlCompleteLogoutRequest`
+==== SecuritySamlCompleteLogoutRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecuritySamlCompleteLogoutRequest extends <<RequestBase>> {
   realm: string
   ids: <<Ids>>
   query_string?: string
   content?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecuritySamlCompleteLogoutResponse`
+==== SecuritySamlCompleteLogoutResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SecuritySamlCompleteLogoutResponse = boolean
-----
 
+[pass]
+++++
+</pre>
+++++

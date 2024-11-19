@@ -41,20 +41,27 @@ The start basic API enables you to initiate an indefinite basic license, which g
 ----
 
 [discrete]
-===== `LicensePostStartBasicRequest`
+==== LicensePostStartBasicRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicensePostStartBasicRequest extends <<RequestBase>> {
   acknowledge?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `LicensePostStartBasicResponse`
+==== LicensePostStartBasicResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicensePostStartBasicResponse {
   acknowledged: boolean
   basic_was_started: boolean
@@ -62,5 +69,8 @@ interface LicensePostStartBasicResponse {
   type?: LicenseLicenseType
   acknowledge?: Record<string, string | string[]>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

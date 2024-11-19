@@ -41,28 +41,38 @@ Authenticate SAML. Submits a SAML response message to Elasticsearch for consumpt
 ----
 
 [discrete]
-===== `SecuritySamlAuthenticateRequest`
+==== SecuritySamlAuthenticateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecuritySamlAuthenticateRequest extends <<RequestBase>> {
   content: string
   ids: <<Ids>>
   realm?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecuritySamlAuthenticateResponse`
+==== SecuritySamlAuthenticateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecuritySamlAuthenticateResponse {
   access_token: string
   username: string
-  expires_in: <<integer>>
+  expires_in: number
   refresh_token: string
   realm: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++

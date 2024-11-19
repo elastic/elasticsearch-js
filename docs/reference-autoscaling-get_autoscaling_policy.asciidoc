@@ -41,20 +41,30 @@ Get an autoscaling policy. NOTE: This feature is designed for indirect use by El
 ----
 
 [discrete]
-===== `AutoscalingGetAutoscalingPolicyRequest`
+==== AutoscalingGetAutoscalingPolicyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface AutoscalingGetAutoscalingPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `AutoscalingGetAutoscalingPolicyResponse`
+==== AutoscalingGetAutoscalingPolicyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type AutoscalingGetAutoscalingPolicyResponse = AutoscalingAutoscalingPolicy
-----
 
+[pass]
+++++
+</pre>
+++++

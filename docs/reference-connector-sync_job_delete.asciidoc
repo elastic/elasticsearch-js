@@ -41,20 +41,30 @@ Delete a connector sync job. Remove a connector sync job and its associated data
 ----
 
 [discrete]
-===== `ConnectorSyncJobDeleteRequest`
+==== ConnectorSyncJobDeleteRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorSyncJobDeleteRequest extends <<RequestBase>> {
   connector_sync_job_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorSyncJobDeleteResponse`
+==== ConnectorSyncJobDeleteResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ConnectorSyncJobDeleteResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

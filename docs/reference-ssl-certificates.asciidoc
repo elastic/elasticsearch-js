@@ -41,19 +41,29 @@ Get SSL certificates. Get information about the X.509 certificates that are used
 ----
 
 [discrete]
-===== `SslCertificatesRequest`
+==== SslCertificatesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SslCertificatesRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SslCertificatesResponse`
+==== SslCertificatesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SslCertificatesResponse = SslCertificatesCertificateInformation[]
-----
 
+[pass]
+++++
+</pre>
+++++

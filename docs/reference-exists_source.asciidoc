@@ -41,10 +41,12 @@ Check for a document source. Checks if a document's `_source` is stored.
 ----
 
 [discrete]
-===== `ExistsSourceRequest`
+==== ExistsSourceRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ExistsSourceRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -58,13 +60,21 @@ interface ExistsSourceRequest extends <<RequestBase>> {
   version?: <<VersionNumber>>
   version_type?: <<VersionType>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ExistsSourceResponse`
+==== ExistsSourceResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ExistsSourceResponse = boolean
-----
 
+[pass]
+++++
+</pre>
+++++

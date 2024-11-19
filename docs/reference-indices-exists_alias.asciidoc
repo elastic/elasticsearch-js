@@ -41,10 +41,12 @@ Check aliases. Checks if one or more data stream or index aliases exist.
 ----
 
 [discrete]
-===== `IndicesExistsAliasRequest`
+==== IndicesExistsAliasRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesExistsAliasRequest extends <<RequestBase>> {
   name: <<Names>>
   index?: <<Indices>>
@@ -53,13 +55,21 @@ interface IndicesExistsAliasRequest extends <<RequestBase>> {
   ignore_unavailable?: boolean
   local?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesExistsAliasResponse`
+==== IndicesExistsAliasResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesExistsAliasResponse = boolean
-----
 
+[pass]
+++++
+</pre>
+++++

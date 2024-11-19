@@ -39,10 +39,12 @@ Executes several [fleet searches](https://www.elastic.co/guide/en/elasticsearch/
 ----
 
 [discrete]
-===== `FleetMsearchRequest`
+==== FleetMsearchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface FleetMsearchRequest extends <<RequestBase>> {
   index?: <<IndexName>> | <<IndexAlias>>
   allow_no_indices?: boolean
@@ -50,9 +52,9 @@ interface FleetMsearchRequest extends <<RequestBase>> {
   expand_wildcards?: <<ExpandWildcards>>
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
-  max_concurrent_searches?: <<long>>
-  max_concurrent_shard_requests?: <<long>>
-  pre_filter_shard_size?: <<long>>
+  max_concurrent_searches?: number
+  max_concurrent_shard_requests?: number
+  pre_filter_shard_size?: number
   search_type?: <<SearchType>>
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
@@ -60,15 +62,23 @@ interface FleetMsearchRequest extends <<RequestBase>> {
   allow_partial_search_results?: boolean
   searches?: MsearchRequestItem[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `FleetMsearchResponse`
+==== FleetMsearchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface FleetMsearchResponse<TDocument = unknown> {
   docs: MsearchResponseItem<TDocument>[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

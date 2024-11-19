@@ -41,26 +41,36 @@ Get trained models. Returns configuration and usage information about inference 
 ----
 
 [discrete]
-===== `CatMlTrainedModelsRequest`
+==== CatMlTrainedModelsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatMlTrainedModelsRequest extends CatCatRequestBase {
   model_id?: <<Id>>
   allow_no_match?: boolean
   bytes?: <<Bytes>>
   h?: CatCatTrainedModelsColumns
   s?: CatCatTrainedModelsColumns
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatMlTrainedModelsResponse`
+==== CatMlTrainedModelsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatMlTrainedModelsResponse = CatMlTrainedModelsTrainedModelsRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

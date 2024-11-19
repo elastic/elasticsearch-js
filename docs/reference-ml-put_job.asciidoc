@@ -41,10 +41,12 @@ Create an anomaly detection job. If you include a `datafeed_config`, you must ha
 ----
 
 [discrete]
-===== `MlPutJobRequest`
+==== MlPutJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPutJobRequest extends <<RequestBase>> {
   job_id: <<Id>>
   allow_lazy_open?: boolean
@@ -52,24 +54,29 @@ interface MlPutJobRequest extends <<RequestBase>> {
   analysis_limits?: MlAnalysisLimits
   background_persist_interval?: <<Duration>>
   custom_settings?: MlCustomSettings
-  daily_model_snapshot_retention_after_days?: <<long>>
+  daily_model_snapshot_retention_after_days?: number
   data_description: MlDataDescription
   datafeed_config?: MlDatafeedConfig
   description?: string
   groups?: string[]
   model_plot_config?: MlModelPlotConfig
-  model_snapshot_retention_days?: <<long>>
-  renormalization_window_days?: <<long>>
+  model_snapshot_retention_days?: number
+  renormalization_window_days?: number
   results_index_name?: <<IndexName>>
-  results_retention_days?: <<long>>
+  results_retention_days?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlPutJobResponse`
+==== MlPutJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPutJobResponse {
   allow_lazy_open: boolean
   analysis_config: MlAnalysisConfigRead
@@ -77,7 +84,7 @@ interface MlPutJobResponse {
   background_persist_interval?: <<Duration>>
   create_time: <<DateTime>>
   custom_settings?: MlCustomSettings
-  daily_model_snapshot_retention_after_days: <<long>>
+  daily_model_snapshot_retention_after_days: number
   data_description: MlDataDescription
   datafeed_config?: MlDatafeed
   description?: string
@@ -87,10 +94,13 @@ interface MlPutJobResponse {
   job_version: string
   model_plot_config?: MlModelPlotConfig
   model_snapshot_id?: <<Id>>
-  model_snapshot_retention_days: <<long>>
-  renormalization_window_days?: <<long>>
+  model_snapshot_retention_days: number
+  renormalization_window_days?: number
   results_index_name: string
-  results_retention_days?: <<long>>
+  results_retention_days?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Run multiple searches. The format of the request is similar to the bulk API form
 ----
 
 [discrete]
-===== `MsearchRequest`
+==== MsearchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MsearchRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -53,22 +55,30 @@ interface MsearchRequest extends <<RequestBase>> {
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   include_named_queries_score?: boolean
-  max_concurrent_searches?: <<long>>
-  max_concurrent_shard_requests?: <<long>>
-  pre_filter_shard_size?: <<long>>
+  max_concurrent_searches?: number
+  max_concurrent_shard_requests?: number
+  pre_filter_shard_size?: number
   rest_total_hits_as_int?: boolean
   routing?: <<Routing>>
   search_type?: <<SearchType>>
   typed_keys?: boolean
   searches?: MsearchRequestItem[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MsearchResponse`
+==== MsearchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MsearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
-----
 
+[pass]
+++++
+</pre>
+++++

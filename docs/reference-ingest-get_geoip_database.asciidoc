@@ -41,23 +41,33 @@ Returns information about one or more geoip database configurations.
 ----
 
 [discrete]
-===== `IngestGetGeoipDatabaseRequest`
+==== IngestGetGeoipDatabaseRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestGetGeoipDatabaseRequest extends <<RequestBase>> {
   id?: <<Ids>>
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IngestGetGeoipDatabaseResponse`
+==== IngestGetGeoipDatabaseResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestGetGeoipDatabaseResponse {
   databases: IngestGetGeoipDatabaseDatabaseConfigurationMetadata[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

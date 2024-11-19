@@ -41,10 +41,12 @@ Removes the follower retention leases from the leader.
 ----
 
 [discrete]
-===== `CcrForgetFollowerRequest`
+==== CcrForgetFollowerRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrForgetFollowerRequest extends <<RequestBase>> {
   index: <<IndexName>>
   follower_cluster?: string
@@ -52,15 +54,23 @@ interface CcrForgetFollowerRequest extends <<RequestBase>> {
   follower_index_uuid?: <<Uuid>>
   leader_remote_cluster?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrForgetFollowerResponse`
+==== CcrForgetFollowerResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrForgetFollowerResponse {
   _shards: <<ShardStatistics>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

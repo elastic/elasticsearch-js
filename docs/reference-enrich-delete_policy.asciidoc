@@ -41,20 +41,30 @@ Delete an enrich policy. Deletes an existing enrich policy and its enrich index.
 ----
 
 [discrete]
-===== `EnrichDeletePolicyRequest`
+==== EnrichDeletePolicyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface EnrichDeletePolicyRequest extends <<RequestBase>> {
   name: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `EnrichDeletePolicyResponse`
+==== EnrichDeletePolicyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type EnrichDeletePolicyResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

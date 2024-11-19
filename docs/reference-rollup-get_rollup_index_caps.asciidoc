@@ -41,20 +41,30 @@ Returns the rollup capabilities of all jobs inside of a rollup index (for exampl
 ----
 
 [discrete]
-===== `RollupGetRollupIndexCapsRequest`
+==== RollupGetRollupIndexCapsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupGetRollupIndexCapsRequest extends <<RequestBase>> {
   index: <<Ids>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `RollupGetRollupIndexCapsResponse`
+==== RollupGetRollupIndexCapsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type RollupGetRollupIndexCapsResponse = Record<<<IndexName>>, RollupGetRollupIndexCapsIndexCapabilities>
-----
 
+[pass]
+++++
+</pre>
+++++

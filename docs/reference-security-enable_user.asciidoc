@@ -41,22 +41,32 @@ Enable users. Enable users in the native realm.
 ----
 
 [discrete]
-===== `SecurityEnableUserRequest`
+==== SecurityEnableUserRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityEnableUserRequest extends <<RequestBase>> {
   username: <<Username>>
   refresh?: <<Refresh>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityEnableUserResponse`
+==== SecurityEnableUserResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityEnableUserResponse {
 }
-----
 
+[pass]
+++++
+</pre>
+++++

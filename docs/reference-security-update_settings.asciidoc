@@ -40,20 +40,3 @@ Update settings for the security system index
 (SecurityUpdateSettingsRequest, options?): Promise<SecurityUpdateSettingsResponse>
 ----
 
-[discrete]
-===== `SecurityUpdateSettingsRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `SecurityUpdateSettingsResponse`
-
-[source,ts]
-----
-n/a
-----
-

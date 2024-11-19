@@ -41,22 +41,32 @@ Deletes a legacy index template.
 ----
 
 [discrete]
-===== `IndicesDeleteTemplateRequest`
+==== IndicesDeleteTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesDeleteTemplateRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesDeleteTemplateResponse`
+==== IndicesDeleteTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesDeleteTemplateResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

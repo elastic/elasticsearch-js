@@ -41,21 +41,31 @@ Get the dangling indices. If Elasticsearch encounters index data that is absent 
 ----
 
 [discrete]
-===== `DanglingIndicesListDanglingIndicesRequest`
+==== DanglingIndicesListDanglingIndicesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface DanglingIndicesListDanglingIndicesRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `DanglingIndicesListDanglingIndicesResponse`
+==== DanglingIndicesListDanglingIndicesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface DanglingIndicesListDanglingIndicesResponse {
   dangling_indices: DanglingIndicesListDanglingIndicesDanglingIndex[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,30 +41,40 @@ Start a trained model deployment. It allocates the model to every machine learni
 ----
 
 [discrete]
-===== `MlStartTrainedModelDeploymentRequest`
+==== MlStartTrainedModelDeploymentRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlStartTrainedModelDeploymentRequest extends <<RequestBase>> {
   model_id: <<Id>>
   cache_size?: <<ByteSize>>
   deployment_id?: string
-  number_of_allocations?: <<integer>>
+  number_of_allocations?: number
   priority?: MlTrainingPriority
-  queue_capacity?: <<integer>>
-  threads_per_allocation?: <<integer>>
+  queue_capacity?: number
+  threads_per_allocation?: number
   timeout?: <<Duration>>
   wait_for?: MlDeploymentAllocationState
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlStartTrainedModelDeploymentResponse`
+==== MlStartTrainedModelDeploymentResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlStartTrainedModelDeploymentResponse {
   assignment: MlTrainedModelAssignment
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,27 +41,37 @@ Creates or updates a query rule within a query ruleset.
 ----
 
 [discrete]
-===== `QueryRulesPutRuleRequest`
+==== QueryRulesPutRuleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface QueryRulesPutRuleRequest extends <<RequestBase>> {
   ruleset_id: <<Id>>
   rule_id: <<Id>>
   type: QueryRulesQueryRuleType
   criteria: QueryRulesQueryRuleCriteria | QueryRulesQueryRuleCriteria[]
   actions: QueryRulesQueryRuleActions
-  priority?: <<integer>>
+  priority?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `QueryRulesPutRuleResponse`
+==== QueryRulesPutRuleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface QueryRulesPutRuleResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

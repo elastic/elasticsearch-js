@@ -41,10 +41,12 @@ Executes an ES|QL request
 ----
 
 [discrete]
-===== `EsqlQueryRequest`
+==== EsqlQueryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface EsqlQueryRequest extends <<RequestBase>> {
   format?: EsqlQueryEsqlFormat
   delimiter?: string
@@ -57,13 +59,21 @@ interface EsqlQueryRequest extends <<RequestBase>> {
   query: string
   tables?: Record<string, Record<string, EsqlTableValuesContainer>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `EsqlQueryResponse`
+==== EsqlQueryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type EsqlQueryResponse = <<EsqlColumns>>
-----
 
+[pass]
+++++
+</pre>
+++++

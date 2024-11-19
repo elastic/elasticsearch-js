@@ -41,21 +41,31 @@ Returns the health status of a cluster, similar to the cluster health API. IMPOR
 ----
 
 [discrete]
-===== `CatHealthRequest`
+==== CatHealthRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatHealthRequest extends CatCatRequestBase {
   time?: <<TimeUnit>>
   ts?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatHealthResponse`
+==== CatHealthResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatHealthResponse = CatHealthHealthRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

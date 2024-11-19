@@ -41,23 +41,33 @@ Acknowledges a watch, manually throttling the execution of the watch's actions.
 ----
 
 [discrete]
-===== `WatcherAckWatchRequest`
+==== WatcherAckWatchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherAckWatchRequest extends <<RequestBase>> {
   watch_id: <<Name>>
   action_id?: <<Names>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `WatcherAckWatchResponse`
+==== WatcherAckWatchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherAckWatchResponse {
   status: WatcherWatchStatus
 }
-----
 
+[pass]
+++++
+</pre>
+++++

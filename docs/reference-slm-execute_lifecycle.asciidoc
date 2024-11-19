@@ -41,22 +41,32 @@ Immediately creates a snapshot according to the lifecycle policy, without waitin
 ----
 
 [discrete]
-===== `SlmExecuteLifecycleRequest`
+==== SlmExecuteLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SlmExecuteLifecycleRequest extends <<RequestBase>> {
   policy_id: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SlmExecuteLifecycleResponse`
+==== SlmExecuteLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SlmExecuteLifecycleResponse {
   snapshot_name: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

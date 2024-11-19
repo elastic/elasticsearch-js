@@ -41,21 +41,31 @@ Returns thread pool statistics for each node in a cluster. Returned information 
 ----
 
 [discrete]
-===== `CatThreadPoolRequest`
+==== CatThreadPoolRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatThreadPoolRequest extends CatCatRequestBase {
   thread_pool_patterns?: <<Names>>
   time?: <<TimeUnit>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatThreadPoolResponse`
+==== CatThreadPoolResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatThreadPoolResponse = CatThreadPoolThreadPoolRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,22 +41,32 @@ Deletes one or more existing ingest pipeline.
 ----
 
 [discrete]
-===== `IngestDeletePipelineRequest`
+==== IngestDeletePipelineRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestDeletePipelineRequest extends <<RequestBase>> {
   id: <<Id>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IngestDeletePipelineResponse`
+==== IngestDeletePipelineResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IngestDeletePipelineResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Resolves the specified index expressions to return information about each cluste
 ----
 
 [discrete]
-===== `IndicesResolveClusterRequest`
+==== IndicesResolveClusterRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesResolveClusterRequest extends <<RequestBase>> {
   name: <<Names>>
   allow_no_indices?: boolean
@@ -52,13 +54,21 @@ interface IndicesResolveClusterRequest extends <<RequestBase>> {
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesResolveClusterResponse`
+==== IndicesResolveClusterResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesResolveClusterResponse = Record<<<ClusterAlias>>, IndicesResolveClusterResolveClusterInfo>
-----
 
+[pass]
+++++
+</pre>
+++++

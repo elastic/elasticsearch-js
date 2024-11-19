@@ -41,32 +41,42 @@ Get anomaly detection job results for influencers. Influencers are the entities 
 ----
 
 [discrete]
-===== `MlGetInfluencersRequest`
+==== MlGetInfluencersRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetInfluencersRequest extends <<RequestBase>> {
   job_id: <<Id>>
   desc?: boolean
   end?: <<DateTime>>
   exclude_interim?: boolean
-  influencer_score?: <<double>>
-  from?: <<integer>>
-  size?: <<integer>>
+  influencer_score?: number
+  from?: number
+  size?: number
   sort?: <<Field>>
   start?: <<DateTime>>
   page?: MlPage
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetInfluencersResponse`
+==== MlGetInfluencersResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetInfluencersResponse {
-  count: <<long>>
+  count: number
   influencers: MlInfluencer[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

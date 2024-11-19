@@ -41,10 +41,12 @@ Get data frame analytics jobs. Returns configuration and usage information about
 ----
 
 [discrete]
-===== `CatMlDataFrameAnalyticsRequest`
+==== CatMlDataFrameAnalyticsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatMlDataFrameAnalyticsRequest extends CatCatRequestBase {
   id?: <<Id>>
   allow_no_match?: boolean
@@ -53,13 +55,21 @@ interface CatMlDataFrameAnalyticsRequest extends CatCatRequestBase {
   s?: CatCatDfaColumns
   time?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatMlDataFrameAnalyticsResponse`
+==== CatMlDataFrameAnalyticsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatMlDataFrameAnalyticsResponse = CatMlDataFrameAnalyticsDataFrameAnalyticsRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

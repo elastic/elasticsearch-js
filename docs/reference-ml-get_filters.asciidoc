@@ -41,25 +41,35 @@ Get filters. You can get a single filter or all filters.
 ----
 
 [discrete]
-===== `MlGetFiltersRequest`
+==== MlGetFiltersRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetFiltersRequest extends <<RequestBase>> {
   filter_id?: <<Ids>>
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetFiltersResponse`
+==== MlGetFiltersResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetFiltersResponse {
-  count: <<long>>
+  count: number
   filters: MlFilter[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

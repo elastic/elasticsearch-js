@@ -41,24 +41,34 @@ Update the connector name and description.
 ----
 
 [discrete]
-===== `ConnectorUpdateNameRequest`
+==== ConnectorUpdateNameRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateNameRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   name?: string
   description?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdateNameResponse`
+==== ConnectorUpdateNameResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateNameResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,23 +41,33 @@ Get an inference endpoint
 ----
 
 [discrete]
-===== `InferenceGetRequest`
+==== InferenceGetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface InferenceGetRequest extends <<RequestBase>> {
   task_type?: InferenceTaskType
   inference_id?: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `InferenceGetResponse`
+==== InferenceGetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface InferenceGetResponse {
   endpoints: InferenceInferenceEndpointInfo[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

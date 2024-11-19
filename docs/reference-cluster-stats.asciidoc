@@ -41,22 +41,32 @@ Returns cluster statistics. It returns basic index metrics (shard numbers, store
 ----
 
 [discrete]
-===== `ClusterStatsRequest`
+==== ClusterStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterStatsRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   include_remotes?: boolean
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterStatsResponse`
+==== ClusterStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ClusterStatsResponse = ClusterStatsStatsResponseBase
-----
 
+[pass]
+++++
+</pre>
+++++

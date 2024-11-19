@@ -85,7 +85,7 @@ _Default:_ `3`
 _Default:_ `30000`
 
 |`pingTimeout`
-|`number` - Max ping request timeout in milliseconds for each request. +
+|`number` - Max number of milliseconds a `ClusterConnectionPool` will wait when pinging nodes before marking them dead. +
 _Default:_ `3000`
 
 |`sniffInterval`
@@ -105,17 +105,13 @@ _Default:_ `'_nodes/_all/http'`
 _Default:_ `false`
 
 |`resurrectStrategy`
-|`string` - Configure the node resurrection strategy. +
+|`string` - Strategy for resurrecting dead nodes when using `ClusterConnectionPool`. 'ping' will issue a test request to a node and resurrect it if it responds. 'optimistic' marks a node as alive without testing it. 'none' will never attempt to revive a dead connection. +
 _Options:_ `'ping'`, `'optimistic'`, `'none'` +
 _Default:_ `'ping'`
 
-|`suggestCompression`
-|`boolean` - Adds `accept-encoding` header to every request. +
-_Default:_ `false`
-
 |`compression`
 |`string, boolean` - Enables gzip request body compression. +
-_Options:_ `'gzip'`, `false` +
+_Options:_ `true`, `false` +
 _Default:_ `false`
 
 |`tls`

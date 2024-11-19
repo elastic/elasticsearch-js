@@ -41,24 +41,34 @@ Update the connector configuration. Update the configuration field in the connec
 ----
 
 [discrete]
-===== `ConnectorUpdateConfigurationRequest`
+==== ConnectorUpdateConfigurationRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateConfigurationRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   configuration?: ConnectorConnectorConfiguration
   values?: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdateConfigurationResponse`
+==== ConnectorUpdateConfigurationResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateConfigurationResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

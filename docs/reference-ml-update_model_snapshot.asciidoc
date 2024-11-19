@@ -41,26 +41,36 @@ Update a snapshot. Updates certain properties of a snapshot.
 ----
 
 [discrete]
-===== `MlUpdateModelSnapshotRequest`
+==== MlUpdateModelSnapshotRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpdateModelSnapshotRequest extends <<RequestBase>> {
   job_id: <<Id>>
   snapshot_id: <<Id>>
   description?: string
   retain?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlUpdateModelSnapshotResponse`
+==== MlUpdateModelSnapshotResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpdateModelSnapshotResponse {
   acknowledged: boolean
   model: MlModelSnapshot
 }
-----
 
+[pass]
+++++
+</pre>
+++++

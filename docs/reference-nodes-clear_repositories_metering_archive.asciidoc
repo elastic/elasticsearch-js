@@ -41,21 +41,31 @@ You can use this API to clear the archived repositories metering information in 
 ----
 
 [discrete]
-===== `NodesClearRepositoriesMeteringArchiveRequest`
+==== NodesClearRepositoriesMeteringArchiveRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface NodesClearRepositoriesMeteringArchiveRequest extends <<RequestBase>> {
   node_id: <<NodeIds>>
-  max_archive_version: <<long>>
+  max_archive_version: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `NodesClearRepositoriesMeteringArchiveResponse`
+==== NodesClearRepositoriesMeteringArchiveResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type NodesClearRepositoriesMeteringArchiveResponse = NodesClearRepositoriesMeteringArchiveResponseBase
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,20 +41,30 @@ Delete a filter. If an anomaly detection job references the filter, you cannot d
 ----
 
 [discrete]
-===== `MlDeleteFilterRequest`
+==== MlDeleteFilterRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlDeleteFilterRequest extends <<RequestBase>> {
   filter_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlDeleteFilterResponse`
+==== MlDeleteFilterResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlDeleteFilterResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,27 +41,37 @@ Suggest a user profile. Get suggestions for user profiles that match specified s
 ----
 
 [discrete]
-===== `SecuritySuggestUserProfilesRequest`
+==== SecuritySuggestUserProfilesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecuritySuggestUserProfilesRequest extends <<RequestBase>> {
   name?: string
-  size?: <<long>>
+  size?: number
   data?: string | string[]
   hint?: SecuritySuggestUserProfilesHint
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecuritySuggestUserProfilesResponse`
+==== SecuritySuggestUserProfilesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecuritySuggestUserProfilesResponse {
   total: SecuritySuggestUserProfilesTotalUserProfiles
-  took: <<long>>
+  took: number
   profiles: SecurityUserProfile[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

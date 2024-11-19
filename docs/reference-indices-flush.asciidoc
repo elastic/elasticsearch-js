@@ -41,10 +41,12 @@ Flushes one or more data streams or indices.
 ----
 
 [discrete]
-===== `IndicesFlushRequest`
+==== IndicesFlushRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesFlushRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -53,13 +55,21 @@ interface IndicesFlushRequest extends <<RequestBase>> {
   ignore_unavailable?: boolean
   wait_if_ongoing?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesFlushResponse`
+==== IndicesFlushResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesFlushResponse = <<ShardsOperationResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

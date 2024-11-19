@@ -41,10 +41,12 @@ Stop transforms. Stops one or more transforms.
 ----
 
 [discrete]
-===== `TransformStopTransformRequest`
+==== TransformStopTransformRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformStopTransformRequest extends <<RequestBase>> {
   transform_id: <<Name>>
   allow_no_match?: boolean
@@ -53,13 +55,21 @@ interface TransformStopTransformRequest extends <<RequestBase>> {
   wait_for_checkpoint?: boolean
   wait_for_completion?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TransformStopTransformResponse`
+==== TransformStopTransformResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type TransformStopTransformResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

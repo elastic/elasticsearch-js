@@ -41,21 +41,31 @@ Get application privileges.
 ----
 
 [discrete]
-===== `SecurityGetPrivilegesRequest`
+==== SecurityGetPrivilegesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityGetPrivilegesRequest extends <<RequestBase>> {
   application?: <<Name>>
   name?: <<Names>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityGetPrivilegesResponse`
+==== SecurityGetPrivilegesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SecurityGetPrivilegesResponse = Record<string, Record<string, SecurityPutPrivilegesActions>>
-----
 
+[pass]
+++++
+</pre>
+++++

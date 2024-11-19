@@ -41,20 +41,30 @@ Deletes an existing snapshot lifecycle policy.
 ----
 
 [discrete]
-===== `SlmDeleteLifecycleRequest`
+==== SlmDeleteLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SlmDeleteLifecycleRequest extends <<RequestBase>> {
   policy_id: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SlmDeleteLifecycleResponse`
+==== SlmDeleteLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SlmDeleteLifecycleResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

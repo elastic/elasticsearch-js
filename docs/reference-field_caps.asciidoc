@@ -41,10 +41,12 @@ Get the field capabilities. Get information about the capabilities of fields amo
 ----
 
 [discrete]
-===== `FieldCapsRequest`
+==== FieldCapsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface FieldCapsRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -58,16 +60,24 @@ interface FieldCapsRequest extends <<RequestBase>> {
   index_filter?: QueryDslQueryContainer
   runtime_mappings?: MappingRuntimeFields
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `FieldCapsResponse`
+==== FieldCapsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface FieldCapsResponse {
   indices: <<Indices>>
   fields: Record<<<Field>>, Record<string, FieldCapsFieldCapability>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

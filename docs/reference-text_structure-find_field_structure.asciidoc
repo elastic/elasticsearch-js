@@ -40,20 +40,3 @@ Finds the structure of a text field in an index.
 (TextStructureFindFieldStructureRequest, options?): Promise<TextStructureFindFieldStructureResponse>
 ----
 
-[discrete]
-===== `TextStructureFindFieldStructureRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `TextStructureFindFieldStructureResponse`
-
-[source,ts]
-----
-n/a
-----
-

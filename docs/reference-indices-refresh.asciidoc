@@ -41,23 +41,33 @@ Refresh an index. A refresh makes recent operations performed on one or more ind
 ----
 
 [discrete]
-===== `IndicesRefreshRequest`
+==== IndicesRefreshRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesRefreshRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
   expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesRefreshResponse`
+==== IndicesRefreshResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesRefreshResponse = <<ShardsOperationResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

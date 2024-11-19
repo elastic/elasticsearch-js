@@ -41,25 +41,35 @@ Returns the existing search applications.
 ----
 
 [discrete]
-===== `SearchApplicationListRequest`
+==== SearchApplicationListRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchApplicationListRequest extends <<RequestBase>> {
   q?: string
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchApplicationListResponse`
+==== SearchApplicationListResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchApplicationListResponse {
-  count: <<long>>
+  count: number
   results: SearchApplicationListSearchApplicationListItem[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

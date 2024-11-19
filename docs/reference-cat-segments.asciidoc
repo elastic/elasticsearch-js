@@ -41,21 +41,31 @@ Returns low-level information about the Lucene segments in index shards. For dat
 ----
 
 [discrete]
-===== `CatSegmentsRequest`
+==== CatSegmentsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatSegmentsRequest extends CatCatRequestBase {
   index?: <<Indices>>
   bytes?: <<Bytes>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatSegmentsResponse`
+==== CatSegmentsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatSegmentsResponse = CatSegmentsSegmentsRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

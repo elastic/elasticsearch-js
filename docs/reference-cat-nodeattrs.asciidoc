@@ -41,19 +41,29 @@ Returns information about custom node attributes. IMPORTANT: cat APIs are only i
 ----
 
 [discrete]
-===== `CatNodeattrsRequest`
+==== CatNodeattrsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatNodeattrsRequest extends CatCatRequestBase {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatNodeattrsResponse`
+==== CatNodeattrsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatNodeattrsResponse = CatNodeattrsNodeAttributesRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

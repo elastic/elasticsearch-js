@@ -41,22 +41,32 @@ Retrieves a lifecycle policy.
 ----
 
 [discrete]
-===== `IlmGetLifecycleRequest`
+==== IlmGetLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmGetLifecycleRequest extends <<RequestBase>> {
   name?: <<Name>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IlmGetLifecycleResponse`
+==== IlmGetLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IlmGetLifecycleResponse = Record<string, IlmGetLifecycleLifecycle>
-----
 
+[pass]
+++++
+</pre>
+++++

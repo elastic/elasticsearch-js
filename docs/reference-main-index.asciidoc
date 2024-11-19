@@ -1,5 +1,5 @@
 [[reference-main-index]]
-== API reference
+== API Reference
 
 include::reference-shared-types.asciidoc[]
 include::reference-async_search-delete.asciidoc[]
@@ -503,502 +503,502 @@ include::reference-xpack-info.asciidoc[]
 include::reference-xpack-usage.asciidoc[]
 
 
-* asyncSearch.delete: <<reference-async_search-delete, `asyncSearch.delete`>>
-* asyncSearch.get: <<reference-async_search-get, `asyncSearch.get`>>
-* asyncSearch.status: <<reference-async_search-status, `asyncSearch.status`>>
-* asyncSearch.submit: <<reference-async_search-submit, `asyncSearch.submit`>>
-* autoscaling.deleteAutoscalingPolicy: <<reference-autoscaling-delete_autoscaling_policy, `autoscaling.deleteAutoscalingPolicy`>>
-* autoscaling.getAutoscalingCapacity: <<reference-autoscaling-get_autoscaling_capacity, `autoscaling.getAutoscalingCapacity`>>
-* autoscaling.getAutoscalingPolicy: <<reference-autoscaling-get_autoscaling_policy, `autoscaling.getAutoscalingPolicy`>>
-* autoscaling.putAutoscalingPolicy: <<reference-autoscaling-put_autoscaling_policy, `autoscaling.putAutoscalingPolicy`>>
-* bulk: <<reference-bulk, `bulk`>>
-* cat.aliases: <<reference-cat-aliases, `cat.aliases`>>
-* cat.allocation: <<reference-cat-allocation, `cat.allocation`>>
-* cat.componentTemplates: <<reference-cat-component_templates, `cat.componentTemplates`>>
-* cat.count: <<reference-cat-count, `cat.count`>>
-* cat.fielddata: <<reference-cat-fielddata, `cat.fielddata`>>
-* cat.health: <<reference-cat-health, `cat.health`>>
-* cat.help: <<reference-cat-help, `cat.help`>>
-* cat.indices: <<reference-cat-indices, `cat.indices`>>
-* cat.master: <<reference-cat-master, `cat.master`>>
-* cat.mlDataFrameAnalytics: <<reference-cat-ml_data_frame_analytics, `cat.mlDataFrameAnalytics`>>
-* cat.mlDatafeeds: <<reference-cat-ml_datafeeds, `cat.mlDatafeeds`>>
-* cat.mlJobs: <<reference-cat-ml_jobs, `cat.mlJobs`>>
-* cat.mlTrainedModels: <<reference-cat-ml_trained_models, `cat.mlTrainedModels`>>
-* cat.nodeattrs: <<reference-cat-nodeattrs, `cat.nodeattrs`>>
-* cat.nodes: <<reference-cat-nodes, `cat.nodes`>>
-* cat.pendingTasks: <<reference-cat-pending_tasks, `cat.pendingTasks`>>
-* cat.plugins: <<reference-cat-plugins, `cat.plugins`>>
-* cat.recovery: <<reference-cat-recovery, `cat.recovery`>>
-* cat.repositories: <<reference-cat-repositories, `cat.repositories`>>
-* cat.segments: <<reference-cat-segments, `cat.segments`>>
-* cat.shards: <<reference-cat-shards, `cat.shards`>>
-* cat.snapshots: <<reference-cat-snapshots, `cat.snapshots`>>
-* cat.tasks: <<reference-cat-tasks, `cat.tasks`>>
-* cat.templates: <<reference-cat-templates, `cat.templates`>>
-* cat.threadPool: <<reference-cat-thread_pool, `cat.threadPool`>>
-* cat.transforms: <<reference-cat-transforms, `cat.transforms`>>
-* ccr.deleteAutoFollowPattern: <<reference-ccr-delete_auto_follow_pattern, `ccr.deleteAutoFollowPattern`>>
-* ccr.follow: <<reference-ccr-follow, `ccr.follow`>>
-* ccr.followInfo: <<reference-ccr-follow_info, `ccr.followInfo`>>
-* ccr.followStats: <<reference-ccr-follow_stats, `ccr.followStats`>>
-* ccr.forgetFollower: <<reference-ccr-forget_follower, `ccr.forgetFollower`>>
-* ccr.getAutoFollowPattern: <<reference-ccr-get_auto_follow_pattern, `ccr.getAutoFollowPattern`>>
-* ccr.pauseAutoFollowPattern: <<reference-ccr-pause_auto_follow_pattern, `ccr.pauseAutoFollowPattern`>>
-* ccr.pauseFollow: <<reference-ccr-pause_follow, `ccr.pauseFollow`>>
-* ccr.putAutoFollowPattern: <<reference-ccr-put_auto_follow_pattern, `ccr.putAutoFollowPattern`>>
-* ccr.resumeAutoFollowPattern: <<reference-ccr-resume_auto_follow_pattern, `ccr.resumeAutoFollowPattern`>>
-* ccr.resumeFollow: <<reference-ccr-resume_follow, `ccr.resumeFollow`>>
-* ccr.stats: <<reference-ccr-stats, `ccr.stats`>>
-* ccr.unfollow: <<reference-ccr-unfollow, `ccr.unfollow`>>
-* clearScroll: <<reference-clear_scroll, `clearScroll`>>
-* closePointInTime: <<reference-close_point_in_time, `closePointInTime`>>
-* cluster.allocationExplain: <<reference-cluster-allocation_explain, `cluster.allocationExplain`>>
-* cluster.deleteComponentTemplate: <<reference-cluster-delete_component_template, `cluster.deleteComponentTemplate`>>
-* cluster.deleteVotingConfigExclusions: <<reference-cluster-delete_voting_config_exclusions, `cluster.deleteVotingConfigExclusions`>>
-* cluster.existsComponentTemplate: <<reference-cluster-exists_component_template, `cluster.existsComponentTemplate`>>
-* cluster.getComponentTemplate: <<reference-cluster-get_component_template, `cluster.getComponentTemplate`>>
-* cluster.getSettings: <<reference-cluster-get_settings, `cluster.getSettings`>>
-* cluster.health: <<reference-cluster-health, `cluster.health`>>
-* cluster.info: <<reference-cluster-info, `cluster.info`>>
-* cluster.pendingTasks: <<reference-cluster-pending_tasks, `cluster.pendingTasks`>>
-* cluster.postVotingConfigExclusions: <<reference-cluster-post_voting_config_exclusions, `cluster.postVotingConfigExclusions`>>
-* cluster.putComponentTemplate: <<reference-cluster-put_component_template, `cluster.putComponentTemplate`>>
-* cluster.putSettings: <<reference-cluster-put_settings, `cluster.putSettings`>>
-* cluster.remoteInfo: <<reference-cluster-remote_info, `cluster.remoteInfo`>>
-* cluster.reroute: <<reference-cluster-reroute, `cluster.reroute`>>
-* cluster.state: <<reference-cluster-state, `cluster.state`>>
-* cluster.stats: <<reference-cluster-stats, `cluster.stats`>>
-* connector.checkIn: <<reference-connector-check_in, `connector.checkIn`>>
-* connector.delete: <<reference-connector-delete, `connector.delete`>>
-* connector.get: <<reference-connector-get, `connector.get`>>
-* connector.list: <<reference-connector-list, `connector.list`>>
-* connector.post: <<reference-connector-post, `connector.post`>>
-* connector.put: <<reference-connector-put, `connector.put`>>
-* connector.syncJobCancel: <<reference-connector-sync_job_cancel, `connector.syncJobCancel`>>
-* connector.syncJobCheckIn: <<reference-connector-sync_job_check_in, `connector.syncJobCheckIn`>>
-* connector.syncJobClaim: <<reference-connector-sync_job_claim, `connector.syncJobClaim`>>
-* connector.syncJobDelete: <<reference-connector-sync_job_delete, `connector.syncJobDelete`>>
-* connector.syncJobError: <<reference-connector-sync_job_error, `connector.syncJobError`>>
-* connector.syncJobGet: <<reference-connector-sync_job_get, `connector.syncJobGet`>>
-* connector.syncJobList: <<reference-connector-sync_job_list, `connector.syncJobList`>>
-* connector.syncJobPost: <<reference-connector-sync_job_post, `connector.syncJobPost`>>
-* connector.syncJobUpdateStats: <<reference-connector-sync_job_update_stats, `connector.syncJobUpdateStats`>>
-* connector.updateActiveFiltering: <<reference-connector-update_active_filtering, `connector.updateActiveFiltering`>>
-* connector.updateApiKeyId: <<reference-connector-update_api_key_id, `connector.updateApiKeyId`>>
-* connector.updateConfiguration: <<reference-connector-update_configuration, `connector.updateConfiguration`>>
-* connector.updateError: <<reference-connector-update_error, `connector.updateError`>>
-* connector.updateFeatures: <<reference-connector-update_features, `connector.updateFeatures`>>
-* connector.updateFiltering: <<reference-connector-update_filtering, `connector.updateFiltering`>>
-* connector.updateFilteringValidation: <<reference-connector-update_filtering_validation, `connector.updateFilteringValidation`>>
-* connector.updateIndexName: <<reference-connector-update_index_name, `connector.updateIndexName`>>
-* connector.updateName: <<reference-connector-update_name, `connector.updateName`>>
-* connector.updateNative: <<reference-connector-update_native, `connector.updateNative`>>
-* connector.updatePipeline: <<reference-connector-update_pipeline, `connector.updatePipeline`>>
-* connector.updateScheduling: <<reference-connector-update_scheduling, `connector.updateScheduling`>>
-* connector.updateServiceType: <<reference-connector-update_service_type, `connector.updateServiceType`>>
-* connector.updateStatus: <<reference-connector-update_status, `connector.updateStatus`>>
-* count: <<reference-count, `count`>>
-* create: <<reference-create, `create`>>
-* danglingIndices.deleteDanglingIndex: <<reference-dangling_indices-delete_dangling_index, `danglingIndices.deleteDanglingIndex`>>
-* danglingIndices.importDanglingIndex: <<reference-dangling_indices-import_dangling_index, `danglingIndices.importDanglingIndex`>>
-* danglingIndices.listDanglingIndices: <<reference-dangling_indices-list_dangling_indices, `danglingIndices.listDanglingIndices`>>
-* delete: <<reference-delete, `delete`>>
-* deleteByQuery: <<reference-delete_by_query, `deleteByQuery`>>
-* deleteByQueryRethrottle: <<reference-delete_by_query_rethrottle, `deleteByQueryRethrottle`>>
-* deleteScript: <<reference-delete_script, `deleteScript`>>
-* enrich.deletePolicy: <<reference-enrich-delete_policy, `enrich.deletePolicy`>>
-* enrich.executePolicy: <<reference-enrich-execute_policy, `enrich.executePolicy`>>
-* enrich.getPolicy: <<reference-enrich-get_policy, `enrich.getPolicy`>>
-* enrich.putPolicy: <<reference-enrich-put_policy, `enrich.putPolicy`>>
-* enrich.stats: <<reference-enrich-stats, `enrich.stats`>>
-* eql.delete: <<reference-eql-delete, `eql.delete`>>
-* eql.get: <<reference-eql-get, `eql.get`>>
-* eql.getStatus: <<reference-eql-get_status, `eql.getStatus`>>
-* eql.search: <<reference-eql-search, `eql.search`>>
-* esql.asyncQuery: <<reference-esql-async_query, `esql.asyncQuery`>>
-* esql.asyncQueryGet: <<reference-esql-async_query_get, `esql.asyncQueryGet`>>
-* esql.query: <<reference-esql-query, `esql.query`>>
-* exists: <<reference-exists, `exists`>>
-* existsSource: <<reference-exists_source, `existsSource`>>
-* explain: <<reference-explain, `explain`>>
-* features.getFeatures: <<reference-features-get_features, `features.getFeatures`>>
-* features.resetFeatures: <<reference-features-reset_features, `features.resetFeatures`>>
-* fieldCaps: <<reference-field_caps, `fieldCaps`>>
-* fleet.globalCheckpoints: <<reference-fleet-global_checkpoints, `fleet.globalCheckpoints`>>
-* fleet.msearch: <<reference-fleet-msearch, `fleet.msearch`>>
-* fleet.search: <<reference-fleet-search, `fleet.search`>>
-* get: <<reference-get, `get`>>
-* getScript: <<reference-get_script, `getScript`>>
-* getScriptContext: <<reference-get_script_context, `getScriptContext`>>
-* getScriptLanguages: <<reference-get_script_languages, `getScriptLanguages`>>
-* getSource: <<reference-get_source, `getSource`>>
-* graph.explore: <<reference-graph-explore, `graph.explore`>>
-* healthReport: <<reference-health_report, `healthReport`>>
-* ilm.deleteLifecycle: <<reference-ilm-delete_lifecycle, `ilm.deleteLifecycle`>>
-* ilm.explainLifecycle: <<reference-ilm-explain_lifecycle, `ilm.explainLifecycle`>>
-* ilm.getLifecycle: <<reference-ilm-get_lifecycle, `ilm.getLifecycle`>>
-* ilm.getStatus: <<reference-ilm-get_status, `ilm.getStatus`>>
-* ilm.migrateToDataTiers: <<reference-ilm-migrate_to_data_tiers, `ilm.migrateToDataTiers`>>
-* ilm.moveToStep: <<reference-ilm-move_to_step, `ilm.moveToStep`>>
-* ilm.putLifecycle: <<reference-ilm-put_lifecycle, `ilm.putLifecycle`>>
-* ilm.removePolicy: <<reference-ilm-remove_policy, `ilm.removePolicy`>>
-* ilm.retry: <<reference-ilm-retry, `ilm.retry`>>
-* ilm.start: <<reference-ilm-start, `ilm.start`>>
-* ilm.stop: <<reference-ilm-stop, `ilm.stop`>>
-* index: <<reference-index, `index`>>
-* indices.addBlock: <<reference-indices-add_block, `indices.addBlock`>>
-* indices.analyze: <<reference-indices-analyze, `indices.analyze`>>
-* indices.clearCache: <<reference-indices-clear_cache, `indices.clearCache`>>
-* indices.clone: <<reference-indices-clone, `indices.clone`>>
-* indices.close: <<reference-indices-close, `indices.close`>>
-* indices.create: <<reference-indices-create, `indices.create`>>
-* indices.createDataStream: <<reference-indices-create_data_stream, `indices.createDataStream`>>
-* indices.dataStreamsStats: <<reference-indices-data_streams_stats, `indices.dataStreamsStats`>>
-* indices.delete: <<reference-indices-delete, `indices.delete`>>
-* indices.deleteAlias: <<reference-indices-delete_alias, `indices.deleteAlias`>>
-* indices.deleteDataLifecycle: <<reference-indices-delete_data_lifecycle, `indices.deleteDataLifecycle`>>
-* indices.deleteDataStream: <<reference-indices-delete_data_stream, `indices.deleteDataStream`>>
-* indices.deleteIndexTemplate: <<reference-indices-delete_index_template, `indices.deleteIndexTemplate`>>
-* indices.deleteTemplate: <<reference-indices-delete_template, `indices.deleteTemplate`>>
-* indices.diskUsage: <<reference-indices-disk_usage, `indices.diskUsage`>>
-* indices.downsample: <<reference-indices-downsample, `indices.downsample`>>
-* indices.exists: <<reference-indices-exists, `indices.exists`>>
-* indices.existsAlias: <<reference-indices-exists_alias, `indices.existsAlias`>>
-* indices.existsIndexTemplate: <<reference-indices-exists_index_template, `indices.existsIndexTemplate`>>
-* indices.existsTemplate: <<reference-indices-exists_template, `indices.existsTemplate`>>
-* indices.explainDataLifecycle: <<reference-indices-explain_data_lifecycle, `indices.explainDataLifecycle`>>
-* indices.fieldUsageStats: <<reference-indices-field_usage_stats, `indices.fieldUsageStats`>>
-* indices.flush: <<reference-indices-flush, `indices.flush`>>
-* indices.forcemerge: <<reference-indices-forcemerge, `indices.forcemerge`>>
-* indices.get: <<reference-indices-get, `indices.get`>>
-* indices.getAlias: <<reference-indices-get_alias, `indices.getAlias`>>
-* indices.getDataLifecycle: <<reference-indices-get_data_lifecycle, `indices.getDataLifecycle`>>
-* indices.getDataStream: <<reference-indices-get_data_stream, `indices.getDataStream`>>
-* indices.getFieldMapping: <<reference-indices-get_field_mapping, `indices.getFieldMapping`>>
-* indices.getIndexTemplate: <<reference-indices-get_index_template, `indices.getIndexTemplate`>>
-* indices.getMapping: <<reference-indices-get_mapping, `indices.getMapping`>>
-* indices.getSettings: <<reference-indices-get_settings, `indices.getSettings`>>
-* indices.getTemplate: <<reference-indices-get_template, `indices.getTemplate`>>
-* indices.migrateToDataStream: <<reference-indices-migrate_to_data_stream, `indices.migrateToDataStream`>>
-* indices.modifyDataStream: <<reference-indices-modify_data_stream, `indices.modifyDataStream`>>
-* indices.open: <<reference-indices-open, `indices.open`>>
-* indices.promoteDataStream: <<reference-indices-promote_data_stream, `indices.promoteDataStream`>>
-* indices.putAlias: <<reference-indices-put_alias, `indices.putAlias`>>
-* indices.putDataLifecycle: <<reference-indices-put_data_lifecycle, `indices.putDataLifecycle`>>
-* indices.putIndexTemplate: <<reference-indices-put_index_template, `indices.putIndexTemplate`>>
-* indices.putMapping: <<reference-indices-put_mapping, `indices.putMapping`>>
-* indices.putSettings: <<reference-indices-put_settings, `indices.putSettings`>>
-* indices.putTemplate: <<reference-indices-put_template, `indices.putTemplate`>>
-* indices.recovery: <<reference-indices-recovery, `indices.recovery`>>
-* indices.refresh: <<reference-indices-refresh, `indices.refresh`>>
-* indices.reloadSearchAnalyzers: <<reference-indices-reload_search_analyzers, `indices.reloadSearchAnalyzers`>>
-* indices.resolveCluster: <<reference-indices-resolve_cluster, `indices.resolveCluster`>>
-* indices.resolveIndex: <<reference-indices-resolve_index, `indices.resolveIndex`>>
-* indices.rollover: <<reference-indices-rollover, `indices.rollover`>>
-* indices.segments: <<reference-indices-segments, `indices.segments`>>
-* indices.shardStores: <<reference-indices-shard_stores, `indices.shardStores`>>
-* indices.shrink: <<reference-indices-shrink, `indices.shrink`>>
-* indices.simulateIndexTemplate: <<reference-indices-simulate_index_template, `indices.simulateIndexTemplate`>>
-* indices.simulateTemplate: <<reference-indices-simulate_template, `indices.simulateTemplate`>>
-* indices.split: <<reference-indices-split, `indices.split`>>
-* indices.stats: <<reference-indices-stats, `indices.stats`>>
-* indices.unfreeze: <<reference-indices-unfreeze, `indices.unfreeze`>>
-* indices.updateAliases: <<reference-indices-update_aliases, `indices.updateAliases`>>
-* indices.validateQuery: <<reference-indices-validate_query, `indices.validateQuery`>>
-* inference.delete: <<reference-inference-delete, `inference.delete`>>
-* inference.get: <<reference-inference-get, `inference.get`>>
-* inference.inference: <<reference-inference-inference, `inference.inference`>>
-* inference.put: <<reference-inference-put, `inference.put`>>
-* inference.streamInference: <<reference-inference-stream_inference, `inference.streamInference`>>
-* info: <<reference-info, `info`>>
-* ingest.deleteGeoipDatabase: <<reference-ingest-delete_geoip_database, `ingest.deleteGeoipDatabase`>>
-* ingest.deletePipeline: <<reference-ingest-delete_pipeline, `ingest.deletePipeline`>>
-* ingest.geoIpStats: <<reference-ingest-geo_ip_stats, `ingest.geoIpStats`>>
-* ingest.getGeoipDatabase: <<reference-ingest-get_geoip_database, `ingest.getGeoipDatabase`>>
-* ingest.getPipeline: <<reference-ingest-get_pipeline, `ingest.getPipeline`>>
-* ingest.processorGrok: <<reference-ingest-processor_grok, `ingest.processorGrok`>>
-* ingest.putGeoipDatabase: <<reference-ingest-put_geoip_database, `ingest.putGeoipDatabase`>>
-* ingest.putPipeline: <<reference-ingest-put_pipeline, `ingest.putPipeline`>>
-* ingest.simulate: <<reference-ingest-simulate, `ingest.simulate`>>
-* knnSearch: <<reference-knn_search, `knnSearch`>>
-* license.delete: <<reference-license-delete, `license.delete`>>
-* license.get: <<reference-license-get, `license.get`>>
-* license.getBasicStatus: <<reference-license-get_basic_status, `license.getBasicStatus`>>
-* license.getTrialStatus: <<reference-license-get_trial_status, `license.getTrialStatus`>>
-* license.post: <<reference-license-post, `license.post`>>
-* license.postStartBasic: <<reference-license-post_start_basic, `license.postStartBasic`>>
-* license.postStartTrial: <<reference-license-post_start_trial, `license.postStartTrial`>>
-* logstash.deletePipeline: <<reference-logstash-delete_pipeline, `logstash.deletePipeline`>>
-* logstash.getPipeline: <<reference-logstash-get_pipeline, `logstash.getPipeline`>>
-* logstash.putPipeline: <<reference-logstash-put_pipeline, `logstash.putPipeline`>>
-* mget: <<reference-mget, `mget`>>
-* migration.deprecations: <<reference-migration-deprecations, `migration.deprecations`>>
-* migration.getFeatureUpgradeStatus: <<reference-migration-get_feature_upgrade_status, `migration.getFeatureUpgradeStatus`>>
-* migration.postFeatureUpgrade: <<reference-migration-post_feature_upgrade, `migration.postFeatureUpgrade`>>
-* ml.clearTrainedModelDeploymentCache: <<reference-ml-clear_trained_model_deployment_cache, `ml.clearTrainedModelDeploymentCache`>>
-* ml.closeJob: <<reference-ml-close_job, `ml.closeJob`>>
-* ml.deleteCalendar: <<reference-ml-delete_calendar, `ml.deleteCalendar`>>
-* ml.deleteCalendarEvent: <<reference-ml-delete_calendar_event, `ml.deleteCalendarEvent`>>
-* ml.deleteCalendarJob: <<reference-ml-delete_calendar_job, `ml.deleteCalendarJob`>>
-* ml.deleteDataFrameAnalytics: <<reference-ml-delete_data_frame_analytics, `ml.deleteDataFrameAnalytics`>>
-* ml.deleteDatafeed: <<reference-ml-delete_datafeed, `ml.deleteDatafeed`>>
-* ml.deleteExpiredData: <<reference-ml-delete_expired_data, `ml.deleteExpiredData`>>
-* ml.deleteFilter: <<reference-ml-delete_filter, `ml.deleteFilter`>>
-* ml.deleteForecast: <<reference-ml-delete_forecast, `ml.deleteForecast`>>
-* ml.deleteJob: <<reference-ml-delete_job, `ml.deleteJob`>>
-* ml.deleteModelSnapshot: <<reference-ml-delete_model_snapshot, `ml.deleteModelSnapshot`>>
-* ml.deleteTrainedModel: <<reference-ml-delete_trained_model, `ml.deleteTrainedModel`>>
-* ml.deleteTrainedModelAlias: <<reference-ml-delete_trained_model_alias, `ml.deleteTrainedModelAlias`>>
-* ml.estimateModelMemory: <<reference-ml-estimate_model_memory, `ml.estimateModelMemory`>>
-* ml.evaluateDataFrame: <<reference-ml-evaluate_data_frame, `ml.evaluateDataFrame`>>
-* ml.explainDataFrameAnalytics: <<reference-ml-explain_data_frame_analytics, `ml.explainDataFrameAnalytics`>>
-* ml.flushJob: <<reference-ml-flush_job, `ml.flushJob`>>
-* ml.forecast: <<reference-ml-forecast, `ml.forecast`>>
-* ml.getBuckets: <<reference-ml-get_buckets, `ml.getBuckets`>>
-* ml.getCalendarEvents: <<reference-ml-get_calendar_events, `ml.getCalendarEvents`>>
-* ml.getCalendars: <<reference-ml-get_calendars, `ml.getCalendars`>>
-* ml.getCategories: <<reference-ml-get_categories, `ml.getCategories`>>
-* ml.getDataFrameAnalytics: <<reference-ml-get_data_frame_analytics, `ml.getDataFrameAnalytics`>>
-* ml.getDataFrameAnalyticsStats: <<reference-ml-get_data_frame_analytics_stats, `ml.getDataFrameAnalyticsStats`>>
-* ml.getDatafeedStats: <<reference-ml-get_datafeed_stats, `ml.getDatafeedStats`>>
-* ml.getDatafeeds: <<reference-ml-get_datafeeds, `ml.getDatafeeds`>>
-* ml.getFilters: <<reference-ml-get_filters, `ml.getFilters`>>
-* ml.getInfluencers: <<reference-ml-get_influencers, `ml.getInfluencers`>>
-* ml.getJobStats: <<reference-ml-get_job_stats, `ml.getJobStats`>>
-* ml.getJobs: <<reference-ml-get_jobs, `ml.getJobs`>>
-* ml.getMemoryStats: <<reference-ml-get_memory_stats, `ml.getMemoryStats`>>
-* ml.getModelSnapshotUpgradeStats: <<reference-ml-get_model_snapshot_upgrade_stats, `ml.getModelSnapshotUpgradeStats`>>
-* ml.getModelSnapshots: <<reference-ml-get_model_snapshots, `ml.getModelSnapshots`>>
-* ml.getOverallBuckets: <<reference-ml-get_overall_buckets, `ml.getOverallBuckets`>>
-* ml.getRecords: <<reference-ml-get_records, `ml.getRecords`>>
-* ml.getTrainedModels: <<reference-ml-get_trained_models, `ml.getTrainedModels`>>
-* ml.getTrainedModelsStats: <<reference-ml-get_trained_models_stats, `ml.getTrainedModelsStats`>>
-* ml.inferTrainedModel: <<reference-ml-infer_trained_model, `ml.inferTrainedModel`>>
-* ml.info: <<reference-ml-info, `ml.info`>>
-* ml.openJob: <<reference-ml-open_job, `ml.openJob`>>
-* ml.postCalendarEvents: <<reference-ml-post_calendar_events, `ml.postCalendarEvents`>>
-* ml.postData: <<reference-ml-post_data, `ml.postData`>>
-* ml.previewDataFrameAnalytics: <<reference-ml-preview_data_frame_analytics, `ml.previewDataFrameAnalytics`>>
-* ml.previewDatafeed: <<reference-ml-preview_datafeed, `ml.previewDatafeed`>>
-* ml.putCalendar: <<reference-ml-put_calendar, `ml.putCalendar`>>
-* ml.putCalendarJob: <<reference-ml-put_calendar_job, `ml.putCalendarJob`>>
-* ml.putDataFrameAnalytics: <<reference-ml-put_data_frame_analytics, `ml.putDataFrameAnalytics`>>
-* ml.putDatafeed: <<reference-ml-put_datafeed, `ml.putDatafeed`>>
-* ml.putFilter: <<reference-ml-put_filter, `ml.putFilter`>>
-* ml.putJob: <<reference-ml-put_job, `ml.putJob`>>
-* ml.putTrainedModel: <<reference-ml-put_trained_model, `ml.putTrainedModel`>>
-* ml.putTrainedModelAlias: <<reference-ml-put_trained_model_alias, `ml.putTrainedModelAlias`>>
-* ml.putTrainedModelDefinitionPart: <<reference-ml-put_trained_model_definition_part, `ml.putTrainedModelDefinitionPart`>>
-* ml.putTrainedModelVocabulary: <<reference-ml-put_trained_model_vocabulary, `ml.putTrainedModelVocabulary`>>
-* ml.resetJob: <<reference-ml-reset_job, `ml.resetJob`>>
-* ml.revertModelSnapshot: <<reference-ml-revert_model_snapshot, `ml.revertModelSnapshot`>>
-* ml.setUpgradeMode: <<reference-ml-set_upgrade_mode, `ml.setUpgradeMode`>>
-* ml.startDataFrameAnalytics: <<reference-ml-start_data_frame_analytics, `ml.startDataFrameAnalytics`>>
-* ml.startDatafeed: <<reference-ml-start_datafeed, `ml.startDatafeed`>>
-* ml.startTrainedModelDeployment: <<reference-ml-start_trained_model_deployment, `ml.startTrainedModelDeployment`>>
-* ml.stopDataFrameAnalytics: <<reference-ml-stop_data_frame_analytics, `ml.stopDataFrameAnalytics`>>
-* ml.stopDatafeed: <<reference-ml-stop_datafeed, `ml.stopDatafeed`>>
-* ml.stopTrainedModelDeployment: <<reference-ml-stop_trained_model_deployment, `ml.stopTrainedModelDeployment`>>
-* ml.updateDataFrameAnalytics: <<reference-ml-update_data_frame_analytics, `ml.updateDataFrameAnalytics`>>
-* ml.updateDatafeed: <<reference-ml-update_datafeed, `ml.updateDatafeed`>>
-* ml.updateFilter: <<reference-ml-update_filter, `ml.updateFilter`>>
-* ml.updateJob: <<reference-ml-update_job, `ml.updateJob`>>
-* ml.updateModelSnapshot: <<reference-ml-update_model_snapshot, `ml.updateModelSnapshot`>>
-* ml.updateTrainedModelDeployment: <<reference-ml-update_trained_model_deployment, `ml.updateTrainedModelDeployment`>>
-* ml.upgradeJobSnapshot: <<reference-ml-upgrade_job_snapshot, `ml.upgradeJobSnapshot`>>
-* monitoring.bulk: <<reference-monitoring-bulk, `monitoring.bulk`>>
-* msearch: <<reference-msearch, `msearch`>>
-* msearchTemplate: <<reference-msearch_template, `msearchTemplate`>>
-* mtermvectors: <<reference-mtermvectors, `mtermvectors`>>
-* nodes.clearRepositoriesMeteringArchive: <<reference-nodes-clear_repositories_metering_archive, `nodes.clearRepositoriesMeteringArchive`>>
-* nodes.getRepositoriesMeteringInfo: <<reference-nodes-get_repositories_metering_info, `nodes.getRepositoriesMeteringInfo`>>
-* nodes.hotThreads: <<reference-nodes-hot_threads, `nodes.hotThreads`>>
-* nodes.info: <<reference-nodes-info, `nodes.info`>>
-* nodes.reloadSecureSettings: <<reference-nodes-reload_secure_settings, `nodes.reloadSecureSettings`>>
-* nodes.stats: <<reference-nodes-stats, `nodes.stats`>>
-* nodes.usage: <<reference-nodes-usage, `nodes.usage`>>
-* openPointInTime: <<reference-open_point_in_time, `openPointInTime`>>
-* ping: <<reference-ping, `ping`>>
-* putScript: <<reference-put_script, `putScript`>>
-* queryRules.deleteRule: <<reference-query_rules-delete_rule, `queryRules.deleteRule`>>
-* queryRules.deleteRuleset: <<reference-query_rules-delete_ruleset, `queryRules.deleteRuleset`>>
-* queryRules.getRule: <<reference-query_rules-get_rule, `queryRules.getRule`>>
-* queryRules.getRuleset: <<reference-query_rules-get_ruleset, `queryRules.getRuleset`>>
-* queryRules.listRulesets: <<reference-query_rules-list_rulesets, `queryRules.listRulesets`>>
-* queryRules.putRule: <<reference-query_rules-put_rule, `queryRules.putRule`>>
-* queryRules.putRuleset: <<reference-query_rules-put_ruleset, `queryRules.putRuleset`>>
-* queryRules.test: <<reference-query_rules-test, `queryRules.test`>>
-* rankEval: <<reference-rank_eval, `rankEval`>>
-* reindex: <<reference-reindex, `reindex`>>
-* reindexRethrottle: <<reference-reindex_rethrottle, `reindexRethrottle`>>
-* renderSearchTemplate: <<reference-render_search_template, `renderSearchTemplate`>>
-* rollup.deleteJob: <<reference-rollup-delete_job, `rollup.deleteJob`>>
-* rollup.getJobs: <<reference-rollup-get_jobs, `rollup.getJobs`>>
-* rollup.getRollupCaps: <<reference-rollup-get_rollup_caps, `rollup.getRollupCaps`>>
-* rollup.getRollupIndexCaps: <<reference-rollup-get_rollup_index_caps, `rollup.getRollupIndexCaps`>>
-* rollup.putJob: <<reference-rollup-put_job, `rollup.putJob`>>
-* rollup.rollupSearch: <<reference-rollup-rollup_search, `rollup.rollupSearch`>>
-* rollup.startJob: <<reference-rollup-start_job, `rollup.startJob`>>
-* rollup.stopJob: <<reference-rollup-stop_job, `rollup.stopJob`>>
-* scriptsPainlessExecute: <<reference-scripts_painless_execute, `scriptsPainlessExecute`>>
-* scroll: <<reference-scroll, `scroll`>>
-* search: <<reference-search, `search`>>
-* searchApplication.delete: <<reference-search_application-delete, `searchApplication.delete`>>
-* searchApplication.deleteBehavioralAnalytics: <<reference-search_application-delete_behavioral_analytics, `searchApplication.deleteBehavioralAnalytics`>>
-* searchApplication.get: <<reference-search_application-get, `searchApplication.get`>>
-* searchApplication.getBehavioralAnalytics: <<reference-search_application-get_behavioral_analytics, `searchApplication.getBehavioralAnalytics`>>
-* searchApplication.list: <<reference-search_application-list, `searchApplication.list`>>
-* searchApplication.postBehavioralAnalyticsEvent: <<reference-search_application-post_behavioral_analytics_event, `searchApplication.postBehavioralAnalyticsEvent`>>
-* searchApplication.put: <<reference-search_application-put, `searchApplication.put`>>
-* searchApplication.putBehavioralAnalytics: <<reference-search_application-put_behavioral_analytics, `searchApplication.putBehavioralAnalytics`>>
-* searchApplication.renderQuery: <<reference-search_application-render_query, `searchApplication.renderQuery`>>
-* searchApplication.search: <<reference-search_application-search, `searchApplication.search`>>
-* searchMvt: <<reference-search_mvt, `searchMvt`>>
-* searchShards: <<reference-search_shards, `searchShards`>>
-* searchTemplate: <<reference-search_template, `searchTemplate`>>
-* searchableSnapshots.cacheStats: <<reference-searchable_snapshots-cache_stats, `searchableSnapshots.cacheStats`>>
-* searchableSnapshots.clearCache: <<reference-searchable_snapshots-clear_cache, `searchableSnapshots.clearCache`>>
-* searchableSnapshots.mount: <<reference-searchable_snapshots-mount, `searchableSnapshots.mount`>>
-* searchableSnapshots.stats: <<reference-searchable_snapshots-stats, `searchableSnapshots.stats`>>
-* security.activateUserProfile: <<reference-security-activate_user_profile, `security.activateUserProfile`>>
-* security.authenticate: <<reference-security-authenticate, `security.authenticate`>>
-* security.bulkDeleteRole: <<reference-security-bulk_delete_role, `security.bulkDeleteRole`>>
-* security.bulkPutRole: <<reference-security-bulk_put_role, `security.bulkPutRole`>>
-* security.bulkUpdateApiKeys: <<reference-security-bulk_update_api_keys, `security.bulkUpdateApiKeys`>>
-* security.changePassword: <<reference-security-change_password, `security.changePassword`>>
-* security.clearApiKeyCache: <<reference-security-clear_api_key_cache, `security.clearApiKeyCache`>>
-* security.clearCachedPrivileges: <<reference-security-clear_cached_privileges, `security.clearCachedPrivileges`>>
-* security.clearCachedRealms: <<reference-security-clear_cached_realms, `security.clearCachedRealms`>>
-* security.clearCachedRoles: <<reference-security-clear_cached_roles, `security.clearCachedRoles`>>
-* security.clearCachedServiceTokens: <<reference-security-clear_cached_service_tokens, `security.clearCachedServiceTokens`>>
-* security.createApiKey: <<reference-security-create_api_key, `security.createApiKey`>>
-* security.createCrossClusterApiKey: <<reference-security-create_cross_cluster_api_key, `security.createCrossClusterApiKey`>>
-* security.createServiceToken: <<reference-security-create_service_token, `security.createServiceToken`>>
-* security.deletePrivileges: <<reference-security-delete_privileges, `security.deletePrivileges`>>
-* security.deleteRole: <<reference-security-delete_role, `security.deleteRole`>>
-* security.deleteRoleMapping: <<reference-security-delete_role_mapping, `security.deleteRoleMapping`>>
-* security.deleteServiceToken: <<reference-security-delete_service_token, `security.deleteServiceToken`>>
-* security.deleteUser: <<reference-security-delete_user, `security.deleteUser`>>
-* security.disableUser: <<reference-security-disable_user, `security.disableUser`>>
-* security.disableUserProfile: <<reference-security-disable_user_profile, `security.disableUserProfile`>>
-* security.enableUser: <<reference-security-enable_user, `security.enableUser`>>
-* security.enableUserProfile: <<reference-security-enable_user_profile, `security.enableUserProfile`>>
-* security.enrollKibana: <<reference-security-enroll_kibana, `security.enrollKibana`>>
-* security.enrollNode: <<reference-security-enroll_node, `security.enrollNode`>>
-* security.getApiKey: <<reference-security-get_api_key, `security.getApiKey`>>
-* security.getBuiltinPrivileges: <<reference-security-get_builtin_privileges, `security.getBuiltinPrivileges`>>
-* security.getPrivileges: <<reference-security-get_privileges, `security.getPrivileges`>>
-* security.getRole: <<reference-security-get_role, `security.getRole`>>
-* security.getRoleMapping: <<reference-security-get_role_mapping, `security.getRoleMapping`>>
-* security.getServiceAccounts: <<reference-security-get_service_accounts, `security.getServiceAccounts`>>
-* security.getServiceCredentials: <<reference-security-get_service_credentials, `security.getServiceCredentials`>>
-* security.getSettings: <<reference-security-get_settings, `security.getSettings`>>
-* security.getToken: <<reference-security-get_token, `security.getToken`>>
-* security.getUser: <<reference-security-get_user, `security.getUser`>>
-* security.getUserPrivileges: <<reference-security-get_user_privileges, `security.getUserPrivileges`>>
-* security.getUserProfile: <<reference-security-get_user_profile, `security.getUserProfile`>>
-* security.grantApiKey: <<reference-security-grant_api_key, `security.grantApiKey`>>
-* security.hasPrivileges: <<reference-security-has_privileges, `security.hasPrivileges`>>
-* security.hasPrivilegesUserProfile: <<reference-security-has_privileges_user_profile, `security.hasPrivilegesUserProfile`>>
-* security.invalidateApiKey: <<reference-security-invalidate_api_key, `security.invalidateApiKey`>>
-* security.invalidateToken: <<reference-security-invalidate_token, `security.invalidateToken`>>
-* security.oidcAuthenticate: <<reference-security-oidc_authenticate, `security.oidcAuthenticate`>>
-* security.oidcLogout: <<reference-security-oidc_logout, `security.oidcLogout`>>
-* security.oidcPrepareAuthentication: <<reference-security-oidc_prepare_authentication, `security.oidcPrepareAuthentication`>>
-* security.putPrivileges: <<reference-security-put_privileges, `security.putPrivileges`>>
-* security.putRole: <<reference-security-put_role, `security.putRole`>>
-* security.putRoleMapping: <<reference-security-put_role_mapping, `security.putRoleMapping`>>
-* security.putUser: <<reference-security-put_user, `security.putUser`>>
-* security.queryApiKeys: <<reference-security-query_api_keys, `security.queryApiKeys`>>
-* security.queryRole: <<reference-security-query_role, `security.queryRole`>>
-* security.queryUser: <<reference-security-query_user, `security.queryUser`>>
-* security.samlAuthenticate: <<reference-security-saml_authenticate, `security.samlAuthenticate`>>
-* security.samlCompleteLogout: <<reference-security-saml_complete_logout, `security.samlCompleteLogout`>>
-* security.samlInvalidate: <<reference-security-saml_invalidate, `security.samlInvalidate`>>
-* security.samlLogout: <<reference-security-saml_logout, `security.samlLogout`>>
-* security.samlPrepareAuthentication: <<reference-security-saml_prepare_authentication, `security.samlPrepareAuthentication`>>
-* security.samlServiceProviderMetadata: <<reference-security-saml_service_provider_metadata, `security.samlServiceProviderMetadata`>>
-* security.suggestUserProfiles: <<reference-security-suggest_user_profiles, `security.suggestUserProfiles`>>
-* security.updateApiKey: <<reference-security-update_api_key, `security.updateApiKey`>>
-* security.updateCrossClusterApiKey: <<reference-security-update_cross_cluster_api_key, `security.updateCrossClusterApiKey`>>
-* security.updateSettings: <<reference-security-update_settings, `security.updateSettings`>>
-* security.updateUserProfileData: <<reference-security-update_user_profile_data, `security.updateUserProfileData`>>
-* shutdown.deleteNode: <<reference-shutdown-delete_node, `shutdown.deleteNode`>>
-* shutdown.getNode: <<reference-shutdown-get_node, `shutdown.getNode`>>
-* shutdown.putNode: <<reference-shutdown-put_node, `shutdown.putNode`>>
-* simulate.ingest: <<reference-simulate-ingest, `simulate.ingest`>>
-* slm.deleteLifecycle: <<reference-slm-delete_lifecycle, `slm.deleteLifecycle`>>
-* slm.executeLifecycle: <<reference-slm-execute_lifecycle, `slm.executeLifecycle`>>
-* slm.executeRetention: <<reference-slm-execute_retention, `slm.executeRetention`>>
-* slm.getLifecycle: <<reference-slm-get_lifecycle, `slm.getLifecycle`>>
-* slm.getStats: <<reference-slm-get_stats, `slm.getStats`>>
-* slm.getStatus: <<reference-slm-get_status, `slm.getStatus`>>
-* slm.putLifecycle: <<reference-slm-put_lifecycle, `slm.putLifecycle`>>
-* slm.start: <<reference-slm-start, `slm.start`>>
-* slm.stop: <<reference-slm-stop, `slm.stop`>>
-* snapshot.cleanupRepository: <<reference-snapshot-cleanup_repository, `snapshot.cleanupRepository`>>
-* snapshot.clone: <<reference-snapshot-clone, `snapshot.clone`>>
-* snapshot.create: <<reference-snapshot-create, `snapshot.create`>>
-* snapshot.createRepository: <<reference-snapshot-create_repository, `snapshot.createRepository`>>
-* snapshot.delete: <<reference-snapshot-delete, `snapshot.delete`>>
-* snapshot.deleteRepository: <<reference-snapshot-delete_repository, `snapshot.deleteRepository`>>
-* snapshot.get: <<reference-snapshot-get, `snapshot.get`>>
-* snapshot.getRepository: <<reference-snapshot-get_repository, `snapshot.getRepository`>>
-* snapshot.repositoryAnalyze: <<reference-snapshot-repository_analyze, `snapshot.repositoryAnalyze`>>
-* snapshot.restore: <<reference-snapshot-restore, `snapshot.restore`>>
-* snapshot.status: <<reference-snapshot-status, `snapshot.status`>>
-* snapshot.verifyRepository: <<reference-snapshot-verify_repository, `snapshot.verifyRepository`>>
-* sql.clearCursor: <<reference-sql-clear_cursor, `sql.clearCursor`>>
-* sql.deleteAsync: <<reference-sql-delete_async, `sql.deleteAsync`>>
-* sql.getAsync: <<reference-sql-get_async, `sql.getAsync`>>
-* sql.getAsyncStatus: <<reference-sql-get_async_status, `sql.getAsyncStatus`>>
-* sql.query: <<reference-sql-query, `sql.query`>>
-* sql.translate: <<reference-sql-translate, `sql.translate`>>
-* ssl.certificates: <<reference-ssl-certificates, `ssl.certificates`>>
-* synonyms.deleteSynonym: <<reference-synonyms-delete_synonym, `synonyms.deleteSynonym`>>
-* synonyms.deleteSynonymRule: <<reference-synonyms-delete_synonym_rule, `synonyms.deleteSynonymRule`>>
-* synonyms.getSynonym: <<reference-synonyms-get_synonym, `synonyms.getSynonym`>>
-* synonyms.getSynonymRule: <<reference-synonyms-get_synonym_rule, `synonyms.getSynonymRule`>>
-* synonyms.getSynonymsSets: <<reference-synonyms-get_synonyms_sets, `synonyms.getSynonymsSets`>>
-* synonyms.putSynonym: <<reference-synonyms-put_synonym, `synonyms.putSynonym`>>
-* synonyms.putSynonymRule: <<reference-synonyms-put_synonym_rule, `synonyms.putSynonymRule`>>
-* tasks.cancel: <<reference-tasks-cancel, `tasks.cancel`>>
-* tasks.get: <<reference-tasks-get, `tasks.get`>>
-* tasks.list: <<reference-tasks-list, `tasks.list`>>
-* termsEnum: <<reference-terms_enum, `termsEnum`>>
-* termvectors: <<reference-termvectors, `termvectors`>>
-* textStructure.findFieldStructure: <<reference-text_structure-find_field_structure, `textStructure.findFieldStructure`>>
-* textStructure.findMessageStructure: <<reference-text_structure-find_message_structure, `textStructure.findMessageStructure`>>
-* textStructure.findStructure: <<reference-text_structure-find_structure, `textStructure.findStructure`>>
-* textStructure.testGrokPattern: <<reference-text_structure-test_grok_pattern, `textStructure.testGrokPattern`>>
-* transform.deleteTransform: <<reference-transform-delete_transform, `transform.deleteTransform`>>
-* transform.getNodeStats: <<reference-transform-get_node_stats, `transform.getNodeStats`>>
-* transform.getTransform: <<reference-transform-get_transform, `transform.getTransform`>>
-* transform.getTransformStats: <<reference-transform-get_transform_stats, `transform.getTransformStats`>>
-* transform.previewTransform: <<reference-transform-preview_transform, `transform.previewTransform`>>
-* transform.putTransform: <<reference-transform-put_transform, `transform.putTransform`>>
-* transform.resetTransform: <<reference-transform-reset_transform, `transform.resetTransform`>>
-* transform.scheduleNowTransform: <<reference-transform-schedule_now_transform, `transform.scheduleNowTransform`>>
-* transform.startTransform: <<reference-transform-start_transform, `transform.startTransform`>>
-* transform.stopTransform: <<reference-transform-stop_transform, `transform.stopTransform`>>
-* transform.updateTransform: <<reference-transform-update_transform, `transform.updateTransform`>>
-* transform.upgradeTransforms: <<reference-transform-upgrade_transforms, `transform.upgradeTransforms`>>
-* update: <<reference-update, `update`>>
-* updateByQuery: <<reference-update_by_query, `updateByQuery`>>
-* updateByQueryRethrottle: <<reference-update_by_query_rethrottle, `updateByQueryRethrottle`>>
-* watcher.ackWatch: <<reference-watcher-ack_watch, `watcher.ackWatch`>>
-* watcher.activateWatch: <<reference-watcher-activate_watch, `watcher.activateWatch`>>
-* watcher.deactivateWatch: <<reference-watcher-deactivate_watch, `watcher.deactivateWatch`>>
-* watcher.deleteWatch: <<reference-watcher-delete_watch, `watcher.deleteWatch`>>
-* watcher.executeWatch: <<reference-watcher-execute_watch, `watcher.executeWatch`>>
-* watcher.getSettings: <<reference-watcher-get_settings, `watcher.getSettings`>>
-* watcher.getWatch: <<reference-watcher-get_watch, `watcher.getWatch`>>
-* watcher.putWatch: <<reference-watcher-put_watch, `watcher.putWatch`>>
-* watcher.queryWatches: <<reference-watcher-query_watches, `watcher.queryWatches`>>
-* watcher.start: <<reference-watcher-start, `watcher.start`>>
-* watcher.stats: <<reference-watcher-stats, `watcher.stats`>>
-* watcher.stop: <<reference-watcher-stop, `watcher.stop`>>
-* watcher.updateSettings: <<reference-watcher-update_settings, `watcher.updateSettings`>>
-* xpack.info: <<reference-xpack-info, `xpack.info`>>
-* xpack.usage: <<reference-xpack-usage, `xpack.usage`>>
+* <<reference-async_search-delete, `asyncSearch.delete`>>
+* <<reference-async_search-get, `asyncSearch.get`>>
+* <<reference-async_search-status, `asyncSearch.status`>>
+* <<reference-async_search-submit, `asyncSearch.submit`>>
+* <<reference-autoscaling-delete_autoscaling_policy, `autoscaling.deleteAutoscalingPolicy`>>
+* <<reference-autoscaling-get_autoscaling_capacity, `autoscaling.getAutoscalingCapacity`>>
+* <<reference-autoscaling-get_autoscaling_policy, `autoscaling.getAutoscalingPolicy`>>
+* <<reference-autoscaling-put_autoscaling_policy, `autoscaling.putAutoscalingPolicy`>>
+* <<reference-bulk, `bulk`>>
+* <<reference-cat-aliases, `cat.aliases`>>
+* <<reference-cat-allocation, `cat.allocation`>>
+* <<reference-cat-component_templates, `cat.componentTemplates`>>
+* <<reference-cat-count, `cat.count`>>
+* <<reference-cat-fielddata, `cat.fielddata`>>
+* <<reference-cat-health, `cat.health`>>
+* <<reference-cat-help, `cat.help`>>
+* <<reference-cat-indices, `cat.indices`>>
+* <<reference-cat-master, `cat.master`>>
+* <<reference-cat-ml_data_frame_analytics, `cat.mlDataFrameAnalytics`>>
+* <<reference-cat-ml_datafeeds, `cat.mlDatafeeds`>>
+* <<reference-cat-ml_jobs, `cat.mlJobs`>>
+* <<reference-cat-ml_trained_models, `cat.mlTrainedModels`>>
+* <<reference-cat-nodeattrs, `cat.nodeattrs`>>
+* <<reference-cat-nodes, `cat.nodes`>>
+* <<reference-cat-pending_tasks, `cat.pendingTasks`>>
+* <<reference-cat-plugins, `cat.plugins`>>
+* <<reference-cat-recovery, `cat.recovery`>>
+* <<reference-cat-repositories, `cat.repositories`>>
+* <<reference-cat-segments, `cat.segments`>>
+* <<reference-cat-shards, `cat.shards`>>
+* <<reference-cat-snapshots, `cat.snapshots`>>
+* <<reference-cat-tasks, `cat.tasks`>>
+* <<reference-cat-templates, `cat.templates`>>
+* <<reference-cat-thread_pool, `cat.threadPool`>>
+* <<reference-cat-transforms, `cat.transforms`>>
+* <<reference-ccr-delete_auto_follow_pattern, `ccr.deleteAutoFollowPattern`>>
+* <<reference-ccr-follow, `ccr.follow`>>
+* <<reference-ccr-follow_info, `ccr.followInfo`>>
+* <<reference-ccr-follow_stats, `ccr.followStats`>>
+* <<reference-ccr-forget_follower, `ccr.forgetFollower`>>
+* <<reference-ccr-get_auto_follow_pattern, `ccr.getAutoFollowPattern`>>
+* <<reference-ccr-pause_auto_follow_pattern, `ccr.pauseAutoFollowPattern`>>
+* <<reference-ccr-pause_follow, `ccr.pauseFollow`>>
+* <<reference-ccr-put_auto_follow_pattern, `ccr.putAutoFollowPattern`>>
+* <<reference-ccr-resume_auto_follow_pattern, `ccr.resumeAutoFollowPattern`>>
+* <<reference-ccr-resume_follow, `ccr.resumeFollow`>>
+* <<reference-ccr-stats, `ccr.stats`>>
+* <<reference-ccr-unfollow, `ccr.unfollow`>>
+* <<reference-clear_scroll, `clearScroll`>>
+* <<reference-close_point_in_time, `closePointInTime`>>
+* <<reference-cluster-allocation_explain, `cluster.allocationExplain`>>
+* <<reference-cluster-delete_component_template, `cluster.deleteComponentTemplate`>>
+* <<reference-cluster-delete_voting_config_exclusions, `cluster.deleteVotingConfigExclusions`>>
+* <<reference-cluster-exists_component_template, `cluster.existsComponentTemplate`>>
+* <<reference-cluster-get_component_template, `cluster.getComponentTemplate`>>
+* <<reference-cluster-get_settings, `cluster.getSettings`>>
+* <<reference-cluster-health, `cluster.health`>>
+* <<reference-cluster-info, `cluster.info`>>
+* <<reference-cluster-pending_tasks, `cluster.pendingTasks`>>
+* <<reference-cluster-post_voting_config_exclusions, `cluster.postVotingConfigExclusions`>>
+* <<reference-cluster-put_component_template, `cluster.putComponentTemplate`>>
+* <<reference-cluster-put_settings, `cluster.putSettings`>>
+* <<reference-cluster-remote_info, `cluster.remoteInfo`>>
+* <<reference-cluster-reroute, `cluster.reroute`>>
+* <<reference-cluster-state, `cluster.state`>>
+* <<reference-cluster-stats, `cluster.stats`>>
+* <<reference-connector-check_in, `connector.checkIn`>>
+* <<reference-connector-delete, `connector.delete`>>
+* <<reference-connector-get, `connector.get`>>
+* <<reference-connector-list, `connector.list`>>
+* <<reference-connector-post, `connector.post`>>
+* <<reference-connector-put, `connector.put`>>
+* <<reference-connector-sync_job_cancel, `connector.syncJobCancel`>>
+* <<reference-connector-sync_job_check_in, `connector.syncJobCheckIn`>>
+* <<reference-connector-sync_job_claim, `connector.syncJobClaim`>>
+* <<reference-connector-sync_job_delete, `connector.syncJobDelete`>>
+* <<reference-connector-sync_job_error, `connector.syncJobError`>>
+* <<reference-connector-sync_job_get, `connector.syncJobGet`>>
+* <<reference-connector-sync_job_list, `connector.syncJobList`>>
+* <<reference-connector-sync_job_post, `connector.syncJobPost`>>
+* <<reference-connector-sync_job_update_stats, `connector.syncJobUpdateStats`>>
+* <<reference-connector-update_active_filtering, `connector.updateActiveFiltering`>>
+* <<reference-connector-update_api_key_id, `connector.updateApiKeyId`>>
+* <<reference-connector-update_configuration, `connector.updateConfiguration`>>
+* <<reference-connector-update_error, `connector.updateError`>>
+* <<reference-connector-update_features, `connector.updateFeatures`>>
+* <<reference-connector-update_filtering, `connector.updateFiltering`>>
+* <<reference-connector-update_filtering_validation, `connector.updateFilteringValidation`>>
+* <<reference-connector-update_index_name, `connector.updateIndexName`>>
+* <<reference-connector-update_name, `connector.updateName`>>
+* <<reference-connector-update_native, `connector.updateNative`>>
+* <<reference-connector-update_pipeline, `connector.updatePipeline`>>
+* <<reference-connector-update_scheduling, `connector.updateScheduling`>>
+* <<reference-connector-update_service_type, `connector.updateServiceType`>>
+* <<reference-connector-update_status, `connector.updateStatus`>>
+* <<reference-count, `count`>>
+* <<reference-create, `create`>>
+* <<reference-dangling_indices-delete_dangling_index, `danglingIndices.deleteDanglingIndex`>>
+* <<reference-dangling_indices-import_dangling_index, `danglingIndices.importDanglingIndex`>>
+* <<reference-dangling_indices-list_dangling_indices, `danglingIndices.listDanglingIndices`>>
+* <<reference-delete, `delete`>>
+* <<reference-delete_by_query, `deleteByQuery`>>
+* <<reference-delete_by_query_rethrottle, `deleteByQueryRethrottle`>>
+* <<reference-delete_script, `deleteScript`>>
+* <<reference-enrich-delete_policy, `enrich.deletePolicy`>>
+* <<reference-enrich-execute_policy, `enrich.executePolicy`>>
+* <<reference-enrich-get_policy, `enrich.getPolicy`>>
+* <<reference-enrich-put_policy, `enrich.putPolicy`>>
+* <<reference-enrich-stats, `enrich.stats`>>
+* <<reference-eql-delete, `eql.delete`>>
+* <<reference-eql-get, `eql.get`>>
+* <<reference-eql-get_status, `eql.getStatus`>>
+* <<reference-eql-search, `eql.search`>>
+* <<reference-esql-async_query, `esql.asyncQuery`>>
+* <<reference-esql-async_query_get, `esql.asyncQueryGet`>>
+* <<reference-esql-query, `esql.query`>>
+* <<reference-exists, `exists`>>
+* <<reference-exists_source, `existsSource`>>
+* <<reference-explain, `explain`>>
+* <<reference-features-get_features, `features.getFeatures`>>
+* <<reference-features-reset_features, `features.resetFeatures`>>
+* <<reference-field_caps, `fieldCaps`>>
+* <<reference-fleet-global_checkpoints, `fleet.globalCheckpoints`>>
+* <<reference-fleet-msearch, `fleet.msearch`>>
+* <<reference-fleet-search, `fleet.search`>>
+* <<reference-get, `get`>>
+* <<reference-get_script, `getScript`>>
+* <<reference-get_script_context, `getScriptContext`>>
+* <<reference-get_script_languages, `getScriptLanguages`>>
+* <<reference-get_source, `getSource`>>
+* <<reference-graph-explore, `graph.explore`>>
+* <<reference-health_report, `healthReport`>>
+* <<reference-ilm-delete_lifecycle, `ilm.deleteLifecycle`>>
+* <<reference-ilm-explain_lifecycle, `ilm.explainLifecycle`>>
+* <<reference-ilm-get_lifecycle, `ilm.getLifecycle`>>
+* <<reference-ilm-get_status, `ilm.getStatus`>>
+* <<reference-ilm-migrate_to_data_tiers, `ilm.migrateToDataTiers`>>
+* <<reference-ilm-move_to_step, `ilm.moveToStep`>>
+* <<reference-ilm-put_lifecycle, `ilm.putLifecycle`>>
+* <<reference-ilm-remove_policy, `ilm.removePolicy`>>
+* <<reference-ilm-retry, `ilm.retry`>>
+* <<reference-ilm-start, `ilm.start`>>
+* <<reference-ilm-stop, `ilm.stop`>>
+* <<reference-index, `index`>>
+* <<reference-indices-add_block, `indices.addBlock`>>
+* <<reference-indices-analyze, `indices.analyze`>>
+* <<reference-indices-clear_cache, `indices.clearCache`>>
+* <<reference-indices-clone, `indices.clone`>>
+* <<reference-indices-close, `indices.close`>>
+* <<reference-indices-create, `indices.create`>>
+* <<reference-indices-create_data_stream, `indices.createDataStream`>>
+* <<reference-indices-data_streams_stats, `indices.dataStreamsStats`>>
+* <<reference-indices-delete, `indices.delete`>>
+* <<reference-indices-delete_alias, `indices.deleteAlias`>>
+* <<reference-indices-delete_data_lifecycle, `indices.deleteDataLifecycle`>>
+* <<reference-indices-delete_data_stream, `indices.deleteDataStream`>>
+* <<reference-indices-delete_index_template, `indices.deleteIndexTemplate`>>
+* <<reference-indices-delete_template, `indices.deleteTemplate`>>
+* <<reference-indices-disk_usage, `indices.diskUsage`>>
+* <<reference-indices-downsample, `indices.downsample`>>
+* <<reference-indices-exists, `indices.exists`>>
+* <<reference-indices-exists_alias, `indices.existsAlias`>>
+* <<reference-indices-exists_index_template, `indices.existsIndexTemplate`>>
+* <<reference-indices-exists_template, `indices.existsTemplate`>>
+* <<reference-indices-explain_data_lifecycle, `indices.explainDataLifecycle`>>
+* <<reference-indices-field_usage_stats, `indices.fieldUsageStats`>>
+* <<reference-indices-flush, `indices.flush`>>
+* <<reference-indices-forcemerge, `indices.forcemerge`>>
+* <<reference-indices-get, `indices.get`>>
+* <<reference-indices-get_alias, `indices.getAlias`>>
+* <<reference-indices-get_data_lifecycle, `indices.getDataLifecycle`>>
+* <<reference-indices-get_data_stream, `indices.getDataStream`>>
+* <<reference-indices-get_field_mapping, `indices.getFieldMapping`>>
+* <<reference-indices-get_index_template, `indices.getIndexTemplate`>>
+* <<reference-indices-get_mapping, `indices.getMapping`>>
+* <<reference-indices-get_settings, `indices.getSettings`>>
+* <<reference-indices-get_template, `indices.getTemplate`>>
+* <<reference-indices-migrate_to_data_stream, `indices.migrateToDataStream`>>
+* <<reference-indices-modify_data_stream, `indices.modifyDataStream`>>
+* <<reference-indices-open, `indices.open`>>
+* <<reference-indices-promote_data_stream, `indices.promoteDataStream`>>
+* <<reference-indices-put_alias, `indices.putAlias`>>
+* <<reference-indices-put_data_lifecycle, `indices.putDataLifecycle`>>
+* <<reference-indices-put_index_template, `indices.putIndexTemplate`>>
+* <<reference-indices-put_mapping, `indices.putMapping`>>
+* <<reference-indices-put_settings, `indices.putSettings`>>
+* <<reference-indices-put_template, `indices.putTemplate`>>
+* <<reference-indices-recovery, `indices.recovery`>>
+* <<reference-indices-refresh, `indices.refresh`>>
+* <<reference-indices-reload_search_analyzers, `indices.reloadSearchAnalyzers`>>
+* <<reference-indices-resolve_cluster, `indices.resolveCluster`>>
+* <<reference-indices-resolve_index, `indices.resolveIndex`>>
+* <<reference-indices-rollover, `indices.rollover`>>
+* <<reference-indices-segments, `indices.segments`>>
+* <<reference-indices-shard_stores, `indices.shardStores`>>
+* <<reference-indices-shrink, `indices.shrink`>>
+* <<reference-indices-simulate_index_template, `indices.simulateIndexTemplate`>>
+* <<reference-indices-simulate_template, `indices.simulateTemplate`>>
+* <<reference-indices-split, `indices.split`>>
+* <<reference-indices-stats, `indices.stats`>>
+* <<reference-indices-unfreeze, `indices.unfreeze`>>
+* <<reference-indices-update_aliases, `indices.updateAliases`>>
+* <<reference-indices-validate_query, `indices.validateQuery`>>
+* <<reference-inference-delete, `inference.delete`>>
+* <<reference-inference-get, `inference.get`>>
+* <<reference-inference-inference, `inference.inference`>>
+* <<reference-inference-put, `inference.put`>>
+* <<reference-inference-stream_inference, `inference.streamInference`>>
+* <<reference-info, `info`>>
+* <<reference-ingest-delete_geoip_database, `ingest.deleteGeoipDatabase`>>
+* <<reference-ingest-delete_pipeline, `ingest.deletePipeline`>>
+* <<reference-ingest-geo_ip_stats, `ingest.geoIpStats`>>
+* <<reference-ingest-get_geoip_database, `ingest.getGeoipDatabase`>>
+* <<reference-ingest-get_pipeline, `ingest.getPipeline`>>
+* <<reference-ingest-processor_grok, `ingest.processorGrok`>>
+* <<reference-ingest-put_geoip_database, `ingest.putGeoipDatabase`>>
+* <<reference-ingest-put_pipeline, `ingest.putPipeline`>>
+* <<reference-ingest-simulate, `ingest.simulate`>>
+* <<reference-knn_search, `knnSearch`>>
+* <<reference-license-delete, `license.delete`>>
+* <<reference-license-get, `license.get`>>
+* <<reference-license-get_basic_status, `license.getBasicStatus`>>
+* <<reference-license-get_trial_status, `license.getTrialStatus`>>
+* <<reference-license-post, `license.post`>>
+* <<reference-license-post_start_basic, `license.postStartBasic`>>
+* <<reference-license-post_start_trial, `license.postStartTrial`>>
+* <<reference-logstash-delete_pipeline, `logstash.deletePipeline`>>
+* <<reference-logstash-get_pipeline, `logstash.getPipeline`>>
+* <<reference-logstash-put_pipeline, `logstash.putPipeline`>>
+* <<reference-mget, `mget`>>
+* <<reference-migration-deprecations, `migration.deprecations`>>
+* <<reference-migration-get_feature_upgrade_status, `migration.getFeatureUpgradeStatus`>>
+* <<reference-migration-post_feature_upgrade, `migration.postFeatureUpgrade`>>
+* <<reference-ml-clear_trained_model_deployment_cache, `ml.clearTrainedModelDeploymentCache`>>
+* <<reference-ml-close_job, `ml.closeJob`>>
+* <<reference-ml-delete_calendar, `ml.deleteCalendar`>>
+* <<reference-ml-delete_calendar_event, `ml.deleteCalendarEvent`>>
+* <<reference-ml-delete_calendar_job, `ml.deleteCalendarJob`>>
+* <<reference-ml-delete_data_frame_analytics, `ml.deleteDataFrameAnalytics`>>
+* <<reference-ml-delete_datafeed, `ml.deleteDatafeed`>>
+* <<reference-ml-delete_expired_data, `ml.deleteExpiredData`>>
+* <<reference-ml-delete_filter, `ml.deleteFilter`>>
+* <<reference-ml-delete_forecast, `ml.deleteForecast`>>
+* <<reference-ml-delete_job, `ml.deleteJob`>>
+* <<reference-ml-delete_model_snapshot, `ml.deleteModelSnapshot`>>
+* <<reference-ml-delete_trained_model, `ml.deleteTrainedModel`>>
+* <<reference-ml-delete_trained_model_alias, `ml.deleteTrainedModelAlias`>>
+* <<reference-ml-estimate_model_memory, `ml.estimateModelMemory`>>
+* <<reference-ml-evaluate_data_frame, `ml.evaluateDataFrame`>>
+* <<reference-ml-explain_data_frame_analytics, `ml.explainDataFrameAnalytics`>>
+* <<reference-ml-flush_job, `ml.flushJob`>>
+* <<reference-ml-forecast, `ml.forecast`>>
+* <<reference-ml-get_buckets, `ml.getBuckets`>>
+* <<reference-ml-get_calendar_events, `ml.getCalendarEvents`>>
+* <<reference-ml-get_calendars, `ml.getCalendars`>>
+* <<reference-ml-get_categories, `ml.getCategories`>>
+* <<reference-ml-get_data_frame_analytics, `ml.getDataFrameAnalytics`>>
+* <<reference-ml-get_data_frame_analytics_stats, `ml.getDataFrameAnalyticsStats`>>
+* <<reference-ml-get_datafeed_stats, `ml.getDatafeedStats`>>
+* <<reference-ml-get_datafeeds, `ml.getDatafeeds`>>
+* <<reference-ml-get_filters, `ml.getFilters`>>
+* <<reference-ml-get_influencers, `ml.getInfluencers`>>
+* <<reference-ml-get_job_stats, `ml.getJobStats`>>
+* <<reference-ml-get_jobs, `ml.getJobs`>>
+* <<reference-ml-get_memory_stats, `ml.getMemoryStats`>>
+* <<reference-ml-get_model_snapshot_upgrade_stats, `ml.getModelSnapshotUpgradeStats`>>
+* <<reference-ml-get_model_snapshots, `ml.getModelSnapshots`>>
+* <<reference-ml-get_overall_buckets, `ml.getOverallBuckets`>>
+* <<reference-ml-get_records, `ml.getRecords`>>
+* <<reference-ml-get_trained_models, `ml.getTrainedModels`>>
+* <<reference-ml-get_trained_models_stats, `ml.getTrainedModelsStats`>>
+* <<reference-ml-infer_trained_model, `ml.inferTrainedModel`>>
+* <<reference-ml-info, `ml.info`>>
+* <<reference-ml-open_job, `ml.openJob`>>
+* <<reference-ml-post_calendar_events, `ml.postCalendarEvents`>>
+* <<reference-ml-post_data, `ml.postData`>>
+* <<reference-ml-preview_data_frame_analytics, `ml.previewDataFrameAnalytics`>>
+* <<reference-ml-preview_datafeed, `ml.previewDatafeed`>>
+* <<reference-ml-put_calendar, `ml.putCalendar`>>
+* <<reference-ml-put_calendar_job, `ml.putCalendarJob`>>
+* <<reference-ml-put_data_frame_analytics, `ml.putDataFrameAnalytics`>>
+* <<reference-ml-put_datafeed, `ml.putDatafeed`>>
+* <<reference-ml-put_filter, `ml.putFilter`>>
+* <<reference-ml-put_job, `ml.putJob`>>
+* <<reference-ml-put_trained_model, `ml.putTrainedModel`>>
+* <<reference-ml-put_trained_model_alias, `ml.putTrainedModelAlias`>>
+* <<reference-ml-put_trained_model_definition_part, `ml.putTrainedModelDefinitionPart`>>
+* <<reference-ml-put_trained_model_vocabulary, `ml.putTrainedModelVocabulary`>>
+* <<reference-ml-reset_job, `ml.resetJob`>>
+* <<reference-ml-revert_model_snapshot, `ml.revertModelSnapshot`>>
+* <<reference-ml-set_upgrade_mode, `ml.setUpgradeMode`>>
+* <<reference-ml-start_data_frame_analytics, `ml.startDataFrameAnalytics`>>
+* <<reference-ml-start_datafeed, `ml.startDatafeed`>>
+* <<reference-ml-start_trained_model_deployment, `ml.startTrainedModelDeployment`>>
+* <<reference-ml-stop_data_frame_analytics, `ml.stopDataFrameAnalytics`>>
+* <<reference-ml-stop_datafeed, `ml.stopDatafeed`>>
+* <<reference-ml-stop_trained_model_deployment, `ml.stopTrainedModelDeployment`>>
+* <<reference-ml-update_data_frame_analytics, `ml.updateDataFrameAnalytics`>>
+* <<reference-ml-update_datafeed, `ml.updateDatafeed`>>
+* <<reference-ml-update_filter, `ml.updateFilter`>>
+* <<reference-ml-update_job, `ml.updateJob`>>
+* <<reference-ml-update_model_snapshot, `ml.updateModelSnapshot`>>
+* <<reference-ml-update_trained_model_deployment, `ml.updateTrainedModelDeployment`>>
+* <<reference-ml-upgrade_job_snapshot, `ml.upgradeJobSnapshot`>>
+* <<reference-monitoring-bulk, `monitoring.bulk`>>
+* <<reference-msearch, `msearch`>>
+* <<reference-msearch_template, `msearchTemplate`>>
+* <<reference-mtermvectors, `mtermvectors`>>
+* <<reference-nodes-clear_repositories_metering_archive, `nodes.clearRepositoriesMeteringArchive`>>
+* <<reference-nodes-get_repositories_metering_info, `nodes.getRepositoriesMeteringInfo`>>
+* <<reference-nodes-hot_threads, `nodes.hotThreads`>>
+* <<reference-nodes-info, `nodes.info`>>
+* <<reference-nodes-reload_secure_settings, `nodes.reloadSecureSettings`>>
+* <<reference-nodes-stats, `nodes.stats`>>
+* <<reference-nodes-usage, `nodes.usage`>>
+* <<reference-open_point_in_time, `openPointInTime`>>
+* <<reference-ping, `ping`>>
+* <<reference-put_script, `putScript`>>
+* <<reference-query_rules-delete_rule, `queryRules.deleteRule`>>
+* <<reference-query_rules-delete_ruleset, `queryRules.deleteRuleset`>>
+* <<reference-query_rules-get_rule, `queryRules.getRule`>>
+* <<reference-query_rules-get_ruleset, `queryRules.getRuleset`>>
+* <<reference-query_rules-list_rulesets, `queryRules.listRulesets`>>
+* <<reference-query_rules-put_rule, `queryRules.putRule`>>
+* <<reference-query_rules-put_ruleset, `queryRules.putRuleset`>>
+* <<reference-query_rules-test, `queryRules.test`>>
+* <<reference-rank_eval, `rankEval`>>
+* <<reference-reindex, `reindex`>>
+* <<reference-reindex_rethrottle, `reindexRethrottle`>>
+* <<reference-render_search_template, `renderSearchTemplate`>>
+* <<reference-rollup-delete_job, `rollup.deleteJob`>>
+* <<reference-rollup-get_jobs, `rollup.getJobs`>>
+* <<reference-rollup-get_rollup_caps, `rollup.getRollupCaps`>>
+* <<reference-rollup-get_rollup_index_caps, `rollup.getRollupIndexCaps`>>
+* <<reference-rollup-put_job, `rollup.putJob`>>
+* <<reference-rollup-rollup_search, `rollup.rollupSearch`>>
+* <<reference-rollup-start_job, `rollup.startJob`>>
+* <<reference-rollup-stop_job, `rollup.stopJob`>>
+* <<reference-scripts_painless_execute, `scriptsPainlessExecute`>>
+* <<reference-scroll, `scroll`>>
+* <<reference-search, `search`>>
+* <<reference-search_application-delete, `searchApplication.delete`>>
+* <<reference-search_application-delete_behavioral_analytics, `searchApplication.deleteBehavioralAnalytics`>>
+* <<reference-search_application-get, `searchApplication.get`>>
+* <<reference-search_application-get_behavioral_analytics, `searchApplication.getBehavioralAnalytics`>>
+* <<reference-search_application-list, `searchApplication.list`>>
+* <<reference-search_application-post_behavioral_analytics_event, `searchApplication.postBehavioralAnalyticsEvent`>>
+* <<reference-search_application-put, `searchApplication.put`>>
+* <<reference-search_application-put_behavioral_analytics, `searchApplication.putBehavioralAnalytics`>>
+* <<reference-search_application-render_query, `searchApplication.renderQuery`>>
+* <<reference-search_application-search, `searchApplication.search`>>
+* <<reference-search_mvt, `searchMvt`>>
+* <<reference-search_shards, `searchShards`>>
+* <<reference-search_template, `searchTemplate`>>
+* <<reference-searchable_snapshots-cache_stats, `searchableSnapshots.cacheStats`>>
+* <<reference-searchable_snapshots-clear_cache, `searchableSnapshots.clearCache`>>
+* <<reference-searchable_snapshots-mount, `searchableSnapshots.mount`>>
+* <<reference-searchable_snapshots-stats, `searchableSnapshots.stats`>>
+* <<reference-security-activate_user_profile, `security.activateUserProfile`>>
+* <<reference-security-authenticate, `security.authenticate`>>
+* <<reference-security-bulk_delete_role, `security.bulkDeleteRole`>>
+* <<reference-security-bulk_put_role, `security.bulkPutRole`>>
+* <<reference-security-bulk_update_api_keys, `security.bulkUpdateApiKeys`>>
+* <<reference-security-change_password, `security.changePassword`>>
+* <<reference-security-clear_api_key_cache, `security.clearApiKeyCache`>>
+* <<reference-security-clear_cached_privileges, `security.clearCachedPrivileges`>>
+* <<reference-security-clear_cached_realms, `security.clearCachedRealms`>>
+* <<reference-security-clear_cached_roles, `security.clearCachedRoles`>>
+* <<reference-security-clear_cached_service_tokens, `security.clearCachedServiceTokens`>>
+* <<reference-security-create_api_key, `security.createApiKey`>>
+* <<reference-security-create_cross_cluster_api_key, `security.createCrossClusterApiKey`>>
+* <<reference-security-create_service_token, `security.createServiceToken`>>
+* <<reference-security-delete_privileges, `security.deletePrivileges`>>
+* <<reference-security-delete_role, `security.deleteRole`>>
+* <<reference-security-delete_role_mapping, `security.deleteRoleMapping`>>
+* <<reference-security-delete_service_token, `security.deleteServiceToken`>>
+* <<reference-security-delete_user, `security.deleteUser`>>
+* <<reference-security-disable_user, `security.disableUser`>>
+* <<reference-security-disable_user_profile, `security.disableUserProfile`>>
+* <<reference-security-enable_user, `security.enableUser`>>
+* <<reference-security-enable_user_profile, `security.enableUserProfile`>>
+* <<reference-security-enroll_kibana, `security.enrollKibana`>>
+* <<reference-security-enroll_node, `security.enrollNode`>>
+* <<reference-security-get_api_key, `security.getApiKey`>>
+* <<reference-security-get_builtin_privileges, `security.getBuiltinPrivileges`>>
+* <<reference-security-get_privileges, `security.getPrivileges`>>
+* <<reference-security-get_role, `security.getRole`>>
+* <<reference-security-get_role_mapping, `security.getRoleMapping`>>
+* <<reference-security-get_service_accounts, `security.getServiceAccounts`>>
+* <<reference-security-get_service_credentials, `security.getServiceCredentials`>>
+* <<reference-security-get_settings, `security.getSettings`>>
+* <<reference-security-get_token, `security.getToken`>>
+* <<reference-security-get_user, `security.getUser`>>
+* <<reference-security-get_user_privileges, `security.getUserPrivileges`>>
+* <<reference-security-get_user_profile, `security.getUserProfile`>>
+* <<reference-security-grant_api_key, `security.grantApiKey`>>
+* <<reference-security-has_privileges, `security.hasPrivileges`>>
+* <<reference-security-has_privileges_user_profile, `security.hasPrivilegesUserProfile`>>
+* <<reference-security-invalidate_api_key, `security.invalidateApiKey`>>
+* <<reference-security-invalidate_token, `security.invalidateToken`>>
+* <<reference-security-oidc_authenticate, `security.oidcAuthenticate`>>
+* <<reference-security-oidc_logout, `security.oidcLogout`>>
+* <<reference-security-oidc_prepare_authentication, `security.oidcPrepareAuthentication`>>
+* <<reference-security-put_privileges, `security.putPrivileges`>>
+* <<reference-security-put_role, `security.putRole`>>
+* <<reference-security-put_role_mapping, `security.putRoleMapping`>>
+* <<reference-security-put_user, `security.putUser`>>
+* <<reference-security-query_api_keys, `security.queryApiKeys`>>
+* <<reference-security-query_role, `security.queryRole`>>
+* <<reference-security-query_user, `security.queryUser`>>
+* <<reference-security-saml_authenticate, `security.samlAuthenticate`>>
+* <<reference-security-saml_complete_logout, `security.samlCompleteLogout`>>
+* <<reference-security-saml_invalidate, `security.samlInvalidate`>>
+* <<reference-security-saml_logout, `security.samlLogout`>>
+* <<reference-security-saml_prepare_authentication, `security.samlPrepareAuthentication`>>
+* <<reference-security-saml_service_provider_metadata, `security.samlServiceProviderMetadata`>>
+* <<reference-security-suggest_user_profiles, `security.suggestUserProfiles`>>
+* <<reference-security-update_api_key, `security.updateApiKey`>>
+* <<reference-security-update_cross_cluster_api_key, `security.updateCrossClusterApiKey`>>
+* <<reference-security-update_settings, `security.updateSettings`>>
+* <<reference-security-update_user_profile_data, `security.updateUserProfileData`>>
+* <<reference-shutdown-delete_node, `shutdown.deleteNode`>>
+* <<reference-shutdown-get_node, `shutdown.getNode`>>
+* <<reference-shutdown-put_node, `shutdown.putNode`>>
+* <<reference-simulate-ingest, `simulate.ingest`>>
+* <<reference-slm-delete_lifecycle, `slm.deleteLifecycle`>>
+* <<reference-slm-execute_lifecycle, `slm.executeLifecycle`>>
+* <<reference-slm-execute_retention, `slm.executeRetention`>>
+* <<reference-slm-get_lifecycle, `slm.getLifecycle`>>
+* <<reference-slm-get_stats, `slm.getStats`>>
+* <<reference-slm-get_status, `slm.getStatus`>>
+* <<reference-slm-put_lifecycle, `slm.putLifecycle`>>
+* <<reference-slm-start, `slm.start`>>
+* <<reference-slm-stop, `slm.stop`>>
+* <<reference-snapshot-cleanup_repository, `snapshot.cleanupRepository`>>
+* <<reference-snapshot-clone, `snapshot.clone`>>
+* <<reference-snapshot-create, `snapshot.create`>>
+* <<reference-snapshot-create_repository, `snapshot.createRepository`>>
+* <<reference-snapshot-delete, `snapshot.delete`>>
+* <<reference-snapshot-delete_repository, `snapshot.deleteRepository`>>
+* <<reference-snapshot-get, `snapshot.get`>>
+* <<reference-snapshot-get_repository, `snapshot.getRepository`>>
+* <<reference-snapshot-repository_analyze, `snapshot.repositoryAnalyze`>>
+* <<reference-snapshot-restore, `snapshot.restore`>>
+* <<reference-snapshot-status, `snapshot.status`>>
+* <<reference-snapshot-verify_repository, `snapshot.verifyRepository`>>
+* <<reference-sql-clear_cursor, `sql.clearCursor`>>
+* <<reference-sql-delete_async, `sql.deleteAsync`>>
+* <<reference-sql-get_async, `sql.getAsync`>>
+* <<reference-sql-get_async_status, `sql.getAsyncStatus`>>
+* <<reference-sql-query, `sql.query`>>
+* <<reference-sql-translate, `sql.translate`>>
+* <<reference-ssl-certificates, `ssl.certificates`>>
+* <<reference-synonyms-delete_synonym, `synonyms.deleteSynonym`>>
+* <<reference-synonyms-delete_synonym_rule, `synonyms.deleteSynonymRule`>>
+* <<reference-synonyms-get_synonym, `synonyms.getSynonym`>>
+* <<reference-synonyms-get_synonym_rule, `synonyms.getSynonymRule`>>
+* <<reference-synonyms-get_synonyms_sets, `synonyms.getSynonymsSets`>>
+* <<reference-synonyms-put_synonym, `synonyms.putSynonym`>>
+* <<reference-synonyms-put_synonym_rule, `synonyms.putSynonymRule`>>
+* <<reference-tasks-cancel, `tasks.cancel`>>
+* <<reference-tasks-get, `tasks.get`>>
+* <<reference-tasks-list, `tasks.list`>>
+* <<reference-terms_enum, `termsEnum`>>
+* <<reference-termvectors, `termvectors`>>
+* <<reference-text_structure-find_field_structure, `textStructure.findFieldStructure`>>
+* <<reference-text_structure-find_message_structure, `textStructure.findMessageStructure`>>
+* <<reference-text_structure-find_structure, `textStructure.findStructure`>>
+* <<reference-text_structure-test_grok_pattern, `textStructure.testGrokPattern`>>
+* <<reference-transform-delete_transform, `transform.deleteTransform`>>
+* <<reference-transform-get_node_stats, `transform.getNodeStats`>>
+* <<reference-transform-get_transform, `transform.getTransform`>>
+* <<reference-transform-get_transform_stats, `transform.getTransformStats`>>
+* <<reference-transform-preview_transform, `transform.previewTransform`>>
+* <<reference-transform-put_transform, `transform.putTransform`>>
+* <<reference-transform-reset_transform, `transform.resetTransform`>>
+* <<reference-transform-schedule_now_transform, `transform.scheduleNowTransform`>>
+* <<reference-transform-start_transform, `transform.startTransform`>>
+* <<reference-transform-stop_transform, `transform.stopTransform`>>
+* <<reference-transform-update_transform, `transform.updateTransform`>>
+* <<reference-transform-upgrade_transforms, `transform.upgradeTransforms`>>
+* <<reference-update, `update`>>
+* <<reference-update_by_query, `updateByQuery`>>
+* <<reference-update_by_query_rethrottle, `updateByQueryRethrottle`>>
+* <<reference-watcher-ack_watch, `watcher.ackWatch`>>
+* <<reference-watcher-activate_watch, `watcher.activateWatch`>>
+* <<reference-watcher-deactivate_watch, `watcher.deactivateWatch`>>
+* <<reference-watcher-delete_watch, `watcher.deleteWatch`>>
+* <<reference-watcher-execute_watch, `watcher.executeWatch`>>
+* <<reference-watcher-get_settings, `watcher.getSettings`>>
+* <<reference-watcher-get_watch, `watcher.getWatch`>>
+* <<reference-watcher-put_watch, `watcher.putWatch`>>
+* <<reference-watcher-query_watches, `watcher.queryWatches`>>
+* <<reference-watcher-start, `watcher.start`>>
+* <<reference-watcher-stats, `watcher.stats`>>
+* <<reference-watcher-stop, `watcher.stop`>>
+* <<reference-watcher-update_settings, `watcher.updateSettings`>>
+* <<reference-xpack-info, `xpack.info`>>
+* <<reference-xpack-usage, `xpack.usage`>>

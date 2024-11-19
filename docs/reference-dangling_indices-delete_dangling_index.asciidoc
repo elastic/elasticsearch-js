@@ -41,23 +41,33 @@ Delete a dangling index. If Elasticsearch encounters index data that is absent f
 ----
 
 [discrete]
-===== `DanglingIndicesDeleteDanglingIndexRequest`
+==== DanglingIndicesDeleteDanglingIndexRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface DanglingIndicesDeleteDanglingIndexRequest extends <<RequestBase>> {
   index_uuid: <<Uuid>>
   accept_data_loss: boolean
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `DanglingIndicesDeleteDanglingIndexResponse`
+==== DanglingIndicesDeleteDanglingIndexResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type DanglingIndicesDeleteDanglingIndexResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

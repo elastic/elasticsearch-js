@@ -41,30 +41,40 @@ Translates SQL into Elasticsearch queries
 ----
 
 [discrete]
-===== `SqlTranslateRequest`
+==== SqlTranslateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SqlTranslateRequest extends <<RequestBase>> {
-  fetch_size?: <<integer>>
+  fetch_size?: number
   filter?: QueryDslQueryContainer
   query: string
   time_zone?: <<TimeZone>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SqlTranslateResponse`
+==== SqlTranslateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SqlTranslateResponse {
   aggregations?: Record<string, AggregationsAggregationContainer>
-  size?: <<long>>
+  size?: number
   _source?: SearchSourceConfig
   fields?: (QueryDslFieldAndFormat | <<Field>>)[]
   query?: QueryDslQueryContainer
   sort?: <<Sort>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

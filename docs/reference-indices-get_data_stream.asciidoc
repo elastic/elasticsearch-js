@@ -41,10 +41,12 @@ Get data streams. Retrieves information about one or more data streams.
 ----
 
 [discrete]
-===== `IndicesGetDataStreamRequest`
+==== IndicesGetDataStreamRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesGetDataStreamRequest extends <<RequestBase>> {
   name?: <<DataStreamNames>>
   expand_wildcards?: <<ExpandWildcards>>
@@ -52,15 +54,23 @@ interface IndicesGetDataStreamRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   verbose?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesGetDataStreamResponse`
+==== IndicesGetDataStreamResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesGetDataStreamResponse {
   data_streams: IndicesDataStream[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

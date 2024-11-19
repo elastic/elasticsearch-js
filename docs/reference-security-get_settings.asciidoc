@@ -40,20 +40,3 @@ Retrieve settings for the security system indices
 (SecurityGetSettingsRequest, options?): Promise<SecurityGetSettingsResponse>
 ----
 
-[discrete]
-===== `SecurityGetSettingsRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `SecurityGetSettingsResponse`
-
-[source,ts]
-----
-n/a
-----
-

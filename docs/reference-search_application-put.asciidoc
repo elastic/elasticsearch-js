@@ -41,24 +41,34 @@ Create or update a search application.
 ----
 
 [discrete]
-===== `SearchApplicationPutRequest`
+==== SearchApplicationPutRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchApplicationPutRequest extends <<RequestBase>> {
   name: <<Name>>
   create?: boolean
   search_application?: SearchApplicationSearchApplication
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchApplicationPutResponse`
+==== SearchApplicationPutResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchApplicationPutResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

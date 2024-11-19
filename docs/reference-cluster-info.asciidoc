@@ -41,20 +41,27 @@ Get cluster info. Returns basic information about the cluster.
 ----
 
 [discrete]
-===== `ClusterInfoRequest`
+==== ClusterInfoRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterInfoRequest extends <<RequestBase>> {
   target: <<ClusterInfoTargets>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterInfoResponse`
+==== ClusterInfoResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterInfoResponse {
   cluster_name: <<Name>>
   http?: NodesHttp
@@ -62,5 +69,8 @@ interface ClusterInfoResponse {
   thread_pool?: Record<string, NodesThreadCount>
   script?: NodesScripting
 }
-----
 
+[pass]
+++++
+</pre>
+++++

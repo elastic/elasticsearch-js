@@ -41,26 +41,36 @@ Get transforms. Returns configuration and usage information about transforms. CA
 ----
 
 [discrete]
-===== `CatTransformsRequest`
+==== CatTransformsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatTransformsRequest extends CatCatRequestBase {
   transform_id?: <<Id>>
   allow_no_match?: boolean
-  from?: <<integer>>
+  from?: number
   h?: CatCatTransformColumns
   s?: CatCatTransformColumns
   time?: <<TimeUnit>>
-  size?: <<integer>>
+  size?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatTransformsResponse`
+==== CatTransformsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatTransformsResponse = CatTransformsTransformsRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

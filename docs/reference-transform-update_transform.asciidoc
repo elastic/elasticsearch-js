@@ -41,10 +41,12 @@ Update a transform. Updates certain properties of a transform. All updated prope
 ----
 
 [discrete]
-===== `TransformUpdateTransformRequest`
+==== TransformUpdateTransformRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformUpdateTransformRequest extends <<RequestBase>> {
   transform_id: <<Id>>
   defer_validation?: boolean
@@ -58,16 +60,21 @@ interface TransformUpdateTransformRequest extends <<RequestBase>> {
   sync?: TransformSyncContainer
   retention_policy?: TransformRetentionPolicyContainer | null
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TransformUpdateTransformResponse`
+==== TransformUpdateTransformResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformUpdateTransformResponse {
   authorization?: MlTransformAuthorization
-  create_time: <<long>>
+  create_time: number
   description: string
   dest: ReindexDestination
   frequency?: <<Duration>>
@@ -81,5 +88,8 @@ interface TransformUpdateTransformResponse {
   version: <<VersionString>>
   _meta?: <<Metadata>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

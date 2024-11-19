@@ -41,22 +41,32 @@ Returns the current status and available results for an async EQL search or a st
 ----
 
 [discrete]
-===== `EqlGetRequest`
+==== EqlGetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface EqlGetRequest extends <<RequestBase>> {
   id: <<Id>>
   keep_alive?: <<Duration>>
   wait_for_completion_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `EqlGetResponse`
+==== EqlGetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type EqlGetResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEvent>
-----
 
+[pass]
+++++
+</pre>
+++++

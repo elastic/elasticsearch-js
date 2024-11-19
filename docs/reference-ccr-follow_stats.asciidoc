@@ -41,22 +41,32 @@ Retrieves follower stats. return shard-level stats about the following tasks ass
 ----
 
 [discrete]
-===== `CcrFollowStatsRequest`
+==== CcrFollowStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrFollowStatsRequest extends <<RequestBase>> {
   index: <<Indices>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrFollowStatsResponse`
+==== CcrFollowStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrFollowStatsResponse {
   indices: CcrFollowIndexStats[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,24 +41,34 @@ Create part of a trained model definition.
 ----
 
 [discrete]
-===== `MlPutTrainedModelDefinitionPartRequest`
+==== MlPutTrainedModelDefinitionPartRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPutTrainedModelDefinitionPartRequest extends <<RequestBase>> {
   model_id: <<Id>>
-  part: <<integer>>
+  part: number
   definition: string
-  total_definition_length: <<long>>
-  total_parts: <<integer>>
+  total_definition_length: number
+  total_parts: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlPutTrainedModelDefinitionPartResponse`
+==== MlPutTrainedModelDefinitionPartResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlPutTrainedModelDefinitionPartResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

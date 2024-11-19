@@ -41,19 +41,29 @@ Returns cluster-level changes that have not yet been executed. IMPORTANT: cat AP
 ----
 
 [discrete]
-===== `CatPendingTasksRequest`
+==== CatPendingTasksRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatPendingTasksRequest extends CatCatRequestBase {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatPendingTasksResponse`
+==== CatPendingTasksResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatPendingTasksResponse = CatPendingTasksPendingTasksRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

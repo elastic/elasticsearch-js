@@ -41,22 +41,32 @@ Find out whether system features need to be upgraded or not
 ----
 
 [discrete]
-===== `MigrationGetFeatureUpgradeStatusRequest`
+==== MigrationGetFeatureUpgradeStatusRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MigrationGetFeatureUpgradeStatusRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MigrationGetFeatureUpgradeStatusResponse`
+==== MigrationGetFeatureUpgradeStatusResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MigrationGetFeatureUpgradeStatusResponse {
   features: MigrationGetFeatureUpgradeStatusMigrationFeature[]
   migration_status: MigrationGetFeatureUpgradeStatusMigrationStatus
 }
-----
 
+[pass]
+++++
+</pre>
+++++

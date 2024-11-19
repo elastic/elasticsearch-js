@@ -41,25 +41,35 @@ Retrieves a synonym set
 ----
 
 [discrete]
-===== `SynonymsGetSynonymRequest`
+==== SynonymsGetSynonymRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SynonymsGetSynonymRequest extends <<RequestBase>> {
   id: <<Id>>
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SynonymsGetSynonymResponse`
+==== SynonymsGetSynonymResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SynonymsGetSynonymResponse {
-  count: <<integer>>
+  count: number
   synonyms_set: SynonymsSynonymRuleRead[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Create or update a connector.
 ----
 
 [discrete]
-===== `ConnectorPutRequest`
+==== ConnectorPutRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorPutRequest extends <<RequestBase>> {
   connector_id?: <<Id>>
   description?: string
@@ -54,16 +56,24 @@ interface ConnectorPutRequest extends <<RequestBase>> {
   name?: string
   service_type?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorPutResponse`
+==== ConnectorPutResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorPutResponse {
   result: <<Result>>
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

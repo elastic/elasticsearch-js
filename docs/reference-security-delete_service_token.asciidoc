@@ -41,25 +41,35 @@ Delete service account tokens. Delete service account tokens for a service in a 
 ----
 
 [discrete]
-===== `SecurityDeleteServiceTokenRequest`
+==== SecurityDeleteServiceTokenRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityDeleteServiceTokenRequest extends <<RequestBase>> {
   namespace: <<Namespace>>
   service: <<Service>>
   name: <<Name>>
   refresh?: <<Refresh>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityDeleteServiceTokenResponse`
+==== SecurityDeleteServiceTokenResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityDeleteServiceTokenResponse {
   found: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Clones an existing index.
 ----
 
 [discrete]
-===== `IndicesCloneRequest`
+==== IndicesCloneRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesCloneRequest extends <<RequestBase>> {
   index: <<IndexName>>
   target: <<Name>>
@@ -54,17 +56,25 @@ interface IndicesCloneRequest extends <<RequestBase>> {
   aliases?: Record<<<IndexName>>, IndicesAlias>
   settings?: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesCloneResponse`
+==== IndicesCloneResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesCloneResponse {
   acknowledged: boolean
   index: <<IndexName>>
   shards_acknowledged: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

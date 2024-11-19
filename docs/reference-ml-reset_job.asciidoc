@@ -41,22 +41,32 @@ Reset an anomaly detection job. All model state and results are deleted. The job
 ----
 
 [discrete]
-===== `MlResetJobRequest`
+==== MlResetJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlResetJobRequest extends <<RequestBase>> {
   job_id: <<Id>>
   wait_for_completion?: boolean
   delete_user_annotations?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlResetJobResponse`
+==== MlResetJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlResetJobResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,21 +41,31 @@ Reset a transform. Resets a transform. Before you can reset it, you must stop it
 ----
 
 [discrete]
-===== `TransformResetTransformRequest`
+==== TransformResetTransformRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformResetTransformRequest extends <<RequestBase>> {
   transform_id: <<Id>>
   force?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TransformResetTransformResponse`
+==== TransformResetTransformResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type TransformResetTransformResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

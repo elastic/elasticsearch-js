@@ -41,23 +41,33 @@ Retrieve node-level cache statistics about searchable snapshots.
 ----
 
 [discrete]
-===== `SearchableSnapshotsCacheStatsRequest`
+==== SearchableSnapshotsCacheStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchableSnapshotsCacheStatsRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchableSnapshotsCacheStatsResponse`
+==== SearchableSnapshotsCacheStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchableSnapshotsCacheStatsResponse {
   nodes: Record<string, SearchableSnapshotsCacheStatsNode>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

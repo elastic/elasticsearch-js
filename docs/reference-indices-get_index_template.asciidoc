@@ -41,10 +41,12 @@ Get index templates. Returns information about one or more index templates.
 ----
 
 [discrete]
-===== `IndicesGetIndexTemplateRequest`
+==== IndicesGetIndexTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesGetIndexTemplateRequest extends <<RequestBase>> {
   name?: <<Name>>
   local?: boolean
@@ -52,15 +54,23 @@ interface IndicesGetIndexTemplateRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   include_defaults?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesGetIndexTemplateResponse`
+==== IndicesGetIndexTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesGetIndexTemplateResponse {
   index_templates: IndicesGetIndexTemplateIndexTemplateItem[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

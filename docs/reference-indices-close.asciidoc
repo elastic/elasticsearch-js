@@ -41,10 +41,12 @@ Closes an index.
 ----
 
 [discrete]
-===== `IndicesCloseRequest`
+==== IndicesCloseRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesCloseRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -54,17 +56,25 @@ interface IndicesCloseRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   wait_for_active_shards?: <<WaitForActiveShards>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesCloseResponse`
+==== IndicesCloseResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesCloseResponse {
   acknowledged: boolean
   indices: Record<<<IndexName>>, IndicesCloseCloseIndexResult>
   shards_acknowledged: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

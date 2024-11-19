@@ -41,25 +41,35 @@ Clear the user cache. Evict users from the user cache. You can completely clear 
 ----
 
 [discrete]
-===== `SecurityClearCachedRealmsRequest`
+==== SecurityClearCachedRealmsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityClearCachedRealmsRequest extends <<RequestBase>> {
   realms: <<Names>>
   usernames?: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityClearCachedRealmsResponse`
+==== SecurityClearCachedRealmsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityClearCachedRealmsResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
   nodes: Record<string, SecurityClusterNode>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

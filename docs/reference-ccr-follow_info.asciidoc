@@ -41,22 +41,32 @@ Retrieves information about all follower indices, including parameters and statu
 ----
 
 [discrete]
-===== `CcrFollowInfoRequest`
+==== CcrFollowInfoRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrFollowInfoRequest extends <<RequestBase>> {
   index: <<Indices>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrFollowInfoResponse`
+==== CcrFollowInfoResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrFollowInfoResponse {
   follower_indices: CcrFollowInfoFollowerIndex[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

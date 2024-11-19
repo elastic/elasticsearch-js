@@ -41,23 +41,33 @@ Get index templates. Retrieves information about one or more index templates.
 ----
 
 [discrete]
-===== `IndicesGetTemplateRequest`
+==== IndicesGetTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesGetTemplateRequest extends <<RequestBase>> {
   name?: <<Names>>
   flat_settings?: boolean
   local?: boolean
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesGetTemplateResponse`
+==== IndicesGetTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesGetTemplateResponse = Record<string, IndicesTemplateMapping>
-----
 
+[pass]
+++++
+</pre>
+++++

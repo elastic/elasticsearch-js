@@ -41,10 +41,12 @@ Retrieves store information about replica shards in one or more indices. For dat
 ----
 
 [discrete]
-===== `IndicesShardStoresRequest`
+==== IndicesShardStoresRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesShardStoresRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -52,15 +54,23 @@ interface IndicesShardStoresRequest extends <<RequestBase>> {
   ignore_unavailable?: boolean
   status?: IndicesShardStoresShardStoreStatus | IndicesShardStoresShardStoreStatus[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesShardStoresResponse`
+==== IndicesShardStoresResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesShardStoresResponse {
   indices: Record<<<IndexName>>, IndicesShardStoresIndicesShardStores>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

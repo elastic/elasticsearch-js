@@ -41,25 +41,35 @@ Returns information about the status of a snapshot.
 ----
 
 [discrete]
-===== `SnapshotStatusRequest`
+==== SnapshotStatusRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotStatusRequest extends <<RequestBase>> {
   repository?: <<Name>>
   snapshot?: <<Names>>
   ignore_unavailable?: boolean
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SnapshotStatusResponse`
+==== SnapshotStatusResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotStatusResponse {
   snapshots: SnapshotStatus[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

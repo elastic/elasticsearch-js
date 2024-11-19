@@ -41,24 +41,34 @@ Create a connector sync job. Create a connector sync job document in the interna
 ----
 
 [discrete]
-===== `ConnectorSyncJobPostRequest`
+==== ConnectorSyncJobPostRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorSyncJobPostRequest extends <<RequestBase>> {
   id: <<Id>>
   job_type?: ConnectorSyncJobType
   trigger_method?: ConnectorSyncJobTriggerMethod
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorSyncJobPostResponse`
+==== ConnectorSyncJobPostResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorSyncJobPostResponse {
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,20 +41,27 @@ This API provides information about which features are currently enabled and ava
 ----
 
 [discrete]
-===== `XpackUsageRequest`
+==== XpackUsageRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface XpackUsageRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `XpackUsageResponse`
+==== XpackUsageResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface XpackUsageResponse {
   aggregate_metric: XpackUsageBase
   analytics: XpackUsageAnalytics
@@ -86,5 +93,8 @@ interface XpackUsageResponse {
   vectors?: XpackUsageVector
   voting_only: XpackUsageBase
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,23 +41,33 @@ Delete roles. Delete roles in the native realm.
 ----
 
 [discrete]
-===== `SecurityDeleteRoleRequest`
+==== SecurityDeleteRoleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityDeleteRoleRequest extends <<RequestBase>> {
   name: <<Name>>
   refresh?: <<Refresh>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityDeleteRoleResponse`
+==== SecurityDeleteRoleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityDeleteRoleResponse {
   found: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

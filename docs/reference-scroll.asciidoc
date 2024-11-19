@@ -41,22 +41,32 @@ Run a scrolling search. IMPORTANT: The scroll API is no longer recommend for dee
 ----
 
 [discrete]
-===== `ScrollRequest`
+==== ScrollRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ScrollRequest extends <<RequestBase>> {
   scroll_id?: <<ScrollId>>
   rest_total_hits_as_int?: boolean
   scroll?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ScrollResponse`
+==== ScrollResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ScrollResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
-----
 
+[pass]
+++++
+</pre>
+++++

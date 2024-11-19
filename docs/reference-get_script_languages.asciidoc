@@ -41,22 +41,32 @@ Get script languages. Get a list of available script types, languages, and conte
 ----
 
 [discrete]
-===== `GetScriptLanguagesRequest`
+==== GetScriptLanguagesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface GetScriptLanguagesRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `GetScriptLanguagesResponse`
+==== GetScriptLanguagesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface GetScriptLanguagesResponse {
   language_contexts: GetScriptLanguagesLanguageContext[]
   types_allowed: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

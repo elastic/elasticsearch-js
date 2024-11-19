@@ -41,26 +41,36 @@ Run multiple templated searches.
 ----
 
 [discrete]
-===== `MsearchTemplateRequest`
+==== MsearchTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MsearchTemplateRequest extends <<RequestBase>> {
   index?: <<Indices>>
   ccs_minimize_roundtrips?: boolean
-  max_concurrent_searches?: <<long>>
+  max_concurrent_searches?: number
   search_type?: <<SearchType>>
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
   search_templates?: MsearchTemplateRequestItem[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MsearchTemplateResponse`
+==== MsearchTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = MsearchMultiSearchResult<TDocument, TAggregations>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,26 +41,36 @@ Invalidate SAML. Submits a SAML LogoutRequest message to Elasticsearch for consu
 ----
 
 [discrete]
-===== `SecuritySamlInvalidateRequest`
+==== SecuritySamlInvalidateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecuritySamlInvalidateRequest extends <<RequestBase>> {
   acs?: string
   query_string: string
   realm?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecuritySamlInvalidateResponse`
+==== SecuritySamlInvalidateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecuritySamlInvalidateResponse {
-  invalidated: <<integer>>
+  invalidated: number
   realm: string
   redirect: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++

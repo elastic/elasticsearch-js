@@ -41,23 +41,33 @@ Create a trained model vocabulary. This API is supported only for natural langua
 ----
 
 [discrete]
-===== `MlPutTrainedModelVocabularyRequest`
+==== MlPutTrainedModelVocabularyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPutTrainedModelVocabularyRequest extends <<RequestBase>> {
   model_id: <<Id>>
   vocabulary: string[]
   merges?: string[]
-  scores?: <<double>>[]
+  scores?: number[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlPutTrainedModelVocabularyResponse`
+==== MlPutTrainedModelVocabularyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlPutTrainedModelVocabularyResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

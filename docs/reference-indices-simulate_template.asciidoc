@@ -41,10 +41,12 @@ Simulate an index template. Returns the index configuration that would be applie
 ----
 
 [discrete]
-===== `IndicesSimulateTemplateRequest`
+==== IndicesSimulateTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesSimulateTemplateRequest extends <<RequestBase>> {
   name?: <<Name>>
   create?: boolean
@@ -55,22 +57,30 @@ interface IndicesSimulateTemplateRequest extends <<RequestBase>> {
   composed_of?: <<Name>>[]
   template?: IndicesPutIndexTemplateIndexTemplateMapping
   data_stream?: IndicesDataStreamVisibility
-  priority?: <<long>>
+  priority?: number
   version?: <<VersionNumber>>
   _meta?: <<Metadata>>
   ignore_missing_component_templates?: string[]
   deprecated?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesSimulateTemplateResponse`
+==== IndicesSimulateTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesSimulateTemplateResponse {
   overlapping?: IndicesSimulateTemplateOverlapping[]
   template: IndicesSimulateTemplateTemplate
 }
-----
 
+[pass]
+++++
+</pre>
+++++

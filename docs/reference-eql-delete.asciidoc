@@ -41,20 +41,30 @@ Deletes an async EQL search or a stored synchronous EQL search. The API also del
 ----
 
 [discrete]
-===== `EqlDeleteRequest`
+==== EqlDeleteRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface EqlDeleteRequest extends <<RequestBase>> {
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `EqlDeleteResponse`
+==== EqlDeleteResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type EqlDeleteResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

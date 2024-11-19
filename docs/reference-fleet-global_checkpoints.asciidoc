@@ -41,10 +41,12 @@ Returns the current global checkpoints for an index. This API is design for inte
 ----
 
 [discrete]
-===== `FleetGlobalCheckpointsRequest`
+==== FleetGlobalCheckpointsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface FleetGlobalCheckpointsRequest extends <<RequestBase>> {
   index: <<IndexName>> | <<IndexAlias>>
   wait_for_advance?: boolean
@@ -52,16 +54,24 @@ interface FleetGlobalCheckpointsRequest extends <<RequestBase>> {
   checkpoints?: FleetCheckpoint[]
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `FleetGlobalCheckpointsResponse`
+==== FleetGlobalCheckpointsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface FleetGlobalCheckpointsResponse {
   global_checkpoints: FleetCheckpoint[]
   timed_out: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

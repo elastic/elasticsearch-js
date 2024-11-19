@@ -41,20 +41,30 @@ Get a connector. Get the details about a connector.
 ----
 
 [discrete]
-===== `ConnectorGetRequest`
+==== ConnectorGetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorGetRequest extends <<RequestBase>> {
   connector_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorGetResponse`
+==== ConnectorGetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ConnectorGetResponse = ConnectorConnector
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Create a transform. Creates a transform. A transform copies data from source ind
 ----
 
 [discrete]
-===== `TransformPutTransformRequest`
+==== TransformPutTransformRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformPutTransformRequest extends <<RequestBase>> {
   transform_id: <<Id>>
   defer_validation?: boolean
@@ -60,13 +62,21 @@ interface TransformPutTransformRequest extends <<RequestBase>> {
   source: TransformSource
   sync?: TransformSyncContainer
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TransformPutTransformResponse`
+==== TransformPutTransformResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type TransformPutTransformResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

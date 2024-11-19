@@ -41,27 +41,37 @@ Get transform stats. Retrieves usage information for transforms.
 ----
 
 [discrete]
-===== `TransformGetTransformStatsRequest`
+==== TransformGetTransformStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformGetTransformStatsRequest extends <<RequestBase>> {
   transform_id: <<Names>>
   allow_no_match?: boolean
-  from?: <<long>>
-  size?: <<long>>
+  from?: number
+  size?: number
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TransformGetTransformStatsResponse`
+==== TransformGetTransformStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformGetTransformStatsResponse {
-  count: <<long>>
+  count: number
   transforms: TransformGetTransformStatsTransformStats[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

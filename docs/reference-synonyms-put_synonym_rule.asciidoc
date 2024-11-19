@@ -41,22 +41,32 @@ Creates or updates a synonym rule in a synonym set
 ----
 
 [discrete]
-===== `SynonymsPutSynonymRuleRequest`
+==== SynonymsPutSynonymRuleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SynonymsPutSynonymRuleRequest extends <<RequestBase>> {
   set_id: <<Id>>
   rule_id: <<Id>>
   synonyms: SynonymsSynonymString
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SynonymsPutSynonymRuleResponse`
+==== SynonymsPutSynonymRuleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SynonymsPutSynonymRuleResponse = SynonymsSynonymsUpdateResult
-----
 
+[pass]
+++++
+</pre>
+++++

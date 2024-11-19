@@ -41,21 +41,31 @@ Get users. Get information about users in the native realm and built-in users.
 ----
 
 [discrete]
-===== `SecurityGetUserRequest`
+==== SecurityGetUserRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityGetUserRequest extends <<RequestBase>> {
   username?: <<Username>> | <<Username>>[]
   with_profile_uid?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityGetUserResponse`
+==== SecurityGetUserResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SecurityGetUserResponse = Record<string, SecurityUser>
-----
 
+[pass]
+++++
+</pre>
+++++

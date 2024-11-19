@@ -41,25 +41,32 @@ Provides explanations for shard allocations in the cluster.
 ----
 
 [discrete]
-===== `ClusterAllocationExplainRequest`
+==== ClusterAllocationExplainRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterAllocationExplainRequest extends <<RequestBase>> {
   include_disk_info?: boolean
   include_yes_decisions?: boolean
   current_node?: string
   index?: <<IndexName>>
   primary?: boolean
-  shard?: <<integer>>
+  shard?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterAllocationExplainResponse`
+==== ClusterAllocationExplainResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterAllocationExplainResponse {
   allocate_explanation?: string
   allocation_delay?: <<Duration>>
@@ -83,9 +90,12 @@ interface ClusterAllocationExplainResponse {
   rebalance_explanation?: string
   remaining_delay?: <<Duration>>
   remaining_delay_in_millis?: <<DurationValue>><<<UnitMillis>>>
-  shard: <<integer>>
+  shard: number
   unassigned_info?: ClusterAllocationExplainUnassignedInformation
   note?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++

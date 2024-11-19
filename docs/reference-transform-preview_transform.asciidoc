@@ -41,10 +41,12 @@ Preview a transform. Generates a preview of the results that you will get when y
 ----
 
 [discrete]
-===== `TransformPreviewTransformRequest`
+==== TransformPreviewTransformRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformPreviewTransformRequest extends <<RequestBase>> {
   transform_id?: <<Id>>
   timeout?: <<Duration>>
@@ -58,16 +60,24 @@ interface TransformPreviewTransformRequest extends <<RequestBase>> {
   retention_policy?: TransformRetentionPolicyContainer
   latest?: TransformLatest
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TransformPreviewTransformResponse`
+==== TransformPreviewTransformResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformPreviewTransformResponse<TTransform = unknown> {
   generated_dest_index: IndicesIndexState
   preview: TTransform[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

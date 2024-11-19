@@ -41,20 +41,30 @@ Deletes auto-follow patterns.
 ----
 
 [discrete]
-===== `CcrDeleteAutoFollowPatternRequest`
+==== CcrDeleteAutoFollowPatternRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrDeleteAutoFollowPatternRequest extends <<RequestBase>> {
   name: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrDeleteAutoFollowPatternResponse`
+==== CcrDeleteAutoFollowPatternResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CcrDeleteAutoFollowPatternResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,20 +41,30 @@ Deletes an async SQL search or a stored synchronous SQL search. If the search is
 ----
 
 [discrete]
-===== `SqlDeleteAsyncRequest`
+==== SqlDeleteAsyncRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SqlDeleteAsyncRequest extends <<RequestBase>> {
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SqlDeleteAsyncResponse`
+==== SqlDeleteAsyncResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SqlDeleteAsyncResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -40,20 +40,3 @@ Updates the stats fields in the connector sync job document.
 (ConnectorSyncJobUpdateStatsRequest, options?): Promise<ConnectorSyncJobUpdateStatsResponse>
 ----
 
-[discrete]
-===== `ConnectorSyncJobUpdateStatsRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `ConnectorSyncJobUpdateStatsResponse`
-
-[source,ts]
-----
-n/a
-----
-

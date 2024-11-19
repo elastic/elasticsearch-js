@@ -41,21 +41,31 @@ Delete a connector. Removes a connector and associated sync jobs. This is a dest
 ----
 
 [discrete]
-===== `ConnectorDeleteRequest`
+==== ConnectorDeleteRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorDeleteRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   delete_sync_jobs?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorDeleteResponse`
+==== ConnectorDeleteResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ConnectorDeleteResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

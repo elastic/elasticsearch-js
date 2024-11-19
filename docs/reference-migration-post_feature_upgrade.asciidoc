@@ -41,22 +41,32 @@ Begin upgrades for system features
 ----
 
 [discrete]
-===== `MigrationPostFeatureUpgradeRequest`
+==== MigrationPostFeatureUpgradeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MigrationPostFeatureUpgradeRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MigrationPostFeatureUpgradeResponse`
+==== MigrationPostFeatureUpgradeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MigrationPostFeatureUpgradeResponse {
   accepted: boolean
   features: MigrationPostFeatureUpgradeMigrationFeature[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

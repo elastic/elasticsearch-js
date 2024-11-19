@@ -41,22 +41,32 @@ Clear trained model deployment cache. Cache will be cleared on all nodes where t
 ----
 
 [discrete]
-===== `MlClearTrainedModelDeploymentCacheRequest`
+==== MlClearTrainedModelDeploymentCacheRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlClearTrainedModelDeploymentCacheRequest extends <<RequestBase>> {
   model_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlClearTrainedModelDeploymentCacheResponse`
+==== MlClearTrainedModelDeploymentCacheResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlClearTrainedModelDeploymentCacheResponse {
   cleared: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

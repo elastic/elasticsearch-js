@@ -41,10 +41,12 @@ Get index information. Returns high-level information about indices in a cluster
 ----
 
 [discrete]
-===== `CatIndicesRequest`
+==== CatIndicesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatIndicesRequest extends CatCatRequestBase {
   index?: <<Indices>>
   bytes?: <<Bytes>>
@@ -54,13 +56,21 @@ interface CatIndicesRequest extends CatCatRequestBase {
   pri?: boolean
   time?: <<TimeUnit>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatIndicesResponse`
+==== CatIndicesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatIndicesResponse = CatIndicesIndicesRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

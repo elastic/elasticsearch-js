@@ -41,24 +41,34 @@ Retrieve shard-level statistics about searchable snapshots.
 ----
 
 [discrete]
-===== `SearchableSnapshotsStatsRequest`
+==== SearchableSnapshotsStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchableSnapshotsStatsRequest extends <<RequestBase>> {
   index?: <<Indices>>
   level?: SearchableSnapshotsStatsLevel
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchableSnapshotsStatsResponse`
+==== SearchableSnapshotsStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchableSnapshotsStatsResponse {
   stats: any
   total: any
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,24 +41,34 @@ Get anomaly detection jobs usage info.
 ----
 
 [discrete]
-===== `MlGetJobStatsRequest`
+==== MlGetJobStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetJobStatsRequest extends <<RequestBase>> {
   job_id?: <<Id>>
   allow_no_match?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetJobStatsResponse`
+==== MlGetJobStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetJobStatsResponse {
-  count: <<long>>
+  count: number
   jobs: MlJobStats[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

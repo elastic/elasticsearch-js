@@ -41,10 +41,12 @@ Used by the monitoring features to send monitoring data.
 ----
 
 [discrete]
-===== `MonitoringBulkRequest`
+==== MonitoringBulkRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <<RequestBase>> {
   type?: string
   system_id: string
@@ -52,18 +54,26 @@ interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = unknown>
   interval: <<Duration>>
   operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MonitoringBulkResponse`
+==== MonitoringBulkResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MonitoringBulkResponse {
   error?: <<ErrorCause>>
   errors: boolean
   ignored: boolean
-  took: <<long>>
+  took: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

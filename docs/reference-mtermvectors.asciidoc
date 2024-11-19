@@ -41,10 +41,12 @@ Get multiple term vectors. You can specify existing documents by index and ID or
 ----
 
 [discrete]
-===== `MtermvectorsRequest`
+==== MtermvectorsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MtermvectorsRequest extends <<RequestBase>> {
   index?: <<IndexName>>
   fields?: <<Fields>>
@@ -61,15 +63,23 @@ interface MtermvectorsRequest extends <<RequestBase>> {
   docs?: MtermvectorsOperation[]
   ids?: <<Id>>[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MtermvectorsResponse`
+==== MtermvectorsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MtermvectorsResponse {
   docs: MtermvectorsTermVectorsResult[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,20 +41,30 @@ Update data streams. Performs one or more data stream modification actions in a 
 ----
 
 [discrete]
-===== `IndicesModifyDataStreamRequest`
+==== IndicesModifyDataStreamRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesModifyDataStreamRequest extends <<RequestBase>> {
   actions: IndicesModifyDataStreamAction[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesModifyDataStreamResponse`
+==== IndicesModifyDataStreamResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesModifyDataStreamResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

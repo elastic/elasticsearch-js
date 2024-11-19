@@ -41,23 +41,33 @@ Returns information about ongoing and completed shard recoveries. Shard recovery
 ----
 
 [discrete]
-===== `CatRecoveryRequest`
+==== CatRecoveryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatRecoveryRequest extends CatCatRequestBase {
   index?: <<Indices>>
   active_only?: boolean
   bytes?: <<Bytes>>
   detailed?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatRecoveryResponse`
+==== CatRecoveryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatRecoveryResponse = CatRecoveryRecoveryRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

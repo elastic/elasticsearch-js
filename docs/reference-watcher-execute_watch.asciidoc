@@ -41,10 +41,12 @@ This API can be used to force execution of the watch outside of its triggering l
 ----
 
 [discrete]
-===== `WatcherExecuteWatchRequest`
+==== WatcherExecuteWatchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherExecuteWatchRequest extends <<RequestBase>> {
   id?: <<Id>>
   debug?: boolean
@@ -56,16 +58,24 @@ interface WatcherExecuteWatchRequest extends <<RequestBase>> {
   trigger_data?: WatcherScheduleTriggerEvent
   watch?: WatcherWatch
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `WatcherExecuteWatchResponse`
+==== WatcherExecuteWatchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherExecuteWatchResponse {
   _id: <<Id>>
   watch_record: WatcherExecuteWatchWatchRecord
 }
-----
 
+[pass]
+++++
+</pre>
+++++

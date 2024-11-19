@@ -41,10 +41,12 @@ Returns the current status and available results for an async SQL search or stor
 ----
 
 [discrete]
-===== `SqlGetAsyncRequest`
+==== SqlGetAsyncRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SqlGetAsyncRequest extends <<RequestBase>> {
   id: <<Id>>
   delimiter?: string
@@ -52,13 +54,18 @@ interface SqlGetAsyncRequest extends <<RequestBase>> {
   keep_alive?: <<Duration>>
   wait_for_completion_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SqlGetAsyncResponse`
+==== SqlGetAsyncResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SqlGetAsyncResponse {
   id: <<Id>>
   is_running: boolean
@@ -67,5 +74,8 @@ interface SqlGetAsyncResponse {
   cursor?: string
   rows: SqlRow[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

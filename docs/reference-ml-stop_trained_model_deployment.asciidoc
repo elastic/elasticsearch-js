@@ -41,24 +41,34 @@ Stop a trained model deployment.
 ----
 
 [discrete]
-===== `MlStopTrainedModelDeploymentRequest`
+==== MlStopTrainedModelDeploymentRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlStopTrainedModelDeploymentRequest extends <<RequestBase>> {
   model_id: <<Id>>
   allow_no_match?: boolean
   force?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlStopTrainedModelDeploymentResponse`
+==== MlStopTrainedModelDeploymentResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlStopTrainedModelDeploymentResponse {
   stopped: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

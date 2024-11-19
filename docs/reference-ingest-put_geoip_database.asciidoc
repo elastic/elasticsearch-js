@@ -41,10 +41,12 @@ Returns information about one or more geoip database configurations.
 ----
 
 [discrete]
-===== `IngestPutGeoipDatabaseRequest`
+==== IngestPutGeoipDatabaseRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestPutGeoipDatabaseRequest extends <<RequestBase>> {
   id: <<Id>>
   master_timeout?: <<Duration>>
@@ -52,13 +54,21 @@ interface IngestPutGeoipDatabaseRequest extends <<RequestBase>> {
   name: <<Name>>
   maxmind: IngestMaxmind
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IngestPutGeoipDatabaseResponse`
+==== IngestPutGeoipDatabaseResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IngestPutGeoipDatabaseResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

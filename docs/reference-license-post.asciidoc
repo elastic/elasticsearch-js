@@ -41,26 +41,36 @@ Updates the license for the cluster.
 ----
 
 [discrete]
-===== `LicensePostRequest`
+==== LicensePostRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicensePostRequest extends <<RequestBase>> {
   acknowledge?: boolean
   license?: LicenseLicense
   licenses?: LicenseLicense[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `LicensePostResponse`
+==== LicensePostResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicensePostResponse {
   acknowledge?: LicensePostAcknowledgement
   acknowledged: boolean
   license_status: LicenseLicenseStatus
 }
-----
 
+[pass]
+++++
+</pre>
+++++

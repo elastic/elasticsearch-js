@@ -41,22 +41,32 @@ Delete data streams. Deletes one or more data streams and their backing indices.
 ----
 
 [discrete]
-===== `IndicesDeleteDataStreamRequest`
+==== IndicesDeleteDataStreamRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesDeleteDataStreamRequest extends <<RequestBase>> {
   name: <<DataStreamNames>>
   master_timeout?: <<Duration>>
   expand_wildcards?: <<ExpandWildcards>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesDeleteDataStreamResponse`
+==== IndicesDeleteDataStreamResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesDeleteDataStreamResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

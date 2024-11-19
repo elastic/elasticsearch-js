@@ -41,17 +41,19 @@ Run a search. Get search hits that match the query defined in the request. You c
 ----
 
 [discrete]
-===== `SearchRequest`
+==== SearchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
   allow_partial_search_results?: boolean
   analyzer?: string
   analyze_wildcard?: boolean
-  batched_reduce_size?: <<long>>
+  batched_reduce_size?: number
   ccs_minimize_roundtrips?: boolean
   default_operator?: QueryDslOperator
   df?: string
@@ -60,17 +62,17 @@ interface SearchRequest extends <<RequestBase>> {
   ignore_unavailable?: boolean
   include_named_queries_score?: boolean
   lenient?: boolean
-  max_concurrent_shard_requests?: <<long>>
+  max_concurrent_shard_requests?: number
   min_compatible_shard_node?: <<VersionString>>
   preference?: string
-  pre_filter_shard_size?: <<long>>
+  pre_filter_shard_size?: number
   request_cache?: boolean
   routing?: <<Routing>>
   scroll?: <<Duration>>
   search_type?: <<SearchType>>
   suggest_field?: <<Field>>
   suggest_mode?: <<SuggestMode>>
-  suggest_size?: <<long>>
+  suggest_size?: number
   suggest_text?: string
   typed_keys?: boolean
   rest_total_hits_as_int?: boolean
@@ -84,14 +86,14 @@ interface SearchRequest extends <<RequestBase>> {
   collapse?: SearchFieldCollapse
   explain?: boolean
   ext?: Record<string, any>
-  from?: <<integer>>
+  from?: number
   highlight?: SearchHighlight
   track_total_hits?: SearchTrackHits
-  indices_boost?: Record<<<IndexName>>, <<double>>>[]
+  indices_boost?: Record<<<IndexName>>, number>[]
   docvalue_fields?: (QueryDslFieldAndFormat | <<Field>>)[]
   knn?: <<KnnSearch>> | <<KnnSearch>>[]
   rank?: <<RankContainer>>
-  min_score?: <<double>>
+  min_score?: number
   post_filter?: QueryDslQueryContainer
   profile?: boolean
   query?: QueryDslQueryContainer
@@ -99,13 +101,13 @@ interface SearchRequest extends <<RequestBase>> {
   retriever?: <<RetrieverContainer>>
   script_fields?: Record<string, <<ScriptField>>>
   search_after?: <<SortResults>>
-  size?: <<integer>>
+  size?: number
   slice?: <<SlicedScroll>>
   sort?: <<Sort>>
   _source?: SearchSourceConfig
   fields?: (QueryDslFieldAndFormat | <<Field>>)[]
   suggest?: SearchSuggester
-  terminate_after?: <<long>>
+  terminate_after?: number
   timeout?: string
   track_scores?: boolean
   version?: boolean
@@ -115,13 +117,21 @@ interface SearchRequest extends <<RequestBase>> {
   runtime_mappings?: MappingRuntimeFields
   stats?: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchResponse`
+==== SearchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
-----
 
+[pass]
+++++
+</pre>
+++++

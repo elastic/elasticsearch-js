@@ -41,10 +41,12 @@ Create or update a script or search template. Creates or updates a stored script
 ----
 
 [discrete]
-===== `PutScriptRequest`
+==== PutScriptRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface PutScriptRequest extends <<RequestBase>> {
   id: <<Id>>
   context?: <<Name>>
@@ -52,13 +54,21 @@ interface PutScriptRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   script: <<StoredScript>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `PutScriptResponse`
+==== PutScriptResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type PutScriptResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

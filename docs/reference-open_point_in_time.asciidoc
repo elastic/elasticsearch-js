@@ -41,10 +41,12 @@ Open a point in time. A search request by default runs against the most recent v
 ----
 
 [discrete]
-===== `OpenPointInTimeRequest`
+==== OpenPointInTimeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface OpenPointInTimeRequest extends <<RequestBase>> {
   index: <<Indices>>
   keep_alive: <<Duration>>
@@ -54,16 +56,24 @@ interface OpenPointInTimeRequest extends <<RequestBase>> {
   expand_wildcards?: <<ExpandWildcards>>
   index_filter?: QueryDslQueryContainer
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `OpenPointInTimeResponse`
+==== OpenPointInTimeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface OpenPointInTimeResponse {
   _shards: <<ShardStatistics>>
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

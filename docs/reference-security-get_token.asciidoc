@@ -41,10 +41,12 @@ Get a token. Create a bearer token for access without requiring basic authentica
 ----
 
 [discrete]
-===== `SecurityGetTokenRequest`
+==== SecurityGetTokenRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityGetTokenRequest extends <<RequestBase>> {
   grant_type?: SecurityGetTokenAccessTokenGrantType
   scope?: string
@@ -53,21 +55,29 @@ interface SecurityGetTokenRequest extends <<RequestBase>> {
   refresh_token?: string
   username?: <<Username>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityGetTokenResponse`
+==== SecurityGetTokenResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityGetTokenResponse {
   access_token: string
-  expires_in: <<long>>
+  expires_in: number
   scope?: string
   type: string
   refresh_token?: string
   kerberos_authentication_response_token?: string
   authentication: SecurityGetTokenAuthenticatedUser
 }
-----
 
+[pass]
+++++
+</pre>
+++++

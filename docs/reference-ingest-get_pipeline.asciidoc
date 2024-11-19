@@ -41,22 +41,32 @@ Returns information about one or more ingest pipelines. This API returns a local
 ----
 
 [discrete]
-===== `IngestGetPipelineRequest`
+==== IngestGetPipelineRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestGetPipelineRequest extends <<RequestBase>> {
   id?: <<Id>>
   master_timeout?: <<Duration>>
   summary?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IngestGetPipelineResponse`
+==== IngestGetPipelineResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IngestGetPipelineResponse = Record<string, IngestPipeline>
-----
 
+[pass]
+++++
+</pre>
+++++

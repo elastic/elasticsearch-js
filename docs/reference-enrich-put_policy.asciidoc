@@ -41,23 +41,33 @@ Create an enrich policy. Creates an enrich policy.
 ----
 
 [discrete]
-===== `EnrichPutPolicyRequest`
+==== EnrichPutPolicyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface EnrichPutPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
   geo_match?: EnrichPolicy
   match?: EnrichPolicy
   range?: EnrichPolicy
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `EnrichPutPolicyResponse`
+==== EnrichPutPolicyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type EnrichPutPolicyResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Creates or updates a snapshot lifecycle policy.
 ----
 
 [discrete]
-===== `SlmPutLifecycleRequest`
+==== SlmPutLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SlmPutLifecycleRequest extends <<RequestBase>> {
   policy_id: <<Name>>
   master_timeout?: <<Duration>>
@@ -55,13 +57,21 @@ interface SlmPutLifecycleRequest extends <<RequestBase>> {
   retention?: SlmRetention
   schedule?: WatcherCronExpression
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SlmPutLifecycleResponse`
+==== SlmPutLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SlmPutLifecycleResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

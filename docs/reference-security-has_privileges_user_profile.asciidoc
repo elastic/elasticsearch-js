@@ -41,24 +41,34 @@ Check user profile privileges. Determine whether the users associated with the s
 ----
 
 [discrete]
-===== `SecurityHasPrivilegesUserProfileRequest`
+==== SecurityHasPrivilegesUserProfileRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityHasPrivilegesUserProfileRequest extends <<RequestBase>> {
   uids: SecurityUserProfileId[]
   privileges: SecurityHasPrivilegesUserProfilePrivilegesCheck
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityHasPrivilegesUserProfileResponse`
+==== SecurityHasPrivilegesUserProfileResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityHasPrivilegesUserProfileResponse {
   has_privilege_uids: SecurityUserProfileId[]
   errors?: SecurityHasPrivilegesUserProfileHasPrivilegesUserProfileErrors
 }
-----
 
+[pass]
+++++
+</pre>
+++++

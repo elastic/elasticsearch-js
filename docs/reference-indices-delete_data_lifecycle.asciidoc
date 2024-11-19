@@ -41,23 +41,33 @@ Delete data stream lifecycles. Removes the data stream lifecycle from a data str
 ----
 
 [discrete]
-===== `IndicesDeleteDataLifecycleRequest`
+==== IndicesDeleteDataLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesDeleteDataLifecycleRequest extends <<RequestBase>> {
   name: <<DataStreamNames>>
   expand_wildcards?: <<ExpandWildcards>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesDeleteDataLifecycleResponse`
+==== IndicesDeleteDataLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesDeleteDataLifecycleResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

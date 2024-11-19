@@ -41,21 +41,31 @@ Returns information about the snapshots stored in one or more repositories. A sn
 ----
 
 [discrete]
-===== `CatSnapshotsRequest`
+==== CatSnapshotsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatSnapshotsRequest extends CatCatRequestBase {
   repository?: <<Names>>
   ignore_unavailable?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatSnapshotsResponse`
+==== CatSnapshotsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatSnapshotsResponse = CatSnapshotsSnapshotsRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

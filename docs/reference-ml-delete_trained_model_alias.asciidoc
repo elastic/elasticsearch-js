@@ -41,21 +41,31 @@ Delete a trained model alias. This API deletes an existing model alias that refe
 ----
 
 [discrete]
-===== `MlDeleteTrainedModelAliasRequest`
+==== MlDeleteTrainedModelAliasRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlDeleteTrainedModelAliasRequest extends <<RequestBase>> {
   model_alias: <<Name>>
   model_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlDeleteTrainedModelAliasResponse`
+==== MlDeleteTrainedModelAliasResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlDeleteTrainedModelAliasResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,22 +41,32 @@ Create an inference endpoint
 ----
 
 [discrete]
-===== `InferencePutRequest`
+==== InferencePutRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface InferencePutRequest extends <<RequestBase>> {
   task_type?: InferenceTaskType
   inference_id: <<Id>>
   inference_config?: InferenceInferenceEndpoint
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `InferencePutResponse`
+==== InferencePutResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type InferencePutResponse = InferenceInferenceEndpointInfo
-----
 
+[pass]
+++++
+</pre>
+++++

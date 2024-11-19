@@ -41,22 +41,32 @@ Delete component templates. Deletes component templates. Component templates are
 ----
 
 [discrete]
-===== `ClusterDeleteComponentTemplateRequest`
+==== ClusterDeleteComponentTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterDeleteComponentTemplateRequest extends <<RequestBase>> {
   name: <<Names>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterDeleteComponentTemplateResponse`
+==== ClusterDeleteComponentTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ClusterDeleteComponentTemplateResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

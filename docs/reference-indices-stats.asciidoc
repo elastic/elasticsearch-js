@@ -41,10 +41,12 @@ Returns statistics for one or more indices. For data streams, the API retrieves 
 ----
 
 [discrete]
-===== `IndicesStatsRequest`
+==== IndicesStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesStatsRequest extends <<RequestBase>> {
   metric?: <<Metrics>>
   index?: <<Indices>>
@@ -58,17 +60,25 @@ interface IndicesStatsRequest extends <<RequestBase>> {
   include_unloaded_segments?: boolean
   level?: <<Level>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesStatsResponse`
+==== IndicesStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesStatsResponse {
   indices?: Record<string, IndicesStatsIndicesStats>
   _shards: <<ShardStatistics>>
   _all: IndicesStatsIndicesStats
 }
-----
 
+[pass]
+++++
+</pre>
+++++

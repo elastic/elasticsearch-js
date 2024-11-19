@@ -41,10 +41,12 @@ Returns low-level information about the Lucene segments in index shards. For dat
 ----
 
 [discrete]
-===== `IndicesSegmentsRequest`
+==== IndicesSegmentsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesSegmentsRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -52,16 +54,24 @@ interface IndicesSegmentsRequest extends <<RequestBase>> {
   ignore_unavailable?: boolean
   verbose?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesSegmentsResponse`
+==== IndicesSegmentsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesSegmentsResponse {
   indices: Record<string, IndicesSegmentsIndexSegment>
   _shards: <<ShardStatistics>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

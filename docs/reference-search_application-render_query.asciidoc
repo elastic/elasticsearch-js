@@ -40,20 +40,3 @@ Renders a query for given search application search parameters
 (SearchApplicationRenderQueryRequest, options?): Promise<SearchApplicationRenderQueryResponse>
 ----
 
-[discrete]
-===== `SearchApplicationRenderQueryRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `SearchApplicationRenderQueryResponse`
-
-[source,ts]
-----
-n/a
-----
-

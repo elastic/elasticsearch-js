@@ -41,21 +41,31 @@ Delete a datafeed.
 ----
 
 [discrete]
-===== `MlDeleteDatafeedRequest`
+==== MlDeleteDatafeedRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlDeleteDatafeedRequest extends <<RequestBase>> {
   datafeed_id: <<Id>>
   force?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlDeleteDatafeedResponse`
+==== MlDeleteDatafeedResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlDeleteDatafeedResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

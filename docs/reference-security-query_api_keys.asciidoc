@@ -41,10 +41,12 @@ Find API keys with a query. Get a paginated list of API keys and their informati
 ----
 
 [discrete]
-===== `SecurityQueryApiKeysRequest`
+==== SecurityQueryApiKeysRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityQueryApiKeysRequest extends <<RequestBase>> {
   with_limited_by?: boolean
   with_profile_uid?: boolean
@@ -53,23 +55,31 @@ interface SecurityQueryApiKeysRequest extends <<RequestBase>> {
   /** @alias aggregations */
   aggs?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
   query?: SecurityQueryApiKeysApiKeyQueryContainer
-  from?: <<integer>>
+  from?: number
   sort?: <<Sort>>
-  size?: <<integer>>
+  size?: number
   search_after?: <<SortResults>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityQueryApiKeysResponse`
+==== SecurityQueryApiKeysResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityQueryApiKeysResponse {
-  total: <<integer>>
-  count: <<integer>>
+  total: number
+  count: number
   api_keys: SecurityApiKey[]
   aggregations?: Record<<<AggregateName>>, SecurityQueryApiKeysApiKeyAggregate>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,26 +41,36 @@ Create a service account token. Create a service accounts token for access witho
 ----
 
 [discrete]
-===== `SecurityCreateServiceTokenRequest`
+==== SecurityCreateServiceTokenRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityCreateServiceTokenRequest extends <<RequestBase>> {
   namespace: <<Namespace>>
   service: <<Service>>
   name?: <<Name>>
   refresh?: <<Refresh>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityCreateServiceTokenResponse`
+==== SecurityCreateServiceTokenResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityCreateServiceTokenResponse {
   created: boolean
   token: SecurityCreateServiceTokenToken
 }
-----
 
+[pass]
+++++
+</pre>
+++++

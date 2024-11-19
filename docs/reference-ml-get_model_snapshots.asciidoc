@@ -41,31 +41,41 @@ Get model snapshots info.
 ----
 
 [discrete]
-===== `MlGetModelSnapshotsRequest`
+==== MlGetModelSnapshotsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetModelSnapshotsRequest extends <<RequestBase>> {
   job_id: <<Id>>
   snapshot_id?: <<Id>>
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
   desc?: boolean
   end?: <<DateTime>>
   page?: MlPage
   sort?: <<Field>>
   start?: <<DateTime>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetModelSnapshotsResponse`
+==== MlGetModelSnapshotsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetModelSnapshotsResponse {
-  count: <<long>>
+  count: number
   model_snapshots: MlModelSnapshot[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

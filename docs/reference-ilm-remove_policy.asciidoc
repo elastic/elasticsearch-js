@@ -41,23 +41,33 @@ Removes the assigned lifecycle policy and stops managing the specified index
 ----
 
 [discrete]
-===== `IlmRemovePolicyRequest`
+==== IlmRemovePolicyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmRemovePolicyRequest extends <<RequestBase>> {
   index: <<IndexName>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IlmRemovePolicyResponse`
+==== IlmRemovePolicyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmRemovePolicyResponse {
   failed_indexes: <<IndexName>>[]
   has_failures: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

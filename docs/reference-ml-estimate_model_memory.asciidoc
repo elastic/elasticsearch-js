@@ -41,24 +41,34 @@ Estimate job model memory usage. Makes an estimation of the memory usage for an 
 ----
 
 [discrete]
-===== `MlEstimateModelMemoryRequest`
+==== MlEstimateModelMemoryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlEstimateModelMemoryRequest extends <<RequestBase>> {
   analysis_config?: MlAnalysisConfig
-  max_bucket_cardinality?: Record<<<Field>>, <<long>>>
-  overall_cardinality?: Record<<<Field>>, <<long>>>
+  max_bucket_cardinality?: Record<<<Field>>, number>
+  overall_cardinality?: Record<<<Field>>, number>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlEstimateModelMemoryResponse`
+==== MlEstimateModelMemoryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlEstimateModelMemoryResponse {
   model_memory_estimate: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++

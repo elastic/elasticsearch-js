@@ -41,25 +41,35 @@ Simulate an index. Returns the index configuration that would be applied to the 
 ----
 
 [discrete]
-===== `IndicesSimulateIndexTemplateRequest`
+==== IndicesSimulateIndexTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesSimulateIndexTemplateRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
   include_defaults?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesSimulateIndexTemplateResponse`
+==== IndicesSimulateIndexTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesSimulateIndexTemplateResponse {
   overlapping?: IndicesSimulateTemplateOverlapping[]
   template: IndicesSimulateTemplateTemplate
 }
-----
 
+[pass]
+++++
+</pre>
+++++

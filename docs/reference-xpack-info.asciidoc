@@ -41,27 +41,37 @@ Provides general information about the installed X-Pack features.
 ----
 
 [discrete]
-===== `XpackInfoRequest`
+==== XpackInfoRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface XpackInfoRequest extends <<RequestBase>> {
   categories?: XpackInfoXPackCategory[]
   accept_enterprise?: boolean
   human?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `XpackInfoResponse`
+==== XpackInfoResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface XpackInfoResponse {
   build: XpackInfoBuildInformation
   features: XpackInfoFeatures
   license: XpackInfoMinimalLicenseInformation
   tagline: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++

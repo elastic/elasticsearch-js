@@ -41,10 +41,12 @@ Get component templates. Retrieves information about component templates.
 ----
 
 [discrete]
-===== `ClusterGetComponentTemplateRequest`
+==== ClusterGetComponentTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterGetComponentTemplateRequest extends <<RequestBase>> {
   name?: <<Name>>
   flat_settings?: boolean
@@ -52,15 +54,23 @@ interface ClusterGetComponentTemplateRequest extends <<RequestBase>> {
   local?: boolean
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterGetComponentTemplateResponse`
+==== ClusterGetComponentTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterGetComponentTemplateResponse {
   component_templates: ClusterComponentTemplate[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

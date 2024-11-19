@@ -41,22 +41,32 @@ Disable users. Disable users in the native realm.
 ----
 
 [discrete]
-===== `SecurityDisableUserRequest`
+==== SecurityDisableUserRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityDisableUserRequest extends <<RequestBase>> {
   username: <<Username>>
   refresh?: <<Refresh>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityDisableUserResponse`
+==== SecurityDisableUserResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityDisableUserResponse {
 }
-----
 
+[pass]
+++++
+</pre>
+++++

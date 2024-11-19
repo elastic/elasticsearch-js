@@ -41,30 +41,40 @@ Returns global and policy-level statistics about actions taken by snapshot lifec
 ----
 
 [discrete]
-===== `SlmGetStatsRequest`
+==== SlmGetStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SlmGetStatsRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SlmGetStatsResponse`
+==== SlmGetStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SlmGetStatsResponse {
   retention_deletion_time: <<Duration>>
   retention_deletion_time_millis: <<DurationValue>><<<UnitMillis>>>
-  retention_failed: <<long>>
-  retention_runs: <<long>>
-  retention_timed_out: <<long>>
-  total_snapshots_deleted: <<long>>
-  total_snapshot_deletion_failures: <<long>>
-  total_snapshots_failed: <<long>>
-  total_snapshots_taken: <<long>>
+  retention_failed: number
+  retention_runs: number
+  retention_timed_out: number
+  total_snapshots_deleted: number
+  total_snapshot_deletion_failures: number
+  total_snapshots_failed: number
+  total_snapshots_taken: number
   policy_stats: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

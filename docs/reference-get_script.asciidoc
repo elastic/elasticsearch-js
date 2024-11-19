@@ -41,25 +41,35 @@ Get a script or search template. Retrieves a stored script or search template.
 ----
 
 [discrete]
-===== `GetScriptRequest`
+==== GetScriptRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface GetScriptRequest extends <<RequestBase>> {
   id: <<Id>>
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `GetScriptResponse`
+==== GetScriptResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface GetScriptResponse {
   _id: <<Id>>
   found: boolean
   script?: <<StoredScript>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

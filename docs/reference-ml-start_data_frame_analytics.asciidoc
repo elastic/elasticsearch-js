@@ -41,24 +41,34 @@ Start a data frame analytics job. A data frame analytics job can be started and 
 ----
 
 [discrete]
-===== `MlStartDataFrameAnalyticsRequest`
+==== MlStartDataFrameAnalyticsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlStartDataFrameAnalyticsRequest extends <<RequestBase>> {
   id: <<Id>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlStartDataFrameAnalyticsResponse`
+==== MlStartDataFrameAnalyticsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlStartDataFrameAnalyticsResponse {
   acknowledged: boolean
   node: <<NodeId>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

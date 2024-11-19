@@ -41,21 +41,31 @@ Enable a user profile. Enable user profiles to make them visible in user profile
 ----
 
 [discrete]
-===== `SecurityEnableUserProfileRequest`
+==== SecurityEnableUserProfileRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityEnableUserProfileRequest extends <<RequestBase>> {
   uid: SecurityUserProfileId
   refresh?: <<Refresh>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityEnableUserProfileResponse`
+==== SecurityEnableUserProfileResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SecurityEnableUserProfileResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

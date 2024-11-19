@@ -41,10 +41,12 @@ Create an index. Creates a new index.
 ----
 
 [discrete]
-===== `IndicesCreateRequest`
+==== IndicesCreateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesCreateRequest extends <<RequestBase>> {
   index: <<IndexName>>
   master_timeout?: <<Duration>>
@@ -54,17 +56,25 @@ interface IndicesCreateRequest extends <<RequestBase>> {
   mappings?: MappingTypeMapping
   settings?: IndicesIndexSettings
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesCreateResponse`
+==== IndicesCreateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesCreateResponse {
   index: <<IndexName>>
   shards_acknowledged: boolean
   acknowledged: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

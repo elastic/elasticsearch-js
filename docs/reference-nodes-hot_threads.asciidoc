@@ -41,29 +41,39 @@ This API yields a breakdown of the hot threads on each selected node in the clus
 ----
 
 [discrete]
-===== `NodesHotThreadsRequest`
+==== NodesHotThreadsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface NodesHotThreadsRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   ignore_idle_threads?: boolean
   interval?: <<Duration>>
-  snapshots?: <<long>>
+  snapshots?: number
   master_timeout?: <<Duration>>
-  threads?: <<long>>
+  threads?: number
   timeout?: <<Duration>>
   type?: <<ThreadType>>
   sort?: <<ThreadType>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `NodesHotThreadsResponse`
+==== NodesHotThreadsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface NodesHotThreadsResponse {
 }
-----
 
+[pass]
+++++
+</pre>
+++++

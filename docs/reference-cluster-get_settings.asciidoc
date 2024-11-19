@@ -41,27 +41,37 @@ Returns cluster-wide settings. By default, it returns only settings that have be
 ----
 
 [discrete]
-===== `ClusterGetSettingsRequest`
+==== ClusterGetSettingsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterGetSettingsRequest extends <<RequestBase>> {
   flat_settings?: boolean
   include_defaults?: boolean
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterGetSettingsResponse`
+==== ClusterGetSettingsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterGetSettingsResponse {
   persistent: Record<string, any>
   transient: Record<string, any>
   defaults?: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

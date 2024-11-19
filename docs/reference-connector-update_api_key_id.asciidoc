@@ -41,24 +41,34 @@ Update the connector API key ID. Update the `api_key_id` and `api_key_secret_id`
 ----
 
 [discrete]
-===== `ConnectorUpdateApiKeyIdRequest`
+==== ConnectorUpdateApiKeyIdRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateApiKeyIdRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   api_key_id?: string
   api_key_secret_id?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdateApiKeyIdResponse`
+==== ConnectorUpdateApiKeyIdResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateApiKeyIdResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

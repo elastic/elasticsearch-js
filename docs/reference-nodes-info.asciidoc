@@ -41,10 +41,12 @@ Returns cluster nodes information.
 ----
 
 [discrete]
-===== `NodesInfoRequest`
+==== NodesInfoRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface NodesInfoRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   metric?: <<Metrics>>
@@ -52,13 +54,21 @@ interface NodesInfoRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `NodesInfoResponse`
+==== NodesInfoResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type NodesInfoResponse = NodesInfoResponseBase
-----
 
+[pass]
+++++
+</pre>
+++++

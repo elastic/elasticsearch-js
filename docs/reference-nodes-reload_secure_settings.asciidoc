@@ -41,22 +41,32 @@ Reloads the keystore on nodes in the cluster.
 ----
 
 [discrete]
-===== `NodesReloadSecureSettingsRequest`
+==== NodesReloadSecureSettingsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface NodesReloadSecureSettingsRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   timeout?: <<Duration>>
   secure_settings_password?: <<Password>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `NodesReloadSecureSettingsResponse`
+==== NodesReloadSecureSettingsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type NodesReloadSecureSettingsResponse = NodesReloadSecureSettingsResponseBase
-----
 
+[pass]
+++++
+</pre>
+++++

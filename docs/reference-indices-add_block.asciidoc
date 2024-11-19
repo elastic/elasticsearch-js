@@ -41,10 +41,12 @@ Add an index block. Limits the operations allowed on an index by blocking specif
 ----
 
 [discrete]
-===== `IndicesAddBlockRequest`
+==== IndicesAddBlockRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesAddBlockRequest extends <<RequestBase>> {
   index: <<IndexName>>
   block: IndicesAddBlockIndicesBlockOptions
@@ -54,17 +56,25 @@ interface IndicesAddBlockRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesAddBlockResponse`
+==== IndicesAddBlockResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesAddBlockResponse {
   acknowledged: boolean
   shards_acknowledged: boolean
   indices: IndicesAddBlockIndicesBlockStatus[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

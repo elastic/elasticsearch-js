@@ -41,10 +41,12 @@ Allows to manually change the allocation of individual shards in the cluster.
 ----
 
 [discrete]
-===== `ClusterRerouteRequest`
+==== ClusterRerouteRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterRerouteRequest extends <<RequestBase>> {
   dry_run?: boolean
   explain?: boolean
@@ -54,17 +56,25 @@ interface ClusterRerouteRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   commands?: ClusterRerouteCommand[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterRerouteResponse`
+==== ClusterRerouteResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterRerouteResponse {
   acknowledged: boolean
   explanations?: ClusterRerouteRerouteExplanation[]
   state?: any
 }
-----
 
+[pass]
+++++
+</pre>
+++++

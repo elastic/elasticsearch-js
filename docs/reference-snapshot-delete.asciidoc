@@ -41,22 +41,32 @@ Deletes one or more snapshots.
 ----
 
 [discrete]
-===== `SnapshotDeleteRequest`
+==== SnapshotDeleteRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotDeleteRequest extends <<RequestBase>> {
   repository: <<Name>>
   snapshot: <<Name>>
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SnapshotDeleteResponse`
+==== SnapshotDeleteResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SnapshotDeleteResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

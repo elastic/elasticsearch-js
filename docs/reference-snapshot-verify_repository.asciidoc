@@ -41,24 +41,34 @@ Verifies a repository.
 ----
 
 [discrete]
-===== `SnapshotVerifyRepositoryRequest`
+==== SnapshotVerifyRepositoryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotVerifyRepositoryRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SnapshotVerifyRepositoryResponse`
+==== SnapshotVerifyRepositoryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotVerifyRepositoryResponse {
   nodes: Record<string, SnapshotVerifyRepositoryCompactNodeInfo>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

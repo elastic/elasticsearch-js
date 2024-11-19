@@ -41,20 +41,30 @@ Returns the capabilities of any rollup jobs that have been configured for a spec
 ----
 
 [discrete]
-===== `RollupGetRollupCapsRequest`
+==== RollupGetRollupCapsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupGetRollupCapsRequest extends <<RequestBase>> {
   id?: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `RollupGetRollupCapsResponse`
+==== RollupGetRollupCapsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type RollupGetRollupCapsResponse = Record<<<IndexName>>, RollupGetRollupCapsRollupCapabilities>
-----
 
+[pass]
+++++
+</pre>
+++++

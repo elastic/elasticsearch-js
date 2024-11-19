@@ -41,23 +41,33 @@ Update the connector pipeline. When you create a new connector, the configuratio
 ----
 
 [discrete]
-===== `ConnectorUpdatePipelineRequest`
+==== ConnectorUpdatePipelineRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdatePipelineRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   pipeline: ConnectorIngestPipelineParams
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdatePipelineResponse`
+==== ConnectorUpdatePipelineResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdatePipelineResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

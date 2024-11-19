@@ -41,10 +41,12 @@ Delete indices. Deletes one or more indices.
 ----
 
 [discrete]
-===== `IndicesDeleteRequest`
+==== IndicesDeleteRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesDeleteRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -53,13 +55,21 @@ interface IndicesDeleteRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesDeleteResponse`
+==== IndicesDeleteResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesDeleteResponse = <<IndicesResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

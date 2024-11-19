@@ -41,24 +41,34 @@ Returns summarized information about existing query rulesets.
 ----
 
 [discrete]
-===== `QueryRulesListRulesetsRequest`
+==== QueryRulesListRulesetsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface QueryRulesListRulesetsRequest extends <<RequestBase>> {
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `QueryRulesListRulesetsResponse`
+==== QueryRulesListRulesetsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface QueryRulesListRulesetsResponse {
-  count: <<long>>
+  count: number
   results: QueryRulesListRulesetsQueryRulesetListItem[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

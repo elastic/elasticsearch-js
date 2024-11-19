@@ -41,22 +41,32 @@ Delete a data frame analytics job.
 ----
 
 [discrete]
-===== `MlDeleteDataFrameAnalyticsRequest`
+==== MlDeleteDataFrameAnalyticsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlDeleteDataFrameAnalyticsRequest extends <<RequestBase>> {
   id: <<Id>>
   force?: boolean
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlDeleteDataFrameAnalyticsResponse`
+==== MlDeleteDataFrameAnalyticsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlDeleteDataFrameAnalyticsResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,22 +41,32 @@ Run a search application search. Generate and run an Elasticsearch query that us
 ----
 
 [discrete]
-===== `SearchApplicationSearchRequest`
+==== SearchApplicationSearchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchApplicationSearchRequest extends <<RequestBase>> {
   name: <<Name>>
   typed_keys?: boolean
   params?: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchApplicationSearchResponse`
+==== SearchApplicationSearchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SearchApplicationSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = SearchResponseBody<TDocument, TAggregations>
-----
 
+[pass]
+++++
+</pre>
+++++

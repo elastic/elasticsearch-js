@@ -41,22 +41,32 @@ Check component templates. Returns information about whether a particular compon
 ----
 
 [discrete]
-===== `ClusterExistsComponentTemplateRequest`
+==== ClusterExistsComponentTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterExistsComponentTemplateRequest extends <<RequestBase>> {
   name: <<Names>>
   master_timeout?: <<Duration>>
   local?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterExistsComponentTemplateResponse`
+==== ClusterExistsComponentTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ClusterExistsComponentTemplateResponse = boolean
-----
 
+[pass]
+++++
+</pre>
+++++

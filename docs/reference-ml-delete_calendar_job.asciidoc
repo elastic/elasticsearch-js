@@ -41,25 +41,35 @@ Delete anomaly jobs from a calendar.
 ----
 
 [discrete]
-===== `MlDeleteCalendarJobRequest`
+==== MlDeleteCalendarJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlDeleteCalendarJobRequest extends <<RequestBase>> {
   calendar_id: <<Id>>
   job_id: <<Ids>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlDeleteCalendarJobResponse`
+==== MlDeleteCalendarJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlDeleteCalendarJobResponse {
   calendar_id: <<Id>>
   description?: string
   job_ids: <<Ids>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

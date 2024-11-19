@@ -41,26 +41,36 @@ Create a calendar.
 ----
 
 [discrete]
-===== `MlPutCalendarRequest`
+==== MlPutCalendarRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPutCalendarRequest extends <<RequestBase>> {
   calendar_id: <<Id>>
   job_ids?: <<Id>>[]
   description?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlPutCalendarResponse`
+==== MlPutCalendarResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPutCalendarResponse {
   calendar_id: <<Id>>
   description?: string
   job_ids: <<Ids>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

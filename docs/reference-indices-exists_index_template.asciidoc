@@ -41,21 +41,31 @@ Returns information about whether a particular index template exists.
 ----
 
 [discrete]
-===== `IndicesExistsIndexTemplateRequest`
+==== IndicesExistsIndexTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesExistsIndexTemplateRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesExistsIndexTemplateResponse`
+==== IndicesExistsIndexTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesExistsIndexTemplateResponse = boolean
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,22 +41,32 @@ Clears the SQL cursor
 ----
 
 [discrete]
-===== `SqlClearCursorRequest`
+==== SqlClearCursorRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SqlClearCursorRequest extends <<RequestBase>> {
   cursor: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SqlClearCursorResponse`
+==== SqlClearCursorResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SqlClearCursorResponse {
   succeeded: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

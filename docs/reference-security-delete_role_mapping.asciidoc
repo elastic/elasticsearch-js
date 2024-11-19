@@ -41,23 +41,33 @@ Delete role mappings.
 ----
 
 [discrete]
-===== `SecurityDeleteRoleMappingRequest`
+==== SecurityDeleteRoleMappingRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityDeleteRoleMappingRequest extends <<RequestBase>> {
   name: <<Name>>
   refresh?: <<Refresh>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityDeleteRoleMappingResponse`
+==== SecurityDeleteRoleMappingResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityDeleteRoleMappingResponse {
   found: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

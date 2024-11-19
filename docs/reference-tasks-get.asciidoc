@@ -41,27 +41,37 @@ Get task information. Returns information about the tasks currently executing in
 ----
 
 [discrete]
-===== `TasksGetRequest`
+==== TasksGetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TasksGetRequest extends <<RequestBase>> {
   task_id: <<Id>>
   timeout?: <<Duration>>
   wait_for_completion?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TasksGetResponse`
+==== TasksGetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TasksGetResponse {
   completed: boolean
   task: TasksTaskInfo
   response?: any
   error?: <<ErrorCause>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

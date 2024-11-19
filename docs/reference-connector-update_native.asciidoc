@@ -39,23 +39,33 @@ Update the connector is_native flag.
 ----
 
 [discrete]
-===== `ConnectorUpdateNativeRequest`
+==== ConnectorUpdateNativeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateNativeRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   is_native: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdateNativeResponse`
+==== ConnectorUpdateNativeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateNativeResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

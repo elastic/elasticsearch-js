@@ -41,29 +41,39 @@ Find users with a query. Get information for users in a paginated manner. You ca
 ----
 
 [discrete]
-===== `SecurityQueryUserRequest`
+==== SecurityQueryUserRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityQueryUserRequest extends <<RequestBase>> {
   with_profile_uid?: boolean
   query?: SecurityQueryUserUserQueryContainer
-  from?: <<integer>>
+  from?: number
   sort?: <<Sort>>
-  size?: <<integer>>
+  size?: number
   search_after?: <<SortResults>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityQueryUserResponse`
+==== SecurityQueryUserResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityQueryUserResponse {
-  total: <<integer>>
-  count: <<integer>>
+  total: number
+  count: number
   users: SecurityQueryUserQueryUser[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

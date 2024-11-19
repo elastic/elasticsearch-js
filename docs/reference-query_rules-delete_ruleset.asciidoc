@@ -41,20 +41,30 @@ Deletes a query ruleset.
 ----
 
 [discrete]
-===== `QueryRulesDeleteRulesetRequest`
+==== QueryRulesDeleteRulesetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface QueryRulesDeleteRulesetRequest extends <<RequestBase>> {
   ruleset_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `QueryRulesDeleteRulesetResponse`
+==== QueryRulesDeleteRulesetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type QueryRulesDeleteRulesetResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

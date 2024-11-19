@@ -41,10 +41,12 @@ Retrieves information about the index’s current lifecycle state, such as the c
 ----
 
 [discrete]
-===== `IlmExplainLifecycleRequest`
+==== IlmExplainLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmExplainLifecycleRequest extends <<RequestBase>> {
   index: <<IndexName>>
   only_errors?: boolean
@@ -52,15 +54,23 @@ interface IlmExplainLifecycleRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IlmExplainLifecycleResponse`
+==== IlmExplainLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmExplainLifecycleResponse {
   indices: Record<<<IndexName>>, IlmExplainLifecycleLifecycleExplain>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

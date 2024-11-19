@@ -41,19 +41,21 @@ Update a document. Updates a document by running a script or passing a partial d
 ----
 
 [discrete]
-===== `UpdateRequest`
+==== UpdateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
-  if_primary_term?: <<long>>
+  if_primary_term?: number
   if_seq_no?: <<SequenceNumber>>
   lang?: string
   refresh?: <<Refresh>>
   require_alias?: boolean
-  retry_on_conflict?: <<integer>>
+  retry_on_conflict?: number
   routing?: <<Routing>>
   timeout?: <<Duration>>
   wait_for_active_shards?: <<WaitForActiveShards>>
@@ -67,13 +69,21 @@ interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends
   _source?: SearchSourceConfig
   upsert?: TDocument
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `UpdateResponse`
+==== UpdateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type UpdateResponse<TDocument = unknown> = UpdateUpdateWriteResponseBase<TDocument>
-----
 
+[pass]
+++++
+</pre>
+++++

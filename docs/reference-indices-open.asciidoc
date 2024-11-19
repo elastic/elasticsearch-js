@@ -41,10 +41,12 @@ Opens a closed index. For data streams, the API opens any closed backing indices
 ----
 
 [discrete]
-===== `IndicesOpenRequest`
+==== IndicesOpenRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesOpenRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -54,16 +56,24 @@ interface IndicesOpenRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   wait_for_active_shards?: <<WaitForActiveShards>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesOpenResponse`
+==== IndicesOpenResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesOpenResponse {
   acknowledged: boolean
   shards_acknowledged: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

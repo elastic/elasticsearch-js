@@ -41,19 +41,29 @@ Turns on snapshot lifecycle management (SLM).
 ----
 
 [discrete]
-===== `SlmStartRequest`
+==== SlmStartRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SlmStartRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SlmStartResponse`
+==== SlmStartResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SlmStartResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

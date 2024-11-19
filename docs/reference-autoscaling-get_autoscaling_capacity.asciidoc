@@ -41,21 +41,31 @@ Get the autoscaling capacity. NOTE: This feature is designed for indirect use by
 ----
 
 [discrete]
-===== `AutoscalingGetAutoscalingCapacityRequest`
+==== AutoscalingGetAutoscalingCapacityRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface AutoscalingGetAutoscalingCapacityRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `AutoscalingGetAutoscalingCapacityResponse`
+==== AutoscalingGetAutoscalingCapacityResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface AutoscalingGetAutoscalingCapacityResponse {
   policies: Record<string, AutoscalingGetAutoscalingCapacityAutoscalingDeciders>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

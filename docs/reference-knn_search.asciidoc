@@ -41,10 +41,12 @@ Run a knn search. NOTE: The kNN search API has been replaced by the `knn` option
 ----
 
 [discrete]
-===== `KnnSearchRequest`
+==== KnnSearchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface KnnSearchRequest extends <<RequestBase>> {
   index: <<Indices>>
   routing?: <<Routing>>
@@ -55,20 +57,28 @@ interface KnnSearchRequest extends <<RequestBase>> {
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   knn: KnnSearchQuery
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `KnnSearchResponse`
+==== KnnSearchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface KnnSearchResponse<TDocument = unknown> {
-  took: <<long>>
+  took: number
   timed_out: boolean
   _shards: <<ShardStatistics>>
   hits: SearchHitsMetadata<TDocument>
   fields?: Record<string, any>
-  max_score?: <<double>>
+  max_score?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

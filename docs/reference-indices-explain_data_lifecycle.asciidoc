@@ -41,24 +41,34 @@ Get the status for a data stream lifecycle. Retrieves information about an index
 ----
 
 [discrete]
-===== `IndicesExplainDataLifecycleRequest`
+==== IndicesExplainDataLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesExplainDataLifecycleRequest extends <<RequestBase>> {
   index: <<Indices>>
   include_defaults?: boolean
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesExplainDataLifecycleResponse`
+==== IndicesExplainDataLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesExplainDataLifecycleResponse {
   indices: Record<<<IndexName>>, IndicesExplainDataLifecycleDataStreamLifecycleExplain>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

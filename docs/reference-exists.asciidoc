@@ -41,10 +41,12 @@ Check a document. Checks if a specified document exists.
 ----
 
 [discrete]
-===== `ExistsRequest`
+==== ExistsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ExistsRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -59,13 +61,21 @@ interface ExistsRequest extends <<RequestBase>> {
   version?: <<VersionNumber>>
   version_type?: <<VersionType>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ExistsResponse`
+==== ExistsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ExistsResponse = boolean
-----
 
+[pass]
+++++
+</pre>
+++++

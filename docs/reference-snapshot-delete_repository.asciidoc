@@ -41,22 +41,32 @@ Deletes a repository.
 ----
 
 [discrete]
-===== `SnapshotDeleteRepositoryRequest`
+==== SnapshotDeleteRepositoryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotDeleteRepositoryRequest extends <<RequestBase>> {
   name: <<Names>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SnapshotDeleteRepositoryResponse`
+==== SnapshotDeleteRepositoryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SnapshotDeleteRepositoryResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

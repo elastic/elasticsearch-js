@@ -41,23 +41,33 @@ Get enrich stats. Returns enrich coordinator statistics and information about en
 ----
 
 [discrete]
-===== `EnrichStatsRequest`
+==== EnrichStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface EnrichStatsRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `EnrichStatsResponse`
+==== EnrichStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface EnrichStatsResponse {
   coordinator_stats: EnrichStatsCoordinatorStats[]
   executing_policies: EnrichStatsExecutingPolicy[]
   cache_stats?: EnrichStatsCacheStats[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

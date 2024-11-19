@@ -41,25 +41,35 @@ Close anomaly detection jobs. A job can be opened and closed multiple times thro
 ----
 
 [discrete]
-===== `MlCloseJobRequest`
+==== MlCloseJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlCloseJobRequest extends <<RequestBase>> {
   job_id: <<Id>>
   allow_no_match?: boolean
   force?: boolean
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlCloseJobResponse`
+==== MlCloseJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlCloseJobResponse {
   closed: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

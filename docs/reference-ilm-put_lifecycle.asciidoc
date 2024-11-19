@@ -41,23 +41,33 @@ Creates a lifecycle policy. If the specified policy exists, the policy is replac
 ----
 
 [discrete]
-===== `IlmPutLifecycleRequest`
+==== IlmPutLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmPutLifecycleRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
   policy?: IlmPolicy
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IlmPutLifecycleResponse`
+==== IlmPutLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IlmPutLifecycleResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

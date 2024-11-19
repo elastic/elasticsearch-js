@@ -41,10 +41,12 @@ Invalidate API keys. This API invalidates API keys created by the create API key
 ----
 
 [discrete]
-===== `SecurityInvalidateApiKeyRequest`
+==== SecurityInvalidateApiKeyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityInvalidateApiKeyRequest extends <<RequestBase>> {
   id?: <<Id>>
   ids?: <<Id>>[]
@@ -53,18 +55,26 @@ interface SecurityInvalidateApiKeyRequest extends <<RequestBase>> {
   realm_name?: string
   username?: <<Username>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityInvalidateApiKeyResponse`
+==== SecurityInvalidateApiKeyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityInvalidateApiKeyResponse {
-  error_count: <<integer>>
+  error_count: number
   error_details?: <<ErrorCause>>[]
   invalidated_api_keys: string[]
   previously_invalidated_api_keys: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

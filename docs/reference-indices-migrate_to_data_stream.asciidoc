@@ -41,22 +41,32 @@ Convert an index alias to a data stream. Converts an index alias to a data strea
 ----
 
 [discrete]
-===== `IndicesMigrateToDataStreamRequest`
+==== IndicesMigrateToDataStreamRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesMigrateToDataStreamRequest extends <<RequestBase>> {
   name: <<IndexName>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesMigrateToDataStreamResponse`
+==== IndicesMigrateToDataStreamResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesMigrateToDataStreamResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

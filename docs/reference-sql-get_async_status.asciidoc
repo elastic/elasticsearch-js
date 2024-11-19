@@ -41,27 +41,37 @@ Returns the current status of an async SQL search or a stored synchronous SQL se
 ----
 
 [discrete]
-===== `SqlGetAsyncStatusRequest`
+==== SqlGetAsyncStatusRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SqlGetAsyncStatusRequest extends <<RequestBase>> {
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SqlGetAsyncStatusResponse`
+==== SqlGetAsyncStatusResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SqlGetAsyncStatusResponse {
   id: string
   is_running: boolean
   is_partial: boolean
   start_time_in_millis: <<EpochTime>><<<UnitMillis>>>
   expiration_time_in_millis: <<EpochTime>><<<UnitMillis>>>
-  completion_status?: <<uint>>
+  completion_status?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

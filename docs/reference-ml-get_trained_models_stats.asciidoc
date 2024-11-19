@@ -41,26 +41,36 @@ Get trained models usage info. You can get usage information for multiple traine
 ----
 
 [discrete]
-===== `MlGetTrainedModelsStatsRequest`
+==== MlGetTrainedModelsStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetTrainedModelsStatsRequest extends <<RequestBase>> {
   model_id?: <<Ids>>
   allow_no_match?: boolean
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetTrainedModelsStatsResponse`
+==== MlGetTrainedModelsStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetTrainedModelsStatsResponse {
-  count: <<integer>>
+  count: number
   trained_model_stats: MlTrainedModelStats[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

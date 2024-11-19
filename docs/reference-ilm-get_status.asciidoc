@@ -41,21 +41,31 @@ Retrieves the current index lifecycle management (ILM) status.
 ----
 
 [discrete]
-===== `IlmGetStatusRequest`
+==== IlmGetStatusRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmGetStatusRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IlmGetStatusResponse`
+==== IlmGetStatusResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmGetStatusResponse {
   operation_mode: <<LifecycleOperationMode>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

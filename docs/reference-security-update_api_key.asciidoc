@@ -41,25 +41,35 @@ Update an API key. Updates attributes of an existing API key. Users can only upd
 ----
 
 [discrete]
-===== `SecurityUpdateApiKeyRequest`
+==== SecurityUpdateApiKeyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityUpdateApiKeyRequest extends <<RequestBase>> {
   id: <<Id>>
   role_descriptors?: Record<string, SecurityRoleDescriptor>
   metadata?: <<Metadata>>
   expiration?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityUpdateApiKeyResponse`
+==== SecurityUpdateApiKeyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityUpdateApiKeyResponse {
   updated: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

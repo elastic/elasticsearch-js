@@ -41,23 +41,33 @@ Returns information about tasks currently executing in the cluster. IMPORTANT: c
 ----
 
 [discrete]
-===== `CatTasksRequest`
+==== CatTasksRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatTasksRequest extends CatCatRequestBase {
   actions?: string[]
   detailed?: boolean
   node_id?: string[]
   parent_task_id?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatTasksResponse`
+==== CatTasksResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatTasksResponse = CatTasksTasksRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

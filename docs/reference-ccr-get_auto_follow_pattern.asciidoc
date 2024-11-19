@@ -41,22 +41,32 @@ Gets configured auto-follow patterns. Returns the specified auto-follow pattern 
 ----
 
 [discrete]
-===== `CcrGetAutoFollowPatternRequest`
+==== CcrGetAutoFollowPatternRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrGetAutoFollowPatternRequest extends <<RequestBase>> {
   name?: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrGetAutoFollowPatternResponse`
+==== CcrGetAutoFollowPatternResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrGetAutoFollowPatternResponse {
   patterns: CcrGetAutoFollowPatternAutoFollowPattern[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

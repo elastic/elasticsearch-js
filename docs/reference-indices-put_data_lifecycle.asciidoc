@@ -41,10 +41,12 @@ Update data stream lifecycles. Update the data stream lifecycle of the specified
 ----
 
 [discrete]
-===== `IndicesPutDataLifecycleRequest`
+==== IndicesPutDataLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesPutDataLifecycleRequest extends <<RequestBase>> {
   name: <<DataStreamNames>>
   expand_wildcards?: <<ExpandWildcards>>
@@ -53,13 +55,21 @@ interface IndicesPutDataLifecycleRequest extends <<RequestBase>> {
   data_retention?: <<Duration>>
   downsampling?: IndicesDataStreamLifecycleDownsampling
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesPutDataLifecycleResponse`
+==== IndicesPutDataLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesPutDataLifecycleResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

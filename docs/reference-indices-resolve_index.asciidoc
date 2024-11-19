@@ -41,27 +41,37 @@ Resolves the specified name(s) and/or index patterns for indices, aliases, and d
 ----
 
 [discrete]
-===== `IndicesResolveIndexRequest`
+==== IndicesResolveIndexRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesResolveIndexRequest extends <<RequestBase>> {
   name: <<Names>>
   expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   allow_no_indices?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesResolveIndexResponse`
+==== IndicesResolveIndexResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesResolveIndexResponse {
   indices: IndicesResolveIndexResolveIndexItem[]
   aliases: IndicesResolveIndexResolveIndexAliasItem[]
   data_streams: IndicesResolveIndexResolveIndexDataStreamsItem[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

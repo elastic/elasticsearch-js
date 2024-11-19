@@ -41,10 +41,12 @@ Delete documents. Deletes documents that match the specified query.
 ----
 
 [discrete]
-===== `DeleteByQueryRequest`
+==== DeleteByQueryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface DeleteByQueryRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -54,46 +56,51 @@ interface DeleteByQueryRequest extends <<RequestBase>> {
   default_operator?: QueryDslOperator
   df?: string
   expand_wildcards?: <<ExpandWildcards>>
-  from?: <<long>>
+  from?: number
   ignore_unavailable?: boolean
   lenient?: boolean
   preference?: string
   refresh?: boolean
   request_cache?: boolean
-  requests_per_second?: <<float>>
+  requests_per_second?: number
   routing?: <<Routing>>
   q?: string
   scroll?: <<Duration>>
-  scroll_size?: <<long>>
+  scroll_size?: number
   search_timeout?: <<Duration>>
   search_type?: <<SearchType>>
   slices?: <<Slices>>
   sort?: string[]
   stats?: string[]
-  terminate_after?: <<long>>
+  terminate_after?: number
   timeout?: <<Duration>>
   version?: boolean
   wait_for_active_shards?: <<WaitForActiveShards>>
   wait_for_completion?: boolean
-  max_docs?: <<long>>
+  max_docs?: number
   query?: QueryDslQueryContainer
   slice?: <<SlicedScroll>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `DeleteByQueryResponse`
+==== DeleteByQueryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface DeleteByQueryResponse {
-  batches?: <<long>>
-  deleted?: <<long>>
+  batches?: number
+  deleted?: number
   failures?: <<BulkIndexByScrollFailure>>[]
-  noops?: <<long>>
-  requests_per_second?: <<float>>
+  noops?: number
+  requests_per_second?: number
   retries?: <<Retries>>
-  slice_id?: <<integer>>
+  slice_id?: number
   task?: <<TaskId>>
   throttled?: <<Duration>>
   throttled_millis?: <<DurationValue>><<<UnitMillis>>>
@@ -101,8 +108,11 @@ interface DeleteByQueryResponse {
   throttled_until_millis?: <<DurationValue>><<<UnitMillis>>>
   timed_out?: boolean
   took?: <<DurationValue>><<<UnitMillis>>>
-  total?: <<long>>
-  version_conflicts?: <<long>>
+  total?: number
+  version_conflicts?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

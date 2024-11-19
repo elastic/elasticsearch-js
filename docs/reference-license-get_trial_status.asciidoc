@@ -41,21 +41,31 @@ Retrieves information about the status of the trial license.
 ----
 
 [discrete]
-===== `LicenseGetTrialStatusRequest`
+==== LicenseGetTrialStatusRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicenseGetTrialStatusRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `LicenseGetTrialStatusResponse`
+==== LicenseGetTrialStatusResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicenseGetTrialStatusResponse {
   eligible_to_start_trial: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

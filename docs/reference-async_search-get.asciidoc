@@ -41,23 +41,33 @@ Get async search results. Retrieve the results of a previously submitted asynchr
 ----
 
 [discrete]
-===== `AsyncSearchGetRequest`
+==== AsyncSearchGetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface AsyncSearchGetRequest extends <<RequestBase>> {
   id: <<Id>>
   keep_alive?: <<Duration>>
   typed_keys?: boolean
   wait_for_completion_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `AsyncSearchGetResponse`
+==== AsyncSearchGetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type AsyncSearchGetResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> = AsyncSearchAsyncSearchDocumentResponseBase<TDocument, TAggregations>
-----
 
+[pass]
+++++
+</pre>
+++++

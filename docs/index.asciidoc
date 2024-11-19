@@ -1,8 +1,5 @@
 = Elasticsearch JavaScript Client
 
-include::{asciidoc-dir}/../../shared/versions/stack/{source_branch}.asciidoc[]
-include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
-
 include::introduction.asciidoc[]
 include::getting-started.asciidoc[]
 include::changelog.asciidoc[]
@@ -20,5 +17,4 @@ include::typescript.asciidoc[]
 include::reference-main-index.asciidoc[]
 include::examples/index.asciidoc[]
 include::helpers.asciidoc[]
-include::redirects.asciidoc[]
 include::timeout-best-practices.asciidoc[]

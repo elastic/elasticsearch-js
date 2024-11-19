@@ -41,10 +41,12 @@ Get aliases. Retrieves information for one or more data stream or index aliases.
 ----
 
 [discrete]
-===== `IndicesGetAliasRequest`
+==== IndicesGetAliasRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesGetAliasRequest extends <<RequestBase>> {
   name?: <<Names>>
   index?: <<Indices>>
@@ -53,13 +55,21 @@ interface IndicesGetAliasRequest extends <<RequestBase>> {
   ignore_unavailable?: boolean
   local?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesGetAliasResponse`
+==== IndicesGetAliasResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesGetAliasResponse = Record<<<IndexName>>, IndicesGetAliasIndexAliases>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,21 +41,31 @@ Get script contexts. Get a list of supported script contexts and their methods.
 ----
 
 [discrete]
-===== `GetScriptContextRequest`
+==== GetScriptContextRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface GetScriptContextRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `GetScriptContextResponse`
+==== GetScriptContextResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface GetScriptContextResponse {
   contexts: GetScriptContextContext[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

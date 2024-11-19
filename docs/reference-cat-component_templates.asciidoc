@@ -41,20 +41,30 @@ Get component templates. Returns information about component templates in a clus
 ----
 
 [discrete]
-===== `CatComponentTemplatesRequest`
+==== CatComponentTemplatesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatComponentTemplatesRequest extends CatCatRequestBase {
   name?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatComponentTemplatesResponse`
+==== CatComponentTemplatesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatComponentTemplatesResponse = CatComponentTemplatesComponentTemplate[]
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Get tokens from text analysis. The analyze API performs [analysis](https://www.e
 ----
 
 [discrete]
-===== `IndicesAnalyzeRequest`
+==== IndicesAnalyzeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesAnalyzeRequest extends <<RequestBase>> {
   index?: <<IndexName>>
   analyzer?: string
@@ -57,16 +59,24 @@ interface IndicesAnalyzeRequest extends <<RequestBase>> {
   text?: IndicesAnalyzeTextToAnalyze
   tokenizer?: AnalysisTokenizer
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesAnalyzeResponse`
+==== IndicesAnalyzeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesAnalyzeResponse {
   detail?: IndicesAnalyzeAnalyzeDetail
   tokens?: IndicesAnalyzeAnalyzeToken[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

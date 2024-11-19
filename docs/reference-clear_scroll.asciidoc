@@ -41,23 +41,33 @@ Clear a scrolling search. Clear the search context and results for a scrolling s
 ----
 
 [discrete]
-===== `ClearScrollRequest`
+==== ClearScrollRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClearScrollRequest extends <<RequestBase>> {
   scroll_id?: <<ScrollIds>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClearScrollResponse`
+==== ClearScrollResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClearScrollResponse {
   succeeded: boolean
-  num_freed: <<integer>>
+  num_freed: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

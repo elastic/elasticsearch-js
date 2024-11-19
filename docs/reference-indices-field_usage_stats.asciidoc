@@ -41,10 +41,12 @@ Returns field usage information for each shard and field of an index.
 ----
 
 [discrete]
-===== `IndicesFieldUsageStatsRequest`
+==== IndicesFieldUsageStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesFieldUsageStatsRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -55,13 +57,21 @@ interface IndicesFieldUsageStatsRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   wait_for_active_shards?: <<WaitForActiveShards>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesFieldUsageStatsResponse`
+==== IndicesFieldUsageStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesFieldUsageStatsResponse = IndicesFieldUsageStatsFieldsUsageBody
-----
 
+[pass]
+++++
+</pre>
+++++

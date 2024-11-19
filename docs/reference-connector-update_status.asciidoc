@@ -41,23 +41,33 @@ Update the connector status.
 ----
 
 [discrete]
-===== `ConnectorUpdateStatusRequest`
+==== ConnectorUpdateStatusRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateStatusRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   status: ConnectorConnectorStatus
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdateStatusResponse`
+==== ConnectorUpdateStatusResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateStatusResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

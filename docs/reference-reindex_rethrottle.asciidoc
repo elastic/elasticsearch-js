@@ -41,23 +41,33 @@ Throttle a reindex operation. Change the number of requests per second for a par
 ----
 
 [discrete]
-===== `ReindexRethrottleRequest`
+==== ReindexRethrottleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ReindexRethrottleRequest extends <<RequestBase>> {
   task_id: <<Id>>
-  requests_per_second?: <<float>>
+  requests_per_second?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ReindexRethrottleResponse`
+==== ReindexRethrottleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ReindexRethrottleResponse {
   nodes: Record<string, ReindexRethrottleReindexNode>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

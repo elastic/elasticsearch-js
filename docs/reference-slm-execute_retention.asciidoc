@@ -41,19 +41,29 @@ Deletes any snapshots that are expired according to the policy's retention rules
 ----
 
 [discrete]
-===== `SlmExecuteRetentionRequest`
+==== SlmExecuteRetentionRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SlmExecuteRetentionRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SlmExecuteRetentionResponse`
+==== SlmExecuteRetentionResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SlmExecuteRetentionResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

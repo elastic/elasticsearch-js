@@ -41,26 +41,36 @@ Bulk create or update roles. The role management APIs are generally the preferre
 ----
 
 [discrete]
-===== `SecurityBulkPutRoleRequest`
+==== SecurityBulkPutRoleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityBulkPutRoleRequest extends <<RequestBase>> {
   refresh?: <<Refresh>>
   roles: Record<string, SecurityRoleDescriptor>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityBulkPutRoleResponse`
+==== SecurityBulkPutRoleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityBulkPutRoleResponse {
   created?: string[]
   updated?: string[]
   noop?: string[]
   errors?: SecurityBulkError
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,14 +41,16 @@ Delete a document. Removes a JSON document from the specified index.
 ----
 
 [discrete]
-===== `DeleteRequest`
+==== DeleteRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface DeleteRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
-  if_primary_term?: <<long>>
+  if_primary_term?: number
   if_seq_no?: <<SequenceNumber>>
   refresh?: <<Refresh>>
   routing?: <<Routing>>
@@ -57,13 +59,21 @@ interface DeleteRequest extends <<RequestBase>> {
   version_type?: <<VersionType>>
   wait_for_active_shards?: <<WaitForActiveShards>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `DeleteResponse`
+==== DeleteResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type DeleteResponse = <<WriteResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

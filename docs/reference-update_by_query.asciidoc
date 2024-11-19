@@ -41,10 +41,12 @@ Update documents. Updates documents that match the specified query. If no query 
 ----
 
 [discrete]
-===== `UpdateByQueryRequest`
+==== UpdateByQueryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface UpdateByQueryRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -53,7 +55,7 @@ interface UpdateByQueryRequest extends <<RequestBase>> {
   default_operator?: QueryDslOperator
   df?: string
   expand_wildcards?: <<ExpandWildcards>>
-  from?: <<long>>
+  from?: number
   ignore_unavailable?: boolean
   lenient?: boolean
   pipeline?: string
@@ -61,51 +63,59 @@ interface UpdateByQueryRequest extends <<RequestBase>> {
   q?: string
   refresh?: boolean
   request_cache?: boolean
-  requests_per_second?: <<float>>
+  requests_per_second?: number
   routing?: <<Routing>>
   scroll?: <<Duration>>
-  scroll_size?: <<long>>
+  scroll_size?: number
   search_timeout?: <<Duration>>
   search_type?: <<SearchType>>
   slices?: <<Slices>>
   sort?: string[]
   stats?: string[]
-  terminate_after?: <<long>>
+  terminate_after?: number
   timeout?: <<Duration>>
   version?: boolean
   version_type?: boolean
   wait_for_active_shards?: <<WaitForActiveShards>>
   wait_for_completion?: boolean
-  max_docs?: <<long>>
+  max_docs?: number
   query?: QueryDslQueryContainer
   script?: <<Script>> | string
   slice?: <<SlicedScroll>>
   conflicts?: <<Conflicts>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `UpdateByQueryResponse`
+==== UpdateByQueryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface UpdateByQueryResponse {
-  batches?: <<long>>
+  batches?: number
   failures?: <<BulkIndexByScrollFailure>>[]
-  noops?: <<long>>
-  deleted?: <<long>>
-  requests_per_second?: <<float>>
+  noops?: number
+  deleted?: number
+  requests_per_second?: number
   retries?: <<Retries>>
   task?: <<TaskId>>
   timed_out?: boolean
   took?: <<DurationValue>><<<UnitMillis>>>
-  total?: <<long>>
-  updated?: <<long>>
-  version_conflicts?: <<long>>
+  total?: number
+  updated?: number
+  version_conflicts?: number
   throttled?: <<Duration>>
   throttled_millis?: <<DurationValue>><<<UnitMillis>>>
   throttled_until?: <<Duration>>
   throttled_until_millis?: <<DurationValue>><<<UnitMillis>>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

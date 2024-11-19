@@ -41,24 +41,34 @@ Clear the API key cache. Evict a subset of all entries from the API key cache. T
 ----
 
 [discrete]
-===== `SecurityClearApiKeyCacheRequest`
+==== SecurityClearApiKeyCacheRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityClearApiKeyCacheRequest extends <<RequestBase>> {
   ids: <<Ids>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityClearApiKeyCacheResponse`
+==== SecurityClearApiKeyCacheResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityClearApiKeyCacheResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
   nodes: Record<string, SecurityClusterNode>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,20 +41,30 @@ Retrieves pipelines used for Logstash Central Management.
 ----
 
 [discrete]
-===== `LogstashGetPipelineRequest`
+==== LogstashGetPipelineRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LogstashGetPipelineRequest extends <<RequestBase>> {
   id?: <<Ids>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `LogstashGetPipelineResponse`
+==== LogstashGetPipelineResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type LogstashGetPipelineResponse = Record<<<Id>>, LogstashPipeline>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,24 +41,34 @@ Open anomaly detection jobs. An anomaly detection job must be opened to be ready
 ----
 
 [discrete]
-===== `MlOpenJobRequest`
+==== MlOpenJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlOpenJobRequest extends <<RequestBase>> {
   job_id: <<Id>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlOpenJobResponse`
+==== MlOpenJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlOpenJobResponse {
   opened: boolean
   node: <<NodeId>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

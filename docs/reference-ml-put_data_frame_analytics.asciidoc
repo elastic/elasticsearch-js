@@ -41,10 +41,12 @@ Create a data frame analytics job. This API creates a data frame analytics job t
 ----
 
 [discrete]
-===== `MlPutDataFrameAnalyticsRequest`
+==== MlPutDataFrameAnalyticsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPutDataFrameAnalyticsRequest extends <<RequestBase>> {
   id: <<Id>>
   allow_lazy_start?: boolean
@@ -52,19 +54,24 @@ interface MlPutDataFrameAnalyticsRequest extends <<RequestBase>> {
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
   description?: string
   dest: MlDataframeAnalyticsDestination
-  max_num_threads?: <<integer>>
+  max_num_threads?: number
   model_memory_limit?: string
   source: MlDataframeAnalyticsSource
   headers?: <<HttpHeaders>>
   version?: <<VersionString>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlPutDataFrameAnalyticsResponse`
+==== MlPutDataFrameAnalyticsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPutDataFrameAnalyticsResponse {
   authorization?: MlDataframeAnalyticsAuthorization
   allow_lazy_start: boolean
@@ -74,10 +81,13 @@ interface MlPutDataFrameAnalyticsResponse {
   description?: string
   dest: MlDataframeAnalyticsDestination
   id: <<Id>>
-  max_num_threads: <<integer>>
+  max_num_threads: number
   model_memory_limit: string
   source: MlDataframeAnalyticsSource
   version: <<VersionString>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

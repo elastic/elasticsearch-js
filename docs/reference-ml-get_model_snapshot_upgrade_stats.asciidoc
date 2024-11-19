@@ -41,25 +41,35 @@ Get anomaly detection job model snapshot upgrade usage info.
 ----
 
 [discrete]
-===== `MlGetModelSnapshotUpgradeStatsRequest`
+==== MlGetModelSnapshotUpgradeStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetModelSnapshotUpgradeStatsRequest extends <<RequestBase>> {
   job_id: <<Id>>
   snapshot_id: <<Id>>
   allow_no_match?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetModelSnapshotUpgradeStatsResponse`
+==== MlGetModelSnapshotUpgradeStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetModelSnapshotUpgradeStatsResponse {
-  count: <<long>>
+  count: number
   model_snapshot_upgrades: MlModelSnapshotUpgrade[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

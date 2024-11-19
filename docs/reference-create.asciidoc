@@ -41,10 +41,12 @@ Index a document. Adds a JSON document to the specified data stream or index and
 ----
 
 [discrete]
-===== `CreateRequest`
+==== CreateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CreateRequest<TDocument = unknown> extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -57,13 +59,21 @@ interface CreateRequest<TDocument = unknown> extends <<RequestBase>> {
   wait_for_active_shards?: <<WaitForActiveShards>>
   document?: TDocument
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CreateResponse`
+==== CreateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CreateResponse = <<WriteResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

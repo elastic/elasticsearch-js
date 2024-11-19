@@ -41,21 +41,31 @@ Schedule a transform to start now. Instantly runs a transform to process data. I
 ----
 
 [discrete]
-===== `TransformScheduleNowTransformRequest`
+==== TransformScheduleNowTransformRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformScheduleNowTransformRequest extends <<RequestBase>> {
   transform_id: <<Id>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TransformScheduleNowTransformResponse`
+==== TransformScheduleNowTransformResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type TransformScheduleNowTransformResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

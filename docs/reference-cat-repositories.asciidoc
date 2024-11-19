@@ -41,19 +41,29 @@ Returns the snapshot repositories for a cluster. IMPORTANT: cat APIs are only in
 ----
 
 [discrete]
-===== `CatRepositoriesRequest`
+==== CatRepositoriesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatRepositoriesRequest extends CatCatRequestBase {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatRepositoriesResponse`
+==== CatRepositoriesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatRepositoriesResponse = CatRepositoriesRepositoriesRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

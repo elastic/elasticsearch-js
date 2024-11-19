@@ -41,37 +41,47 @@ Update a data frame analytics job.
 ----
 
 [discrete]
-===== `MlUpdateDataFrameAnalyticsRequest`
+==== MlUpdateDataFrameAnalyticsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpdateDataFrameAnalyticsRequest extends <<RequestBase>> {
   id: <<Id>>
   description?: string
   model_memory_limit?: string
-  max_num_threads?: <<integer>>
+  max_num_threads?: number
   allow_lazy_start?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlUpdateDataFrameAnalyticsResponse`
+==== MlUpdateDataFrameAnalyticsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpdateDataFrameAnalyticsResponse {
   authorization?: MlDataframeAnalyticsAuthorization
   allow_lazy_start: boolean
   analysis: MlDataframeAnalysisContainer
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
-  create_time: <<long>>
+  create_time: number
   description?: string
   dest: MlDataframeAnalyticsDestination
   id: <<Id>>
-  max_num_threads: <<integer>>
+  max_num_threads: number
   model_memory_limit: string
   source: MlDataframeAnalyticsSource
   version: <<VersionString>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

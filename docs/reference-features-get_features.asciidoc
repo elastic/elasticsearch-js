@@ -41,21 +41,31 @@ Gets a list of features which can be included in snapshots using the feature_sta
 ----
 
 [discrete]
-===== `FeaturesGetFeaturesRequest`
+==== FeaturesGetFeaturesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface FeaturesGetFeaturesRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `FeaturesGetFeaturesResponse`
+==== FeaturesGetFeaturesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface FeaturesGetFeaturesResponse {
   features: FeaturesFeature[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

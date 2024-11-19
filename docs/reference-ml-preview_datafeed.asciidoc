@@ -41,10 +41,12 @@ Preview a datafeed. This API returns the first "page" of search results from a d
 ----
 
 [discrete]
-===== `MlPreviewDatafeedRequest`
+==== MlPreviewDatafeedRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPreviewDatafeedRequest extends <<RequestBase>> {
   datafeed_id?: <<Id>>
   start?: <<DateTime>>
@@ -52,13 +54,21 @@ interface MlPreviewDatafeedRequest extends <<RequestBase>> {
   datafeed_config?: MlDatafeedConfig
   job_config?: MlJobConfig
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlPreviewDatafeedResponse`
+==== MlPreviewDatafeedResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlPreviewDatafeedResponse<TDocument = unknown> = TDocument[]
-----
 
+[pass]
+++++
+</pre>
+++++

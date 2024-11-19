@@ -41,24 +41,34 @@ Stops an existing, started rollup job.
 ----
 
 [discrete]
-===== `RollupStopJobRequest`
+==== RollupStopJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupStopJobRequest extends <<RequestBase>> {
   id: <<Id>>
   timeout?: <<Duration>>
   wait_for_completion?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `RollupStopJobResponse`
+==== RollupStopJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupStopJobResponse {
   stopped: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

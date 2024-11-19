@@ -41,10 +41,12 @@ Mount a snapshot as a searchable index.
 ----
 
 [discrete]
-===== `SearchableSnapshotsMountRequest`
+==== SearchableSnapshotsMountRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchableSnapshotsMountRequest extends <<RequestBase>> {
   repository: <<Name>>
   snapshot: <<Name>>
@@ -56,15 +58,23 @@ interface SearchableSnapshotsMountRequest extends <<RequestBase>> {
   index_settings?: Record<string, any>
   ignore_index_settings?: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchableSnapshotsMountResponse`
+==== SearchableSnapshotsMountResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchableSnapshotsMountResponse {
   snapshot: SearchableSnapshotsMountMountedSnapshot
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,23 +41,33 @@ Delete an anomaly detection job. All job configuration, model state and results 
 ----
 
 [discrete]
-===== `MlDeleteJobRequest`
+==== MlDeleteJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlDeleteJobRequest extends <<RequestBase>> {
   job_id: <<Id>>
   force?: boolean
   delete_user_annotations?: boolean
   wait_for_completion?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlDeleteJobResponse`
+==== MlDeleteJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlDeleteJobResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

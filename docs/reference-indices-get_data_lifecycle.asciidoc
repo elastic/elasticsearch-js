@@ -41,25 +41,35 @@ Get data stream lifecycles. Retrieves the data stream lifecycle configuration of
 ----
 
 [discrete]
-===== `IndicesGetDataLifecycleRequest`
+==== IndicesGetDataLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesGetDataLifecycleRequest extends <<RequestBase>> {
   name: <<DataStreamNames>>
   expand_wildcards?: <<ExpandWildcards>>
   include_defaults?: boolean
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesGetDataLifecycleResponse`
+==== IndicesGetDataLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesGetDataLifecycleResponse {
   data_streams: IndicesGetDataLifecycleDataStreamWithLifecycle[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

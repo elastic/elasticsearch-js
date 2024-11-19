@@ -41,16 +41,18 @@ Executes a SQL request
 ----
 
 [discrete]
-===== `SqlQueryRequest`
+==== SqlQueryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SqlQueryRequest extends <<RequestBase>> {
   format?: SqlQuerySqlFormat
   catalog?: string
   columnar?: boolean
   cursor?: string
-  fetch_size?: <<integer>>
+  fetch_size?: number
   filter?: QueryDslQueryContainer
   query?: string
   request_timeout?: <<Duration>>
@@ -64,13 +66,18 @@ interface SqlQueryRequest extends <<RequestBase>> {
   keep_on_completion?: boolean
   index_using_frozen?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SqlQueryResponse`
+==== SqlQueryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SqlQueryResponse {
   id?: <<Id>>
   is_running?: boolean
@@ -79,5 +86,8 @@ interface SqlQueryResponse {
   cursor?: string
   rows: SqlRow[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

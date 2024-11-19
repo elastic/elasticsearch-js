@@ -41,10 +41,12 @@ Get datafeeds. Returns configuration and usage information about datafeeds. This
 ----
 
 [discrete]
-===== `CatMlDatafeedsRequest`
+==== CatMlDatafeedsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatMlDatafeedsRequest extends CatCatRequestBase {
   datafeed_id?: <<Id>>
   allow_no_match?: boolean
@@ -52,13 +54,21 @@ interface CatMlDatafeedsRequest extends CatCatRequestBase {
   s?: CatCatDatafeedColumns
   time?: <<TimeUnit>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatMlDatafeedsResponse`
+==== CatMlDatafeedsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatMlDatafeedsResponse = CatMlDatafeedsDatafeedsRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

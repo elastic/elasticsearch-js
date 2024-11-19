@@ -41,23 +41,33 @@ Activate a user profile. Create or update a user profile on behalf of another us
 ----
 
 [discrete]
-===== `SecurityActivateUserProfileRequest`
+==== SecurityActivateUserProfileRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityActivateUserProfileRequest extends <<RequestBase>> {
   access_token?: string
   grant_type: SecurityGrantType
   password?: string
   username?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityActivateUserProfileResponse`
+==== SecurityActivateUserProfileResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SecurityActivateUserProfileResponse = SecurityUserProfileWithMetadata
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,23 +41,33 @@ Deletes an existing rollup job.
 ----
 
 [discrete]
-===== `RollupDeleteJobRequest`
+==== RollupDeleteJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupDeleteJobRequest extends <<RequestBase>> {
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `RollupDeleteJobResponse`
+==== RollupDeleteJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupDeleteJobResponse {
   acknowledged: boolean
   task_failures?: <<TaskFailure>>[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,23 +41,33 @@ Reloads an index's search analyzers and their resources.
 ----
 
 [discrete]
-===== `IndicesReloadSearchAnalyzersRequest`
+==== IndicesReloadSearchAnalyzersRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesReloadSearchAnalyzersRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
   expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesReloadSearchAnalyzersResponse`
+==== IndicesReloadSearchAnalyzersResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesReloadSearchAnalyzersResponse = IndicesReloadSearchAnalyzersReloadResult
-----
 
+[pass]
+++++
+</pre>
+++++

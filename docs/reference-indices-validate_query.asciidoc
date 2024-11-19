@@ -41,10 +41,12 @@ Validate a query. Validates a query without running it.
 ----
 
 [discrete]
-===== `IndicesValidateQueryRequest`
+==== IndicesValidateQueryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesValidateQueryRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -61,18 +63,26 @@ interface IndicesValidateQueryRequest extends <<RequestBase>> {
   q?: string
   query?: QueryDslQueryContainer
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesValidateQueryResponse`
+==== IndicesValidateQueryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesValidateQueryResponse {
   explanations?: IndicesValidateQueryIndicesValidationExplanation[]
   _shards?: <<ShardStatistics>>
   valid: boolean
   error?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++

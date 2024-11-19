@@ -41,20 +41,30 @@ Delete a search application. Remove a search application and its associated alia
 ----
 
 [discrete]
-===== `SearchApplicationDeleteRequest`
+==== SearchApplicationDeleteRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchApplicationDeleteRequest extends <<RequestBase>> {
   name: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchApplicationDeleteResponse`
+==== SearchApplicationDeleteResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SearchApplicationDeleteResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

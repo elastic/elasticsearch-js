@@ -38,20 +38,3 @@ Perform streaming inference
 (InferenceStreamInferenceRequest, options?): Promise<InferenceStreamInferenceResponse>
 ----
 
-[discrete]
-===== `InferenceStreamInferenceRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `InferenceStreamInferenceResponse`
-
-[source,ts]
-----
-n/a
-----
-

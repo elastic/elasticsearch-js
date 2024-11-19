@@ -41,19 +41,29 @@ The cluster remote info API allows you to retrieve all of the configured remote 
 ----
 
 [discrete]
-===== `ClusterRemoteInfoRequest`
+==== ClusterRemoteInfoRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterRemoteInfoRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterRemoteInfoResponse`
+==== ClusterRemoteInfoResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ClusterRemoteInfoResponse = Record<string, ClusterRemoteInfoClusterRemoteInfo>
-----
 
+[pass]
+++++
+</pre>
+++++

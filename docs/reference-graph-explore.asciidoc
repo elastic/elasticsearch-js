@@ -41,10 +41,12 @@ Extracts and summarizes information about the documents and terms in an Elastics
 ----
 
 [discrete]
-===== `GraphExploreRequest`
+==== GraphExploreRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface GraphExploreRequest extends <<RequestBase>> {
   index: <<Indices>>
   routing?: <<Routing>>
@@ -54,19 +56,27 @@ interface GraphExploreRequest extends <<RequestBase>> {
   query?: QueryDslQueryContainer
   vertices?: GraphVertexDefinition[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `GraphExploreResponse`
+==== GraphExploreResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface GraphExploreResponse {
   connections: GraphConnection[]
   failures: <<ShardFailure>>[]
   timed_out: boolean
-  took: <<long>>
+  took: number
   vertices: GraphVertex[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

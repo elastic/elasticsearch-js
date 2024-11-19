@@ -41,20 +41,30 @@ Deletes a synonym set
 ----
 
 [discrete]
-===== `SynonymsDeleteSynonymRequest`
+==== SynonymsDeleteSynonymRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SynonymsDeleteSynonymRequest extends <<RequestBase>> {
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SynonymsDeleteSynonymResponse`
+==== SynonymsDeleteSynonymResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SynonymsDeleteSynonymResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,20 +41,30 @@ Clears cluster voting config exclusions.
 ----
 
 [discrete]
-===== `ClusterDeleteVotingConfigExclusionsRequest`
+==== ClusterDeleteVotingConfigExclusionsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterDeleteVotingConfigExclusionsRequest extends <<RequestBase>> {
   wait_for_removal?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterDeleteVotingConfigExclusionsResponse`
+==== ClusterDeleteVotingConfigExclusionsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ClusterDeleteVotingConfigExclusionsResponse = boolean
-----
 
+[pass]
+++++
+</pre>
+++++

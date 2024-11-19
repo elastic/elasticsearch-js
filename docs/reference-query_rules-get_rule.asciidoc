@@ -41,21 +41,31 @@ Returns the details about a query rule within a query ruleset
 ----
 
 [discrete]
-===== `QueryRulesGetRuleRequest`
+==== QueryRulesGetRuleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface QueryRulesGetRuleRequest extends <<RequestBase>> {
   ruleset_id: <<Id>>
   rule_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `QueryRulesGetRuleResponse`
+==== QueryRulesGetRuleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type QueryRulesGetRuleResponse = QueryRulesQueryRule
-----
 
+[pass]
+++++
+</pre>
+++++

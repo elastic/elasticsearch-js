@@ -41,22 +41,32 @@ Returns information on the usage of features.
 ----
 
 [discrete]
-===== `NodesUsageRequest`
+==== NodesUsageRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface NodesUsageRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   metric?: <<Metrics>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `NodesUsageResponse`
+==== NodesUsageResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type NodesUsageResponse = NodesUsageResponseBase
-----
 
+[pass]
+++++
+</pre>
+++++

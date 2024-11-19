@@ -41,23 +41,33 @@ Update the connector service type.
 ----
 
 [discrete]
-===== `ConnectorUpdateServiceTypeRequest`
+==== ConnectorUpdateServiceTypeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateServiceTypeRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   service_type: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdateServiceTypeResponse`
+==== ConnectorUpdateServiceTypeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateServiceTypeResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

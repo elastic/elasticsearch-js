@@ -41,20 +41,30 @@ Get behavioral analytics collections.
 ----
 
 [discrete]
-===== `SearchApplicationGetBehavioralAnalyticsRequest`
+==== SearchApplicationGetBehavioralAnalyticsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchApplicationGetBehavioralAnalyticsRequest extends <<RequestBase>> {
   name?: <<Name>>[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchApplicationGetBehavioralAnalyticsResponse`
+==== SearchApplicationGetBehavioralAnalyticsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SearchApplicationGetBehavioralAnalyticsResponse = Record<<<Name>>, SearchApplicationAnalyticsCollection>
-----
 
+[pass]
+++++
+</pre>
+++++

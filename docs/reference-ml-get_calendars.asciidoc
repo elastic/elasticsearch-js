@@ -41,26 +41,36 @@ Get calendar configuration info.
 ----
 
 [discrete]
-===== `MlGetCalendarsRequest`
+==== MlGetCalendarsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetCalendarsRequest extends <<RequestBase>> {
   calendar_id?: <<Id>>
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
   page?: MlPage
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetCalendarsResponse`
+==== MlGetCalendarsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetCalendarsResponse {
   calendars: MlGetCalendarsCalendar[]
-  count: <<long>>
+  count: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

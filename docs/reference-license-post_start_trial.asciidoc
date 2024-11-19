@@ -41,26 +41,36 @@ The start trial API enables you to start a 30-day trial, which gives access to a
 ----
 
 [discrete]
-===== `LicensePostStartTrialRequest`
+==== LicensePostStartTrialRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicensePostStartTrialRequest extends <<RequestBase>> {
   acknowledge?: boolean
   type_query_string?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `LicensePostStartTrialResponse`
+==== LicensePostStartTrialResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicensePostStartTrialResponse {
   acknowledged: boolean
   error_message?: string
   trial_was_started: boolean
   type?: LicenseLicenseType
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,23 +41,33 @@ Creates or updates a query ruleset.
 ----
 
 [discrete]
-===== `QueryRulesPutRulesetRequest`
+==== QueryRulesPutRulesetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface QueryRulesPutRulesetRequest extends <<RequestBase>> {
   ruleset_id: <<Id>>
   rules: QueryRulesQueryRule | QueryRulesQueryRule[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `QueryRulesPutRulesetResponse`
+==== QueryRulesPutRulesetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface QueryRulesPutRulesetResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

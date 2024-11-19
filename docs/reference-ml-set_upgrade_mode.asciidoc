@@ -41,21 +41,31 @@ Set upgrade_mode for ML indices. Sets a cluster wide upgrade_mode setting that p
 ----
 
 [discrete]
-===== `MlSetUpgradeModeRequest`
+==== MlSetUpgradeModeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlSetUpgradeModeRequest extends <<RequestBase>> {
   enabled?: boolean
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlSetUpgradeModeResponse`
+==== MlSetUpgradeModeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlSetUpgradeModeResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

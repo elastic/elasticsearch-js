@@ -41,30 +41,40 @@ Get trained model configuration info.
 ----
 
 [discrete]
-===== `MlGetTrainedModelsRequest`
+==== MlGetTrainedModelsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetTrainedModelsRequest extends <<RequestBase>> {
   model_id?: <<Ids>>
   allow_no_match?: boolean
   decompress_definition?: boolean
   exclude_generated?: boolean
-  from?: <<integer>>
+  from?: number
   include?: MlInclude
-  size?: <<integer>>
+  size?: number
   tags?: string | string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetTrainedModelsResponse`
+==== MlGetTrainedModelsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetTrainedModelsResponse {
-  count: <<integer>>
+  count: number
   trained_model_configs: MlTrainedModelConfig[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

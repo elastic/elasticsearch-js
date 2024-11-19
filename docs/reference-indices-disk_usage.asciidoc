@@ -41,10 +41,12 @@ Analyzes the disk usage of each field of an index or data stream.
 ----
 
 [discrete]
-===== `IndicesDiskUsageRequest`
+==== IndicesDiskUsageRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesDiskUsageRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -53,13 +55,21 @@ interface IndicesDiskUsageRequest extends <<RequestBase>> {
   ignore_unavailable?: boolean
   run_expensive_tasks?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesDiskUsageResponse`
+==== IndicesDiskUsageResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesDiskUsageResponse = any
-----
 
+[pass]
+++++
+</pre>
+++++

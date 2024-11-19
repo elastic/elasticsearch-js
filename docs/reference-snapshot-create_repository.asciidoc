@@ -41,10 +41,12 @@ Creates a repository.
 ----
 
 [discrete]
-===== `SnapshotCreateRepositoryRequest`
+==== SnapshotCreateRepositoryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotCreateRepositoryRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
@@ -52,13 +54,21 @@ interface SnapshotCreateRepositoryRequest extends <<RequestBase>> {
   verify?: boolean
   repository?: SnapshotRepository
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SnapshotCreateRepositoryResponse`
+==== SnapshotCreateRepositoryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SnapshotCreateRepositoryResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

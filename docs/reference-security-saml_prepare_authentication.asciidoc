@@ -41,26 +41,36 @@ Prepare SAML authentication. Creates a SAML authentication request (`<AuthnReque
 ----
 
 [discrete]
-===== `SecuritySamlPrepareAuthenticationRequest`
+==== SecuritySamlPrepareAuthenticationRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecuritySamlPrepareAuthenticationRequest extends <<RequestBase>> {
   acs?: string
   realm?: string
   relay_state?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecuritySamlPrepareAuthenticationResponse`
+==== SecuritySamlPrepareAuthenticationResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecuritySamlPrepareAuthenticationResponse {
   id: <<Id>>
   realm: string
   redirect: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++

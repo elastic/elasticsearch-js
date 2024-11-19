@@ -41,13 +41,15 @@ Reindex documents. Copies documents from a source to a destination. The source c
 ----
 
 [discrete]
-===== `ReindexRequest`
+==== ReindexRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ReindexRequest extends <<RequestBase>> {
   refresh?: boolean
-  requests_per_second?: <<float>>
+  requests_per_second?: number
   scroll?: <<Duration>>
   slices?: <<Slices>>
   timeout?: <<Duration>>
@@ -56,35 +58,43 @@ interface ReindexRequest extends <<RequestBase>> {
   require_alias?: boolean
   conflicts?: <<Conflicts>>
   dest: ReindexDestination
-  max_docs?: <<long>>
+  max_docs?: number
   script?: <<Script>> | string
-  size?: <<long>>
+  size?: number
   source: ReindexSource
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ReindexResponse`
+==== ReindexResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ReindexResponse {
-  batches?: <<long>>
-  created?: <<long>>
-  deleted?: <<long>>
+  batches?: number
+  created?: number
+  deleted?: number
   failures?: <<BulkIndexByScrollFailure>>[]
-  noops?: <<long>>
+  noops?: number
   retries?: <<Retries>>
-  requests_per_second?: <<float>>
-  slice_id?: <<integer>>
+  requests_per_second?: number
+  slice_id?: number
   task?: <<TaskId>>
   throttled_millis?: <<EpochTime>><<<UnitMillis>>>
   throttled_until_millis?: <<EpochTime>><<<UnitMillis>>>
   timed_out?: boolean
   took?: <<DurationValue>><<<UnitMillis>>>
-  total?: <<long>>
-  updated?: <<long>>
-  version_conflicts?: <<long>>
+  total?: number
+  updated?: number
+  version_conflicts?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

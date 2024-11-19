@@ -41,21 +41,31 @@ Halts all lifecycle management operations and stops the index lifecycle manageme
 ----
 
 [discrete]
-===== `IlmStopRequest`
+==== IlmStopRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmStopRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IlmStopResponse`
+==== IlmStopResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IlmStopResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

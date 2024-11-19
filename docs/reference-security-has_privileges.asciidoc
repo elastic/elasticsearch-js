@@ -41,23 +41,30 @@ Check user privileges. Determine whether the specified user has a specified list
 ----
 
 [discrete]
-===== `SecurityHasPrivilegesRequest`
+==== SecurityHasPrivilegesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityHasPrivilegesRequest extends <<RequestBase>> {
   user?: <<Name>>
   application?: SecurityHasPrivilegesApplicationPrivilegesCheck[]
   cluster?: SecurityClusterPrivilege[]
   index?: SecurityHasPrivilegesIndexPrivilegesCheck[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityHasPrivilegesResponse`
+==== SecurityHasPrivilegesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityHasPrivilegesResponse {
   application: SecurityHasPrivilegesApplicationsPrivileges
   cluster: Record<string, boolean>
@@ -65,5 +72,8 @@ interface SecurityHasPrivilegesResponse {
   index: Record<<<IndexName>>, SecurityHasPrivilegesPrivileges>
   username: <<Username>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

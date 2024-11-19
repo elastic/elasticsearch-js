@@ -41,10 +41,12 @@ Cancels a task, if it can be cancelled through an API.
 ----
 
 [discrete]
-===== `TasksCancelRequest`
+==== TasksCancelRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TasksCancelRequest extends <<RequestBase>> {
   task_id?: <<TaskId>>
   actions?: string | string[]
@@ -52,13 +54,21 @@ interface TasksCancelRequest extends <<RequestBase>> {
   parent_task_id?: string
   wait_for_completion?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TasksCancelResponse`
+==== TasksCancelResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type TasksCancelResponse = TasksTaskListResponseBase
-----
 
+[pass]
+++++
+</pre>
+++++

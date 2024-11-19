@@ -41,22 +41,32 @@ Delete application privileges.
 ----
 
 [discrete]
-===== `SecurityDeletePrivilegesRequest`
+==== SecurityDeletePrivilegesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityDeletePrivilegesRequest extends <<RequestBase>> {
   application: <<Name>>
   name: <<Names>>
   refresh?: <<Refresh>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityDeletePrivilegesResponse`
+==== SecurityDeletePrivilegesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SecurityDeletePrivilegesResponse = Record<string, Record<string, SecurityDeletePrivilegesFoundStatus>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,23 +41,33 @@ Update the connector error field. Set the error field for the connector. If the 
 ----
 
 [discrete]
-===== `ConnectorUpdateErrorRequest`
+==== ConnectorUpdateErrorRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateErrorRequest extends <<RequestBase>> {
   connector_id: <<Id>>
-  error: SpecUtilsWithNullValue<string>
+  error: <<SpecUtilsWithNullValue>><string>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdateErrorResponse`
+==== ConnectorUpdateErrorResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateErrorResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

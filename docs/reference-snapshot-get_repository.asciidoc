@@ -41,22 +41,32 @@ Returns information about a repository.
 ----
 
 [discrete]
-===== `SnapshotGetRepositoryRequest`
+==== SnapshotGetRepositoryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotGetRepositoryRequest extends <<RequestBase>> {
   name?: <<Names>>
   local?: boolean
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SnapshotGetRepositoryResponse`
+==== SnapshotGetRepositoryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SnapshotGetRepositoryResponse = Record<string, SnapshotRepository>
-----
 
+[pass]
+++++
+</pre>
+++++

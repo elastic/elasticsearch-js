@@ -41,21 +41,31 @@ Get aliases. Retrieves the cluster’s index aliases, including filter and routi
 ----
 
 [discrete]
-===== `CatAliasesRequest`
+==== CatAliasesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatAliasesRequest extends CatCatRequestBase {
   name?: <<Names>>
   expand_wildcards?: <<ExpandWildcards>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatAliasesResponse`
+==== CatAliasesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatAliasesResponse = CatAliasesAliasesRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

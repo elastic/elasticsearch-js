@@ -41,10 +41,12 @@ Roll over to a new index. Creates a new index for a data stream or index alias.
 ----
 
 [discrete]
-===== `IndicesRolloverRequest`
+==== IndicesRolloverRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesRolloverRequest extends <<RequestBase>> {
   alias: <<IndexAlias>>
   new_index?: <<IndexName>>
@@ -57,13 +59,18 @@ interface IndicesRolloverRequest extends <<RequestBase>> {
   mappings?: MappingTypeMapping
   settings?: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesRolloverResponse`
+==== IndicesRolloverResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesRolloverResponse {
   acknowledged: boolean
   conditions: Record<string, boolean>
@@ -73,5 +80,8 @@ interface IndicesRolloverResponse {
   rolled_over: boolean
   shards_acknowledged: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

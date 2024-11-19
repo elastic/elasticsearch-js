@@ -41,20 +41,30 @@ Get search application details.
 ----
 
 [discrete]
-===== `SearchApplicationGetRequest`
+==== SearchApplicationGetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchApplicationGetRequest extends <<RequestBase>> {
   name: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchApplicationGetResponse`
+==== SearchApplicationGetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SearchApplicationGetResponse = SearchApplicationSearchApplication
-----
 
+[pass]
+++++
+</pre>
+++++

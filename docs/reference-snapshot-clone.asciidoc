@@ -41,10 +41,12 @@ Clones indices from one snapshot into another snapshot in the same repository.
 ----
 
 [discrete]
-===== `SnapshotCloneRequest`
+==== SnapshotCloneRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotCloneRequest extends <<RequestBase>> {
   repository: <<Name>>
   snapshot: <<Name>>
@@ -53,13 +55,21 @@ interface SnapshotCloneRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   indices: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SnapshotCloneResponse`
+==== SnapshotCloneResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SnapshotCloneResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,24 +41,34 @@ Revert to a snapshot. The machine learning features react quickly to anomalous i
 ----
 
 [discrete]
-===== `MlRevertModelSnapshotRequest`
+==== MlRevertModelSnapshotRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlRevertModelSnapshotRequest extends <<RequestBase>> {
   job_id: <<Id>>
   snapshot_id: <<Id>>
   delete_intervening_results?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlRevertModelSnapshotResponse`
+==== MlRevertModelSnapshotResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlRevertModelSnapshotResponse {
   model: MlModelSnapshot
 }
-----
 
+[pass]
+++++
+</pre>
+++++

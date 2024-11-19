@@ -41,21 +41,31 @@ Creates or updates a pipeline used for Logstash Central Management.
 ----
 
 [discrete]
-===== `LogstashPutPipelineRequest`
+==== LogstashPutPipelineRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LogstashPutPipelineRequest extends <<RequestBase>> {
   id: <<Id>>
   pipeline?: LogstashPipeline
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `LogstashPutPipelineResponse`
+==== LogstashPutPipelineResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type LogstashPutPipelineResponse = boolean
-----
 
+[pass]
+++++
+</pre>
+++++

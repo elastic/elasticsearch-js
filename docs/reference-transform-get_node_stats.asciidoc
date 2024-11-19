@@ -38,20 +38,3 @@ Retrieves transform usage information for transform nodes.
 (TransformGetNodeStatsRequest, options?): Promise<TransformGetNodeStatsResponse>
 ----
 
-[discrete]
-===== `TransformGetNodeStatsRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `TransformGetNodeStatsResponse`
-
-[source,ts]
-----
-n/a
-----
-

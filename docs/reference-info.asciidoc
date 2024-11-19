@@ -41,19 +41,26 @@ Get cluster info. Returns basic information about the cluster.
 ----
 
 [discrete]
-===== `InfoRequest`
+==== InfoRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface InfoRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `InfoResponse`
+==== InfoResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface InfoResponse {
   cluster_name: <<Name>>
   cluster_uuid: <<Uuid>>
@@ -61,5 +68,8 @@ interface InfoResponse {
   tagline: string
   version: <<ElasticsearchVersionInfo>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

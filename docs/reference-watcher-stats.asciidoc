@@ -41,26 +41,36 @@ Retrieves the current Watcher metrics.
 ----
 
 [discrete]
-===== `WatcherStatsRequest`
+==== WatcherStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherStatsRequest extends <<RequestBase>> {
   metric?: WatcherStatsWatcherMetric | WatcherStatsWatcherMetric[]
   emit_stacktraces?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `WatcherStatsResponse`
+==== WatcherStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherStatsResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
   manually_stopped: boolean
   stats: WatcherStatsWatcherNodeStats[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

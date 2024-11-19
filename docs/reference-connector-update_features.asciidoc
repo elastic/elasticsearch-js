@@ -40,20 +40,3 @@ Updates the connector features in the connector document.
 (ConnectorUpdateFeaturesRequest, options?): Promise<ConnectorUpdateFeaturesResponse>
 ----
 
-[discrete]
-===== `ConnectorUpdateFeaturesRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `ConnectorUpdateFeaturesResponse`
-
-[source,ts]
-----
-n/a
-----
-

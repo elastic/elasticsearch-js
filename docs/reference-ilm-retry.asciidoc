@@ -41,20 +41,30 @@ Retries executing the policy for an index that is in the ERROR step.
 ----
 
 [discrete]
-===== `IlmRetryRequest`
+==== IlmRetryRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmRetryRequest extends <<RequestBase>> {
   index: <<IndexName>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IlmRetryResponse`
+==== IlmRetryResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IlmRetryResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

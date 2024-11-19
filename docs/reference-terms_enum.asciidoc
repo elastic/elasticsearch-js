@@ -41,31 +41,41 @@ Get terms in an index. Discover terms that match a partial string in an index. T
 ----
 
 [discrete]
-===== `TermsEnumRequest`
+==== TermsEnumRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TermsEnumRequest extends <<RequestBase>> {
   index: <<IndexName>>
   field: <<Field>>
-  size?: <<integer>>
+  size?: number
   timeout?: <<Duration>>
   case_insensitive?: boolean
   index_filter?: QueryDslQueryContainer
   string?: string
   search_after?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TermsEnumResponse`
+==== TermsEnumResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TermsEnumResponse {
   _shards: <<ShardStatistics>>
   terms: string[]
   complete: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

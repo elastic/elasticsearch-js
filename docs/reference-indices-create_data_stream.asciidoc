@@ -41,22 +41,32 @@ Create a data stream. Creates a data stream. You must have a matching index temp
 ----
 
 [discrete]
-===== `IndicesCreateDataStreamRequest`
+==== IndicesCreateDataStreamRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesCreateDataStreamRequest extends <<RequestBase>> {
   name: <<DataStreamName>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesCreateDataStreamResponse`
+==== IndicesCreateDataStreamResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesCreateDataStreamResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

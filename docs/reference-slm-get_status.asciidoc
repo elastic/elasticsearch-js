@@ -41,21 +41,31 @@ Retrieves the status of snapshot lifecycle management (SLM).
 ----
 
 [discrete]
-===== `SlmGetStatusRequest`
+==== SlmGetStatusRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SlmGetStatusRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SlmGetStatusResponse`
+==== SlmGetStatusResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SlmGetStatusResponse {
   operation_mode: <<LifecycleOperationMode>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

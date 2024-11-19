@@ -41,24 +41,34 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentati
 ----
 
 [discrete]
-===== `ShutdownGetNodeRequest`
+==== ShutdownGetNodeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ShutdownGetNodeRequest extends <<RequestBase>> {
   node_id?: <<NodeIds>>
   master_timeout?: <<TimeUnit>>
   timeout?: <<TimeUnit>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ShutdownGetNodeResponse`
+==== ShutdownGetNodeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ShutdownGetNodeResponse {
   nodes: ShutdownGetNodeNodeShutdownStatus[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

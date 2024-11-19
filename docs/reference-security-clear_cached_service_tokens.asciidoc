@@ -41,26 +41,36 @@ Clear service account token caches. Evict a subset of all entries from the servi
 ----
 
 [discrete]
-===== `SecurityClearCachedServiceTokensRequest`
+==== SecurityClearCachedServiceTokensRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityClearCachedServiceTokensRequest extends <<RequestBase>> {
   namespace: <<Namespace>>
   service: <<Service>>
   name: <<Names>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityClearCachedServiceTokensResponse`
+==== SecurityClearCachedServiceTokensResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityClearCachedServiceTokensResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
   nodes: Record<string, SecurityClusterNode>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

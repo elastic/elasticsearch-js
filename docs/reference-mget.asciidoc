@@ -41,10 +41,12 @@ Get multiple documents. Get multiple JSON documents by ID from one or more indic
 ----
 
 [discrete]
-===== `MgetRequest`
+==== MgetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MgetRequest extends <<RequestBase>> {
   index?: <<IndexName>>
   force_synthetic_source?: boolean
@@ -59,15 +61,23 @@ interface MgetRequest extends <<RequestBase>> {
   docs?: MgetOperation[]
   ids?: <<Ids>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MgetResponse`
+==== MgetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MgetResponse<TDocument = unknown> {
   docs: MgetResponseItem<TDocument>[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

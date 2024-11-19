@@ -41,24 +41,34 @@ Retrieves a summary of all defined synonym sets
 ----
 
 [discrete]
-===== `SynonymsGetSynonymsSetsRequest`
+==== SynonymsGetSynonymsSetsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SynonymsGetSynonymsSetsRequest extends <<RequestBase>> {
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SynonymsGetSynonymsSetsResponse`
+==== SynonymsGetSynonymsSetsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SynonymsGetSynonymsSetsResponse {
-  count: <<integer>>
+  count: number
   results: SynonymsGetSynonymsSetsSynonymsSetItem[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

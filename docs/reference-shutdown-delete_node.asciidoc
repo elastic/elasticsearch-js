@@ -41,22 +41,32 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current[{es} documentati
 ----
 
 [discrete]
-===== `ShutdownDeleteNodeRequest`
+==== ShutdownDeleteNodeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ShutdownDeleteNodeRequest extends <<RequestBase>> {
   node_id: <<NodeId>>
   master_timeout?: <<TimeUnit>>
   timeout?: <<TimeUnit>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ShutdownDeleteNodeResponse`
+==== ShutdownDeleteNodeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ShutdownDeleteNodeResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

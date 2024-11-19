@@ -41,25 +41,35 @@ Bulk delete roles. The role management APIs are generally the preferred way to m
 ----
 
 [discrete]
-===== `SecurityBulkDeleteRoleRequest`
+==== SecurityBulkDeleteRoleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityBulkDeleteRoleRequest extends <<RequestBase>> {
   refresh?: <<Refresh>>
   names: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityBulkDeleteRoleResponse`
+==== SecurityBulkDeleteRoleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityBulkDeleteRoleResponse {
   deleted?: string[]
   not_found?: string[]
   errors?: SecurityBulkError
 }
-----
 
+[pass]
+++++
+</pre>
+++++

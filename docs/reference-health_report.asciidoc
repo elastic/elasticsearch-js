@@ -41,27 +41,37 @@ Returns the health of the cluster.
 ----
 
 [discrete]
-===== `HealthReportRequest`
+==== HealthReportRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface HealthReportRequest extends <<RequestBase>> {
   feature?: string | string[]
   timeout?: <<Duration>>
   verbose?: boolean
-  size?: <<integer>>
+  size?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `HealthReportResponse`
+==== HealthReportResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface HealthReportResponse {
   cluster_name: string
   indicators: HealthReportIndicators
   status?: HealthReportIndicatorHealthStatus
 }
-----
 
+[pass]
+++++
+</pre>
+++++

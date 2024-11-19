@@ -41,25 +41,35 @@ Stop data frame analytics jobs. A data frame analytics job can be started and st
 ----
 
 [discrete]
-===== `MlStopDataFrameAnalyticsRequest`
+==== MlStopDataFrameAnalyticsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlStopDataFrameAnalyticsRequest extends <<RequestBase>> {
   id: <<Id>>
   allow_no_match?: boolean
   force?: boolean
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlStopDataFrameAnalyticsResponse`
+==== MlStopDataFrameAnalyticsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlStopDataFrameAnalyticsResponse {
   stopped: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

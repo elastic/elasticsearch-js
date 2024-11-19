@@ -39,23 +39,33 @@ Update the connector draft filtering validation. Update the draft filtering vali
 ----
 
 [discrete]
-===== `ConnectorUpdateFilteringValidationRequest`
+==== ConnectorUpdateFilteringValidationRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateFilteringValidationRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   validation: ConnectorFilteringRulesValidation
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdateFilteringValidationResponse`
+==== ConnectorUpdateFilteringValidationResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateFilteringValidationResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

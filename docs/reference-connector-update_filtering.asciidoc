@@ -41,25 +41,35 @@ Update the connector filtering. Update the draft filtering configuration of a co
 ----
 
 [discrete]
-===== `ConnectorUpdateFilteringRequest`
+==== ConnectorUpdateFilteringRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateFilteringRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   filtering?: ConnectorFilteringConfig[]
   rules?: ConnectorFilteringRule[]
   advanced_snippet?: ConnectorFilteringAdvancedSnippet
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdateFilteringResponse`
+==== ConnectorUpdateFilteringResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateFilteringResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

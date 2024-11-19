@@ -41,10 +41,12 @@ Splits an existing index into a new index with more primary shards.
 ----
 
 [discrete]
-===== `IndicesSplitRequest`
+==== IndicesSplitRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesSplitRequest extends <<RequestBase>> {
   index: <<IndexName>>
   target: <<IndexName>>
@@ -54,17 +56,25 @@ interface IndicesSplitRequest extends <<RequestBase>> {
   aliases?: Record<<<IndexName>>, IndicesAlias>
   settings?: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesSplitResponse`
+==== IndicesSplitResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesSplitResponse {
   acknowledged: boolean
   shards_acknowledged: boolean
   index: <<IndexName>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

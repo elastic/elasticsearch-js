@@ -41,20 +41,30 @@ Pauses a follower index. The follower index will not fetch any additional operat
 ----
 
 [discrete]
-===== `CcrPauseFollowRequest`
+==== CcrPauseFollowRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrPauseFollowRequest extends <<RequestBase>> {
   index: <<IndexName>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrPauseFollowResponse`
+==== CcrPauseFollowResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CcrPauseFollowResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

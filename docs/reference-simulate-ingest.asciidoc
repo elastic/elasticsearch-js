@@ -40,20 +40,3 @@ Simulates running ingest with example documents.
 (SimulateIngestRequest, options?): Promise<SimulateIngestResponse>
 ----
 
-[discrete]
-===== `SimulateIngestRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `SimulateIngestResponse`
-
-[source,ts]
-----
-n/a
-----
-

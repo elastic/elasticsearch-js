@@ -41,35 +41,45 @@ Creates a new named collection of auto-follow patterns against a specified remot
 ----
 
 [discrete]
-===== `CcrPutAutoFollowPatternRequest`
+==== CcrPutAutoFollowPatternRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrPutAutoFollowPatternRequest extends <<RequestBase>> {
   name: <<Name>>
   remote_cluster: string
   follow_index_pattern?: <<IndexPattern>>
   leader_index_patterns?: <<IndexPatterns>>
   leader_index_exclusion_patterns?: <<IndexPatterns>>
-  max_outstanding_read_requests?: <<integer>>
+  max_outstanding_read_requests?: number
   settings?: Record<string, any>
-  max_outstanding_write_requests?: <<integer>>
+  max_outstanding_write_requests?: number
   read_poll_timeout?: <<Duration>>
-  max_read_request_operation_count?: <<integer>>
+  max_read_request_operation_count?: number
   max_read_request_size?: <<ByteSize>>
   max_retry_delay?: <<Duration>>
-  max_write_buffer_count?: <<integer>>
+  max_write_buffer_count?: number
   max_write_buffer_size?: <<ByteSize>>
-  max_write_request_operation_count?: <<integer>>
+  max_write_request_operation_count?: number
   max_write_request_size?: <<ByteSize>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrPutAutoFollowPatternResponse`
+==== CcrPutAutoFollowPatternResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CcrPutAutoFollowPatternResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

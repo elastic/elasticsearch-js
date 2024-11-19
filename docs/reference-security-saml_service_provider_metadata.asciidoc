@@ -41,22 +41,32 @@ Create SAML service provider metadata. Generate SAML metadata for a SAML 2.0 Ser
 ----
 
 [discrete]
-===== `SecuritySamlServiceProviderMetadataRequest`
+==== SecuritySamlServiceProviderMetadataRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecuritySamlServiceProviderMetadataRequest extends <<RequestBase>> {
   realm_name: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecuritySamlServiceProviderMetadataResponse`
+==== SecuritySamlServiceProviderMetadataResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecuritySamlServiceProviderMetadataResponse {
   metadata: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++

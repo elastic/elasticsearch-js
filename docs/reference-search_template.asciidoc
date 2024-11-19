@@ -41,10 +41,12 @@ Run a search with a search template.
 ----
 
 [discrete]
-===== `SearchTemplateRequest`
+==== SearchTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchTemplateRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -64,28 +66,36 @@ interface SearchTemplateRequest extends <<RequestBase>> {
   profile?: boolean
   source?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchTemplateResponse`
+==== SearchTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchTemplateResponse<TDocument = unknown> {
-  took: <<long>>
+  took: number
   timed_out: boolean
   _shards: <<ShardStatistics>>
   hits: SearchHitsMetadata<TDocument>
   aggregations?: Record<<<AggregateName>>, AggregationsAggregate>
   _clusters?: <<ClusterStatistics>>
   fields?: Record<string, any>
-  max_score?: <<double>>
-  num_reduce_phases?: <<long>>
+  max_score?: number
+  num_reduce_phases?: number
   profile?: SearchProfile
   pit_id?: <<Id>>
   _scroll_id?: <<ScrollId>>
   suggest?: Record<<<SuggestionName>>, SearchSuggest<TDocument>[]>
   terminated_early?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

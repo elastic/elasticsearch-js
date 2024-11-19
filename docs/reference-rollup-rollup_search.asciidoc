@@ -41,10 +41,12 @@ Enables searching rolled-up data using the standard Query DSL.
 ----
 
 [discrete]
-===== `RollupRollupSearchRequest`
+==== RollupRollupSearchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupRollupSearchRequest extends <<RequestBase>> {
   index: <<Indices>>
   rest_total_hits_as_int?: boolean
@@ -53,22 +55,30 @@ interface RollupRollupSearchRequest extends <<RequestBase>> {
   /** @alias aggregations */
   aggs?: Record<string, AggregationsAggregationContainer>
   query?: QueryDslQueryContainer
-  size?: <<integer>>
+  size?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `RollupRollupSearchResponse`
+==== RollupRollupSearchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupRollupSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, AggregationsAggregate>> {
-  took: <<long>>
+  took: number
   timed_out: boolean
   terminated_early?: boolean
   _shards: <<ShardStatistics>>
   hits: SearchHitsMetadata<TDocument>
   aggregations?: TAggregations
 }
-----
 
+[pass]
+++++
+</pre>
+++++

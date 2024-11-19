@@ -41,27 +41,37 @@ Get data frame analytics jobs usage info.
 ----
 
 [discrete]
-===== `MlGetDataFrameAnalyticsStatsRequest`
+==== MlGetDataFrameAnalyticsStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetDataFrameAnalyticsStatsRequest extends <<RequestBase>> {
   id?: <<Id>>
   allow_no_match?: boolean
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
   verbose?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetDataFrameAnalyticsStatsResponse`
+==== MlGetDataFrameAnalyticsStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetDataFrameAnalyticsStatsResponse {
-  count: <<long>>
+  count: number
   data_frame_analytics: MlDataframeAnalytics[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

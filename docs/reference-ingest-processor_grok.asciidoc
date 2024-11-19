@@ -41,21 +41,31 @@ Extracts structured fields out of a single text field within a document. You cho
 ----
 
 [discrete]
-===== `IngestProcessorGrokRequest`
+==== IngestProcessorGrokRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestProcessorGrokRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IngestProcessorGrokResponse`
+==== IngestProcessorGrokResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestProcessorGrokResponse {
   patterns: Record<string, string>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

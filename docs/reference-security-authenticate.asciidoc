@@ -41,19 +41,26 @@ Authenticate a user. Authenticates a user and returns information about the auth
 ----
 
 [discrete]
-===== `SecurityAuthenticateRequest`
+==== SecurityAuthenticateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityAuthenticateRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityAuthenticateResponse`
+==== SecurityAuthenticateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityAuthenticateResponse {
   api_key?: SecurityApiKey
   authentication_realm: SecurityRealmInfo
@@ -67,5 +74,8 @@ interface SecurityAuthenticateResponse {
   authentication_type: string
   token?: SecurityAuthenticateToken
 }
-----
 
+[pass]
+++++
+</pre>
+++++

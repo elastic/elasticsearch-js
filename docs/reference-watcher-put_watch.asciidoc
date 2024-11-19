@@ -41,14 +41,16 @@ Creates a new watch, or updates an existing one.
 ----
 
 [discrete]
-===== `WatcherPutWatchRequest`
+==== WatcherPutWatchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherPutWatchRequest extends <<RequestBase>> {
   id: <<Id>>
   active?: boolean
-  if_primary_term?: <<long>>
+  if_primary_term?: number
   if_seq_no?: <<SequenceNumber>>
   version?: <<VersionNumber>>
   actions?: Record<string, WatcherAction>
@@ -59,19 +61,27 @@ interface WatcherPutWatchRequest extends <<RequestBase>> {
   transform?: <<TransformContainer>>
   trigger?: WatcherTriggerContainer
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `WatcherPutWatchResponse`
+==== WatcherPutWatchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherPutWatchResponse {
   created: boolean
   _id: <<Id>>
-  _primary_term: <<long>>
+  _primary_term: number
   _seq_no: <<SequenceNumber>>
   _version: <<VersionNumber>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

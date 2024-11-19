@@ -41,24 +41,34 @@ Get a user profile. Get a user's profile using the unique profile ID.
 ----
 
 [discrete]
-===== `SecurityGetUserProfileRequest`
+==== SecurityGetUserProfileRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityGetUserProfileRequest extends <<RequestBase>> {
   uid: SecurityUserProfileId | SecurityUserProfileId[]
   data?: string | string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityGetUserProfileResponse`
+==== SecurityGetUserProfileResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityGetUserProfileResponse {
   profiles: SecurityUserProfileWithMetadata[]
   errors?: SecurityGetUserProfileGetUserProfileErrors
 }
-----
 
+[pass]
+++++
+</pre>
+++++

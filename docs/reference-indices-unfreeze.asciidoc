@@ -41,10 +41,12 @@ Unfreezes an index.
 ----
 
 [discrete]
-===== `IndicesUnfreezeRequest`
+==== IndicesUnfreezeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesUnfreezeRequest extends <<RequestBase>> {
   index: <<IndexName>>
   allow_no_indices?: boolean
@@ -54,16 +56,24 @@ interface IndicesUnfreezeRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   wait_for_active_shards?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesUnfreezeResponse`
+==== IndicesUnfreezeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesUnfreezeResponse {
   acknowledged: boolean
   shards_acknowledged: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

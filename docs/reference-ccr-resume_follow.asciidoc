@@ -41,30 +41,40 @@ Resumes a follower index that has been paused
 ----
 
 [discrete]
-===== `CcrResumeFollowRequest`
+==== CcrResumeFollowRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrResumeFollowRequest extends <<RequestBase>> {
   index: <<IndexName>>
-  max_outstanding_read_requests?: <<long>>
-  max_outstanding_write_requests?: <<long>>
-  max_read_request_operation_count?: <<long>>
+  max_outstanding_read_requests?: number
+  max_outstanding_write_requests?: number
+  max_read_request_operation_count?: number
   max_read_request_size?: string
   max_retry_delay?: <<Duration>>
-  max_write_buffer_count?: <<long>>
+  max_write_buffer_count?: number
   max_write_buffer_size?: string
-  max_write_request_operation_count?: <<long>>
+  max_write_request_operation_count?: number
   max_write_request_size?: string
   read_poll_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrResumeFollowResponse`
+==== CcrResumeFollowResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CcrResumeFollowResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

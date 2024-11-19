@@ -41,21 +41,31 @@ Start the index lifecycle management (ILM) plugin.
 ----
 
 [discrete]
-===== `IlmStartRequest`
+==== IlmStartRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmStartRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IlmStartResponse`
+==== IlmStartResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IlmStartResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

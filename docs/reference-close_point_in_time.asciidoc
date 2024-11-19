@@ -41,23 +41,33 @@ Close a point in time. A point in time must be opened explicitly before being us
 ----
 
 [discrete]
-===== `ClosePointInTimeRequest`
+==== ClosePointInTimeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClosePointInTimeRequest extends <<RequestBase>> {
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClosePointInTimeResponse`
+==== ClosePointInTimeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClosePointInTimeResponse {
   succeeded: boolean
-  num_freed: <<integer>>
+  num_freed: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

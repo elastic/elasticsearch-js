@@ -41,28 +41,38 @@ Get all connectors. Get information about all connectors.
 ----
 
 [discrete]
-===== `ConnectorListRequest`
+==== ConnectorListRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorListRequest extends <<RequestBase>> {
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
   index_name?: <<Indices>>
   connector_name?: <<Names>>
   service_type?: <<Names>>
   query?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorListResponse`
+==== ConnectorListResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorListResponse {
-  count: <<long>>
+  count: number
   results: ConnectorConnector[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

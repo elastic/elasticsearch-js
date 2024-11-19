@@ -41,10 +41,12 @@ Update index settings. Changes dynamic index settings in real time. For data str
 ----
 
 [discrete]
-===== `IndicesPutSettingsRequest`
+==== IndicesPutSettingsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesPutSettingsRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -56,13 +58,21 @@ interface IndicesPutSettingsRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   settings?: IndicesIndexSettings
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesPutSettingsResponse`
+==== IndicesPutSettingsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesPutSettingsResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

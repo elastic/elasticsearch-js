@@ -41,10 +41,12 @@ Create or update role mappings. Role mappings define which roles are assigned to
 ----
 
 [discrete]
-===== `SecurityPutRoleMappingRequest`
+==== SecurityPutRoleMappingRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityPutRoleMappingRequest extends <<RequestBase>> {
   name: <<Name>>
   refresh?: <<Refresh>>
@@ -55,16 +57,24 @@ interface SecurityPutRoleMappingRequest extends <<RequestBase>> {
   rules?: SecurityRoleMappingRule
   run_as?: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityPutRoleMappingResponse`
+==== SecurityPutRoleMappingResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityPutRoleMappingResponse {
   created?: boolean
   role_mapping: SecurityCreatedStatus
 }
-----
 
+[pass]
+++++
+</pre>
+++++

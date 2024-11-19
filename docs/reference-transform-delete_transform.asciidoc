@@ -41,23 +41,33 @@ Delete a transform. Deletes a transform.
 ----
 
 [discrete]
-===== `TransformDeleteTransformRequest`
+==== TransformDeleteTransformRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TransformDeleteTransformRequest extends <<RequestBase>> {
   transform_id: <<Id>>
   force?: boolean
   delete_dest_index?: boolean
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TransformDeleteTransformResponse`
+==== TransformDeleteTransformResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type TransformDeleteTransformResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,22 +41,32 @@ Create or update an alias. Adds a data stream or index to an alias.
 ----
 
 [discrete]
-===== `IndicesUpdateAliasesRequest`
+==== IndicesUpdateAliasesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesUpdateAliasesRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
   actions?: IndicesUpdateAliasesAction[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesUpdateAliasesResponse`
+==== IndicesUpdateAliasesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesUpdateAliasesResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,22 +41,32 @@ Deletes the specified lifecycle policy definition. You cannot delete policies th
 ----
 
 [discrete]
-===== `IlmDeleteLifecycleRequest`
+==== IlmDeleteLifecycleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmDeleteLifecycleRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IlmDeleteLifecycleResponse`
+==== IlmDeleteLifecycleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IlmDeleteLifecycleResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

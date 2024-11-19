@@ -41,25 +41,35 @@ Update a cross-cluster API key. Update the attributes of an existing cross-clust
 ----
 
 [discrete]
-===== `SecurityUpdateCrossClusterApiKeyRequest`
+==== SecurityUpdateCrossClusterApiKeyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityUpdateCrossClusterApiKeyRequest extends <<RequestBase>> {
   id: <<Id>>
   access: SecurityAccess
   expiration?: <<Duration>>
   metadata?: <<Metadata>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityUpdateCrossClusterApiKeyResponse`
+==== SecurityUpdateCrossClusterApiKeyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityUpdateCrossClusterApiKeyResponse {
   updated: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

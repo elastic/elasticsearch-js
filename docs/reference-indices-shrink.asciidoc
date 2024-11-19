@@ -41,10 +41,12 @@ Shrinks an existing index into a new index with fewer primary shards.
 ----
 
 [discrete]
-===== `IndicesShrinkRequest`
+==== IndicesShrinkRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesShrinkRequest extends <<RequestBase>> {
   index: <<IndexName>>
   target: <<IndexName>>
@@ -54,17 +56,25 @@ interface IndicesShrinkRequest extends <<RequestBase>> {
   aliases?: Record<<<IndexName>>, IndicesAlias>
   settings?: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesShrinkResponse`
+==== IndicesShrinkResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesShrinkResponse {
   acknowledged: boolean
   shards_acknowledged: boolean
   index: <<IndexName>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,21 +41,31 @@ Resets the internal state of features, usually by deleting system indices
 ----
 
 [discrete]
-===== `FeaturesResetFeaturesRequest`
+==== FeaturesResetFeaturesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface FeaturesResetFeaturesRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `FeaturesResetFeaturesResponse`
+==== FeaturesResetFeaturesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface FeaturesResetFeaturesResponse {
   features: FeaturesFeature[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

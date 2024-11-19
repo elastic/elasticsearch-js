@@ -41,22 +41,32 @@ Starts an existing, stopped rollup job.
 ----
 
 [discrete]
-===== `RollupStartJobRequest`
+==== RollupStartJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupStartJobRequest extends <<RequestBase>> {
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `RollupStartJobResponse`
+==== RollupStartJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupStartJobResponse {
   started: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

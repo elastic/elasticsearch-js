@@ -41,10 +41,12 @@ Updates the cluster settings.
 ----
 
 [discrete]
-===== `ClusterPutSettingsRequest`
+==== ClusterPutSettingsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterPutSettingsRequest extends <<RequestBase>> {
   flat_settings?: boolean
   master_timeout?: <<Duration>>
@@ -52,17 +54,25 @@ interface ClusterPutSettingsRequest extends <<RequestBase>> {
   persistent?: Record<string, any>
   transient?: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterPutSettingsResponse`
+==== ClusterPutSettingsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterPutSettingsResponse {
   acknowledged: boolean
   persistent: Record<string, any>
   transient: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

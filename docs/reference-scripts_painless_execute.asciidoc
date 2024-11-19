@@ -41,24 +41,34 @@ Run a script. Runs a script and returns a result.
 ----
 
 [discrete]
-===== `ScriptsPainlessExecuteRequest`
+==== ScriptsPainlessExecuteRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ScriptsPainlessExecuteRequest extends <<RequestBase>> {
   context?: string
   context_setup?: ScriptsPainlessExecutePainlessContextSetup
   script?: <<Script>> | string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ScriptsPainlessExecuteResponse`
+==== ScriptsPainlessExecuteResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ScriptsPainlessExecuteResponse<TResult = unknown> {
   result: TResult
 }
-----
 
+[pass]
+++++
+</pre>
+++++

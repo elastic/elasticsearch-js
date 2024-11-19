@@ -41,26 +41,36 @@ Upgrade a snapshot. Upgrades an anomaly detection model snapshot to the latest m
 ----
 
 [discrete]
-===== `MlUpgradeJobSnapshotRequest`
+==== MlUpgradeJobSnapshotRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpgradeJobSnapshotRequest extends <<RequestBase>> {
   job_id: <<Id>>
   snapshot_id: <<Id>>
   wait_for_completion?: boolean
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlUpgradeJobSnapshotResponse`
+==== MlUpgradeJobSnapshotResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpgradeJobSnapshotResponse {
   node: <<NodeId>>
   completed: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Create an API key. Create an API key for access without requiring basic authenti
 ----
 
 [discrete]
-===== `SecurityCreateApiKeyRequest`
+==== SecurityCreateApiKeyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityCreateApiKeyRequest extends <<RequestBase>> {
   refresh?: <<Refresh>>
   expiration?: <<Duration>>
@@ -52,19 +54,27 @@ interface SecurityCreateApiKeyRequest extends <<RequestBase>> {
   role_descriptors?: Record<string, SecurityRoleDescriptor>
   metadata?: <<Metadata>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityCreateApiKeyResponse`
+==== SecurityCreateApiKeyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityCreateApiKeyResponse {
   api_key: string
-  expiration?: <<long>>
+  expiration?: number
   id: <<Id>>
   name: <<Name>>
   encoded: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++

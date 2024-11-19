@@ -41,30 +41,40 @@ Get overall bucket results. Retrievs overall bucket results that summarize the b
 ----
 
 [discrete]
-===== `MlGetOverallBucketsRequest`
+==== MlGetOverallBucketsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetOverallBucketsRequest extends <<RequestBase>> {
   job_id: <<Id>>
   allow_no_match?: boolean
   bucket_span?: <<Duration>>
   end?: <<DateTime>>
   exclude_interim?: boolean
-  overall_score?: <<double>> | string
+  overall_score?: number | string
   start?: <<DateTime>>
-  top_n?: <<integer>>
+  top_n?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetOverallBucketsResponse`
+==== MlGetOverallBucketsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetOverallBucketsResponse {
-  count: <<long>>
+  count: number
   overall_buckets: MlOverallBucket[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

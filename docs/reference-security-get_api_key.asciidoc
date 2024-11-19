@@ -41,10 +41,12 @@ Get API key information. Retrieves information for one or more API keys. NOTE: I
 ----
 
 [discrete]
-===== `SecurityGetApiKeyRequest`
+==== SecurityGetApiKeyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityGetApiKeyRequest extends <<RequestBase>> {
   id?: <<Id>>
   name?: <<Name>>
@@ -55,15 +57,23 @@ interface SecurityGetApiKeyRequest extends <<RequestBase>> {
   active_only?: boolean
   with_profile_uid?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityGetApiKeyResponse`
+==== SecurityGetApiKeyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityGetApiKeyResponse {
   api_keys: SecurityApiKey[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

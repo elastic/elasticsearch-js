@@ -41,21 +41,31 @@ Create or update an autoscaling policy. NOTE: This feature is designed for indir
 ----
 
 [discrete]
-===== `AutoscalingPutAutoscalingPolicyRequest`
+==== AutoscalingPutAutoscalingPolicyRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface AutoscalingPutAutoscalingPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
   policy?: AutoscalingAutoscalingPolicy
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `AutoscalingPutAutoscalingPolicyResponse`
+==== AutoscalingPutAutoscalingPolicyResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type AutoscalingPutAutoscalingPolicyResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

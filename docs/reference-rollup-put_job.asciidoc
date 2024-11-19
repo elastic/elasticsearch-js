@@ -41,28 +41,38 @@ Creates a rollup job.
 ----
 
 [discrete]
-===== `RollupPutJobRequest`
+==== RollupPutJobRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RollupPutJobRequest extends <<RequestBase>> {
   id: <<Id>>
   cron: string
   groups: RollupGroupings
   index_pattern: string
   metrics?: RollupFieldMetric[]
-  page_size: <<integer>>
+  page_size: number
   rollup_index: <<IndexName>>
   timeout?: <<Duration>>
   headers?: <<HttpHeaders>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `RollupPutJobResponse`
+==== RollupPutJobResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type RollupPutJobResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

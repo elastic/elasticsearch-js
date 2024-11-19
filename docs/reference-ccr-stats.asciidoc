@@ -41,22 +41,32 @@ Gets all stats related to cross-cluster replication.
 ----
 
 [discrete]
-===== `CcrStatsRequest`
+==== CcrStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrStatsRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrStatsResponse`
+==== CcrStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrStatsResponse {
   auto_follow_stats: CcrStatsAutoFollowStats
   follow_stats: CcrStatsFollowStats
 }
-----
 
+[pass]
+++++
+</pre>
+++++

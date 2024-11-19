@@ -41,19 +41,29 @@ Ping the cluster. Returns whether the cluster is running.
 ----
 
 [discrete]
-===== `PingRequest`
+==== PingRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface PingRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `PingResponse`
+==== PingResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type PingResponse = boolean
-----
 
+[pass]
+++++
+</pre>
+++++

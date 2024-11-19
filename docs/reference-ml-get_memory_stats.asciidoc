@@ -41,27 +41,37 @@ Get machine learning memory usage info. Get information about how machine learni
 ----
 
 [discrete]
-===== `MlGetMemoryStatsRequest`
+==== MlGetMemoryStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetMemoryStatsRequest extends <<RequestBase>> {
   node_id?: <<Id>>
   human?: boolean
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlGetMemoryStatsResponse`
+==== MlGetMemoryStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlGetMemoryStatsResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
   nodes: Record<<<Id>>, MlGetMemoryStatsMemory>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

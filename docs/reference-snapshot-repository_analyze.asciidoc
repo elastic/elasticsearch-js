@@ -40,20 +40,3 @@ Analyzes a repository for correctness and performance
 (SnapshotRepositoryAnalyzeRequest, options?): Promise<SnapshotRepositoryAnalyzeResponse>
 ----
 
-[discrete]
-===== `SnapshotRepositoryAnalyzeRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `SnapshotRepositoryAnalyzeResponse`
-
-[source,ts]
-----
-n/a
-----
-

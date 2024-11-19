@@ -38,20 +38,3 @@ Claims a connector sync job.
 (ConnectorSyncJobClaimRequest, options?): Promise<ConnectorSyncJobClaimResponse>
 ----
 
-[discrete]
-===== `ConnectorSyncJobClaimRequest`
-
-[source,ts]
-----
-{
-}
-----
-
-[discrete]
-===== `ConnectorSyncJobClaimResponse`
-
-[source,ts]
-----
-n/a
-----
-

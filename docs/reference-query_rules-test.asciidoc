@@ -41,24 +41,34 @@ Creates or updates a query ruleset.
 ----
 
 [discrete]
-===== `QueryRulesTestRequest`
+==== QueryRulesTestRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface QueryRulesTestRequest extends <<RequestBase>> {
   ruleset_id: <<Id>>
   match_criteria: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `QueryRulesTestResponse`
+==== QueryRulesTestResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface QueryRulesTestResponse {
-  total_matched_rules: <<integer>>
+  total_matched_rules: number
   matched_rules: QueryRulesTestQueryRulesetMatchedRule[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

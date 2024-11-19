@@ -41,23 +41,33 @@ Throttle an update by query operation. Change the number of requests per second 
 ----
 
 [discrete]
-===== `UpdateByQueryRethrottleRequest`
+==== UpdateByQueryRethrottleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface UpdateByQueryRethrottleRequest extends <<RequestBase>> {
   task_id: <<Id>>
-  requests_per_second?: <<float>>
+  requests_per_second?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `UpdateByQueryRethrottleResponse`
+==== UpdateByQueryRethrottleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface UpdateByQueryRethrottleResponse {
   nodes: Record<string, UpdateByQueryRethrottleUpdateByQueryRethrottleNode>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

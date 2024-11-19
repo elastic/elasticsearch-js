@@ -41,10 +41,12 @@ Bulk index or delete documents. Performs multiple indexing or delete operations 
 ----
 
 [discrete]
-===== `BulkRequest`
+==== BulkRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <<RequestBase>> {
   index?: <<IndexName>>
   pipeline?: string
@@ -58,18 +60,26 @@ interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <
   require_alias?: boolean
   operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `BulkResponse`
+==== BulkResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface BulkResponse {
   errors: boolean
   items: Partial<Record<BulkOperationType, BulkResponseItem>>[]
-  took: <<long>>
-  ingest_took?: <<long>>
+  took: number
+  ingest_took?: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

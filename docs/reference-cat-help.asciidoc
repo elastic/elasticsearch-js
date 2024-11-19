@@ -41,19 +41,29 @@ Get CAT help. Returns help for the CAT APIs.
 ----
 
 [discrete]
-===== `CatHelpRequest`
+==== CatHelpRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatHelpRequest extends CatCatRequestBase {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatHelpResponse`
+==== CatHelpResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatHelpResponse = CatHelpHelpRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

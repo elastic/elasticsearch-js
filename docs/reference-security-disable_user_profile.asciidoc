@@ -41,21 +41,31 @@ Disable a user profile. Disable user profiles so that they are not visible in us
 ----
 
 [discrete]
-===== `SecurityDisableUserProfileRequest`
+==== SecurityDisableUserProfileRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityDisableUserProfileRequest extends <<RequestBase>> {
   uid: SecurityUserProfileId
   refresh?: <<Refresh>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityDisableUserProfileResponse`
+==== SecurityDisableUserProfileResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SecurityDisableUserProfileResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

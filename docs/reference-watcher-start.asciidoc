@@ -41,19 +41,29 @@ Starts Watcher if it is not already running.
 ----
 
 [discrete]
-===== `WatcherStartRequest`
+==== WatcherStartRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherStartRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `WatcherStartResponse`
+==== WatcherStartResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type WatcherStartResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

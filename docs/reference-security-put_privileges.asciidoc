@@ -41,21 +41,31 @@ Create or update application privileges.
 ----
 
 [discrete]
-===== `SecurityPutPrivilegesRequest`
+==== SecurityPutPrivilegesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityPutPrivilegesRequest extends <<RequestBase>> {
   refresh?: <<Refresh>>
   privileges?: Record<string, Record<string, SecurityPutPrivilegesActions>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityPutPrivilegesResponse`
+==== SecurityPutPrivilegesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SecurityPutPrivilegesResponse = Record<string, Record<string, SecurityCreatedStatus>>
-----
 
+[pass]
+++++
+</pre>
+++++

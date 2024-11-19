@@ -41,10 +41,12 @@ Explain data frame analytics config. This API provides explanations for a data f
 ----
 
 [discrete]
-===== `MlExplainDataFrameAnalyticsRequest`
+==== MlExplainDataFrameAnalyticsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlExplainDataFrameAnalyticsRequest extends <<RequestBase>> {
   id?: <<Id>>
   source?: MlDataframeAnalyticsSource
@@ -52,20 +54,28 @@ interface MlExplainDataFrameAnalyticsRequest extends <<RequestBase>> {
   analysis?: MlDataframeAnalysisContainer
   description?: string
   model_memory_limit?: string
-  max_num_threads?: <<integer>>
+  max_num_threads?: number
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
   allow_lazy_start?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlExplainDataFrameAnalyticsResponse`
+==== MlExplainDataFrameAnalyticsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlExplainDataFrameAnalyticsResponse {
   field_selection: MlDataframeAnalyticsFieldSelection[]
   memory_estimation: MlDataframeAnalyticsMemoryEstimation
 }
-----
 
+[pass]
+++++
+</pre>
+++++

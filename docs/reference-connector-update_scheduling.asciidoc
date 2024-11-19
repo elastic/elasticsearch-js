@@ -41,23 +41,33 @@ Update the connector scheduling.
 ----
 
 [discrete]
-===== `ConnectorUpdateSchedulingRequest`
+==== ConnectorUpdateSchedulingRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateSchedulingRequest extends <<RequestBase>> {
   connector_id: <<Id>>
   scheduling: ConnectorSchedulingConfiguration
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorUpdateSchedulingResponse`
+==== ConnectorUpdateSchedulingResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorUpdateSchedulingResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,27 +41,37 @@ Retrieves stored watches.
 ----
 
 [discrete]
-===== `WatcherQueryWatchesRequest`
+==== WatcherQueryWatchesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherQueryWatchesRequest extends <<RequestBase>> {
-  from?: <<integer>>
-  size?: <<integer>>
+  from?: number
+  size?: number
   query?: QueryDslQueryContainer
   sort?: <<Sort>>
   search_after?: <<SortResults>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `WatcherQueryWatchesResponse`
+==== WatcherQueryWatchesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherQueryWatchesResponse {
-  count: <<integer>>
+  count: number
   watches: WatcherQueryWatch[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

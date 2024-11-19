@@ -41,10 +41,12 @@ Clears the caches of one or more indices. For data streams, the API clears the c
 ----
 
 [discrete]
-===== `IndicesClearCacheRequest`
+==== IndicesClearCacheRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesClearCacheRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -55,13 +57,21 @@ interface IndicesClearCacheRequest extends <<RequestBase>> {
   query?: boolean
   request?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesClearCacheResponse`
+==== IndicesClearCacheResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesClearCacheResponse = <<ShardsOperationResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,19 +41,29 @@ Stops Watcher if it is running.
 ----
 
 [discrete]
-===== `WatcherStopRequest`
+==== WatcherStopRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherStopRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `WatcherStopResponse`
+==== WatcherStopResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type WatcherStopResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

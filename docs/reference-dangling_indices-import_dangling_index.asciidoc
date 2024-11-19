@@ -41,23 +41,33 @@ Import a dangling index. If Elasticsearch encounters index data that is absent f
 ----
 
 [discrete]
-===== `DanglingIndicesImportDanglingIndexRequest`
+==== DanglingIndicesImportDanglingIndexRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface DanglingIndicesImportDanglingIndexRequest extends <<RequestBase>> {
   index_uuid: <<Uuid>>
   accept_data_loss: boolean
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `DanglingIndicesImportDanglingIndexResponse`
+==== DanglingIndicesImportDanglingIndexResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type DanglingIndicesImportDanglingIndexResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Perform inference on the service
 ----
 
 [discrete]
-===== `InferenceInferenceRequest`
+==== InferenceInferenceRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface InferenceInferenceRequest extends <<RequestBase>> {
   task_type?: InferenceTaskType
   inference_id: <<Id>>
@@ -53,13 +55,21 @@ interface InferenceInferenceRequest extends <<RequestBase>> {
   input: string | string[]
   task_settings?: InferenceTaskSettings
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `InferenceInferenceResponse`
+==== InferenceInferenceResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type InferenceInferenceResponse = InferenceInferenceResult
-----
 
+[pass]
+++++
+</pre>
+++++

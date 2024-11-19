@@ -41,27 +41,37 @@ Update a filter. Updates the description of a filter, adds items, or removes ite
 ----
 
 [discrete]
-===== `MlUpdateFilterRequest`
+==== MlUpdateFilterRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpdateFilterRequest extends <<RequestBase>> {
   filter_id: <<Id>>
   add_items?: string[]
   description?: string
   remove_items?: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlUpdateFilterResponse`
+==== MlUpdateFilterResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlUpdateFilterResponse {
   description: string
   filter_id: <<Id>>
   items: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

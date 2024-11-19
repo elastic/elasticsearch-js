@@ -41,10 +41,12 @@ Get mapping definitions. Retrieves mapping definitions for one or more indices. 
 ----
 
 [discrete]
-===== `IndicesGetMappingRequest`
+==== IndicesGetMappingRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesGetMappingRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -53,13 +55,21 @@ interface IndicesGetMappingRequest extends <<RequestBase>> {
   local?: boolean
   master_timeout?: <<Duration>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesGetMappingResponse`
+==== IndicesGetMappingResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesGetMappingResponse = Record<<<IndexName>>, IndicesGetMappingIndexMappingRecord>
-----
 
+[pass]
+++++
+</pre>
+++++

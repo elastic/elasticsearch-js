@@ -41,24 +41,34 @@ Tests a Grok pattern on some text.
 ----
 
 [discrete]
-===== `TextStructureTestGrokPatternRequest`
+==== TextStructureTestGrokPatternRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TextStructureTestGrokPatternRequest extends <<RequestBase>> {
   ecs_compatibility?: string
   grok_pattern: <<GrokPattern>>
   text: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `TextStructureTestGrokPatternResponse`
+==== TextStructureTestGrokPatternResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface TextStructureTestGrokPatternResponse {
   matches: TextStructureTestGrokPatternMatchedText[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,24 +41,34 @@ Clear the roles cache. Evict roles from the native role cache.
 ----
 
 [discrete]
-===== `SecurityClearCachedRolesRequest`
+==== SecurityClearCachedRolesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityClearCachedRolesRequest extends <<RequestBase>> {
   name: <<Names>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityClearCachedRolesResponse`
+==== SecurityClearCachedRolesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityClearCachedRolesResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
   nodes: Record<string, SecurityClusterNode>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

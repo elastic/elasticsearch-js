@@ -41,25 +41,35 @@ Render a search template. Render a search template as a search request body.
 ----
 
 [discrete]
-===== `RenderSearchTemplateRequest`
+==== RenderSearchTemplateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RenderSearchTemplateRequest extends <<RequestBase>> {
   id?: <<Id>>
   file?: string
   params?: Record<string, any>
   source?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `RenderSearchTemplateResponse`
+==== RenderSearchTemplateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RenderSearchTemplateResponse {
   template_output: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

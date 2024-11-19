@@ -41,25 +41,35 @@ Executes an ingest pipeline against a set of provided documents.
 ----
 
 [discrete]
-===== `IngestSimulateRequest`
+==== IngestSimulateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestSimulateRequest extends <<RequestBase>> {
   id?: <<Id>>
   verbose?: boolean
   docs: IngestSimulateDocument[]
   pipeline?: IngestPipeline
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IngestSimulateResponse`
+==== IngestSimulateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestSimulateResponse {
   docs: IngestSimulateSimulateDocumentResult[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

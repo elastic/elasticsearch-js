@@ -41,26 +41,36 @@ Evaluate data frame analytics. The API packages together commonly used evaluatio
 ----
 
 [discrete]
-===== `MlEvaluateDataFrameRequest`
+==== MlEvaluateDataFrameRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlEvaluateDataFrameRequest extends <<RequestBase>> {
   evaluation: MlDataframeEvaluationContainer
   index: <<IndexName>>
   query?: QueryDslQueryContainer
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlEvaluateDataFrameResponse`
+==== MlEvaluateDataFrameResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlEvaluateDataFrameResponse {
   classification?: MlEvaluateDataFrameDataframeClassificationSummary
   outlier_detection?: MlEvaluateDataFrameDataframeOutlierDetectionSummary
   regression?: MlEvaluateDataFrameDataframeRegressionSummary
 }
-----
 
+[pass]
+++++
+</pre>
+++++

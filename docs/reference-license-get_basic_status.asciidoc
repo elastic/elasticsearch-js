@@ -41,21 +41,31 @@ Retrieves information about the status of the basic license.
 ----
 
 [discrete]
-===== `LicenseGetBasicStatusRequest`
+==== LicenseGetBasicStatusRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicenseGetBasicStatusRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `LicenseGetBasicStatusResponse`
+==== LicenseGetBasicStatusResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicenseGetBasicStatusResponse {
   eligible_to_start_basic: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++

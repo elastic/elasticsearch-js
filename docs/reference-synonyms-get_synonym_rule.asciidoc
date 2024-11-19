@@ -41,21 +41,31 @@ Retrieves a synonym rule from a synonym set
 ----
 
 [discrete]
-===== `SynonymsGetSynonymRuleRequest`
+==== SynonymsGetSynonymRuleRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SynonymsGetSynonymRuleRequest extends <<RequestBase>> {
   set_id: <<Id>>
   rule_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SynonymsGetSynonymRuleResponse`
+==== SynonymsGetSynonymRuleResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SynonymsGetSynonymRuleResponse = SynonymsSynonymRuleRead
-----
 
+[pass]
+++++
+</pre>
+++++

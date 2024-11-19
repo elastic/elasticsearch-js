@@ -41,28 +41,38 @@ Invalidate a token. The access tokens returned by the get token API have a finit
 ----
 
 [discrete]
-===== `SecurityInvalidateTokenRequest`
+==== SecurityInvalidateTokenRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityInvalidateTokenRequest extends <<RequestBase>> {
   token?: string
   refresh_token?: string
   realm_name?: <<Name>>
   username?: <<Username>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityInvalidateTokenResponse`
+==== SecurityInvalidateTokenResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityInvalidateTokenResponse {
-  error_count: <<long>>
+  error_count: number
   error_details?: <<ErrorCause>>[]
-  invalidated_tokens: <<long>>
-  previously_invalidated_tokens: <<long>>
+  invalidated_tokens: number
+  previously_invalidated_tokens: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

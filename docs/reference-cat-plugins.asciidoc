@@ -41,19 +41,29 @@ Returns a list of plugins running on each node of a cluster. IMPORTANT: cat APIs
 ----
 
 [discrete]
-===== `CatPluginsRequest`
+==== CatPluginsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatPluginsRequest extends CatCatRequestBase {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatPluginsResponse`
+==== CatPluginsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatPluginsResponse = CatPluginsPluginsRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

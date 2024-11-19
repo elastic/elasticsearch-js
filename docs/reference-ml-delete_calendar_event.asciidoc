@@ -41,21 +41,31 @@ Delete events from a calendar.
 ----
 
 [discrete]
-===== `MlDeleteCalendarEventRequest`
+==== MlDeleteCalendarEventRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlDeleteCalendarEventRequest extends <<RequestBase>> {
   calendar_id: <<Id>>
   event_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlDeleteCalendarEventResponse`
+==== MlDeleteCalendarEventResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type MlDeleteCalendarEventResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Creates or updates an ingest pipeline. Changes made using this API take effect i
 ----
 
 [discrete]
-===== `IngestPutPipelineRequest`
+==== IngestPutPipelineRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IngestPutPipelineRequest extends <<RequestBase>> {
   id: <<Id>>
   master_timeout?: <<Duration>>
@@ -57,13 +59,21 @@ interface IngestPutPipelineRequest extends <<RequestBase>> {
   version?: <<VersionNumber>>
   deprecated?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IngestPutPipelineResponse`
+==== IngestPutPipelineResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IngestPutPipelineResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

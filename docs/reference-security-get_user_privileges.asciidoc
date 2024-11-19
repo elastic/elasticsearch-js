@@ -41,22 +41,29 @@ Get user privileges.
 ----
 
 [discrete]
-===== `SecurityGetUserPrivilegesRequest`
+==== SecurityGetUserPrivilegesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityGetUserPrivilegesRequest extends <<RequestBase>> {
   application?: <<Name>>
   priviledge?: <<Name>>
   username?: <<Name>> | null
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityGetUserPrivilegesResponse`
+==== SecurityGetUserPrivilegesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityGetUserPrivilegesResponse {
   applications: SecurityApplicationPrivileges[]
   cluster: string[]
@@ -64,5 +71,8 @@ interface SecurityGetUserPrivilegesResponse {
   indices: SecurityUserIndicesPrivileges[]
   run_as: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

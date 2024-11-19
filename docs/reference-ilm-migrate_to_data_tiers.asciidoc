@@ -41,22 +41,29 @@ Switches the indices, ILM policies, and legacy, composable and component templat
 ----
 
 [discrete]
-===== `IlmMigrateToDataTiersRequest`
+==== IlmMigrateToDataTiersRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmMigrateToDataTiersRequest extends <<RequestBase>> {
   dry_run?: boolean
   legacy_template_to_delete?: string
   node_attribute?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IlmMigrateToDataTiersResponse`
+==== IlmMigrateToDataTiersResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IlmMigrateToDataTiersResponse {
   dry_run: boolean
   removed_legacy_template: string
@@ -66,5 +73,8 @@ interface IlmMigrateToDataTiersResponse {
   migrated_composable_templates: string[]
   migrated_component_templates: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

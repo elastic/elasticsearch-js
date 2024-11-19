@@ -41,28 +41,38 @@ Retrieves a watch by its ID.
 ----
 
 [discrete]
-===== `WatcherGetWatchRequest`
+==== WatcherGetWatchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherGetWatchRequest extends <<RequestBase>> {
   id: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `WatcherGetWatchResponse`
+==== WatcherGetWatchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface WatcherGetWatchResponse {
   found: boolean
   _id: <<Id>>
   status?: WatcherWatchStatus
   watch?: WatcherWatch
-  _primary_term?: <<integer>>
+  _primary_term?: number
   _seq_no?: <<SequenceNumber>>
   _version?: <<VersionNumber>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

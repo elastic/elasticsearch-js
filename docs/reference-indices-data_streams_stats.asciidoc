@@ -41,28 +41,38 @@ Get data stream stats. Retrieves statistics for one or more data streams.
 ----
 
 [discrete]
-===== `IndicesDataStreamsStatsRequest`
+==== IndicesDataStreamsStatsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesDataStreamsStatsRequest extends <<RequestBase>> {
   name?: <<IndexName>>
   expand_wildcards?: <<ExpandWildcards>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesDataStreamsStatsResponse`
+==== IndicesDataStreamsStatsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesDataStreamsStatsResponse {
   _shards: <<ShardStatistics>>
-  backing_indices: <<integer>>
-  data_stream_count: <<integer>>
+  backing_indices: number
+  data_stream_count: number
   data_streams: IndicesDataStreamsStatsDataStreamsStatsItem[]
   total_store_sizes?: <<ByteSize>>
-  total_store_size_bytes: <<long>>
+  total_store_size_bytes: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

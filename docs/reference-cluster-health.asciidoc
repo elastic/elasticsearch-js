@@ -41,10 +41,12 @@ The cluster health API returns a simple status on the health of the cluster. You
 ----
 
 [discrete]
-===== `ClusterHealthRequest`
+==== ClusterHealthRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ClusterHealthRequest extends <<RequestBase>> {
   index?: <<Indices>>
   expand_wildcards?: <<ExpandWildcards>>
@@ -54,18 +56,26 @@ interface ClusterHealthRequest extends <<RequestBase>> {
   timeout?: <<Duration>>
   wait_for_active_shards?: <<WaitForActiveShards>>
   wait_for_events?: <<WaitForEvents>>
-  wait_for_nodes?: string | <<integer>>
+  wait_for_nodes?: string | number
   wait_for_no_initializing_shards?: boolean
   wait_for_no_relocating_shards?: boolean
   wait_for_status?: <<HealthStatus>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ClusterHealthResponse`
+==== ClusterHealthResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type ClusterHealthResponse = ClusterHealthHealthResponseBody
-----
 
+[pass]
+++++
+</pre>
+++++

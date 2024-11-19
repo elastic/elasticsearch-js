@@ -41,21 +41,31 @@ Provides a snapshot of the number of shards allocated to each data node and thei
 ----
 
 [discrete]
-===== `CatAllocationRequest`
+==== CatAllocationRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CatAllocationRequest extends CatCatRequestBase {
   node_id?: <<NodeIds>>
   bytes?: <<Bytes>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CatAllocationResponse`
+==== CatAllocationResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CatAllocationResponse = CatAllocationAllocationRecord[]
-----
 
+[pass]
+++++
+</pre>
+++++

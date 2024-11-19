@@ -41,20 +41,30 @@ Pauses an auto-follow pattern
 ----
 
 [discrete]
-===== `CcrPauseAutoFollowPatternRequest`
+==== CcrPauseAutoFollowPatternRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrPauseAutoFollowPatternRequest extends <<RequestBase>> {
   name: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrPauseAutoFollowPatternResponse`
+==== CcrPauseAutoFollowPatternResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CcrPauseAutoFollowPatternResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

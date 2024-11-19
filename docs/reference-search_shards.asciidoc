@@ -41,10 +41,12 @@ Get the search shards. Get the indices and shards that a search request would be
 ----
 
 [discrete]
-===== `SearchShardsRequest`
+==== SearchShardsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchShardsRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -54,17 +56,25 @@ interface SearchShardsRequest extends <<RequestBase>> {
   preference?: string
   routing?: <<Routing>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchShardsResponse`
+==== SearchShardsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchShardsResponse {
   nodes: Record<<<NodeId>>, SearchShardsSearchShardsNodeAttributes>
   shards: <<NodeShard>>[][]
   indices: Record<<<IndexName>>, SearchShardsShardStoreIndex>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

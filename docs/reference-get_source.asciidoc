@@ -41,10 +41,12 @@ Get a document's source. Returns the source of a document.
 ----
 
 [discrete]
-===== `GetSourceRequest`
+==== GetSourceRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface GetSourceRequest extends <<RequestBase>> {
   id: <<Id>>
   index: <<IndexName>>
@@ -59,13 +61,21 @@ interface GetSourceRequest extends <<RequestBase>> {
   version?: <<VersionNumber>>
   version_type?: <<VersionType>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `GetSourceResponse`
+==== GetSourceResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type GetSourceResponse<TDocument = unknown> = TDocument
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Get index information. Returns information about one or more indices. For data s
 ----
 
 [discrete]
-===== `IndicesGetRequest`
+==== IndicesGetRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface IndicesGetRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -56,13 +58,21 @@ interface IndicesGetRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   features?: IndicesGetFeatures
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `IndicesGetResponse`
+==== IndicesGetResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type IndicesGetResponse = Record<<<IndexName>>, IndicesIndexState>
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Creates a snapshot in a repository.
 ----
 
 [discrete]
-===== `SnapshotCreateRequest`
+==== SnapshotCreateRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotCreateRequest extends <<RequestBase>> {
   repository: <<Name>>
   snapshot: <<Name>>
@@ -57,16 +59,24 @@ interface SnapshotCreateRequest extends <<RequestBase>> {
   metadata?: <<Metadata>>
   partial?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SnapshotCreateResponse`
+==== SnapshotCreateResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SnapshotCreateResponse {
   accepted?: boolean
   snapshot?: SnapshotSnapshotInfo
 }
-----
 
+[pass]
+++++
+</pre>
+++++

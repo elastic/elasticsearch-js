@@ -41,19 +41,26 @@ Enroll a node. Enroll a new node to allow it to join an existing cluster with se
 ----
 
 [discrete]
-===== `SecurityEnrollNodeRequest`
+==== SecurityEnrollNodeRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityEnrollNodeRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityEnrollNodeResponse`
+==== SecurityEnrollNodeResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityEnrollNodeResponse {
   http_ca_key: string
   http_ca_cert: string
@@ -62,5 +69,8 @@ interface SecurityEnrollNodeResponse {
   transport_cert: string
   nodes_addresses: string[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++

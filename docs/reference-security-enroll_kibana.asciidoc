@@ -41,22 +41,32 @@ Enroll Kibana. Enable a Kibana instance to configure itself for communication wi
 ----
 
 [discrete]
-===== `SecurityEnrollKibanaRequest`
+==== SecurityEnrollKibanaRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityEnrollKibanaRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityEnrollKibanaResponse`
+==== SecurityEnrollKibanaResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityEnrollKibanaResponse {
   token: SecurityEnrollKibanaToken
   http_ca: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++

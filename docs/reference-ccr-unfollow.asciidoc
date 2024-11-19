@@ -41,20 +41,30 @@ Stops the following task associated with a follower index and removes index meta
 ----
 
 [discrete]
-===== `CcrUnfollowRequest`
+==== CcrUnfollowRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface CcrUnfollowRequest extends <<RequestBase>> {
   index: <<IndexName>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `CcrUnfollowResponse`
+==== CcrUnfollowResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type CcrUnfollowResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

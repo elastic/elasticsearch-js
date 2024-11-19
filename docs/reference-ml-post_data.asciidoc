@@ -41,39 +41,49 @@ Send data to an anomaly detection job for analysis. IMPORTANT: For each job, dat
 ----
 
 [discrete]
-===== `MlPostDataRequest`
+==== MlPostDataRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPostDataRequest<TData = unknown> extends <<RequestBase>> {
   job_id: <<Id>>
   reset_end?: <<DateTime>>
   reset_start?: <<DateTime>>
   data?: TData[]
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `MlPostDataResponse`
+==== MlPostDataResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface MlPostDataResponse {
-  bucket_count: <<long>>
-  earliest_record_timestamp: <<long>>
-  empty_bucket_count: <<long>>
-  input_bytes: <<long>>
-  input_field_count: <<long>>
-  input_record_count: <<long>>
-  invalid_date_count: <<long>>
+  bucket_count: number
+  earliest_record_timestamp: number
+  empty_bucket_count: number
+  input_bytes: number
+  input_field_count: number
+  input_record_count: number
+  invalid_date_count: number
   job_id: <<Id>>
-  last_data_time: <<integer>>
-  latest_record_timestamp: <<long>>
-  missing_field_count: <<long>>
-  out_of_order_timestamp_count: <<long>>
-  processed_field_count: <<long>>
-  processed_record_count: <<long>>
-  sparse_bucket_count: <<long>>
+  last_data_time: number
+  latest_record_timestamp: number
+  missing_field_count: number
+  out_of_order_timestamp_count: number
+  processed_field_count: number
+  processed_record_count: number
+  sparse_bucket_count: number
 }
-----
 
+[pass]
+++++
+</pre>
+++++

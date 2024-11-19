@@ -41,19 +41,29 @@ Deletes licensing information for the cluster
 ----
 
 [discrete]
-===== `LicenseDeleteRequest`
+==== LicenseDeleteRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface LicenseDeleteRequest extends <<RequestBase>> {
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `LicenseDeleteResponse`
+==== LicenseDeleteResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type LicenseDeleteResponse = <<AcknowledgedResponseBase>>
-----
 
+[pass]
+++++
+</pre>
+++++

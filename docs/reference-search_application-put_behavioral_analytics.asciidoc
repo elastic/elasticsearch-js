@@ -41,20 +41,30 @@ Create a behavioral analytics collection.
 ----
 
 [discrete]
-===== `SearchApplicationPutBehavioralAnalyticsRequest`
+==== SearchApplicationPutBehavioralAnalyticsRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchApplicationPutBehavioralAnalyticsRequest extends <<RequestBase>> {
   name: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchApplicationPutBehavioralAnalyticsResponse`
+==== SearchApplicationPutBehavioralAnalyticsResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SearchApplicationPutBehavioralAnalyticsResponse = SearchApplicationPutBehavioralAnalyticsAnalyticsAcknowledgeResponseBase
-----
 
+[pass]
+++++
+</pre>
+++++

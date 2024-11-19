@@ -41,24 +41,34 @@ Clear the privileges cache. Evict privileges from the native application privile
 ----
 
 [discrete]
-===== `SecurityClearCachedPrivilegesRequest`
+==== SecurityClearCachedPrivilegesRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityClearCachedPrivilegesRequest extends <<RequestBase>> {
   application: <<Name>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SecurityClearCachedPrivilegesResponse`
+==== SecurityClearCachedPrivilegesResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SecurityClearCachedPrivilegesResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
   nodes: Record<string, SecurityClusterNode>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

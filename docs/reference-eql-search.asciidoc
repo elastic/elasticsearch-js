@@ -41,10 +41,12 @@ Returns results matching a query expressed in Event Query Language (EQL)
 ----
 
 [discrete]
-===== `EqlSearchRequest`
+==== EqlSearchRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface EqlSearchRequest extends <<RequestBase>> {
   index: <<Indices>>
   allow_no_indices?: boolean
@@ -55,23 +57,31 @@ interface EqlSearchRequest extends <<RequestBase>> {
   event_category_field?: <<Field>>
   tiebreaker_field?: <<Field>>
   timestamp_field?: <<Field>>
-  fetch_size?: <<uint>>
+  fetch_size?: number
   filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
   keep_alive?: <<Duration>>
   keep_on_completion?: boolean
   wait_for_completion_timeout?: <<Duration>>
-  size?: <<uint>>
+  size?: number
   fields?: QueryDslFieldAndFormat | <<Field>> | (QueryDslFieldAndFormat | <<Field>>)[]
   result_position?: EqlSearchResultPosition
   runtime_mappings?: MappingRuntimeFields
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `EqlSearchResponse`
+==== EqlSearchResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEvent>
-----
 
+[pass]
+++++
+</pre>
+++++

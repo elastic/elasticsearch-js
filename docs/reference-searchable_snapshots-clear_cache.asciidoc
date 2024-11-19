@@ -41,10 +41,12 @@ Clear the cache of searchable snapshots.
 ----
 
 [discrete]
-===== `SearchableSnapshotsClearCacheRequest`
+==== SearchableSnapshotsClearCacheRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface SearchableSnapshotsClearCacheRequest extends <<RequestBase>> {
   index?: <<Indices>>
   expand_wildcards?: <<ExpandWildcards>>
@@ -53,13 +55,21 @@ interface SearchableSnapshotsClearCacheRequest extends <<RequestBase>> {
   pretty?: boolean
   human?: boolean
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `SearchableSnapshotsClearCacheResponse`
+==== SearchableSnapshotsClearCacheResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 type SearchableSnapshotsClearCacheResponse = any
-----
 
+[pass]
+++++
+</pre>
+++++

@@ -41,10 +41,12 @@ Create a connector. Connectors are Elasticsearch integrations that bring content
 ----
 
 [discrete]
-===== `ConnectorPostRequest`
+==== ConnectorPostRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorPostRequest extends <<RequestBase>> {
   description?: string
   index_name?: <<IndexName>>
@@ -53,16 +55,24 @@ interface ConnectorPostRequest extends <<RequestBase>> {
   name?: string
   service_type?: string
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorPostResponse`
+==== ConnectorPostResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorPostResponse {
   result: <<Result>>
   id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

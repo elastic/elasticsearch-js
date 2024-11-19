@@ -41,22 +41,32 @@ Check in a connector. Update the `last_seen` field in the connector and set it t
 ----
 
 [discrete]
-===== `ConnectorCheckInRequest`
+==== ConnectorCheckInRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorCheckInRequest extends <<RequestBase>> {
   connector_id: <<Id>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `ConnectorCheckInResponse`
+==== ConnectorCheckInResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface ConnectorCheckInResponse {
   result: <<Result>>
 }
-----
 
+[pass]
+++++
+</pre>
+++++

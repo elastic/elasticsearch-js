@@ -41,10 +41,12 @@ Evaluate ranked search results. Evaluate the quality of ranked search results ov
 ----
 
 [discrete]
-===== `RankEvalRequest`
+==== RankEvalRequest
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RankEvalRequest extends <<RequestBase>> {
   index?: <<Indices>>
   allow_no_indices?: boolean
@@ -54,17 +56,25 @@ interface RankEvalRequest extends <<RequestBase>> {
   requests: RankEvalRankEvalRequestItem[]
   metric?: RankEvalRankEvalMetric
 }
-----
 
+[pass]
+++++
+</pre>
+++++
 [discrete]
-===== `RankEvalResponse`
+==== RankEvalResponse
 
-[source,ts]
-----
+[pass]
+++++
+<pre>
+++++
 interface RankEvalResponse {
-  metric_score: <<double>>
+  metric_score: number
   details: Record<<<Id>>, RankEvalRankEvalMetricDetail>
   failures: Record<string, any>
 }
-----
 
+[pass]
+++++
+</pre>
+++++
