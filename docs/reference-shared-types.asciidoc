@@ -1,0 +1,2282 @@
+[[reference-shared-types]]
+= Types
+
+[[shared-type-acknowledged-response-base]]
+== AcknowledgedResponseBase
+
+[source,ts]
+---
+interface AcknowledgedResponseBase {
+  /** @property acknowledged For a successful response, this value is always true. On failure, an exception is returned instead. */
+  acknowledged: boolean
+}
+---
+
+[[shared-type-aggregate-name]]
+== AggregateName
+
+[source,ts]
+---
+type AggregateName = string
+---
+
+[[shared-type-bulk-index-by-scroll-failure]]
+== BulkIndexByScrollFailure
+
+[source,ts]
+---
+interface BulkIndexByScrollFailure {
+  cause: ErrorCause
+  id: Id
+  index: IndexName
+  status: integer
+  type: string
+}
+---
+
+[[shared-type-bulk-stats]]
+== BulkStats
+
+[source,ts]
+---
+interface BulkStats {
+  total_operations: long
+  total_time?: Duration
+  total_time_in_millis: DurationValue<UnitMillis>
+  total_size?: ByteSize
+  total_size_in_bytes: long
+  avg_time?: Duration
+  avg_time_in_millis: DurationValue<UnitMillis>
+  avg_size?: ByteSize
+  avg_size_in_bytes: long
+}
+---
+
+[[shared-type-byte-size]]
+== ByteSize
+
+[source,ts]
+---
+type ByteSize = long | string
+---
+
+[[shared-type-bytes]]
+== Bytes
+
+[source,ts]
+---
+type Bytes = 'b' | 'kb' | 'mb' | 'gb' | 'tb' | 'pb'
+---
+
+[[shared-type-category-id]]
+== CategoryId
+
+[source,ts]
+---
+type CategoryId = string
+---
+
+[[shared-type-cluster-alias]]
+== ClusterAlias
+
+[source,ts]
+---
+type ClusterAlias = string
+---
+
+[[shared-type-cluster-details]]
+== ClusterDetails
+
+[source,ts]
+---
+interface ClusterDetails {
+  status: ClusterSearchStatus
+  indices: string
+  took?: DurationValue<UnitMillis>
+  timed_out: boolean
+  _shards?: ShardStatistics
+  failures?: ShardFailure[]
+}
+---
+
+[[shared-type-cluster-info-target]]
+== ClusterInfoTarget
+
+[source,ts]
+---
+type ClusterInfoTarget = '_all' | 'http' | 'ingest' | 'thread_pool' | 'script'
+---
+
+[[shared-type-cluster-info-targets]]
+== ClusterInfoTargets
+
+[source,ts]
+---
+type ClusterInfoTargets = ClusterInfoTarget | ClusterInfoTarget[]
+---
+
+[[shared-type-cluster-search-status]]
+== ClusterSearchStatus
+
+[source,ts]
+---
+type ClusterSearchStatus = 'running' | 'successful' | 'partial' | 'skipped' | 'failed'
+---
+
+[[shared-type-cluster-statistics]]
+== ClusterStatistics
+
+[source,ts]
+---
+interface ClusterStatistics {
+  skipped: integer
+  successful: integer
+  total: integer
+  running: integer
+  partial: integer
+  failed: integer
+  details?: Record<ClusterAlias, ClusterDetails>
+}
+---
+
+[[shared-type-completion-stats]]
+== CompletionStats
+
+[source,ts]
+---
+interface CompletionStats {
+  /** @property size_in_bytes Total amount, in bytes, of memory used for completion across all shards assigned to selected nodes. */
+  size_in_bytes: long
+  /** @property size Total amount of memory used for completion across all shards assigned to selected nodes. */
+  size?: ByteSize
+  fields?: Record<Field, FieldSizeUsage>
+}
+---
+
+[[shared-type-conflicts]]
+== Conflicts
+
+[source,ts]
+---
+type Conflicts = 'abort' | 'proceed'
+---
+
+[[shared-type-coords-geo-bounds]]
+== CoordsGeoBounds
+
+[source,ts]
+---
+interface CoordsGeoBounds {
+  top: double
+  bottom: double
+  left: double
+  right: double
+}
+---
+
+[[shared-type-d-f-i-independence-measure]]
+== DFIIndependenceMeasure
+
+[source,ts]
+---
+type DFIIndependenceMeasure = 'standardized' | 'saturated' | 'chisquared'
+---
+
+[[shared-type-d-f-r-after-effect]]
+== DFRAfterEffect
+
+[source,ts]
+---
+type DFRAfterEffect = 'no' | 'b' | 'l'
+---
+
+[[shared-type-d-f-r-basic-model]]
+== DFRBasicModel
+
+[source,ts]
+---
+type DFRBasicModel = 'be' | 'd' | 'g' | 'if' | 'in' | 'ine' | 'p'
+---
+
+[[shared-type-data-stream-name]]
+== DataStreamName
+
+[source,ts]
+---
+type DataStreamName = string
+---
+
+[[shared-type-data-stream-names]]
+== DataStreamNames
+
+[source,ts]
+---
+type DataStreamNames = DataStreamName | DataStreamName[]
+---
+
+[[shared-type-date-format]]
+== DateFormat
+
+[source,ts]
+---
+type DateFormat = string
+---
+
+[[shared-type-date-math]]
+== DateMath
+
+[source,ts]
+---
+type DateMath = string | Date
+---
+
+[[shared-type-date-time]]
+== DateTime
+
+[source,ts]
+---
+type DateTime = string | EpochTime<UnitMillis> | Date
+---
+
+[[shared-type-distance]]
+== Distance
+
+[source,ts]
+---
+type Distance = string
+---
+
+[[shared-type-distance-unit]]
+== DistanceUnit
+
+[source,ts]
+---
+type DistanceUnit = 'in' | 'ft' | 'yd' | 'mi' | 'nmi' | 'km' | 'm' | 'cm' | 'mm'
+---
+
+[[shared-type-doc-stats]]
+== DocStats
+
+[source,ts]
+---
+interface DocStats {
+  /** @property count Total number of non-deleted documents across all primary shards assigned to selected nodes. This number is based on documents in Lucene segments and may include documents from nested fields. */
+  count: long
+  /** @property deleted Total number of deleted documents across all primary shards assigned to selected nodes. This number is based on documents in Lucene segments. Elasticsearch reclaims the disk space of deleted Lucene documents when a segment is merged. */
+  deleted?: long
+}
+---
+
+[[shared-type-duration]]
+== Duration
+
+[source,ts]
+---
+type Duration = string | -1 | 0
+---
+
+[[shared-type-duration-large]]
+== DurationLarge
+
+[source,ts]
+---
+type DurationLarge = string
+---
+
+[[shared-type-duration-value]]
+== DurationValue
+
+[source,ts]
+---
+type DurationValue<Unit = unknown> = Unit
+---
+
+[[shared-type-elasticsearch-version-info]]
+== ElasticsearchVersionInfo
+
+[source,ts]
+---
+interface ElasticsearchVersionInfo {
+  build_date: DateTime
+  build_flavor: string
+  build_hash: string
+  build_snapshot: boolean
+  build_type: string
+  lucene_version: VersionString
+  minimum_index_compatibility_version: VersionString
+  minimum_wire_compatibility_version: VersionString
+  number: string
+}
+---
+
+[[shared-type-elasticsearch-version-min-info]]
+== ElasticsearchVersionMinInfo
+
+[source,ts]
+---
+interface ElasticsearchVersionMinInfo {
+  build_flavor: string
+  minimum_index_compatibility_version: VersionString
+  minimum_wire_compatibility_version: VersionString
+  number: string
+}
+---
+
+[[shared-type-empty-object]]
+== EmptyObject
+
+[source,ts]
+---
+interface EmptyObject {
+}
+---
+
+[[shared-type-epoch-time]]
+== EpochTime
+
+[source,ts]
+---
+type EpochTime<Unit = unknown> = Unit
+---
+
+[[shared-type-error-cause]]
+== ErrorCause
+
+[source,ts]
+---
+interface ErrorCauseKeys {
+  type: string
+  reason?: string
+  stack_trace?: string
+  caused_by?: ErrorCause
+  root_cause?: ErrorCause[]
+  suppressed?: ErrorCause[]
+}
+export type ErrorCause = ErrorCauseKeys
+  & { [property: string]: any }
+---
+
+[[shared-type-error-response-base]]
+== ErrorResponseBase
+
+[source,ts]
+---
+interface ErrorResponseBase {
+  error: ErrorCause
+  status: integer
+}
+---
+
+[[shared-type-esql-columns]]
+== EsqlColumns
+
+[source,ts]
+---
+type EsqlColumns = ArrayBuffer
+---
+
+[[shared-type-expand-wildcard]]
+== ExpandWildcard
+
+[source,ts]
+---
+type ExpandWildcard = 'all' | 'open' | 'closed' | 'hidden' | 'none'
+---
+
+[[shared-type-expand-wildcards]]
+== ExpandWildcards
+
+[source,ts]
+---
+type ExpandWildcards = ExpandWildcard | ExpandWildcard[]
+---
+
+[[shared-type-field]]
+== Field
+
+[source,ts]
+---
+type Field = string
+---
+
+[[shared-type-field-memory-usage]]
+== FieldMemoryUsage
+
+[source,ts]
+---
+interface FieldMemoryUsage {
+  memory_size?: ByteSize
+  memory_size_in_bytes: long
+}
+---
+
+[[shared-type-field-size-usage]]
+== FieldSizeUsage
+
+[source,ts]
+---
+interface FieldSizeUsage {
+  size?: ByteSize
+  size_in_bytes: long
+}
+---
+
+[[shared-type-field-sort]]
+== FieldSort
+
+[source,ts]
+---
+interface FieldSort {
+  missing?: AggregationsMissing
+  mode?: SortMode
+  nested?: NestedSortValue
+  order?: SortOrder
+  unmapped_type?: MappingFieldType
+  numeric_type?: FieldSortNumericType
+  format?: string
+}
+---
+
+[[shared-type-field-sort-numeric-type]]
+== FieldSortNumericType
+
+[source,ts]
+---
+type FieldSortNumericType = 'long' | 'double' | 'date' | 'date_nanos'
+---
+
+[[shared-type-field-value]]
+== FieldValue
+
+[source,ts]
+---
+type FieldValue = long | double | string | boolean | null | any
+---
+
+[[shared-type-fielddata-stats]]
+== FielddataStats
+
+[source,ts]
+---
+interface FielddataStats {
+  evictions?: long
+  memory_size?: ByteSize
+  memory_size_in_bytes: long
+  fields?: Record<Field, FieldMemoryUsage>
+}
+---
+
+[[shared-type-fields]]
+== Fields
+
+[source,ts]
+---
+type Fields = Field | Field[]
+---
+
+[[shared-type-flush-stats]]
+== FlushStats
+
+[source,ts]
+---
+interface FlushStats {
+  periodic: long
+  total: long
+  total_time?: Duration
+  total_time_in_millis: DurationValue<UnitMillis>
+}
+---
+
+[[shared-type-fuzziness]]
+== Fuzziness
+
+[source,ts]
+---
+type Fuzziness = string | integer
+---
+
+[[shared-type-geo-bounds]]
+== GeoBounds
+
+[source,ts]
+---
+type GeoBounds = CoordsGeoBounds | TopLeftBottomRightGeoBounds | TopRightBottomLeftGeoBounds | WktGeoBounds
+---
+
+[[shared-type-geo-distance-sort]]
+== GeoDistanceSort
+
+[source,ts]
+---
+interface GeoDistanceSortKeys {
+  mode?: SortMode
+  distance_type?: GeoDistanceType
+  ignore_unmapped?: boolean
+  order?: SortOrder
+  unit?: DistanceUnit
+  nested?: NestedSortValue
+}
+export type GeoDistanceSort = GeoDistanceSortKeys
+  & { [property: string]: GeoLocation | GeoLocation[] | SortMode | GeoDistanceType | boolean | SortOrder | DistanceUnit | NestedSortValue }
+---
+
+[[shared-type-geo-distance-type]]
+== GeoDistanceType
+
+[source,ts]
+---
+type GeoDistanceType = 'arc' | 'plane'
+---
+
+[[shared-type-geo-hash]]
+== GeoHash
+
+[source,ts]
+---
+type GeoHash = string
+---
+
+[[shared-type-geo-hash-location]]
+== GeoHashLocation
+
+[source,ts]
+---
+interface GeoHashLocation {
+  geohash: GeoHash
+}
+---
+
+[[shared-type-geo-hash-precision]]
+== GeoHashPrecision
+
+[source,ts]
+---
+type GeoHashPrecision = number | string
+---
+
+[[shared-type-geo-hex-cell]]
+== GeoHexCell
+
+[source,ts]
+---
+type GeoHexCell = string
+---
+
+[[shared-type-geo-line]]
+== GeoLine
+
+[source,ts]
+---
+interface GeoLine {
+  /** @property type Always `"LineString"` */
+  type: string
+  /** @property coordinates Array of `[lon, lat]` coordinates */
+  coordinates: double[][]
+}
+---
+
+[[shared-type-geo-location]]
+== GeoLocation
+
+[source,ts]
+---
+type GeoLocation = LatLonGeoLocation | GeoHashLocation | double[] | string
+---
+
+[[shared-type-geo-shape]]
+== GeoShape
+
+[source,ts]
+---
+type GeoShape = any
+---
+
+[[shared-type-geo-shape-relation]]
+== GeoShapeRelation
+
+[source,ts]
+---
+type GeoShapeRelation = 'intersects' | 'disjoint' | 'within' | 'contains'
+---
+
+[[shared-type-geo-tile]]
+== GeoTile
+
+[source,ts]
+---
+type GeoTile = string
+---
+
+[[shared-type-geo-tile-precision]]
+== GeoTilePrecision
+
+[source,ts]
+---
+type GeoTilePrecision = number
+---
+
+[[shared-type-get-stats]]
+== GetStats
+
+[source,ts]
+---
+interface GetStats {
+  current: long
+  exists_time?: Duration
+  exists_time_in_millis: DurationValue<UnitMillis>
+  exists_total: long
+  missing_time?: Duration
+  missing_time_in_millis: DurationValue<UnitMillis>
+  missing_total: long
+  time?: Duration
+  time_in_millis: DurationValue<UnitMillis>
+  total: long
+}
+---
+
+[[shared-type-grok-pattern]]
+== GrokPattern
+
+[source,ts]
+---
+type GrokPattern = string
+---
+
+[[shared-type-health-status]]
+== HealthStatus
+
+[source,ts]
+---
+type HealthStatus = 'green' | 'GREEN' | 'yellow' | 'YELLOW' | 'red' | 'RED'
+---
+
+[[shared-type-host]]
+== Host
+
+[source,ts]
+---
+type Host = string
+---
+
+[[shared-type-http-headers]]
+== HttpHeaders
+
+[source,ts]
+---
+type HttpHeaders = Record<string, string | string[]>
+---
+
+[[shared-type-i-b-distribution]]
+== IBDistribution
+
+[source,ts]
+---
+type IBDistribution = 'll' | 'spl'
+---
+
+[[shared-type-i-b-lambda]]
+== IBLambda
+
+[source,ts]
+---
+type IBLambda = 'df' | 'ttf'
+---
+
+[[shared-type-id]]
+== Id
+
+[source,ts]
+---
+type Id = string
+---
+
+[[shared-type-ids]]
+== Ids
+
+[source,ts]
+---
+type Ids = Id | Id[]
+---
+
+[[shared-type-index-alias]]
+== IndexAlias
+
+[source,ts]
+---
+type IndexAlias = string
+---
+
+[[shared-type-index-name]]
+== IndexName
+
+[source,ts]
+---
+type IndexName = string
+---
+
+[[shared-type-index-pattern]]
+== IndexPattern
+
+[source,ts]
+---
+type IndexPattern = string
+---
+
+[[shared-type-index-patterns]]
+== IndexPatterns
+
+[source,ts]
+---
+type IndexPatterns = IndexPattern[]
+---
+
+[[shared-type-indexing-stats]]
+== IndexingStats
+
+[source,ts]
+---
+interface IndexingStats {
+  index_current: long
+  delete_current: long
+  delete_time?: Duration
+  delete_time_in_millis: DurationValue<UnitMillis>
+  delete_total: long
+  is_throttled: boolean
+  noop_update_total: long
+  throttle_time?: Duration
+  throttle_time_in_millis: DurationValue<UnitMillis>
+  index_time?: Duration
+  index_time_in_millis: DurationValue<UnitMillis>
+  index_total: long
+  index_failed: long
+  types?: Record<string, IndexingStats>
+  write_load?: double
+}
+---
+
+[[shared-type-indices]]
+== Indices
+
+[source,ts]
+---
+type Indices = IndexName | IndexName[]
+---
+
+[[shared-type-indices-options]]
+== IndicesOptions
+
+[source,ts]
+---
+interface IndicesOptions {
+  /** @property allow_no_indices If false, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. */
+  allow_no_indices?: boolean
+  /** @property expand_wildcards Type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as `open,hidden`. */
+  expand_wildcards?: ExpandWildcards
+  /** @property ignore_unavailable If true, missing or closed indices are not included in the response. */
+  ignore_unavailable?: boolean
+  /** @property ignore_throttled If true, concrete, expanded or aliased indices are ignored when frozen. */
+  ignore_throttled?: boolean
+}
+---
+
+[[shared-type-indices-response-base]]
+== IndicesResponseBase
+
+[source,ts]
+---
+interface IndicesResponseBase extends AcknowledgedResponseBase {
+  _shards?: ShardStatistics
+}
+---
+
+[[shared-type-inline-get]]
+== InlineGet
+
+[source,ts]
+---
+interface InlineGetKeys<TDocument = unknown> {
+  fields?: Record<string, any>
+  found: boolean
+  _seq_no?: SequenceNumber
+  _primary_term?: long
+  _routing?: Routing
+  _source?: TDocument
+}
+export type InlineGet<TDocument = unknown> = InlineGetKeys<TDocument>
+  & { [property: string]: any }
+---
+
+[[shared-type-ip]]
+== Ip
+
+[source,ts]
+---
+type Ip = string
+---
+
+[[shared-type-knn-query]]
+== KnnQuery
+
+[source,ts]
+---
+interface KnnQuery extends QueryDslQueryBase {
+  /** @property field The name of the vector field to search against */
+  field: Field
+  /** @property query_vector The query vector */
+  query_vector?: QueryVector
+  /** @property query_vector_builder The query vector builder. You must provide a query_vector_builder or query_vector, but not both. */
+  query_vector_builder?: QueryVectorBuilder
+  /** @property num_candidates The number of nearest neighbor candidates to consider per shard */
+  num_candidates?: integer
+  /** @property k The final number of nearest neighbors to return as top hits */
+  k?: integer
+  /** @property filter Filters for the kNN search query */
+  filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  /** @property similarity The minimum similarity for a vector to be considered a match */
+  similarity?: float
+}
+---
+
+[[shared-type-knn-retriever]]
+== KnnRetriever
+
+[source,ts]
+---
+interface KnnRetriever extends RetrieverBase {
+  /** @property field The name of the vector field to search against. */
+  field: string
+  /** @property query_vector Query vector. Must have the same number of dimensions as the vector field you are searching against. You must provide a query_vector_builder or query_vector, but not both. */
+  query_vector?: QueryVector
+  /** @property query_vector_builder Defines a model to build a query vector. */
+  query_vector_builder?: QueryVectorBuilder
+  /** @property k Number of nearest neighbors to return as top hits. */
+  k: integer
+  /** @property num_candidates Number of nearest neighbor candidates to consider per shard. */
+  num_candidates: integer
+  /** @property similarity The minimum similarity required for a document to be considered a match. */
+  similarity?: float
+}
+---
+
+[[shared-type-knn-search]]
+== KnnSearch
+
+[source,ts]
+---
+interface KnnSearch {
+  /** @property field The name of the vector field to search against */
+  field: Field
+  /** @property query_vector The query vector */
+  query_vector?: QueryVector
+  /** @property query_vector_builder The query vector builder. You must provide a query_vector_builder or query_vector, but not both. */
+  query_vector_builder?: QueryVectorBuilder
+  /** @property k The final number of nearest neighbors to return as top hits */
+  k?: integer
+  /** @property num_candidates The number of nearest neighbor candidates to consider per shard */
+  num_candidates?: integer
+  /** @property boost Boost value to apply to kNN scores */
+  boost?: float
+  /** @property filter Filters for the kNN search query */
+  filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  /** @property similarity The minimum similarity for a vector to be considered a match */
+  similarity?: float
+  /** @property inner_hits If defined, each search hit will contain inner hits. */
+  inner_hits?: SearchInnerHits
+}
+---
+
+[[shared-type-lat-lon-geo-location]]
+== LatLonGeoLocation
+
+[source,ts]
+---
+interface LatLonGeoLocation {
+  /** @property lat Latitude */
+  lat: double
+  /** @property lon Longitude */
+  lon: double
+}
+---
+
+[[shared-type-level]]
+== Level
+
+[source,ts]
+---
+type Level = 'cluster' | 'indices' | 'shards'
+---
+
+[[shared-type-lifecycle-operation-mode]]
+== LifecycleOperationMode
+
+[source,ts]
+---
+type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
+---
+
+[[shared-type-mapbox-vector-tiles]]
+== MapboxVectorTiles
+
+[source,ts]
+---
+type MapboxVectorTiles = ArrayBuffer
+---
+
+[[shared-type-merges-stats]]
+== MergesStats
+
+[source,ts]
+---
+interface MergesStats {
+  current: long
+  current_docs: long
+  current_size?: string
+  current_size_in_bytes: long
+  total: long
+  total_auto_throttle?: string
+  total_auto_throttle_in_bytes: long
+  total_docs: long
+  total_size?: string
+  total_size_in_bytes: long
+  total_stopped_time?: Duration
+  total_stopped_time_in_millis: DurationValue<UnitMillis>
+  total_throttled_time?: Duration
+  total_throttled_time_in_millis: DurationValue<UnitMillis>
+  total_time?: Duration
+  total_time_in_millis: DurationValue<UnitMillis>
+}
+---
+
+[[shared-type-metadata]]
+== Metadata
+
+[source,ts]
+---
+type Metadata = Record<string, any>
+---
+
+[[shared-type-metrics]]
+== Metrics
+
+[source,ts]
+---
+type Metrics = string | string[]
+---
+
+[[shared-type-minimum-should-match]]
+== MinimumShouldMatch
+
+[source,ts]
+---
+type MinimumShouldMatch = integer | string
+---
+
+[[shared-type-multi-term-query-rewrite]]
+== MultiTermQueryRewrite
+
+[source,ts]
+---
+type MultiTermQueryRewrite = string
+---
+
+[[shared-type-name]]
+== Name
+
+[source,ts]
+---
+type Name = string
+---
+
+[[shared-type-names]]
+== Names
+
+[source,ts]
+---
+type Names = Name | Name[]
+---
+
+[[shared-type-namespace]]
+== Namespace
+
+[source,ts]
+---
+type Namespace = string
+---
+
+[[shared-type-nested-sort-value]]
+== NestedSortValue
+
+[source,ts]
+---
+interface NestedSortValue {
+  filter?: QueryDslQueryContainer
+  max_children?: integer
+  nested?: NestedSortValue
+  path: Field
+}
+---
+
+[[shared-type-node-attributes]]
+== NodeAttributes
+
+[source,ts]
+---
+interface NodeAttributes {
+  /** @property attributes Lists node attributes. */
+  attributes: Record<string, string>
+  /** @property ephemeral_id The ephemeral ID of the node. */
+  ephemeral_id: Id
+  /** @property id The unique identifier of the node. */
+  id?: NodeId
+  /** @property name The unique identifier of the node. */
+  name: NodeName
+  /** @property transport_address The host and port where transport HTTP connections are accepted. */
+  transport_address: TransportAddress
+}
+---
+
+[[shared-type-node-id]]
+== NodeId
+
+[source,ts]
+---
+type NodeId = string
+---
+
+[[shared-type-node-ids]]
+== NodeIds
+
+[source,ts]
+---
+type NodeIds = NodeId | NodeId[]
+---
+
+[[shared-type-node-name]]
+== NodeName
+
+[source,ts]
+---
+type NodeName = string
+---
+
+[[shared-type-node-role]]
+== NodeRole
+
+[source,ts]
+---
+type NodeRole = 'master' | 'data' | 'data_cold' | 'data_content' | 'data_frozen' | 'data_hot' | 'data_warm' | 'client' | 'ingest' | 'ml' | 'voting_only' | 'transform' | 'remote_cluster_client' | 'coordinating_only'
+---
+
+[[shared-type-node-roles]]
+== NodeRoles
+
+[source,ts]
+---
+type NodeRoles = NodeRole[]
+---
+
+[[shared-type-node-shard]]
+== NodeShard
+
+[source,ts]
+---
+interface NodeShard {
+  state: IndicesStatsShardRoutingState
+  primary: boolean
+  node?: NodeName
+  shard: integer
+  index: IndexName
+  allocation_id?: Record<string, Id>
+  recovery_source?: Record<string, Id>
+  unassigned_info?: ClusterAllocationExplainUnassignedInformation
+  relocating_node?: NodeId | null
+  relocation_failure_info?: RelocationFailureInfo
+}
+---
+
+[[shared-type-node-statistics]]
+== NodeStatistics
+
+[source,ts]
+---
+interface NodeStatistics {
+  failures?: ErrorCause[]
+  /** @property total Total number of nodes selected by the request. */
+  total: integer
+  /** @property successful Number of nodes that responded successfully to the request. */
+  successful: integer
+  /** @property failed Number of nodes that rejected the request or failed to respond. If this value is not 0, a reason for the rejection or failure is included in the response. */
+  failed: integer
+}
+---
+
+[[shared-type-normalization]]
+== Normalization
+
+[source,ts]
+---
+type Normalization = 'no' | 'h1' | 'h2' | 'h3' | 'z'
+---
+
+[[shared-type-op-type]]
+== OpType
+
+[source,ts]
+---
+type OpType = 'index' | 'create'
+---
+
+[[shared-type-password]]
+== Password
+
+[source,ts]
+---
+type Password = string
+---
+
+[[shared-type-percentage]]
+== Percentage
+
+[source,ts]
+---
+type Percentage = string | float
+---
+
+[[shared-type-pipeline-name]]
+== PipelineName
+
+[source,ts]
+---
+type PipelineName = string
+---
+
+[[shared-type-plugin-stats]]
+== PluginStats
+
+[source,ts]
+---
+interface PluginStats {
+  classname: string
+  description: string
+  elasticsearch_version: VersionString
+  extended_plugins: string[]
+  has_native_controller: boolean
+  java_version: VersionString
+  name: Name
+  version: VersionString
+  licensed: boolean
+}
+---
+
+[[shared-type-property-name]]
+== PropertyName
+
+[source,ts]
+---
+type PropertyName = string
+---
+
+[[shared-type-query-cache-stats]]
+== QueryCacheStats
+
+[source,ts]
+---
+interface QueryCacheStats {
+  /** @property cache_count Total number of entries added to the query cache across all shards assigned to selected nodes. This number includes current and evicted entries. */
+  cache_count: long
+  /** @property cache_size Total number of entries currently in the query cache across all shards assigned to selected nodes. */
+  cache_size: long
+  /** @property evictions Total number of query cache evictions across all shards assigned to selected nodes. */
+  evictions: long
+  /** @property hit_count Total count of query cache hits across all shards assigned to selected nodes. */
+  hit_count: long
+  /** @property memory_size Total amount of memory used for the query cache across all shards assigned to selected nodes. */
+  memory_size?: ByteSize
+  /** @property memory_size_in_bytes Total amount, in bytes, of memory used for the query cache across all shards assigned to selected nodes. */
+  memory_size_in_bytes: long
+  /** @property miss_count Total count of query cache misses across all shards assigned to selected nodes. */
+  miss_count: long
+  /** @property total_count Total count of hits and misses in the query cache across all shards assigned to selected nodes. */
+  total_count: long
+}
+---
+
+[[shared-type-query-vector]]
+== QueryVector
+
+[source,ts]
+---
+type QueryVector = float[]
+---
+
+[[shared-type-query-vector-builder]]
+== QueryVectorBuilder
+
+[source,ts]
+---
+interface QueryVectorBuilder {
+  text_embedding?: TextEmbedding
+}
+---
+
+[[shared-type-r-r-f-retriever]]
+== RRFRetriever
+
+[source,ts]
+---
+interface RRFRetriever extends RetrieverBase {
+  /** @property retrievers A list of child retrievers to specify which sets of returned top documents will have the RRF formula applied to them. */
+  retrievers: RetrieverContainer[]
+  /** @property rank_constant This value determines how much influence documents in individual result sets per query have over the final ranked result set. */
+  rank_constant?: integer
+  /** @property rank_window_size This value determines the size of the individual result sets per query. */
+  rank_window_size?: integer
+}
+---
+
+[[shared-type-rank-base]]
+== RankBase
+
+[source,ts]
+---
+interface RankBase {
+}
+---
+
+[[shared-type-rank-container]]
+== RankContainer
+
+[source,ts]
+---
+interface RankContainer {
+  /** @property rrf The reciprocal rank fusion parameters */
+  rrf?: RrfRank
+}
+---
+
+[[shared-type-recovery-stats]]
+== RecoveryStats
+
+[source,ts]
+---
+interface RecoveryStats {
+  current_as_source: long
+  current_as_target: long
+  throttle_time?: Duration
+  throttle_time_in_millis: DurationValue<UnitMillis>
+}
+---
+
+[[shared-type-refresh]]
+== Refresh
+
+[source,ts]
+---
+type Refresh = boolean | 'true' | 'false' | 'wait_for'
+---
+
+[[shared-type-refresh-stats]]
+== RefreshStats
+
+[source,ts]
+---
+interface RefreshStats {
+  external_total: long
+  external_total_time_in_millis: DurationValue<UnitMillis>
+  listeners: long
+  total: long
+  total_time?: Duration
+  total_time_in_millis: DurationValue<UnitMillis>
+}
+---
+
+[[shared-type-relation-name]]
+== RelationName
+
+[source,ts]
+---
+type RelationName = string
+---
+
+[[shared-type-relocation-failure-info]]
+== RelocationFailureInfo
+
+[source,ts]
+---
+interface RelocationFailureInfo {
+  failed_attempts: integer
+}
+---
+
+[[shared-type-request-base]]
+== RequestBase
+
+[source,ts]
+---
+interface RequestBase extends SpecUtilsCommonQueryParameters {
+}
+---
+
+[[shared-type-request-cache-stats]]
+== RequestCacheStats
+
+[source,ts]
+---
+interface RequestCacheStats {
+  evictions: long
+  hit_count: long
+  memory_size?: string
+  memory_size_in_bytes: long
+  miss_count: long
+}
+---
+
+[[shared-type-result]]
+== Result
+
+[source,ts]
+---
+type Result = 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
+---
+
+[[shared-type-retries]]
+== Retries
+
+[source,ts]
+---
+interface Retries {
+  bulk: long
+  search: long
+}
+---
+
+[[shared-type-retriever-base]]
+== RetrieverBase
+
+[source,ts]
+---
+interface RetrieverBase {
+  /** @property filter Query to filter the documents that can match. */
+  filter?: QueryDslQueryContainer | QueryDslQueryContainer[]
+  /** @property min_score Minimum _score for matching documents. Documents with a lower _score are not included in the top documents. */
+  min_score?: float
+}
+---
+
+[[shared-type-retriever-container]]
+== RetrieverContainer
+
+[source,ts]
+---
+interface RetrieverContainer {
+  /** @property standard A retriever that replaces the functionality of a traditional query. */
+  standard?: StandardRetriever
+  /** @property knn A retriever that replaces the functionality of a knn search. */
+  knn?: KnnRetriever
+  /** @property rrf A retriever that produces top documents from reciprocal rank fusion (RRF). */
+  rrf?: RRFRetriever
+  /** @property text_similarity_reranker A retriever that reranks the top documents based on a reranking model using the InferenceAPI */
+  text_similarity_reranker?: TextSimilarityReranker
+}
+---
+
+[[shared-type-routing]]
+== Routing
+
+[source,ts]
+---
+type Routing = string
+---
+
+[[shared-type-rrf-rank]]
+== RrfRank
+
+[source,ts]
+---
+interface RrfRank {
+  /** @property rank_constant How much influence documents in individual result sets per query have over the final ranked result set */
+  rank_constant?: long
+  /** @property rank_window_size Size of the individual result sets per query */
+  rank_window_size?: long
+}
+---
+
+[[shared-type-scalar-value]]
+== ScalarValue
+
+[source,ts]
+---
+type ScalarValue = long | double | string | boolean | null
+---
+
+[[shared-type-score-sort]]
+== ScoreSort
+
+[source,ts]
+---
+interface ScoreSort {
+  order?: SortOrder
+}
+---
+
+[[shared-type-script]]
+== Script
+
+[source,ts]
+---
+interface Script {
+  /** @property source The script source. */
+  source?: string
+  /** @property id The `id` for a stored script. */
+  id?: Id
+  /** @property params Specifies any named parameters that are passed into the script as variables. Use parameters instead of hard-coded values to decrease compile time. */
+  params?: Record<string, any>
+  /** @property lang Specifies the language the script is written in. */
+  lang?: ScriptLanguage
+  options?: Record<string, string>
+}
+---
+
+[[shared-type-script-field]]
+== ScriptField
+
+[source,ts]
+---
+interface ScriptField {
+  script: Script | string
+  ignore_failure?: boolean
+}
+---
+
+[[shared-type-script-language]]
+== ScriptLanguage
+
+[source,ts]
+---
+type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java' | string
+---
+
+[[shared-type-script-sort]]
+== ScriptSort
+
+[source,ts]
+---
+interface ScriptSort {
+  order?: SortOrder
+  script: Script | string
+  type?: ScriptSortType
+  mode?: SortMode
+  nested?: NestedSortValue
+}
+---
+
+[[shared-type-script-sort-type]]
+== ScriptSortType
+
+[source,ts]
+---
+type ScriptSortType = 'string' | 'number' | 'version'
+---
+
+[[shared-type-script-transform]]
+== ScriptTransform
+
+[source,ts]
+---
+interface ScriptTransform {
+  lang?: string
+  params?: Record<string, any>
+  source?: string
+  id?: string
+}
+---
+
+[[shared-type-scroll-id]]
+== ScrollId
+
+[source,ts]
+---
+type ScrollId = string
+---
+
+[[shared-type-scroll-ids]]
+== ScrollIds
+
+[source,ts]
+---
+type ScrollIds = ScrollId | ScrollId[]
+---
+
+[[shared-type-search-stats]]
+== SearchStats
+
+[source,ts]
+---
+interface SearchStats {
+  fetch_current: long
+  fetch_time?: Duration
+  fetch_time_in_millis: DurationValue<UnitMillis>
+  fetch_total: long
+  open_contexts?: long
+  query_current: long
+  query_time?: Duration
+  query_time_in_millis: DurationValue<UnitMillis>
+  query_total: long
+  scroll_current: long
+  scroll_time?: Duration
+  scroll_time_in_millis: DurationValue<UnitMillis>
+  scroll_total: long
+  suggest_current: long
+  suggest_time?: Duration
+  suggest_time_in_millis: DurationValue<UnitMillis>
+  suggest_total: long
+  groups?: Record<string, SearchStats>
+}
+---
+
+[[shared-type-search-transform]]
+== SearchTransform
+
+[source,ts]
+---
+interface SearchTransform {
+  request: WatcherSearchInputRequestDefinition
+  timeout: Duration
+}
+---
+
+[[shared-type-search-type]]
+== SearchType
+
+[source,ts]
+---
+type SearchType = 'query_then_fetch' | 'dfs_query_then_fetch'
+---
+
+[[shared-type-segments-stats]]
+== SegmentsStats
+
+[source,ts]
+---
+interface SegmentsStats {
+  /** @property count Total number of segments across all shards assigned to selected nodes. */
+  count: integer
+  /** @property doc_values_memory Total amount of memory used for doc values across all shards assigned to selected nodes. */
+  doc_values_memory?: ByteSize
+  /** @property doc_values_memory_in_bytes Total amount, in bytes, of memory used for doc values across all shards assigned to selected nodes. */
+  doc_values_memory_in_bytes: long
+  /** @property file_sizes This object is not populated by the cluster stats API. To get information on segment files, use the node stats API. */
+  file_sizes: Record<string, IndicesStatsShardFileSizeInfo>
+  /** @property fixed_bit_set Total amount of memory used by fixed bit sets across all shards assigned to selected nodes. Fixed bit sets are used for nested object field types and type filters for join fields. */
+  fixed_bit_set?: ByteSize
+  /** @property fixed_bit_set_memory_in_bytes Total amount of memory, in bytes, used by fixed bit sets across all shards assigned to selected nodes. */
+  fixed_bit_set_memory_in_bytes: long
+  /** @property index_writer_memory Total amount of memory used by all index writers across all shards assigned to selected nodes. */
+  index_writer_memory?: ByteSize
+  index_writer_max_memory_in_bytes?: long
+  /** @property index_writer_memory_in_bytes Total amount, in bytes, of memory used by all index writers across all shards assigned to selected nodes. */
+  index_writer_memory_in_bytes: long
+  /** @property max_unsafe_auto_id_timestamp Unix timestamp, in milliseconds, of the most recently retried indexing request. */
+  max_unsafe_auto_id_timestamp: long
+  /** @property memory Total amount of memory used for segments across all shards assigned to selected nodes. */
+  memory?: ByteSize
+  /** @property memory_in_bytes Total amount, in bytes, of memory used for segments across all shards assigned to selected nodes. */
+  memory_in_bytes: long
+  /** @property norms_memory Total amount of memory used for normalization factors across all shards assigned to selected nodes. */
+  norms_memory?: ByteSize
+  /** @property norms_memory_in_bytes Total amount, in bytes, of memory used for normalization factors across all shards assigned to selected nodes. */
+  norms_memory_in_bytes: long
+  /** @property points_memory Total amount of memory used for points across all shards assigned to selected nodes. */
+  points_memory?: ByteSize
+  /** @property points_memory_in_bytes Total amount, in bytes, of memory used for points across all shards assigned to selected nodes. */
+  points_memory_in_bytes: long
+  stored_memory?: ByteSize
+  /** @property stored_fields_memory_in_bytes Total amount, in bytes, of memory used for stored fields across all shards assigned to selected nodes. */
+  stored_fields_memory_in_bytes: long
+  /** @property terms_memory_in_bytes Total amount, in bytes, of memory used for terms across all shards assigned to selected nodes. */
+  terms_memory_in_bytes: long
+  /** @property terms_memory Total amount of memory used for terms across all shards assigned to selected nodes. */
+  terms_memory?: ByteSize
+  /** @property term_vectory_memory Total amount of memory used for term vectors across all shards assigned to selected nodes. */
+  term_vectory_memory?: ByteSize
+  /** @property term_vectors_memory_in_bytes Total amount, in bytes, of memory used for term vectors across all shards assigned to selected nodes. */
+  term_vectors_memory_in_bytes: long
+  /** @property version_map_memory Total amount of memory used by all version maps across all shards assigned to selected nodes. */
+  version_map_memory?: ByteSize
+  /** @property version_map_memory_in_bytes Total amount, in bytes, of memory used by all version maps across all shards assigned to selected nodes. */
+  version_map_memory_in_bytes: long
+}
+---
+
+[[shared-type-sequence-number]]
+== SequenceNumber
+
+[source,ts]
+---
+type SequenceNumber = long
+---
+
+[[shared-type-service]]
+== Service
+
+[source,ts]
+---
+type Service = string
+---
+
+[[shared-type-shard-failure]]
+== ShardFailure
+
+[source,ts]
+---
+interface ShardFailure {
+  index?: IndexName
+  node?: string
+  reason: ErrorCause
+  shard: integer
+  status?: string
+}
+---
+
+[[shared-type-shard-statistics]]
+== ShardStatistics
+
+[source,ts]
+---
+interface ShardStatistics {
+  failed: uint
+  /** @property successful Indicates how many shards have successfully run the search. */
+  successful: uint
+  /** @property total Indicates how many shards the search will run on overall. */
+  total: uint
+  failures?: ShardFailure[]
+  skipped?: uint
+}
+---
+
+[[shared-type-shards-operation-response-base]]
+== ShardsOperationResponseBase
+
+[source,ts]
+---
+interface ShardsOperationResponseBase {
+  _shards?: ShardStatistics
+}
+---
+
+[[shared-type-sliced-scroll]]
+== SlicedScroll
+
+[source,ts]
+---
+interface SlicedScroll {
+  field?: Field
+  id: Id
+  max: integer
+}
+---
+
+[[shared-type-slices]]
+== Slices
+
+[source,ts]
+---
+type Slices = integer | SlicesCalculation
+---
+
+[[shared-type-slices-calculation]]
+== SlicesCalculation
+
+[source,ts]
+---
+type SlicesCalculation = 'auto'
+---
+
+[[shared-type-sort]]
+== Sort
+
+[source,ts]
+---
+type Sort = SortCombinations | SortCombinations[]
+---
+
+[[shared-type-sort-combinations]]
+== SortCombinations
+
+[source,ts]
+---
+type SortCombinations = Field | SortOptions
+---
+
+[[shared-type-sort-mode]]
+== SortMode
+
+[source,ts]
+---
+type SortMode = 'min' | 'max' | 'sum' | 'avg' | 'median'
+---
+
+[[shared-type-sort-options]]
+== SortOptions
+
+[source,ts]
+---
+interface SortOptionsKeys {
+  _score?: ScoreSort
+  _doc?: ScoreSort
+  _geo_distance?: GeoDistanceSort
+  _script?: ScriptSort
+}
+export type SortOptions = SortOptionsKeys
+  & { [property: string]: FieldSort | SortOrder | ScoreSort | GeoDistanceSort | ScriptSort }
+---
+
+[[shared-type-sort-order]]
+== SortOrder
+
+[source,ts]
+---
+type SortOrder = 'asc' | 'desc'
+---
+
+[[shared-type-sort-results]]
+== SortResults
+
+[source,ts]
+---
+type SortResults = FieldValue[]
+---
+
+[[shared-type-standard-retriever]]
+== StandardRetriever
+
+[source,ts]
+---
+interface StandardRetriever extends RetrieverBase {
+  /** @property query Defines a query to retrieve a set of top documents. */
+  query?: QueryDslQueryContainer
+  /** @property search_after Defines a search after object parameter used for pagination. */
+  search_after?: SortResults
+  /** @property terminate_after Maximum number of documents to collect for each shard. */
+  terminate_after?: integer
+  /** @property sort A sort object that that specifies the order of matching documents. */
+  sort?: Sort
+  /** @property collapse Collapses the top documents by a specified key into a single top document per key. */
+  collapse?: SearchFieldCollapse
+}
+---
+
+[[shared-type-store-stats]]
+== StoreStats
+
+[source,ts]
+---
+interface StoreStats {
+  /** @property size Total size of all shards assigned to selected nodes. */
+  size?: ByteSize
+  /** @property size_in_bytes Total size, in bytes, of all shards assigned to selected nodes. */
+  size_in_bytes: long
+  /** @property reserved A prediction of how much larger the shard stores will eventually grow due to ongoing peer recoveries, restoring snapshots, and similar activities. */
+  reserved?: ByteSize
+  /** @property reserved_in_bytes A prediction, in bytes, of how much larger the shard stores will eventually grow due to ongoing peer recoveries, restoring snapshots, and similar activities. */
+  reserved_in_bytes: long
+  /** @property total_data_set_size Total data set size of all shards assigned to selected nodes. This includes the size of shards not stored fully on the nodes, such as the cache for partially mounted indices. */
+  total_data_set_size?: ByteSize
+  /** @property total_data_set_size_in_bytes Total data set size, in bytes, of all shards assigned to selected nodes. This includes the size of shards not stored fully on the nodes, such as the cache for partially mounted indices. */
+  total_data_set_size_in_bytes?: long
+}
+---
+
+[[shared-type-stored-script]]
+== StoredScript
+
+[source,ts]
+---
+interface StoredScript {
+  /** @property lang Specifies the language the script is written in. */
+  lang: ScriptLanguage
+  options?: Record<string, string>
+  /** @property source The script source. */
+  source: string
+}
+---
+
+[[shared-type-suggest-mode]]
+== SuggestMode
+
+[source,ts]
+---
+type SuggestMode = 'missing' | 'popular' | 'always'
+---
+
+[[shared-type-suggestion-name]]
+== SuggestionName
+
+[source,ts]
+---
+type SuggestionName = string
+---
+
+[[shared-type-task-failure]]
+== TaskFailure
+
+[source,ts]
+---
+interface TaskFailure {
+  task_id: long
+  node_id: NodeId
+  status: string
+  reason: ErrorCause
+}
+---
+
+[[shared-type-task-id]]
+== TaskId
+
+[source,ts]
+---
+type TaskId = string | integer
+---
+
+[[shared-type-text-embedding]]
+== TextEmbedding
+
+[source,ts]
+---
+interface TextEmbedding {
+  model_id: string
+  model_text: string
+}
+---
+
+[[shared-type-text-similarity-reranker]]
+== TextSimilarityReranker
+
+[source,ts]
+---
+interface TextSimilarityReranker extends RetrieverBase {
+  /** @property retriever The nested retriever which will produce the first-level results, that will later be used for reranking. */
+  retriever: RetrieverContainer
+  /** @property rank_window_size This value determines how many documents we will consider from the nested retriever. */
+  rank_window_size?: integer
+  /** @property inference_id Unique identifier of the inference endpoint created using the inference API. */
+  inference_id?: string
+  /** @property inference_text The text snippet used as the basis for similarity comparison */
+  inference_text?: string
+  /** @property field The document field to be used for text similarity comparisons. This field should contain the text that will be evaluated against the inference_text */
+  field?: string
+}
+---
+
+[[shared-type-thread-type]]
+== ThreadType
+
+[source,ts]
+---
+type ThreadType = 'cpu' | 'wait' | 'block' | 'gpu' | 'mem'
+---
+
+[[shared-type-time-of-day]]
+== TimeOfDay
+
+[source,ts]
+---
+type TimeOfDay = string
+---
+
+[[shared-type-time-unit]]
+== TimeUnit
+
+[source,ts]
+---
+type TimeUnit = 'nanos' | 'micros' | 'ms' | 's' | 'm' | 'h' | 'd'
+---
+
+[[shared-type-time-zone]]
+== TimeZone
+
+[source,ts]
+---
+type TimeZone = string
+---
+
+[[shared-type-top-left-bottom-right-geo-bounds]]
+== TopLeftBottomRightGeoBounds
+
+[source,ts]
+---
+interface TopLeftBottomRightGeoBounds {
+  top_left: GeoLocation
+  bottom_right: GeoLocation
+}
+---
+
+[[shared-type-top-right-bottom-left-geo-bounds]]
+== TopRightBottomLeftGeoBounds
+
+[source,ts]
+---
+interface TopRightBottomLeftGeoBounds {
+  top_right: GeoLocation
+  bottom_left: GeoLocation
+}
+---
+
+[[shared-type-transform-container]]
+== TransformContainer
+
+[source,ts]
+---
+interface TransformContainer {
+  chain?: TransformContainer[]
+  script?: ScriptTransform
+  search?: SearchTransform
+}
+---
+
+[[shared-type-translog-stats]]
+== TranslogStats
+
+[source,ts]
+---
+interface TranslogStats {
+  earliest_last_modified_age: long
+  operations: long
+  size?: string
+  size_in_bytes: long
+  uncommitted_operations: integer
+  uncommitted_size?: string
+  uncommitted_size_in_bytes: long
+}
+---
+
+[[shared-type-transport-address]]
+== TransportAddress
+
+[source,ts]
+---
+type TransportAddress = string
+---
+
+[[shared-type-unit-float-millis]]
+== UnitFloatMillis
+
+[source,ts]
+---
+type UnitFloatMillis = double
+---
+
+[[shared-type-unit-millis]]
+== UnitMillis
+
+[source,ts]
+---
+type UnitMillis = long
+---
+
+[[shared-type-unit-nanos]]
+== UnitNanos
+
+[source,ts]
+---
+type UnitNanos = long
+---
+
+[[shared-type-unit-seconds]]
+== UnitSeconds
+
+[source,ts]
+---
+type UnitSeconds = long
+---
+
+[[shared-type-username]]
+== Username
+
+[source,ts]
+---
+type Username = string
+---
+
+[[shared-type-uuid]]
+== Uuid
+
+[source,ts]
+---
+type Uuid = string
+---
+
+[[shared-type-version-number]]
+== VersionNumber
+
+[source,ts]
+---
+type VersionNumber = long
+---
+
+[[shared-type-version-string]]
+== VersionString
+
+[source,ts]
+---
+type VersionString = string
+---
+
+[[shared-type-version-type]]
+== VersionType
+
+[source,ts]
+---
+type VersionType = 'internal' | 'external' | 'external_gte' | 'force'
+---
+
+[[shared-type-wait-for-active-shard-options]]
+== WaitForActiveShardOptions
+
+[source,ts]
+---
+type WaitForActiveShardOptions = 'all' | 'index-setting'
+---
+
+[[shared-type-wait-for-active-shards]]
+== WaitForActiveShards
+
+[source,ts]
+---
+type WaitForActiveShards = integer | WaitForActiveShardOptions
+---
+
+[[shared-type-wait-for-events]]
+== WaitForEvents
+
+[source,ts]
+---
+type WaitForEvents = 'immediate' | 'urgent' | 'high' | 'normal' | 'low' | 'languid'
+---
+
+[[shared-type-warmer-stats]]
+== WarmerStats
+
+[source,ts]
+---
+interface WarmerStats {
+  current: long
+  total: long
+  total_time?: Duration
+  total_time_in_millis: DurationValue<UnitMillis>
+}
+---
+
+[[shared-type-wkt-geo-bounds]]
+== WktGeoBounds
+
+[source,ts]
+---
+interface WktGeoBounds {
+  wkt: string
+}
+---
+
+[[shared-type-write-response-base]]
+== WriteResponseBase
+
+[source,ts]
+---
+interface WriteResponseBase {
+  _id: Id
+  _index: IndexName
+  _primary_term?: long
+  result: Result
+  _seq_no?: SequenceNumber
+  _shards: ShardStatistics
+  _version: VersionNumber
+  forced_refresh?: boolean
+}
+---
+
+[[shared-type-byte]]
+== byte
+
+[source,ts]
+---
+type byte = number
+---
+
+[[shared-type-double]]
+== double
+
+[source,ts]
+---
+type double = number
+---
+
+[[shared-type-float]]
+== float
+
+[source,ts]
+---
+type float = number
+---
+
+[[shared-type-integer]]
+== integer
+
+[source,ts]
+---
+type integer = number
+---
+
+[[shared-type-long]]
+== long
+
+[source,ts]
+---
+type long = number
+---
+
+[[shared-type-short]]
+== short
+
+[source,ts]
+---
+type short = number
+---
+
+[[shared-type-uint]]
+== uint
+
+[source,ts]
+---
+type uint = number
+---
+
+[[shared-type-ulong]]
+== ulong
+
+[source,ts]
+---
+type ulong = number
+---
+
+[[shared-type-spec-utils-base-node]]
+== SpecUtilsBaseNode
+
+[source,ts]
+---
+interface SpecUtilsBaseNode {
+  attributes: Record<string, string>
+  host: Host
+  ip: Ip
+  name: Name
+  roles?: NodeRoles
+  transport_address: TransportAddress
+}
+---
+
+[[shared-type-spec-utils-null-value]]
+== SpecUtilsNullValue
+
+[source,ts]
+---
+type SpecUtilsNullValue = null
+---
+
+[[shared-type-spec-utils-pipe-separated-flags]]
+== SpecUtilsPipeSeparatedFlags
+
+[source,ts]
+---
+type SpecUtilsPipeSeparatedFlags<T = unknown> = T | string
+---
+
+[[shared-type-spec-utils-stringified]]
+== SpecUtilsStringified
+
+[source,ts]
+---
+type SpecUtilsStringified<T = unknown> = T | string
+---
+
+[[shared-type-spec-utils-void]]
+== SpecUtilsVoid
+
+[source,ts]
+---
+
+---
+
+[[shared-type-spec-utils-with-null-value]]
+== SpecUtilsWithNullValue
+
+[source,ts]
+---
+type SpecUtilsWithNullValue<T = unknown> = T | SpecUtilsNullValue
+---
+
+[[shared-type-spec-utils-additional-properties]]
+== SpecUtilsAdditionalProperties
+
+[source,ts]
+---
+interface SpecUtilsAdditionalProperties<TKey = unknown, TValue = unknown> {
+}
+---
+
+[[shared-type-spec-utils-additional-property]]
+== SpecUtilsAdditionalProperty
+
+[source,ts]
+---
+interface SpecUtilsAdditionalProperty<TKey = unknown, TValue = unknown> {
+}
+---
+
+[[shared-type-spec-utils-common-query-parameters]]
+== SpecUtilsCommonQueryParameters
+
+[source,ts]
+---
+interface SpecUtilsCommonQueryParameters {
+  /** @property error_trace When set to `true` Elasticsearch will include the full stack trace of errors when they occur. */
+  error_trace?: boolean
+  /** @property filter_path Comma-separated list of filters in dot notation which reduce the response returned by Elasticsearch. */
+  filter_path?: string | string[]
+  /** @property human When set to `true` will return statistics in a format suitable for humans. For example `"exists_time": "1h"` for humans and `"eixsts_time_in_millis": 3600000` for computers. When disabled the human readable values will be omitted. This makes sense for responses being consumed only by machines. */
+  human?: boolean
+  /** @property pretty If set to `true` the returned JSON will be "pretty-formatted". Only use this option for debugging only. */
+  pretty?: boolean
+}
+---
+
+[[shared-type-spec-utils-common-cat-query-parameters]]
+== SpecUtilsCommonCatQueryParameters
+
+[source,ts]
+---
+interface SpecUtilsCommonCatQueryParameters {
+  /** @property format Specifies the format to return the columnar data in, can be set to `text`, `json`, `cbor`, `yaml`, or `smile`. */
+  format?: string
+  /** @property h List of columns to appear in the response. Supports simple wildcards. */
+  h?: Names
+  /** @property help When set to `true` will output available columns. This option can't be combined with any other query string option. */
+  help?: boolean
+  /** @property local If `true`, the request computes the list of selected nodes from the local cluster state. If `false` the list of selected nodes are computed from the cluster state of the master node. In both cases the coordinating node will send requests for further information to each selected node. */
+  local?: boolean
+  /** @property master_timeout Period to wait for a connection to the master node. */
+  master_timeout?: Duration
+  /** @property s List of columns that determine how the table should be sorted. Sorting defaults to ascending and can be changed by setting `:asc` or `:desc` as a suffix to the column name. */
+  s?: Names
+  /** @property v When set to `true` will enable verbose output. */
+  v?: boolean
+}
+---
+
+[[shared-type-spec-utils-overload-of]]
+== SpecUtilsOverloadOf
+
+[source,ts]
+---
+interface SpecUtilsOverloadOf<TDefinition = unknown> {
+}
+---
+
