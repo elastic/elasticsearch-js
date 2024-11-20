@@ -49,8 +49,8 @@ Retrieves stored watches.
 <pre>
 ++++
 interface WatcherQueryWatchesRequest extends <<RequestBase>> {
-  from?: <<_integer, integer>>
-  size?: <<_integer, integer>>
+  from?: <<integer>>
+  size?: <<integer>>
   query?: <<QueryDslQueryContainer>>
   sort?: <<Sort>>
   search_after?: <<SortResults>>
@@ -68,7 +68,7 @@ interface WatcherQueryWatchesRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface WatcherQueryWatchesResponse {
-  count: <<_integer, integer>>
+  count: <<integer>>
   watches: WatcherQueryWatch[]
 }
 

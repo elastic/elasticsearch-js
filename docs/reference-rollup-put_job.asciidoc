@@ -54,7 +54,7 @@ interface RollupPutJobRequest extends <<RequestBase>> {
   groups: RollupGroupings
   index_pattern: string
   metrics?: RollupFieldMetric[]
-  page_size: <<_integer, integer>>
+  page_size: <<integer>>
   rollup_index: <<IndexName>>
   timeout?: <<Duration>>
   headers?: <<HttpHeaders>>

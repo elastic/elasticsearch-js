@@ -56,7 +56,7 @@ interface RollupRollupSearchRequest extends <<RequestBase>> {
   pass:[/**] @alias aggregations */
   aggs?: Record<string, <<AggregationsAggregationContainer>>>
   query?: <<QueryDslQueryContainer>>
-  size?: <<_integer, integer>>
+  size?: <<integer>>
 }
 
 [pass]
@@ -71,7 +71,7 @@ interface RollupRollupSearchRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface RollupRollupSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> {
-  took: <<_long, long>>
+  took: <<long>>
   timed_out: boolean
   terminated_early?: boolean
   _shards: <<ShardStatistics>>

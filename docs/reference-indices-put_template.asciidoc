@@ -56,7 +56,7 @@ interface IndicesPutTemplateRequest extends <<RequestBase>> {
   aliases?: Record<<<IndexName>>, IndicesAlias>
   index_patterns?: string | string[]
   mappings?: <<MappingTypeMapping>>
-  order?: <<_integer, integer>>
+  order?: <<integer>>
   settings?: IndicesIndexSettings
   version?: <<VersionNumber>>
 }

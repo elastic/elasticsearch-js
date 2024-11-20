@@ -49,8 +49,8 @@ Returns summarized information about existing query rulesets.
 <pre>
 ++++
 interface QueryRulesListRulesetsRequest extends <<RequestBase>> {
-  from?: <<_integer, integer>>
-  size?: <<_integer, integer>>
+  from?: <<integer>>
+  size?: <<integer>>
 }
 
 [pass]
@@ -65,7 +65,7 @@ interface QueryRulesListRulesetsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface QueryRulesListRulesetsResponse {
-  count: <<_long, long>>
+  count: <<long>>
   results: QueryRulesListRulesetsQueryRulesetListItem[]
 }
 

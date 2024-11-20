@@ -54,16 +54,16 @@ interface CcrPutAutoFollowPatternRequest extends <<RequestBase>> {
   follow_index_pattern?: <<IndexPattern>>
   leader_index_patterns?: <<IndexPatterns>>
   leader_index_exclusion_patterns?: <<IndexPatterns>>
-  max_outstanding_read_requests?: <<_integer, integer>>
+  max_outstanding_read_requests?: <<integer>>
   settings?: Record<string, any>
-  max_outstanding_write_requests?: <<_integer, integer>>
+  max_outstanding_write_requests?: <<integer>>
   read_poll_timeout?: <<Duration>>
-  max_read_request_operation_count?: <<_integer, integer>>
+  max_read_request_operation_count?: <<integer>>
   max_read_request_size?: <<ByteSize>>
   max_retry_delay?: <<Duration>>
-  max_write_buffer_count?: <<_integer, integer>>
+  max_write_buffer_count?: <<integer>>
   max_write_buffer_size?: <<ByteSize>>
-  max_write_request_operation_count?: <<_integer, integer>>
+  max_write_request_operation_count?: <<integer>>
   max_write_request_size?: <<ByteSize>>
 }
 

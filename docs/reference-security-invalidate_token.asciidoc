@@ -67,10 +67,10 @@ interface SecurityInvalidateTokenRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SecurityInvalidateTokenResponse {
-  error_count: <<_long, long>>
+  error_count: <<long>>
   error_details?: <<ErrorCause>>[]
-  invalidated_tokens: <<_long, long>>
-  previously_invalidated_tokens: <<_long, long>>
+  invalidated_tokens: <<long>>
+  previously_invalidated_tokens: <<long>>
 }
 
 [pass]

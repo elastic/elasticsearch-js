@@ -51,8 +51,8 @@ Get transforms. Retrieves configuration information for transforms.
 interface TransformGetTransformRequest extends <<RequestBase>> {
   transform_id?: <<Names>>
   allow_no_match?: boolean
-  from?: <<_integer, integer>>
-  size?: <<_integer, integer>>
+  from?: <<integer>>
+  size?: <<integer>>
   exclude_generated?: boolean
 }
 
@@ -68,7 +68,7 @@ interface TransformGetTransformRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface TransformGetTransformResponse {
-  count: <<_long, long>>
+  count: <<long>>
   transforms: TransformGetTransformTransformSummary[]
 }
 

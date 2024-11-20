@@ -71,7 +71,7 @@ interface MonitoringBulkResponse {
   error?: <<ErrorCause>>
   errors: boolean
   ignored: boolean
-  took: <<_long, long>>
+  took: <<long>>
 }
 
 [pass]

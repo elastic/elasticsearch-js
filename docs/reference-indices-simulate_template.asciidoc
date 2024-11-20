@@ -58,7 +58,7 @@ interface IndicesSimulateTemplateRequest extends <<RequestBase>> {
   composed_of?: <<Name>>[]
   template?: IndicesPutIndexTemplateIndexTemplateMapping
   data_stream?: IndicesDataStreamVisibility
-  priority?: <<_long, long>>
+  priority?: <<long>>
   version?: <<VersionNumber>>
   _meta?: <<Metadata>>
   ignore_missing_component_templates?: string[]

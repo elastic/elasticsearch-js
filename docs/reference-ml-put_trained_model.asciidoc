@@ -59,7 +59,7 @@ interface MlPutTrainedModelRequest extends <<RequestBase>> {
   input?: MlPutTrainedModelInput
   metadata?: any
   model_type?: MlTrainedModelType
-  model_size_bytes?: <<_long, long>>
+  model_size_bytes?: <<long>>
   platform_architecture?: string
   tags?: string[]
   prefix_strings?: MlTrainedModelPrefixStrings

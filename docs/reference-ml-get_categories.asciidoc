@@ -51,9 +51,9 @@ Get anomaly detection job results for categories.
 interface MlGetCategoriesRequest extends <<RequestBase>> {
   job_id: <<Id>>
   category_id?: <<CategoryId>>
-  from?: <<_integer, integer>>
+  from?: <<integer>>
   partition_field_value?: string
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   page?: MlPage
 }
 
@@ -70,7 +70,7 @@ interface MlGetCategoriesRequest extends <<RequestBase>> {
 ++++
 interface MlGetCategoriesResponse {
   categories: MlCategory[]
-  count: <<_long, long>>
+  count: <<long>>
 }
 
 [pass]

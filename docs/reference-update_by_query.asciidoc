@@ -56,7 +56,7 @@ interface UpdateByQueryRequest extends <<RequestBase>> {
   default_operator?: <<QueryDslOperator>>
   df?: string
   expand_wildcards?: <<ExpandWildcards>>
-  from?: <<_long, long>>
+  from?: <<long>>
   ignore_unavailable?: boolean
   lenient?: boolean
   pipeline?: string
@@ -64,22 +64,22 @@ interface UpdateByQueryRequest extends <<RequestBase>> {
   q?: string
   refresh?: boolean
   request_cache?: boolean
-  requests_per_second?: <<_float, float>>
+  requests_per_second?: <<float>>
   routing?: <<Routing>>
   scroll?: <<Duration>>
-  scroll_size?: <<_long, long>>
+  scroll_size?: <<long>>
   search_timeout?: <<Duration>>
   search_type?: <<SearchType>>
   slices?: <<Slices>>
   sort?: string[]
   stats?: string[]
-  terminate_after?: <<_long, long>>
+  terminate_after?: <<long>>
   timeout?: <<Duration>>
   version?: boolean
   version_type?: boolean
   wait_for_active_shards?: <<WaitForActiveShards>>
   wait_for_completion?: boolean
-  max_docs?: <<_long, long>>
+  max_docs?: <<long>>
   query?: <<QueryDslQueryContainer>>
   script?: <<Script>> | string
   slice?: <<SlicedScroll>>
@@ -98,18 +98,18 @@ interface UpdateByQueryRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface UpdateByQueryResponse {
-  batches?: <<_long, long>>
+  batches?: <<long>>
   failures?: <<BulkIndexByScrollFailure>>[]
-  noops?: <<_long, long>>
-  deleted?: <<_long, long>>
-  requests_per_second?: <<_float, float>>
+  noops?: <<long>>
+  deleted?: <<long>>
+  requests_per_second?: <<float>>
   retries?: <<Retries>>
   task?: <<TaskId>>
   timed_out?: boolean
   took?: <<DurationValue>><<<UnitMillis>>>
-  total?: <<_long, long>>
-  updated?: <<_long, long>>
-  version_conflicts?: <<_long, long>>
+  total?: <<long>>
+  updated?: <<long>>
+  version_conflicts?: <<long>>
   throttled?: <<Duration>>
   throttled_millis?: <<DurationValue>><<<UnitMillis>>>
   throttled_until?: <<Duration>>

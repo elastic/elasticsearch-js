@@ -51,7 +51,7 @@ Update user profile data. Update specific data for the user profile that is asso
 interface SecurityUpdateUserProfileDataRequest extends <<RequestBase>> {
   uid: SecurityUserProfileId
   if_seq_no?: <<SequenceNumber>>
-  if_primary_term?: <<_long, long>>
+  if_primary_term?: <<long>>
   refresh?: <<Refresh>>
   labels?: Record<string, any>
   data?: Record<string, any>

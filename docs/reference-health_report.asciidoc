@@ -52,7 +52,7 @@ interface HealthReportRequest extends <<RequestBase>> {
   feature?: string | string[]
   timeout?: <<Duration>>
   verbose?: boolean
-  size?: <<_integer, integer>>
+  size?: <<integer>>
 }
 
 [pass]

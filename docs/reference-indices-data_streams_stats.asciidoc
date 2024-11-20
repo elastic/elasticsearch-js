@@ -66,11 +66,11 @@ interface IndicesDataStreamsStatsRequest extends <<RequestBase>> {
 ++++
 interface IndicesDataStreamsStatsResponse {
   _shards: <<ShardStatistics>>
-  backing_indices: <<_integer, integer>>
-  data_stream_count: <<_integer, integer>>
+  backing_indices: <<integer>>
+  data_stream_count: <<integer>>
   data_streams: IndicesDataStreamsStatsDataStreamsStatsItem[]
   total_store_sizes?: <<ByteSize>>
-  total_store_size_bytes: <<_long, long>>
+  total_store_size_bytes: <<long>>
 }
 
 [pass]

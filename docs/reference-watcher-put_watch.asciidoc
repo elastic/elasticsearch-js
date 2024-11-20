@@ -51,7 +51,7 @@ Creates a new watch, or updates an existing one.
 interface WatcherPutWatchRequest extends <<RequestBase>> {
   id: <<Id>>
   active?: boolean
-  if_primary_term?: <<_long, long>>
+  if_primary_term?: <<long>>
   if_seq_no?: <<SequenceNumber>>
   version?: <<VersionNumber>>
   actions?: Record<string, WatcherAction>
@@ -77,7 +77,7 @@ interface WatcherPutWatchRequest extends <<RequestBase>> {
 interface WatcherPutWatchResponse {
   created: boolean
   _id: <<Id>>
-  _primary_term: <<_long, long>>
+  _primary_term: <<long>>
   _seq_no: <<SequenceNumber>>
   _version: <<VersionNumber>>
 }

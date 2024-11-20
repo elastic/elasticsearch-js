@@ -49,8 +49,8 @@ Get all connectors. Get information about all connectors.
 <pre>
 ++++
 interface ConnectorListRequest extends <<RequestBase>> {
-  from?: <<_integer, integer>>
-  size?: <<_integer, integer>>
+  from?: <<integer>>
+  size?: <<integer>>
   index_name?: <<Indices>>
   connector_name?: <<Names>>
   service_type?: <<Names>>
@@ -69,7 +69,7 @@ interface ConnectorListRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface ConnectorListResponse {
-  count: <<_long, long>>
+  count: <<long>>
   results: ConnectorConnector[]
 }
 

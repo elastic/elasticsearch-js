@@ -50,10 +50,10 @@ Create part of a trained model definition.
 ++++
 interface MlPutTrainedModelDefinitionPartRequest extends <<RequestBase>> {
   model_id: <<Id>>
-  part: <<_integer, integer>>
+  part: <<integer>>
   definition: string
-  total_definition_length: <<_long, long>>
-  total_parts: <<_integer, integer>>
+  total_definition_length: <<long>>
+  total_parts: <<integer>>
 }
 
 [pass]

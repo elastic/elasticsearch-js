@@ -73,7 +73,7 @@ interface GraphExploreResponse {
   connections: GraphConnection[]
   failures: <<ShardFailure>>[]
   timed_out: boolean
-  took: <<_long, long>>
+  took: <<long>>
   vertices: GraphVertex[]
 }
 

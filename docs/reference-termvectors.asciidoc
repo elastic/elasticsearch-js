@@ -83,7 +83,7 @@ interface TermvectorsResponse {
   _id?: <<Id>>
   _index: <<IndexName>>
   term_vectors?: Record<<<Field>>, TermvectorsTermVector>
-  took: <<_long, long>>
+  took: <<long>>
   _version: <<VersionNumber>>
 }
 

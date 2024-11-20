@@ -50,7 +50,7 @@ Throttle a reindex operation. Change the number of requests per second for a par
 ++++
 interface ReindexRethrottleRequest extends <<RequestBase>> {
   task_id: <<Id>>
-  requests_per_second?: <<_float, float>>
+  requests_per_second?: <<float>>
 }
 
 [pass]

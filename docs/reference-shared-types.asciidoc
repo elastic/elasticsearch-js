@@ -45,7 +45,7 @@ interface BulkIndexByScrollFailure {
   cause: <<ErrorCause>>
   id: <<Id>>
   index: <<IndexName>>
-  status: <<_integer, integer>>
+  status: <<integer>>
   type: string
 }
 [pass]
@@ -62,15 +62,15 @@ interface BulkIndexByScrollFailure {
 <pre>
 ++++
 interface BulkStats {
-  total_operations: <<_long, long>>
+  total_operations: <<long>>
   total_time?: <<Duration>>
   total_time_in_millis: <<DurationValue>><<<UnitMillis>>>
   total_size?: <<ByteSize>>
-  total_size_in_bytes: <<_long, long>>
+  total_size_in_bytes: <<long>>
   avg_time?: <<Duration>>
   avg_time_in_millis: <<DurationValue>><<<UnitMillis>>>
   avg_size?: <<ByteSize>>
-  avg_size_in_bytes: <<_long, long>>
+  avg_size_in_bytes: <<long>>
 }
 [pass]
 ++++
@@ -85,7 +85,7 @@ interface BulkStats {
 ++++
 <pre>
 ++++
-type ByteSize = <<_long, long>> | string
+type ByteSize = <<long>> | string
 [pass]
 ++++
 </pre>
@@ -205,12 +205,12 @@ type ClusterSearchStatus = 'running' | 'successful' | 'partial' | 'skipped' | 'f
 <pre>
 ++++
 interface ClusterStatistics {
-  skipped: <<_integer, integer>>
-  successful: <<_integer, integer>>
-  total: <<_integer, integer>>
-  running: <<_integer, integer>>
-  partial: <<_integer, integer>>
-  failed: <<_integer, integer>>
+  skipped: <<integer>>
+  successful: <<integer>>
+  total: <<integer>>
+  running: <<integer>>
+  partial: <<integer>>
+  failed: <<integer>>
   details?: Record<<<ClusterAlias>>, <<ClusterDetails>>>
 }
 [pass]
@@ -228,7 +228,7 @@ interface ClusterStatistics {
 ++++
 interface CompletionStats {
   pass:[/**] @property size_in_bytes Total amount, in bytes, of memory used for completion across all shards assigned to selected nodes. */
-  size_in_bytes: <<_long, long>>
+  size_in_bytes: <<long>>
   pass:[/**] @property size Total amount of memory used for completion across all shards assigned to selected nodes. */
   size?: <<ByteSize>>
   fields?: Record<<<Field>>, <<FieldSizeUsage>>>
@@ -261,10 +261,10 @@ type Conflicts = 'abort' | 'proceed'
 <pre>
 ++++
 interface CoordsGeoBounds {
-  top: <<_double, double>>
-  bottom: <<_double, double>>
-  left: <<_double, double>>
-  right: <<_double, double>>
+  top: <<double>>
+  bottom: <<double>>
+  left: <<double>>
+  right: <<double>>
 }
 [pass]
 ++++
@@ -421,9 +421,9 @@ type DistanceUnit = 'in' | 'ft' | 'yd' | 'mi' | 'nmi' | 'km' | 'm' | 'cm' | 'mm'
 ++++
 interface DocStats {
   pass:[/**] @property count Total number of non-deleted documents across all primary shards assigned to selected nodes. This number is based on documents in Lucene segments and may include documents from nested fields. */
-  count: <<_long, long>>
+  count: <<long>>
   pass:[/**] @property deleted Total number of deleted documents across all primary shards assigned to selected nodes. This number is based on documents in Lucene segments. Elasticsearch reclaims the disk space of deleted Lucene documents when a segment is merged. */
-  deleted?: <<_long, long>>
+  deleted?: <<long>>
 }
 [pass]
 ++++
@@ -577,7 +577,7 @@ type ErrorCause = ErrorCauseKeys
 ++++
 interface ErrorResponseBase {
   error: <<ErrorCause>>
-  status: <<_integer, integer>>
+  status: <<integer>>
 }
 [pass]
 ++++
@@ -650,7 +650,7 @@ type Field = string
 ++++
 interface FieldMemoryUsage {
   memory_size?: <<ByteSize>>
-  memory_size_in_bytes: <<_long, long>>
+  memory_size_in_bytes: <<long>>
 }
 [pass]
 ++++
@@ -667,7 +667,7 @@ interface FieldMemoryUsage {
 ++++
 interface FieldSizeUsage {
   size?: <<ByteSize>>
-  size_in_bytes: <<_long, long>>
+  size_in_bytes: <<long>>
 }
 [pass]
 ++++
@@ -704,7 +704,7 @@ interface FieldSort {
 ++++
 <pre>
 ++++
-type FieldSortNumericType = '<<_long, long>>' | '<<_double, double>>' | 'date' | 'date_nanos'
+type FieldSortNumericType = '<<long>>' | '<<double>>' | 'date' | 'date_nanos'
 [pass]
 ++++
 </pre>
@@ -718,7 +718,7 @@ type FieldSortNumericType = '<<_long, long>>' | '<<_double, double>>' | 'date' |
 ++++
 <pre>
 ++++
-type FieldValue = <<_long, long>> | <<_double, double>> | string | boolean | null | any
+type FieldValue = <<long>> | <<double>> | string | boolean | null | any
 [pass]
 ++++
 </pre>
@@ -733,9 +733,9 @@ type FieldValue = <<_long, long>> | <<_double, double>> | string | boolean | nul
 <pre>
 ++++
 interface FielddataStats {
-  evictions?: <<_long, long>>
+  evictions?: <<long>>
   memory_size?: <<ByteSize>>
-  memory_size_in_bytes: <<_long, long>>
+  memory_size_in_bytes: <<long>>
   fields?: Record<<<Field>>, <<FieldMemoryUsage>>>
 }
 [pass]
@@ -766,8 +766,8 @@ type Fields = <<Field>> | <<Field>>[]
 <pre>
 ++++
 interface FlushStats {
-  periodic: <<_long, long>>
-  total: <<_long, long>>
+  periodic: <<long>>
+  total: <<long>>
   total_time?: <<Duration>>
   total_time_in_millis: <<DurationValue>><<<UnitMillis>>>
 }
@@ -784,7 +784,7 @@ interface FlushStats {
 ++++
 <pre>
 ++++
-type Fuzziness = string | <<_integer, integer>>
+type Fuzziness = string | <<integer>>
 [pass]
 ++++
 </pre>
@@ -911,7 +911,7 @@ interface GeoLine {
   pass:[/**] @property type Always `"LineString"` */
   type: string
   pass:[/**] @property coordinates Array of `[lon, lat]` coordinates */
-  coordinates: <<_double, double>>[][]
+  coordinates: <<double>>[][]
 }
 [pass]
 ++++
@@ -926,7 +926,7 @@ interface GeoLine {
 ++++
 <pre>
 ++++
-type GeoLocation = <<LatLonGeoLocation>> | <<GeoHashLocation>> | <<_double, double>>[] | string
+type GeoLocation = <<LatLonGeoLocation>> | <<GeoHashLocation>> | <<double>>[] | string
 [pass]
 ++++
 </pre>
@@ -997,16 +997,16 @@ type GeoTilePrecision = number
 <pre>
 ++++
 interface GetStats {
-  current: <<_long, long>>
+  current: <<long>>
   exists_time?: <<Duration>>
   exists_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  exists_total: <<_long, long>>
+  exists_total: <<long>>
   missing_time?: <<Duration>>
   missing_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  missing_total: <<_long, long>>
+  missing_total: <<long>>
   time?: <<Duration>>
   time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  total: <<_long, long>>
+  total: <<long>>
 }
 [pass]
 ++++
@@ -1190,21 +1190,21 @@ type IndexPatterns = <<IndexPattern>>[]
 <pre>
 ++++
 interface IndexingStats {
-  index_current: <<_long, long>>
-  delete_current: <<_long, long>>
+  index_current: <<long>>
+  delete_current: <<long>>
   delete_time?: <<Duration>>
   delete_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  delete_total: <<_long, long>>
+  delete_total: <<long>>
   is_throttled: boolean
-  noop_update_total: <<_long, long>>
+  noop_update_total: <<long>>
   throttle_time?: <<Duration>>
   throttle_time_in_millis: <<DurationValue>><<<UnitMillis>>>
   index_time?: <<Duration>>
   index_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  index_total: <<_long, long>>
-  index_failed: <<_long, long>>
+  index_total: <<long>>
+  index_failed: <<long>>
   types?: Record<string, <<IndexingStats>>>
-  write_load?: <<_double, double>>
+  write_load?: <<double>>
 }
 [pass]
 ++++
@@ -1276,7 +1276,7 @@ interface InlineGetKeys<TDocument = unknown> {
   fields?: Record<string, any>
   found: boolean
   _seq_no?: <<SequenceNumber>>
-  _primary_term?: <<_long, long>>
+  _primary_term?: <<long>>
   _routing?: <<Routing>>
   _source?: TDocument
 }
@@ -1317,13 +1317,13 @@ interface KnnQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property query_vector_builder The query vector builder. You must provide a query_vector_builder or query_vector, but not both. */
   query_vector_builder?: <<QueryVectorBuilder>>
   pass:[/**] @property num_candidates The number of nearest neighbor candidates to consider per shard */
-  num_candidates?: <<_integer, integer>>
+  num_candidates?: <<integer>>
   pass:[/**] @property k The final number of nearest neighbors to return as top hits */
-  k?: <<_integer, integer>>
+  k?: <<integer>>
   pass:[/**] @property filter Filters for the kNN search query */
   filter?: <<QueryDslQueryContainer>> | <<QueryDslQueryContainer>>[]
   pass:[/**] @property similarity The minimum similarity for a vector to be considered a match */
-  similarity?: <<_float, float>>
+  similarity?: <<float>>
 }
 [pass]
 ++++
@@ -1346,11 +1346,11 @@ interface KnnRetriever extends <<RetrieverBase>> {
   pass:[/**] @property query_vector_builder Defines a model to build a query vector. */
   query_vector_builder?: <<QueryVectorBuilder>>
   pass:[/**] @property k Number of nearest neighbors to return as top hits. */
-  k: <<_integer, integer>>
+  k: <<integer>>
   pass:[/**] @property num_candidates Number of nearest neighbor candidates to consider per shard. */
-  num_candidates: <<_integer, integer>>
+  num_candidates: <<integer>>
   pass:[/**] @property similarity The minimum similarity required for a document to be considered a match. */
-  similarity?: <<_float, float>>
+  similarity?: <<float>>
 }
 [pass]
 ++++
@@ -1373,15 +1373,15 @@ interface KnnSearch {
   pass:[/**] @property query_vector_builder The query vector builder. You must provide a query_vector_builder or query_vector, but not both. */
   query_vector_builder?: <<QueryVectorBuilder>>
   pass:[/**] @property k The final number of nearest neighbors to return as top hits */
-  k?: <<_integer, integer>>
+  k?: <<integer>>
   pass:[/**] @property num_candidates The number of nearest neighbor candidates to consider per shard */
-  num_candidates?: <<_integer, integer>>
+  num_candidates?: <<integer>>
   pass:[/**] @property boost Boost value to apply to kNN scores */
-  boost?: <<_float, float>>
+  boost?: <<float>>
   pass:[/**] @property filter Filters for the kNN search query */
   filter?: <<QueryDslQueryContainer>> | <<QueryDslQueryContainer>>[]
   pass:[/**] @property similarity The minimum similarity for a vector to be considered a match */
-  similarity?: <<_float, float>>
+  similarity?: <<float>>
   pass:[/**] @property inner_hits If defined, each search hit will contain inner hits. */
   inner_hits?: SearchInnerHits
 }
@@ -1400,9 +1400,9 @@ interface KnnSearch {
 ++++
 interface LatLonGeoLocation {
   pass:[/**] @property lat Latitude */
-  lat: <<_double, double>>
+  lat: <<double>>
   pass:[/**] @property lon Longitude */
-  lon: <<_double, double>>
+  lon: <<double>>
 }
 [pass]
 ++++
@@ -1460,16 +1460,16 @@ type MapboxVectorTiles = ArrayBuffer
 <pre>
 ++++
 interface MergesStats {
-  current: <<_long, long>>
-  current_docs: <<_long, long>>
+  current: <<long>>
+  current_docs: <<long>>
   current_size?: string
-  current_size_in_bytes: <<_long, long>>
-  total: <<_long, long>>
+  current_size_in_bytes: <<long>>
+  total: <<long>>
   total_auto_throttle?: string
-  total_auto_throttle_in_bytes: <<_long, long>>
-  total_docs: <<_long, long>>
+  total_auto_throttle_in_bytes: <<long>>
+  total_docs: <<long>>
   total_size?: string
-  total_size_in_bytes: <<_long, long>>
+  total_size_in_bytes: <<long>>
   total_stopped_time?: <<Duration>>
   total_stopped_time_in_millis: <<DurationValue>><<<UnitMillis>>>
   total_throttled_time?: <<Duration>>
@@ -1518,7 +1518,7 @@ type Metrics = string | string[]
 ++++
 <pre>
 ++++
-type MinimumShouldMatch = <<_integer, integer>> | string
+type MinimumShouldMatch = <<integer>> | string
 [pass]
 ++++
 </pre>
@@ -1590,7 +1590,7 @@ type Namespace = string
 ++++
 interface NestedSortValue {
   filter?: <<QueryDslQueryContainer>>
-  max_children?: <<_integer, integer>>
+  max_children?: <<integer>>
   nested?: <<NestedSortValue>>
   path: <<Field>>
 }
@@ -1706,7 +1706,7 @@ interface NodeShard {
   state: IndicesStatsShardRoutingState
   primary: boolean
   node?: <<NodeName>>
-  shard: <<_integer, integer>>
+  shard: <<integer>>
   index: <<IndexName>>
   allocation_id?: Record<string, <<Id>>>
   recovery_source?: Record<string, <<Id>>>
@@ -1730,11 +1730,11 @@ interface NodeShard {
 interface NodeStatistics {
   failures?: <<ErrorCause>>[]
   pass:[/**] @property total Total number of nodes selected by the request. */
-  total: <<_integer, integer>>
+  total: <<integer>>
   pass:[/**] @property successful Number of nodes that responded successfully to the request. */
-  successful: <<_integer, integer>>
+  successful: <<integer>>
   pass:[/**] @property failed Number of nodes that rejected the request or failed to respond. If this value is not 0, a reason for the rejection or failure is included in the response. */
-  failed: <<_integer, integer>>
+  failed: <<integer>>
 }
 [pass]
 ++++
@@ -1791,7 +1791,7 @@ type Password = string
 ++++
 <pre>
 ++++
-type Percentage = string | <<_float, float>>
+type Percentage = string | <<float>>
 [pass]
 ++++
 </pre>
@@ -1859,21 +1859,21 @@ type PropertyName = string
 ++++
 interface QueryCacheStats {
   pass:[/**] @property cache_count Total number of entries added to the query cache across all shards assigned to selected nodes. This number includes current and evicted entries. */
-  cache_count: <<_long, long>>
+  cache_count: <<long>>
   pass:[/**] @property cache_size Total number of entries currently in the query cache across all shards assigned to selected nodes. */
-  cache_size: <<_long, long>>
+  cache_size: <<long>>
   pass:[/**] @property evictions Total number of query cache evictions across all shards assigned to selected nodes. */
-  evictions: <<_long, long>>
+  evictions: <<long>>
   pass:[/**] @property hit_count Total count of query cache hits across all shards assigned to selected nodes. */
-  hit_count: <<_long, long>>
+  hit_count: <<long>>
   pass:[/**] @property memory_size Total amount of memory used for the query cache across all shards assigned to selected nodes. */
   memory_size?: <<ByteSize>>
   pass:[/**] @property memory_size_in_bytes Total amount, in bytes, of memory used for the query cache across all shards assigned to selected nodes. */
-  memory_size_in_bytes: <<_long, long>>
+  memory_size_in_bytes: <<long>>
   pass:[/**] @property miss_count Total count of query cache misses across all shards assigned to selected nodes. */
-  miss_count: <<_long, long>>
+  miss_count: <<long>>
   pass:[/**] @property total_count Total count of hits and misses in the query cache across all shards assigned to selected nodes. */
-  total_count: <<_long, long>>
+  total_count: <<long>>
 }
 [pass]
 ++++
@@ -1888,7 +1888,7 @@ interface QueryCacheStats {
 ++++
 <pre>
 ++++
-type QueryVector = <<_float, float>>[]
+type QueryVector = <<float>>[]
 [pass]
 ++++
 </pre>
@@ -1922,9 +1922,9 @@ interface RRFRetriever extends <<RetrieverBase>> {
   pass:[/**] @property retrievers A list of child retrievers to specify which sets of returned top documents will have the RRF formula applied to them. */
   retrievers: <<RetrieverContainer>>[]
   pass:[/**] @property rank_constant This value determines how much influence documents in individual result sets per query have over the final ranked result set. */
-  rank_constant?: <<_integer, integer>>
+  rank_constant?: <<integer>>
   pass:[/**] @property rank_window_size This value determines the size of the individual result sets per query. */
-  rank_window_size?: <<_integer, integer>>
+  rank_window_size?: <<integer>>
 }
 [pass]
 ++++
@@ -1972,8 +1972,8 @@ interface RankContainer {
 <pre>
 ++++
 interface RecoveryStats {
-  current_as_source: <<_long, long>>
-  current_as_target: <<_long, long>>
+  current_as_source: <<long>>
+  current_as_target: <<long>>
   throttle_time?: <<Duration>>
   throttle_time_in_millis: <<DurationValue>><<<UnitMillis>>>
 }
@@ -2005,10 +2005,10 @@ type Refresh = boolean | 'true' | 'false' | 'wait_for'
 <pre>
 ++++
 interface RefreshStats {
-  external_total: <<_long, long>>
+  external_total: <<long>>
   external_total_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  listeners: <<_long, long>>
-  total: <<_long, long>>
+  listeners: <<long>>
+  total: <<long>>
   total_time?: <<Duration>>
   total_time_in_millis: <<DurationValue>><<<UnitMillis>>>
 }
@@ -2040,7 +2040,7 @@ type RelationName = string
 <pre>
 ++++
 interface RelocationFailureInfo {
-  failed_attempts: <<_integer, integer>>
+  failed_attempts: <<integer>>
 }
 [pass]
 ++++
@@ -2071,11 +2071,11 @@ interface RequestBase extends <<SpecUtilsCommonQueryParameters>> {
 <pre>
 ++++
 interface RequestCacheStats {
-  evictions: <<_long, long>>
-  hit_count: <<_long, long>>
+  evictions: <<long>>
+  hit_count: <<long>>
   memory_size?: string
-  memory_size_in_bytes: <<_long, long>>
-  miss_count: <<_long, long>>
+  memory_size_in_bytes: <<long>>
+  miss_count: <<long>>
 }
 [pass]
 ++++
@@ -2105,8 +2105,8 @@ type Result = 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
 <pre>
 ++++
 interface Retries {
-  bulk: <<_long, long>>
-  search: <<_long, long>>
+  bulk: <<long>>
+  search: <<long>>
 }
 [pass]
 ++++
@@ -2125,7 +2125,7 @@ interface RetrieverBase {
   pass:[/**] @property filter Query to filter the documents that can match. */
   filter?: <<QueryDslQueryContainer>> | <<QueryDslQueryContainer>>[]
   pass:[/**] @property min_score Minimum _score for matching documents. Documents with a lower _score are not included in the top documents. */
-  min_score?: <<_float, float>>
+  min_score?: <<float>>
 }
 [pass]
 ++++
@@ -2179,9 +2179,9 @@ type Routing = string
 ++++
 interface RrfRank {
   pass:[/**] @property rank_constant How much influence documents in individual result sets per query have over the final ranked result set */
-  rank_constant?: <<_long, long>>
+  rank_constant?: <<long>>
   pass:[/**] @property rank_window_size Size of the individual result sets per query */
-  rank_window_size?: <<_long, long>>
+  rank_window_size?: <<long>>
 }
 [pass]
 ++++
@@ -2196,7 +2196,7 @@ interface RrfRank {
 ++++
 <pre>
 ++++
-type ScalarValue = <<_long, long>> | <<_double, double>> | string | boolean | null
+type ScalarValue = <<long>> | <<double>> | string | boolean | null
 [pass]
 ++++
 </pre>
@@ -2363,23 +2363,23 @@ type ScrollIds = <<ScrollId>> | <<ScrollId>>[]
 <pre>
 ++++
 interface SearchStats {
-  fetch_current: <<_long, long>>
+  fetch_current: <<long>>
   fetch_time?: <<Duration>>
   fetch_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  fetch_total: <<_long, long>>
-  open_contexts?: <<_long, long>>
-  query_current: <<_long, long>>
+  fetch_total: <<long>>
+  open_contexts?: <<long>>
+  query_current: <<long>>
   query_time?: <<Duration>>
   query_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  query_total: <<_long, long>>
-  scroll_current: <<_long, long>>
+  query_total: <<long>>
+  scroll_current: <<long>>
   scroll_time?: <<Duration>>
   scroll_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  scroll_total: <<_long, long>>
-  suggest_current: <<_long, long>>
+  scroll_total: <<long>>
+  suggest_current: <<long>>
   suggest_time?: <<Duration>>
   suggest_time_in_millis: <<DurationValue>><<<UnitMillis>>>
-  suggest_total: <<_long, long>>
+  suggest_total: <<long>>
   groups?: Record<string, <<SearchStats>>>
 }
 [pass]
@@ -2428,51 +2428,51 @@ type SearchType = 'query_then_fetch' | 'dfs_query_then_fetch'
 ++++
 interface SegmentsStats {
   pass:[/**] @property count Total number of segments across all shards assigned to selected nodes. */
-  count: <<_integer, integer>>
+  count: <<integer>>
   pass:[/**] @property doc_values_memory Total amount of memory used for doc values across all shards assigned to selected nodes. */
   doc_values_memory?: <<ByteSize>>
   pass:[/**] @property doc_values_memory_in_bytes Total amount, in bytes, of memory used for doc values across all shards assigned to selected nodes. */
-  doc_values_memory_in_bytes: <<_long, long>>
+  doc_values_memory_in_bytes: <<long>>
   pass:[/**] @property file_sizes This object is not populated by the cluster stats API. To get information on segment files, use the node stats API. */
   file_sizes: Record<string, IndicesStatsShardFileSizeInfo>
   pass:[/**] @property fixed_bit_set Total amount of memory used by fixed bit sets across all shards assigned to selected nodes. Fixed bit sets are used for nested object field types and type filters for join fields. */
   fixed_bit_set?: <<ByteSize>>
   pass:[/**] @property fixed_bit_set_memory_in_bytes Total amount of memory, in bytes, used by fixed bit sets across all shards assigned to selected nodes. */
-  fixed_bit_set_memory_in_bytes: <<_long, long>>
+  fixed_bit_set_memory_in_bytes: <<long>>
   pass:[/**] @property index_writer_memory Total amount of memory used by all index writers across all shards assigned to selected nodes. */
   index_writer_memory?: <<ByteSize>>
-  index_writer_max_memory_in_bytes?: <<_long, long>>
+  index_writer_max_memory_in_bytes?: <<long>>
   pass:[/**] @property index_writer_memory_in_bytes Total amount, in bytes, of memory used by all index writers across all shards assigned to selected nodes. */
-  index_writer_memory_in_bytes: <<_long, long>>
+  index_writer_memory_in_bytes: <<long>>
   pass:[/**] @property max_unsafe_auto_id_timestamp Unix timestamp, in milliseconds, of the most recently retried indexing request. */
-  max_unsafe_auto_id_timestamp: <<_long, long>>
+  max_unsafe_auto_id_timestamp: <<long>>
   pass:[/**] @property memory Total amount of memory used for segments across all shards assigned to selected nodes. */
   memory?: <<ByteSize>>
   pass:[/**] @property memory_in_bytes Total amount, in bytes, of memory used for segments across all shards assigned to selected nodes. */
-  memory_in_bytes: <<_long, long>>
+  memory_in_bytes: <<long>>
   pass:[/**] @property norms_memory Total amount of memory used for normalization factors across all shards assigned to selected nodes. */
   norms_memory?: <<ByteSize>>
   pass:[/**] @property norms_memory_in_bytes Total amount, in bytes, of memory used for normalization factors across all shards assigned to selected nodes. */
-  norms_memory_in_bytes: <<_long, long>>
+  norms_memory_in_bytes: <<long>>
   pass:[/**] @property points_memory Total amount of memory used for points across all shards assigned to selected nodes. */
   points_memory?: <<ByteSize>>
   pass:[/**] @property points_memory_in_bytes Total amount, in bytes, of memory used for points across all shards assigned to selected nodes. */
-  points_memory_in_bytes: <<_long, long>>
+  points_memory_in_bytes: <<long>>
   stored_memory?: <<ByteSize>>
   pass:[/**] @property stored_fields_memory_in_bytes Total amount, in bytes, of memory used for stored fields across all shards assigned to selected nodes. */
-  stored_fields_memory_in_bytes: <<_long, long>>
+  stored_fields_memory_in_bytes: <<long>>
   pass:[/**] @property terms_memory_in_bytes Total amount, in bytes, of memory used for terms across all shards assigned to selected nodes. */
-  terms_memory_in_bytes: <<_long, long>>
+  terms_memory_in_bytes: <<long>>
   pass:[/**] @property terms_memory Total amount of memory used for terms across all shards assigned to selected nodes. */
   terms_memory?: <<ByteSize>>
   pass:[/**] @property term_vectory_memory Total amount of memory used for term vectors across all shards assigned to selected nodes. */
   term_vectory_memory?: <<ByteSize>>
   pass:[/**] @property term_vectors_memory_in_bytes Total amount, in bytes, of memory used for term vectors across all shards assigned to selected nodes. */
-  term_vectors_memory_in_bytes: <<_long, long>>
+  term_vectors_memory_in_bytes: <<long>>
   pass:[/**] @property version_map_memory Total amount of memory used by all version maps across all shards assigned to selected nodes. */
   version_map_memory?: <<ByteSize>>
   pass:[/**] @property version_map_memory_in_bytes Total amount, in bytes, of memory used by all version maps across all shards assigned to selected nodes. */
-  version_map_memory_in_bytes: <<_long, long>>
+  version_map_memory_in_bytes: <<long>>
 }
 [pass]
 ++++
@@ -2487,7 +2487,7 @@ interface SegmentsStats {
 ++++
 <pre>
 ++++
-type SequenceNumber = <<_long, long>>
+type SequenceNumber = <<long>>
 [pass]
 ++++
 </pre>
@@ -2519,7 +2519,7 @@ interface ShardFailure {
   index?: <<IndexName>>
   node?: string
   reason: <<ErrorCause>>
-  shard: <<_integer, integer>>
+  shard: <<integer>>
   status?: string
 }
 [pass]
@@ -2536,13 +2536,13 @@ interface ShardFailure {
 <pre>
 ++++
 interface ShardStatistics {
-  failed: <<_uint, uint>>
+  failed: <<uint>>
   pass:[/**] @property successful Indicates how many shards have successfully run the search. */
-  successful: <<_uint, uint>>
+  successful: <<uint>>
   pass:[/**] @property total Indicates how many shards the search will run on overall. */
-  total: <<_uint, uint>>
+  total: <<uint>>
   failures?: <<ShardFailure>>[]
-  skipped?: <<_uint, uint>>
+  skipped?: <<uint>>
 }
 [pass]
 ++++
@@ -2576,7 +2576,7 @@ interface ShardsOperationResponseBase {
 interface SlicedScroll {
   field?: <<Field>>
   id: <<Id>>
-  max: <<_integer, integer>>
+  max: <<integer>>
 }
 [pass]
 ++++
@@ -2591,7 +2591,7 @@ interface SlicedScroll {
 ++++
 <pre>
 ++++
-type Slices = <<_integer, integer>> | <<SlicesCalculation>>
+type Slices = <<integer>> | <<SlicesCalculation>>
 [pass]
 ++++
 </pre>
@@ -2716,7 +2716,7 @@ interface StandardRetriever extends <<RetrieverBase>> {
   pass:[/**] @property search_after Defines a search after object parameter used for pagination. */
   search_after?: <<SortResults>>
   pass:[/**] @property terminate_after Maximum number of documents to collect for each shard. */
-  terminate_after?: <<_integer, integer>>
+  terminate_after?: <<integer>>
   pass:[/**] @property sort A sort object that that specifies the order of matching documents. */
   sort?: <<Sort>>
   pass:[/**] @property collapse Collapses the top documents by a specified key into a single top document per key. */
@@ -2739,15 +2739,15 @@ interface StoreStats {
   pass:[/**] @property size Total size of all shards assigned to selected nodes. */
   size?: <<ByteSize>>
   pass:[/**] @property size_in_bytes Total size, in bytes, of all shards assigned to selected nodes. */
-  size_in_bytes: <<_long, long>>
+  size_in_bytes: <<long>>
   pass:[/**] @property reserved A prediction of how much larger the shard stores will eventually grow due to ongoing peer recoveries, restoring snapshots, and similar activities. */
   reserved?: <<ByteSize>>
   pass:[/**] @property reserved_in_bytes A prediction, in bytes, of how much larger the shard stores will eventually grow due to ongoing peer recoveries, restoring snapshots, and similar activities. */
-  reserved_in_bytes: <<_long, long>>
+  reserved_in_bytes: <<long>>
   pass:[/**] @property total_data_set_size Total data set size of all shards assigned to selected nodes. This includes the size of shards not stored fully on the nodes, such as the cache for partially mounted indices. */
   total_data_set_size?: <<ByteSize>>
   pass:[/**] @property total_data_set_size_in_bytes Total data set size, in bytes, of all shards assigned to selected nodes. This includes the size of shards not stored fully on the nodes, such as the cache for partially mounted indices. */
-  total_data_set_size_in_bytes?: <<_long, long>>
+  total_data_set_size_in_bytes?: <<long>>
 }
 [pass]
 ++++
@@ -2811,7 +2811,7 @@ type SuggestionName = string
 <pre>
 ++++
 interface TaskFailure {
-  task_id: <<_long, long>>
+  task_id: <<long>>
   node_id: <<NodeId>>
   status: string
   reason: <<ErrorCause>>
@@ -2829,7 +2829,7 @@ interface TaskFailure {
 ++++
 <pre>
 ++++
-type TaskId = string | <<_integer, integer>>
+type TaskId = string | <<integer>>
 [pass]
 ++++
 </pre>
@@ -2864,7 +2864,7 @@ interface TextSimilarityReranker extends <<RetrieverBase>> {
   pass:[/**] @property retriever The nested retriever which will produce the first-level results, that will later be used for reranking. */
   retriever: <<RetrieverContainer>>
   pass:[/**] @property rank_window_size This value determines how many documents we will consider from the nested retriever. */
-  rank_window_size?: <<_integer, integer>>
+  rank_window_size?: <<integer>>
   pass:[/**] @property inference_id Unique identifier of the inference endpoint created using the inference API. */
   inference_id?: string
   pass:[/**] @property inference_text The text snippet used as the basis for similarity comparison */
@@ -2994,13 +2994,13 @@ interface TransformContainer {
 <pre>
 ++++
 interface TranslogStats {
-  earliest_last_modified_age: <<_long, long>>
-  operations: <<_long, long>>
+  earliest_last_modified_age: <<long>>
+  operations: <<long>>
   size?: string
-  size_in_bytes: <<_long, long>>
-  uncommitted_operations: <<_integer, integer>>
+  size_in_bytes: <<long>>
+  uncommitted_operations: <<integer>>
   uncommitted_size?: string
-  uncommitted_size_in_bytes: <<_long, long>>
+  uncommitted_size_in_bytes: <<long>>
 }
 [pass]
 ++++
@@ -3029,7 +3029,7 @@ type TransportAddress = string
 ++++
 <pre>
 ++++
-type UnitFloatMillis = <<_double, double>>
+type UnitFloatMillis = <<double>>
 [pass]
 ++++
 </pre>
@@ -3043,7 +3043,7 @@ type UnitFloatMillis = <<_double, double>>
 ++++
 <pre>
 ++++
-type UnitMillis = <<_long, long>>
+type UnitMillis = <<long>>
 [pass]
 ++++
 </pre>
@@ -3057,7 +3057,7 @@ type UnitMillis = <<_long, long>>
 ++++
 <pre>
 ++++
-type UnitNanos = <<_long, long>>
+type UnitNanos = <<long>>
 [pass]
 ++++
 </pre>
@@ -3071,7 +3071,7 @@ type UnitNanos = <<_long, long>>
 ++++
 <pre>
 ++++
-type UnitSeconds = <<_long, long>>
+type UnitSeconds = <<long>>
 [pass]
 ++++
 </pre>
@@ -3113,7 +3113,7 @@ type Uuid = string
 ++++
 <pre>
 ++++
-type VersionNumber = <<_long, long>>
+type VersionNumber = <<long>>
 [pass]
 ++++
 </pre>
@@ -3169,7 +3169,7 @@ type WaitForActiveShardOptions = 'all' | 'index-setting'
 ++++
 <pre>
 ++++
-type WaitForActiveShards = <<_integer, integer>> | <<WaitForActiveShardOptions>>
+type WaitForActiveShards = <<integer>> | <<WaitForActiveShardOptions>>
 [pass]
 ++++
 </pre>
@@ -3198,8 +3198,8 @@ type WaitForEvents = 'immediate' | 'urgent' | 'high' | 'normal' | 'low' | 'langu
 <pre>
 ++++
 interface WarmerStats {
-  current: <<_long, long>>
-  total: <<_long, long>>
+  current: <<long>>
+  total: <<long>>
   total_time?: <<Duration>>
   total_time_in_millis: <<DurationValue>><<<UnitMillis>>>
 }
@@ -3235,7 +3235,7 @@ interface WktGeoBounds {
 interface WriteResponseBase {
   _id: <<Id>>
   _index: <<IndexName>>
-  _primary_term?: <<_long, long>>
+  _primary_term?: <<long>>
   result: <<Result>>
   _seq_no?: <<SequenceNumber>>
   _shards: <<ShardStatistics>>
@@ -3593,7 +3593,7 @@ interface AggregationsAdjacencyMatrixBucketKeys extends <<AggregationsMultiBucke
   key: string
 }
 type AggregationsAdjacencyMatrixBucket = AggregationsAdjacencyMatrixBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | string | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | string | <<long>> }
 [pass]
 ++++
 </pre>
@@ -3782,7 +3782,7 @@ interface AggregationsAggregationContainer {
   percentiles_bucket?: <<AggregationsPercentilesBucketAggregation>>
   pass:[/**] @property range A multi-bucket value source based aggregation that enables the user to define a set of ranges - each representing a bucket. */
   range?: <<AggregationsRangeAggregation>>
-  pass:[/**] @property rare_terms A multi-bucket value source based aggregation which finds "rare" terms — terms that are at the <<_long, long>>-tail of the distribution and are not frequent. */
+  pass:[/**] @property rare_terms A multi-bucket value source based aggregation which finds "rare" terms — terms that are at the <<long>>-tail of the distribution and are not frequent. */
   rare_terms?: <<AggregationsRareTermsAggregation>>
   pass:[/**] @property rate Calculates a rate of documents or a field in each bucket. Can only be used inside a `date_histogram` or `composite` aggregation. */
   rate?: <<AggregationsRateAggregation>>
@@ -3842,11 +3842,11 @@ interface AggregationsAggregationContainer {
 ++++
 interface AggregationsAggregationRange {
   pass:[/**] @property from Start of the range (inclusive). */
-  from?: <<_double, double>> | null
+  from?: <<double>> | null
   pass:[/**] @property key Custom key to return the range with. */
   key?: string
   pass:[/**] @property to End of the range (exclusive). */
-  to?: <<_double, double>> | null
+  to?: <<double>> | null
 }
 [pass]
 ++++
@@ -3863,7 +3863,7 @@ interface AggregationsAggregationRange {
 ++++
 interface AggregationsArrayPercentilesItem {
   key: string
-  value: <<_double, double>> | null
+  value: <<double>> | null
   value_as_string?: string
 }
 [pass]
@@ -3897,7 +3897,7 @@ interface AggregationsAutoDateHistogramAggregate extends <<AggregationsMultiBuck
 ++++
 interface AggregationsAutoDateHistogramAggregation extends <<AggregationsBucketAggregationBase>> {
   pass:[/**] @property buckets The target number of buckets. */
-  buckets?: <<_integer, integer>>
+  buckets?: <<integer>>
   pass:[/**] @property field The field on which to run the aggregation. */
   field?: <<Field>>
   pass:[/**] @property format The date format used to format `key_as_string` in the response. If no `format` is specified, the first date format specified in the field mapping is used. */
@@ -3972,13 +3972,13 @@ interface AggregationsAvgAggregate extends <<AggregationsSingleMetricAggregateBa
 <pre>
 ++++
 interface AggregationsBoxPlotAggregate extends <<AggregationsAggregateBase>> {
-  min: <<_double, double>>
-  max: <<_double, double>>
-  q1: <<_double, double>>
-  q2: <<_double, double>>
-  q3: <<_double, double>>
-  lower: <<_double, double>>
-  upper: <<_double, double>>
+  min: <<double>>
+  max: <<double>>
+  q1: <<double>>
+  q2: <<double>>
+  q3: <<double>>
+  lower: <<double>>
+  upper: <<double>>
   min_as_string?: string
   max_as_string?: string
   q1_as_string?: string
@@ -4002,7 +4002,7 @@ interface AggregationsBoxPlotAggregate extends <<AggregationsAggregateBase>> {
 ++++
 interface AggregationsBoxplotAggregation extends <<AggregationsMetricAggregationBase>> {
   pass:[/**] @property compression Limits the maximum number of nodes used by the underlying <<TDigest>> algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
-  compression?: <<_double, double>>
+  compression?: <<double>>
 }
 [pass]
 ++++
@@ -4085,11 +4085,11 @@ interface AggregationsBucketCorrelationFunctionCountCorrelation {
 ++++
 interface AggregationsBucketCorrelationFunctionCountCorrelationIndicator {
   pass:[/**] @property doc_count The total number of documents that initially created the expectations. It’s required to be greater than or equal to the sum of all values in the buckets_path as this is the originating superset of data to which the term values are correlated. */
-  doc_count: <<_integer, integer>>
+  doc_count: <<integer>>
   pass:[/**] @property expectations An array of numbers with which to correlate the configured `bucket_path` values. The length of this value must always equal the number of buckets returned by the `bucket_path`. */
-  expectations: <<_double, double>>[]
+  expectations: <<double>>[]
   pass:[/**] @property fractions An array of fractions to use when averaging and calculating variance. This should be used if the pre-calculated data and the buckets_path have known gaps. The length of fractions, if provided, must equal expectations. */
-  fractions?: <<_double, double>>[]
+  fractions?: <<double>>[]
 }
 [pass]
 ++++
@@ -4108,7 +4108,7 @@ interface AggregationsBucketKsAggregation extends <<AggregationsBucketPathAggreg
   pass:[/**] @property alternative A list of string values indicating which K-S test alternative to calculate. The valid values are: "greater", "less", "two_sided". This parameter is key for determining the K-S statistic used when calculating the K-S test. Default value is all possible alternative hypotheses. */
   alternative?: string[]
   pass:[/**] @property fractions A list of doubles indicating the distribution of the samples with which to compare to the `buckets_path` results. In typical usage this is the overall proportion of documents in each bucket, which is compared with the actual document proportions in each bucket from the sibling aggregation counts. The default is to assume that overall documents are uniformly distributed on these buckets, which they would be if one used equal percentiles of a metric to define the bucket end points. */
-  fractions?: <<_double, double>>[]
+  fractions?: <<double>>[]
   pass:[/**] @property sampling_method Indicates the sampling methodology when calculating the K-S test. Note, this is sampling of the returned values. This determines the cumulative distribution function (CDF) points used comparing the two samples. Default is `upper_tail`, which emphasizes the upper end of the CDF points. Valid options are: `upper_tail`, `uniform`, and `lower_tail`. */
   sampling_method?: string
 }
@@ -4194,11 +4194,11 @@ interface AggregationsBucketSelectorAggregation extends <<AggregationsPipelineAg
 ++++
 interface AggregationsBucketSortAggregation {
   pass:[/**] @property from <<Buckets>> in positions prior to `from` will be truncated. */
-  from?: <<_integer, integer>>
+  from?: <<integer>>
   pass:[/**] @property gap_policy The policy to apply when gaps are found in the data. */
   gap_policy?: <<AggregationsGapPolicy>>
   pass:[/**] @property size The number of buckets to return. Defaults to all buckets of the parent aggregation. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   pass:[/**] @property sort The list of fields to sort on. */
   sort?: <<Sort>>
 }
@@ -4258,7 +4258,7 @@ type AggregationsCalendarInterval = 'second' | '1s' | 'minute' | '1m' | 'hour' |
 <pre>
 ++++
 interface AggregationsCardinalityAggregate extends <<AggregationsAggregateBase>> {
-  value: <<_long, long>>
+  value: <<long>>
 }
 [pass]
 ++++
@@ -4275,7 +4275,7 @@ interface AggregationsCardinalityAggregate extends <<AggregationsAggregateBase>>
 ++++
 interface AggregationsCardinalityAggregation extends <<AggregationsMetricAggregationBase>> {
   pass:[/**] @property precision_threshold A unique count below which counts are expected to be close to accurate. This allows to trade memory for accuracy. */
-  precision_threshold?: <<_integer, integer>>
+  precision_threshold?: <<integer>>
   rehash?: boolean
   pass:[/**] @property execution_hint Mechanism by which cardinality aggregations is run. */
   execution_hint?: <<AggregationsCardinalityExecutionMode>>
@@ -4311,23 +4311,23 @@ interface AggregationsCategorizeTextAggregation {
   pass:[/**] @property field The semi-structured text field to categorize. */
   field: <<Field>>
   pass:[/**] @property max_unique_tokens The maximum number of unique tokens at any position up to max_matched_tokens. Must be larger than 1. Smaller values use less memory and create fewer categories. Larger values will use more memory and create narrower categories. Max allowed value is 100. */
-  max_unique_tokens?: <<_integer, integer>>
+  max_unique_tokens?: <<integer>>
   pass:[/**] @property max_matched_tokens The maximum number of token positions to match on before attempting to merge categories. Larger values will use more memory and create narrower categories. Max allowed value is 100. */
-  max_matched_tokens?: <<_integer, integer>>
+  max_matched_tokens?: <<integer>>
   pass:[/**] @property similarity_threshold The minimum percentage of tokens that must match for text to be added to the category bucket. Must be between 1 and 100. The larger the value the narrower the categories. Larger values will increase memory usage and create narrower categories. */
-  similarity_threshold?: <<_integer, integer>>
+  similarity_threshold?: <<integer>>
   pass:[/**] @property categorization_filters This property expects an array of regular expressions. The expressions are used to filter out matching sequences from the categorization field values. You can use this functionality to fine tune the categorization by excluding sequences from consideration when categories are defined. For example, you can exclude SQL statements that appear in your log files. This property cannot be used at the same time as categorization_analyzer. If you only want to define simple regular expression filters that are applied prior to tokenization, setting this property is the easiest method. If you also want to customize the tokenizer or post-tokenization filtering, use the categorization_analyzer property instead and include the filters as pattern_replace character filters. */
   categorization_filters?: string[]
   pass:[/**] @property categorization_analyzer The categorization analyzer specifies how the text is analyzed and tokenized before being categorized. The syntax is very similar to that used to define the analyzer in the [Analyze endpoint](https://www.elastic.co/guide/en/elasticsearch/reference/8.0/indices-analyze.html). This property cannot be used at the same time as categorization_filters. */
   categorization_analyzer?: <<AggregationsCategorizeTextAnalyzer>>
   pass:[/**] @property shard_size The number of categorization buckets to return from each shard before merging all the results. */
-  shard_size?: <<_integer, integer>>
+  shard_size?: <<integer>>
   pass:[/**] @property size The number of buckets to return. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   pass:[/**] @property min_doc_count The minimum number of documents in a bucket to be returned to the results. */
-  min_doc_count?: <<_integer, integer>>
+  min_doc_count?: <<integer>>
   pass:[/**] @property shard_min_doc_count The minimum number of documents in a bucket to be returned from the shard before merging. */
-  shard_min_doc_count?: <<_integer, integer>>
+  shard_min_doc_count?: <<integer>>
 }
 [pass]
 ++++
@@ -4378,7 +4378,7 @@ interface AggregationsChiSquareHeuristic {
 interface AggregationsChildrenAggregateKeys extends <<AggregationsSingleBucketAggregateBase>> {
 }
 type AggregationsChildrenAggregate = AggregationsChildrenAggregateKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | <<Metadata>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 [pass]
 ++++
 </pre>
@@ -4443,7 +4443,7 @@ interface AggregationsCompositeAggregation extends <<AggregationsBucketAggregati
   pass:[/**] @property after When paginating, use the `after_key` value returned in the previous response to retrieve the next page. */
   after?: <<AggregationsCompositeAggregateKey>>
   pass:[/**] @property size The number of composite buckets that should be returned. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   pass:[/**] @property sources The value sources used to build composite buckets. Keys are returned in the order of the `sources` definition. */
   sources?: Record<string, <<AggregationsCompositeAggregationSource>>>[]
 }
@@ -4510,7 +4510,7 @@ interface AggregationsCompositeBucketKeys extends <<AggregationsMultiBucketBase>
   key: <<AggregationsCompositeAggregateKey>>
 }
 type AggregationsCompositeBucket = AggregationsCompositeBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<AggregationsCompositeAggregateKey>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<AggregationsCompositeAggregateKey>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -4547,7 +4547,7 @@ interface AggregationsCompositeDateHistogramAggregation extends <<AggregationsCo
 <pre>
 ++++
 interface AggregationsCompositeGeoTileGridAggregation extends <<AggregationsCompositeAggregationBase>> {
-  precision?: <<_integer, integer>>
+  precision?: <<integer>>
   bounds?: <<GeoBounds>>
 }
 [pass]
@@ -4564,7 +4564,7 @@ interface AggregationsCompositeGeoTileGridAggregation extends <<AggregationsComp
 <pre>
 ++++
 interface AggregationsCompositeHistogramAggregation extends <<AggregationsCompositeAggregationBase>> {
-  interval: <<_double, double>>
+  interval: <<double>>
 }
 [pass]
 ++++
@@ -4595,7 +4595,7 @@ interface AggregationsCompositeTermsAggregation extends <<AggregationsCompositeA
 <pre>
 ++++
 interface AggregationsCumulativeCardinalityAggregate extends <<AggregationsAggregateBase>> {
-  value: <<_long, long>>
+  value: <<long>>
   value_as_string?: string
 }
 [pass]
@@ -4689,7 +4689,7 @@ interface AggregationsDateHistogramAggregation extends <<AggregationsBucketAggre
   format?: string
   interval?: <<Duration>>
   pass:[/**] @property min_doc_count Only returns buckets that have `min_doc_count` number of documents. By default, all buckets between the first bucket that matches documents and the last one are returned. */
-  min_doc_count?: <<_integer, integer>>
+  min_doc_count?: <<integer>>
   pass:[/**] @property missing The value to apply to documents that do not have a value. By default, documents without a value are ignored. */
   missing?: <<DateTime>>
   pass:[/**] @property offset Changes the start value of each bucket by the specified positive (`+`) or negative offset (`-`) duration. */
@@ -4721,7 +4721,7 @@ interface AggregationsDateHistogramBucketKeys extends <<AggregationsMultiBucketB
   key: <<EpochTime>><<<UnitMillis>>>
 }
 type AggregationsDateHistogramBucket = AggregationsDateHistogramBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | string | <<EpochTime>><<<UnitMillis>>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | string | <<EpochTime>><<<UnitMillis>>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -4799,7 +4799,7 @@ interface AggregationsDateRangeExpression {
 <pre>
 ++++
 interface AggregationsDerivativeAggregate extends <<AggregationsSingleMetricAggregateBase>> {
-  normalized_value?: <<_double, double>>
+  normalized_value?: <<double>>
   normalized_value_as_string?: string
 }
 [pass]
@@ -4834,10 +4834,10 @@ interface AggregationsDiversifiedSamplerAggregation extends <<AggregationsBucket
   pass:[/**] @property execution_hint The type of value used for de-duplication. */
   execution_hint?: <<AggregationsSamplerAggregationExecutionHint>>
   pass:[/**] @property max_docs_per_value Limits how many documents are permitted per choice of de-duplicating value. */
-  max_docs_per_value?: <<_integer, integer>>
+  max_docs_per_value?: <<integer>>
   script?: <<Script>> | string
   pass:[/**] @property shard_size Limits how many top-scoring documents are collected in the sample processed on each shard. */
-  shard_size?: <<_integer, integer>>
+  shard_size?: <<integer>>
   pass:[/**] @property field The field used to provide values used for de-duplication. */
   field?: <<Field>>
 }
@@ -4870,11 +4870,11 @@ interface AggregationsDoubleTermsAggregate extends <<AggregationsTermsAggregateB
 <pre>
 ++++
 interface AggregationsDoubleTermsBucketKeys extends <<AggregationsTermsBucketBase>> {
-  key: <<_double, double>>
+  key: <<double>>
   key_as_string?: string
 }
 type AggregationsDoubleTermsBucket = AggregationsDoubleTermsBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_double, double>> | string | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<double>> | string | <<long>> }
 [pass]
 ++++
 </pre>
@@ -4889,7 +4889,7 @@ type AggregationsDoubleTermsBucket = AggregationsDoubleTermsBucketKeys
 <pre>
 ++++
 interface AggregationsEwmaModelSettings {
-  alpha?: <<_float, float>>
+  alpha?: <<float>>
 }
 [pass]
 ++++
@@ -4941,13 +4941,13 @@ interface AggregationsExtendedBounds<T = unknown> {
 <pre>
 ++++
 interface AggregationsExtendedStatsAggregate extends <<AggregationsStatsAggregate>> {
-  sum_of_squares: <<_double, double>> | null
-  variance: <<_double, double>> | null
-  variance_population: <<_double, double>> | null
-  variance_sampling: <<_double, double>> | null
-  std_deviation: <<_double, double>> | null
-  std_deviation_population: <<_double, double>> | null
-  std_deviation_sampling: <<_double, double>> | null
+  sum_of_squares: <<double>> | null
+  variance: <<double>> | null
+  variance_population: <<double>> | null
+  variance_sampling: <<double>> | null
+  std_deviation: <<double>> | null
+  std_deviation_population: <<double>> | null
+  std_deviation_sampling: <<double>> | null
   std_deviation_bounds?: <<AggregationsStandardDeviationBounds>>
   sum_of_squares_as_string?: string
   variance_as_string?: string
@@ -4971,7 +4971,7 @@ interface AggregationsExtendedStatsAggregate extends <<AggregationsStatsAggregat
 ++++
 interface AggregationsExtendedStatsAggregation extends <<AggregationsFormatMetricAggregationBase>> {
   pass:[/**] @property sigma The number of standard deviations above/below the mean to display. */
-  sigma?: <<_double, double>>
+  sigma?: <<double>>
 }
 [pass]
 ++++
@@ -5003,7 +5003,7 @@ interface AggregationsExtendedStatsBucketAggregate extends <<AggregationsExtende
 ++++
 interface AggregationsExtendedStatsBucketAggregation extends <<AggregationsPipelineAggregationBase>> {
   pass:[/**] @property sigma The number of standard deviations above/below the mean to display. */
-  sigma?: <<_double, double>>
+  sigma?: <<double>>
 }
 [pass]
 ++++
@@ -5018,7 +5018,7 @@ interface AggregationsExtendedStatsBucketAggregation extends <<AggregationsPipel
 ++++
 <pre>
 ++++
-type AggregationsFieldDateMath = <<DateMath>> | <<_double, double>>
+type AggregationsFieldDateMath = <<DateMath>> | <<double>>
 [pass]
 ++++
 </pre>
@@ -5035,7 +5035,7 @@ type AggregationsFieldDateMath = <<DateMath>> | <<_double, double>>
 interface AggregationsFilterAggregateKeys extends <<AggregationsSingleBucketAggregateBase>> {
 }
 type AggregationsFilterAggregate = AggregationsFilterAggregateKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | <<Metadata>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 [pass]
 ++++
 </pre>
@@ -5090,7 +5090,7 @@ interface AggregationsFiltersAggregation extends <<AggregationsBucketAggregation
 interface AggregationsFiltersBucketKeys extends <<AggregationsMultiBucketBase>> {
 }
 type AggregationsFiltersBucket = AggregationsFiltersBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -5155,11 +5155,11 @@ interface AggregationsFrequentItemSetsAggregation {
   pass:[/**] @property fields <<Fields>> to analyze. */
   fields: <<AggregationsFrequentItemSetsField>>[]
   pass:[/**] @property minimum_set_size The minimum size of one item set. */
-  minimum_set_size?: <<_integer, integer>>
+  minimum_set_size?: <<integer>>
   pass:[/**] @property minimum_support The minimum support of one item set. */
-  minimum_support?: <<_double, double>>
+  minimum_support?: <<double>>
   pass:[/**] @property size The number of top item sets to return. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   pass:[/**] @property filter Query that filters documents from analysis. */
   filter?: <<QueryDslQueryContainer>>
 }
@@ -5178,10 +5178,10 @@ interface AggregationsFrequentItemSetsAggregation {
 ++++
 interface AggregationsFrequentItemSetsBucketKeys extends <<AggregationsMultiBucketBase>> {
   key: Record<<<Field>>, string[]>
-  support: <<_double, double>>
+  support: <<double>>
 }
 type AggregationsFrequentItemSetsBucket = AggregationsFrequentItemSetsBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | Record<<<Field>>, string[]> | <<_double, double>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | Record<<<Field>>, string[]> | <<double>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -5263,7 +5263,7 @@ interface AggregationsGeoBoundsAggregation extends <<AggregationsMetricAggregati
 <pre>
 ++++
 interface AggregationsGeoCentroidAggregate extends <<AggregationsAggregateBase>> {
-  count: <<_long, long>>
+  count: <<long>>
   location?: <<GeoLocation>>
 }
 [pass]
@@ -5280,7 +5280,7 @@ interface AggregationsGeoCentroidAggregate extends <<AggregationsAggregateBase>>
 <pre>
 ++++
 interface AggregationsGeoCentroidAggregation extends <<AggregationsMetricAggregationBase>> {
-  count?: <<_long, long>>
+  count?: <<long>>
   location?: <<GeoLocation>>
 }
 [pass]
@@ -5359,9 +5359,9 @@ interface AggregationsGeoHashGridAggregation extends <<AggregationsBucketAggrega
   pass:[/**] @property precision The string length of the geohashes used to define cells/buckets in the results. */
   precision?: <<GeoHashPrecision>>
   pass:[/**] @property shard_size Allows for more accurate counting of the top cells returned in the final result the aggregation. Defaults to returning `max(10,(size x number-of-shards))` buckets from each shard. */
-  shard_size?: <<_integer, integer>>
+  shard_size?: <<integer>>
   pass:[/**] @property size The maximum number of geohash buckets to return. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
 }
 [pass]
 ++++
@@ -5380,7 +5380,7 @@ interface AggregationsGeoHashGridBucketKeys extends <<AggregationsMultiBucketBas
   key: <<GeoHash>>
 }
 type AggregationsGeoHashGridBucket = AggregationsGeoHashGridBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<GeoHash>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<GeoHash>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -5413,7 +5413,7 @@ interface AggregationsGeoHexGridBucketKeys extends <<AggregationsMultiBucketBase
   key: <<GeoHexCell>>
 }
 type AggregationsGeoHexGridBucket = AggregationsGeoHexGridBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<GeoHexCell>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<GeoHexCell>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -5455,7 +5455,7 @@ interface AggregationsGeoLineAggregation {
   pass:[/**] @property sort_order The order in which the line is sorted (ascending or descending). */
   sort_order?: <<SortOrder>>
   pass:[/**] @property size The maximum length of the line represented in the aggregation. Valid sizes are between 1 and 10000. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
 }
 [pass]
 ++++
@@ -5525,9 +5525,9 @@ interface AggregationsGeoTileGridAggregation extends <<AggregationsBucketAggrega
   pass:[/**] @property precision Integer zoom of the key used to define cells/buckets in the results. Values outside of the range [0,29] will be rejected. */
   precision?: <<GeoTilePrecision>>
   pass:[/**] @property shard_size Allows for more accurate counting of the top cells returned in the final result the aggregation. Defaults to returning `max(10,(size x number-of-shards))` buckets from each shard. */
-  shard_size?: <<_integer, integer>>
+  shard_size?: <<integer>>
   pass:[/**] @property size The maximum number of buckets to return. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   pass:[/**] @property bounds A bounding box to filter the geo-points or geo-shapes in each bucket. */
   bounds?: <<GeoBounds>>
 }
@@ -5548,7 +5548,7 @@ interface AggregationsGeoTileGridBucketKeys extends <<AggregationsMultiBucketBas
   key: <<GeoTile>>
 }
 type AggregationsGeoTileGridBucket = AggregationsGeoTileGridBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<GeoTile>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<GeoTile>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -5566,13 +5566,13 @@ interface AggregationsGeohexGridAggregation extends <<AggregationsBucketAggregat
   pass:[/**] @property field <<Field>> containing indexed `geo_point` or `geo_shape` values. If the field contains an array, `geohex_grid` aggregates all array values. */
   field: <<Field>>
   pass:[/**] @property precision Integer zoom of the key used to defined cells or buckets in the results. Value should be between 0-15. */
-  precision?: <<_integer, integer>>
+  precision?: <<integer>>
   pass:[/**] @property bounds Bounding box used to filter the geo-points in each bucket. */
   bounds?: <<GeoBounds>>
   pass:[/**] @property size Maximum number of buckets to return. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   pass:[/**] @property shard_size Number of buckets returned from each shard. */
-  shard_size?: <<_integer, integer>>
+  shard_size?: <<integer>>
 }
 [pass]
 ++++
@@ -5590,7 +5590,7 @@ interface AggregationsGeohexGridAggregation extends <<AggregationsBucketAggregat
 interface AggregationsGlobalAggregateKeys extends <<AggregationsSingleBucketAggregateBase>> {
 }
 type AggregationsGlobalAggregate = AggregationsGlobalAggregateKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | <<Metadata>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 [pass]
 ++++
 </pre>
@@ -5638,7 +5638,7 @@ interface AggregationsGoogleNormalizedDistanceHeuristic {
 ++++
 interface AggregationsHdrMethod {
   pass:[/**] @property number_of_significant_value_digits Specifies the resolution of values for the histogram in number of significant digits. */
-  number_of_significant_value_digits?: <<_integer, integer>>
+  number_of_significant_value_digits?: <<integer>>
 }
 [pass]
 ++++
@@ -5700,19 +5700,19 @@ interface AggregationsHistogramAggregate extends <<AggregationsMultiBucketAggreg
 ++++
 interface AggregationsHistogramAggregation extends <<AggregationsBucketAggregationBase>> {
   pass:[/**] @property extended_bounds Enables extending the bounds of the histogram beyond the data itself. */
-  extended_bounds?: <<AggregationsExtendedBounds>><<<_double, double>>>
+  extended_bounds?: <<AggregationsExtendedBounds>><<<double>>>
   pass:[/**] @property hard_bounds Limits the range of buckets in the histogram. It is particularly useful in the case of open data ranges that can result in a very large number of buckets. */
-  hard_bounds?: <<AggregationsExtendedBounds>><<<_double, double>>>
+  hard_bounds?: <<AggregationsExtendedBounds>><<<double>>>
   pass:[/**] @property field The name of the field to aggregate on. */
   field?: <<Field>>
   pass:[/**] @property interval The interval for the buckets. Must be a positive decimal. */
-  interval?: <<_double, double>>
+  interval?: <<double>>
   pass:[/**] @property min_doc_count Only returns buckets that have `min_doc_count` number of documents. By default, the response will fill gaps in the histogram with empty buckets. */
-  min_doc_count?: <<_integer, integer>>
+  min_doc_count?: <<integer>>
   pass:[/**] @property missing The value to apply to documents that do not have a value. By default, documents without a value are ignored. */
-  missing?: <<_double, double>>
+  missing?: <<double>>
   pass:[/**] @property offset By default, the bucket keys start with 0 and then continue in even spaced steps of `interval`. The bucket boundaries can be shifted by using the `offset` option. */
-  offset?: <<_double, double>>
+  offset?: <<double>>
   pass:[/**] @property order The sort order of the returned buckets. By default, the returned buckets are sorted by their key ascending. */
   order?: <<AggregationsAggregateOrder>>
   script?: <<Script>> | string
@@ -5735,10 +5735,10 @@ interface AggregationsHistogramAggregation extends <<AggregationsBucketAggregati
 ++++
 interface AggregationsHistogramBucketKeys extends <<AggregationsMultiBucketBase>> {
   key_as_string?: string
-  key: <<_double, double>>
+  key: <<double>>
 }
 type AggregationsHistogramBucket = AggregationsHistogramBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | string | <<_double, double>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | string | <<double>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -5753,8 +5753,8 @@ type AggregationsHistogramBucket = AggregationsHistogramBucketKeys
 <pre>
 ++++
 interface AggregationsHoltLinearModelSettings {
-  alpha?: <<_float, float>>
-  beta?: <<_float, float>>
+  alpha?: <<float>>
+  beta?: <<float>>
 }
 [pass]
 ++++
@@ -5787,11 +5787,11 @@ interface AggregationsHoltMovingAverageAggregation extends <<AggregationsMovingA
 <pre>
 ++++
 interface AggregationsHoltWintersModelSettings {
-  alpha?: <<_float, float>>
-  beta?: <<_float, float>>
-  gamma?: <<_float, float>>
+  alpha?: <<float>>
+  beta?: <<float>>
+  gamma?: <<float>>
   pad?: boolean
-  period?: <<_integer, integer>>
+  period?: <<integer>>
   type?: <<AggregationsHoltWintersType>>
 }
 [pass]
@@ -5880,7 +5880,7 @@ interface AggregationsInferenceAggregation extends <<AggregationsPipelineAggrega
 ++++
 interface AggregationsInferenceClassImportance {
   class_name: string
-  importance: <<_double, double>>
+  importance: <<double>>
 }
 [pass]
 ++++
@@ -5916,7 +5916,7 @@ interface AggregationsInferenceConfigContainer {
 ++++
 interface AggregationsInferenceFeatureImportance {
   feature_name: string
-  importance?: <<_double, double>>
+  importance?: <<double>>
   classes?: <<AggregationsInferenceClassImportance>>[]
 }
 [pass]
@@ -5934,8 +5934,8 @@ interface AggregationsInferenceFeatureImportance {
 ++++
 interface AggregationsInferenceTopClassEntry {
   class_name: <<FieldValue>>
-  class_probability: <<_double, double>>
-  class_score: <<_double, double>>
+  class_probability: <<double>>
+  class_score: <<double>>
 }
 [pass]
 ++++
@@ -5969,7 +5969,7 @@ interface AggregationsIpPrefixAggregation extends <<AggregationsBucketAggregatio
   pass:[/**] @property field The IP address field to aggregation on. The field mapping type must be `ip`. */
   field: <<Field>>
   pass:[/**] @property prefix_length Length of the network prefix. For IPv4 addresses the accepted range is [0, 32]. For IPv6 addresses the accepted range is [0, 128]. */
-  prefix_length: <<_integer, integer>>
+  prefix_length: <<integer>>
   pass:[/**] @property is_ipv6 Defines whether the prefix applies to IPv6 addresses. */
   is_ipv6?: boolean
   pass:[/**] @property append_prefix_length Defines whether the prefix length is appended to IP address keys in the response. */
@@ -5977,7 +5977,7 @@ interface AggregationsIpPrefixAggregation extends <<AggregationsBucketAggregatio
   pass:[/**] @property keyed Defines whether buckets are returned as a hash rather than an array in the response. */
   keyed?: boolean
   pass:[/**] @property min_doc_count Minimum number of documents in a bucket for it to be included in the response. */
-  min_doc_count?: <<_long, long>>
+  min_doc_count?: <<long>>
 }
 [pass]
 ++++
@@ -5995,11 +5995,11 @@ interface AggregationsIpPrefixAggregation extends <<AggregationsBucketAggregatio
 interface AggregationsIpPrefixBucketKeys extends <<AggregationsMultiBucketBase>> {
   is_ipv6: boolean
   key: string
-  prefix_length: <<_integer, integer>>
+  prefix_length: <<integer>>
   netmask?: string
 }
 type AggregationsIpPrefixBucket = AggregationsIpPrefixBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | boolean | string | <<_integer, integer>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | boolean | string | <<integer>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -6074,7 +6074,7 @@ interface AggregationsIpRangeBucketKeys extends <<AggregationsMultiBucketBase>> 
   to?: string
 }
 type AggregationsIpRangeBucket = AggregationsIpRangeBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | string | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | string | <<long>> }
 [pass]
 ++++
 </pre>
@@ -6088,7 +6088,7 @@ type AggregationsIpRangeBucket = AggregationsIpRangeBucketKeys
 ++++
 <pre>
 ++++
-type AggregationsKeyedPercentiles = Record<string, string | <<_long, long>> | null>
+type AggregationsKeyedPercentiles = Record<string, string | <<long>> | null>
 [pass]
 ++++
 </pre>
@@ -6135,11 +6135,11 @@ interface AggregationsLongRareTermsAggregate extends <<AggregationsMultiBucketAg
 <pre>
 ++++
 interface AggregationsLongRareTermsBucketKeys extends <<AggregationsMultiBucketBase>> {
-  key: <<_long, long>>
+  key: <<long>>
   key_as_string?: string
 }
 type AggregationsLongRareTermsBucket = AggregationsLongRareTermsBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | string }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | string }
 [pass]
 ++++
 </pre>
@@ -6169,11 +6169,11 @@ interface AggregationsLongTermsAggregate extends <<AggregationsTermsAggregateBas
 <pre>
 ++++
 interface AggregationsLongTermsBucketKeys extends <<AggregationsTermsBucketBase>> {
-  key: <<_long, long>>
+  key: <<long>>
   key_as_string?: string
 }
 type AggregationsLongTermsBucket = AggregationsLongTermsBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | string }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | string }
 [pass]
 ++++
 </pre>
@@ -6191,7 +6191,7 @@ interface AggregationsMatrixAggregation {
   pass:[/**] @property fields An array of fields for computing the statistics. */
   fields?: <<Fields>>
   pass:[/**] @property missing The value to apply to documents that do not have a value. By default, documents without a value are ignored. */
-  missing?: Record<<<Field>>, <<_double, double>>>
+  missing?: Record<<<Field>>, <<double>>>
 }
 [pass]
 ++++
@@ -6207,7 +6207,7 @@ interface AggregationsMatrixAggregation {
 <pre>
 ++++
 interface AggregationsMatrixStatsAggregate extends <<AggregationsAggregateBase>> {
-  doc_count: <<_long, long>>
+  doc_count: <<long>>
   fields?: <<AggregationsMatrixStatsFields>>[]
 }
 [pass]
@@ -6242,13 +6242,13 @@ interface AggregationsMatrixStatsAggregation extends <<AggregationsMatrixAggrega
 ++++
 interface AggregationsMatrixStatsFields {
   name: <<Field>>
-  count: <<_long, long>>
-  mean: <<_double, double>>
-  variance: <<_double, double>>
-  skewness: <<_double, double>>
-  kurtosis: <<_double, double>>
-  covariance: Record<<<Field>>, <<_double, double>>>
-  correlation: Record<<<Field>>, <<_double, double>>>
+  count: <<long>>
+  mean: <<double>>
+  variance: <<double>>
+  skewness: <<double>>
+  kurtosis: <<double>>
+  covariance: Record<<<Field>>, <<double>>>
+  correlation: Record<<<Field>>, <<double>>>
 }
 [pass]
 ++++
@@ -6325,7 +6325,7 @@ interface AggregationsMedianAbsoluteDeviationAggregate extends <<AggregationsSin
 ++++
 interface AggregationsMedianAbsoluteDeviationAggregation extends <<AggregationsFormatMetricAggregationBase>> {
   pass:[/**] @property compression Limits the maximum number of nodes used by the underlying <<TDigest>> algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
-  compression?: <<_double, double>>
+  compression?: <<double>>
 }
 [pass]
 ++++
@@ -6419,7 +6419,7 @@ type AggregationsMinimumInterval = 'second' | 'minute' | 'hour' | 'day' | 'month
 ++++
 <pre>
 ++++
-type AggregationsMissing = string | <<_integer, integer>> | <<_double, double>> | boolean
+type AggregationsMissing = string | <<integer>> | <<double>> | boolean
 [pass]
 ++++
 </pre>
@@ -6436,7 +6436,7 @@ type AggregationsMissing = string | <<_integer, integer>> | <<_double, double>> 
 interface AggregationsMissingAggregateKeys extends <<AggregationsSingleBucketAggregateBase>> {
 }
 type AggregationsMissingAggregate = AggregationsMissingAggregateKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | <<Metadata>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 [pass]
 ++++
 </pre>
@@ -6498,8 +6498,8 @@ type AggregationsMovingAverageAggregation = <<AggregationsLinearMovingAverageAgg
 ++++
 interface AggregationsMovingAverageAggregationBase extends <<AggregationsPipelineAggregationBase>> {
   minimize?: boolean
-  predict?: <<_integer, integer>>
-  window?: <<_integer, integer>>
+  predict?: <<integer>>
+  window?: <<integer>>
 }
 [pass]
 ++++
@@ -6518,9 +6518,9 @@ interface AggregationsMovingFunctionAggregation extends <<AggregationsPipelineAg
   pass:[/**] @property script The script that should be executed on each window of data. */
   script?: string
   pass:[/**] @property shift By default, the window consists of the last n values excluding the current bucket. Increasing `shift` by 1, moves the starting window position by 1 to the right. */
-  shift?: <<_integer, integer>>
+  shift?: <<integer>>
   pass:[/**] @property window The size of window to "slide" across the histogram. */
-  window?: <<_integer, integer>>
+  window?: <<integer>>
 }
 [pass]
 ++++
@@ -6537,9 +6537,9 @@ interface AggregationsMovingFunctionAggregation extends <<AggregationsPipelineAg
 ++++
 interface AggregationsMovingPercentilesAggregation extends <<AggregationsPipelineAggregationBase>> {
   pass:[/**] @property window The size of window to "slide" across the histogram. */
-  window?: <<_integer, integer>>
+  window?: <<integer>>
   pass:[/**] @property shift By default, the window consists of the last n values excluding the current bucket. Increasing `shift` by 1, moves the starting window position by 1 to the right. */
-  shift?: <<_integer, integer>>
+  shift?: <<integer>>
   keyed?: boolean
 }
 [pass]
@@ -6572,7 +6572,7 @@ interface AggregationsMultiBucketAggregateBase<TBucket = unknown> extends <<Aggr
 <pre>
 ++++
 interface AggregationsMultiBucketBase {
-  doc_count: <<_long, long>>
+  doc_count: <<long>>
 }
 [pass]
 ++++
@@ -6627,15 +6627,15 @@ interface AggregationsMultiTermsAggregation extends <<AggregationsBucketAggregat
   pass:[/**] @property order Specifies the sort order of the buckets. Defaults to sorting by descending document count. */
   order?: <<AggregationsAggregateOrder>>
   pass:[/**] @property min_doc_count The minimum number of documents in a bucket for it to be returned. */
-  min_doc_count?: <<_long, long>>
+  min_doc_count?: <<long>>
   pass:[/**] @property shard_min_doc_count The minimum number of documents in a bucket on each shard for it to be returned. */
-  shard_min_doc_count?: <<_long, long>>
+  shard_min_doc_count?: <<long>>
   pass:[/**] @property shard_size The number of candidate terms produced by each shard. By default, `shard_size` will be automatically estimated based on the number of shards and the `size` parameter. */
-  shard_size?: <<_integer, integer>>
+  shard_size?: <<integer>>
   pass:[/**] @property show_term_doc_count_error Calculates the doc count error on per term basis. */
   show_term_doc_count_error?: boolean
   pass:[/**] @property size The number of term buckets should be returned out of the overall terms list. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   pass:[/**] @property terms The field from which to generate sets of terms. */
   terms: <<AggregationsMultiTermLookup>>[]
 }
@@ -6655,10 +6655,10 @@ interface AggregationsMultiTermsAggregation extends <<AggregationsBucketAggregat
 interface AggregationsMultiTermsBucketKeys extends <<AggregationsMultiBucketBase>> {
   key: <<FieldValue>>[]
   key_as_string?: string
-  doc_count_error_upper_bound?: <<_long, long>>
+  doc_count_error_upper_bound?: <<long>>
 }
 type AggregationsMultiTermsBucket = AggregationsMultiTermsBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<FieldValue>>[] | string | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<FieldValue>>[] | string | <<long>> }
 [pass]
 ++++
 </pre>
@@ -6694,7 +6694,7 @@ interface AggregationsMutualInformationHeuristic {
 interface AggregationsNestedAggregateKeys extends <<AggregationsSingleBucketAggregateBase>> {
 }
 type AggregationsNestedAggregate = AggregationsNestedAggregateKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | <<Metadata>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 [pass]
 ++++
 </pre>
@@ -6759,7 +6759,7 @@ type AggregationsNormalizeMethod = 'rescale_0_1' | 'rescale_0_100' | 'percent_of
 interface AggregationsParentAggregateKeys extends <<AggregationsSingleBucketAggregateBase>> {
 }
 type AggregationsParentAggregate = AggregationsParentAggregateKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | <<Metadata>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 [pass]
 ++++
 </pre>
@@ -6809,7 +6809,7 @@ interface AggregationsPercentileRanksAggregation extends <<AggregationsFormatMet
   pass:[/**] @property keyed By default, the aggregation associates a unique string key with each bucket and returns the ranges as a hash rather than an array. Set to `false` to disable this behavior. */
   keyed?: boolean
   pass:[/**] @property values An array of values for which to calculate the percentile ranks. */
-  values?: <<_double, double>>[] | null
+  values?: <<double>>[] | null
   pass:[/**] @property hdr Uses the alternative High Dynamic Range Histogram algorithm to calculate percentile ranks. */
   hdr?: <<AggregationsHdrMethod>>
   pass:[/**] @property tdigest Sets parameters for the default <<TDigest>> algorithm used to calculate percentile ranks. */
@@ -6862,7 +6862,7 @@ interface AggregationsPercentilesAggregation extends <<AggregationsFormatMetricA
   pass:[/**] @property keyed By default, the aggregation associates a unique string key with each bucket and returns the ranges as a hash rather than an array. Set to `false` to disable this behavior. */
   keyed?: boolean
   pass:[/**] @property percents The percentiles to calculate. */
-  percents?: <<_double, double>>[]
+  percents?: <<double>>[]
   pass:[/**] @property hdr Uses the alternative High Dynamic Range Histogram algorithm to calculate percentiles. */
   hdr?: <<AggregationsHdrMethod>>
   pass:[/**] @property tdigest Sets parameters for the default <<TDigest>> algorithm used to calculate percentiles. */
@@ -6898,7 +6898,7 @@ interface AggregationsPercentilesBucketAggregate extends <<AggregationsPercentil
 ++++
 interface AggregationsPercentilesBucketAggregation extends <<AggregationsPipelineAggregationBase>> {
   pass:[/**] @property percents The list of percentiles to calculate. */
-  percents?: <<_double, double>>[]
+  percents?: <<double>>[]
 }
 [pass]
 ++++
@@ -6934,11 +6934,11 @@ interface AggregationsPipelineAggregationBase extends <<AggregationsBucketPathAg
 ++++
 interface AggregationsRandomSamplerAggregation extends <<AggregationsBucketAggregationBase>> {
   pass:[/**] @property probability The probability that a document will be included in the aggregated data. Must be greater than 0, less than 0.5, or exactly 1. The lower the probability, the fewer documents are matched. */
-  probability: <<_double, double>>
+  probability: <<double>>
   pass:[/**] @property seed The seed to generate the random sampling of documents. When a seed is provided, the random subset of documents is the same between calls. */
-  seed?: <<_integer, integer>>
+  seed?: <<integer>>
   pass:[/**] @property shard_seed When combined with seed, setting shard_seed ensures 100% consistent sampling over shards where data is exactly the same. */
-  shard_seed?: <<_integer, integer>>
+  shard_seed?: <<integer>>
 }
 [pass]
 ++++
@@ -6972,7 +6972,7 @@ interface AggregationsRangeAggregation extends <<AggregationsBucketAggregationBa
   pass:[/**] @property field The date field whose values are use to build ranges. */
   field?: <<Field>>
   pass:[/**] @property missing The value to apply to documents that do not have a value. By default, documents without a value are ignored. */
-  missing?: <<_integer, integer>>
+  missing?: <<integer>>
   pass:[/**] @property ranges An array of ranges used to bucket documents. */
   ranges?: <<AggregationsAggregationRange>>[]
   script?: <<Script>> | string
@@ -6994,14 +6994,14 @@ interface AggregationsRangeAggregation extends <<AggregationsBucketAggregationBa
 <pre>
 ++++
 interface AggregationsRangeBucketKeys extends <<AggregationsMultiBucketBase>> {
-  from?: <<_double, double>>
-  to?: <<_double, double>>
+  from?: <<double>>
+  to?: <<double>>
   from_as_string?: string
   to_as_string?: string
   key?: string
 }
 type AggregationsRangeBucket = AggregationsRangeBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_double, double>> | string | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<double>> | string | <<long>> }
 [pass]
 ++++
 </pre>
@@ -7023,11 +7023,11 @@ interface AggregationsRareTermsAggregation extends <<AggregationsBucketAggregati
   pass:[/**] @property include Terms that should be included in the aggregation. */
   include?: <<AggregationsTermsInclude>>
   pass:[/**] @property max_doc_count The maximum number of documents a term should appear in. */
-  max_doc_count?: <<_long, long>>
+  max_doc_count?: <<long>>
   pass:[/**] @property missing The value to apply to documents that do not have a value. By default, documents without a value are ignored. */
   missing?: <<AggregationsMissing>>
   pass:[/**] @property precision The precision of the internal CuckooFilters. Smaller precision leads to better approximation, but higher memory usage. */
-  precision?: <<_double, double>>
+  precision?: <<double>>
   value_type?: string
 }
 [pass]
@@ -7044,7 +7044,7 @@ interface AggregationsRareTermsAggregation extends <<AggregationsBucketAggregati
 <pre>
 ++++
 interface AggregationsRateAggregate extends <<AggregationsAggregateBase>> {
-  value: <<_double, double>>
+  value: <<double>>
   value_as_string?: string
 }
 [pass]
@@ -7096,7 +7096,7 @@ type AggregationsRateMode = 'sum' | 'value_count'
 interface AggregationsReverseNestedAggregateKeys extends <<AggregationsSingleBucketAggregateBase>> {
 }
 type AggregationsReverseNestedAggregate = AggregationsReverseNestedAggregateKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | <<Metadata>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 [pass]
 ++++
 </pre>
@@ -7130,7 +7130,7 @@ interface AggregationsReverseNestedAggregation extends <<AggregationsBucketAggre
 interface AggregationsSamplerAggregateKeys extends <<AggregationsSingleBucketAggregateBase>> {
 }
 type AggregationsSamplerAggregate = AggregationsSamplerAggregateKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | <<Metadata>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 [pass]
 ++++
 </pre>
@@ -7146,7 +7146,7 @@ type AggregationsSamplerAggregate = AggregationsSamplerAggregateKeys
 ++++
 interface AggregationsSamplerAggregation extends <<AggregationsBucketAggregationBase>> {
   pass:[/**] @property shard_size Limits how many top-scoring documents are collected in the sample processed on each shard. */
-  shard_size?: <<_integer, integer>>
+  shard_size?: <<integer>>
 }
 [pass]
 ++++
@@ -7233,8 +7233,8 @@ interface AggregationsScriptedMetricAggregation extends <<AggregationsMetricAggr
 <pre>
 ++++
 interface AggregationsSerialDifferencingAggregation extends <<AggregationsPipelineAggregationBase>> {
-  pass:[/**] @property lag The historical bucket to subtract from the current value. Must be a positive, non-zero <<_integer, integer>>. */
-  lag?: <<_integer, integer>>
+  pass:[/**] @property lag The historical bucket to subtract from the current value. Must be a positive, non-zero <<integer>>. */
+  lag?: <<integer>>
 }
 [pass]
 ++++
@@ -7265,11 +7265,11 @@ interface AggregationsSignificantLongTermsAggregate extends <<AggregationsSignif
 <pre>
 ++++
 interface AggregationsSignificantLongTermsBucketKeys extends <<AggregationsSignificantTermsBucketBase>> {
-  key: <<_long, long>>
+  key: <<long>>
   key_as_string?: string
 }
 type AggregationsSignificantLongTermsBucket = AggregationsSignificantLongTermsBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | string | <<_double, double>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | string | <<double>> }
 [pass]
 ++++
 </pre>
@@ -7302,7 +7302,7 @@ interface AggregationsSignificantStringTermsBucketKeys extends <<AggregationsSig
   key: string
 }
 type AggregationsSignificantStringTermsBucket = AggregationsSignificantStringTermsBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | string | <<_double, double>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | string | <<double>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -7317,8 +7317,8 @@ type AggregationsSignificantStringTermsBucket = AggregationsSignificantStringTer
 <pre>
 ++++
 interface AggregationsSignificantTermsAggregateBase<T = unknown> extends <<AggregationsMultiBucketAggregateBase>><T> {
-  bg_count?: <<_long, long>>
-  doc_count?: <<_long, long>>
+  bg_count?: <<long>>
+  doc_count?: <<long>>
 }
 [pass]
 ++++
@@ -7351,7 +7351,7 @@ interface AggregationsSignificantTermsAggregation extends <<AggregationsBucketAg
   pass:[/**] @property jlh Use JLH score as the significance score. */
   jlh?: <<EmptyObject>>
   pass:[/**] @property min_doc_count Only return terms that are found in more than `min_doc_count` hits. */
-  min_doc_count?: <<_long, long>>
+  min_doc_count?: <<long>>
   pass:[/**] @property mutual_information Use mutual information as described in "Information Retrieval", Manning et al., Chapter 13.5.1, as the significance score. */
   mutual_information?: <<AggregationsMutualInformationHeuristic>>
   pass:[/**] @property percentage A simple calculation of the number of documents in the foreground sample with a term divided by the number of documents in the background with the term. */
@@ -7359,11 +7359,11 @@ interface AggregationsSignificantTermsAggregation extends <<AggregationsBucketAg
   pass:[/**] @property script_heuristic Customized score, implemented via a script. */
   script_heuristic?: <<AggregationsScriptedHeuristic>>
   pass:[/**] @property shard_min_doc_count Regulates the certainty a shard has if the term should actually be added to the candidate list or not with respect to the `min_doc_count`. Terms will only be considered if their local shard frequency within the set is higher than the `shard_min_doc_count`. */
-  shard_min_doc_count?: <<_long, long>>
+  shard_min_doc_count?: <<long>>
   pass:[/**] @property shard_size Can be used to control the volumes of candidate terms produced by each shard. By default, `shard_size` will be automatically estimated based on the number of shards and the `size` parameter. */
-  shard_size?: <<_integer, integer>>
+  shard_size?: <<integer>>
   pass:[/**] @property size The number of buckets returned out of the overall terms list. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
 }
 [pass]
 ++++
@@ -7379,8 +7379,8 @@ interface AggregationsSignificantTermsAggregation extends <<AggregationsBucketAg
 <pre>
 ++++
 interface AggregationsSignificantTermsBucketBase extends <<AggregationsMultiBucketBase>> {
-  score: <<_double, double>>
-  bg_count: <<_long, long>>
+  score: <<double>>
+  bg_count: <<long>>
 }
 [pass]
 ++++
@@ -7415,7 +7415,7 @@ interface AggregationsSignificantTextAggregation extends <<AggregationsBucketAgg
   pass:[/**] @property jlh Use JLH score as the significance score. */
   jlh?: <<EmptyObject>>
   pass:[/**] @property min_doc_count Only return values that are found in more than `min_doc_count` hits. */
-  min_doc_count?: <<_long, long>>
+  min_doc_count?: <<long>>
   pass:[/**] @property mutual_information Use mutual information as described in "Information Retrieval", Manning et al., Chapter 13.5.1, as the significance score. */
   mutual_information?: <<AggregationsMutualInformationHeuristic>>
   pass:[/**] @property percentage A simple calculation of the number of documents in the foreground sample with a term divided by the number of documents in the background with the term. */
@@ -7423,11 +7423,11 @@ interface AggregationsSignificantTextAggregation extends <<AggregationsBucketAgg
   pass:[/**] @property script_heuristic Customized score, implemented via a script. */
   script_heuristic?: <<AggregationsScriptedHeuristic>>
   pass:[/**] @property shard_min_doc_count Regulates the certainty a shard has if the values should actually be added to the candidate list or not with respect to the min_doc_count. Values will only be considered if their local shard frequency within the set is higher than the `shard_min_doc_count`. */
-  shard_min_doc_count?: <<_long, long>>
+  shard_min_doc_count?: <<long>>
   pass:[/**] @property shard_size The number of candidate terms produced by each shard. By default, `shard_size` will be automatically estimated based on the number of shards and the `size` parameter. */
-  shard_size?: <<_integer, integer>>
+  shard_size?: <<integer>>
   pass:[/**] @property size The number of buckets returned out of the overall terms list. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   pass:[/**] @property source_fields Overrides the JSON `_source` fields from which text will be analyzed. */
   source_fields?: <<Fields>>
 }
@@ -7477,7 +7477,7 @@ interface AggregationsSimpleValueAggregate extends <<AggregationsSingleMetricAgg
 <pre>
 ++++
 interface AggregationsSingleBucketAggregateBase extends <<AggregationsAggregateBase>> {
-  doc_count: <<_long, long>>
+  doc_count: <<long>>
 }
 [pass]
 ++++
@@ -7494,7 +7494,7 @@ interface AggregationsSingleBucketAggregateBase extends <<AggregationsAggregateB
 ++++
 interface AggregationsSingleMetricAggregateBase extends <<AggregationsAggregateBase>> {
   pass:[/**] @property value The metric value. A missing value generally means that there was no data to aggregate, unless specified otherwise. */
-  value: <<_double, double>> | null
+  value: <<double>> | null
   value_as_string?: string
 }
 [pass]
@@ -7511,12 +7511,12 @@ interface AggregationsSingleMetricAggregateBase extends <<AggregationsAggregateB
 <pre>
 ++++
 interface AggregationsStandardDeviationBounds {
-  upper: <<_double, double>> | null
-  lower: <<_double, double>> | null
-  upper_population: <<_double, double>> | null
-  lower_population: <<_double, double>> | null
-  upper_sampling: <<_double, double>> | null
-  lower_sampling: <<_double, double>> | null
+  upper: <<double>> | null
+  lower: <<double>> | null
+  upper_population: <<double>> | null
+  lower_population: <<double>> | null
+  upper_sampling: <<double>> | null
+  lower_sampling: <<double>> | null
 }
 [pass]
 ++++
@@ -7553,11 +7553,11 @@ interface AggregationsStandardDeviationBoundsAsString {
 <pre>
 ++++
 interface AggregationsStatsAggregate extends <<AggregationsAggregateBase>> {
-  count: <<_long, long>>
-  min: <<_double, double>> | null
-  max: <<_double, double>> | null
-  avg: <<_double, double>> | null
-  sum: <<_double, double>>
+  count: <<long>>
+  min: <<double>> | null
+  max: <<double>> | null
+  avg: <<double>> | null
+  sum: <<double>>
   min_as_string?: string
   max_as_string?: string
   avg_as_string?: string
@@ -7640,7 +7640,7 @@ interface AggregationsStringRareTermsBucketKeys extends <<AggregationsMultiBucke
   key: string
 }
 type AggregationsStringRareTermsBucket = AggregationsStringRareTermsBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | string | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | string | <<long>> }
 [pass]
 ++++
 </pre>
@@ -7655,12 +7655,12 @@ type AggregationsStringRareTermsBucket = AggregationsStringRareTermsBucketKeys
 <pre>
 ++++
 interface AggregationsStringStatsAggregate extends <<AggregationsAggregateBase>> {
-  count: <<_long, long>>
-  min_length: <<_integer, integer>> | null
-  max_length: <<_integer, integer>> | null
-  avg_length: <<_double, double>> | null
-  entropy: <<_double, double>> | null
-  distribution?: Record<string, <<_double, double>>> | null
+  count: <<long>>
+  min_length: <<integer>> | null
+  max_length: <<integer>> | null
+  avg_length: <<double>> | null
+  entropy: <<double>> | null
+  distribution?: Record<string, <<double>>> | null
   min_length_as_string?: string
   max_length_as_string?: string
   avg_length_as_string?: string
@@ -7714,7 +7714,7 @@ interface AggregationsStringTermsBucketKeys extends <<AggregationsTermsBucketBas
   key: <<FieldValue>>
 }
 type AggregationsStringTermsBucket = AggregationsStringTermsBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<FieldValue>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<FieldValue>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -7775,7 +7775,7 @@ interface AggregationsSumBucketAggregation extends <<AggregationsPipelineAggrega
 ++++
 interface AggregationsTDigest {
   pass:[/**] @property compression Limits the maximum number of nodes used by the underlying <<TDigest>> algorithm to `20 * compression`, enabling control of memory usage and approximation error. */
-  compression?: <<_integer, integer>>
+  compression?: <<integer>>
 }
 [pass]
 ++++
@@ -7821,7 +7821,7 @@ interface AggregationsTDigestPercentilesAggregate extends <<AggregationsPercenti
 <pre>
 ++++
 interface AggregationsTTestAggregate extends <<AggregationsAggregateBase>> {
-  value: <<_double, double>> | null
+  value: <<double>> | null
   value_as_string?: string
 }
 [pass]
@@ -7873,8 +7873,8 @@ type AggregationsTTestType = 'paired' | 'homoscedastic' | 'heteroscedastic'
 <pre>
 ++++
 interface AggregationsTermsAggregateBase<TBucket = unknown> extends <<AggregationsMultiBucketAggregateBase>><TBucket> {
-  doc_count_error_upper_bound?: <<_long, long>>
-  sum_other_doc_count?: <<_long, long>>
+  doc_count_error_upper_bound?: <<long>>
+  sum_other_doc_count?: <<long>>
 }
 [pass]
 ++++
@@ -7901,7 +7901,7 @@ interface AggregationsTermsAggregation extends <<AggregationsBucketAggregationBa
   pass:[/**] @property include Values to include. Accepts regular expressions and partitions. */
   include?: <<AggregationsTermsInclude>>
   pass:[/**] @property min_doc_count Only return values that are found in more than `min_doc_count` hits. */
-  min_doc_count?: <<_integer, integer>>
+  min_doc_count?: <<integer>>
   pass:[/**] @property missing The value to apply to documents that do not have a value. By default, documents without a value are ignored. */
   missing?: <<AggregationsMissing>>
   missing_order?: <<AggregationsMissingOrder>>
@@ -7912,13 +7912,13 @@ interface AggregationsTermsAggregation extends <<AggregationsBucketAggregationBa
   order?: <<AggregationsAggregateOrder>>
   script?: <<Script>> | string
   pass:[/**] @property shard_min_doc_count Regulates the certainty a shard has if the term should actually be added to the candidate list or not with respect to the `min_doc_count`. Terms will only be considered if their local shard frequency within the set is higher than the `shard_min_doc_count`. */
-  shard_min_doc_count?: <<_long, long>>
+  shard_min_doc_count?: <<long>>
   pass:[/**] @property shard_size The number of candidate terms produced by each shard. By default, `shard_size` will be automatically estimated based on the number of shards and the `size` parameter. */
-  shard_size?: <<_integer, integer>>
+  shard_size?: <<integer>>
   pass:[/**] @property show_term_doc_count_error Set to `true` to return the `doc_count_error_upper_bound`, which is an upper bound to the error on the `doc_count` returned by each shard. */
   show_term_doc_count_error?: boolean
   pass:[/**] @property size The number of buckets returned out of the overall terms list. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   format?: string
 }
 [pass]
@@ -7963,7 +7963,7 @@ type AggregationsTermsAggregationExecutionHint = 'map' | 'global_ordinals' | 'gl
 <pre>
 ++++
 interface AggregationsTermsBucketBase extends <<AggregationsMultiBucketBase>> {
-  doc_count_error_upper_bound?: <<_long, long>>
+  doc_count_error_upper_bound?: <<long>>
 }
 [pass]
 ++++
@@ -8008,9 +8008,9 @@ type AggregationsTermsInclude = string | string[] | <<AggregationsTermsPartition
 ++++
 interface AggregationsTermsPartition {
   pass:[/**] @property num_partitions The number of partitions. */
-  num_partitions: <<_long, long>>
+  num_partitions: <<long>>
   pass:[/**] @property partition The partition number for this request. */
-  partition: <<_long, long>>
+  partition: <<long>>
 }
 [pass]
 ++++
@@ -8062,7 +8062,7 @@ interface AggregationsTimeSeriesAggregate extends <<AggregationsMultiBucketAggre
 ++++
 interface AggregationsTimeSeriesAggregation extends <<AggregationsBucketAggregationBase>> {
   pass:[/**] @property size The maximum number of results to return. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   pass:[/**] @property keyed Set to `true` to associate a unique string key with each bucket and returns the ranges as a hash rather than an array. */
   keyed?: boolean
 }
@@ -8083,7 +8083,7 @@ interface AggregationsTimeSeriesBucketKeys extends <<AggregationsMultiBucketBase
   key: Record<<<Field>>, <<FieldValue>>>
 }
 type AggregationsTimeSeriesBucket = AggregationsTimeSeriesBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | Record<<<Field>>, <<FieldValue>>> | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | Record<<<Field>>, <<FieldValue>>> | <<long>> }
 [pass]
 ++++
 </pre>
@@ -8121,13 +8121,13 @@ interface AggregationsTopHitsAggregation extends <<AggregationsMetricAggregation
   pass:[/**] @property fields Array of wildcard (*) patterns. The request returns values for field names matching these patterns in the hits.fields property of the response. */
   fields?: (<<QueryDslFieldAndFormat>> | <<Field>>)[]
   pass:[/**] @property from Starting document offset. */
-  from?: <<_integer, integer>>
+  from?: <<integer>>
   pass:[/**] @property highlight Specifies the highlighter to use for retrieving highlighted snippets from one or more fields in the search results. */
   highlight?: SearchHighlight
   pass:[/**] @property script_fields Returns the result of one or more script evaluations for each hit. */
   script_fields?: Record<string, <<ScriptField>>>
   pass:[/**] @property size The maximum number of top matching hits to return per bucket. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   pass:[/**] @property sort <<Sort>> order of the top matching hits. By default, the hits are sorted by the score of the main query. */
   sort?: <<Sort>>
   pass:[/**] @property _source Selects the fields of the source that are returned. */
@@ -8191,7 +8191,7 @@ interface AggregationsTopMetricsAggregation extends <<AggregationsMetricAggregat
   pass:[/**] @property metrics The fields of the top document to return. */
   metrics?: <<AggregationsTopMetricsValue>> | <<AggregationsTopMetricsValue>>[]
   pass:[/**] @property size The number of top documents from which to return metrics. */
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   pass:[/**] @property sort The sort order of the documents. */
   sort?: <<Sort>>
 }
@@ -8243,7 +8243,7 @@ interface AggregationsUnmappedRareTermsAggregate extends <<AggregationsMultiBuck
 interface AggregationsUnmappedSamplerAggregateKeys extends <<AggregationsSingleBucketAggregateBase>> {
 }
 type AggregationsUnmappedSamplerAggregate = AggregationsUnmappedSamplerAggregateKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_long, long>> | <<Metadata>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<long>> | <<Metadata>> }
 [pass]
 ++++
 </pre>
@@ -8317,7 +8317,7 @@ interface AggregationsValueCountAggregation extends <<AggregationsFormattableMet
 ++++
 <pre>
 ++++
-type AggregationsValueType = 'string' | '<<_long, long>>' | '<<_double, double>>' | 'number' | 'date' | 'date_nanos' | 'ip' | 'numeric' | 'geo_point' | 'boolean'
+type AggregationsValueType = 'string' | '<<long>>' | '<<double>>' | 'number' | 'date' | 'date_nanos' | 'ip' | 'numeric' | 'geo_point' | 'boolean'
 [pass]
 ++++
 </pre>
@@ -8350,11 +8350,11 @@ interface AggregationsVariableWidthHistogramAggregation {
   pass:[/**] @property field The name of the field. */
   field?: <<Field>>
   pass:[/**] @property buckets The target number of buckets. */
-  buckets?: <<_integer, integer>>
+  buckets?: <<integer>>
   pass:[/**] @property shard_size The number of buckets that the coordinating node will request from each shard. Defaults to `buckets * 50`. */
-  shard_size?: <<_integer, integer>>
+  shard_size?: <<integer>>
   pass:[/**] @property initial_buffer Specifies the number of individual documents that will be stored in memory on a shard before the initial bucketing algorithm is run. Defaults to `min(10 * shard_size, 50000)`. */
-  initial_buffer?: <<_integer, integer>>
+  initial_buffer?: <<integer>>
   script?: <<Script>> | string
 }
 [pass]
@@ -8371,15 +8371,15 @@ interface AggregationsVariableWidthHistogramAggregation {
 <pre>
 ++++
 interface AggregationsVariableWidthHistogramBucketKeys extends <<AggregationsMultiBucketBase>> {
-  min: <<_double, double>>
-  key: <<_double, double>>
-  max: <<_double, double>>
+  min: <<double>>
+  key: <<double>>
+  max: <<double>>
   min_as_string?: string
   key_as_string?: string
   max_as_string?: string
 }
 type AggregationsVariableWidthHistogramBucket = AggregationsVariableWidthHistogramBucketKeys
-  & { [property: string]: <<AggregationsAggregate>> | <<_double, double>> | string | <<_long, long>> }
+  & { [property: string]: <<AggregationsAggregate>> | <<double>> | string | <<long>> }
 [pass]
 ++++
 </pre>
@@ -8419,7 +8419,7 @@ interface AggregationsWeightedAverageValue {
   pass:[/**] @property field The field from which to extract the values or weights. */
   field?: <<Field>>
   pass:[/**] @property missing A value or weight to use if the field is missing. */
-  missing?: <<_double, double>>
+  missing?: <<double>>
   script?: <<Script>> | string
 }
 [pass]
@@ -8660,7 +8660,7 @@ type AnalysisCharFilterDefinition = <<AnalysisHtmlStripCharFilter>> | <<Analysis
 interface AnalysisCharGroupTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'char_group'
   tokenize_on_chars: string[]
-  max_token_length?: <<_integer, integer>>
+  max_token_length?: <<integer>>
 }
 [pass]
 ++++
@@ -8713,7 +8713,7 @@ interface AnalysisCjkAnalyzer {
 ++++
 interface AnalysisClassicTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'classic'
-  max_token_length?: <<_integer, integer>>
+  max_token_length?: <<integer>>
 }
 [pass]
 ++++
@@ -8750,9 +8750,9 @@ interface AnalysisCommonGramsTokenFilter extends <<AnalysisTokenFilterBase>> {
 ++++
 interface AnalysisCompoundWordTokenFilterBase extends <<AnalysisTokenFilterBase>> {
   hyphenation_patterns_path?: string
-  max_subword_size?: <<_integer, integer>>
-  min_subword_size?: <<_integer, integer>>
-  min_word_size?: <<_integer, integer>>
+  max_subword_size?: <<integer>>
+  min_subword_size?: <<integer>>
+  min_word_size?: <<integer>>
   only_longest_match?: boolean
   word_list?: string[]
   word_list_path?: string
@@ -8792,8 +8792,8 @@ interface AnalysisCustomAnalyzer {
   type: 'custom'
   char_filter?: string | string[]
   filter?: string | string[]
-  position_increment_gap?: <<_integer, integer>>
-  position_offset_gap?: <<_integer, integer>>
+  position_increment_gap?: <<integer>>
+  position_offset_gap?: <<integer>>
   tokenizer: string
 }
 [pass]
@@ -8864,7 +8864,7 @@ interface AnalysisDanishAnalyzer {
 ++++
 <pre>
 ++++
-type AnalysisDelimitedPayloadEncoding = 'int' | '<<_float, float>>' | 'identity'
+type AnalysisDelimitedPayloadEncoding = 'int' | '<<float>>' | 'identity'
 [pass]
 ++++
 </pre>
@@ -8947,8 +8947,8 @@ type AnalysisEdgeNGramSide = 'front' | 'back'
 ++++
 interface AnalysisEdgeNGramTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'edge_ngram'
-  max_gram?: <<_integer, integer>>
-  min_gram?: <<_integer, integer>>
+  max_gram?: <<integer>>
+  min_gram?: <<integer>>
   side?: <<AnalysisEdgeNGramSide>>
   preserve_original?: <<SpecUtilsStringified>><boolean>
 }
@@ -8968,8 +8968,8 @@ interface AnalysisEdgeNGramTokenFilter extends <<AnalysisTokenFilterBase>> {
 interface AnalysisEdgeNGramTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'edge_ngram'
   custom_token_chars?: string
-  max_gram?: <<_integer, integer>>
-  min_gram?: <<_integer, integer>>
+  max_gram?: <<integer>>
+  min_gram?: <<integer>>
   token_chars?: <<AnalysisTokenChar>>[]
 }
 [pass]
@@ -9044,7 +9044,7 @@ interface AnalysisEstonianAnalyzer {
 interface AnalysisFingerprintAnalyzer {
   type: 'fingerprint'
   version?: <<VersionString>>
-  max_output_size: <<_integer, integer>>
+  max_output_size: <<integer>>
   preserve_original: boolean
   separator: string
   stopwords?: <<AnalysisStopWords>>
@@ -9065,7 +9065,7 @@ interface AnalysisFingerprintAnalyzer {
 ++++
 interface AnalysisFingerprintTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'fingerprint'
-  max_output_size?: <<_integer, integer>>
+  max_output_size?: <<integer>>
   separator?: string
 }
 [pass]
@@ -9660,7 +9660,7 @@ interface AnalysisKeywordMarkerTokenFilter extends <<AnalysisTokenFilterBase>> {
 ++++
 interface AnalysisKeywordTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'keyword'
-  buffer_size?: <<_integer, integer>>
+  buffer_size?: <<integer>>
 }
 [pass]
 ++++
@@ -9747,7 +9747,7 @@ interface AnalysisKuromojiReadingFormTokenFilter extends <<AnalysisTokenFilterBa
 ++++
 interface AnalysisKuromojiStemmerTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'kuromoji_stemmer'
-  minimum_length: <<_integer, integer>>
+  minimum_length: <<integer>>
 }
 [pass]
 ++++
@@ -9780,7 +9780,7 @@ interface AnalysisKuromojiTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'kuromoji_tokenizer'
   discard_punctuation?: boolean
   mode: <<AnalysisKuromojiTokenizationMode>>
-  nbest_cost?: <<_integer, integer>>
+  nbest_cost?: <<integer>>
   nbest_examples?: string
   user_dictionary?: string
   user_dictionary_rules?: string[]
@@ -9855,8 +9855,8 @@ interface AnalysisLatvianAnalyzer {
 ++++
 interface AnalysisLengthTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'length'
-  max?: <<_integer, integer>>
-  min?: <<_integer, integer>>
+  max?: <<integer>>
+  min?: <<integer>>
 }
 [pass]
 ++++
@@ -9890,7 +9890,7 @@ interface AnalysisLetterTokenizer extends <<AnalysisTokenizerBase>> {
 interface AnalysisLimitTokenCountTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'limit'
   consume_all_tokens?: boolean
-  max_token_count?: <<SpecUtilsStringified>><<<_integer, integer>>>
+  max_token_count?: <<SpecUtilsStringified>><<<integer>>>
 }
 [pass]
 ++++
@@ -10011,8 +10011,8 @@ interface AnalysisMultiplexerTokenFilter extends <<AnalysisTokenFilterBase>> {
 ++++
 interface AnalysisNGramTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'ngram'
-  max_gram?: <<_integer, integer>>
-  min_gram?: <<_integer, integer>>
+  max_gram?: <<integer>>
+  min_gram?: <<integer>>
   preserve_original?: <<SpecUtilsStringified>><boolean>
 }
 [pass]
@@ -10031,8 +10031,8 @@ interface AnalysisNGramTokenFilter extends <<AnalysisTokenFilterBase>> {
 interface AnalysisNGramTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'ngram'
   custom_token_chars?: string
-  max_gram?: <<_integer, integer>>
-  min_gram?: <<_integer, integer>>
+  max_gram?: <<integer>>
+  min_gram?: <<integer>>
   token_chars?: <<AnalysisTokenChar>>[]
 }
 [pass]
@@ -10154,11 +10154,11 @@ interface AnalysisNorwegianAnalyzer {
 ++++
 interface AnalysisPathHierarchyTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'path_hierarchy'
-  buffer_size?: <<SpecUtilsStringified>><<<_integer, integer>>>
+  buffer_size?: <<SpecUtilsStringified>><<<integer>>>
   delimiter?: string
   replacement?: string
   reverse?: <<SpecUtilsStringified>><boolean>
-  skip?: <<SpecUtilsStringified>><<<_integer, integer>>>
+  skip?: <<SpecUtilsStringified>><<<integer>>>
 }
 [pass]
 ++++
@@ -10254,7 +10254,7 @@ interface AnalysisPatternReplaceTokenFilter extends <<AnalysisTokenFilterBase>> 
 interface AnalysisPatternTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'pattern'
   flags?: string
-  group?: <<_integer, integer>>
+  group?: <<integer>>
   pattern?: string
 }
 [pass]
@@ -10348,7 +10348,7 @@ interface AnalysisPhoneticTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'phonetic'
   encoder: <<AnalysisPhoneticEncoder>>
   languageset?: <<AnalysisPhoneticLanguage>> | <<AnalysisPhoneticLanguage>>[]
-  max_code_len?: <<_integer, integer>>
+  max_code_len?: <<integer>>
   name_type?: <<AnalysisPhoneticNameType>>
   replace?: boolean
   rule_type?: <<AnalysisPhoneticRuleType>>
@@ -10510,8 +10510,8 @@ interface AnalysisSerbianAnalyzer {
 interface AnalysisShingleTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'shingle'
   filler_token?: string
-  max_shingle_size?: <<_integer, integer>> | string
-  min_shingle_size?: <<_integer, integer>> | string
+  max_shingle_size?: <<integer>> | string
+  min_shingle_size?: <<integer>> | string
   output_unigrams?: boolean
   output_unigrams_if_no_shingles?: boolean
   token_separator?: string
@@ -10670,7 +10670,7 @@ interface AnalysisSpanishAnalyzer {
 ++++
 interface AnalysisStandardAnalyzer {
   type: 'standard'
-  max_token_length?: <<_integer, integer>>
+  max_token_length?: <<integer>>
   stopwords?: <<AnalysisStopWords>>
 }
 [pass]
@@ -10688,7 +10688,7 @@ interface AnalysisStandardAnalyzer {
 ++++
 interface AnalysisStandardTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'standard'
-  max_token_length?: <<_integer, integer>>
+  max_token_length?: <<integer>>
 }
 [pass]
 ++++
@@ -11027,7 +11027,7 @@ interface AnalysisTrimTokenFilter extends <<AnalysisTokenFilterBase>> {
 ++++
 interface AnalysisTruncateTokenFilter extends <<AnalysisTokenFilterBase>> {
   type: 'truncate'
-  length?: <<_integer, integer>>
+  length?: <<integer>>
 }
 [pass]
 ++++
@@ -11063,7 +11063,7 @@ interface AnalysisTurkishAnalyzer {
 ++++
 interface AnalysisUaxEmailUrlTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'uax_url_email'
-  max_token_length?: <<_integer, integer>>
+  max_token_length?: <<integer>>
 }
 [pass]
 ++++
@@ -11130,7 +11130,7 @@ interface AnalysisWhitespaceAnalyzer {
 ++++
 interface AnalysisWhitespaceTokenizer extends <<AnalysisTokenizerBase>> {
   type: 'whitespace'
-  max_token_length?: <<_integer, integer>>
+  max_token_length?: <<integer>>
 }
 [pass]
 ++++
@@ -11266,7 +11266,7 @@ interface MappingBinaryProperty extends <<MappingDocValuesPropertyBase>> {
 <pre>
 ++++
 interface MappingBooleanProperty extends <<MappingDocValuesPropertyBase>> {
-  boost?: <<_double, double>>
+  boost?: <<double>>
   fielddata?: IndicesNumericFielddata
   index?: boolean
   null_value?: boolean
@@ -11286,8 +11286,8 @@ interface MappingBooleanProperty extends <<MappingDocValuesPropertyBase>> {
 <pre>
 ++++
 interface MappingByteNumberProperty extends <<MappingNumberPropertyBase>> {
-  type: '<<_byte, byte>>'
-  null_value?: <<_byte, byte>>
+  type: '<<byte>>'
+  null_value?: <<byte>>
 }
 [pass]
 ++++
@@ -11305,7 +11305,7 @@ interface MappingByteNumberProperty extends <<MappingNumberPropertyBase>> {
 interface MappingCompletionProperty extends <<MappingDocValuesPropertyBase>> {
   analyzer?: string
   contexts?: <<MappingSuggestContext>>[]
-  max_input_length?: <<_integer, integer>>
+  max_input_length?: <<integer>>
   preserve_position_increments?: boolean
   preserve_separators?: boolean
   search_analyzer?: string
@@ -11391,12 +11391,12 @@ interface MappingDataStreamTimestamp {
 <pre>
 ++++
 interface MappingDateNanosProperty extends <<MappingDocValuesPropertyBase>> {
-  boost?: <<_double, double>>
+  boost?: <<double>>
   format?: string
   ignore_malformed?: boolean
   index?: boolean
   null_value?: <<DateTime>>
-  precision_step?: <<_integer, integer>>
+  precision_step?: <<integer>>
   type: 'date_nanos'
 }
 [pass]
@@ -11413,13 +11413,13 @@ interface MappingDateNanosProperty extends <<MappingDocValuesPropertyBase>> {
 <pre>
 ++++
 interface MappingDateProperty extends <<MappingDocValuesPropertyBase>> {
-  boost?: <<_double, double>>
+  boost?: <<double>>
   fielddata?: IndicesNumericFielddata
   format?: string
   ignore_malformed?: boolean
   index?: boolean
   null_value?: <<DateTime>>
-  precision_step?: <<_integer, integer>>
+  precision_step?: <<integer>>
   locale?: string
   type: 'date'
 }
@@ -11455,9 +11455,9 @@ interface MappingDateRangeProperty extends <<MappingRangePropertyBase>> {
 ++++
 interface MappingDenseVectorIndexOptions {
   type: string
-  m?: <<_integer, integer>>
-  ef_construction?: <<_integer, integer>>
-  confidence_interval?: <<_float, float>>
+  m?: <<integer>>
+  ef_construction?: <<integer>>
+  confidence_interval?: <<float>>
 }
 [pass]
 ++++
@@ -11475,7 +11475,7 @@ interface MappingDenseVectorIndexOptions {
 interface MappingDenseVectorProperty extends <<MappingPropertyBase>> {
   type: 'dense_vector'
   element_type?: string
-  dims?: <<_integer, integer>>
+  dims?: <<integer>>
   similarity?: string
   index?: boolean
   index_options?: <<MappingDenseVectorIndexOptions>>
@@ -11510,8 +11510,8 @@ interface MappingDocValuesPropertyBase extends <<MappingCorePropertyBase>> {
 <pre>
 ++++
 interface MappingDoubleNumberProperty extends <<MappingNumberPropertyBase>> {
-  type: '<<_double, double>>'
-  null_value?: <<_double, double>>
+  type: '<<double>>'
+  null_value?: <<double>>
 }
 [pass]
 ++++
@@ -11560,7 +11560,7 @@ interface MappingDynamicProperty extends <<MappingDocValuesPropertyBase>> {
   type: '{dynamic_type}'
   enabled?: boolean
   null_value?: <<FieldValue>>
-  boost?: <<_double, double>>
+  boost?: <<double>>
   coerce?: boolean
   script?: <<Script>> | string
   on_script_error?: <<MappingOnScriptError>>
@@ -11573,12 +11573,12 @@ interface MappingDynamicProperty extends <<MappingDocValuesPropertyBase>> {
   index_phrases?: boolean
   index_prefixes?: <<MappingTextIndexPrefixes>> | null
   norms?: boolean
-  position_increment_gap?: <<_integer, integer>>
+  position_increment_gap?: <<integer>>
   search_analyzer?: string
   search_quote_analyzer?: string
   term_vector?: <<MappingTermVectorOption>>
   format?: string
-  precision_step?: <<_integer, integer>>
+  precision_step?: <<integer>>
   locale?: string
 }
 [pass]
@@ -11668,7 +11668,7 @@ interface MappingFieldNamesField {
 ++++
 <pre>
 ++++
-type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'version' | 'murmur3' | 'token_count' | 'percolator' | '<<_integer, integer>>' | '<<_long, long>>' | '<<_short, short>>' | '<<_byte, byte>>' | '<<_float, float>>' | 'half_float' | 'scaled_float' | '<<_double, double>>' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
+type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | 'keyword' | 'text' | 'search_as_you_type' | 'date' | 'date_nanos' | 'boolean' | 'completion' | 'nested' | 'object' | 'version' | 'murmur3' | 'token_count' | 'percolator' | '<<integer>>' | '<<long>>' | '<<short>>' | '<<byte>>' | '<<float>>' | 'half_float' | 'scaled_float' | '<<double>>' | 'integer_range' | 'float_range' | 'long_range' | 'double_range' | 'date_range' | 'ip_range' | 'alias' | 'join' | 'rank_feature' | 'rank_features' | 'flattened' | 'shape' | 'histogram' | 'constant_keyword' | 'aggregate_metric_double' | 'dense_vector' | 'semantic_text' | 'sparse_vector' | 'match_only_text' | 'icu_collation_keyword'
 [pass]
 ++++
 </pre>
@@ -11683,8 +11683,8 @@ type MappingFieldType = 'none' | 'geo_point' | 'geo_shape' | 'ip' | 'binary' | '
 <pre>
 ++++
 interface MappingFlattenedProperty extends <<MappingPropertyBase>> {
-  boost?: <<_double, double>>
-  depth_limit?: <<_integer, integer>>
+  boost?: <<double>>
+  depth_limit?: <<integer>>
   doc_values?: boolean
   eager_global_ordinals?: boolean
   index?: boolean
@@ -11708,8 +11708,8 @@ interface MappingFlattenedProperty extends <<MappingPropertyBase>> {
 <pre>
 ++++
 interface MappingFloatNumberProperty extends <<MappingNumberPropertyBase>> {
-  type: '<<_float, float>>'
-  null_value?: <<_float, float>>
+  type: '<<float>>'
+  null_value?: <<float>>
 }
 [pass]
 ++++
@@ -11813,7 +11813,7 @@ type MappingGeoStrategy = 'recursive' | 'term'
 ++++
 interface MappingHalfFloatNumberProperty extends <<MappingNumberPropertyBase>> {
   type: 'half_float'
-  null_value?: <<_float, float>>
+  null_value?: <<float>>
 }
 [pass]
 ++++
@@ -11910,8 +11910,8 @@ type MappingIndexOptions = 'docs' | 'freqs' | 'positions' | 'offsets'
 <pre>
 ++++
 interface MappingIntegerNumberProperty extends <<MappingNumberPropertyBase>> {
-  type: '<<_integer, integer>>'
-  null_value?: <<_integer, integer>>
+  type: '<<integer>>'
+  null_value?: <<integer>>
 }
 [pass]
 ++++
@@ -11943,7 +11943,7 @@ interface MappingIntegerRangeProperty extends <<MappingRangePropertyBase>> {
 <pre>
 ++++
 interface MappingIpProperty extends <<MappingDocValuesPropertyBase>> {
-  boost?: <<_double, double>>
+  boost?: <<double>>
   index?: boolean
   ignore_malformed?: boolean
   null_value?: string
@@ -12001,7 +12001,7 @@ interface MappingJoinProperty extends <<MappingPropertyBase>> {
 <pre>
 ++++
 interface MappingKeywordProperty extends <<MappingDocValuesPropertyBase>> {
-  boost?: <<_double, double>>
+  boost?: <<double>>
   eager_global_ordinals?: boolean
   index?: boolean
   index_options?: <<MappingIndexOptions>>
@@ -12030,8 +12030,8 @@ interface MappingKeywordProperty extends <<MappingDocValuesPropertyBase>> {
 <pre>
 ++++
 interface MappingLongNumberProperty extends <<MappingNumberPropertyBase>> {
-  type: '<<_long, long>>'
-  null_value?: <<_long, long>>
+  type: '<<long>>'
+  null_value?: <<long>>
 }
 [pass]
 ++++
@@ -12134,7 +12134,7 @@ interface MappingNestedProperty extends <<MappingCorePropertyBase>> {
 <pre>
 ++++
 interface MappingNumberPropertyBase extends <<MappingDocValuesPropertyBase>> {
-  boost?: <<_double, double>>
+  boost?: <<double>>
   coerce?: boolean
   ignore_malformed?: boolean
   index?: boolean
@@ -12243,7 +12243,7 @@ interface MappingPropertyBase {
   pass:[/**] @property meta <<Metadata>> about the field. */
   meta?: Record<string, string>
   properties?: Record<<<PropertyName>>, <<MappingProperty>>>
-  ignore_above?: <<_integer, integer>>
+  ignore_above?: <<integer>>
   dynamic?: <<MappingDynamicMapping>>
   fields?: Record<<<PropertyName>>, <<MappingProperty>>>
 }
@@ -12261,7 +12261,7 @@ interface MappingPropertyBase {
 <pre>
 ++++
 interface MappingRangePropertyBase extends <<MappingDocValuesPropertyBase>> {
-  boost?: <<_double, double>>
+  boost?: <<double>>
   coerce?: boolean
   index?: boolean
 }
@@ -12343,7 +12343,7 @@ interface MappingRuntimeField {
   target_index?: <<IndexName>>
   pass:[/**] @property script Painless script executed at query time. */
   script?: <<Script>> | string
-  pass:[/**] @property type <<Field>> type, which can be: `boolean`, `composite`, `date`, `<<_double, double>>`, `geo_point`, `ip`,`keyword`, `<<_long, long>>`, or `lookup`. */
+  pass:[/**] @property type <<Field>> type, which can be: `boolean`, `composite`, `date`, `<<double>>`, `geo_point`, `ip`,`keyword`, `<<long>>`, or `lookup`. */
   type: <<MappingRuntimeFieldType>>
 }
 [pass]
@@ -12376,7 +12376,7 @@ interface MappingRuntimeFieldFetchFields {
 ++++
 <pre>
 ++++
-type MappingRuntimeFieldType = 'boolean' | 'composite' | 'date' | '<<_double, double>>' | 'geo_point' | 'ip' | 'keyword' | '<<_long, long>>' | 'lookup'
+type MappingRuntimeFieldType = 'boolean' | 'composite' | 'date' | '<<double>>' | 'geo_point' | 'ip' | 'keyword' | '<<long>>' | 'lookup'
 [pass]
 ++++
 </pre>
@@ -12406,8 +12406,8 @@ type MappingRuntimeFields = Record<<<Field>>, <<MappingRuntimeField>>>
 ++++
 interface MappingScaledFloatNumberProperty extends <<MappingNumberPropertyBase>> {
   type: 'scaled_float'
-  null_value?: <<_double, double>>
-  scaling_factor?: <<_double, double>>
+  null_value?: <<double>>
+  scaling_factor?: <<double>>
 }
 [pass]
 ++++
@@ -12426,7 +12426,7 @@ interface MappingSearchAsYouTypeProperty extends <<MappingCorePropertyBase>> {
   analyzer?: string
   index?: boolean
   index_options?: <<MappingIndexOptions>>
-  max_shingle_size?: <<_integer, integer>>
+  max_shingle_size?: <<integer>>
   norms?: boolean
   search_analyzer?: string
   search_quote_analyzer?: string
@@ -12486,8 +12486,8 @@ interface MappingShapeProperty extends <<MappingDocValuesPropertyBase>> {
 <pre>
 ++++
 interface MappingShortNumberProperty extends <<MappingNumberPropertyBase>> {
-  type: '<<_short, short>>'
-  null_value?: <<_short, short>>
+  type: '<<short>>'
+  null_value?: <<short>>
 }
 [pass]
 ++++
@@ -12573,7 +12573,7 @@ interface MappingSuggestContext {
   name: <<Name>>
   path?: <<Field>>
   type: string
-  precision?: <<_integer, integer>> | string
+  precision?: <<integer>> | string
 }
 [pass]
 ++++
@@ -12603,8 +12603,8 @@ type MappingTermVectorOption = 'no' | 'yes' | 'with_offsets' | 'with_positions' 
 <pre>
 ++++
 interface MappingTextIndexPrefixes {
-  max_chars: <<_integer, integer>>
-  min_chars: <<_integer, integer>>
+  max_chars: <<integer>>
+  min_chars: <<integer>>
 }
 [pass]
 ++++
@@ -12621,7 +12621,7 @@ interface MappingTextIndexPrefixes {
 ++++
 interface MappingTextProperty extends <<MappingCorePropertyBase>> {
   analyzer?: string
-  boost?: <<_double, double>>
+  boost?: <<double>>
   eager_global_ordinals?: boolean
   fielddata?: boolean
   fielddata_frequency_filter?: IndicesFielddataFrequencyFilter
@@ -12630,7 +12630,7 @@ interface MappingTextProperty extends <<MappingCorePropertyBase>> {
   index_phrases?: boolean
   index_prefixes?: <<MappingTextIndexPrefixes>> | null
   norms?: boolean
-  position_increment_gap?: <<_integer, integer>>
+  position_increment_gap?: <<integer>>
   search_analyzer?: string
   search_quote_analyzer?: string
   similarity?: string | null
@@ -12666,9 +12666,9 @@ type MappingTimeSeriesMetricType = 'gauge' | 'counter' | 'summary' | 'histogram'
 ++++
 interface MappingTokenCountProperty extends <<MappingDocValuesPropertyBase>> {
   analyzer?: string
-  boost?: <<_double, double>>
+  boost?: <<double>>
   index?: boolean
-  null_value?: <<_double, double>>
+  null_value?: <<double>>
   enable_position_increments?: boolean
   type: 'token_count'
 }
@@ -12719,7 +12719,7 @@ interface MappingTypeMapping {
 ++++
 interface MappingUnsignedLongNumberProperty extends <<MappingNumberPropertyBase>> {
   type: 'unsigned_long'
-  null_value?: <<_ulong, ulong>>
+  null_value?: <<ulong>>
 }
 [pass]
 ++++
@@ -12794,7 +12794,7 @@ interface QueryDslBoolQuery extends <<QueryDslQueryBase>> {
 ++++
 interface QueryDslBoostingQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property negative_boost Floating point number between 0 and 1.0 used to decrease the relevance scores of documents matching the `negative` query. */
-  negative_boost: <<_double, double>>
+  negative_boost: <<double>>
   pass:[/**] @property negative Query used to decrease the relevance score of matching documents. */
   negative: <<QueryDslQueryContainer>>
   pass:[/**] @property positive Any returned documents must match this query. */
@@ -12884,7 +12884,7 @@ type QueryDslCombinedFieldsZeroTerms = 'none' | 'all'
 ++++
 interface QueryDslCommonTermsQuery extends <<QueryDslQueryBase>> {
   analyzer?: string
-  cutoff_frequency?: <<_double, double>>
+  cutoff_frequency?: <<double>>
   high_freq_operator?: <<QueryDslOperator>>
   low_freq_operator?: <<QueryDslOperator>>
   minimum_should_match?: <<MinimumShouldMatch>>
@@ -13004,7 +13004,7 @@ interface QueryDslDecayFunctionBase<TOrigin = unknown, TScale = unknown> {
 ++++
 interface QueryDslDecayPlacement<TOrigin = unknown, TScale = unknown> {
   pass:[/**] @property decay Defines how documents are scored at the distance given at scale. */
-  decay?: <<_double, double>>
+  decay?: <<double>>
   pass:[/**] @property offset If defined, the decay function will only compute the decay function for documents with a distance greater than the defined `offset`. */
   offset?: TScale
   pass:[/**] @property scale Defines the distance from origin + offset at which the computed score will equal `decay` parameter. */
@@ -13029,7 +13029,7 @@ interface QueryDslDisMaxQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property queries One or more query clauses. Returned documents must match one or more of these queries. If a document matches multiple queries, Elasticsearch uses the highest relevance score. */
   queries: <<QueryDslQueryContainer>>[]
   pass:[/**] @property tie_breaker Floating point number between 0 and 1.0 used to increase the relevance scores of documents matching multiple query clauses. */
-  tie_breaker?: <<_double, double>>
+  tie_breaker?: <<double>>
 }
 [pass]
 ++++
@@ -13157,9 +13157,9 @@ interface QueryDslFieldValueFactorScoreFunction {
   pass:[/**] @property field <<Field>> to be extracted from the document. */
   field: <<Field>>
   pass:[/**] @property factor Optional factor to multiply the field value with. */
-  factor?: <<_double, double>>
+  factor?: <<double>>
   pass:[/**] @property missing Value used if the document doesn’t have that field. The modifier and factor are still applied to it as though it were read from the document. */
-  missing?: <<_double, double>>
+  missing?: <<double>>
   pass:[/**] @property modifier Modifier to apply to the field value. */
   modifier?: <<QueryDslFieldValueFactorModifier>>
 }
@@ -13204,7 +13204,7 @@ interface QueryDslFunctionScoreContainer {
   pass:[/**] @property script_score Enables you to wrap another query and customize the scoring of it optionally with a computation derived from other numeric field values in the doc using a script expression. */
   script_score?: <<QueryDslScriptScoreFunction>>
   filter?: <<QueryDslQueryContainer>>
-  weight?: <<_double, double>>
+  weight?: <<double>>
 }
 [pass]
 ++++
@@ -13239,9 +13239,9 @@ interface QueryDslFunctionScoreQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property functions One or more functions that compute a new score for each document returned by the query. */
   functions?: <<QueryDslFunctionScoreContainer>>[]
   pass:[/**] @property max_boost Restricts the new score to not exceed the provided limit. */
-  max_boost?: <<_double, double>>
+  max_boost?: <<double>>
   pass:[/**] @property min_score Excludes documents that do not meet the provided score threshold. */
-  min_score?: <<_double, double>>
+  min_score?: <<double>>
   pass:[/**] @property query A query that determines the documents for which a new score is computed. */
   query?: <<QueryDslQueryContainer>>
   pass:[/**] @property score_mode Specifies how the computed scores are combined */
@@ -13262,9 +13262,9 @@ interface QueryDslFunctionScoreQuery extends <<QueryDslQueryBase>> {
 ++++
 interface QueryDslFuzzyQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property max_expansions Maximum number of variations created. */
-  max_expansions?: <<_integer, integer>>
+  max_expansions?: <<integer>>
   pass:[/**] @property prefix_length Number of beginning characters left unchanged when creating expansions. */
-  prefix_length?: <<_integer, integer>>
+  prefix_length?: <<integer>>
   pass:[/**] @property rewrite Number of beginning characters left unchanged when creating expansions. */
   rewrite?: <<MultiTermQueryRewrite>>
   pass:[/**] @property transpositions Indicates whether edits include transpositions of two adjacent characters (for example `ab` to `ba`). */
@@ -13272,7 +13272,7 @@ interface QueryDslFuzzyQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property fuzziness Maximum edit distance allowed for matching. */
   fuzziness?: <<Fuzziness>>
   pass:[/**] @property value Term you wish to find in the provided field. */
-  value: string | <<_double, double>> | boolean
+  value: string | <<double>> | boolean
 }
 [pass]
 ++++
@@ -13293,7 +13293,7 @@ interface QueryDslGeoBoundingBoxQueryKeys extends <<QueryDslQueryBase>> {
   ignore_unmapped?: boolean
 }
 type QueryDslGeoBoundingBoxQuery = QueryDslGeoBoundingBoxQueryKeys
-  & { [property: string]: <<GeoBounds>> | <<QueryDslGeoExecution>> | <<QueryDslGeoValidationMethod>> | boolean | <<_float, float>> | string }
+  & { [property: string]: <<GeoBounds>> | <<QueryDslGeoExecution>> | <<QueryDslGeoValidationMethod>> | boolean | <<float>> | string }
 [pass]
 ++++
 </pre>
@@ -13346,7 +13346,7 @@ interface QueryDslGeoDistanceQueryKeys extends <<QueryDslQueryBase>> {
   ignore_unmapped?: boolean
 }
 type QueryDslGeoDistanceQuery = QueryDslGeoDistanceQueryKeys
-  & { [property: string]: <<GeoLocation>> | <<Distance>> | <<GeoDistanceType>> | <<QueryDslGeoValidationMethod>> | boolean | <<_float, float>> | string }
+  & { [property: string]: <<GeoLocation>> | <<Distance>> | <<GeoDistanceType>> | <<QueryDslGeoValidationMethod>> | boolean | <<float>> | string }
 [pass]
 ++++
 </pre>
@@ -13395,7 +13395,7 @@ interface QueryDslGeoPolygonQueryKeys extends <<QueryDslQueryBase>> {
   ignore_unmapped?: boolean
 }
 type QueryDslGeoPolygonQuery = QueryDslGeoPolygonQueryKeys
-  & { [property: string]: <<QueryDslGeoPolygonPoints>> | <<QueryDslGeoValidationMethod>> | boolean | <<_float, float>> | string }
+  & { [property: string]: <<QueryDslGeoPolygonPoints>> | <<QueryDslGeoValidationMethod>> | boolean | <<float>> | string }
 [pass]
 ++++
 </pre>
@@ -13433,7 +13433,7 @@ interface QueryDslGeoShapeQueryKeys extends <<QueryDslQueryBase>> {
   ignore_unmapped?: boolean
 }
 type QueryDslGeoShapeQuery = QueryDslGeoShapeQueryKeys
-  & { [property: string]: <<QueryDslGeoShapeFieldQuery>> | boolean | <<_float, float>> | string }
+  & { [property: string]: <<QueryDslGeoShapeFieldQuery>> | boolean | <<float>> | string }
 [pass]
 ++++
 </pre>
@@ -13467,9 +13467,9 @@ interface QueryDslHasChildQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property inner_hits If defined, each search hit will contain inner hits. */
   inner_hits?: SearchInnerHits
   pass:[/**] @property max_children Maximum number of child documents that match the query allowed for a returned parent document. If the parent document exceeds this limit, it is excluded from the search results. */
-  max_children?: <<_integer, integer>>
+  max_children?: <<integer>>
   pass:[/**] @property min_children Minimum number of child documents that match the query required to match the query for a returned parent document. If the parent document does not meet this limit, it is excluded from the search results. */
-  min_children?: <<_integer, integer>>
+  min_children?: <<integer>>
   pass:[/**] @property query Query you wish to run on child documents of the `type` field. If a child document matches the search, the query returns the parent document. */
   query: <<QueryDslQueryContainer>>
   pass:[/**] @property score_mode Indicates how scores for matching child documents affect the root parent document’s relevance score. */
@@ -13536,7 +13536,7 @@ interface QueryDslIntervalsAllOf {
   pass:[/**] @property intervals An array of rules to combine. All rules must produce a match in a document for the overall source to match. */
   intervals: <<QueryDslIntervalsContainer>>[]
   pass:[/**] @property max_gaps Maximum number of positions between the matching terms. Intervals produced by the rules further apart than this are not considered matches. */
-  max_gaps?: <<_integer, integer>>
+  max_gaps?: <<integer>>
   pass:[/**] @property ordered If `true`, intervals produced by the rules should appear in the order in which they are specified. */
   ordered?: boolean
   pass:[/**] @property filter Rule used to filter returned intervals. */
@@ -13640,7 +13640,7 @@ interface QueryDslIntervalsFuzzy {
   pass:[/**] @property fuzziness Maximum edit distance allowed for matching. */
   fuzziness?: <<Fuzziness>>
   pass:[/**] @property prefix_length Number of beginning characters left unchanged when creating expansions. */
-  prefix_length?: <<_integer, integer>>
+  prefix_length?: <<integer>>
   pass:[/**] @property term The term to match. */
   term: string
   pass:[/**] @property transpositions Indicates whether edits include transpositions of two adjacent characters (for example, `ab` to `ba`). */
@@ -13665,7 +13665,7 @@ interface QueryDslIntervalsMatch {
   pass:[/**] @property analyzer <<Analyzer>> used to analyze terms in the query. */
   analyzer?: string
   pass:[/**] @property max_gaps Maximum number of positions between the matching terms. Terms further apart than this are not considered matches. */
-  max_gaps?: <<_integer, integer>>
+  max_gaps?: <<integer>>
   pass:[/**] @property ordered If `true`, matching terms must appear in their specified order. */
   ordered?: boolean
   pass:[/**] @property query Text you wish to find in the provided field. */
@@ -13823,13 +13823,13 @@ interface QueryDslMatchBoolPrefixQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property fuzzy_transpositions If `true`, edits for fuzzy matching include transpositions of two adjacent characters (for example, `ab` to `ba`). Can be applied to the term subqueries constructed for all terms but the final term. */
   fuzzy_transpositions?: boolean
   pass:[/**] @property max_expansions Maximum number of terms to which the query will expand. Can be applied to the term subqueries constructed for all terms but the final term. */
-  max_expansions?: <<_integer, integer>>
+  max_expansions?: <<integer>>
   pass:[/**] @property minimum_should_match Minimum number of clauses that must match for a document to be returned. Applied to the constructed bool query. */
   minimum_should_match?: <<MinimumShouldMatch>>
   pass:[/**] @property operator Boolean logic used to interpret text in the query value. Applied to the constructed bool query. */
   operator?: <<QueryDslOperator>>
   pass:[/**] @property prefix_length Number of beginning characters left unchanged for fuzzy matching. Can be applied to the term subqueries constructed for all terms but the final term. */
-  prefix_length?: <<_integer, integer>>
+  prefix_length?: <<integer>>
   pass:[/**] @property query Terms you wish to find in the provided field. The last term is used in a prefix query. */
   query: string
 }
@@ -13865,11 +13865,11 @@ interface QueryDslMatchPhrasePrefixQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property analyzer <<Analyzer>> used to convert text in the query value into tokens. */
   analyzer?: string
   pass:[/**] @property max_expansions Maximum number of terms to which the last provided term of the query value will expand. */
-  max_expansions?: <<_integer, integer>>
+  max_expansions?: <<integer>>
   pass:[/**] @property query Text you wish to find in the provided field. */
   query: string
   pass:[/**] @property slop Maximum number of positions allowed between matching tokens. */
-  slop?: <<_integer, integer>>
+  slop?: <<integer>>
   pass:[/**] @property zero_terms_query Indicates whether no documents are returned if the analyzer removes all tokens, such as when using a `stop` filter. */
   zero_terms_query?: <<QueryDslZeroTermsQuery>>
 }
@@ -13892,7 +13892,7 @@ interface QueryDslMatchPhraseQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property query Query terms that are analyzed and turned into a phrase query. */
   query: string
   pass:[/**] @property slop Maximum number of positions allowed between matching tokens. */
-  slop?: <<_integer, integer>>
+  slop?: <<integer>>
   pass:[/**] @property zero_terms_query Indicates whether no documents are returned if the `analyzer` removes all tokens, such as when using a `stop` filter. */
   zero_terms_query?: <<QueryDslZeroTermsQuery>>
 }
@@ -13914,7 +13914,7 @@ interface QueryDslMatchQuery extends <<QueryDslQueryBase>> {
   analyzer?: string
   pass:[/**] @property auto_generate_synonyms_phrase_query If `true`, match phrase queries are automatically created for multi-term synonyms. */
   auto_generate_synonyms_phrase_query?: boolean
-  cutoff_frequency?: <<_double, double>>
+  cutoff_frequency?: <<double>>
   pass:[/**] @property fuzziness Maximum edit distance allowed for matching. */
   fuzziness?: <<Fuzziness>>
   pass:[/**] @property fuzzy_rewrite Method used to rewrite the query. */
@@ -13924,15 +13924,15 @@ interface QueryDslMatchQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property lenient If `true`, format-based errors, such as providing a text query value for a numeric field, are ignored. */
   lenient?: boolean
   pass:[/**] @property max_expansions Maximum number of terms to which the query will expand. */
-  max_expansions?: <<_integer, integer>>
+  max_expansions?: <<integer>>
   pass:[/**] @property minimum_should_match Minimum number of clauses that must match for a document to be returned. */
   minimum_should_match?: <<MinimumShouldMatch>>
   pass:[/**] @property operator Boolean logic used to interpret text in the query value. */
   operator?: <<QueryDslOperator>>
   pass:[/**] @property prefix_length Number of beginning characters left unchanged for fuzzy matching. */
-  prefix_length?: <<_integer, integer>>
+  prefix_length?: <<integer>>
   pass:[/**] @property query Text, number, boolean value or date you wish to find in the provided field. */
-  query: string | <<_float, float>> | boolean
+  query: string | <<float>> | boolean
   pass:[/**] @property zero_terms_query Indicates whether no documents are returned if the `analyzer` removes all tokens, such as when using a `stop` filter. */
   zero_terms_query?: <<QueryDslZeroTermsQuery>>
 }
@@ -13953,7 +13953,7 @@ interface QueryDslMoreLikeThisQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property analyzer The analyzer that is used to analyze the free form text. Defaults to the analyzer associated with the first field in fields. */
   analyzer?: string
   pass:[/**] @property boost_terms Each term in the formed query could be further boosted by their tf-idf score. This sets the boost factor to use when using this feature. Defaults to deactivated (0). */
-  boost_terms?: <<_double, double>>
+  boost_terms?: <<double>>
   pass:[/**] @property fail_on_unsupported_field Controls whether the query should fail (throw an exception) if any of the specified fields are not of the supported types (`text` or `keyword`). */
   fail_on_unsupported_field?: boolean
   pass:[/**] @property fields A list of fields to fetch and analyze the text from. Defaults to the `index.query.default_field` index setting, which has a default value of `*`. */
@@ -13963,19 +13963,19 @@ interface QueryDslMoreLikeThisQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property like Specifies free form text and/or a single or multiple documents for which you want to find similar documents. */
   like: <<QueryDslLike>> | <<QueryDslLike>>[]
   pass:[/**] @property max_doc_freq The maximum document frequency above which the terms are ignored from the input document. */
-  max_doc_freq?: <<_integer, integer>>
+  max_doc_freq?: <<integer>>
   pass:[/**] @property max_query_terms The maximum number of query terms that can be selected. */
-  max_query_terms?: <<_integer, integer>>
+  max_query_terms?: <<integer>>
   pass:[/**] @property max_word_length The maximum word length above which the terms are ignored. Defaults to unbounded (`0`). */
-  max_word_length?: <<_integer, integer>>
+  max_word_length?: <<integer>>
   pass:[/**] @property min_doc_freq The minimum document frequency below which the terms are ignored from the input document. */
-  min_doc_freq?: <<_integer, integer>>
+  min_doc_freq?: <<integer>>
   pass:[/**] @property minimum_should_match After the disjunctive query has been formed, this parameter controls the number of terms that must match. */
   minimum_should_match?: <<MinimumShouldMatch>>
   pass:[/**] @property min_term_freq The minimum term frequency below which the terms are ignored from the input document. */
-  min_term_freq?: <<_integer, integer>>
+  min_term_freq?: <<integer>>
   pass:[/**] @property min_word_length The minimum word length below which the terms are ignored. */
-  min_word_length?: <<_integer, integer>>
+  min_word_length?: <<integer>>
   routing?: <<Routing>>
   pass:[/**] @property stop_words An array of stop words. Any word in this set is ignored. */
   stop_words?: <<AnalysisStopWords>>
@@ -14002,7 +14002,7 @@ interface QueryDslMultiMatchQuery extends <<QueryDslQueryBase>> {
   analyzer?: string
   pass:[/**] @property auto_generate_synonyms_phrase_query If `true`, match phrase queries are automatically created for multi-term synonyms. */
   auto_generate_synonyms_phrase_query?: boolean
-  cutoff_frequency?: <<_double, double>>
+  cutoff_frequency?: <<double>>
   pass:[/**] @property fields The fields to be queried. Defaults to the `index.query.default_field` index settings, which in turn defaults to `*`. */
   fields?: <<Fields>>
   pass:[/**] @property fuzziness Maximum edit distance allowed for matching. */
@@ -14014,19 +14014,19 @@ interface QueryDslMultiMatchQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property lenient If `true`, format-based errors, such as providing a text query value for a numeric field, are ignored. */
   lenient?: boolean
   pass:[/**] @property max_expansions Maximum number of terms to which the query will expand. */
-  max_expansions?: <<_integer, integer>>
+  max_expansions?: <<integer>>
   pass:[/**] @property minimum_should_match Minimum number of clauses that must match for a document to be returned. */
   minimum_should_match?: <<MinimumShouldMatch>>
   pass:[/**] @property operator Boolean logic used to interpret text in the query value. */
   operator?: <<QueryDslOperator>>
   pass:[/**] @property prefix_length Number of beginning characters left unchanged for fuzzy matching. */
-  prefix_length?: <<_integer, integer>>
+  prefix_length?: <<integer>>
   pass:[/**] @property query Text, number, boolean value or date you wish to find in the provided field. */
   query: string
   pass:[/**] @property slop Maximum number of positions allowed between matching tokens. */
-  slop?: <<_integer, integer>>
+  slop?: <<integer>>
   pass:[/**] @property tie_breaker Determines how scores for each per-term blended query and scores across groups are combined. */
-  tie_breaker?: <<_double, double>>
+  tie_breaker?: <<double>>
   pass:[/**] @property type How `the` multi_match query is executed internally. */
   type?: <<QueryDslTextQueryType>>
   pass:[/**] @property zero_terms_query Indicates whether no documents are returned if the `analyzer` removes all tokens, such as when using a `stop` filter. */
@@ -14084,7 +14084,7 @@ interface QueryDslNestedQuery extends <<QueryDslQueryBase>> {
 ++++
 <pre>
 ++++
-interface QueryDslNumberRangeQuery extends <<QueryDslRangeQueryBase>><<<_double, double>>> {
+interface QueryDslNumberRangeQuery extends <<QueryDslRangeQueryBase>><<<double>>> {
 }
 [pass]
 ++++
@@ -14099,7 +14099,7 @@ interface QueryDslNumberRangeQuery extends <<QueryDslRangeQueryBase>><<<_double,
 ++++
 <pre>
 ++++
-interface QueryDslNumericDecayFunctionKeys extends <<QueryDslDecayFunctionBase>><<<_double, double>>, <<_double, double>>> {
+interface QueryDslNumericDecayFunctionKeys extends <<QueryDslDecayFunctionBase>><<<double>>, <<double>>> {
 }
 type QueryDslNumericDecayFunction = QueryDslNumericDecayFunctionKeys
   & { [property: string]: <<QueryDslDecayPlacement>> | <<QueryDslMultiValueMode>> }
@@ -14247,7 +14247,7 @@ interface QueryDslPrefixQuery extends <<QueryDslQueryBase>> {
 ++++
 interface QueryDslQueryBase {
   pass:[/**] @property boost Floating point number used to decrease or increase the relevance scores of the query. Boost values are relative to the default value of 1.0. A boost value between 0 and 1.0 decreases the relevance score. A value greater than 1.0 increases the relevance score. */
-  boost?: <<_float, float>>
+  boost?: <<float>>
   _name?: string
 }
 [pass]
@@ -14282,7 +14282,7 @@ interface QueryDslQueryContainer {
   pass:[/**] @property function_score The `function_score` enables you to modify the score of documents that are retrieved by a query. */
   function_score?: <<QueryDslFunctionScoreQuery>> | <<QueryDslFunctionScoreContainer>>[]
   pass:[/**] @property fuzzy Returns documents that contain terms similar to the search term, as measured by a Levenshtein edit distance. */
-  fuzzy?: Partial<Record<<<Field>>, <<QueryDslFuzzyQuery>> | string | <<_double, double>> | boolean>>
+  fuzzy?: Partial<Record<<<Field>>, <<QueryDslFuzzyQuery>> | string | <<double>> | boolean>>
   pass:[/**] @property geo_bounding_box Matches geo_point and geo_shape values that intersect a bounding box. */
   geo_bounding_box?: <<QueryDslGeoBoundingBoxQuery>>
   pass:[/**] @property geo_distance Matches `geo_point` and `geo_shape` values within a given distance of a geopoint. */
@@ -14301,7 +14301,7 @@ interface QueryDslQueryContainer {
   pass:[/**] @property knn Finds the k nearest vectors to a query vector, as measured by a similarity metric. knn query finds nearest vectors through approximate search on indexed dense_vectors. */
   knn?: <<KnnQuery>>
   pass:[/**] @property match Returns documents that match a provided text, number, date or boolean value. The provided text is analyzed before matching. */
-  match?: Partial<Record<<<Field>>, <<QueryDslMatchQuery>> | string | <<_float, float>> | boolean>>
+  match?: Partial<Record<<<Field>>, <<QueryDslMatchQuery>> | string | <<float>> | boolean>>
   pass:[/**] @property match_all Matches all documents, giving them all a `_score` of 1.0. */
   match_all?: <<QueryDslMatchAllQuery>>
   pass:[/**] @property match_bool_prefix Analyzes its input and constructs a `bool` query from the terms. Each term except the last is used in a `term` query. The last term is used in a prefix query. */
@@ -14415,9 +14415,9 @@ interface QueryDslQueryStringQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property fuzziness Maximum edit distance allowed for fuzzy matching. */
   fuzziness?: <<Fuzziness>>
   pass:[/**] @property fuzzy_max_expansions Maximum number of terms to which the query expands for fuzzy matching. */
-  fuzzy_max_expansions?: <<_integer, integer>>
+  fuzzy_max_expansions?: <<integer>>
   pass:[/**] @property fuzzy_prefix_length Number of beginning characters left unchanged for fuzzy matching. */
-  fuzzy_prefix_length?: <<_integer, integer>>
+  fuzzy_prefix_length?: <<integer>>
   pass:[/**] @property fuzzy_rewrite Method used to rewrite the query. */
   fuzzy_rewrite?: <<MultiTermQueryRewrite>>
   pass:[/**] @property fuzzy_transpositions If `true`, edits for fuzzy matching include transpositions of two adjacent characters (for example, `ab` to `ba`). */
@@ -14425,11 +14425,11 @@ interface QueryDslQueryStringQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property lenient If `true`, format-based errors, such as providing a text value for a numeric field, are ignored. */
   lenient?: boolean
   pass:[/**] @property max_determinized_states Maximum number of automaton states required for the query. */
-  max_determinized_states?: <<_integer, integer>>
+  max_determinized_states?: <<integer>>
   pass:[/**] @property minimum_should_match Minimum number of clauses that must match for a document to be returned. */
   minimum_should_match?: <<MinimumShouldMatch>>
   pass:[/**] @property phrase_slop Maximum number of positions allowed between matching tokens for phrases. */
-  phrase_slop?: <<_double, double>>
+  phrase_slop?: <<double>>
   pass:[/**] @property query Query string you wish to parse and use for search. */
   query: string
   pass:[/**] @property quote_analyzer <<Analyzer>> used to convert quoted text in the query string into tokens. For quoted text, this parameter overrides the analyzer specified in the `analyzer` parameter. */
@@ -14439,7 +14439,7 @@ interface QueryDslQueryStringQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property rewrite Method used to rewrite the query. */
   rewrite?: <<MultiTermQueryRewrite>>
   pass:[/**] @property tie_breaker How to combine the queries generated from the individual search terms in the resulting `dis_max` query. */
-  tie_breaker?: <<_double, double>>
+  tie_breaker?: <<double>>
   pass:[/**] @property time_zone Coordinated Universal Time (UTC) offset or IANA time zone used to convert date values in the query string to UTC. */
   time_zone?: <<TimeZone>>
   pass:[/**] @property type Determines how the query matches and scores documents. */
@@ -14460,7 +14460,7 @@ interface QueryDslQueryStringQuery extends <<QueryDslQueryBase>> {
 ++++
 interface QueryDslRandomScoreFunction {
   field?: <<Field>>
-  seed?: <<_long, long>> | string
+  seed?: <<long>> | string
 }
 [pass]
 ++++
@@ -14562,7 +14562,7 @@ interface QueryDslRankFeatureFunctionLinear {
 ++++
 interface QueryDslRankFeatureFunctionLogarithm {
   pass:[/**] @property scaling_factor Configurable scaling factor. */
-  scaling_factor: <<_float, float>>
+  scaling_factor: <<float>>
 }
 [pass]
 ++++
@@ -14579,7 +14579,7 @@ interface QueryDslRankFeatureFunctionLogarithm {
 ++++
 interface QueryDslRankFeatureFunctionSaturation {
   pass:[/**] @property pivot Configurable pivot value so that the result will be less than 0.5. */
-  pivot?: <<_float, float>>
+  pivot?: <<float>>
 }
 [pass]
 ++++
@@ -14596,9 +14596,9 @@ interface QueryDslRankFeatureFunctionSaturation {
 ++++
 interface QueryDslRankFeatureFunctionSigmoid {
   pass:[/**] @property pivot Configurable pivot value so that the result will be less than 0.5. */
-  pivot: <<_float, float>>
+  pivot: <<float>>
   pass:[/**] @property exponent Configurable Exponent. */
-  exponent: <<_float, float>>
+  exponent: <<float>>
 }
 [pass]
 ++++
@@ -14644,7 +14644,7 @@ interface QueryDslRegexpQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property flags Enables optional operators for the regular expression. */
   flags?: string
   pass:[/**] @property max_determinized_states Maximum number of automaton states required for the query. */
-  max_determinized_states?: <<_integer, integer>>
+  max_determinized_states?: <<integer>>
   pass:[/**] @property rewrite Method used to rewrite the query. */
   rewrite?: <<MultiTermQueryRewrite>>
   pass:[/**] @property value Regular expression for terms you wish to find in the provided field. */
@@ -14717,7 +14717,7 @@ interface QueryDslScriptScoreFunction {
 ++++
 interface QueryDslScriptScoreQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property min_score Documents with a score lower than this floating point number are excluded from the search results. */
-  min_score?: <<_float, float>>
+  min_score?: <<float>>
   pass:[/**] @property query Query used to return documents. */
   query: <<QueryDslQueryContainer>>
   pass:[/**] @property script <<Script>> used to compute the score of documents returned by the query. Important: final relevance scores from the `script_score` query cannot be negative. */
@@ -14780,7 +14780,7 @@ interface QueryDslShapeQueryKeys extends <<QueryDslQueryBase>> {
   ignore_unmapped?: boolean
 }
 type QueryDslShapeQuery = QueryDslShapeQueryKeys
-  & { [property: string]: <<QueryDslShapeFieldQuery>> | boolean | <<_float, float>> | string }
+  & { [property: string]: <<QueryDslShapeFieldQuery>> | boolean | <<float>> | string }
 [pass]
 ++++
 </pre>
@@ -14836,9 +14836,9 @@ interface QueryDslSimpleQueryStringQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property flags List of enabled operators for the simple query string syntax. */
   flags?: <<QueryDslSimpleQueryStringFlags>>
   pass:[/**] @property fuzzy_max_expansions Maximum number of terms to which the query expands for fuzzy matching. */
-  fuzzy_max_expansions?: <<_integer, integer>>
+  fuzzy_max_expansions?: <<integer>>
   pass:[/**] @property fuzzy_prefix_length Number of beginning characters left unchanged for fuzzy matching. */
-  fuzzy_prefix_length?: <<_integer, integer>>
+  fuzzy_prefix_length?: <<integer>>
   pass:[/**] @property fuzzy_transpositions If `true`, edits for fuzzy matching include transpositions of two adjacent characters (for example, `ab` to `ba`). */
   fuzzy_transpositions?: boolean
   pass:[/**] @property lenient If `true`, format-based errors, such as providing a text value for a numeric field, are ignored. */
@@ -14901,7 +14901,7 @@ interface QueryDslSpanFieldMaskingQuery extends <<QueryDslQueryBase>> {
 ++++
 interface QueryDslSpanFirstQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property end Controls the maximum end position permitted in a match. */
-  end: <<_integer, integer>>
+  end: <<integer>>
   pass:[/**] @property match Can be any other span type query. */
   match: <<QueryDslSpanQuery>>
 }
@@ -14918,7 +14918,7 @@ interface QueryDslSpanFirstQuery extends <<QueryDslQueryBase>> {
 ++++
 <pre>
 ++++
-type QueryDslSpanGapQuery = Partial<Record<<<Field>>, <<_integer, integer>>>>
+type QueryDslSpanGapQuery = Partial<Record<<<Field>>, <<integer>>>>
 [pass]
 ++++
 </pre>
@@ -14955,7 +14955,7 @@ interface QueryDslSpanNearQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property in_order Controls whether matches are required to be in-order. */
   in_order?: boolean
   pass:[/**] @property slop Controls the maximum number of intervening unmatched positions permitted. */
-  slop?: <<_integer, integer>>
+  slop?: <<integer>>
 }
 [pass]
 ++++
@@ -14972,15 +14972,15 @@ interface QueryDslSpanNearQuery extends <<QueryDslQueryBase>> {
 ++++
 interface QueryDslSpanNotQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property dist The number of tokens from within the include span that can’t have overlap with the exclude span. Equivalent to setting both `pre` and `post`. */
-  dist?: <<_integer, integer>>
+  dist?: <<integer>>
   pass:[/**] @property exclude Span query whose matches must not overlap those returned. */
   exclude: <<QueryDslSpanQuery>>
   pass:[/**] @property include Span query whose matches are filtered. */
   include: <<QueryDslSpanQuery>>
   pass:[/**] @property post The number of tokens after the include span that can’t have overlap with the exclude span. */
-  post?: <<_integer, integer>>
+  post?: <<integer>>
   pass:[/**] @property pre The number of tokens before the include span that can’t have overlap with the exclude span. */
-  pre?: <<_integer, integer>>
+  pre?: <<integer>>
 }
 [pass]
 ++++
@@ -15030,7 +15030,7 @@ interface QueryDslSpanQuery {
   span_or?: <<QueryDslSpanOrQuery>>
   pass:[/**] @property span_term The equivalent of the `term` query but for use with other span queries. */
   span_term?: Partial<Record<<<Field>>, <<QueryDslSpanTermQuery>> | string>>
-  pass:[/**] @property span_within The result from a single span query is returned as <<_long, long>> is its span falls within the spans returned by a list of other span queries. */
+  pass:[/**] @property span_within The result from a single span query is returned as <<long>> is its span falls within the spans returned by a list of other span queries. */
   span_within?: <<QueryDslSpanWithinQuery>>
 }
 [pass]
@@ -15085,7 +15085,7 @@ interface QueryDslSparseVectorQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property field The name of the field that contains the token-weight pairs to be searched against. This field must be a mapped sparse_vector field. */
   field: <<Field>>
   pass:[/**] @property query_vector Dictionary of precomputed sparse vectors and their associated weights. Only one of inference_id or query_vector may be supplied in a request. */
-  query_vector?: Record<string, <<_float, float>>>
+  query_vector?: Record<string, <<float>>>
   pass:[/**] @property inference_id The inference ID to use to convert the query text into token-weight pairs. It must be the same inference ID that was used to create the tokens from the input text. Only one of inference_id and query_vector is allowed. If inference_id is specified, query must also be specified. Only one of inference_id or query_vector may be supplied in a request. */
   inference_id?: <<Id>>
   pass:[/**] @property query The query text you want to use for search. If inference_id is specified, query must also be specified. */
@@ -15164,7 +15164,7 @@ interface QueryDslTermsLookup {
 interface QueryDslTermsQueryKeys extends <<QueryDslQueryBase>> {
 }
 type QueryDslTermsQuery = QueryDslTermsQueryKeys
-  & { [property: string]: <<QueryDslTermsQueryField>> | <<_float, float>> | string }
+  & { [property: string]: <<QueryDslTermsQueryField>> | <<float>> | string }
 [pass]
 ++++
 </pre>
@@ -15252,9 +15252,9 @@ type QueryDslTextQueryType = 'best_fields' | 'most_fields' | 'cross_fields' | 'p
 ++++
 interface QueryDslTokenPruningConfig {
   pass:[/**] @property tokens_freq_ratio_threshold Tokens whose frequency is more than this threshold times the average frequency of all tokens in the specified field are considered outliers and pruned. */
-  tokens_freq_ratio_threshold?: <<_integer, integer>>
+  tokens_freq_ratio_threshold?: <<integer>>
   pass:[/**] @property tokens_weight_threshold Tokens whose weight is less than this threshold are considered nonsignificant and pruned. */
-  tokens_weight_threshold?: <<_float, float>>
+  tokens_weight_threshold?: <<float>>
   pass:[/**] @property only_score_pruned_tokens Whether to only score pruned tokens, vs only scoring kept tokens. */
   only_score_pruned_tokens?: boolean
 }
@@ -15340,7 +15340,7 @@ interface QueryDslUntypedRangeQuery extends <<QueryDslRangeQueryBase>><any> {
 ++++
 interface QueryDslWeightedTokensQuery extends <<QueryDslQueryBase>> {
   pass:[/**] @property tokens The tokens representing this query */
-  tokens: Record<string, <<_float, float>>>
+  tokens: Record<string, <<float>>>
   pass:[/**] @property pruning_config Token pruning configurations */
   pruning_config?: <<QueryDslTokenPruningConfig>>
 }

@@ -55,7 +55,7 @@ interface MlPutDataFrameAnalyticsRequest extends <<RequestBase>> {
   analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
   description?: string
   dest: MlDataframeAnalyticsDestination
-  max_num_threads?: <<_integer, integer>>
+  max_num_threads?: <<integer>>
   model_memory_limit?: string
   source: MlDataframeAnalyticsSource
   headers?: <<HttpHeaders>>
@@ -82,7 +82,7 @@ interface MlPutDataFrameAnalyticsResponse {
   description?: string
   dest: MlDataframeAnalyticsDestination
   id: <<Id>>
-  max_num_threads: <<_integer, integer>>
+  max_num_threads: <<integer>>
   model_memory_limit: string
   source: MlDataframeAnalyticsSource
   version: <<VersionString>>

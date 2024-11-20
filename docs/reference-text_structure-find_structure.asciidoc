@@ -57,8 +57,8 @@ interface TextStructureFindStructureRequest<TJsonDocument = unknown> {
   format?: string
   grok_pattern?: <<GrokPattern>>
   has_header_row?: boolean
-  line_merge_size_limit?: <<_uint, uint>>
-  lines_to_sample?: <<_uint, uint>>
+  line_merge_size_limit?: <<uint>>
+  lines_to_sample?: <<uint>>
   quote?: string
   should_trim_fields?: boolean
   timeout?: <<Duration>>
@@ -85,12 +85,12 @@ interface TextStructureFindStructureResponse {
   format: string
   field_stats: Record<<<Field>>, TextStructureFindStructureFieldStat>
   sample_start: string
-  num_messages_analyzed: <<_integer, integer>>
+  num_messages_analyzed: <<integer>>
   mappings: <<MappingTypeMapping>>
   quote?: string
   delimiter?: string
   need_client_timezone: boolean
-  num_lines_analyzed: <<_integer, integer>>
+  num_lines_analyzed: <<integer>>
   column_names?: string[]
   explanation?: string[]
   grok_pattern?: <<GrokPattern>>

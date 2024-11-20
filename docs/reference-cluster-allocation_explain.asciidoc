@@ -54,7 +54,7 @@ interface ClusterAllocationExplainRequest extends <<RequestBase>> {
   current_node?: string
   index?: <<IndexName>>
   primary?: boolean
-  shard?: <<_integer, integer>>
+  shard?: <<integer>>
 }
 
 [pass]
@@ -91,7 +91,7 @@ interface ClusterAllocationExplainResponse {
   rebalance_explanation?: string
   remaining_delay?: <<Duration>>
   remaining_delay_in_millis?: <<DurationValue>><<<UnitMillis>>>
-  shard: <<_integer, integer>>
+  shard: <<integer>>
   unassigned_info?: ClusterAllocationExplainUnassignedInformation
   note?: string
 }

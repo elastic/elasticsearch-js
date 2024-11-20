@@ -51,9 +51,9 @@ Get info about events in calendars.
 interface MlGetCalendarEventsRequest extends <<RequestBase>> {
   calendar_id: <<Id>>
   end?: <<DateTime>>
-  from?: <<_integer, integer>>
+  from?: <<integer>>
   job_id?: <<Id>>
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   start?: <<DateTime>>
 }
 
@@ -69,7 +69,7 @@ interface MlGetCalendarEventsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetCalendarEventsResponse {
-  count: <<_long, long>>
+  count: <<long>>
   events: MlCalendarEvent[]
 }
 

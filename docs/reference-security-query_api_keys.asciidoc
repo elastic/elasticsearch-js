@@ -56,9 +56,9 @@ interface SecurityQueryApiKeysRequest extends <<RequestBase>> {
   pass:[/**] @alias aggregations */
   aggs?: Record<string, SecurityQueryApiKeysApiKeyAggregationContainer>
   query?: SecurityQueryApiKeysApiKeyQueryContainer
-  from?: <<_integer, integer>>
+  from?: <<integer>>
   sort?: <<Sort>>
-  size?: <<_integer, integer>>
+  size?: <<integer>>
   search_after?: <<SortResults>>
 }
 
@@ -74,8 +74,8 @@ interface SecurityQueryApiKeysRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SecurityQueryApiKeysResponse {
-  total: <<_integer, integer>>
-  count: <<_integer, integer>>
+  total: <<integer>>
+  count: <<integer>>
   api_keys: SecurityApiKey[]
   aggregations?: Record<<<AggregateName>>, SecurityQueryApiKeysApiKeyAggregate>
 }

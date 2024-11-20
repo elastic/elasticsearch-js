@@ -51,8 +51,8 @@ Get trained models usage info. You can get usage information for multiple traine
 interface MlGetTrainedModelsStatsRequest extends <<RequestBase>> {
   model_id?: <<Ids>>
   allow_no_match?: boolean
-  from?: <<_integer, integer>>
-  size?: <<_integer, integer>>
+  from?: <<integer>>
+  size?: <<integer>>
 }
 
 [pass]
@@ -67,7 +67,7 @@ interface MlGetTrainedModelsStatsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetTrainedModelsStatsResponse {
-  count: <<_integer, integer>>
+  count: <<integer>>
   trained_model_stats: MlTrainedModelStats[]
 }
 

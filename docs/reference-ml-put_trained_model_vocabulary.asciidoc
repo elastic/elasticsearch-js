@@ -52,7 +52,7 @@ interface MlPutTrainedModelVocabularyRequest extends <<RequestBase>> {
   model_id: <<Id>>
   vocabulary: string[]
   merges?: string[]
-  scores?: <<_double, double>>[]
+  scores?: <<double>>[]
 }
 
 [pass]

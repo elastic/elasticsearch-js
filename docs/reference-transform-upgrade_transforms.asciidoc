@@ -65,9 +65,9 @@ interface TransformUpgradeTransformsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface TransformUpgradeTransformsResponse {
-  needs_update: <<_integer, integer>>
-  no_action: <<_integer, integer>>
-  updated: <<_integer, integer>>
+  needs_update: <<integer>>
+  no_action: <<integer>>
+  updated: <<integer>>
 }
 
 [pass]

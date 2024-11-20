@@ -51,9 +51,9 @@ Get anomaly detection job results for buckets. The API presents a chronological 
 interface MlGetBucketsRequest extends <<RequestBase>> {
   job_id: <<Id>>
   timestamp?: <<DateTime>>
-  from?: <<_integer, integer>>
-  size?: <<_integer, integer>>
-  anomaly_score?: <<_double, double>>
+  from?: <<integer>>
+  size?: <<integer>>
+  anomaly_score?: <<double>>
   desc?: boolean
   end?: <<DateTime>>
   exclude_interim?: boolean
@@ -76,7 +76,7 @@ interface MlGetBucketsRequest extends <<RequestBase>> {
 ++++
 interface MlGetBucketsResponse {
   buckets: MlBucketSummary[]
-  count: <<_long, long>>
+  count: <<long>>
 }
 
 [pass]

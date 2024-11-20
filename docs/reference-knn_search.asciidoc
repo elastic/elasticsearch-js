@@ -71,12 +71,12 @@ interface KnnSearchRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface KnnSearchResponse<TDocument = unknown> {
-  took: <<_long, long>>
+  took: <<long>>
   timed_out: boolean
   _shards: <<ShardStatistics>>
   hits: SearchHitsMetadata<TDocument>
   fields?: Record<string, any>
-  max_score?: <<_double, double>>
+  max_score?: <<double>>
 }
 
 [pass]

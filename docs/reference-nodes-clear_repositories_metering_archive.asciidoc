@@ -50,7 +50,7 @@ You can use this API to clear the archived repositories metering information in 
 ++++
 interface NodesClearRepositoriesMeteringArchiveRequest extends <<RequestBase>> {
   node_id: <<NodeIds>>
-  max_archive_version: <<_long, long>>
+  max_archive_version: <<long>>
 }
 
 [pass]

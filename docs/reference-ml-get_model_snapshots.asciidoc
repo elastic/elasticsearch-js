@@ -51,8 +51,8 @@ Get model snapshots info.
 interface MlGetModelSnapshotsRequest extends <<RequestBase>> {
   job_id: <<Id>>
   snapshot_id?: <<Id>>
-  from?: <<_integer, integer>>
-  size?: <<_integer, integer>>
+  from?: <<integer>>
+  size?: <<integer>>
   desc?: boolean
   end?: <<DateTime>>
   page?: MlPage
@@ -72,7 +72,7 @@ interface MlGetModelSnapshotsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetModelSnapshotsResponse {
-  count: <<_long, long>>
+  count: <<long>>
   model_snapshots: MlModelSnapshot[]
 }
 

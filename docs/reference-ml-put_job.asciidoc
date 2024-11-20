@@ -55,16 +55,16 @@ interface MlPutJobRequest extends <<RequestBase>> {
   analysis_limits?: MlAnalysisLimits
   background_persist_interval?: <<Duration>>
   custom_settings?: MlCustomSettings
-  daily_model_snapshot_retention_after_days?: <<_long, long>>
+  daily_model_snapshot_retention_after_days?: <<long>>
   data_description: MlDataDescription
   datafeed_config?: MlDatafeedConfig
   description?: string
   groups?: string[]
   model_plot_config?: MlModelPlotConfig
-  model_snapshot_retention_days?: <<_long, long>>
-  renormalization_window_days?: <<_long, long>>
+  model_snapshot_retention_days?: <<long>>
+  renormalization_window_days?: <<long>>
   results_index_name?: <<IndexName>>
-  results_retention_days?: <<_long, long>>
+  results_retention_days?: <<long>>
 }
 
 [pass]
@@ -85,7 +85,7 @@ interface MlPutJobResponse {
   background_persist_interval?: <<Duration>>
   create_time: <<DateTime>>
   custom_settings?: MlCustomSettings
-  daily_model_snapshot_retention_after_days: <<_long, long>>
+  daily_model_snapshot_retention_after_days: <<long>>
   data_description: MlDataDescription
   datafeed_config?: MlDatafeed
   description?: string
@@ -95,10 +95,10 @@ interface MlPutJobResponse {
   job_version: string
   model_plot_config?: MlModelPlotConfig
   model_snapshot_id?: <<Id>>
-  model_snapshot_retention_days: <<_long, long>>
-  renormalization_window_days?: <<_long, long>>
+  model_snapshot_retention_days: <<long>>
+  renormalization_window_days?: <<long>>
   results_index_name: string
-  results_retention_days?: <<_long, long>>
+  results_retention_days?: <<long>>
 }
 
 [pass]

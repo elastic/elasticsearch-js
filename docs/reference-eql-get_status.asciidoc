@@ -69,7 +69,7 @@ interface EqlGetStatusResponse {
   is_running: boolean
   start_time_in_millis?: <<EpochTime>><<<UnitMillis>>>
   expiration_time_in_millis?: <<EpochTime>><<<UnitMillis>>>
-  completion_status?: <<_integer, integer>>
+  completion_status?: <<integer>>
 }
 
 [pass]

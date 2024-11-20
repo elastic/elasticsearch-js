@@ -50,7 +50,7 @@ Update a trained model deployment.
 ++++
 interface MlUpdateTrainedModelDeploymentRequest extends <<RequestBase>> {
   model_id: <<Id>>
-  number_of_allocations?: <<_integer, integer>>
+  number_of_allocations?: <<integer>>
 }
 
 [pass]

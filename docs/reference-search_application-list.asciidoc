@@ -50,8 +50,8 @@ Returns the existing search applications.
 ++++
 interface SearchApplicationListRequest extends <<RequestBase>> {
   q?: string
-  from?: <<_integer, integer>>
-  size?: <<_integer, integer>>
+  from?: <<integer>>
+  size?: <<integer>>
 }
 
 [pass]
@@ -66,7 +66,7 @@ interface SearchApplicationListRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SearchApplicationListResponse {
-  count: <<_long, long>>
+  count: <<long>>
   results: SearchApplicationListSearchApplicationListItem[]
 }
 

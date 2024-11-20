@@ -59,10 +59,10 @@ interface CountRequest extends <<RequestBase>> {
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   lenient?: boolean
-  min_score?: <<_double, double>>
+  min_score?: <<double>>
   preference?: string
   routing?: <<Routing>>
-  terminate_after?: <<_long, long>>
+  terminate_after?: <<long>>
   q?: string
   query?: <<QueryDslQueryContainer>>
 }
@@ -79,7 +79,7 @@ interface CountRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface CountResponse {
-  count: <<_long, long>>
+  count: <<long>>
   _shards: <<ShardStatistics>>
 }
 

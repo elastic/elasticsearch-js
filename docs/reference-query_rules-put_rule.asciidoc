@@ -54,7 +54,7 @@ interface QueryRulesPutRuleRequest extends <<RequestBase>> {
   type: QueryRulesQueryRuleType
   criteria: QueryRulesQueryRuleCriteria | QueryRulesQueryRuleCriteria[]
   actions: QueryRulesQueryRuleActions
-  priority?: <<_integer, integer>>
+  priority?: <<integer>>
 }
 
 [pass]

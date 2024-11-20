@@ -69,7 +69,7 @@ interface SqlGetAsyncStatusResponse {
   is_partial: boolean
   start_time_in_millis: <<EpochTime>><<<UnitMillis>>>
   expiration_time_in_millis: <<EpochTime>><<<UnitMillis>>>
-  completion_status?: <<_uint, uint>>
+  completion_status?: <<uint>>
 }
 
 [pass]

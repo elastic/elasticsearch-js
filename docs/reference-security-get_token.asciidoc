@@ -70,7 +70,7 @@ interface SecurityGetTokenRequest extends <<RequestBase>> {
 ++++
 interface SecurityGetTokenResponse {
   access_token: string
-  expires_in: <<_long, long>>
+  expires_in: <<long>>
   scope?: string
   type: string
   refresh_token?: string

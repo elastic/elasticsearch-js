@@ -49,8 +49,8 @@ Retrieves a summary of all defined synonym sets
 <pre>
 ++++
 interface SynonymsGetSynonymsSetsRequest extends <<RequestBase>> {
-  from?: <<_integer, integer>>
-  size?: <<_integer, integer>>
+  from?: <<integer>>
+  size?: <<integer>>
 }
 
 [pass]
@@ -65,7 +65,7 @@ interface SynonymsGetSynonymsSetsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SynonymsGetSynonymsSetsResponse {
-  count: <<_integer, integer>>
+  count: <<integer>>
   results: SynonymsGetSynonymsSetsSynonymsSetItem[]
 }
 

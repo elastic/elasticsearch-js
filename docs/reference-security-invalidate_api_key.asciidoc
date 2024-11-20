@@ -69,7 +69,7 @@ interface SecurityInvalidateApiKeyRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SecurityInvalidateApiKeyResponse {
-  error_count: <<_integer, integer>>
+  error_count: <<integer>>
   error_details?: <<ErrorCause>>[]
   invalidated_api_keys: string[]
   previously_invalidated_api_keys: string[]

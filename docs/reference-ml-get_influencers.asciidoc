@@ -53,9 +53,9 @@ interface MlGetInfluencersRequest extends <<RequestBase>> {
   desc?: boolean
   end?: <<DateTime>>
   exclude_interim?: boolean
-  influencer_score?: <<_double, double>>
-  from?: <<_integer, integer>>
-  size?: <<_integer, integer>>
+  influencer_score?: <<double>>
+  from?: <<integer>>
+  size?: <<integer>>
   sort?: <<Field>>
   start?: <<DateTime>>
   page?: MlPage
@@ -73,7 +73,7 @@ interface MlGetInfluencersRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetInfluencersResponse {
-  count: <<_long, long>>
+  count: <<long>>
   influencers: MlInfluencer[]
 }
 

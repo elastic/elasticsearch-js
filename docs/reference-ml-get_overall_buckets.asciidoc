@@ -54,9 +54,9 @@ interface MlGetOverallBucketsRequest extends <<RequestBase>> {
   bucket_span?: <<Duration>>
   end?: <<DateTime>>
   exclude_interim?: boolean
-  overall_score?: <<_double, double>> | string
+  overall_score?: <<double>> | string
   start?: <<DateTime>>
-  top_n?: <<_integer, integer>>
+  top_n?: <<integer>>
 }
 
 [pass]
@@ -71,7 +71,7 @@ interface MlGetOverallBucketsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetOverallBucketsResponse {
-  count: <<_long, long>>
+  count: <<long>>
   overall_buckets: MlOverallBucket[]
 }
 

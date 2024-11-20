@@ -57,28 +57,28 @@ interface DeleteByQueryRequest extends <<RequestBase>> {
   default_operator?: <<QueryDslOperator>>
   df?: string
   expand_wildcards?: <<ExpandWildcards>>
-  from?: <<_long, long>>
+  from?: <<long>>
   ignore_unavailable?: boolean
   lenient?: boolean
   preference?: string
   refresh?: boolean
   request_cache?: boolean
-  requests_per_second?: <<_float, float>>
+  requests_per_second?: <<float>>
   routing?: <<Routing>>
   q?: string
   scroll?: <<Duration>>
-  scroll_size?: <<_long, long>>
+  scroll_size?: <<long>>
   search_timeout?: <<Duration>>
   search_type?: <<SearchType>>
   slices?: <<Slices>>
   sort?: string[]
   stats?: string[]
-  terminate_after?: <<_long, long>>
+  terminate_after?: <<long>>
   timeout?: <<Duration>>
   version?: boolean
   wait_for_active_shards?: <<WaitForActiveShards>>
   wait_for_completion?: boolean
-  max_docs?: <<_long, long>>
+  max_docs?: <<long>>
   query?: <<QueryDslQueryContainer>>
   slice?: <<SlicedScroll>>
 }
@@ -95,13 +95,13 @@ interface DeleteByQueryRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface DeleteByQueryResponse {
-  batches?: <<_long, long>>
-  deleted?: <<_long, long>>
+  batches?: <<long>>
+  deleted?: <<long>>
   failures?: <<BulkIndexByScrollFailure>>[]
-  noops?: <<_long, long>>
-  requests_per_second?: <<_float, float>>
+  noops?: <<long>>
+  requests_per_second?: <<float>>
   retries?: <<Retries>>
-  slice_id?: <<_integer, integer>>
+  slice_id?: <<integer>>
   task?: <<TaskId>>
   throttled?: <<Duration>>
   throttled_millis?: <<DurationValue>><<<UnitMillis>>>
@@ -109,8 +109,8 @@ interface DeleteByQueryResponse {
   throttled_until_millis?: <<DurationValue>><<<UnitMillis>>>
   timed_out?: boolean
   took?: <<DurationValue>><<<UnitMillis>>>
-  total?: <<_long, long>>
-  version_conflicts?: <<_long, long>>
+  total?: <<long>>
+  version_conflicts?: <<long>>
 }
 
 [pass]

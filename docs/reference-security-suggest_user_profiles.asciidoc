@@ -50,7 +50,7 @@ Suggest a user profile. Get suggestions for user profiles that match specified s
 ++++
 interface SecuritySuggestUserProfilesRequest extends <<RequestBase>> {
   name?: string
-  size?: <<_long, long>>
+  size?: <<long>>
   data?: string | string[]
   hint?: SecuritySuggestUserProfilesHint
 }
@@ -68,7 +68,7 @@ interface SecuritySuggestUserProfilesRequest extends <<RequestBase>> {
 ++++
 interface SecuritySuggestUserProfilesResponse {
   total: SecuritySuggestUserProfilesTotalUserProfiles
-  took: <<_long, long>>
+  took: <<long>>
   profiles: SecurityUserProfile[]
 }
 
