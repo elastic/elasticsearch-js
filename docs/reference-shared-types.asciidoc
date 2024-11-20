@@ -5,6 +5,7 @@
 [discrete]
 === AcknowledgedResponseBase
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -21,6 +22,7 @@ interface AcknowledgedResponseBase {
 [discrete]
 === AggregateName
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -34,6 +36,7 @@ type AggregateName = string
 [discrete]
 === BulkIndexByScrollFailure
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -53,6 +56,7 @@ interface BulkIndexByScrollFailure {
 [discrete]
 === BulkStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -76,6 +80,7 @@ interface BulkStats {
 [discrete]
 === ByteSize
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -89,6 +94,7 @@ type ByteSize = number | string
 [discrete]
 === Bytes
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -102,6 +108,7 @@ type Bytes = 'b' | 'kb' | 'mb' | 'gb' | 'tb' | 'pb'
 [discrete]
 === CategoryId
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -115,6 +122,7 @@ type CategoryId = string
 [discrete]
 === ClusterAlias
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -128,6 +136,7 @@ type ClusterAlias = string
 [discrete]
 === ClusterDetails
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -148,6 +157,7 @@ interface ClusterDetails {
 [discrete]
 === ClusterInfoTarget
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -161,6 +171,7 @@ type ClusterInfoTarget = '_all' | 'http' | 'ingest' | 'thread_pool' | 'script'
 [discrete]
 === ClusterInfoTargets
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -174,6 +185,7 @@ type ClusterInfoTargets = <<ClusterInfoTarget>> | <<ClusterInfoTarget>>[]
 [discrete]
 === ClusterSearchStatus
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -187,6 +199,7 @@ type ClusterSearchStatus = 'running' | 'successful' | 'partial' | 'skipped' | 'f
 [discrete]
 === ClusterStatistics
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -208,6 +221,7 @@ interface ClusterStatistics {
 [discrete]
 === CompletionStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -227,6 +241,7 @@ interface CompletionStats {
 [discrete]
 === Conflicts
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -240,6 +255,7 @@ type Conflicts = 'abort' | 'proceed'
 [discrete]
 === CoordsGeoBounds
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -258,6 +274,7 @@ interface CoordsGeoBounds {
 [discrete]
 === DFIIndependenceMeasure
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -271,6 +288,7 @@ type DFIIndependenceMeasure = 'standardized' | 'saturated' | 'chisquared'
 [discrete]
 === DFRAfterEffect
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -284,6 +302,7 @@ type DFRAfterEffect = 'no' | 'b' | 'l'
 [discrete]
 === DFRBasicModel
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -297,6 +316,7 @@ type DFRBasicModel = 'be' | 'd' | 'g' | 'if' | 'in' | 'ine' | 'p'
 [discrete]
 === DataStreamName
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -310,6 +330,7 @@ type DataStreamName = string
 [discrete]
 === DataStreamNames
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -323,6 +344,7 @@ type DataStreamNames = <<DataStreamName>> | <<DataStreamName>>[]
 [discrete]
 === DateFormat
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -336,6 +358,7 @@ type DateFormat = string
 [discrete]
 === DateMath
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -349,6 +372,7 @@ type DateMath = string | Date
 [discrete]
 === DateTime
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -362,6 +386,7 @@ type DateTime = string | <<EpochTime>><<<UnitMillis>>> | Date
 [discrete]
 === Distance
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -375,6 +400,7 @@ type Distance = string
 [discrete]
 === DistanceUnit
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -388,6 +414,7 @@ type DistanceUnit = 'in' | 'ft' | 'yd' | 'mi' | 'nmi' | 'km' | 'm' | 'cm' | 'mm'
 [discrete]
 === DocStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -406,6 +433,7 @@ interface DocStats {
 [discrete]
 === Duration
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -419,6 +447,7 @@ type Duration = string | -1 | 0
 [discrete]
 === DurationLarge
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -432,6 +461,7 @@ type DurationLarge = string
 [discrete]
 === DurationValue
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -445,6 +475,7 @@ type DurationValue<Unit = unknown> = Unit
 [discrete]
 === ElasticsearchVersionInfo
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -468,6 +499,7 @@ interface ElasticsearchVersionInfo {
 [discrete]
 === ElasticsearchVersionMinInfo
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -486,6 +518,7 @@ interface ElasticsearchVersionMinInfo {
 [discrete]
 === EmptyObject
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -500,6 +533,7 @@ interface EmptyObject {
 [discrete]
 === EpochTime
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -513,6 +547,7 @@ type EpochTime<Unit = unknown> = Unit
 [discrete]
 === ErrorCause
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -535,6 +570,7 @@ export type <<ErrorCause>> = ErrorCauseKeys
 [discrete]
 === ErrorResponseBase
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -551,6 +587,7 @@ interface ErrorResponseBase {
 [discrete]
 === EsqlColumns
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -564,6 +601,7 @@ type EsqlColumns = ArrayBuffer
 [discrete]
 === ExpandWildcard
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -577,6 +615,7 @@ type ExpandWildcard = 'all' | 'open' | 'closed' | 'hidden' | 'none'
 [discrete]
 === ExpandWildcards
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -590,6 +629,7 @@ type ExpandWildcards = <<ExpandWildcard>> | <<ExpandWildcard>>[]
 [discrete]
 === Field
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -603,6 +643,7 @@ type Field = string
 [discrete]
 === FieldMemoryUsage
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -619,6 +660,7 @@ interface FieldMemoryUsage {
 [discrete]
 === FieldSizeUsage
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -635,6 +677,7 @@ interface FieldSizeUsage {
 [discrete]
 === FieldSort
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -656,6 +699,7 @@ interface FieldSort {
 [discrete]
 === FieldSortNumericType
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -669,6 +713,7 @@ type FieldSortNumericType = 'number' | 'number' | 'date' | 'date_nanos'
 [discrete]
 === FieldValue
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -682,6 +727,7 @@ type FieldValue = number | number | string | boolean | null | any
 [discrete]
 === FielddataStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -700,6 +746,7 @@ interface FielddataStats {
 [discrete]
 === Fields
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -713,6 +760,7 @@ type Fields = <<Field>> | <<Field>>[]
 [discrete]
 === FlushStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -731,6 +779,7 @@ interface FlushStats {
 [discrete]
 === Fuzziness
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -744,6 +793,7 @@ type Fuzziness = string | number
 [discrete]
 === GeoBounds
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -757,6 +807,7 @@ type GeoBounds = <<CoordsGeoBounds>> | <<TopLeftBottomRightGeoBounds>> | <<TopRi
 [discrete]
 === GeoDistanceSort
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -779,6 +830,7 @@ export type <<GeoDistanceSort>> = GeoDistanceSortKeys
 [discrete]
 === GeoDistanceType
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -792,6 +844,7 @@ type GeoDistanceType = 'arc' | 'plane'
 [discrete]
 === GeoHash
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -805,6 +858,7 @@ type GeoHash = string
 [discrete]
 === GeoHashLocation
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -820,6 +874,7 @@ interface GeoHashLocation {
 [discrete]
 === GeoHashPrecision
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -833,6 +888,7 @@ type GeoHashPrecision = number | string
 [discrete]
 === GeoHexCell
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -846,6 +902,7 @@ type GeoHexCell = string
 [discrete]
 === GeoLine
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -864,6 +921,7 @@ interface GeoLine {
 [discrete]
 === GeoLocation
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -877,6 +935,7 @@ type GeoLocation = <<LatLonGeoLocation>> | <<GeoHashLocation>> | number[] | stri
 [discrete]
 === GeoShape
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -890,6 +949,7 @@ type GeoShape = any
 [discrete]
 === GeoShapeRelation
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -903,6 +963,7 @@ type GeoShapeRelation = 'intersects' | 'disjoint' | 'within' | 'contains'
 [discrete]
 === GeoTile
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -916,6 +977,7 @@ type GeoTile = string
 [discrete]
 === GeoTilePrecision
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -929,6 +991,7 @@ type GeoTilePrecision = number
 [discrete]
 === GetStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -953,6 +1016,7 @@ interface GetStats {
 [discrete]
 === GrokPattern
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -966,6 +1030,7 @@ type GrokPattern = string
 [discrete]
 === HealthStatus
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -979,6 +1044,7 @@ type HealthStatus = 'green' | 'GREEN' | 'yellow' | 'YELLOW' | 'red' | 'RED'
 [discrete]
 === Host
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -992,6 +1058,7 @@ type Host = string
 [discrete]
 === HttpHeaders
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1005,6 +1072,7 @@ type HttpHeaders = Record<string, string | string[]>
 [discrete]
 === IBDistribution
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1018,6 +1086,7 @@ type IBDistribution = 'll' | 'spl'
 [discrete]
 === IBLambda
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1031,6 +1100,7 @@ type IBLambda = 'df' | 'ttf'
 [discrete]
 === Id
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1044,6 +1114,7 @@ type Id = string
 [discrete]
 === Ids
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1057,6 +1128,7 @@ type Ids = <<Id>> | <<Id>>[]
 [discrete]
 === IndexAlias
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1070,6 +1142,7 @@ type IndexAlias = string
 [discrete]
 === IndexName
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1083,6 +1156,7 @@ type IndexName = string
 [discrete]
 === IndexPattern
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1096,6 +1170,7 @@ type IndexPattern = string
 [discrete]
 === IndexPatterns
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1109,6 +1184,7 @@ type IndexPatterns = <<IndexPattern>>[]
 [discrete]
 === IndexingStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1138,6 +1214,7 @@ interface IndexingStats {
 [discrete]
 === Indices
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1151,6 +1228,7 @@ type Indices = <<IndexName>> | <<IndexName>>[]
 [discrete]
 === IndicesOptions
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1173,6 +1251,7 @@ interface IndicesOptions {
 [discrete]
 === IndicesResponseBase
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1188,6 +1267,7 @@ interface IndicesResponseBase extends <<AcknowledgedResponseBase>> {
 [discrete]
 === InlineGet
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1210,6 +1290,7 @@ export type <<InlineGet>><TDocument = unknown> = InlineGetKeys<TDocument>
 [discrete]
 === Ip
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1223,6 +1304,7 @@ type Ip = string
 [discrete]
 === KnnQuery
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1251,6 +1333,7 @@ interface KnnQuery extends QueryDslQueryBase {
 [discrete]
 === KnnRetriever
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1277,6 +1360,7 @@ interface KnnRetriever extends <<RetrieverBase>> {
 [discrete]
 === KnnSearch
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1309,6 +1393,7 @@ interface KnnSearch {
 [discrete]
 === LatLonGeoLocation
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1327,6 +1412,7 @@ interface LatLonGeoLocation {
 [discrete]
 === Level
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1340,6 +1426,7 @@ type Level = 'cluster' | 'indices' | 'shards'
 [discrete]
 === LifecycleOperationMode
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1353,6 +1440,7 @@ type LifecycleOperationMode = 'RUNNING' | 'STOPPING' | 'STOPPED'
 [discrete]
 === MapboxVectorTiles
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1366,6 +1454,7 @@ type MapboxVectorTiles = ArrayBuffer
 [discrete]
 === MergesStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1396,6 +1485,7 @@ interface MergesStats {
 [discrete]
 === Metadata
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1409,6 +1499,7 @@ type Metadata = Record<string, any>
 [discrete]
 === Metrics
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1422,6 +1513,7 @@ type Metrics = string | string[]
 [discrete]
 === MinimumShouldMatch
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1435,6 +1527,7 @@ type MinimumShouldMatch = number | string
 [discrete]
 === MultiTermQueryRewrite
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1448,6 +1541,7 @@ type MultiTermQueryRewrite = string
 [discrete]
 === Name
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1461,6 +1555,7 @@ type Name = string
 [discrete]
 === Names
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1474,6 +1569,7 @@ type Names = <<Name>> | <<Name>>[]
 [discrete]
 === Namespace
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1487,6 +1583,7 @@ type Namespace = string
 [discrete]
 === NestedSortValue
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1505,6 +1602,7 @@ interface NestedSortValue {
 [discrete]
 === NodeAttributes
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1529,6 +1627,7 @@ interface NodeAttributes {
 [discrete]
 === NodeId
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1542,6 +1641,7 @@ type NodeId = string
 [discrete]
 === NodeIds
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1555,6 +1655,7 @@ type NodeIds = <<NodeId>> | <<NodeId>>[]
 [discrete]
 === NodeName
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1568,6 +1669,7 @@ type NodeName = string
 [discrete]
 === NodeRole
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1581,6 +1683,7 @@ type NodeRole = 'master' | 'data' | 'data_cold' | 'data_content' | 'data_frozen'
 [discrete]
 === NodeRoles
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1594,6 +1697,7 @@ type NodeRoles = <<NodeRole>>[]
 [discrete]
 === NodeShard
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1618,6 +1722,7 @@ interface NodeShard {
 [discrete]
 === NodeStatistics
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1639,6 +1744,7 @@ interface NodeStatistics {
 [discrete]
 === Normalization
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1652,6 +1758,7 @@ type Normalization = 'no' | 'h1' | 'h2' | 'h3' | 'z'
 [discrete]
 === OpType
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1665,6 +1772,7 @@ type OpType = 'index' | 'create'
 [discrete]
 === Password
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1678,6 +1786,7 @@ type Password = string
 [discrete]
 === Percentage
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1691,6 +1800,7 @@ type Percentage = string | number
 [discrete]
 === PipelineName
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1704,6 +1814,7 @@ type PipelineName = string
 [discrete]
 === PluginStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1727,6 +1838,7 @@ interface PluginStats {
 [discrete]
 === PropertyName
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1740,6 +1852,7 @@ type PropertyName = string
 [discrete]
 === QueryCacheStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1770,6 +1883,7 @@ interface QueryCacheStats {
 [discrete]
 === QueryVector
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1783,6 +1897,7 @@ type QueryVector = number[]
 [discrete]
 === QueryVectorBuilder
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1798,6 +1913,7 @@ interface QueryVectorBuilder {
 [discrete]
 === RRFRetriever
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1818,6 +1934,7 @@ interface RRFRetriever extends <<RetrieverBase>> {
 [discrete]
 === RankBase
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1832,6 +1949,7 @@ interface RankBase {
 [discrete]
 === RankContainer
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1848,6 +1966,7 @@ interface RankContainer {
 [discrete]
 === RecoveryStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1866,6 +1985,7 @@ interface RecoveryStats {
 [discrete]
 === Refresh
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1879,6 +1999,7 @@ type Refresh = boolean | 'true' | 'false' | 'wait_for'
 [discrete]
 === RefreshStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1899,6 +2020,7 @@ interface RefreshStats {
 [discrete]
 === RelationName
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1912,6 +2034,7 @@ type RelationName = string
 [discrete]
 === RelocationFailureInfo
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1927,6 +2050,7 @@ interface RelocationFailureInfo {
 [discrete]
 === RequestBase
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1941,6 +2065,7 @@ interface RequestBase extends <<SpecUtilsCommonQueryParameters>> {
 [discrete]
 === RequestCacheStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1960,6 +2085,7 @@ interface RequestCacheStats {
 [discrete]
 === Result
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1973,6 +2099,7 @@ type Result = 'created' | 'updated' | 'deleted' | 'not_found' | 'noop'
 [discrete]
 === Retries
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -1989,6 +2116,7 @@ interface Retries {
 [discrete]
 === RetrieverBase
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2007,6 +2135,7 @@ interface RetrieverBase {
 [discrete]
 === RetrieverContainer
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2029,6 +2158,7 @@ interface RetrieverContainer {
 [discrete]
 === Routing
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2042,6 +2172,7 @@ type Routing = string
 [discrete]
 === RrfRank
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2060,6 +2191,7 @@ interface RrfRank {
 [discrete]
 === ScalarValue
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2073,6 +2205,7 @@ type ScalarValue = number | number | string | boolean | null
 [discrete]
 === ScoreSort
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2088,6 +2221,7 @@ interface ScoreSort {
 [discrete]
 === Script
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2111,6 +2245,7 @@ interface Script {
 [discrete]
 === ScriptField
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2127,6 +2262,7 @@ interface ScriptField {
 [discrete]
 === ScriptLanguage
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2140,6 +2276,7 @@ type ScriptLanguage = 'painless' | 'expression' | 'mustache' | 'java' | string
 [discrete]
 === ScriptSort
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2159,6 +2296,7 @@ interface ScriptSort {
 [discrete]
 === ScriptSortType
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2172,6 +2310,7 @@ type ScriptSortType = 'string' | 'number' | 'version'
 [discrete]
 === ScriptTransform
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2190,6 +2329,7 @@ interface ScriptTransform {
 [discrete]
 === ScrollId
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2203,6 +2343,7 @@ type ScrollId = string
 [discrete]
 === ScrollIds
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2216,6 +2357,7 @@ type ScrollIds = <<ScrollId>> | <<ScrollId>>[]
 [discrete]
 === SearchStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2248,6 +2390,7 @@ interface SearchStats {
 [discrete]
 === SearchTransform
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2264,6 +2407,7 @@ interface SearchTransform {
 [discrete]
 === SearchType
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2277,6 +2421,7 @@ type SearchType = 'query_then_fetch' | 'dfs_query_then_fetch'
 [discrete]
 === SegmentsStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2337,6 +2482,7 @@ interface SegmentsStats {
 [discrete]
 === SequenceNumber
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2350,6 +2496,7 @@ type SequenceNumber = number
 [discrete]
 === Service
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2363,6 +2510,7 @@ type Service = string
 [discrete]
 === ShardFailure
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2382,6 +2530,7 @@ interface ShardFailure {
 [discrete]
 === ShardStatistics
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2403,6 +2552,7 @@ interface ShardStatistics {
 [discrete]
 === ShardsOperationResponseBase
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2418,6 +2568,7 @@ interface ShardsOperationResponseBase {
 [discrete]
 === SlicedScroll
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2435,6 +2586,7 @@ interface SlicedScroll {
 [discrete]
 === Slices
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2448,6 +2600,7 @@ type Slices = number | <<SlicesCalculation>>
 [discrete]
 === SlicesCalculation
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2461,6 +2614,7 @@ type SlicesCalculation = 'auto'
 [discrete]
 === Sort
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2474,6 +2628,7 @@ type Sort = <<SortCombinations>> | <<SortCombinations>>[]
 [discrete]
 === SortCombinations
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2487,6 +2642,7 @@ type SortCombinations = <<Field>> | <<SortOptions>>
 [discrete]
 === SortMode
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2500,6 +2656,7 @@ type SortMode = 'min' | 'max' | 'sum' | 'avg' | 'median'
 [discrete]
 === SortOptions
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2520,6 +2677,7 @@ export type <<SortOptions>> = SortOptionsKeys
 [discrete]
 === SortOrder
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2533,6 +2691,7 @@ type SortOrder = 'asc' | 'desc'
 [discrete]
 === SortResults
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2546,6 +2705,7 @@ type SortResults = <<FieldValue>>[]
 [discrete]
 === StandardRetriever
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2570,6 +2730,7 @@ interface StandardRetriever extends <<RetrieverBase>> {
 [discrete]
 === StoreStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2596,6 +2757,7 @@ interface StoreStats {
 [discrete]
 === StoredScript
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2615,6 +2777,7 @@ interface StoredScript {
 [discrete]
 === SuggestMode
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2628,6 +2791,7 @@ type SuggestMode = 'missing' | 'popular' | 'always'
 [discrete]
 === SuggestionName
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2641,6 +2805,7 @@ type SuggestionName = string
 [discrete]
 === TaskFailure
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2659,6 +2824,7 @@ interface TaskFailure {
 [discrete]
 === TaskId
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2672,6 +2838,7 @@ type TaskId = string | number
 [discrete]
 === TextEmbedding
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2688,6 +2855,7 @@ interface TextEmbedding {
 [discrete]
 === TextSimilarityReranker
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2712,6 +2880,7 @@ interface TextSimilarityReranker extends <<RetrieverBase>> {
 [discrete]
 === ThreadType
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2725,6 +2894,7 @@ type ThreadType = 'cpu' | 'wait' | 'block' | 'gpu' | 'mem'
 [discrete]
 === TimeOfDay
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2738,6 +2908,7 @@ type TimeOfDay = string
 [discrete]
 === TimeUnit
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2751,6 +2922,7 @@ type TimeUnit = 'nanos' | 'micros' | 'ms' | 's' | 'm' | 'h' | 'd'
 [discrete]
 === TimeZone
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2764,6 +2936,7 @@ type TimeZone = string
 [discrete]
 === TopLeftBottomRightGeoBounds
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2780,6 +2953,7 @@ interface TopLeftBottomRightGeoBounds {
 [discrete]
 === TopRightBottomLeftGeoBounds
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2796,6 +2970,7 @@ interface TopRightBottomLeftGeoBounds {
 [discrete]
 === TransformContainer
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2813,6 +2988,7 @@ interface TransformContainer {
 [discrete]
 === TranslogStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2834,6 +3010,7 @@ interface TranslogStats {
 [discrete]
 === TransportAddress
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2847,6 +3024,7 @@ type TransportAddress = string
 [discrete]
 === UnitFloatMillis
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2860,6 +3038,7 @@ type UnitFloatMillis = number
 [discrete]
 === UnitMillis
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2873,6 +3052,7 @@ type UnitMillis = number
 [discrete]
 === UnitNanos
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2886,6 +3066,7 @@ type UnitNanos = number
 [discrete]
 === UnitSeconds
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2899,6 +3080,7 @@ type UnitSeconds = number
 [discrete]
 === Username
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2912,6 +3094,7 @@ type Username = string
 [discrete]
 === Uuid
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2925,6 +3108,7 @@ type Uuid = string
 [discrete]
 === VersionNumber
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2938,6 +3122,7 @@ type VersionNumber = number
 [discrete]
 === VersionString
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2951,6 +3136,7 @@ type VersionString = string
 [discrete]
 === VersionType
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2964,6 +3150,7 @@ type VersionType = 'internal' | 'external' | 'external_gte' | 'force'
 [discrete]
 === WaitForActiveShardOptions
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2977,6 +3164,7 @@ type WaitForActiveShardOptions = 'all' | 'index-setting'
 [discrete]
 === WaitForActiveShards
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -2990,6 +3178,7 @@ type WaitForActiveShards = number | <<WaitForActiveShardOptions>>
 [discrete]
 === WaitForEvents
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3003,6 +3192,7 @@ type WaitForEvents = 'immediate' | 'urgent' | 'high' | 'normal' | 'low' | 'langu
 [discrete]
 === WarmerStats
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3021,6 +3211,7 @@ interface WarmerStats {
 [discrete]
 === WktGeoBounds
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3036,6 +3227,7 @@ interface WktGeoBounds {
 [discrete]
 === WriteResponseBase
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3058,6 +3250,7 @@ interface WriteResponseBase {
 [discrete]
 === byte
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3071,6 +3264,7 @@ type number = number
 [discrete]
 === double
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3084,6 +3278,7 @@ type number = number
 [discrete]
 === float
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3097,6 +3292,7 @@ type number = number
 [discrete]
 === integer
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3110,6 +3306,7 @@ type number = number
 [discrete]
 === long
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3123,6 +3320,7 @@ type number = number
 [discrete]
 === short
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3136,6 +3334,7 @@ type number = number
 [discrete]
 === uint
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3149,6 +3348,7 @@ type number = number
 [discrete]
 === ulong
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3162,6 +3362,7 @@ type number = number
 [discrete]
 === SpecUtilsBaseNode
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3182,6 +3383,7 @@ interface SpecUtilsBaseNode {
 [discrete]
 === SpecUtilsNullValue
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3195,6 +3397,7 @@ type SpecUtilsNullValue = null
 [discrete]
 === SpecUtilsPipeSeparatedFlags
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3208,6 +3411,7 @@ type SpecUtilsPipeSeparatedFlags<T = unknown> = T | string
 [discrete]
 === SpecUtilsStringified
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3221,6 +3425,7 @@ type SpecUtilsStringified<T = unknown> = T | string
 [discrete]
 === SpecUtilsVoid
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3234,6 +3439,7 @@ type SpecUtilsStringified<T = unknown> = T | string
 [discrete]
 === SpecUtilsWithNullValue
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3247,6 +3453,7 @@ type SpecUtilsWithNullValue<T = unknown> = T | <<SpecUtilsNullValue>>
 [discrete]
 === SpecUtilsAdditionalProperties
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3261,6 +3468,7 @@ interface SpecUtilsAdditionalProperties<TKey = unknown, TValue = unknown> {
 [discrete]
 === SpecUtilsAdditionalProperty
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3275,6 +3483,7 @@ interface SpecUtilsAdditionalProperty<TKey = unknown, TValue = unknown> {
 [discrete]
 === SpecUtilsCommonQueryParameters
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3297,6 +3506,7 @@ interface SpecUtilsCommonQueryParameters {
 [discrete]
 === SpecUtilsCommonCatQueryParameters
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
@@ -3325,6 +3535,7 @@ interface SpecUtilsCommonCatQueryParameters {
 [discrete]
 === SpecUtilsOverloadOf
 
+SHARED TYPE!
 [pass]
 ++++
 <pre>
