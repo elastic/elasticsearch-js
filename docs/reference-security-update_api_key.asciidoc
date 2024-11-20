@@ -50,7 +50,7 @@ Update an API key. Updates attributes of an existing API key. Users can only upd
 ++++
 interface SecurityUpdateApiKeyRequest extends <<RequestBase>> {
   id: <<Id>>
-  role_descriptors?: Record<string, SecurityRoleDescriptor>
+  role_descriptors?: Record<string, <<SecurityRoleDescriptor>>>
   metadata?: <<Metadata>>
   expiration?: <<Duration>>
 }

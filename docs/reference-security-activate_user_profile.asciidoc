@@ -50,7 +50,7 @@ Activate a user profile. Create or update a user profile on behalf of another us
 ++++
 interface SecurityActivateUserProfileRequest extends <<RequestBase>> {
   access_token?: string
-  grant_type: SecurityGrantType
+  grant_type: <<SecurityGrantType>>
   password?: string
   username?: string
 }
@@ -66,7 +66,7 @@ interface SecurityActivateUserProfileRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type SecurityActivateUserProfileResponse = SecurityUserProfileWithMetadata
+type SecurityActivateUserProfileResponse = <<SecurityUserProfileWithMetadata>>
 
 [pass]
 ++++

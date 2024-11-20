@@ -68,7 +68,7 @@ interface IndicesGetDataStreamRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface IndicesGetDataStreamResponse {
-  data_streams: IndicesDataStream[]
+  data_streams: <<IndicesDataStream>>[]
 }
 
 [pass]

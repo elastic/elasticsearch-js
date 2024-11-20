@@ -58,11 +58,11 @@ interface ReindexRequest extends <<RequestBase>> {
   wait_for_completion?: boolean
   require_alias?: boolean
   conflicts?: <<Conflicts>>
-  dest: ReindexDestination
+  dest: <<ReindexDestination>>
   max_docs?: <<long>>
   script?: <<Script>> | string
   size?: <<long>>
-  source: ReindexSource
+  source: <<ReindexSource>>
 }
 
 [pass]

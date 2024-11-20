@@ -72,7 +72,7 @@ interface MlGetOverallBucketsRequest extends <<RequestBase>> {
 ++++
 interface MlGetOverallBucketsResponse {
   count: <<long>>
-  overall_buckets: MlOverallBucket[]
+  overall_buckets: <<MlOverallBucket>>[]
 }
 
 [pass]

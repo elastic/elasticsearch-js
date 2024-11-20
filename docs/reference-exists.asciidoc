@@ -55,7 +55,7 @@ interface ExistsRequest extends <<RequestBase>> {
   realtime?: boolean
   refresh?: boolean
   routing?: <<Routing>>
-  _source?: SearchSourceConfigParam
+  _source?: <<SearchSourceConfigParam>>
   _source_excludes?: <<Fields>>
   _source_includes?: <<Fields>>
   stored_fields?: <<Fields>>

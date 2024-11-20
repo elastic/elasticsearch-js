@@ -53,9 +53,9 @@ interface IndicesCreateRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
   wait_for_active_shards?: <<WaitForActiveShards>>
-  aliases?: Record<<<Name>>, IndicesAlias>
+  aliases?: Record<<<Name>>, <<IndicesAlias>>>
   mappings?: <<MappingTypeMapping>>
-  settings?: IndicesIndexSettings
+  settings?: <<IndicesIndexSettings>>
 }
 
 [pass]

@@ -48,7 +48,7 @@ Returns a list of plugins running on each node of a cluster. IMPORTANT: cat APIs
 ++++
 <pre>
 ++++
-interface CatPluginsRequest extends CatCatRequestBase {
+interface CatPluginsRequest extends <<CatCatRequestBase>> {
 }
 
 [pass]

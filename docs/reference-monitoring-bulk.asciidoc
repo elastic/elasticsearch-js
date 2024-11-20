@@ -53,7 +53,7 @@ interface MonitoringBulkRequest<TDocument = unknown, TPartialDocument = unknown>
   system_id: string
   system_api_version: string
   interval: <<Duration>>
-  operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
+  operations?: (<<BulkOperationContainer>> | <<BulkUpdateAction>><TDocument, TPartialDocument> | TDocument)[]
 }
 
 [pass]

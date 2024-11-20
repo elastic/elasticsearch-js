@@ -65,7 +65,7 @@ interface EqlGetRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type EqlGetResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEvent>
+type EqlGetResponse<TEvent = unknown> = <<EqlEqlSearchResponseBase>><TEvent>
 
 [pass]
 ++++

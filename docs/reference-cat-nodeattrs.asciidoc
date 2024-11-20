@@ -48,7 +48,7 @@ Returns information about custom node attributes. IMPORTANT: cat APIs are only i
 ++++
 <pre>
 ++++
-interface CatNodeattrsRequest extends CatCatRequestBase {
+interface CatNodeattrsRequest extends <<CatCatRequestBase>> {
 }
 
 [pass]

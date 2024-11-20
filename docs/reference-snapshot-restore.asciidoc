@@ -58,7 +58,7 @@ interface SnapshotRestoreRequest extends <<RequestBase>> {
   ignore_unavailable?: boolean
   include_aliases?: boolean
   include_global_state?: boolean
-  index_settings?: IndicesIndexSettings
+  index_settings?: <<IndicesIndexSettings>>
   indices?: <<Indices>>
   partial?: boolean
   rename_pattern?: string

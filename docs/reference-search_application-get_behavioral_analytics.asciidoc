@@ -63,7 +63,7 @@ interface SearchApplicationGetBehavioralAnalyticsRequest extends <<RequestBase>>
 ++++
 <pre>
 ++++
-type SearchApplicationGetBehavioralAnalyticsResponse = Record<<<Name>>, SearchApplicationAnalyticsCollection>
+type SearchApplicationGetBehavioralAnalyticsResponse = Record<<<Name>>, <<SearchApplicationAnalyticsCollection>>>
 
 [pass]
 ++++

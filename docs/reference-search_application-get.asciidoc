@@ -63,7 +63,7 @@ interface SearchApplicationGetRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type SearchApplicationGetResponse = SearchApplicationSearchApplication
+type SearchApplicationGetResponse = <<SearchApplicationSearchApplication>>
 
 [pass]
 ++++

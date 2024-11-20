@@ -55,7 +55,7 @@ interface MsearchTemplateRequest extends <<RequestBase>> {
   search_type?: <<SearchType>>
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
-  search_templates?: MsearchTemplateRequestItem[]
+  search_templates?: <<MsearchTemplateRequestItem>>[]
 }
 
 [pass]
@@ -69,7 +69,7 @@ interface MsearchTemplateRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = MsearchMultiSearchResult<TDocument, TAggregations>
+type MsearchTemplateResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = <<MsearchMultiSearchResult>><TDocument, TAggregations>
 
 [pass]
 ++++

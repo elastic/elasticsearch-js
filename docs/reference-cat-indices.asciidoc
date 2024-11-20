@@ -48,7 +48,7 @@ Get index information. Returns high-level information about indices in a cluster
 ++++
 <pre>
 ++++
-interface CatIndicesRequest extends CatCatRequestBase {
+interface CatIndicesRequest extends <<CatCatRequestBase>> {
   index?: <<Indices>>
   bytes?: <<Bytes>>
   expand_wildcards?: <<ExpandWildcards>>

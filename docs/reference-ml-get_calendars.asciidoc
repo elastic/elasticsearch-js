@@ -52,7 +52,7 @@ interface MlGetCalendarsRequest extends <<RequestBase>> {
   calendar_id?: <<Id>>
   from?: <<integer>>
   size?: <<integer>>
-  page?: MlPage
+  page?: <<MlPage>>
 }
 
 [pass]

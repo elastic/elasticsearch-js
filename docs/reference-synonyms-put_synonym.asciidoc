@@ -50,7 +50,7 @@ Creates or updates a synonym set.
 ++++
 interface SynonymsPutSynonymRequest extends <<RequestBase>> {
   id: <<Id>>
-  synonyms_set: SynonymsSynonymRule | SynonymsSynonymRule[]
+  synonyms_set: <<SynonymsSynonymRule>> | <<SynonymsSynonymRule>>[]
 }
 
 [pass]

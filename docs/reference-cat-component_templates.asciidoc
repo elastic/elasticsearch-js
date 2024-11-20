@@ -48,7 +48,7 @@ Get component templates. Returns information about component templates in a clus
 ++++
 <pre>
 ++++
-interface CatComponentTemplatesRequest extends CatCatRequestBase {
+interface CatComponentTemplatesRequest extends <<CatCatRequestBase>> {
   name?: string
 }
 

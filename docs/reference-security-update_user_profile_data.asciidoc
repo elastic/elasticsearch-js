@@ -49,7 +49,7 @@ Update user profile data. Update specific data for the user profile that is asso
 <pre>
 ++++
 interface SecurityUpdateUserProfileDataRequest extends <<RequestBase>> {
-  uid: SecurityUserProfileId
+  uid: <<SecurityUserProfileId>>
   if_seq_no?: <<SequenceNumber>>
   if_primary_term?: <<long>>
   refresh?: <<Refresh>>

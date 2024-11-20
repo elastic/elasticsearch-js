@@ -63,7 +63,7 @@ interface GetScriptContextRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface GetScriptContextResponse {
-  contexts: GetScriptContextContext[]
+  contexts: <<GetScriptContextContext>>[]
 }
 
 [pass]

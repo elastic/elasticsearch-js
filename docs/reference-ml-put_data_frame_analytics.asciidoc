@@ -51,13 +51,13 @@ Create a data frame analytics job. This API creates a data frame analytics job t
 interface MlPutDataFrameAnalyticsRequest extends <<RequestBase>> {
   id: <<Id>>
   allow_lazy_start?: boolean
-  analysis: MlDataframeAnalysisContainer
-  analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
+  analysis: <<MlDataframeAnalysisContainer>>
+  analyzed_fields?: <<MlDataframeAnalysisAnalyzedFields>> | string[]
   description?: string
-  dest: MlDataframeAnalyticsDestination
+  dest: <<MlDataframeAnalyticsDestination>>
   max_num_threads?: <<integer>>
   model_memory_limit?: string
-  source: MlDataframeAnalyticsSource
+  source: <<MlDataframeAnalyticsSource>>
   headers?: <<HttpHeaders>>
   version?: <<VersionString>>
 }
@@ -74,17 +74,17 @@ interface MlPutDataFrameAnalyticsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlPutDataFrameAnalyticsResponse {
-  authorization?: MlDataframeAnalyticsAuthorization
+  authorization?: <<MlDataframeAnalyticsAuthorization>>
   allow_lazy_start: boolean
-  analysis: MlDataframeAnalysisContainer
-  analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
+  analysis: <<MlDataframeAnalysisContainer>>
+  analyzed_fields?: <<MlDataframeAnalysisAnalyzedFields>> | string[]
   create_time: <<EpochTime>><<<UnitMillis>>>
   description?: string
-  dest: MlDataframeAnalyticsDestination
+  dest: <<MlDataframeAnalyticsDestination>>
   id: <<Id>>
   max_num_threads: <<integer>>
   model_memory_limit: string
-  source: MlDataframeAnalyticsSource
+  source: <<MlDataframeAnalyticsSource>>
   version: <<VersionString>>
 }
 

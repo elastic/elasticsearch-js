@@ -64,7 +64,7 @@ interface CcrFollowStatsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface CcrFollowStatsResponse {
-  indices: CcrFollowIndexStats[]
+  indices: <<CcrFollowIndexStats>>[]
 }
 
 [pass]

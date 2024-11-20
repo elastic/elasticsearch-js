@@ -48,7 +48,7 @@ Returns information about the shards in a cluster. For data streams, the API ret
 ++++
 <pre>
 ++++
-interface CatShardsRequest extends CatCatRequestBase {
+interface CatShardsRequest extends <<CatCatRequestBase>> {
   index?: <<Indices>>
   bytes?: <<Bytes>>
 }

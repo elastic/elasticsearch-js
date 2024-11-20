@@ -65,7 +65,7 @@ interface IngestGetPipelineRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type IngestGetPipelineResponse = Record<string, IngestPipeline>
+type IngestGetPipelineResponse = Record<string, <<IngestPipeline>>>
 
 [pass]
 ++++

@@ -64,7 +64,7 @@ interface EnrichGetPolicyRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface EnrichGetPolicyResponse {
-  policies: EnrichSummary[]
+  policies: <<EnrichSummary>>[]
 }
 
 [pass]

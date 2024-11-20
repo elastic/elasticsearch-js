@@ -64,7 +64,7 @@ interface QueryRulesGetRuleRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type QueryRulesGetRuleResponse = QueryRulesQueryRule
+type QueryRulesGetRuleResponse = <<QueryRulesQueryRule>>
 
 [pass]
 ++++

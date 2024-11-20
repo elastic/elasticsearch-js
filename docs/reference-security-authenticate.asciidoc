@@ -63,11 +63,11 @@ interface SecurityAuthenticateRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SecurityAuthenticateResponse {
-  api_key?: SecurityApiKey
-  authentication_realm: SecurityRealmInfo
+  api_key?: <<SecurityApiKey>>
+  authentication_realm: <<SecurityRealmInfo>>
   email?: string | null
   full_name?: <<Name>> | null
-  lookup_realm: SecurityRealmInfo
+  lookup_realm: <<SecurityRealmInfo>>
   metadata: <<Metadata>>
   roles: string[]
   username: <<Username>>

@@ -52,7 +52,7 @@ interface IngestSimulateRequest extends <<RequestBase>> {
   id?: <<Id>>
   verbose?: boolean
   docs: IngestSimulateDocument[]
-  pipeline?: IngestPipeline
+  pipeline?: <<IngestPipeline>>
 }
 
 [pass]

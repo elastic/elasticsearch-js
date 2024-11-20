@@ -50,8 +50,8 @@ Updates the license for the cluster.
 ++++
 interface LicensePostRequest extends <<RequestBase>> {
   acknowledge?: boolean
-  license?: LicenseLicense
-  licenses?: LicenseLicense[]
+  license?: <<LicenseLicense>>
+  licenses?: <<LicenseLicense>>[]
 }
 
 [pass]
@@ -68,7 +68,7 @@ interface LicensePostRequest extends <<RequestBase>> {
 interface LicensePostResponse {
   acknowledge?: LicensePostAcknowledgement
   acknowledged: boolean
-  license_status: LicenseLicenseStatus
+  license_status: <<LicenseLicenseStatus>>
 }
 
 [pass]

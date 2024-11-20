@@ -54,7 +54,7 @@ interface MlGetTrainedModelsRequest extends <<RequestBase>> {
   decompress_definition?: boolean
   exclude_generated?: boolean
   from?: <<integer>>
-  include?: MlInclude
+  include?: <<MlInclude>>
   size?: <<integer>>
   tags?: string | string[]
 }
@@ -72,7 +72,7 @@ interface MlGetTrainedModelsRequest extends <<RequestBase>> {
 ++++
 interface MlGetTrainedModelsResponse {
   count: <<integer>>
-  trained_model_configs: MlTrainedModelConfig[]
+  trained_model_configs: <<MlTrainedModelConfig>>[]
 }
 
 [pass]

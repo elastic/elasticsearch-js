@@ -65,7 +65,7 @@ interface WatcherAckWatchRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface WatcherAckWatchResponse {
-  status: WatcherWatchStatus
+  status: <<WatcherWatchStatus>>
 }
 
 [pass]

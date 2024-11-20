@@ -55,11 +55,11 @@ interface MgetRequest extends <<RequestBase>> {
   realtime?: boolean
   refresh?: boolean
   routing?: <<Routing>>
-  _source?: SearchSourceConfigParam
+  _source?: <<SearchSourceConfigParam>>
   _source_excludes?: <<Fields>>
   _source_includes?: <<Fields>>
   stored_fields?: <<Fields>>
-  docs?: MgetOperation[]
+  docs?: <<MgetOperation>>[]
   ids?: <<Ids>>
 }
 
@@ -75,7 +75,7 @@ interface MgetRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MgetResponse<TDocument = unknown> {
-  docs: MgetResponseItem<TDocument>[]
+  docs: <<MgetResponseItem>><TDocument>[]
 }
 
 [pass]

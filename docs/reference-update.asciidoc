@@ -67,7 +67,7 @@ interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends
   doc_as_upsert?: boolean
   script?: <<Script>> | string
   scripted_upsert?: boolean
-  _source?: SearchSourceConfig
+  _source?: <<SearchSourceConfig>>
   upsert?: TDocument
 }
 
@@ -82,7 +82,7 @@ interface UpdateRequest<TDocument = unknown, TPartialDocument = unknown> extends
 ++++
 <pre>
 ++++
-type UpdateResponse<TDocument = unknown> = UpdateUpdateWriteResponseBase<TDocument>
+type UpdateResponse<TDocument = unknown> = <<UpdateUpdateWriteResponseBase>><TDocument>
 
 [pass]
 ++++

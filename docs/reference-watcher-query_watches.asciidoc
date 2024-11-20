@@ -69,7 +69,7 @@ interface WatcherQueryWatchesRequest extends <<RequestBase>> {
 ++++
 interface WatcherQueryWatchesResponse {
   count: <<integer>>
-  watches: WatcherQueryWatch[]
+  watches: <<WatcherQueryWatch>>[]
 }
 
 [pass]

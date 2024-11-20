@@ -58,7 +58,7 @@ interface MlGetBucketsRequest extends <<RequestBase>> {
   end?: <<DateTime>>
   exclude_interim?: boolean
   expand?: boolean
-  page?: MlPage
+  page?: <<MlPage>>
   sort?: <<Field>>
   start?: <<DateTime>>
 }
@@ -75,7 +75,7 @@ interface MlGetBucketsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetBucketsResponse {
-  buckets: MlBucketSummary[]
+  buckets: <<MlBucketSummary>>[]
   count: <<long>>
 }
 

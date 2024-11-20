@@ -48,11 +48,11 @@ Get datafeeds. Returns configuration and usage information about datafeeds. This
 ++++
 <pre>
 ++++
-interface CatMlDatafeedsRequest extends CatCatRequestBase {
+interface CatMlDatafeedsRequest extends <<CatCatRequestBase>> {
   datafeed_id?: <<Id>>
   allow_no_match?: boolean
-  h?: CatCatDatafeedColumns
-  s?: CatCatDatafeedColumns
+  h?: <<CatCatDatafeedColumns>>
+  s?: <<CatCatDatafeedColumns>>
   time?: <<TimeUnit>>
 }
 

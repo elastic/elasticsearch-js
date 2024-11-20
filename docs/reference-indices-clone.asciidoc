@@ -54,7 +54,7 @@ interface IndicesCloneRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
   wait_for_active_shards?: <<WaitForActiveShards>>
-  aliases?: Record<<<IndexName>>, IndicesAlias>
+  aliases?: Record<<<IndexName>>, <<IndicesAlias>>>
   settings?: Record<string, any>
 }
 

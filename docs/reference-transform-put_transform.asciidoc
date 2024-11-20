@@ -52,16 +52,16 @@ interface TransformPutTransformRequest extends <<RequestBase>> {
   transform_id: <<Id>>
   defer_validation?: boolean
   timeout?: <<Duration>>
-  dest: TransformDestination
+  dest: <<TransformDestination>>
   description?: string
   frequency?: <<Duration>>
-  latest?: TransformLatest
+  latest?: <<TransformLatest>>
   _meta?: <<Metadata>>
-  pivot?: TransformPivot
-  retention_policy?: TransformRetentionPolicyContainer
-  settings?: TransformSettings
-  source: TransformSource
-  sync?: TransformSyncContainer
+  pivot?: <<TransformPivot>>
+  retention_policy?: <<TransformRetentionPolicyContainer>>
+  settings?: <<TransformSettings>>
+  source: <<TransformSource>>
+  sync?: <<TransformSyncContainer>>
 }
 
 [pass]

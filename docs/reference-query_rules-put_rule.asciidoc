@@ -51,9 +51,9 @@ Creates or updates a query rule within a query ruleset.
 interface QueryRulesPutRuleRequest extends <<RequestBase>> {
   ruleset_id: <<Id>>
   rule_id: <<Id>>
-  type: QueryRulesQueryRuleType
-  criteria: QueryRulesQueryRuleCriteria | QueryRulesQueryRuleCriteria[]
-  actions: QueryRulesQueryRuleActions
+  type: <<QueryRulesQueryRuleType>>
+  criteria: <<QueryRulesQueryRuleCriteria>> | <<QueryRulesQueryRuleCriteria>>[]
+  actions: <<QueryRulesQueryRuleActions>>
   priority?: <<integer>>
 }
 

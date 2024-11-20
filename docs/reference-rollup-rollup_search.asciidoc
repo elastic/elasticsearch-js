@@ -75,7 +75,7 @@ interface RollupRollupSearchResponse<TDocument = unknown, TAggregations = Record
   timed_out: boolean
   terminated_early?: boolean
   _shards: <<ShardStatistics>>
-  hits: SearchHitsMetadata<TDocument>
+  hits: <<SearchHitsMetadata>><TDocument>
   aggregations?: TAggregations
 }
 

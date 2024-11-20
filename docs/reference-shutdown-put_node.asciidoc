@@ -52,7 +52,7 @@ interface ShutdownPutNodeRequest extends <<RequestBase>> {
   node_id: <<NodeId>>
   master_timeout?: <<TimeUnit>>
   timeout?: <<TimeUnit>>
-  type: ShutdownType
+  type: <<ShutdownType>>
   reason: string
   allocation_delay?: string
   target_node_name?: string

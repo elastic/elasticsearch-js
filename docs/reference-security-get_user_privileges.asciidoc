@@ -66,10 +66,10 @@ interface SecurityGetUserPrivilegesRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SecurityGetUserPrivilegesResponse {
-  applications: SecurityApplicationPrivileges[]
+  applications: <<SecurityApplicationPrivileges>>[]
   cluster: string[]
-  global: SecurityGlobalPrivilege[]
-  indices: SecurityUserIndicesPrivileges[]
+  global: <<SecurityGlobalPrivilege>>[]
+  indices: <<SecurityUserIndicesPrivileges>>[]
   run_as: string[]
 }
 

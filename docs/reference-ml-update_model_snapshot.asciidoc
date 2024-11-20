@@ -68,7 +68,7 @@ interface MlUpdateModelSnapshotRequest extends <<RequestBase>> {
 ++++
 interface MlUpdateModelSnapshotResponse {
   acknowledged: boolean
-  model: MlModelSnapshot
+  model: <<MlModelSnapshot>>
 }
 
 [pass]

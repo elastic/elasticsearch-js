@@ -67,7 +67,7 @@ interface MlGetModelSnapshotUpgradeStatsRequest extends <<RequestBase>> {
 ++++
 interface MlGetModelSnapshotUpgradeStatsResponse {
   count: <<long>>
-  model_snapshot_upgrades: MlModelSnapshotUpgrade[]
+  model_snapshot_upgrades: <<MlModelSnapshotUpgrade>>[]
 }
 
 [pass]

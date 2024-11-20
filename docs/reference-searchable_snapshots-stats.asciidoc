@@ -50,7 +50,7 @@ Retrieve shard-level statistics about searchable snapshots.
 ++++
 interface SearchableSnapshotsStatsRequest extends <<RequestBase>> {
   index?: <<Indices>>
-  level?: SearchableSnapshotsStatsLevel
+  level?: <<SearchableSnapshotsStatsLevel>>
 }
 
 [pass]

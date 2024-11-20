@@ -48,7 +48,7 @@ Returns low-level information about the Lucene segments in index shards. For dat
 ++++
 <pre>
 ++++
-interface CatSegmentsRequest extends CatCatRequestBase {
+interface CatSegmentsRequest extends <<CatCatRequestBase>> {
   index?: <<Indices>>
   bytes?: <<Bytes>>
 }

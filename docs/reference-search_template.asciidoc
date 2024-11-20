@@ -83,16 +83,16 @@ interface SearchTemplateResponse<TDocument = unknown> {
   took: <<long>>
   timed_out: boolean
   _shards: <<ShardStatistics>>
-  hits: SearchHitsMetadata<TDocument>
+  hits: <<SearchHitsMetadata>><TDocument>
   aggregations?: Record<<<AggregateName>>, <<AggregationsAggregate>>>
   _clusters?: <<ClusterStatistics>>
   fields?: Record<string, any>
   max_score?: <<double>>
   num_reduce_phases?: <<long>>
-  profile?: SearchProfile
+  profile?: <<SearchProfile>>
   pit_id?: <<Id>>
   _scroll_id?: <<ScrollId>>
-  suggest?: Record<<<SuggestionName>>, SearchSuggest<TDocument>[]>
+  suggest?: Record<<<SuggestionName>>, <<SearchSuggest>><TDocument>[]>
   terminated_early?: boolean
 }
 

@@ -67,7 +67,7 @@ interface LicensePostStartBasicResponse {
   acknowledged: boolean
   basic_was_started: boolean
   error_message?: string
-  type?: LicenseLicenseType
+  type?: <<LicenseLicenseType>>
   acknowledge?: Record<string, string | string[]>
 }
 

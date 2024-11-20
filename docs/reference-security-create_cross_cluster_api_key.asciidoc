@@ -49,7 +49,7 @@ Create a cross-cluster API key. Create an API key of the `cross_cluster` type fo
 <pre>
 ++++
 interface SecurityCreateCrossClusterApiKeyRequest extends <<RequestBase>> {
-  access: SecurityAccess
+  access: <<SecurityAccess>>
   expiration?: <<Duration>>
   metadata?: <<Metadata>>
   name: <<Name>>

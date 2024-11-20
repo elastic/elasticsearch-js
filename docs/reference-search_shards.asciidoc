@@ -70,9 +70,9 @@ interface SearchShardsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SearchShardsResponse {
-  nodes: Record<<<NodeId>>, SearchShardsSearchShardsNodeAttributes>
+  nodes: Record<<<NodeId>>, <<SearchShardsSearchShardsNodeAttributes>>>
   shards: <<NodeShard>>[][]
-  indices: Record<<<IndexName>>, SearchShardsShardStoreIndex>
+  indices: Record<<<IndexName>>, <<SearchShardsShardStoreIndex>>>
 }
 
 [pass]

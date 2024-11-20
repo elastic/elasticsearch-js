@@ -52,8 +52,8 @@ interface MlPreviewDatafeedRequest extends <<RequestBase>> {
   datafeed_id?: <<Id>>
   start?: <<DateTime>>
   end?: <<DateTime>>
-  datafeed_config?: MlDatafeedConfig
-  job_config?: MlJobConfig
+  datafeed_config?: <<MlDatafeedConfig>>
+  job_config?: <<MlJobConfig>>
 }
 
 [pass]

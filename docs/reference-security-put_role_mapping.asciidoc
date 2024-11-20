@@ -54,8 +54,8 @@ interface SecurityPutRoleMappingRequest extends <<RequestBase>> {
   enabled?: boolean
   metadata?: <<Metadata>>
   roles?: string[]
-  role_templates?: SecurityRoleTemplate[]
-  rules?: SecurityRoleMappingRule
+  role_templates?: <<SecurityRoleTemplate>>[]
+  rules?: <<SecurityRoleMappingRule>>
   run_as?: string[]
 }
 
@@ -72,7 +72,7 @@ interface SecurityPutRoleMappingRequest extends <<RequestBase>> {
 ++++
 interface SecurityPutRoleMappingResponse {
   created?: boolean
-  role_mapping: SecurityCreatedStatus
+  role_mapping: <<SecurityCreatedStatus>>
 }
 
 [pass]

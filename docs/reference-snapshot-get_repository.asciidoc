@@ -65,7 +65,7 @@ interface SnapshotGetRepositoryRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type SnapshotGetRepositoryResponse = Record<string, SnapshotRepository>
+type SnapshotGetRepositoryResponse = Record<string, <<SnapshotRepository>>>
 
 [pass]
 ++++

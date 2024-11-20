@@ -49,7 +49,7 @@ Evaluate data frame analytics. The API packages together commonly used evaluatio
 <pre>
 ++++
 interface MlEvaluateDataFrameRequest extends <<RequestBase>> {
-  evaluation: MlDataframeEvaluationContainer
+  evaluation: <<MlDataframeEvaluationContainer>>
   index: <<IndexName>>
   query?: <<QueryDslQueryContainer>>
 }

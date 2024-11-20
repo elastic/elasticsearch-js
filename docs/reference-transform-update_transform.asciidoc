@@ -52,14 +52,14 @@ interface TransformUpdateTransformRequest extends <<RequestBase>> {
   transform_id: <<Id>>
   defer_validation?: boolean
   timeout?: <<Duration>>
-  dest?: TransformDestination
+  dest?: <<TransformDestination>>
   description?: string
   frequency?: <<Duration>>
   _meta?: <<Metadata>>
-  source?: TransformSource
-  settings?: TransformSettings
-  sync?: TransformSyncContainer
-  retention_policy?: TransformRetentionPolicyContainer | null
+  source?: <<TransformSource>>
+  settings?: <<TransformSettings>>
+  sync?: <<TransformSyncContainer>>
+  retention_policy?: <<TransformRetentionPolicyContainer>> | null
 }
 
 [pass]
@@ -74,18 +74,18 @@ interface TransformUpdateTransformRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface TransformUpdateTransformResponse {
-  authorization?: MlTransformAuthorization
+  authorization?: <<MlTransformAuthorization>>
   create_time: <<long>>
   description: string
-  dest: ReindexDestination
+  dest: <<ReindexDestination>>
   frequency?: <<Duration>>
   id: <<Id>>
-  latest?: TransformLatest
-  pivot?: TransformPivot
-  retention_policy?: TransformRetentionPolicyContainer
-  settings: TransformSettings
-  source: ReindexSource
-  sync?: TransformSyncContainer
+  latest?: <<TransformLatest>>
+  pivot?: <<TransformPivot>>
+  retention_policy?: <<TransformRetentionPolicyContainer>>
+  settings: <<TransformSettings>>
+  source: <<ReindexSource>>
+  sync?: <<TransformSyncContainer>>
   version: <<VersionString>>
   _meta?: <<Metadata>>
 }

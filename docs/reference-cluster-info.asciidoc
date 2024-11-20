@@ -65,10 +65,10 @@ interface ClusterInfoRequest extends <<RequestBase>> {
 ++++
 interface ClusterInfoResponse {
   cluster_name: <<Name>>
-  http?: NodesHttp
-  ingest?: NodesIngest
-  thread_pool?: Record<string, NodesThreadCount>
-  script?: NodesScripting
+  http?: <<NodesHttp>>
+  ingest?: <<NodesIngest>>
+  thread_pool?: Record<string, <<NodesThreadCount>>>
+  script?: <<NodesScripting>>
 }
 
 [pass]

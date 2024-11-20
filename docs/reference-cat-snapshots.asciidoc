@@ -48,7 +48,7 @@ Returns information about the snapshots stored in one or more repositories. A sn
 ++++
 <pre>
 ++++
-interface CatSnapshotsRequest extends CatCatRequestBase {
+interface CatSnapshotsRequest extends <<CatCatRequestBase>> {
   repository?: <<Names>>
   ignore_unavailable?: boolean
 }

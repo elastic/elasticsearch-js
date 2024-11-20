@@ -52,7 +52,7 @@ interface FleetGlobalCheckpointsRequest extends <<RequestBase>> {
   index: <<IndexName>> | <<IndexAlias>>
   wait_for_advance?: boolean
   wait_for_index?: boolean
-  checkpoints?: FleetCheckpoint[]
+  checkpoints?: <<FleetCheckpoint>>[]
   timeout?: <<Duration>>
 }
 
@@ -68,7 +68,7 @@ interface FleetGlobalCheckpointsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface FleetGlobalCheckpointsResponse {
-  global_checkpoints: FleetCheckpoint[]
+  global_checkpoints: <<FleetCheckpoint>>[]
   timed_out: boolean
 }
 

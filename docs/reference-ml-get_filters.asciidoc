@@ -67,7 +67,7 @@ interface MlGetFiltersRequest extends <<RequestBase>> {
 ++++
 interface MlGetFiltersResponse {
   count: <<long>>
-  filters: MlFilter[]
+  filters: <<MlFilter>>[]
 }
 
 [pass]

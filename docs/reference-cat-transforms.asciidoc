@@ -48,12 +48,12 @@ Get transforms. Returns configuration and usage information about transforms. CA
 ++++
 <pre>
 ++++
-interface CatTransformsRequest extends CatCatRequestBase {
+interface CatTransformsRequest extends <<CatCatRequestBase>> {
   transform_id?: <<Id>>
   allow_no_match?: boolean
   from?: <<integer>>
-  h?: CatCatTransformColumns
-  s?: CatCatTransformColumns
+  h?: <<CatCatTransformColumns>>
+  s?: <<CatCatTransformColumns>>
   time?: <<TimeUnit>>
   size?: <<integer>>
 }

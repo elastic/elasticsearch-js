@@ -51,9 +51,9 @@ Creates a rollup job.
 interface RollupPutJobRequest extends <<RequestBase>> {
   id: <<Id>>
   cron: string
-  groups: RollupGroupings
+  groups: <<RollupGroupings>>
   index_pattern: string
-  metrics?: RollupFieldMetric[]
+  metrics?: <<RollupFieldMetric>>[]
   page_size: <<integer>>
   rollup_index: <<IndexName>>
   timeout?: <<Duration>>

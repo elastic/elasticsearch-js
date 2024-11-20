@@ -68,7 +68,7 @@ interface MlGetTrainedModelsStatsRequest extends <<RequestBase>> {
 ++++
 interface MlGetTrainedModelsStatsResponse {
   count: <<integer>>
-  trained_model_stats: MlTrainedModelStats[]
+  trained_model_stats: <<MlTrainedModelStats>>[]
 }
 
 [pass]

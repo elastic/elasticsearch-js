@@ -50,7 +50,7 @@ Creates or updates a pipeline used for Logstash Central Management.
 ++++
 interface LogstashPutPipelineRequest extends <<RequestBase>> {
   id: <<Id>>
-  pipeline?: LogstashPipeline
+  pipeline?: <<LogstashPipeline>>
 }
 
 [pass]

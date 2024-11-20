@@ -50,7 +50,7 @@ Update a cross-cluster API key. Update the attributes of an existing cross-clust
 ++++
 interface SecurityUpdateCrossClusterApiKeyRequest extends <<RequestBase>> {
   id: <<Id>>
-  access: SecurityAccess
+  access: <<SecurityAccess>>
   expiration?: <<Duration>>
   metadata?: <<Metadata>>
 }

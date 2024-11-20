@@ -51,11 +51,11 @@ Create or update roles. The role management APIs are generally the preferred way
 interface SecurityPutRoleRequest extends <<RequestBase>> {
   name: <<Name>>
   refresh?: <<Refresh>>
-  applications?: SecurityApplicationPrivileges[]
-  cluster?: SecurityClusterPrivilege[]
+  applications?: <<SecurityApplicationPrivileges>>[]
+  cluster?: <<SecurityClusterPrivilege>>[]
   global?: Record<string, any>
-  indices?: SecurityIndicesPrivileges[]
-  remote_indices?: SecurityRemoteIndicesPrivileges[]
+  indices?: <<SecurityIndicesPrivileges>>[]
+  remote_indices?: <<SecurityRemoteIndicesPrivileges>>[]
   metadata?: <<Metadata>>
   run_as?: string[]
   description?: string
@@ -74,7 +74,7 @@ interface SecurityPutRoleRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SecurityPutRoleResponse {
-  role: SecurityCreatedStatus
+  role: <<SecurityCreatedStatus>>
 }
 
 [pass]

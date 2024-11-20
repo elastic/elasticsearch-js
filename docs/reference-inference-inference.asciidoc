@@ -49,12 +49,12 @@ Perform inference on the service
 <pre>
 ++++
 interface InferenceInferenceRequest extends <<RequestBase>> {
-  task_type?: InferenceTaskType
+  task_type?: <<InferenceTaskType>>
   inference_id: <<Id>>
   timeout?: <<Duration>>
   query?: string
   input: string | string[]
-  task_settings?: InferenceTaskSettings
+  task_settings?: <<InferenceTaskSettings>>
 }
 
 [pass]
@@ -68,7 +68,7 @@ interface InferenceInferenceRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type InferenceInferenceResponse = InferenceInferenceResult
+type InferenceInferenceResponse = <<InferenceInferenceResult>>
 
 [pass]
 ++++

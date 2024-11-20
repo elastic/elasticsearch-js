@@ -52,7 +52,7 @@ interface ClusterPutComponentTemplateRequest extends <<RequestBase>> {
   name: <<Name>>
   create?: boolean
   master_timeout?: <<Duration>>
-  template: IndicesIndexState
+  template: <<IndicesIndexState>>
   version?: <<VersionNumber>>
   _meta?: <<Metadata>>
   deprecated?: boolean

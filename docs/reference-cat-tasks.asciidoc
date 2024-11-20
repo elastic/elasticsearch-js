@@ -48,7 +48,7 @@ Returns information about tasks currently executing in the cluster. IMPORTANT: c
 ++++
 <pre>
 ++++
-interface CatTasksRequest extends CatCatRequestBase {
+interface CatTasksRequest extends <<CatCatRequestBase>> {
   actions?: string[]
   detailed?: boolean
   node_id?: string[]

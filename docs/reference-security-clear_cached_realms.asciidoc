@@ -67,7 +67,7 @@ interface SecurityClearCachedRealmsRequest extends <<RequestBase>> {
 interface SecurityClearCachedRealmsResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
-  nodes: Record<string, SecurityClusterNode>
+  nodes: Record<string, <<SecurityClusterNode>>>
 }
 
 [pass]

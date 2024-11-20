@@ -53,7 +53,7 @@ interface SnapshotCreateRepositoryRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
   verify?: boolean
-  repository?: SnapshotRepository
+  repository?: <<SnapshotRepository>>
 }
 
 [pass]

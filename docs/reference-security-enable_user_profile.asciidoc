@@ -49,7 +49,7 @@ Enable a user profile. Enable user profiles to make them visible in user profile
 <pre>
 ++++
 interface SecurityEnableUserProfileRequest extends <<RequestBase>> {
-  uid: SecurityUserProfileId
+  uid: <<SecurityUserProfileId>>
   refresh?: <<Refresh>>
 }
 

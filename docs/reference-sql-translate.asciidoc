@@ -69,7 +69,7 @@ interface SqlTranslateRequest extends <<RequestBase>> {
 interface SqlTranslateResponse {
   aggregations?: Record<string, <<AggregationsAggregationContainer>>>
   size?: <<long>>
-  _source?: SearchSourceConfig
+  _source?: <<SearchSourceConfig>>
   fields?: (<<QueryDslFieldAndFormat>> | <<Field>>)[]
   query?: <<QueryDslQueryContainer>>
   sort?: <<Sort>>

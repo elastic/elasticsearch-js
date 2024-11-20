@@ -58,7 +58,7 @@ interface EsqlQueryRequest extends <<RequestBase>> {
   params?: <<FieldValue>>[]
   profile?: boolean
   query: string
-  tables?: Record<string, Record<string, EsqlTableValuesContainer>>
+  tables?: Record<string, Record<string, <<EsqlTableValuesContainer>>>>
 }
 
 [pass]

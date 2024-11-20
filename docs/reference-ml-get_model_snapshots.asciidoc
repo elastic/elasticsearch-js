@@ -55,7 +55,7 @@ interface MlGetModelSnapshotsRequest extends <<RequestBase>> {
   size?: <<integer>>
   desc?: boolean
   end?: <<DateTime>>
-  page?: MlPage
+  page?: <<MlPage>>
   sort?: <<Field>>
   start?: <<DateTime>>
 }
@@ -73,7 +73,7 @@ interface MlGetModelSnapshotsRequest extends <<RequestBase>> {
 ++++
 interface MlGetModelSnapshotsResponse {
   count: <<long>>
-  model_snapshots: MlModelSnapshot[]
+  model_snapshots: <<MlModelSnapshot>>[]
 }
 
 [pass]

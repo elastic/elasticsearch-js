@@ -50,9 +50,9 @@ Create an enrich policy. Creates an enrich policy.
 ++++
 interface EnrichPutPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
-  geo_match?: EnrichPolicy
-  match?: EnrichPolicy
-  range?: EnrichPolicy
+  geo_match?: <<EnrichPolicy>>
+  match?: <<EnrichPolicy>>
+  range?: <<EnrichPolicy>>
 }
 
 [pass]

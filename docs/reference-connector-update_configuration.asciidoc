@@ -50,7 +50,7 @@ Update the connector configuration. Update the configuration field in the connec
 ++++
 interface ConnectorUpdateConfigurationRequest extends <<RequestBase>> {
   connector_id: <<Id>>
-  configuration?: ConnectorConnectorConfiguration
+  configuration?: <<ConnectorConnectorConfiguration>>
   values?: Record<string, any>
 }
 

@@ -52,11 +52,11 @@ interface SlmPutLifecycleRequest extends <<RequestBase>> {
   policy_id: <<Name>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
-  config?: SlmConfiguration
+  config?: <<SlmConfiguration>>
   name?: <<Name>>
   repository?: string
-  retention?: SlmRetention
-  schedule?: WatcherCronExpression
+  retention?: <<SlmRetention>>
+  schedule?: <<WatcherCronExpression>>
 }
 
 [pass]

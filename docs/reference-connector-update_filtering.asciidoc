@@ -50,9 +50,9 @@ Update the connector filtering. Update the draft filtering configuration of a co
 ++++
 interface ConnectorUpdateFilteringRequest extends <<RequestBase>> {
   connector_id: <<Id>>
-  filtering?: ConnectorFilteringConfig[]
-  rules?: ConnectorFilteringRule[]
-  advanced_snippet?: ConnectorFilteringAdvancedSnippet
+  filtering?: <<ConnectorFilteringConfig>>[]
+  rules?: <<ConnectorFilteringRule>>[]
+  advanced_snippet?: <<ConnectorFilteringAdvancedSnippet>>
 }
 
 [pass]

@@ -49,7 +49,7 @@ Delete an inference endpoint
 <pre>
 ++++
 interface InferenceDeleteRequest extends <<RequestBase>> {
-  task_type?: InferenceTaskType
+  task_type?: <<InferenceTaskType>>
   inference_id: <<Id>>
   dry_run?: boolean
   force?: boolean
@@ -66,7 +66,7 @@ interface InferenceDeleteRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type InferenceDeleteResponse = InferenceDeleteInferenceEndpointResult
+type InferenceDeleteResponse = <<InferenceDeleteInferenceEndpointResult>>
 
 [pass]
 ++++

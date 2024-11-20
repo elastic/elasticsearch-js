@@ -61,7 +61,7 @@ interface MtermvectorsRequest extends <<RequestBase>> {
   term_statistics?: boolean
   version?: <<VersionNumber>>
   version_type?: <<VersionType>>
-  docs?: MtermvectorsOperation[]
+  docs?: <<MtermvectorsOperation>>[]
   ids?: <<Id>>[]
 }
 
@@ -77,7 +77,7 @@ interface MtermvectorsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MtermvectorsResponse {
-  docs: MtermvectorsTermVectorsResult[]
+  docs: <<MtermvectorsTermVectorsResult>>[]
 }
 
 [pass]

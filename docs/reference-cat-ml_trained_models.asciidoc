@@ -48,12 +48,12 @@ Get trained models. Returns configuration and usage information about inference 
 ++++
 <pre>
 ++++
-interface CatMlTrainedModelsRequest extends CatCatRequestBase {
+interface CatMlTrainedModelsRequest extends <<CatCatRequestBase>> {
   model_id?: <<Id>>
   allow_no_match?: boolean
   bytes?: <<Bytes>>
-  h?: CatCatTrainedModelsColumns
-  s?: CatCatTrainedModelsColumns
+  h?: <<CatCatTrainedModelsColumns>>
+  s?: <<CatCatTrainedModelsColumns>>
   from?: <<integer>>
   size?: <<integer>>
 }

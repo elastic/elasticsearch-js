@@ -49,7 +49,7 @@ Disable a user profile. Disable user profiles so that they are not visible in us
 <pre>
 ++++
 interface SecurityDisableUserProfileRequest extends <<RequestBase>> {
-  uid: SecurityUserProfileId
+  uid: <<SecurityUserProfileId>>
   refresh?: <<Refresh>>
 }
 

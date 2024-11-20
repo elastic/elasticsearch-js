@@ -63,7 +63,7 @@ interface LogstashGetPipelineRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type LogstashGetPipelineResponse = Record<<<Id>>, LogstashPipeline>
+type LogstashGetPipelineResponse = Record<<<Id>>, <<LogstashPipeline>>>
 
 [pass]
 ++++

@@ -71,7 +71,7 @@ interface SecurityGetApiKeyRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SecurityGetApiKeyResponse {
-  api_keys: SecurityApiKey[]
+  api_keys: <<SecurityApiKey>>[]
 }
 
 [pass]

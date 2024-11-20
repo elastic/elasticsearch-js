@@ -65,7 +65,7 @@ interface ScrollRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type ScrollResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = SearchResponseBody<TDocument, TAggregations>
+type ScrollResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = <<SearchResponseBody>><TDocument, TAggregations>
 
 [pass]
 ++++

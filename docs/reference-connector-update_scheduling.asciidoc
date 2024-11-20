@@ -50,7 +50,7 @@ Update the connector scheduling.
 ++++
 interface ConnectorUpdateSchedulingRequest extends <<RequestBase>> {
   connector_id: <<Id>>
-  scheduling: ConnectorSchedulingConfiguration
+  scheduling: <<ConnectorSchedulingConfiguration>>
 }
 
 [pass]

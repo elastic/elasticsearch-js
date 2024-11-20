@@ -55,7 +55,7 @@ interface MlGetRecordsRequest extends <<RequestBase>> {
   desc?: boolean
   end?: <<DateTime>>
   exclude_interim?: boolean
-  page?: MlPage
+  page?: <<MlPage>>
   record_score?: <<double>>
   sort?: <<Field>>
   start?: <<DateTime>>
@@ -74,7 +74,7 @@ interface MlGetRecordsRequest extends <<RequestBase>> {
 ++++
 interface MlGetRecordsResponse {
   count: <<long>>
-  records: MlAnomaly[]
+  records: <<MlAnomaly>>[]
 }
 
 [pass]

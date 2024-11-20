@@ -52,10 +52,10 @@ interface GraphExploreRequest extends <<RequestBase>> {
   index: <<Indices>>
   routing?: <<Routing>>
   timeout?: <<Duration>>
-  connections?: GraphHop
-  controls?: GraphExploreControls
+  connections?: <<GraphHop>>
+  controls?: <<GraphExploreControls>>
   query?: <<QueryDslQueryContainer>>
-  vertices?: GraphVertexDefinition[]
+  vertices?: <<GraphVertexDefinition>>[]
 }
 
 [pass]
@@ -70,11 +70,11 @@ interface GraphExploreRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface GraphExploreResponse {
-  connections: GraphConnection[]
+  connections: <<GraphConnection>>[]
   failures: <<ShardFailure>>[]
   timed_out: boolean
   took: <<long>>
-  vertices: GraphVertex[]
+  vertices: <<GraphVertex>>[]
 }
 
 [pass]

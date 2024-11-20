@@ -51,13 +51,13 @@ This API can be used to force execution of the watch outside of its triggering l
 interface WatcherExecuteWatchRequest extends <<RequestBase>> {
   id?: <<Id>>
   debug?: boolean
-  action_modes?: Record<string, WatcherActionExecutionMode>
+  action_modes?: Record<string, <<WatcherActionExecutionMode>>>
   alternative_input?: Record<string, any>
   ignore_condition?: boolean
   record_execution?: boolean
-  simulated_actions?: WatcherSimulatedActions
-  trigger_data?: WatcherScheduleTriggerEvent
-  watch?: WatcherWatch
+  simulated_actions?: <<WatcherSimulatedActions>>
+  trigger_data?: <<WatcherScheduleTriggerEvent>>
+  watch?: <<WatcherWatch>>
 }
 
 [pass]

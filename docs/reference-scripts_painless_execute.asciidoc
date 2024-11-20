@@ -50,7 +50,7 @@ Run a script. Runs a script and returns a result.
 ++++
 interface ScriptsPainlessExecuteRequest extends <<RequestBase>> {
   context?: string
-  context_setup?: ScriptsPainlessExecutePainlessContextSetup
+  context_setup?: <<ScriptsPainlessExecutePainlessContextSetup>>
   script?: <<Script>> | string
 }
 

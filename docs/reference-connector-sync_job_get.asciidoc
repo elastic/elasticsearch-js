@@ -63,7 +63,7 @@ interface ConnectorSyncJobGetRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type ConnectorSyncJobGetResponse = ConnectorConnectorSyncJob
+type ConnectorSyncJobGetResponse = <<ConnectorConnectorSyncJob>>
 
 [pass]
 ++++

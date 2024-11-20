@@ -49,7 +49,7 @@ Get an inference endpoint
 <pre>
 ++++
 interface InferenceGetRequest extends <<RequestBase>> {
-  task_type?: InferenceTaskType
+  task_type?: <<InferenceTaskType>>
   inference_id?: <<Id>>
 }
 
@@ -65,7 +65,7 @@ interface InferenceGetRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface InferenceGetResponse {
-  endpoints: InferenceInferenceEndpointInfo[]
+  endpoints: <<InferenceInferenceEndpointInfo>>[]
 }
 
 [pass]

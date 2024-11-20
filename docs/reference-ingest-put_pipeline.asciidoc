@@ -55,8 +55,8 @@ interface IngestPutPipelineRequest extends <<RequestBase>> {
   if_version?: <<VersionNumber>>
   _meta?: <<Metadata>>
   description?: string
-  on_failure?: IngestProcessorContainer[]
-  processors?: IngestProcessorContainer[]
+  on_failure?: <<IngestProcessorContainer>>[]
+  processors?: <<IngestProcessorContainer>>[]
   version?: <<VersionNumber>>
   deprecated?: boolean
 }

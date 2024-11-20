@@ -49,7 +49,7 @@ Check user profile privileges. Determine whether the users associated with the s
 <pre>
 ++++
 interface SecurityHasPrivilegesUserProfileRequest extends <<RequestBase>> {
-  uids: SecurityUserProfileId[]
+  uids: <<SecurityUserProfileId>>[]
   privileges: SecurityHasPrivilegesUserProfilePrivilegesCheck
 }
 
@@ -65,7 +65,7 @@ interface SecurityHasPrivilegesUserProfileRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SecurityHasPrivilegesUserProfileResponse {
-  has_privilege_uids: SecurityUserProfileId[]
+  has_privilege_uids: <<SecurityUserProfileId>>[]
   errors?: SecurityHasPrivilegesUserProfileHasPrivilegesUserProfileErrors
 }
 

@@ -65,7 +65,7 @@ interface MlUpdateTrainedModelDeploymentRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlUpdateTrainedModelDeploymentResponse {
-  assignment: MlTrainedModelAssignment
+  assignment: <<MlTrainedModelAssignment>>
 }
 
 [pass]

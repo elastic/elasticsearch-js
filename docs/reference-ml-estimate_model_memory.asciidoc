@@ -49,7 +49,7 @@ Estimate job model memory usage. Makes an estimation of the memory usage for an 
 <pre>
 ++++
 interface MlEstimateModelMemoryRequest extends <<RequestBase>> {
-  analysis_config?: MlAnalysisConfig
+  analysis_config?: <<MlAnalysisConfig>>
   max_bucket_cardinality?: Record<<<Field>>, <<long>>>
   overall_cardinality?: Record<<<Field>>, <<long>>>
 }

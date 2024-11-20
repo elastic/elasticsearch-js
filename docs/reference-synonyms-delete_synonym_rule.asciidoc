@@ -64,7 +64,7 @@ interface SynonymsDeleteSynonymRuleRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type SynonymsDeleteSynonymRuleResponse = SynonymsSynonymsUpdateResult
+type SynonymsDeleteSynonymRuleResponse = <<SynonymsSynonymsUpdateResult>>
 
 [pass]
 ++++

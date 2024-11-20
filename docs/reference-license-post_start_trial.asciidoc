@@ -68,7 +68,7 @@ interface LicensePostStartTrialResponse {
   acknowledged: boolean
   error_message?: string
   trial_was_started: boolean
-  type?: LicenseLicenseType
+  type?: <<LicenseLicenseType>>
 }
 
 [pass]

@@ -48,12 +48,12 @@ Get data frame analytics jobs. Returns configuration and usage information about
 ++++
 <pre>
 ++++
-interface CatMlDataFrameAnalyticsRequest extends CatCatRequestBase {
+interface CatMlDataFrameAnalyticsRequest extends <<CatCatRequestBase>> {
   id?: <<Id>>
   allow_no_match?: boolean
   bytes?: <<Bytes>>
-  h?: CatCatDfaColumns
-  s?: CatCatDfaColumns
+  h?: <<CatCatDfaColumns>>
+  s?: <<CatCatDfaColumns>>
   time?: <<Duration>>
 }
 

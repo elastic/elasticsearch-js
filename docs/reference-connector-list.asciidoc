@@ -70,7 +70,7 @@ interface ConnectorListRequest extends <<RequestBase>> {
 ++++
 interface ConnectorListResponse {
   count: <<long>>
-  results: ConnectorConnector[]
+  results: <<ConnectorConnector>>[]
 }
 
 [pass]

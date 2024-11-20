@@ -57,7 +57,7 @@ interface IndicesPutSettingsRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   preserve_existing?: boolean
   timeout?: <<Duration>>
-  settings?: IndicesIndexSettings
+  settings?: <<IndicesIndexSettings>>
 }
 
 [pass]

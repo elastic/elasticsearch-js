@@ -67,7 +67,7 @@ interface TasksGetRequest extends <<RequestBase>> {
 ++++
 interface TasksGetResponse {
   completed: boolean
-  task: TasksTaskInfo
+  task: <<TasksTaskInfo>>
   response?: any
   error?: <<ErrorCause>>
 }

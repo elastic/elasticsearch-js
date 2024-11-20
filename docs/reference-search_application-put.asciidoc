@@ -51,7 +51,7 @@ Create or update a search application.
 interface SearchApplicationPutRequest extends <<RequestBase>> {
   name: <<Name>>
   create?: boolean
-  search_application?: SearchApplicationSearchApplication
+  search_application?: <<SearchApplicationSearchApplication>>
 }
 
 [pass]

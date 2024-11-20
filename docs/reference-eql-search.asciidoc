@@ -80,7 +80,7 @@ interface EqlSearchRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type EqlSearchResponse<TEvent = unknown> = EqlEqlSearchResponseBase<TEvent>
+type EqlSearchResponse<TEvent = unknown> = <<EqlEqlSearchResponseBase>><TEvent>
 
 [pass]
 ++++

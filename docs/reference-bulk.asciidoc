@@ -53,13 +53,13 @@ interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <
   pipeline?: string
   refresh?: <<Refresh>>
   routing?: <<Routing>>
-  _source?: SearchSourceConfigParam
+  _source?: <<SearchSourceConfigParam>>
   _source_excludes?: <<Fields>>
   _source_includes?: <<Fields>>
   timeout?: <<Duration>>
   wait_for_active_shards?: <<WaitForActiveShards>>
   require_alias?: boolean
-  operations?: (BulkOperationContainer | BulkUpdateAction<TDocument, TPartialDocument> | TDocument)[]
+  operations?: (<<BulkOperationContainer>> | <<BulkUpdateAction>><TDocument, TPartialDocument> | TDocument)[]
 }
 
 [pass]
@@ -75,7 +75,7 @@ interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> extends <
 ++++
 interface BulkResponse {
   errors: boolean
-  items: Partial<Record<BulkOperationType, BulkResponseItem>>[]
+  items: Partial<Record<<<BulkOperationType>>, <<BulkResponseItem>>>>[]
   took: <<long>>
   ingest_took?: <<long>>
 }

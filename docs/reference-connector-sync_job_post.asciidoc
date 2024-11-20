@@ -50,8 +50,8 @@ Create a connector sync job. Create a connector sync job document in the interna
 ++++
 interface ConnectorSyncJobPostRequest extends <<RequestBase>> {
   id: <<Id>>
-  job_type?: ConnectorSyncJobType
-  trigger_method?: ConnectorSyncJobTriggerMethod
+  job_type?: <<ConnectorSyncJobType>>
+  trigger_method?: <<ConnectorSyncJobTriggerMethod>>
 }
 
 [pass]

@@ -48,7 +48,7 @@ Update the connector draft filtering validation. Update the draft filtering vali
 ++++
 interface ConnectorUpdateFilteringValidationRequest extends <<RequestBase>> {
   connector_id: <<Id>>
-  validation: ConnectorFilteringRulesValidation
+  validation: <<ConnectorFilteringRulesValidation>>
 }
 
 [pass]

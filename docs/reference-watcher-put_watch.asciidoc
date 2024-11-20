@@ -54,13 +54,13 @@ interface WatcherPutWatchRequest extends <<RequestBase>> {
   if_primary_term?: <<long>>
   if_seq_no?: <<SequenceNumber>>
   version?: <<VersionNumber>>
-  actions?: Record<string, WatcherAction>
-  condition?: WatcherConditionContainer
-  input?: WatcherInputContainer
+  actions?: Record<string, <<WatcherAction>>>
+  condition?: <<WatcherConditionContainer>>
+  input?: <<WatcherInputContainer>>
   metadata?: <<Metadata>>
   throttle_period?: string
   transform?: <<TransformContainer>>
-  trigger?: WatcherTriggerContainer
+  trigger?: <<WatcherTriggerContainer>>
 }
 
 [pass]

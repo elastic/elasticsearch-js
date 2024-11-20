@@ -53,7 +53,7 @@ interface IngestPutGeoipDatabaseRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
   name: <<Name>>
-  maxmind: IngestMaxmind
+  maxmind: <<IngestMaxmind>>
 }
 
 [pass]

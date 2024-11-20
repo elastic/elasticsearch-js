@@ -50,7 +50,7 @@ Creates or updates a query ruleset.
 ++++
 interface QueryRulesPutRulesetRequest extends <<RequestBase>> {
   ruleset_id: <<Id>>
-  rules: QueryRulesQueryRule | QueryRulesQueryRule[]
+  rules: <<QueryRulesQueryRule>> | <<QueryRulesQueryRule>>[]
 }
 
 [pass]

@@ -57,7 +57,7 @@ interface SnapshotGetRequest extends <<RequestBase>> {
   index_details?: boolean
   index_names?: boolean
   include_repository?: boolean
-  sort?: SnapshotSnapshotSort
+  sort?: <<SnapshotSnapshotSort>>
   size?: <<integer>>
   order?: <<SortOrder>>
   after?: string
@@ -79,7 +79,7 @@ interface SnapshotGetRequest extends <<RequestBase>> {
 ++++
 interface SnapshotGetResponse {
   responses?: SnapshotGetSnapshotResponseItem[]
-  snapshots?: SnapshotSnapshotInfo[]
+  snapshots?: <<SnapshotSnapshotInfo>>[]
   total: <<integer>>
   remaining: <<integer>>
 }

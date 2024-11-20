@@ -55,8 +55,8 @@ interface MlUpdateDatafeedRequest extends <<RequestBase>> {
   ignore_throttled?: boolean
   ignore_unavailable?: boolean
   aggregations?: Record<string, <<AggregationsAggregationContainer>>>
-  chunking_config?: MlChunkingConfig
-  delayed_data_check_config?: MlDelayedDataCheckConfig
+  chunking_config?: <<MlChunkingConfig>>
+  delayed_data_check_config?: <<MlDelayedDataCheckConfig>>
   frequency?: <<Duration>>
   indices?: string[]
   pass:[/**] @alias indices */
@@ -83,10 +83,10 @@ interface MlUpdateDatafeedRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlUpdateDatafeedResponse {
-  authorization?: MlDatafeedAuthorization
+  authorization?: <<MlDatafeedAuthorization>>
   aggregations?: Record<string, <<AggregationsAggregationContainer>>>
-  chunking_config: MlChunkingConfig
-  delayed_data_check_config?: MlDelayedDataCheckConfig
+  chunking_config: <<MlChunkingConfig>>
+  delayed_data_check_config?: <<MlDelayedDataCheckConfig>>
   datafeed_id: <<Id>>
   frequency?: <<Duration>>
   indices: string[]

@@ -54,7 +54,7 @@ interface MlGetCategoriesRequest extends <<RequestBase>> {
   from?: <<integer>>
   partition_field_value?: string
   size?: <<integer>>
-  page?: MlPage
+  page?: <<MlPage>>
 }
 
 [pass]
@@ -69,7 +69,7 @@ interface MlGetCategoriesRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlGetCategoriesResponse {
-  categories: MlCategory[]
+  categories: <<MlCategory>>[]
   count: <<long>>
 }
 

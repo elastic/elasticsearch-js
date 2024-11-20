@@ -63,7 +63,7 @@ interface SecurityGetRoleMappingRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type SecurityGetRoleMappingResponse = Record<string, SecurityRoleMapping>
+type SecurityGetRoleMappingResponse = Record<string, <<SecurityRoleMapping>>>
 
 [pass]
 ++++

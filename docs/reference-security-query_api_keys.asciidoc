@@ -76,7 +76,7 @@ interface SecurityQueryApiKeysRequest extends <<RequestBase>> {
 interface SecurityQueryApiKeysResponse {
   total: <<integer>>
   count: <<integer>>
-  api_keys: SecurityApiKey[]
+  api_keys: <<SecurityApiKey>>[]
   aggregations?: Record<<<AggregateName>>, SecurityQueryApiKeysApiKeyAggregate>
 }
 

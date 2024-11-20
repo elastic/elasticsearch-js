@@ -55,14 +55,14 @@ interface MlPutTrainedModelRequest extends <<RequestBase>> {
   compressed_definition?: string
   definition?: MlPutTrainedModelDefinition
   description?: string
-  inference_config?: MlInferenceConfigCreateContainer
+  inference_config?: <<MlInferenceConfigCreateContainer>>
   input?: MlPutTrainedModelInput
   metadata?: any
-  model_type?: MlTrainedModelType
+  model_type?: <<MlTrainedModelType>>
   model_size_bytes?: <<long>>
   platform_architecture?: string
   tags?: string[]
-  prefix_strings?: MlTrainedModelPrefixStrings
+  prefix_strings?: <<MlTrainedModelPrefixStrings>>
 }
 
 [pass]
@@ -76,7 +76,7 @@ interface MlPutTrainedModelRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type MlPutTrainedModelResponse = MlTrainedModelConfig
+type MlPutTrainedModelResponse = <<MlTrainedModelConfig>>
 
 [pass]
 ++++

@@ -70,7 +70,7 @@ interface MlGetCalendarEventsRequest extends <<RequestBase>> {
 ++++
 interface MlGetCalendarEventsResponse {
   count: <<long>>
-  events: MlCalendarEvent[]
+  events: <<MlCalendarEvent>>[]
 }
 
 [pass]

@@ -48,7 +48,7 @@ Returns the snapshot repositories for a cluster. IMPORTANT: cat APIs are only in
 ++++
 <pre>
 ++++
-interface CatRepositoriesRequest extends CatCatRequestBase {
+interface CatRepositoriesRequest extends <<CatCatRequestBase>> {
 }
 
 [pass]

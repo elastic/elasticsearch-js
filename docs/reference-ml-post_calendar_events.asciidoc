@@ -50,7 +50,7 @@ Add scheduled events to the calendar.
 ++++
 interface MlPostCalendarEventsRequest extends <<RequestBase>> {
   calendar_id: <<Id>>
-  events: MlCalendarEvent[]
+  events: <<MlCalendarEvent>>[]
 }
 
 [pass]
@@ -65,7 +65,7 @@ interface MlPostCalendarEventsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlPostCalendarEventsResponse {
-  events: MlCalendarEvent[]
+  events: <<MlCalendarEvent>>[]
 }
 
 [pass]

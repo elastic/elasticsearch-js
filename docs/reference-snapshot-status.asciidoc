@@ -67,7 +67,7 @@ interface SnapshotStatusRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface SnapshotStatusResponse {
-  snapshots: SnapshotStatus[]
+  snapshots: <<SnapshotStatus>>[]
 }
 
 [pass]

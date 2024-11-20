@@ -68,8 +68,8 @@ interface HealthReportRequest extends <<RequestBase>> {
 ++++
 interface HealthReportResponse {
   cluster_name: string
-  indicators: HealthReportIndicators
-  status?: HealthReportIndicatorHealthStatus
+  indicators: <<HealthReportIndicators>>
+  status?: <<HealthReportIndicatorHealthStatus>>
 }
 
 [pass]

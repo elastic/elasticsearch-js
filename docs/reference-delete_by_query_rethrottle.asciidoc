@@ -64,7 +64,7 @@ interface DeleteByQueryRethrottleRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type DeleteByQueryRethrottleResponse = TasksTaskListResponseBase
+type DeleteByQueryRethrottleResponse = <<TasksTaskListResponseBase>>
 
 [pass]
 ++++

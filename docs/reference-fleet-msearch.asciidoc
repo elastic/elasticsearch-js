@@ -59,9 +59,9 @@ interface FleetMsearchRequest extends <<RequestBase>> {
   search_type?: <<SearchType>>
   rest_total_hits_as_int?: boolean
   typed_keys?: boolean
-  wait_for_checkpoints?: FleetCheckpoint[]
+  wait_for_checkpoints?: <<FleetCheckpoint>>[]
   allow_partial_search_results?: boolean
-  searches?: MsearchRequestItem[]
+  searches?: <<MsearchRequestItem>>[]
 }
 
 [pass]
@@ -76,7 +76,7 @@ interface FleetMsearchRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface FleetMsearchResponse<TDocument = unknown> {
-  docs: MsearchResponseItem<TDocument>[]
+  docs: <<MsearchResponseItem>><TDocument>[]
 }
 
 [pass]

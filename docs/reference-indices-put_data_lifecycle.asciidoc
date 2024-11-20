@@ -54,7 +54,7 @@ interface IndicesPutDataLifecycleRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
   data_retention?: <<Duration>>
-  downsampling?: IndicesDataStreamLifecycleDownsampling
+  downsampling?: <<IndicesDataStreamLifecycleDownsampling>>
 }
 
 [pass]

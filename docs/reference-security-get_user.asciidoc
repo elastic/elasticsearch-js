@@ -64,7 +64,7 @@ interface SecurityGetUserRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type SecurityGetUserResponse = Record<string, SecurityUser>
+type SecurityGetUserResponse = Record<string, <<SecurityUser>>>
 
 [pass]
 ++++

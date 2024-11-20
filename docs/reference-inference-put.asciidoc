@@ -49,9 +49,9 @@ Create an inference endpoint
 <pre>
 ++++
 interface InferencePutRequest extends <<RequestBase>> {
-  task_type?: InferenceTaskType
+  task_type?: <<InferenceTaskType>>
   inference_id: <<Id>>
-  inference_config?: InferenceInferenceEndpoint
+  inference_config?: <<InferenceInferenceEndpoint>>
 }
 
 [pass]
@@ -65,7 +65,7 @@ interface InferencePutRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type InferencePutResponse = InferenceInferenceEndpointInfo
+type InferencePutResponse = <<InferenceInferenceEndpointInfo>>
 
 [pass]
 ++++

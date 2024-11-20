@@ -52,7 +52,7 @@ interface IlmPutLifecycleRequest extends <<RequestBase>> {
   name: <<Name>>
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
-  policy?: IlmPolicy
+  policy?: <<IlmPolicy>>
 }
 
 [pass]

@@ -68,7 +68,7 @@ interface ClusterGetComponentTemplateRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface ClusterGetComponentTemplateResponse {
-  component_templates: ClusterComponentTemplate[]
+  component_templates: <<ClusterComponentTemplate>>[]
 }
 
 [pass]

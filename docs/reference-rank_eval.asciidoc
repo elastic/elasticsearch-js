@@ -54,8 +54,8 @@ interface RankEvalRequest extends <<RequestBase>> {
   expand_wildcards?: <<ExpandWildcards>>
   ignore_unavailable?: boolean
   search_type?: string
-  requests: RankEvalRankEvalRequestItem[]
-  metric?: RankEvalRankEvalMetric
+  requests: <<RankEvalRankEvalRequestItem>>[]
+  metric?: <<RankEvalRankEvalMetric>>
 }
 
 [pass]
@@ -71,7 +71,7 @@ interface RankEvalRequest extends <<RequestBase>> {
 ++++
 interface RankEvalResponse {
   metric_score: <<double>>
-  details: Record<<<Id>>, RankEvalRankEvalMetricDetail>
+  details: Record<<<Id>>, <<RankEvalRankEvalMetricDetail>>>
   failures: Record<string, any>
 }
 

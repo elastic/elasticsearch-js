@@ -65,7 +65,7 @@ interface UpdateByQueryRethrottleRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface UpdateByQueryRethrottleResponse {
-  nodes: Record<string, UpdateByQueryRethrottleUpdateByQueryRethrottleNode>
+  nodes: Record<string, <<UpdateByQueryRethrottleUpdateByQueryRethrottleNode>>>
 }
 
 [pass]

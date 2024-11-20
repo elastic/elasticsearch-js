@@ -52,7 +52,7 @@ interface MlInferTrainedModelRequest extends <<RequestBase>> {
   model_id: <<Id>>
   timeout?: <<Duration>>
   docs: Record<string, any>[]
-  inference_config?: MlInferenceConfigUpdateContainer
+  inference_config?: <<MlInferenceConfigUpdateContainer>>
 }
 
 [pass]
@@ -67,7 +67,7 @@ interface MlInferTrainedModelRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlInferTrainedModelResponse {
-  inference_results: MlInferenceResponseResult[]
+  inference_results: <<MlInferenceResponseResult>>[]
 }
 
 [pass]

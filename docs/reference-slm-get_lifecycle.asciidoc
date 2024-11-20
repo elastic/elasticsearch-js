@@ -63,7 +63,7 @@ interface SlmGetLifecycleRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type SlmGetLifecycleResponse = Record<<<Id>>, SlmSnapshotLifecycle>
+type SlmGetLifecycleResponse = Record<<<Id>>, <<SlmSnapshotLifecycle>>>
 
 [pass]
 ++++

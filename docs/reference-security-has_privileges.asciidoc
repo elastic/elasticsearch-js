@@ -51,7 +51,7 @@ Check user privileges. Determine whether the specified user has a specified list
 interface SecurityHasPrivilegesRequest extends <<RequestBase>> {
   user?: <<Name>>
   application?: SecurityHasPrivilegesApplicationPrivilegesCheck[]
-  cluster?: SecurityClusterPrivilege[]
+  cluster?: <<SecurityClusterPrivilege>>[]
   index?: SecurityHasPrivilegesIndexPrivilegesCheck[]
 }
 

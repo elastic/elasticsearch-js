@@ -50,7 +50,7 @@ Create or update an autoscaling policy. NOTE: This feature is designed for indir
 ++++
 interface AutoscalingPutAutoscalingPolicyRequest extends <<RequestBase>> {
   name: <<Name>>
-  policy?: AutoscalingAutoscalingPolicy
+  policy?: <<AutoscalingAutoscalingPolicy>>
 }
 
 [pass]

@@ -65,7 +65,7 @@ interface ReindexRethrottleRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface ReindexRethrottleResponse {
-  nodes: Record<string, ReindexRethrottleReindexNode>
+  nodes: Record<string, <<ReindexRethrottleReindexNode>>>
 }
 
 [pass]

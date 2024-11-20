@@ -67,7 +67,7 @@ interface TasksCancelRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type TasksCancelResponse = TasksTaskListResponseBase
+type TasksCancelResponse = <<TasksTaskListResponseBase>>
 
 [pass]
 ++++

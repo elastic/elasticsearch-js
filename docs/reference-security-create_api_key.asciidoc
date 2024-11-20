@@ -52,7 +52,7 @@ interface SecurityCreateApiKeyRequest extends <<RequestBase>> {
   refresh?: <<Refresh>>
   expiration?: <<Duration>>
   name?: <<Name>>
-  role_descriptors?: Record<string, SecurityRoleDescriptor>
+  role_descriptors?: Record<string, <<SecurityRoleDescriptor>>>
   metadata?: <<Metadata>>
 }
 

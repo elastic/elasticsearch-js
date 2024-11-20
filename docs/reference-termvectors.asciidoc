@@ -63,7 +63,7 @@ interface TermvectorsRequest<TDocument = unknown> extends <<RequestBase>> {
   version?: <<VersionNumber>>
   version_type?: <<VersionType>>
   doc?: TDocument
-  filter?: TermvectorsFilter
+  filter?: <<TermvectorsFilter>>
   per_field_analyzer?: Record<<<Field>>, string>
 }
 
@@ -82,7 +82,7 @@ interface TermvectorsResponse {
   found: boolean
   _id?: <<Id>>
   _index: <<IndexName>>
-  term_vectors?: Record<<<Field>>, TermvectorsTermVector>
+  term_vectors?: Record<<<Field>>, <<TermvectorsTermVector>>>
   took: <<long>>
   _version: <<VersionNumber>>
 }

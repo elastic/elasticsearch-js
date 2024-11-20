@@ -63,7 +63,7 @@ interface FeaturesResetFeaturesRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface FeaturesResetFeaturesResponse {
-  features: FeaturesFeature[]
+  features: <<FeaturesFeature>>[]
 }
 
 [pass]

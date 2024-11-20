@@ -48,7 +48,7 @@ Returns information about the nodes in a cluster. IMPORTANT: cat APIs are only i
 ++++
 <pre>
 ++++
-interface CatNodesRequest extends CatCatRequestBase {
+interface CatNodesRequest extends <<CatCatRequestBase>> {
   bytes?: <<Bytes>>
   full_id?: boolean | string
   include_unloaded_segments?: boolean

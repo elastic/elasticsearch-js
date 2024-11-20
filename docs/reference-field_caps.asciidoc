@@ -75,7 +75,7 @@ interface FieldCapsRequest extends <<RequestBase>> {
 ++++
 interface FieldCapsResponse {
   indices: <<Indices>>
-  fields: Record<<<Field>>, Record<string, FieldCapsFieldCapability>>
+  fields: Record<<<Field>>, Record<string, <<FieldCapsFieldCapability>>>>
 }
 
 [pass]

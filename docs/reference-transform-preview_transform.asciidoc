@@ -51,15 +51,15 @@ Preview a transform. Generates a preview of the results that you will get when y
 interface TransformPreviewTransformRequest extends <<RequestBase>> {
   transform_id?: <<Id>>
   timeout?: <<Duration>>
-  dest?: TransformDestination
+  dest?: <<TransformDestination>>
   description?: string
   frequency?: <<Duration>>
-  pivot?: TransformPivot
-  source?: TransformSource
-  settings?: TransformSettings
-  sync?: TransformSyncContainer
-  retention_policy?: TransformRetentionPolicyContainer
-  latest?: TransformLatest
+  pivot?: <<TransformPivot>>
+  source?: <<TransformSource>>
+  settings?: <<TransformSettings>>
+  sync?: <<TransformSyncContainer>>
+  retention_policy?: <<TransformRetentionPolicyContainer>>
+  latest?: <<TransformLatest>>
 }
 
 [pass]
@@ -74,7 +74,7 @@ interface TransformPreviewTransformRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface TransformPreviewTransformResponse<TTransform = unknown> {
-  generated_dest_index: IndicesIndexState
+  generated_dest_index: <<IndicesIndexState>>
   preview: TTransform[]
 }
 

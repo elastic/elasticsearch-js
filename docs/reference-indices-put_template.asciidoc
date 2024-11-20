@@ -53,11 +53,11 @@ interface IndicesPutTemplateRequest extends <<RequestBase>> {
   create?: boolean
   master_timeout?: <<Duration>>
   cause?: string
-  aliases?: Record<<<IndexName>>, IndicesAlias>
+  aliases?: Record<<<IndexName>>, <<IndicesAlias>>>
   index_patterns?: string | string[]
   mappings?: <<MappingTypeMapping>>
   order?: <<integer>>
-  settings?: IndicesIndexSettings
+  settings?: <<IndicesIndexSettings>>
   version?: <<VersionNumber>>
 }
 

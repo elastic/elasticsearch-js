@@ -50,13 +50,13 @@ Explain data frame analytics config. This API provides explanations for a data f
 ++++
 interface MlExplainDataFrameAnalyticsRequest extends <<RequestBase>> {
   id?: <<Id>>
-  source?: MlDataframeAnalyticsSource
-  dest?: MlDataframeAnalyticsDestination
-  analysis?: MlDataframeAnalysisContainer
+  source?: <<MlDataframeAnalyticsSource>>
+  dest?: <<MlDataframeAnalyticsDestination>>
+  analysis?: <<MlDataframeAnalysisContainer>>
   description?: string
   model_memory_limit?: string
   max_num_threads?: <<integer>>
-  analyzed_fields?: MlDataframeAnalysisAnalyzedFields | string[]
+  analyzed_fields?: <<MlDataframeAnalysisAnalyzedFields>> | string[]
   allow_lazy_start?: boolean
 }
 
@@ -72,8 +72,8 @@ interface MlExplainDataFrameAnalyticsRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface MlExplainDataFrameAnalyticsResponse {
-  field_selection: MlDataframeAnalyticsFieldSelection[]
-  memory_estimation: MlDataframeAnalyticsMemoryEstimation
+  field_selection: <<MlDataframeAnalyticsFieldSelection>>[]
+  memory_estimation: <<MlDataframeAnalyticsMemoryEstimation>>
 }
 
 [pass]

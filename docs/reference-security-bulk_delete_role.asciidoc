@@ -67,7 +67,7 @@ interface SecurityBulkDeleteRoleRequest extends <<RequestBase>> {
 interface SecurityBulkDeleteRoleResponse {
   deleted?: string[]
   not_found?: string[]
-  errors?: SecurityBulkError
+  errors?: <<SecurityBulkError>>
 }
 
 [pass]

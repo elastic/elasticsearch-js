@@ -58,7 +58,7 @@ interface ExplainRequest extends <<RequestBase>> {
   lenient?: boolean
   preference?: string
   routing?: <<Routing>>
-  _source?: SearchSourceConfigParam
+  _source?: <<SearchSourceConfigParam>>
   _source_excludes?: <<Fields>>
   _source_includes?: <<Fields>>
   stored_fields?: <<Fields>>
@@ -81,7 +81,7 @@ interface ExplainResponse<TDocument = unknown> {
   _index: <<IndexName>>
   _id: <<Id>>
   matched: boolean
-  explanation?: ExplainExplanationDetail
+  explanation?: <<ExplainExplanationDetail>>
   get?: <<InlineGet>><TDocument>
 }
 

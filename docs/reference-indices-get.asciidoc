@@ -71,7 +71,7 @@ interface IndicesGetRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type IndicesGetResponse = Record<<<IndexName>>, IndicesIndexState>
+type IndicesGetResponse = Record<<<IndexName>>, <<IndicesIndexState>>>
 
 [pass]
 ++++

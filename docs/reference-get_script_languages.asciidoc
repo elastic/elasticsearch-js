@@ -63,7 +63,7 @@ interface GetScriptLanguagesRequest extends <<RequestBase>> {
 <pre>
 ++++
 interface GetScriptLanguagesResponse {
-  language_contexts: GetScriptLanguagesLanguageContext[]
+  language_contexts: <<GetScriptLanguagesLanguageContext>>[]
   types_allowed: string[]
 }
 

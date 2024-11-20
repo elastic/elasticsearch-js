@@ -67,7 +67,7 @@ interface SynonymsGetSynonymRequest extends <<RequestBase>> {
 ++++
 interface SynonymsGetSynonymResponse {
   count: <<integer>>
-  synonyms_set: SynonymsSynonymRuleRead[]
+  synonyms_set: <<SynonymsSynonymRuleRead>>[]
 }
 
 [pass]

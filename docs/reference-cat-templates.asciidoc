@@ -48,7 +48,7 @@ Returns information about index templates in a cluster. You can use index templa
 ++++
 <pre>
 ++++
-interface CatTemplatesRequest extends CatCatRequestBase {
+interface CatTemplatesRequest extends <<CatCatRequestBase>> {
   name?: <<Name>>
 }
 

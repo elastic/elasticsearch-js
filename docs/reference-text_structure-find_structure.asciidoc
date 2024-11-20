@@ -100,7 +100,7 @@ interface TextStructureFindStructureResponse {
   joda_timestamp_formats?: string[]
   timestamp_field?: <<Field>>
   should_trim_fields?: boolean
-  ingest_pipeline: IngestPipelineConfig
+  ingest_pipeline: <<IngestPipelineConfig>>
 }
 
 [pass]

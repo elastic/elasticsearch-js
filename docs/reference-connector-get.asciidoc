@@ -63,7 +63,7 @@ interface ConnectorGetRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type ConnectorGetResponse = ConnectorConnector
+type ConnectorGetResponse = <<ConnectorConnector>>
 
 [pass]
 ++++

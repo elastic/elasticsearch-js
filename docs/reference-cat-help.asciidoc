@@ -48,7 +48,7 @@ Get CAT help. Returns help for the CAT APIs.
 ++++
 <pre>
 ++++
-interface CatHelpRequest extends CatCatRequestBase {
+interface CatHelpRequest extends <<CatCatRequestBase>> {
 }
 
 [pass]

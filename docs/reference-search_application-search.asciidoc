@@ -65,7 +65,7 @@ interface SearchApplicationSearchRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type SearchApplicationSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = SearchResponseBody<TDocument, TAggregations>
+type SearchApplicationSearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = <<SearchResponseBody>><TDocument, TAggregations>
 
 [pass]
 ++++

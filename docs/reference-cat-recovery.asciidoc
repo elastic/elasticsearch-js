@@ -48,7 +48,7 @@ Returns information about ongoing and completed shard recoveries. Shard recovery
 ++++
 <pre>
 ++++
-interface CatRecoveryRequest extends CatCatRequestBase {
+interface CatRecoveryRequest extends <<CatCatRequestBase>> {
   index?: <<Indices>>
   active_only?: boolean
   bytes?: <<Bytes>>

@@ -68,7 +68,7 @@ interface SecurityClearCachedServiceTokensRequest extends <<RequestBase>> {
 interface SecurityClearCachedServiceTokensResponse {
   _nodes: <<NodeStatistics>>
   cluster_name: <<Name>>
-  nodes: Record<string, SecurityClusterNode>
+  nodes: Record<string, <<SecurityClusterNode>>>
 }
 
 [pass]

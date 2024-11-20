@@ -63,7 +63,7 @@ interface MsearchRequest extends <<RequestBase>> {
   routing?: <<Routing>>
   search_type?: <<SearchType>>
   typed_keys?: boolean
-  searches?: MsearchRequestItem[]
+  searches?: <<MsearchRequestItem>>[]
 }
 
 [pass]
@@ -77,7 +77,7 @@ interface MsearchRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type MsearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = MsearchMultiSearchResult<TDocument, TAggregations>
+type MsearchResponse<TDocument = unknown, TAggregations = Record<<<AggregateName>>, <<AggregationsAggregate>>>> = <<MsearchMultiSearchResult>><TDocument, TAggregations>
 
 [pass]
 ++++

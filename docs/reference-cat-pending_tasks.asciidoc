@@ -48,7 +48,7 @@ Returns cluster-level changes that have not yet been executed. IMPORTANT: cat AP
 ++++
 <pre>
 ++++
-interface CatPendingTasksRequest extends CatCatRequestBase {
+interface CatPendingTasksRequest extends <<CatCatRequestBase>> {
 }
 
 [pass]

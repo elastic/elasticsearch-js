@@ -58,7 +58,7 @@ interface MlGetInfluencersRequest extends <<RequestBase>> {
   size?: <<integer>>
   sort?: <<Field>>
   start?: <<DateTime>>
-  page?: MlPage
+  page?: <<MlPage>>
 }
 
 [pass]
@@ -74,7 +74,7 @@ interface MlGetInfluencersRequest extends <<RequestBase>> {
 ++++
 interface MlGetInfluencersResponse {
   count: <<long>>
-  influencers: MlInfluencer[]
+  influencers: <<MlInfluencer>>[]
 }
 
 [pass]

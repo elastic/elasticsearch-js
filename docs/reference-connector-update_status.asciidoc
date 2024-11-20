@@ -50,7 +50,7 @@ Update the connector status.
 ++++
 interface ConnectorUpdateStatusRequest extends <<RequestBase>> {
   connector_id: <<Id>>
-  status: ConnectorConnectorStatus
+  status: <<ConnectorConnectorStatus>>
 }
 
 [pass]

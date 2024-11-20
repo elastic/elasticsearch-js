@@ -69,7 +69,7 @@ interface MlGetDataFrameAnalyticsStatsRequest extends <<RequestBase>> {
 ++++
 interface MlGetDataFrameAnalyticsStatsResponse {
   count: <<long>>
-  data_frame_analytics: MlDataframeAnalytics[]
+  data_frame_analytics: <<MlDataframeAnalytics>>[]
 }
 
 [pass]

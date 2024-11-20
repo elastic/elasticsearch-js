@@ -55,7 +55,7 @@ interface IndicesRolloverRequest extends <<RequestBase>> {
   master_timeout?: <<Duration>>
   timeout?: <<Duration>>
   wait_for_active_shards?: <<WaitForActiveShards>>
-  aliases?: Record<<<IndexName>>, IndicesAlias>
+  aliases?: Record<<<IndexName>>, <<IndicesAlias>>>
   conditions?: IndicesRolloverRolloverConditions
   mappings?: <<MappingTypeMapping>>
   settings?: Record<string, any>

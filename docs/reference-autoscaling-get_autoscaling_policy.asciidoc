@@ -63,7 +63,7 @@ interface AutoscalingGetAutoscalingPolicyRequest extends <<RequestBase>> {
 ++++
 <pre>
 ++++
-type AutoscalingGetAutoscalingPolicyResponse = AutoscalingAutoscalingPolicy
+type AutoscalingGetAutoscalingPolicyResponse = <<AutoscalingAutoscalingPolicy>>
 
 [pass]
 ++++

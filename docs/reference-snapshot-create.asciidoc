@@ -74,7 +74,7 @@ interface SnapshotCreateRequest extends <<RequestBase>> {
 ++++
 interface SnapshotCreateResponse {
   accepted?: boolean
-  snapshot?: SnapshotSnapshotInfo
+  snapshot?: <<SnapshotSnapshotInfo>>
 }
 
 [pass]

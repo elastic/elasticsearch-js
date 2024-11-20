@@ -50,7 +50,7 @@ Update the connector pipeline. When you create a new connector, the configuratio
 ++++
 interface ConnectorUpdatePipelineRequest extends <<RequestBase>> {
   connector_id: <<Id>>
-  pipeline: ConnectorIngestPipelineParams
+  pipeline: <<ConnectorIngestPipelineParams>>
 }
 
 [pass]
